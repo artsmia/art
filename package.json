@@ -1,0 +1,30 @@
+{
+  "name": "art",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "watchify index.js -o bundle.js & serve -p 1314",
+    "build": "NODE_ENV=production browserify index.js | uglifyjs -c -m > bundle.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "browserify": {
+    "transform": [
+      "6to5ify"
+    ]
+  },
+  "devDependencies": {
+    "uglifyjs": "^2.3.6",
+    "browserify": "^8.1.0",
+    "watchify": "^2.2.1",
+    "6to5ify": "^3.1.2"
+  },
+  "dependencies": {
+    "when": "^3.6.4",
+    "rest": "^1.2.0",
+    "react-router": "^0.11.6",
+    "react": "^0.12.2"
+  }
+}
