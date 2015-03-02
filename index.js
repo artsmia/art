@@ -15,19 +15,29 @@ var App = React.createClass({
 var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
+  getInitialState() {
+    return {terms: ''}
+  },
+
   render() {
     return (
       <div>
-        <input type="search" onKeyDown={this.handleKey} />
-        <SearchResults {...this.props}/>
+        <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} />
+        <SearchResults {...this.props} updateInput={this.updateInput} />
       </div>
     )
   },
 
-  handleKey(event) {
-    if(event.which !== 13) return 
-    this.setState({terms: event.target.value})
-    this.transitionTo('searchResults', {terms: event.target.value})
+  throttledSearch(event) {
+    var terms = event.target.value
+    this.setState({terms: terms})
+
+    if(this.search) clearTimeout(this.search)
+    this.search = setTimeout(() => this.transitionTo('searchResults', {terms: terms}), 500)
+  },
+
+  updateInput(terms) {
+    this.setState({terms: terms})
   }
 })
 
@@ -38,6 +48,10 @@ var SearchResults = React.createClass({
     fetchData: (params) => {
       return rest(`http://caption-search.dx.artsmia.org/${params.terms}`).then((r) => JSON.parse(r.entity))
     }
+  },
+
+  componentDidMount() {
+    this.props.updateInput(this.getParams().terms)
   },
 
   render() {
@@ -77,7 +91,7 @@ var routes = (
   <Route handler={App} path="/">
     <Route name="artwork" path="art/:id" handler={Artwork} />
     <Redirect from="/" to="search" />
-    <Route name="search" path="/search" handler={Search}>
+    <Route name="search" path="/search/" handler={Search}>
       <Route name="searchResults" path="/search/:terms" handler={SearchResults} />
     </Route>
   </Route>
