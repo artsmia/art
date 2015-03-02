@@ -12,6 +12,49 @@ var App = React.createClass({
   }
 })
 
+var Search = React.createClass({
+  mixins: [Router.State, Router.Navigation],
+
+  render() {
+    return (
+      <div>
+        <input type="search" onKeyDown={this.handleKey} />
+        <SearchResults {...this.props}/>
+      </div>
+    )
+  },
+
+  handleKey(event) {
+    if(event.which !== 13) return 
+    this.setState({terms: event.target.value})
+    this.transitionTo('searchResults', {terms: event.target.value})
+  }
+})
+
+var SearchResults = React.createClass({
+  mixins: [Router.State],
+
+  statics: {
+    fetchData: (params) => {
+      return rest(`http://caption-search.dx.artsmia.org/${params.terms}`).then((r) => JSON.parse(r.entity))
+    }
+  },
+
+  render() {
+    var search = this.props.data.searchResults
+    var results = search && search.es.hits.hits.map((hit) => {
+      var id = hit._source.id.split('/').reverse()[0]
+      return <Artwork key={id} id={id} data={{artwork: hit._source}} />
+    })
+
+    return (
+      <div>
+        {results}
+      </div>
+    )
+  }
+})
+
 var Artwork = React.createClass({
   mixins: [Router.State],
   statics: {
@@ -33,7 +76,10 @@ var Artwork = React.createClass({
 var routes = (
   <Route handler={App} path="/">
     <Route name="artwork" path="art/:id" handler={Artwork} />
-    <Redirect from="/" to="artwork" params={{id: 1425}} />
+    <Redirect from="/" to="search" />
+    <Route name="search" path="/search" handler={Search}>
+      <Route name="searchResults" path="/search/:terms" handler={SearchResults} />
+    </Route>
   </Route>
 );
 
