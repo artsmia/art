@@ -33,7 +33,7 @@ var Search = React.createClass({
     this.setState({terms: terms})
 
     if(this.search) clearTimeout(this.search)
-    this.search = setTimeout(() => this.transitionTo('searchResults', {terms: terms}), 500)
+    this.search = setTimeout(() => this.transitionTo('searchResults', {terms: terms}), 200)
   },
 
   updateInput(terms) {
