@@ -151,8 +151,8 @@ var routes = (
     <Redirect from="/" to="search" />
     <Route name="search" path="/search/" handler={Search}>
       <Route name="searchResults" path="/search/:terms" handler={SearchResults} />
-      <Route name="artistsByName" path="/search/artists/:letter" handler={ArtistsByLetter} />
     </Route>
+    <Route name="artistsByName" path="/search/artists/:letter" handler={ArtistsByLetter} />
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
   </Route>
 );
