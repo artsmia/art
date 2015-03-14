@@ -46,8 +46,9 @@ var SearchResults = React.createClass({
   mixins: [Router.State],
 
   statics: {
-    fetchData: (params) => {
-      return rest(`http://caption-search.dx.artsmia.org/${params.terms}`).then((r) => JSON.parse(r.entity))
+    fetchData: (params, query) => {
+      var size = query.size || 100
+      return rest(`http://caption-search.dx.artsmia.org/${params.terms}?size=${size}`).then((r) => JSON.parse(r.entity))
     }
   },
 
@@ -57,13 +58,19 @@ var SearchResults = React.createClass({
 
   render() {
     var search = this.props.data.searchResults
-    var results = search && search.es.hits.hits.map((hit) => {
-      var id = hit._source.id.split('/').reverse()[0]
-      return <Artwork key={id} id={id} data={{artwork: hit._source}} />
+    var hits = search && search.es.hits
+    var results = hits && hits.hits.map((hit) => {
+      var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
+      return <div><Artwork key={'object:'+id} id={id} data={{artwork: hit._source}} /><hr/></div>
     })
+    var showAllLink = search && search.es && <span>(<Link to="searchResults" params={{terms: this.getParams().terms}} query={{size: search.es.hits.total}}>show all</Link>)</span>
+    console.info(search, hits)
 
     return (
       <div>
+        {results && <h2>
+          showing {hits.hits.length} of {hits.total} {hits.hits.length < hits.total && {showAllLink}}
+        </h2>}
         {results}
       </div>
     )
@@ -157,7 +164,7 @@ Router.run(routes, (Handler, state) => {
   var promises = state.routes.filter((route) => {
     return route.handler.fetchData
   }).reduce((promises, route) => {
-    promises[route.name] = route.handler.fetchData(state.params)
+    promises[route.name] = route.handler.fetchData(state.params, state.query)
     return promises
   }, {})
 
