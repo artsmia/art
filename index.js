@@ -135,11 +135,14 @@ var Artwork = React.createClass({
     }
   },
   render() {
+    var art = this.props.data.artwork
+    var id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
     return (
       <div>
-        <h1>{this.props.data.artwork.title}</h1>
-        <h2>{this.props.data.artwork.artist}</h2>
-        <img src={`http://api.artsmia.org/images/${this.getParams().id}/small.jpg`} />
+        <h1>{art.title} ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>) <Link to="artwork" params={{id: id}}>&rarr;</Link></h1>
+        <h2>{art.artist}</h2>
+        {art.image == 'valid' && <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />}
+        <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
       </div>
     )
   }
