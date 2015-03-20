@@ -141,9 +141,25 @@ var Artwork = React.createClass({
       <div>
         <h1>{art.title} ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>) <Link to="artwork" params={{id: id}}>&rarr;</Link></h1>
         <h2>{art.artist}</h2>
-        {art.image == 'valid' && <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />}
+        <ArtworkImage art={art} id={id} />
         <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
       </div>
+    )
+  }
+})
+
+let LazyLoad = require('react-lazy-load')
+var ArtworkImage = React.createClass({
+  render() {
+    let art = this.props.art
+    let id = this.props.id
+    let aspectRatio = art.image_height/art.image_width
+    let height = aspectRatio > 1 ? 400 : aspectRatio*400
+
+    return art.image == 'valid' && art.image_width > 0 && (
+      <LazyLoad height={height+'px'}>
+        <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
+      </LazyLoad>
     )
   }
 })
