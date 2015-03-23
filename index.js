@@ -137,10 +137,11 @@ var Artwork = React.createClass({
   render() {
     var art = this.props.data.artwork
     var id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
+    const highlights = this.props.highlights
     return (
       <div>
-        <h1>{art.title} ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>) <Link to="artwork" params={{id: id}}>&rarr;</Link></h1>
-        <h2>{art.artist}</h2>
+        <h1><span dangerouslySetInnerHTML={{__html: highlights && highlights.title || art.title}}></span> ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>) <Link to="artwork" params={{id: id}}>&rarr;</Link></h1>
+        <h2><span dangerouslySetInnerHTML={{__html: highlights && highlights.artist || art.artist}}></span></h2>
         <ArtworkImage art={art} id={id} />
         <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
       </div>
