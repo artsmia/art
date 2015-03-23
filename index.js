@@ -58,7 +58,6 @@ var SearchResults = React.createClass({
 
   render() {
     var search = this.props.data.searchResults
-    window.search = search
     var hits = search && search.es.hits
     var results = hits && hits.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
@@ -103,10 +102,10 @@ const SearchSummary = React.createClass({
         </h2>
         <div id="aggs">
           {_aggs.map(function(agg) {
-            return (<dl id={agg.name} style={{float: 'left', margin: '0 1em'}}>
+            if(agg.buckets.length > 1) return (<dl id={agg.name} style={{float: 'left', margin: '0 1em'}}>
               <h3 style={{margin: 0}}>{agg.name}</h3>
               {agg.buckets.slice(0, 10).map(function(bucket) { 
-                return (<div><dt>{bucket.key}</dt><dd>{bucket.doc_count}</dd></div>)
+                if(bucket.key) return (<div><dt>{bucket.key || '""'}</dt><dd>{bucket.doc_count}</dd></div>)
               })}
             </dl>)
           })}
