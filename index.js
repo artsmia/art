@@ -58,20 +58,59 @@ var SearchResults = React.createClass({
 
   render() {
     var search = this.props.data.searchResults
+    window.search = search
     var hits = search && search.es.hits
     var results = hits && hits.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       return <div key={id}><Artwork id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
     })
-    var showAllLink = search && search.es && <span>(<Link to="searchResults" params={{terms: this.getParams().terms}} query={{size: search.es.hits.total}}>show all</Link>)</span>
-    console.info(search, hits)
+    console.info('searchResults render', search, hits)
 
     return (
       <div>
-        {results && <h2>
-          showing {hits.hits.length} of {hits.total} {hits.hits.length < hits.total && {showAllLink}}
-        </h2>}
-        {results}
+        <SearchSummary search={search} hits={hits} results={results} />
+        <div style={{clear: 'both'}}>{results}</div>
+      </div>
+    )
+  }
+})
+
+const SearchSummary = React.createClass({
+  render() {
+    const search = this.props.search
+    if(!search) return <div />
+    const hits = this.props.hits
+    const results = this.props.results
+    const aggs = search.es.aggregations
+    const _aggs = []
+    for(var agg in aggs) {
+      var _agg = aggs[agg]
+      _agg.name = agg
+      _aggs.push(_agg)
+    }
+
+    const showAllLink = search && search.es && 
+      <span>.&nbsp;(<Link to="searchResults" params={{terms: search.query}}
+             query={{size: search.es.hits.total}}>show all</Link>)
+      </span>
+
+    return (
+      <div>
+        <h2>
+          showing {hits.hits.length} of {hits.total} results
+          matching "<code>{search.query}</code>"
+          {hits.hits.length < hits.total && {showAllLink}}
+        </h2>
+        <div id="aggs">
+          {_aggs.map(function(agg) {
+            return (<dl id={agg.name} style={{float: 'left', margin: '0 1em'}}>
+              <h3 style={{margin: 0}}>{agg.name}</h3>
+              {agg.buckets.slice(0, 10).map(function(bucket) { 
+                return (<div><dt>{bucket.key}</dt><dd>{bucket.doc_count}</dd></div>)
+              })}
+            </dl>)
+          })}
+        </div>
       </div>
     )
   }
