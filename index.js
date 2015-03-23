@@ -61,7 +61,7 @@ var SearchResults = React.createClass({
     var hits = search && search.es.hits
     var results = hits && hits.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
-      return <div><Artwork key={'object:'+id} id={id} data={{artwork: hit._source}} /><hr/></div>
+      return <div key={id}><Artwork id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
     })
     var showAllLink = search && search.es && <span>(<Link to="searchResults" params={{terms: this.getParams().terms}} query={{size: search.es.hits.total}}>show all</Link>)</span>
     console.info(search, hits)
