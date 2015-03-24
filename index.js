@@ -102,10 +102,16 @@ const SearchSummary = React.createClass({
         </h2>
         <div id="aggs">
           {_aggs.map(function(agg) {
-            if(agg.buckets.length > 1) return (<dl id={agg.name} style={{float: 'left', margin: '0 1em'}}>
-              <h3 style={{margin: 0}}>{agg.name}</h3>
+            if(agg.buckets.length > 1) return (<dl key={agg.name} id={agg.name} style={{float: 'left', margin: '0 1em'}}>
+              <dt>{agg.name}</dt>
               {agg.buckets.slice(0, 10).map(function(bucket) { 
-                if(bucket.key) return (<div><dt>{bucket.key || '""'}</dt><dd>{bucket.doc_count}</dd></div>)
+                if(bucket.key) return (
+                  <dd key={agg.name+bucket.key} style={{margin: '0 0 0 1em'}}>
+                    <Link to="searchResults" params={{terms: `${search.query} ${agg.name.toLowerCase()}:"${bucket.key}"`}}>
+                      {bucket.key || '""'} - {bucket.doc_count}
+                    </Link>
+                  </dd>
+                )
               })}
             </dl>)
           })}
