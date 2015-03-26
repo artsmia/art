@@ -80,13 +80,6 @@ const SearchSummary = React.createClass({
     if(!search) return <div />
     const hits = this.props.hits
     const results = this.props.results
-    const aggs = search.es.aggregations
-    const _aggs = []
-    for(var agg in aggs) {
-      var _agg = aggs[agg]
-      _agg.name = agg
-      _aggs.push(_agg)
-    }
 
     const showAllLink = search && search.es && 
       <span>.&nbsp;(<Link to="searchResults" params={{terms: search.query}}
@@ -100,22 +93,39 @@ const SearchSummary = React.createClass({
           matching "<code>{search.query}</code>"
           {hits.hits.length < hits.total && {showAllLink}}
         </h2>
-        <div id="aggs">
-          {_aggs.map(function(agg) {
-            if(agg.buckets.length > 1) return (<dl key={agg.name} id={agg.name} style={{float: 'left', margin: '0 1em'}}>
-              <dt>{agg.name}</dt>
-              {agg.buckets.slice(0, 10).map(function(bucket) { 
-                if(bucket.key) return (
-                  <dd key={agg.name+bucket.key} style={{margin: '0 0 0 1em'}}>
-                    <Link to="searchResults" params={{terms: `${search.query} ${agg.name.toLowerCase()}:"${bucket.key}"`}}>
-                      {bucket.key || '""'} - {bucket.doc_count}
-                    </Link>
-                  </dd>
-                )
-              })}
-            </dl>)
-          })}
-        </div>
+        <Aggregations search={search} />
+      </div>
+    )
+  }
+})
+
+var Aggregations = React.createClass({
+  render() {
+    const search = this.props.search
+    const aggs = search.es.aggregations
+    const _aggs = []
+    for(var agg in aggs) {
+      var _agg = aggs[agg]
+      _agg.name = agg
+      _aggs.push(_agg)
+    }
+
+    return (
+      <div id="aggs">
+        {_aggs.map(function(agg) {
+          if(agg.buckets.length > 1) return (<dl key={agg.name} id={agg.name} style={{float: 'left', margin: '0 1em'}}>
+            <dt>{agg.name}</dt>
+            {agg.buckets.slice(0, 10).map(function(bucket) { 
+              if(bucket.key) return (
+                <dd key={agg.name+bucket.key} style={{margin: '0 0 0 1em'}}>
+                  <Link to="searchResults" params={{terms: `${search.query} ${agg.name.toLowerCase()}:"${bucket.key}"`}}>
+                    {bucket.key || '""'} - {bucket.doc_count}
+                  </Link>
+                </dd>
+              )
+            })}
+          </dl>)
+        })}
       </div>
     )
   }
