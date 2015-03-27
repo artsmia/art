@@ -24,7 +24,6 @@ var Search = React.createClass({
       <div>
         <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
         <SearchResults {...this.props} updateInput={this.updateInput} />
-        <ArtistsByLetter {...this.props} />
       </div>
     )
   },
@@ -169,7 +168,7 @@ var ArtistsByLetter = React.createClass({
         return <div>
           <dt key={l.key}><Link to="artistsByName" params={{letter: l.key}}>{l.key}</Link></dt>
           {letter === l.key && <dd style={{position: 'absolute', top: '3em'}}>
-            {l.byName.buckets.map((b) => <Link to="searchResults" params={{terms: `artist.raw:%22${b.key}%22`}}>{b.key}</Link>)}
+            {l.byName.buckets.map((b) => <Link to="filteredSearchResults" params={{terms: '*', splat: `artist.raw:%22${b.key}%22`}} style={{display: 'block'}}>{b.key}</Link>)}
           </dd>}
         </div>
       })}
