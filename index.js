@@ -130,12 +130,15 @@ var Aggregations = React.createClass({
               const newFilters = bucketIsActive ? 
                 search.filters.replace(filterRegex, '').trim() :
                 `${search.filters || ''} ${agg.name.toLowerCase()}:"${encodeURIComponent(bucket.key)}"`.trim()
+              const bucketText = `${bucket.key || '""'} - ${bucket.doc_count}`
 
               if(bucket.key) return (
                 <dd key={agg.name+bucket.key} style={{margin: '0 0 0 1em', fontWeight: bucketIsActive && 'bold'}}>
-                  <Link to={newFilters == '' ? 'searchResults' : 'filteredSearchResults'} params={{terms: `${search.query}`, splat: newFilters}}>
-                    {bucket.key || '""'} - {bucket.doc_count}
-                  </Link>
+                  {(agg.name == 'Gist' || agg.name == 'On View') ? bucketText : (
+                    <Link to={newFilters == '' ? 'searchResults' : 'filteredSearchResults'} params={{terms: `${search.query}`, splat: newFilters}}>
+                      {bucketText}
+                    </Link>
+                  )}
                 </dd>
               )
             })}
