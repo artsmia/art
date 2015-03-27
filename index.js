@@ -48,7 +48,11 @@ var SearchResults = React.createClass({
   statics: {
     fetchData: (params, query) => {
       var size = query.size || 100
-      return rest(`http://caption-search.dx.artsmia.org/${params.terms}?size=${size}`).then((r) => JSON.parse(r.entity))
+      const filters = params.splat
+      let searchUrl = `http://caption-search.dx.artsmia.org/${params.terms}?size=${size}`
+      if(filters) searchUrl += `&filters=${filters}`
+      console.info('searching', searchUrl)
+      return rest(searchUrl).then((r) => JSON.parse(r.entity))
     }
   },
 
@@ -63,7 +67,7 @@ var SearchResults = React.createClass({
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       return <div key={id}><Artwork id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
     })
-    console.info('searchResults render', search, hits)
+    if(search && search.es) console.info('search took', search.es.took, search)
 
     return (
       <div>
@@ -90,7 +94,7 @@ const SearchSummary = React.createClass({
       <div>
         <h2>
           showing {hits.hits.length} of {hits.total} results
-          matching "<code>{search.query}</code>"
+          matching <code>{search.query}</code> {search.filters && <span>and <code>{search.filters}</code></span>}
           {hits.hits.length < hits.total && {showAllLink}}
         </h2>
         <Aggregations search={search} />
@@ -113,12 +117,20 @@ var Aggregations = React.createClass({
     return (
       <div id="aggs">
         {_aggs.map(function(agg) {
-          if(agg.buckets.length > 1) return (<dl key={agg.name} id={agg.name} style={{float: 'left', margin: '0 1em'}}>
-            <dt>{agg.name}</dt>
-            {agg.buckets.slice(0, 10).map(function(bucket) { 
+          const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
+          const showAgg = agg.buckets.length > 1 || aggIsActive
+          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{float: 'left', margin: '0 1em'}}>
+            <dt style={{fontWeight: aggIsActive && 'bold'}}>{agg.name}</dt>
+            {agg.buckets.slice(0, 5).map(function(bucket) { 
+              const filterRegex = new RegExp(agg.name+':"'+bucket.key.replace(/([\[\]\?])/, '\\$1')+'"', 'i')
+              const bucketIsActive = search.filters && search.filters.match(filterRegex)
+              const newFilters = bucketIsActive ? 
+                search.filters.replace(filterRegex, '').trim() :
+                `${search.filters || ''} ${agg.name.toLowerCase()}:"${encodeURIComponent(bucket.key)}"`.trim()
+
               if(bucket.key) return (
-                <dd key={agg.name+bucket.key} style={{margin: '0 0 0 1em'}}>
-                  <Link to="searchResults" params={{terms: `${search.query} ${agg.name.toLowerCase()}:"${bucket.key}"`}}>
+                <dd key={agg.name+bucket.key} style={{margin: '0 0 0 1em', fontWeight: bucketIsActive && 'bold'}}>
+                  <Link to={newFilters == '' ? 'searchResults' : 'filteredSearchResults'} params={{terms: `${search.query}`, splat: newFilters}}>
                     {bucket.key || '""'} - {bucket.doc_count}
                   </Link>
                 </dd>
@@ -224,7 +236,9 @@ var routes = (
     <Route name="artwork" path="art/:id" handler={Artwork} />
     <Redirect from="/" to="search" />
     <Route name="search" path="/search/" handler={Search}>
-      <Route name="searchResults" path="/search/:terms" handler={SearchResults} />
+      <Route name="searchResults" path=":terms" handler={SearchResults}>
+        <Route name="filteredSearchResults" path="filters/*" handler={SearchResults} />
+      </Route>
     </Route>
     <Route name="artistsByName" path="/search/artists/:letter" handler={ArtistsByLetter} />
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
