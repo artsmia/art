@@ -22,7 +22,7 @@ var Search = React.createClass({
   render() {
     return (
       <div>
-        <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} />
+        <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
         <SearchResults {...this.props} updateInput={this.updateInput} />
         <ArtistsByLetter {...this.props} />
       </div>
@@ -34,7 +34,7 @@ var Search = React.createClass({
     this.setState({terms: terms})
 
     if(this.search) clearTimeout(this.search)
-    this.search = setTimeout(() => this.transitionTo('searchResults', {terms: terms}), 200)
+    this.search = setTimeout(() => this.transitionTo('searchResults', {terms: terms.trim()}), 200)
   },
 
   updateInput(terms) {
@@ -58,6 +58,10 @@ var SearchResults = React.createClass({
 
   componentDidMount() {
     this.props.updateInput(this.getParams().terms)
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.data.searchResults != nextProps.data.searchResults
   },
 
   render() {
