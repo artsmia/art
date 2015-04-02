@@ -256,7 +256,12 @@ Router.run(routes, (Handler, state) => {
   window.Handler = Handler
   window.state = state
 
-  var promises = state.routes.filter((route) => {
+  var promises = state.routes.filter((route, index, allRoutes) => {
+    // Don't `fetchData` twice for nested routes with the same `Handler`
+    // Prefer the parent
+    const prevRoute = index > 0 && allRoutes[index-1]
+    if(prevRoute && route.handler.fetchData === prevRoute.handler.fetchData) return
+
     return route.handler.fetchData
   }).reduce((promises, route) => {
     promises[route.name] = route.handler.fetchData(state.params, state.query)
