@@ -89,7 +89,8 @@ const SearchSummary = React.createClass({
     const results = this.props.results
 
     const showAllLink = search && search.es && 
-      <span>.&nbsp;(<Link to="searchResults" params={{terms: search.query}}
+      <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
+             params={{terms: search.query, splat: search.filters}}
              query={{size: search.es.hits.total}}>show all</Link>)
       </span>
 
