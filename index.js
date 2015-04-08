@@ -20,10 +20,24 @@ var Search = React.createClass({
   },
 
   render() {
+    const hits = this.state.results && this.state.results.es.hits.hits
+    const headerArtworks = hits && hits
+      .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
+      .slice(0, 10)
+    const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
+    const searchBoxWithCollage = (
+      <div style={{position: 'relative', height: '40%', width: '100%', overflow: 'hidden'}}>
+        <div style={{position: 'absolute', top: '50%', left: 0, bottom: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'}}>
+          {simpleSearchBox}
+        </div>
+        {headerArtworks && <ImageCollage artworks={headerArtworks} />}
+      </div>
+    )
+
     return (
       <div>
-        <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
-        <SearchResults {...this.props} updateInput={this.updateInput} />
+        {(headerArtworks && headerArtworks.length > 4) ? searchBoxWithCollage : simpleSearchBox}
+        <SearchResults {...this.props} updateInput={this.updateInput} updateResults={this.updateResults}/>
       </div>
     )
   },
@@ -38,7 +52,11 @@ var Search = React.createClass({
 
   updateInput(terms) {
     this.setState({terms: terms})
-  }
+  },
+
+  updateResults(results) {
+    this.setState({results: results})
+  },
 })
 
 var SearchResults = React.createClass({
@@ -57,6 +75,11 @@ var SearchResults = React.createClass({
 
   componentDidMount() {
     this.props.updateInput(this.getParams().terms)
+    this.props.updateResults(this.props.data.searchResults)
+  },
+
+  componentDidUpdate() {
+    this.props.updateResults(this.props.data.searchResults)
   },
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -239,6 +262,30 @@ var ArtworkImage = React.createClass({
           src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
           style={{maxWidth: maxWidth, margin: window.innerWidth <= 400 && `0 ${padding}`}} />
       </LazyLoad>
+    )
+  }
+})
+
+const ImageCollage = React.createClass({
+  render() {
+    const artworks = this.props.artworks
+
+    const imgSize = artworks.length > 5 ? 
+      { width: '20%', height: '50%', } :
+      { width: '50%', height: '50%', }
+
+    const images = artworks.map((art) => {
+      const id = art._source.id
+      return <span style={{
+        background: `url("http://api.artsmia.org/images/${id}/400/medium.jpg") 50% 50% / cover`,
+        display: 'inline-block',
+        width: imgSize.width,
+        height: imgSize.height,
+      }}></span>
+    })
+
+    return (
+      <div>{images}</div>
     )
   }
 })
