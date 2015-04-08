@@ -119,11 +119,11 @@ var Aggregations = React.createClass({
     }
 
     return (
-      <div id="aggs">
+      <div id="aggs" style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px'}}>
         {_aggs.map(function(agg) {
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
           const showAgg = agg.buckets.length > 1 || aggIsActive
-          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{float: 'left', margin: '0 1em'}}>
+          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0 1em', verticalAlign: 'top'}}>
             <dt style={{fontWeight: aggIsActive && 'bold'}}>{agg.name}</dt>
             {agg.buckets.slice(0, 5).map(function(bucket) { 
               const filterRegex = new RegExp(agg.name+':"'+bucket.key.replace(/([\[\]\?])/, '\\$1')+'"', 'i')
