@@ -4,7 +4,9 @@ var React = require('react'),
   resolveHash = require('when/keys').all,
   rest = require('rest'),
   linearPartition = require('linear-partitioning'),
-  SEARCH = 'http://search.dx.artsmia.org'
+  SEARCH = 'http://search.dx.artsmia.org',
+  L = window.L = require('leaflet-0.8-dev'),
+  museumTileLayer = require('./museumTileLayer')
 
 var App = React.createClass({
   render() {
@@ -116,7 +118,7 @@ var SearchResults = React.createClass({
     var search = this.props.data.searchResults
     var results = this.props.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
-      return <div key={id}><Artwork id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
+      return <div key={id}><ArtworkResult id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
     })
 
     return (
@@ -258,13 +260,13 @@ var ObjectsById = React.createClass({
     objects.forEach(o => o.id = o.id.replace('http://api.artsmia.org/objects/', ''))
     return (
       <div>
-        {objects.map((o) => <Artwork key={'object:'+o.id} id={o.id} data={{artwork: o}} />)}
+        {objects.map((o) => <ArtworkResult key={'object:'+o.id} id={o.id} data={{artwork: o}} />)}
       </div>
     )
   }
 })
 
-var Artwork = React.createClass({
+var ArtworkResult = React.createClass({
   mixins: [Router.State],
   statics: {
     fetchData: (params) => {
@@ -307,11 +309,14 @@ var ArtworkImage = React.createClass({
     let padding = width >= maxWidth ? -8 : -8+(maxWidth-width)/2
 
     return art.image == 'valid' && art.image_width > 0 && (
-      <LazyLoad height={height+'px'}>
-        <img
-          src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
-          style={{maxWidth: maxWidth, margin: window.innerWidth <= 400 && `0 ${padding}`}} />
-      </LazyLoad>
+      <div>
+        <LazyLoad height={height+'px'}>
+          <img
+            src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
+            style={{maxWidth: maxWidth, margin: window.innerWidth <= 400 && `0 ${padding}`}} />
+        </LazyLoad>
+        <Markdown>{art.image_copyright}</Markdown>
+      </div>
     )
   }
 })
@@ -410,6 +415,85 @@ const ImageQuilt = React.createClass({
       return
     }
     this.activate = setTimeout(this.clicked.bind(this, art, false), 300)
+  },
+})
+
+var Artwork = React.createClass({
+  mixins: [Router.State],
+  statics: {
+    fetchData: (params) => {
+      return rest('http://caption-search.dx.artsmia.org/id/'+params.id).then((r) => JSON.parse(r.entity))
+    }
+  },
+  render() {
+    var art = this.state.art
+    var id = this.props.id || this.state.id
+    const highlights = this.props.highlights
+    const style = {
+      margin: '90vh auto 0 auto',
+      background: 'white',
+      maxWidth: '35em',
+      padding: '0 1em 1em 1em',
+    }
+
+    return (
+      <div style={style}>
+        <h1><span dangerouslySetInnerHTML={{__html: highlights && highlights.title || art.title}}></span> ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>)</h1>
+        <p>{art.dated}</p>
+        <h2><span dangerouslySetInnerHTML={{__html: highlights && highlights.artist || art.artist}}></span></h2>
+        <p>{art.country}, {art.continent}</p>
+        <p>{art.medium}</p>
+        <p>{art.dimension}</p>
+        <p>{art.creditline}</p>
+        <ArtworkImage art={art} id={id} />
+        <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
+        <Markdown>{art.text}</Markdown>
+
+        <div ref='map' id='map'></div>
+        <a href="#" onClick={() => history.go(-1)}>&larr; back</a>
+      </div>
+    )
+  },
+
+  getInitialState() {
+    var art = this.props.data.artwork
+    return {
+      art: art,
+      id: this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
+    }
+  },
+
+  componentDidMount() {
+    this.map = L.map(this.refs.map.getDOMNode(), {
+      crs: L.CRS.Simple,
+      zoomControl: false,
+    })
+    var art = this.state.art
+    this.map.setView([art.image_width/2, art.image_height/2], 0)
+    rest('//tilesaw.dx.artsmia.org/'+this.state.id).then((data) => {
+      this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
+        attribution: '',
+        id: this.state.id,
+        width: art.image_width,
+        height: art.image_height,
+        fill: true,
+      })
+      this.tiles.addTo(this.map)
+      // this.tiles.fillContainer()
+      window.tiles = this.tiles
+    })
+  }
+})
+
+const marked = require('marked')
+marked.setOptions({
+  gfm: true,
+  breaks: true,
+})
+var Markdown = React.createClass({
+  render() {
+    const rendered = marked(this.props.children.replace('\n', '\n\n'))
+    return <div dangerouslySetInnerHTML={{__html: rendered}}></div>
   },
 })
 
