@@ -16,11 +16,12 @@ var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
   getInitialState() {
-    return {terms: ''}
+    return {terms: this.props.params.terms}
   },
 
   render() {
-    const hits = this.state.results && this.state.results.es.hits.hits
+    const results = this.props.data.searchResults
+    const hits = results && results.es.hits.hits
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
       .slice(0, 10)
@@ -37,7 +38,7 @@ var Search = React.createClass({
     return (
       <div>
         {(headerArtworks && headerArtworks.length > 4) ? searchBoxWithCollage : simpleSearchBox}
-        <SearchResults {...this.props} updateInput={this.updateInput} updateResults={this.updateResults}/>
+        <SearchResults {...this.props} update={this.update} />
       </div>
     )
   },
@@ -47,15 +48,19 @@ var Search = React.createClass({
     this.setState({terms: terms})
 
     if(this.search) clearTimeout(this.search)
-    this.search = setTimeout(() => this.transitionTo('searchResults', {terms: terms.trim()}), 200)
+    this.search = setTimeout(() => this.transitionTo('searchResults', {terms: this.normalizeTerms(terms)}), 200)
   },
 
-  updateInput(terms) {
-    this.setState({terms: terms})
+  componentWillReceiveProps(nextProps) {
+    // Replace `terms` with the terms from the current search, so back+forward
+    // work correctly. UNLESS the only difference is insignificant whitespace.
+    if(this.normalizeTerms() != nextProps.params.terms) {
+      this.setState({terms: nextProps.params.terms})
+    }
   },
 
-  updateResults(results) {
-    this.setState({results: results})
+  normalizeTerms(terms=this.state.terms) {
+    return terms && terms.replace(/\s+/, ' ').trim()
   },
 })
 
@@ -71,15 +76,6 @@ var SearchResults = React.createClass({
       console.info('searching', searchUrl)
       return rest(searchUrl).then((r) => JSON.parse(r.entity))
     }
-  },
-
-  componentDidMount() {
-    this.props.updateInput(this.getParams().terms)
-    this.props.updateResults(this.props.data.searchResults)
-  },
-
-  componentDidUpdate() {
-    this.props.updateResults(this.props.data.searchResults)
   },
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -322,7 +318,7 @@ Router.run(routes, (Handler, state) => {
 
   resolveHash(promises).then(data => {
     console.log('promises', promises, 'resolved to ', data)
-    React.render(<Handler data={data}/>, document.body)
+    React.render(<Handler {...state} data={data}/>, document.body)
   })
 });
 
