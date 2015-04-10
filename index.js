@@ -25,19 +25,20 @@ var Search = React.createClass({
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
       .slice(0, 10)
+    const showCollage = (headerArtworks && headerArtworks.length > 4)
     const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
-    const searchBoxWithCollage = (
-      <div style={{position: 'relative', height: '40%', width: '100%', overflow: 'hidden'}}>
-        <div style={{position: 'absolute', top: '50%', left: 0, bottom: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'}}>
+    const searchBox = (
+      <div style={showCollage && {position: 'relative', height: '40%', width: '100%', overflow: 'hidden'} || {}}>
+        <div style={showCollage && {position: 'absolute', top: '50%', left: 0, bottom: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
           {simpleSearchBox}
         </div>
-        {headerArtworks && <ImageCollage artworks={headerArtworks} />}
+        {showCollage && <ImageCollage artworks={headerArtworks} />}
       </div>
     )
 
     return (
       <div>
-        {(headerArtworks && headerArtworks.length > 4) ? searchBoxWithCollage : simpleSearchBox}
+        {searchBox}
         <SearchResults {...this.props} update={this.update} />
       </div>
     )
