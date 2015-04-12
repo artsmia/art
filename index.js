@@ -16,7 +16,11 @@ var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
   getInitialState() {
-    return {terms: this.props.params.terms}
+    const results = this.props.data.searchResults
+    return {
+      terms: this.props.params.terms,
+      hits: results && results.es.hits.hits || [],
+    }
   },
 
   render() {
@@ -29,17 +33,17 @@ var Search = React.createClass({
     const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
     const searchBox = (
       <div style={showCollage && {position: 'relative', height: '40%', width: '100%', overflow: 'hidden'} || {}}>
-        <div style={showCollage && {position: 'absolute', top: '50%', left: 0, bottom: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
+        <div style={showCollage && {position: 'absolute', top: '50%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
           {simpleSearchBox}
         </div>
-        {showCollage && <ImageCollage artworks={headerArtworks} />}
+        {showCollage && <ImageCollage artworks={headerArtworks} onClick={this.updateFromCollage} />}
       </div>
     )
 
     return (
       <div>
         {searchBox}
-        <SearchResults {...this.props} update={this.update} />
+        <SearchResults {...this.props} hits={this.state.hits} />
       </div>
     )
   },
@@ -58,10 +62,24 @@ var Search = React.createClass({
     if(this.normalizeTerms() != nextProps.params.terms) {
       this.setState({terms: nextProps.params.terms})
     }
+    this.setState({hits: nextProps.data.searchResults && nextProps.data.searchResults.es.hits.hits || []})
   },
 
   normalizeTerms(terms=this.state.terms) {
     return terms && terms.replace(/\s+/, ' ').trim()
+  },
+
+  // update `state.hits` to float a hit from the collage to the top.
+  // If no `art` is passed, that means the collage has lost focus,
+  // reset hits to be the searchResults straigt from ES
+  updateFromCollage(art) {
+    const hits = this.props.data.searchResults.es.hits.hits
+    if(art) {
+      const index = hits.indexOf(art)+1
+      var nextHits = ([art].concat(hits))
+      nextHits.splice(index, 1)
+    }
+    this.setState({hits: nextHits || hits})
   },
 })
 
@@ -80,13 +98,14 @@ var SearchResults = React.createClass({
   },
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.data.searchResults != nextProps.data.searchResults
+    return this.props.data.searchResults != nextProps.data.searchResults ||
+      this.props.hits != nextProps.hits
   },
 
   render() {
     var search = this.props.data.searchResults
     var hits = search && search.es.hits
-    var results = hits && hits.hits.map((hit) => {
+    var results = this.props.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       return <div key={id}><Artwork id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
     })
@@ -264,10 +283,17 @@ var ArtworkImage = React.createClass({
 })
 
 const ImageCollage = React.createClass({
+  getInitialState() {
+    return {
+      active: null,
+      unpinned: false,
+    }
+  },
+
   render() {
     const artworks = this.props.artworks
 
-    const imgSize = artworks.length > 5 ? 
+    const imgSize = artworks.length > 5 ?
       { width: '20%', height: '50%', } :
       { width: '50%', height: '50%', }
 
@@ -278,13 +304,46 @@ const ImageCollage = React.createClass({
         display: 'inline-block',
         width: imgSize.width,
         height: imgSize.height,
-      }}></span>
+      }}
+      key={id}
+      onClick={this.clicked.bind(this, art)}
+      onMouseEnter={this.hovered.bind(this, art, true)}
+      onMouseLeave={this.hovered.bind(this, art, false)}></span>
     })
 
     return (
-      <div>{images}</div>
+      <div onMouseLeave={this.hovered.bind(this, null, false)} style={{cursor: 'pointer'}}>
+        {images}
+      </div>
     )
-  }
+  },
+
+  // The imageCollage changes the order of search results in 2 ways:
+  // * clicking pins a result to the top, in which case it will stay there
+  // * hovering 'floats' a result to the top, but it will sink back down
+  // …after the interaction is finished.
+  // Clicking the pinned artwork un-pins it
+  clicked(art, updateState=true) {
+    if(updateState) this.setState({active: art, unpinned: false})
+    const sameArt = this.state.unpinned && !updateState ||
+      updateState && this.state.active && art == this.state.active
+    if(sameArt) {
+      this.setState({active: null, unpinned: true})
+      art = null
+    }
+    this.props.onClick(art)
+    this.state.unpinned && this.setState({unpinned: false})
+  },
+  hovered(art, active) {
+    // cancel the delayed 'float' on mouseleave
+    // if an artwork was clicked, leave it pinned
+    if(!active) {
+      clearTimeout(this.activate)
+      if(!art) this.clicked(this.state.active, false)
+      return
+    }
+    this.activate = setTimeout(this.clicked.bind(this, art, false), 300)
+  },
 })
 
 var routes = (
