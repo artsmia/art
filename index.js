@@ -29,7 +29,7 @@ var Search = React.createClass({
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
       .slice(0, 10)
-    const showCollage = (headerArtworks && headerArtworks.length > 4)
+    const showCollage = (headerArtworks && headerArtworks.length >= 2)
     const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
     const searchBox = (
       <div style={showCollage && {position: 'relative', height: '40%', width: '100%', overflow: 'hidden'} || {}}>
@@ -293,9 +293,10 @@ const ImageCollage = React.createClass({
   render() {
     const artworks = this.props.artworks
 
-    const imgSize = artworks.length > 5 ?
-      { width: '20%', height: '50%', } :
-      { width: '50%', height: '50%', }
+    // simple: two rows with artworks.length/2 columns each
+    // must be 4 or more artworks with an image
+    const width = 100/Math.floor(artworks.length/2) 
+    const imgSize = { width: width+'%', height: '50%', }
 
     const images = artworks.map((art) => {
       const id = art._source.id
