@@ -92,7 +92,6 @@ var SearchResults = React.createClass({
       const filters = params.splat
       let searchUrl = `http://caption-search.dx.artsmia.org/${params.terms}?size=${size}`
       if(filters) searchUrl += `&filters=${filters}`
-      console.info('searching', searchUrl)
       return rest(searchUrl).then((r) => JSON.parse(r.entity))
     }
   },
@@ -109,7 +108,6 @@ var SearchResults = React.createClass({
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       return <div key={id}><Artwork id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
     })
-    if(search && search.es) console.info('search took', search.es.took, search)
 
     return (
       <div>
@@ -378,7 +376,8 @@ Router.run(routes, (Handler, state) => {
   }, {})
 
   resolveHash(promises).then(data => {
-    console.log('promises', promises, 'resolved to ', data)
+    const search = data.searchResults || data.filteredSearchResults
+    if(search) console.info('search took', search.es.took, search)
     React.render(<Handler {...state} data={data}/>, document.body)
   })
 });
