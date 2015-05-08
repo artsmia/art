@@ -2,7 +2,8 @@ var React = require('react'),
   Router = require('react-router'),
   { NotFoundRoute, Navigation, State, Link, Route, RouteHandler, DefaultRoute, Redirect } = Router,
   resolveHash = require('when/keys').all,
-  rest = require('rest')
+  rest = require('rest'),
+  SEARCH = 'http://search.dx.artsmia.org'
 
 var App = React.createClass({
   render() {
@@ -19,13 +20,13 @@ var Search = React.createClass({
     const results = this.props.data.searchResults
     return {
       terms: this.props.params.terms,
-      hits: results && results.es.hits.hits || [],
+      hits: results && results.hits.hits || [],
     }
   },
 
   render() {
     const results = this.props.data.searchResults
-    const hits = results && results.es.hits.hits
+    const hits = results && results.hits.hits
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
       .slice(0, 10)
@@ -62,7 +63,7 @@ var Search = React.createClass({
     if(this.normalizeTerms() != nextProps.params.terms) {
       this.setState({terms: nextProps.params.terms})
     }
-    this.setState({hits: nextProps.data.searchResults && nextProps.data.searchResults.es.hits.hits || []})
+    this.setState({hits: nextProps.data.searchResults && nextProps.data.searchResults.hits.hits || []})
   },
 
   normalizeTerms(terms=this.state.terms) {
@@ -73,7 +74,7 @@ var Search = React.createClass({
   // If no `art` is passed, that means the collage has lost focus,
   // reset hits to be the searchResults straigt from ES
   updateFromCollage(art) {
-    const hits = this.props.data.searchResults.es.hits.hits
+    const hits = this.props.data.searchResults.hits.hits
     if(art) {
       const index = hits.indexOf(art)+1
       var nextHits = ([art].concat(hits))
@@ -90,7 +91,7 @@ var SearchResults = React.createClass({
     fetchData: (params, query) => {
       var size = query.size || 100
       const filters = params.splat
-      let searchUrl = `http://caption-search.dx.artsmia.org/${params.terms}?size=${size}`
+      let searchUrl = `${SEARCH}/${params.terms}?size=${size}`
       if(filters) searchUrl += `&filters=${filters}`
       return rest(searchUrl).then((r) => JSON.parse(r.entity))
     }
@@ -103,7 +104,7 @@ var SearchResults = React.createClass({
 
   render() {
     var search = this.props.data.searchResults
-    var hits = search && search.es.hits
+    var hits = search && search.hits
     var results = this.props.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       return <div key={id}><Artwork id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
@@ -125,10 +126,10 @@ const SearchSummary = React.createClass({
     const hits = this.props.hits
     const results = this.props.results
 
-    const showAllLink = search && search.es && 
+    const showAllLink = search &&
       <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
              params={{terms: search.query, splat: search.filters}}
-             query={{size: search.es.hits.total}}>show all</Link>)
+             query={{size: search.hits.total}}>show all</Link>)
       </span>
 
     return (
@@ -147,7 +148,7 @@ const SearchSummary = React.createClass({
 var Aggregations = React.createClass({
   render() {
     const search = this.props.search
-    const aggs = search.es.aggregations
+    const aggs = search.aggregations
     const _aggs = []
     for(var agg in aggs) {
       var _agg = aggs[agg]
@@ -222,7 +223,7 @@ var ObjectsById = React.createClass({
   mixins: [Router.State],
 
   statics: {
-    fetchData: (params) => rest(`http://caption-search.dx.artsmia.org/ids/${params.ids}`).then((r) => JSON.parse(r.entity))
+    fetchData: (params) => rest(`${SEARCH}/ids/${params.ids}`).then((r) => JSON.parse(r.entity))
   },
 
   render() {
@@ -241,7 +242,7 @@ var Artwork = React.createClass({
   mixins: [Router.State],
   statics: {
     fetchData: (params) => {
-      return rest('http://caption-search.dx.artsmia.org/id/'+params.id).then((r) => JSON.parse(r.entity))
+      return rest(`${SEARCH}/id/`+params.id).then((r) => JSON.parse(r.entity))
     }
   },
   render() {
@@ -386,7 +387,7 @@ Router.run(routes, (Handler, state) => {
 
   resolveHash(promises).then(data => {
     const search = data.searchResults || data.filteredSearchResults
-    if(search) console.info('search took', search.es.took, search)
+    if(search) console.info('search took', search.took, search)
     React.render(<Handler {...state} data={data}/>, document.body)
   })
 });
