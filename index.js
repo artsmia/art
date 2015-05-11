@@ -3,6 +3,7 @@ var React = require('react'),
   { NotFoundRoute, Navigation, State, Link, Route, RouteHandler, DefaultRoute, Redirect } = Router,
   resolveHash = require('when/keys').all,
   rest = require('rest'),
+  linearPartition = require('linear-partitioning'),
   SEARCH = 'http://search.dx.artsmia.org'
 
 var App = React.createClass({
@@ -33,7 +34,7 @@ var Search = React.createClass({
     const showCollage = (headerArtworks && headerArtworks.length >= 2)
     const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
     const searchBox = (
-      <div style={showCollage && {position: 'relative', height: '40%', width: '100%', overflow: 'hidden'} || {}}>
+      <div style={showCollage && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
         <div style={showCollage && {position: 'absolute', top: '50%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
           {simpleSearchBox}
         </div>
@@ -300,24 +301,43 @@ const ImageCollage = React.createClass({
 
   render() {
     const artworks = this.props.artworks
+    const _art = artworks.map((art) => art._source)
 
-    // simple: two rows with artworks.length/2 columns each
-    // must be 4 or more artworks with an image
-    const width = 100/Math.floor(artworks.length/2) 
-    const imgSize = { width: width+'%', height: '50%', }
+    _art.map((art) => art.aspect_ratio = art.image_width/art.image_height)
+    const viewportWidth = window.innerWidth-16 // body { margin: 8px; }
+    const summedAspectRatio = _art.reduce((sum, art) => {return sum+art.aspect_ratio}, 0)
+    const numRows = Math.min(2, summedAspectRatio*250/viewportWidth) // I want the images to be up to 250px tall, but no more than 2 rows
 
-    const images = artworks.map((art) => {
-      const id = art._source.id
-      return <span style={{
-        background: `url("http://api.artsmia.org/images/${id}/400/medium.jpg") 50% 50% / cover`,
-        display: 'inline-block',
-        width: imgSize.width,
-        height: imgSize.height,
-      }}
-      key={id}
-      onClick={this.clicked.bind(this, art)}
-      onMouseEnter={this.hovered.bind(this, art, true)}
-      onMouseLeave={this.hovered.bind(this, art, false)}></span>
+    const partitionBy = function(collection, weightFn, k) {
+      let weights = collection.map(weightFn)
+      let partition = linearPartition(weights, k)
+
+      let index = 0
+      return partition.map((weightedRow) => {
+        return weightedRow.map((weight, i) => collection[index++])
+      })
+    }
+
+    var rows = partitionBy(artworks, (art) => art._source.aspect_ratio*100, numRows)
+
+    const images = rows.map((row, index) => {
+      var rowSummedAspectRatio = row.reduce((sum, art) => {return sum+art._source.aspect_ratio}, 0)
+      var images = row.map((art) => {
+        var _art = art._source
+        const id = _art.id
+        const _width = _art.aspect_ratio/rowSummedAspectRatio*viewportWidth
+        return <img style={{
+          display: 'inline-block',
+          width: _width,
+        }}
+        key={id}
+        onClick={this.clicked.bind(this, art)}
+        onMouseEnter={this.hovered.bind(this, art, true)}
+        onMouseLeave={this.hovered.bind(this, art, false)}
+        src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
+      })
+
+      return <div key={'row'+index}>{images}</div>
     })
 
     return (
