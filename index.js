@@ -17,6 +17,13 @@ var App = React.createClass({
 var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
+  statics: {
+    fetchData: (params, query) => {
+      let searchUrl = `${SEARCH}/highlight:true`
+      return rest(searchUrl).then((r) => JSON.parse(r.entity))
+    }
+  },
+
   getInitialState() {
     const results = this.props.data.searchResults
     return {
@@ -26,6 +33,7 @@ var Search = React.createClass({
   },
 
   render() {
+    this.props.data.searchResults = this.props.data.searchResults || this.props.data.search
     const results = this.props.data.searchResults
     const hits = results && results.hits.hits
     const headerArtworks = hits && hits
@@ -251,7 +259,7 @@ var Artwork = React.createClass({
     var id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
     const highlights = this.props.highlights
     const showHighlights = highlights && Object.keys(highlights).filter((field) => {
-      return !field.match(/title|artist|image|room/)
+      return !field.match(/title|artist|image|room|highlight/)
     }) || []
 
     return (
