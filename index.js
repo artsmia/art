@@ -141,12 +141,15 @@ const SearchSummary = React.createClass({
              query={{size: search.hits.total}}>show all</Link>)
       </span>
 
+    const showingAll = hits.hits.length == hits.total 
     return (
       <div>
         <h2>
-          showing {hits.hits.length} of {hits.total} results
-          matching <code>{search.query}</code> {search.filters && <span>and <code>{search.filters}</code></span>}
-          {hits.hits.length < hits.total && {showAllLink}}
+          showing {hits.hits.length} {' '}
+          {showingAll || <span>of {hits.total} {' '}</span>}
+          results matching <code>{search.query}</code>
+          {search.filters && <span>and <code>{search.filters}</code></span>}
+          {showingAll || {showAllLink}}
         </h2>
         <Aggregations search={search} />
       </div>
