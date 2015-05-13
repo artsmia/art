@@ -33,12 +33,12 @@ var Search = React.createClass({
   },
 
   render() {
+    const collageProps = this.props.params.terms ? [2, 10] : [3, 30]
     this.props.data.searchResults = this.props.data.searchResults || this.props.data.search
     const results = this.props.data.searchResults
     const hits = results && results.hits.hits
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
-      .slice(0, 10)
     const showCollage = (headerArtworks && headerArtworks.length >= 2)
     const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
     const searchBox = (
@@ -46,7 +46,7 @@ var Search = React.createClass({
         <div style={showCollage && {position: 'absolute', top: '50%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
           {simpleSearchBox}
         </div>
-        {showCollage && <ImageCollage artworks={headerArtworks} onClick={this.updateFromCollage} />}
+        {showCollage && <ImageCollage maxRows={collageProps[0]} maxWorks={collageProps[1]} artworks={headerArtworks} onClick={this.updateFromCollage} />}
       </div>
     )
 
@@ -308,13 +308,15 @@ const ImageCollage = React.createClass({
   },
 
   render() {
-    const artworks = this.props.artworks
+    const artworks = this.props.artworks.slice(0, this.props.maxWorks)
     const _art = artworks.map((art) => art._source)
 
     _art.map((art) => art.aspect_ratio = art.image_width/art.image_height)
     const viewportWidth = window.innerWidth-16 // body { margin: 8px; }
     const summedAspectRatio = _art.reduce((sum, art) => {return sum+art.aspect_ratio}, 0)
-    const numRows = Math.min(2, summedAspectRatio*250/viewportWidth) // I want the images to be up to 250px tall, but no more than 2 rows
+    // Fit the images into `maxRows` or however many rows it would take to show each 
+    // approx 250px tall
+    const numRows = Math.min(this.props.maxRows, summedAspectRatio*250/viewportWidth) 
 
     const partitionBy = function(collection, weightFn, k) {
       let weights = collection.map(weightFn)
@@ -345,7 +347,7 @@ const ImageCollage = React.createClass({
         src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
       })
 
-      return <div key={'row'+index}>{images}</div>
+      return <div key={'row'+index} style={{background: 'black'}}>{images}</div>
     })
 
     return (
