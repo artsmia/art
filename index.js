@@ -33,20 +33,20 @@ var Search = React.createClass({
   },
 
   render() {
-    const collageProps = this.props.params.terms ? [2, 10] : [3, 30]
+    const quiltProps = this.props.params.terms ? [2, 10] : [3, 30]
     this.props.data.searchResults = this.props.data.searchResults || this.props.data.search
     const results = this.props.data.searchResults
     const hits = results && results.hits.hits
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
-    const showCollage = (headerArtworks && headerArtworks.length >= 2)
+    const showQuilt = (headerArtworks && headerArtworks.length >= 2)
     const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
     const searchBox = (
-      <div style={showCollage && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
-        <div style={showCollage && {position: 'absolute', top: '50%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
+      <div style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
+        <div style={showQuilt && {position: 'absolute', top: '50%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
           {simpleSearchBox}
         </div>
-        {showCollage && <ImageCollage maxRows={collageProps[0]} maxWorks={collageProps[1]} artworks={headerArtworks} onClick={this.updateFromCollage} />}
+        {showQuilt && <ImageQuilt maxRows={quiltProps[0]} maxWorks={quiltProps[1]} artworks={headerArtworks} onClick={this.updateFromQuilt} />}
       </div>
     )
 
@@ -79,10 +79,10 @@ var Search = React.createClass({
     return terms && terms.replace(/\s+/, ' ').trim()
   },
 
-  // update `state.hits` to float a hit from the collage to the top.
-  // If no `art` is passed, that means the collage has lost focus,
+  // update `state.hits` to float a hit from the quilt to the top.
+  // If no `art` is passed, that means the quilt has lost focus,
   // reset hits to be the searchResults straigt from ES
-  updateFromCollage(art) {
+  updateFromQuilt(art) {
     const hits = this.props.data.searchResults.hits.hits
     if(art) {
       const index = hits.indexOf(art)+1
@@ -302,7 +302,7 @@ var ArtworkImage = React.createClass({
   }
 })
 
-const ImageCollage = React.createClass({
+const ImageQuilt = React.createClass({
   getInitialState() {
     return {
       active: null,
@@ -360,7 +360,7 @@ const ImageCollage = React.createClass({
     )
   },
 
-  // The imageCollage changes the order of search results in 2 ways:
+  // The quilt changes the order of search results in 2 ways:
   // * clicking pins a result to the top, in which case it will stay there
   // * hovering 'floats' a result to the top, but it will sink back down
   // …after the interaction is finished.
