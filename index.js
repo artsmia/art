@@ -28,7 +28,7 @@ var Search = React.createClass({
     const results = this.props.data.searchResults
     return {
       terms: this.props.params.terms,
-      hits: results && results.hits.hits || [],
+      hits: results && results.hits && results.hits.hits || [],
     }
   },
 
@@ -36,7 +36,7 @@ var Search = React.createClass({
     const quiltProps = this.props.params.terms ? [2, 10] : [3, 30]
     this.props.data.searchResults = this.props.data.searchResults || this.props.data.search
     const results = this.props.data.searchResults
-    const hits = results && results.hits.hits
+    const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
     const showQuilt = (headerArtworks && headerArtworks.length >= 2)
@@ -72,7 +72,8 @@ var Search = React.createClass({
     if(this.normalizeTerms() != nextProps.params.terms) {
       this.setState({terms: nextProps.params.terms})
     }
-    this.setState({hits: nextProps.data.searchResults && nextProps.data.searchResults.hits.hits || []})
+    const results = nextProps.data.searchResults
+    this.setState({hits: results && results.hits && results.hits.hits || []})
   },
 
   normalizeTerms(terms=this.state.terms) {
@@ -113,7 +114,6 @@ var SearchResults = React.createClass({
 
   render() {
     var search = this.props.data.searchResults
-    var hits = search && search.hits
     var results = this.props.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       return <div key={id}><Artwork id={id} data={{artwork: hit._source}} highlights={hit.highlight} /><hr/></div>
@@ -121,7 +121,7 @@ var SearchResults = React.createClass({
 
     return (
       <div>
-        <SearchSummary search={search} hits={hits} results={results} />
+        <SearchSummary search={search} hits={this.props.hits} results={results} />
         <div style={{clear: 'both'}}>{results}</div>
       </div>
     )
@@ -131,7 +131,7 @@ var SearchResults = React.createClass({
 const SearchSummary = React.createClass({
   render() {
     const search = this.props.search
-    if(!search) return <div />
+    if(!search || !search.hits) return <div />
     const hits = this.props.hits
     const results = this.props.results
 
@@ -141,12 +141,12 @@ const SearchSummary = React.createClass({
              query={{size: search.hits.total}}>show all</Link>)
       </span>
 
-    const showingAll = hits.hits.length == hits.total 
+    const showingAll = hits.length == search.hits.total
     return (
       <div>
         <h2>
-          showing {hits.hits.length} {' '}
-          {showingAll || <span>of {hits.total} {' '}</span>}
+          showing {hits.length} {' '}
+          {showingAll || <span>of {search.hits.total} {' '}</span>}
           results matching <code>{search.query}</code>
           {search.filters && <span>and <code>{search.filters}</code></span>}
           {showingAll || {showAllLink}}
