@@ -167,6 +167,12 @@ var Aggregations = React.createClass({
       _agg.name = agg
       _aggs.push(_agg)
     }
+    // Sort aggregations in this order, with any others sorted last
+    const order = ["Artist", "Country", "On View", "Room", "Image", "Image_rights_type", "Title", "Style"]
+    _aggs.sort((a, b) => {
+      [a, b] = [order.indexOf(a.name), order.indexOf(b.name)].map(index => index == -1 ? 100 : index)
+      return a > b
+    })
 
     return (
       <div id="aggs" style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px'}}>
