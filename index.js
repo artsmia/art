@@ -307,7 +307,18 @@ const ImageQuilt = React.createClass({
     return {
       active: null,
       unpinned: false,
+      width: window.innerWidth,
     }
+  },
+
+  handleResize: function(e) {
+    this.setState({width: window.innerWidth})
+  },
+  componentDidMount: function() {
+    window.addEventListener('resize', this.handleResize)
+  },
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize)
   },
 
   render() {
