@@ -4,7 +4,8 @@ var React = require('react'),
   resolveHash = require('when/keys').all,
   rest = require('rest'),
   linearPartition = require('linear-partitioning'),
-  SEARCH = 'http://search.dx.artsmia.org'
+  SEARCH = 'http://search.dx.artsmia.org',
+  debounce = require('debounce')
 
 var App = React.createClass({
   render() {
@@ -40,7 +41,7 @@ var Search = React.createClass({
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
     const showQuilt = (headerArtworks && headerArtworks.length >= 2)
-    const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
+    const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
     const searchBox = (
       <div style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
         <div style={showQuilt && {position: 'absolute', top: '50%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
@@ -58,12 +59,22 @@ var Search = React.createClass({
     )
   },
 
+  componentWillMount() {
+    this.debouncedSearch = debounce(this.search, 1000)
+  },
+
   throttledSearch(event) {
     var terms = event.target.value
     this.setState({terms: terms})
+    this.debouncedSearch()
+  },
 
-    if(this.search) clearTimeout(this.search)
-    this.search = setTimeout(() => this.transitionTo('searchResults', {terms: this.normalizeTerms(terms)}), 200)
+  search() {
+    this.transitionTo('searchResults', {terms: this.normalizeTerms(this.state.terms)})
+  },
+
+  keyDown(event) {
+    if(event.key == 'Enter') this.search()
   },
 
   componentWillReceiveProps(nextProps) {

@@ -22,6 +22,7 @@
     "babelify": "^5.0.3"
   },
   "dependencies": {
+    "debounce": "^1.0.0",
     "linear-partitioning": "^0.3.1",
     "react": "^0.12.2",
     "react-lazy-load": "kjell/react-lazy-load#2a75bf53630c6567a6a6a69dca313245434caf82",
