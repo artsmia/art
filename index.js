@@ -374,7 +374,13 @@ const ImageQuilt = React.createClass({
       var images = row.map((art) => {
         var _art = art._source
         const id = _art.id
-        const _width = _art.aspect_ratio/rowSummedAspectRatio*viewportWidth
+        const computedWidth = _art.aspect_ratio/rowSummedAspectRatio*viewportWidth
+        // browsers do their own thing when resizing images, which can break this row layout
+        // `.floor`ing the computed width ensures that the images in this row will fit,
+        // but leaves a gap at the right edge.
+        // Multiplying the initial computed width, flooring that, then dividing by
+        // the same factor "shaves" the right amount off each image.
+        const _width = Math.floor(computedWidth*3)/3
         return <img style={{
           display: 'inline-block',
           width: _width,
