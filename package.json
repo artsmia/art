@@ -24,6 +24,7 @@
   "dependencies": {
     "debounce": "^1.0.0",
     "linear-partitioning": "^0.3.1",
+    "leaflet-0.8-dev": "^0.8.0-dev-20150217",
     "react": "^0.12.2",
     "react-lazy-load": "kjell/react-lazy-load#2a75bf53630c6567a6a6a69dca313245434caf82",
     "react-router": "^0.11.6",
