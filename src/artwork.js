@@ -28,7 +28,7 @@ var Artwork = React.createClass({
 
     return (
       <div style={style}>
-        <h1><span dangerouslySetInnerHTML={{__html: highlights && highlights.title || art.title}}></span> ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>)</h1>
+        <h1><span dangerouslySetInnerHTML={{__html: highlights && highlights.title || art.title}}></span> ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>)</h1> {/* ` */}
         <p>{art.dated}</p>
         <h2><span dangerouslySetInnerHTML={{__html: highlights && highlights.artist || art.artist}}></span></h2>
         <p>{art.country}, {art.continent}</p>
