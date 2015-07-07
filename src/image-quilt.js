@@ -58,6 +58,7 @@ const ImageQuilt = React.createClass({
         return <img style={{
           display: 'inline-block',
           width: _width,
+          height: _width/_art.aspect_ratio
         }}
         key={id}
         onClick={this.clicked.bind(this, art)}
