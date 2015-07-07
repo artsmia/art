@@ -4,7 +4,7 @@ var rest = require('rest')
 
 var SearchSummary = require('./search-summary')
 var ArtworkResult = require('./artwork-result')
-var SEARCH = 'http://10.1.6.130:4680'
+var SEARCH = require('./search-endpoint')
 
 var SearchResults = React.createClass({
   mixins: [Router.State],

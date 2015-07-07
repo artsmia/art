@@ -3,7 +3,7 @@ var Router = require('react-router')
 var { NotFoundRoute, Navigation, State, Link, Route, RouteHandler, DefaultRoute, Redirect } = Router
 var rest = require('rest')
 var debounce = require('debounce')
-var SEARCH = 'http://10.1.6.130:4680'
+var SEARCH = require('./search-endpoint')
 
 var ImageQuilt = require('./image-quilt')
 var SearchResults = require('./search-results')

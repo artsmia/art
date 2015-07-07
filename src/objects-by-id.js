@@ -2,7 +2,7 @@ var React = require('react')
 var Router = require('react-router')
 var rest = require('rest')
 
-var SEARCH = 'http://10.1.6.130:4680'
+var SEARCH = require('./search-endpoint')
 var ArtworkResult = require('./artwork-result')
 
 var ObjectsById = React.createClass({
