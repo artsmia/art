@@ -1,6 +1,7 @@
 var React = require('react')
 var { Link } = require('react-router')
 
+var Decorate = require('./decorate')
 var Aggregations = require('./aggregations')
 
 const SearchSummary = React.createClass({
@@ -40,6 +41,7 @@ const SearchSummary = React.createClass({
           {toggleAggs}
         </h2>
         
+        <Decorate search={search} />
         {showAggs && <Aggregations search={search} />}
         
       </div>
