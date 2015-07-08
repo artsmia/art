@@ -26,9 +26,10 @@
     "leaflet-0.8-dev": "^0.8.0-dev-20150217",
     "linear-partitioning": "^0.3.1",
     "marked": "^0.3.3",
-    "react": "^0.12.2",
-    "react-lazy-load": "kjell/react-lazy-load#2a75bf53630c6567a6a6a69dca313245434caf82",
-    "react-router": "^0.11.6",
+    "react": "^0.13.0",
+    "react-click-to-select": "^1.0.0",
+    "react-lazy-load": "loktar00/react-lazy-load#aa5f38695fa38dbfd287ec7d12872dfd94f0de76",
+    "react-router": "^0.13.0",
     "rest": "^1.2.0",
     "when": "^3.6.4"
   }
