@@ -4,6 +4,7 @@ var Markdown = require('./markdown')
 
 var DepartmentDecorator = require('./decorate/department')
 var GalleryDecorator = require('./decorate/gallery')
+var HighlightsDecorator = require('./decorate/highlights')
 
 var Decorate = React.createClass({
   render() {
@@ -26,6 +27,7 @@ var DecorationFinder = (search, filters, params) => {
     "department:": (term) => <DepartmentDecorator department={term} params={params} />,
     "g[0-9]{3}a?": (gallery) => <GalleryDecorator gallery={gallery[0]} />,
     "Not on View": (gallery) => <GalleryDecorator notOnView={true} />,
+    "highlight:": () => <HighlightsDecorator />,
   }
 
   let m = Object.keys(Decor).reduce((matches, d) => {
