@@ -52,7 +52,7 @@ var SearchResults = React.createClass({
 
     return (
       <div className='search-results-wrap clearfix'>
-        <SearchSummary search={search} hits={this.props.hits} results={results} />
+        <SearchSummary search={search} hits={this.props.hits} results={results} params={this.props.params} />
         <div className='objects-wrap' style={{clear: 'both'}}>{results}</div>
         <Sticky stickyClass="objects-focus-sticky" stickyStyle={{}}>
         {focusedResult && <div className='objects-focus'>

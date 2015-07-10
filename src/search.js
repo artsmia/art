@@ -21,6 +21,7 @@ var Search = React.createClass({
   },
 
   getInitialState() {
+    this.props.data.searchResults = this.props.data.searchResults || this.props.data.search || this.props.data.department
     const results = this.props.data.searchResults
     return {
       terms: this.props.params.terms,
@@ -30,7 +31,6 @@ var Search = React.createClass({
 
   render() {
     const quiltProps = this.props.params.terms ? [2, 10] : [3, 30]
-    this.props.data.searchResults = this.props.data.searchResults || this.props.data.search
     const results = this.props.data.searchResults
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
     const headerArtworks = hits && hits
@@ -53,7 +53,7 @@ var Search = React.createClass({
       <div id="search">
         <header><div className='logo-container'></div><div className='wordmark-container'></div></header>
         {searchBox}
-        <SearchResults {...this.props} hits={this.state.hits} />
+        {this.props.hideResults || <SearchResults {...this.props} hits={this.state.hits} />}
       </div>
     )
   },

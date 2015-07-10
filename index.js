@@ -16,6 +16,7 @@ var SearchResults = require('./src/search-results')
 var Artwork = require('./src/artwork')
 var ArtistsByLetter = require('./src/artists-by-letter')
 var ObjectsById = require('./src/objects-by-id')
+var Department = require('./src/department')
 
 var routes = (
   <Route handler={App} path="/">
@@ -26,6 +27,7 @@ var routes = (
         <Route name="filteredSearchResults" path="filters/*" handler={SearchResults} />
       </Route>
     </Route>
+    <Route name="department" path="/departments/:dept" handler={Department} />
     <Route name="artistsByName" path="/search/artists/:letter" handler={ArtistsByLetter} />
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
   </Route>

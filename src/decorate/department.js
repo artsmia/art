@@ -1,15 +1,26 @@
 var React = require('react')
+var {Link} = require('react-router')
 
 var Markdown = require('../markdown')
 
 var DepartmentDecorator = React.createClass({
+  getInitialState() {
+    var [deptName, selector] = this.getNameAndSelector(this.props.department)
+    return {
+      deptName: deptName,
+      selector: selector,
+      blurb: DepartmentContent[selector] || `Sorry, there's no "${deptName}" department.`,
+      expanded: this.props.expanded || !!this.props.params.dept || false,
+    }
+  },
+
   render() {
     var {department} = this.props
-    var [deptName, selector] = this.getNameAndSelector(department)
-    var blurb = DepartmentContent[selector] || `Sorry, there's no "${deptName}" department.`
+    var {deptName, selector, blurb, expanded} = this.state
+
     return <div>
-      <h3>{deptName}</h3>
-      <Markdown>{blurb}</Markdown>✨ 
+      <h3><Link to='department' params={{dept: deptName, terms: department}}>{deptName}</Link></h3>
+      {expanded ? <Markdown>{blurb}</Markdown> : this.shortBlurb()}
     </div>
   },
 
@@ -26,6 +37,12 @@ var DepartmentDecorator = React.createClass({
       "Japanese and Korean Art": 'jka'
     }[deptName]]
   },
+
+  shortBlurb() {
+    return <div>
+      <Markdown>{this.state.blurb.split('\n')[0]}</Markdown>
+    </div>
+  }
 })
 
 var DepartmentContent = {

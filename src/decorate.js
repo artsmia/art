@@ -8,7 +8,7 @@ var Decorate = React.createClass({
   render() {
     var {query, filters} = this.props.search
     if(!query && !filters) return <span />
-    var decorations = DecorationFinder(query, filters)
+    var decorations = DecorationFinder(query, filters, this.props.params)
     return <div>
       {decorations}
     </div>
@@ -17,12 +17,12 @@ var Decorate = React.createClass({
 
 module.exports = Decorate
 
-var DecorationFinder = (search, filters) => {
+var DecorationFinder = (search, filters, params) => {
   let terms = search.split(' ')
   if(filters) terms = terms.concat(filters.split('" ').map(f => f.trim()))
 
   var Decor = {
-    "department:": (term) => <DepartmentDecorator department={term} />
+    "department:": (term) => <DepartmentDecorator department={term} params={params} />
   }
 
   let m = Object.keys(Decor).reduce((matches, d) => {

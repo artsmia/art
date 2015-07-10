@@ -41,9 +41,8 @@ const SearchSummary = React.createClass({
           {toggleAggs}
         </h2>
         
-        <Decorate search={search} />
         {showAggs && <Aggregations search={search} />}
-        
+        <Decorate search={search} params={this.props.params} />
       </div>
     )
   },
