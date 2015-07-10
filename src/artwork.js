@@ -39,7 +39,7 @@ var Artwork = React.createClass({
     var id = this.props.id || this.state.id
     const highlights = this.props.highlights
     const style = {
-      margin: '90vh auto 0 auto',
+      margin: `${art.restricted != 1 ? '90vh' : '1em'} auto 0 auto`,
       background: 'white',
       maxWidth: '35em',
       padding: '0 1em 1em 1em',
