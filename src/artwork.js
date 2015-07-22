@@ -8,7 +8,26 @@ var Markdown = require('./markdown')
 var L = window.L = require('leaflet-0.8-dev')
 var museumTileLayer = require('../museumTileLayer')
 
+let mui = require('material-ui')
+let ThemeManager = new mui.Styles.ThemeManager()
+let Card = mui.Card;
+let CardHeader = mui.CardHeader;
+let CardMedia = mui.CardMedia;
+let CardActions = mui.CardActions;
+let CardText = mui.CardText;
+
 var Artwork = React.createClass({
+    
+    childContextTypes: {
+        muiTheme: React.PropTypes.object
+    },
+    
+    getChildContext: function() {
+        return {
+            muiTheme: ThemeManager.getCurrentTheme()
+        };
+    },
+  
   mixins: [Router.State],
   statics: {
     fetchData: (params) => {
@@ -27,22 +46,24 @@ var Artwork = React.createClass({
     }
 
     return (
-      <div style={style}>
-        <h1><span dangerouslySetInnerHTML={{__html: highlights && highlights.title || art.title}}></span> ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>)</h1> {/* ` */}
-        <p>{art.dated}</p>
+      <Card style={{maxWidth: '35em', margin: '90vh auto 0 auto', padding: '0 1em 1em 1em'}}>
+        <CardHeader title={{__html: highlights && highlights.title || art.title}}  subtitle={art.dated} avatar="http://lorempixel.com/100/100/nature/" />
         <h2><span dangerouslySetInnerHTML={{__html: highlights && highlights.artist || art.artist}}></span></h2>
-        <p>{art.country}, {art.continent}</p>
-        <p>{art.medium}</p>
-        <p>{art.dimension}</p>
-        <p>{art.creditline}</p>
+        <CardText>{art.country}, {art.continent} </CardText>
+        <CardText>{art.medium}</CardText>
+        <CardText>{art.dimension}</CardText>
+        <CardText>{art.creditline}</CardText>
+        <CardMedia>
         <ArtworkImage art={art} id={id} />
-        <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
-        <Markdown>{art.text}</Markdown>
+        </CardMedia>
+        <CardText>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</CardText>
+        <CardText>{art.text}</CardText>
 
         <div ref='map' id='map'></div>
         <a href="#" onClick={() => history.go(-1)}>&larr; back</a>
-      </div>
+      </Card>
     )
+
   },
 
   getInitialState() {

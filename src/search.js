@@ -8,7 +8,27 @@ var SEARCH = require('./search-endpoint')
 var ImageQuilt = require('./image-quilt')
 var SearchResults = require('./search-results')
 
+let mui = require('material-ui')
+let ThemeManager = new mui.Styles.ThemeManager()
+let AppBar = mui.AppBar;
+
 var Search = React.createClass({
+    
+    childContextTypes: {
+        muiTheme: React.PropTypes.object
+    },
+    
+    getChildContext: function() {
+        return {
+            muiTheme: ThemeManager.getCurrentTheme()
+        };
+    },
+    componentWillMount() {
+        ThemeManager.setPalette({
+            accent1Color: Colors.deepOrange500
+        });
+    },
+
   mixins: [Router.State, Router.Navigation],
 
   statics: {
@@ -46,6 +66,13 @@ var Search = React.createClass({
 
     return (
       <div id="search">
+        <AppBar
+         title="Collections 2015" 
+         className="main-app-bar"
+         style={{
+             backgroundColor: '#3a3737'
+         }}
+         />
         {searchBox}
         <SearchResults {...this.props} hits={this.state.hits} />
       </div>
