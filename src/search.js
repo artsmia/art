@@ -11,6 +11,7 @@ var SearchResults = require('./search-results')
 let mui = require('material-ui')
 let ThemeManager = new mui.Styles.ThemeManager()
 let AppBar = mui.AppBar;
+let TextField = mui.TextField;
 
 var Search = React.createClass({
     
@@ -55,10 +56,14 @@ var Search = React.createClass({
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
     const showQuilt = (headerArtworks && headerArtworks.length >= 2)
     const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
+    
     const searchBox = (
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
         <div className='search-wrap' style={showQuilt && {position: 'absolute', top: '50%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
-          {simpleSearchBox}
+            <div>
+                <h2>Collection Search</h2>
+                {simpleSearchBox}
+            </div>
         </div>
         {showQuilt && <ImageQuilt maxRows={quiltProps[0]} maxWorks={quiltProps[1]} artworks={headerArtworks} onClick={this.updateFromQuilt} />}
       </div>

@@ -26,3 +26,33 @@ h1,h2,h3,h4,h5,h6 {
 .logo-container{
     background-image: url("images/MIA_LOGO_WORDMARK.svg");
 }
+
+.agg-wrap h2{
+    padding:1em;
+    color:$whitish;
+    background-color:$primary;
+    text-align:center;
+}
+
+#aggs{
+    padding:1em;
+}
+
+.search-wrap div {
+    background-color: rgba(0,0,0,.65);
+    padding:2em;
+    width:33%;
+    min-width:200px;
+    margin:0 auto;
+    
+}
+
+.search-wrap div h2{
+    color:$whitish;
+    margin-bottom:1em;
+}
+
+.search-wrap div input{
+    width:auto;
+    min-width:150px;
+}
