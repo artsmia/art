@@ -67,11 +67,11 @@ const ImageQuilt = React.createClass({
         src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
       })
 
-      return <div key={'row'+index} style={{background: 'black'}}>{images}</div>
+      return <div className='quilt-row-wrap' key={'row'+index} style={{background: 'black'}}>{images}</div>
     })
 
     return (
-      <div onMouseLeave={this.hovered.bind(this, null, false)} style={{cursor: 'pointer'}}>
+      <div className='quilt-wrap'  onMouseLeave={this.hovered.bind(this, null, false)} style={{cursor: 'pointer'}}>
         {images}
       </div>
     )

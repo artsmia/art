@@ -17,7 +17,7 @@ var ObjectsById = React.createClass({
     var objects = this.props.data.objectsById.filter((o, index, objs) =>  o)
     objects.forEach(o => o.id = o.id.replace('http://api.artsmia.org/objects/', ''))
     return (
-      <div>
+      <div className='objects-by-id'>
         {objects.map((o) => <ArtworkResult key={'object:'+o.id} id={o.id} data={{artwork: o}} />)}
       </div>
     )

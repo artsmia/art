@@ -32,9 +32,10 @@ var SearchResults = React.createClass({
     })
 
     return (
-      <div>
+      <div className='search-results-wrap'>
         <SearchSummary search={search} hits={this.props.hits} results={results} />
-        <div style={{clear: 'both'}}>{results}</div>
+        <div className='objects-wrap' style={{clear: 'both'}}>{results}</div>
+        <div className='objects-focus' ></div>
       </div>
     )
   }

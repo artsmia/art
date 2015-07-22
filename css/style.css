@@ -1,0 +1,57 @@
+.highlight em, h1 em, h2 em {
+  background-color: yellow;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+body{margin:0;padding:0;font-family: 'Open Sans', sans-serif;}
+.highlight em, h1 em, h2 em {
+  background-color: yellow;
+}
+
+/* react app styles added */
+
+.quilt-wrap{
+    
+}
+
+.quilt-row{
+    
+}
+
+.search-result{
+    
+}
+
+.agg-wrap{
+    
+}
+.agg-wrap h2{
+    text-align:center;
+}
+
+#aggs{}
+
+#aggs dl{
+    float:left;
+    margin:0;
+    padding:0;
+}
+
+#aggs dt{
+    font-weight:400;
+    background-color:#3f51b5;
+    color:#fff;
+    text-transform:uppercase;
+    font-size:0.75em;
+    padding:2px 6px 2px 6px;
+    text-align: center;
+    margin:0;
+}
+
+#aggs dd{
+
+}
+
+.objects-wrap{width:33%;float:left;}
+.objects-focus{width:66%;float:left;}

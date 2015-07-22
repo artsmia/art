@@ -18,7 +18,7 @@ const SearchSummary = React.createClass({
 
     const showingAll = hits.length == search.hits.total
     return (
-      <div>
+      <div className='agg-wrap'>
         <h2>
           showing {hits.length} {' '}
           {showingAll || <span>of {search.hits.total} {' '}</span>}

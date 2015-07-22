@@ -22,7 +22,7 @@ var ArtistsByLetter = React.createClass({
     return (
       <dl>
       {letters.map((l) => {
-        return <div>
+        return <div className='artist-by-letter'>
           <dt key={l.key}><Link to="artistsByName" params={{letter: l.key}}>{l.key}</Link></dt>
           {letter === l.key && <dd style={{position: 'absolute', top: '3em'}}>
             {l.byName.buckets.map((b) => <Link to="filteredSearchResults" params={{terms: '*', splat: `artist.raw:%22${b.key}%22`}} style={{display: 'block'}}>{b.key}</Link>)}

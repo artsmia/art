@@ -14,7 +14,7 @@ var ArtworkImage = React.createClass({
     let padding = width >= maxWidth ? -8 : -8+(maxWidth-width)/2
 
     return art.image == 'valid' && art.image_width > 0 && (
-      <div>
+      <div className='artwork-image'>
         <LazyLoad height={height+'px'}>
           <img
             src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}

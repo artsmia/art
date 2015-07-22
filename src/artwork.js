@@ -46,7 +46,7 @@ var Artwork = React.createClass({
     }
 
     return (
-      <Card style={{maxWidth: '35em', margin: '90vh auto 0 auto', padding: '0 1em 1em 1em'}}>
+      <Card className='artwork' style={{maxWidth: '35em', margin: '90vh auto 0 auto', padding: '0 1em 1em 1em'}}>
         <CardHeader title={{__html: highlights && highlights.title || art.title}}  subtitle={art.dated} avatar="http://lorempixel.com/100/100/nature/" />
         <h2><span dangerouslySetInnerHTML={{__html: highlights && highlights.artist || art.artist}}></span></h2>
         <CardText>{art.country}, {art.continent} </CardText>

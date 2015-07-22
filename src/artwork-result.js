@@ -20,7 +20,7 @@ var ArtworkResult = React.createClass({
     }) || []
 
     return (
-      <div>
+      <div className='artwork-result'>
         <h1><span dangerouslySetInnerHTML={{__html: highlights && (highlights.title || highlights['title.ngram']) || art.title}}></span> ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>) <Link to="artwork" params={{id: id}}>&rarr;</Link></h1>
         <h2><span dangerouslySetInnerHTML={{__html: highlights && (highlights.artist || highlights['artist.ngram']) || art.artist}}></span></h2>
         <ArtworkImage art={art} id={id} />
