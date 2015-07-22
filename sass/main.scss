@@ -1,0 +1,28 @@
+@import "reset.scss";
+@import "brand-colors.scss";
+@import "mia-font.scss";
+
+
+body{
+    font-family: 'MiaGrotesk-Regular', sans-serif;
+    font-weight: 400;
+    color:$primary;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'MiaGrotesk-Bold', sans-serif;
+    font-weight: 700;
+}
+
+.highlight em, h1 em, h2 em {
+  background-color: yellow;
+}
+
+.main-app-bar{
+    color:#fff;
+    background-color:#3a3737;
+}
+
+.logo-container{
+    background-image: url("images/MIA_LOGO_WORDMARK.svg");
+}

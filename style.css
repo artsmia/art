@@ -1,8 +1,2 @@
-.highlight em, h1 em, h2 em {
-  background-color: yellow;
-}
-
-.main-app-bar{
-    color:#fff;
-    background-color:#3a3737;
-}
+/* seems redundant, but whatever for now */
+@import "css/main.css";
