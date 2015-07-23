@@ -44,11 +44,10 @@ var Aggregations = React.createClass({
               const newFilters = bucketIsActive ? 
                 search.filters.replace(filterRegex, '').trim() :
                 `${search.filters || ''} ${filterString}`.trim()
-              const bucketText = `${bucket.key || '""'} - ${bucket.doc_count}`
-              const bucketCount = `${bucket.doc_count}`
+              const bucketText = `${bucket.key || '""'}`
 
               if(bucket.key) return (
-                <dd key={agg.name+bucket.key} style={{margin: '0', fontWeight: bucketIsActive && 'bold'}}><span className='mdl-badge' data-badge="0">
+                <dd key={agg.name+bucket.key} style={{margin: '0', fontWeight: bucketIsActive && 'bold'}}><span className='mdl-badge' data-badge={bucket.doc_count}>
                   {<Link to={newFilters == '' ? 'searchResults' : 'filteredSearchResults'} params={{terms: `${search.query}`, splat: newFilters}}>
                       {bucketText}
                   </Link>}</span>
