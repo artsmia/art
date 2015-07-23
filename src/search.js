@@ -55,11 +55,11 @@ var Search = React.createClass({
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
     const showQuilt = (headerArtworks && headerArtworks.length >= 2)
-    const simpleSearchBox = <input type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '2em', width: '100%', maxWidth: '11em'}} />
+    const simpleSearchBox = <div className='mdl-textfield mdl-js-textfield'><input className='mdl-textfield__input' type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '1.5em', width: '100%', maxWidth: '500px'}} /></div>
     
     const searchBox = (
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
-        <div className='search-wrap' style={showQuilt && {position: 'absolute', top: '50%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
+        <div className='search-wrap' style={showQuilt && {position: 'absolute', top: '20%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
             <div>
                 <h2>Collection Search</h2>
                 {simpleSearchBox}
@@ -75,7 +75,7 @@ var Search = React.createClass({
          title="Collections 2015" 
          className="main-app-bar"
          style={{
-             backgroundColor: '#3a3737'
+             backgroundColor: 'rgb(35, 35, 35)'
          }}
          />
         {searchBox}

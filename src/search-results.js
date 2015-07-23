@@ -32,10 +32,14 @@ var SearchResults = React.createClass({
     })
 
     return (
-      <div className='search-results-wrap'>
+      <div className='search-results-wrap clearfix'>
         <SearchSummary search={search} hits={this.props.hits} results={results} />
         <div className='objects-wrap' style={{clear: 'both'}}>{results}</div>
-        <div className='objects-focus' ></div>
+        <div className='objects-focus'>
+            <h2>The Death of Germanicus</h2>
+            <h5>Nicholas Poussin</h5>
+            <img src="http://placehold.it/800x800" />
+        </div>
       </div>
     )
   }

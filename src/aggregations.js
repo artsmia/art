@@ -35,7 +35,7 @@ var Aggregations = React.createClass({
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
           // (search.filters.match(new RegExp(agg.name, 'i')) || customFilters[agg.name] && search.filters.match(new RegExp(customFilters[agg.name])
           const showAgg = agg.buckets.length > 1 || aggIsActive
-          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0 1em', verticalAlign: 'top'}}>
+          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0', verticalAlign: 'top'}}>
             <dt style={{fontWeight: aggIsActive && 'bold'}}>{agg.name.replace(/_/g, ' ')}</dt>
             {agg.buckets.slice(0, 5).map(function(bucket) { 
               const filterString = customFilters[agg.name] ? customFilters[agg.name][bucket.key] || bucket.key : agg.name.toLowerCase()+':"'+encodeURIComponent(bucket.key)+'"'
@@ -45,12 +45,13 @@ var Aggregations = React.createClass({
                 search.filters.replace(filterRegex, '').trim() :
                 `${search.filters || ''} ${filterString}`.trim()
               const bucketText = `${bucket.key || '""'} - ${bucket.doc_count}`
+              const bucketCount = `${bucket.doc_count}`
 
               if(bucket.key) return (
-                <dd key={agg.name+bucket.key} style={{margin: '0 0 0 1em', fontWeight: bucketIsActive && 'bold'}}>
+                <dd key={agg.name+bucket.key} style={{margin: '0', fontWeight: bucketIsActive && 'bold'}}><span className='mdl-badge' data-badge="0">
                   {<Link to={newFilters == '' ? 'searchResults' : 'filteredSearchResults'} params={{terms: `${search.query}`, splat: newFilters}}>
                       {bucketText}
-                  </Link>}
+                  </Link>}</span>
                 </dd>
               )
             })}

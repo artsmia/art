@@ -7,11 +7,24 @@ body{
     font-family: 'MiaGrotesk-Regular', sans-serif;
     font-weight: 400;
     color:$primary;
+    margin: 0;
 }
+
+#map {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    
+#search {
+      /*margin: 8px;*/
+    }
 
 h1,h2,h3,h4,h5,h6 {
     font-family: 'MiaGrotesk-Bold', sans-serif;
-    font-weight: 700;
 }
 
 .highlight em, h1 em, h2 em {
@@ -38,21 +51,118 @@ h1,h2,h3,h4,h5,h6 {
     padding:1em;
 }
 
-.search-wrap div {
-    background-color: rgba(0,0,0,.65);
+.agg-wrap h2{
+    text-align:center;
+}
+
+#aggs dl{
+    display:inline-block;
+    padding:0 10px 0 0;
+}
+
+#aggs dt{
+    font-weight:400;
+    color:$primary;
+    text-transform:uppercase;
+    font-size:0.75em;
+    padding:2px 0;
+    text-align: left;
+    margin:0 0 10px 0;
+    border-top:3px solid $primary;
+}
+
+#aggs dd{
+    line-height:1.65em;
+}
+
+.objects-wrap{
+    width:33%;float:left;
+    border-top:3px solid $primary;
+    padding:20px;
+    margin-right:10px;
+}
+
+    .artwork-result{
+        
+    }
+    
+    .artwork-result h1{margin:0;padding:0;}
+    .artwork-result h2{margin:0;padding:0;}
+    
+    .artwork-image{
+        height:150px;
+    }
+    
+    .artwork-image > div > img{
+        max-height:150px;
+    }
+    
+    
+.objects-focus{
+    float:left;
+    padding-top:2em;
+    border-top:3px solid $primary;
+}
+
+.objects-focus h2{
+    font-size:2.5em;
+    margin-bottom:10px;
+    font-family: 'MiaGrotesk-Light', sans-serif;
+}
+
+.objects-focus h5{
+    text-transform:uppercase;
+    font-family: 'MiaGrotesk-Bold', sans-serif;
+}
+
+
+.search-wrap div:first-child {
+    background-color: rgba(255,255,255,.75);
     padding:2em;
     width:33%;
-    min-width:200px;
     margin:0 auto;
+    color:$primary;
     
 }
 
 .search-wrap div h2{
     color:$whitish;
-    margin-bottom:1em;
+    background-color:$primary;
+    padding:0.65em;
+    margin-bottom:15px;
+    font-size:2em;
+    font-family: 'MiaGrotesk-Regular', sans-serif;
 }
 
 .search-wrap div input{
-    width:auto;
-    min-width:150px;
+    width:100%;
+    color:$primary;
+}
+
+.mdl-textfield{
+    width:100%;
+}
+
+.mdl-textfield__input {
+    color:$primary;
+    border-color:$primary;
+    border-width:0 0 3px 0;
+    padding:0;
+    text-align:center;
+}
+
+::-webkit-input-placeholder {
+   color: $support;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: $support;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $support;  
+}
+
+:-ms-input-placeholder {  
+   color: $support;  
 }
