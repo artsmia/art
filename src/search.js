@@ -42,7 +42,6 @@ var Search = React.createClass({
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
         <div className='search-wrap' style={showQuilt && {position: 'absolute', top: '20%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
             <div>
-                <h2>Collection Search</h2>
                 {simpleSearchBox}
             </div>
         </div>
