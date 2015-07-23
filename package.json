@@ -26,6 +26,7 @@
     "leaflet-0.8-dev": "^0.8.0-dev-20150217",
     "linear-partitioning": "^0.3.1",
     "marked": "^0.3.3",
+    "material-ui": "^0.10.1",
     "react": "^0.13.0",
     "react-click-to-select": "^1.0.0",
     "react-lazy-load": "loktar00/react-lazy-load#aa5f38695fa38dbfd287ec7d12872dfd94f0de76",
