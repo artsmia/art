@@ -36,8 +36,34 @@ h1,h2,h3,h4,h5,h6 {
     background-color:#3a3737;
 }
 
+header{
+    width:100%;
+    background-color:$primary;
+    padding-top:30px;
+    position:relative;
+}
+
+.quilt-search-wrap{
+    margin-top:-3px;
+}
+
 .logo-container{
-    background-image: url("images/MIA_LOGO_WORDMARK.svg");
+    background-image: url("../images/MIA_LOGO_MARK.svg");
+    background-repeat: no-repeat;
+    height:100px;
+    width:auto;
+    color:#fff;
+}
+
+.wordmark-container{
+    background-image: url("../images/MIA_LOGO_WORDMARK.svg");
+    background-repeat: no-repeat;
+    color:#fff;
+    position:absolute;
+    height:40px;
+    width:200px;
+    right:20px;
+    top:20px;
 }
 
 .agg-wrap{
@@ -98,16 +124,36 @@ h1,h2,h3,h4,h5,h6 {
     }
     
     .artwork-result h1{margin:0;padding:0;}
-    .artwork-result h2{margin:0;padding:0;}
+    .artwork-result h2{margin:0;padding:0;line-height:1em;}
     
     .artwork-image{
-        height:150px;
+        height:100px;
     }
     
     .artwork-image > div > img{
-        max-height:150px;
+        max-height:100px;
     }
     
+    /* not working
+    .artwork-result p:not(:first-child){
+        display:none;
+    }
+    */
+    
+    .artwork-image div > p, .artwork-result .provenance {
+        display: none;
+    }
+    
+    .artwork-result p.location{
+        text-align:right;
+        display: inline-block;
+    }
+    
+    .artwork-image div > p:first-child{
+        display: none;
+    }
+    
+
     
 .objects-focus{
     float:left;
@@ -164,6 +210,7 @@ h1,h2,h3,h4,h5,h6 {
 .search-wrap div input{
     width:100%;
     color:$primary;
+    font-family: 'MiaGrotesk-Light', sans-serif;
 }
 
 .mdl-textfield{

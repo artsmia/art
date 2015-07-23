@@ -24,7 +24,7 @@ var ArtworkResult = React.createClass({
         <h1><span dangerouslySetInnerHTML={{__html: highlights && (highlights.title || highlights['title.ngram']) || art.title}}></span> ({id}, <a href={`https://collections.artsmia.org/index.php?page=detail&id=${id}`}>#</a>) <Link to="artwork" params={{id: id}}>&rarr;</Link></h1>
         <h2><span dangerouslySetInnerHTML={{__html: highlights && (highlights.artist || highlights['artist.ngram']) || art.artist}}></span></h2>
         <ArtworkImage art={art} id={id} />
-        <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
+        <p className='location' >{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
         <div>
           {showHighlights.map((key) => {
             return <p key={`highlight${key}`} className={['highlight', key].join(' ')} dangerouslySetInnerHTML={{__html: highlights[key][0].replace('\n', '<br>')}}></p>
