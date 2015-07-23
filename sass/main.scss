@@ -40,6 +40,10 @@ h1,h2,h3,h4,h5,h6 {
     background-image: url("images/MIA_LOGO_WORDMARK.svg");
 }
 
+.agg-wrap{
+    background-color:#fff;
+}
+
 .agg-wrap h2{
     padding:1em;
     color:$whitish;
@@ -78,12 +82,19 @@ h1,h2,h3,h4,h5,h6 {
 .objects-wrap{
     width:33%;float:left;
     border-top:3px solid $primary;
-    padding:20px;
+    padding:10px;
     margin-right:10px;
+    background-color:#e0e0e0;
+    overflow:scroll;
+    max-height:1750px;
 }
 
     .artwork-result{
-        
+        padding:10px;
+        margin-bottom:10px;
+        background-color:#fff;
+        -webkit-box-shadow: 2px 2px 4px 0 rgba(0,0,0,.25);
+        box-shadow: 2px 2px 4px 0 rgba(0,0,0,.25);
     }
     
     .artwork-result h1{margin:0;padding:0;}
@@ -100,20 +111,36 @@ h1,h2,h3,h4,h5,h6 {
     
 .objects-focus{
     float:left;
+    width:66%;
     padding-top:2em;
     border-top:3px solid $primary;
 }
 
-.objects-focus h2{
-    font-size:2.5em;
-    margin-bottom:10px;
-    font-family: 'MiaGrotesk-Light', sans-serif;
-}
+    .objects-focus h2{
+        font-size:2.5em;
+        margin-bottom:10px;
+        font-family: 'MiaGrotesk-LightItalic', sans-serif;
+        font-style: italic;
+    }
+    
 
-.objects-focus h5{
-    text-transform:uppercase;
-    font-family: 'MiaGrotesk-Bold', sans-serif;
-}
+    .objects-focus .date{
+        font-size:0.65em;
+        font-family: 'MiaGrotesk-Regular', sans-serif;
+        font-style: normal;
+    }
+    
+    .objects-focus h5{
+        text-transform:uppercase;
+        font-family: 'MiaGrotesk-Bold', sans-serif;
+        margin-bottom:20px;
+    }
+    
+    .objects-focus .tombstone{
+        margin:20px 0;
+        font-size:smaller;
+        line-height:1.2em;
+    }
 
 
 .search-wrap div:first-child {
