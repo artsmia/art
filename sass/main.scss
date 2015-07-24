@@ -133,6 +133,11 @@ header{
     .objects-wrap .artwork-image > div > img{
         max-height:100px;
     }
+
+    .objects-wrap .focused {
+      border-top: 3px solid #232323;
+      margin-top: -3px;
+    }
     
     /* not working
     .artwork-result p:not(:first-child){
