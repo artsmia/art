@@ -36,11 +36,11 @@ var Search = React.createClass({
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
     const showQuilt = (headerArtworks && headerArtworks.length >= 2)
-    const simpleSearchBox = <div className='mdl-textfield mdl-js-textfield'><input className='mdl-textfield__input' type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '1.5em', width: '100%', maxWidth: '500px'}} /></div>
-    
+    const simpleSearchBox = <div className='mdl-textfield mdl-js-textfield'><input className='mdl-textfield__input' type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}} /></div>
+
     const searchBox = (
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
-        <div className='search-wrap' style={showQuilt && {position: 'absolute', top: '20%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em'} || {}}>
+        <div className='search-wrap' style={showQuilt && {position: 'absolute', top: '20%', left: 0, right: 0, width: '100%', textAlign: 'center', marginTop: '-1em', pointerEvents: 'none'} || {}}>
             <div>
                 {simpleSearchBox}
             </div>
