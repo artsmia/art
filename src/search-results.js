@@ -69,7 +69,7 @@ var SearchResults = React.createClass({
   },
 
   focusResult(hit) {
-    this.setState({focusedResult: hit._source})
+    this.setState({focusedResult: hit && hit._source})
   },
 })
 
