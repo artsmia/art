@@ -107,7 +107,6 @@ header{
 
 .objects-wrap{
     width:33%;float:left;
-    border-top:3px solid $primary;
     padding:10px;
     margin-right:10px;
     background-color:#e0e0e0;
@@ -136,7 +135,7 @@ header{
     }
 
     .objects-wrap .focused {
-      border-top: 3px solid #232323;
+      border-top: 3px solid $primary;
       margin-top: -3px;
     }
     
