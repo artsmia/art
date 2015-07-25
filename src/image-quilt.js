@@ -115,6 +115,10 @@ const ImageQuilt = React.createClass({
   },
 })
 
+
+ImageQuilt.getImagedResults = (hits) => hits && hits
+  .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
+
 module.exports = ImageQuilt
 
 var QuiltPatch = React.createClass({
