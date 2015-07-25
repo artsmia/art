@@ -1,1 +1,1 @@
-module.exports = "http://10.1.6.130:4680"
+module.exports = "http://search.staging.artsmia.org"
