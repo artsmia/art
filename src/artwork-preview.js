@@ -2,6 +2,7 @@ var React = require('react')
 
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
+var Peek = require('./peek')
 
 var ArtworkPreview = React.createClass({
   render() {
@@ -10,9 +11,9 @@ var ArtworkPreview = React.createClass({
     return (
       <div className='objects-focus' style={style}>
         <h2>{art.title}, <span className='date'>{art.dated}</span></h2>
-        <h5>{art.artist}</h5>
+        <h5><Peek facet="artist">{art.artist}</Peek></h5>
         <ArtworkImage art={art} id={art.id} />
-        <h6>{art.room}</h6>
+        <h6><Peek facet="room">{art.room}</Peek></h6>
         <div className='tombstone'>
           {art.medium}<br />
           {art.dimension}<br/>
