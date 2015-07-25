@@ -25,7 +25,7 @@ const ImageQuilt = React.createClass({
     const _art = artworks.map((art) => art._source)
 
     _art.map((art) => art.aspect_ratio = art.image_width/art.image_height)
-    const viewportWidth = window.innerWidth-16 // body { margin: 8px; }
+    const viewportWidth = window.innerWidth
     const summedAspectRatio = _art.reduce((sum, art) => {return sum+art.aspect_ratio}, 0)
     // Fit the images into `maxRows` or however many rows it would take to show each 
     // approx 250px tall
