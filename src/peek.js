@@ -17,14 +17,16 @@ var Peek = React.createClass({
   },
 
   render() {
+    var {result} = this.state
+
     return <div onClick={this.onClick} testing={123}>
       <ClickToSelect>
         {this.props.children}
       </ClickToSelect>
       {this.state.open && <div className="peek">
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
-          {this.state.result && this.quiltFromResults()}
-          search for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
+          {result && this.quiltFromResults()}
+          {result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
         </Link>
       </div>}
     </div>
@@ -52,8 +54,10 @@ var Peek = React.createClass({
   },
 
   quiltFromResults() {
-    if(!this.state.result) return ''
-    var wImg = ImageQuilt.getImagedResults(this.state.result.hits.hits)
+    var {result} = this.state
+
+    if(!result) return ''
+    var wImg = ImageQuilt.getImagedResults(result.hits.hits)
     return <ImageQuilt maxRows={2} maxWorks={10} artworks={wImg} />
   },
 })
