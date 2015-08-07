@@ -1,16 +1,20 @@
 var React = require('react')
 var Router = require('react-router')
-var {Route, Redirect, RouteHandler} = Router
+var {Route, Redirect, RouteHandler, DefaultRoute} = Router
 var resolveHash = require('when/keys').all
 
 var App = React.createClass({
   render() {
     return (
-      <RouteHandler {...this.props}/>
+      <div>
+        <header><a href="/"><div className='logo-container'></div></a><div className='wordmark-container'></div></header>
+        <RouteHandler {...this.props}/>
+      </div>
     )
   }
 })
 
+var Home = require('./src/home')
 var Search = require('./src/search')
 var SearchResults = require('./src/search-results')
 var Artwork = require('./src/artwork')
@@ -20,8 +24,8 @@ var Department = require('./src/department')
 
 var routes = (
   <Route handler={App} path="/">
+    <DefaultRoute name="home" handler={Home}/>
     <Route name="artwork" path="art/:id" handler={Artwork} />
-    <Redirect from="/" to="search" />
     <Route name="search" path="/search/" handler={Search}>
       <Route name="searchResults" path=":terms" handler={SearchResults}>
         <Route name="filteredSearchResults" path="filters/*" handler={SearchResults} />

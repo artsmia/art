@@ -7,21 +7,14 @@ var SEARCH = require('./search-endpoint')
 
 var ImageQuilt = require('./image-quilt')
 var SearchResults = require('./search-results')
-
+var SearchSummary = require('./search-summary')
 
 var Search = React.createClass({
     
   mixins: [Router.State, Router.Navigation],
 
-  statics: {
-    fetchData: (params, query) => {
-      let searchUrl = `${SEARCH}/highlight:true`
-      return rest(searchUrl).then((r) => JSON.parse(r.entity))
-    }
-  },
-
   getInitialState() {
-    this.props.data.searchResults = this.props.data.searchResults || this.props.data.search || this.props.data.department
+    this.props.data.searchResults = this.props.data.searchResults || this.props.data.home || this.props.data.department
     const results = this.props.data.searchResults
     return {
       terms: this.props.params.terms,
@@ -51,7 +44,6 @@ var Search = React.createClass({
 
     return (
       <div id="search">
-        <header><div className='logo-container'></div><div className='wordmark-container'></div></header>
         {searchBox}
         {this.props.hideResults || <SearchResults {...this.props} hits={this.state.hits} />}
       </div>
