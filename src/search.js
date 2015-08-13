@@ -23,8 +23,8 @@ var Search = React.createClass({
   },
 
   render() {
+    const results = this.props.data.searchResults || this.props.data.home || this.props.data.department
     const quiltProps = this.props.params.terms ? [2, 10] : [3, 30]
-    const results = this.props.data.searchResults
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
     const headerArtworks = hits && hits
       .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
