@@ -5,9 +5,8 @@ var rest = require('rest')
 var SearchSummary = require('./search-summary')
 var ArtworkResult = require('./artwork-result')
 var SEARCH = require('./search-endpoint')
-var ArtworkImage = require('./artwork-image')
-var Markdown = require('./markdown')
-var Sticky = require('react-sticky');
+var SearchResultsA = require('./search-results/a')
+var SearchResultsB = require('./search-results/b')
 
 var SearchResults = React.createClass({
   mixins: [Router.State],
@@ -26,6 +25,7 @@ var SearchResults = React.createClass({
     var firstHit = this.props.hits[0]
     return {
       focusedResult: firstHit && firstHit._source,
+      view: SearchResultsB,
     }
   },
 
@@ -50,29 +50,40 @@ var SearchResults = React.createClass({
     })
     var {focusedResult} = this.state
 
-    return (
-      <div className='search-results-wrap clearfix'>
-        <div className='objects-wrap' style={{clear: 'both'}}>{results}</div>
-        <Sticky stickyClass="objects-focus-sticky" stickyStyle={{}}>
-        {focusedResult && <div className='objects-focus'>
-            <h2>{focusedResult.title}, <span className='date'>{focusedResult.dated}</span></h2>
-            <h5>{focusedResult.artist}</h5>
-            <ArtworkImage art={focusedResult} id={focusedResult.id} />
-            <div className='tombstone'>
-              {focusedResult.medium}<br />
-              {focusedResult.dimension}<br/>
-              {`${focusedResult.creditline} ${focusedResult.accession_number}`}
-            </div>
-            <Markdown>{focusedResult.text}</Markdown>
-        </div>}
-        </Sticky>
-      </div>
-    )
+    return <div>
+      <SearchResultViewToggle 
+        click={this.changeView}
+        activeView={this.state.view}
+        views={[SearchResultsA, SearchResultsB]} />
+      <this.state.view results={results} focusedResult={focusedResult} />
+    </div>
   },
 
   focusResult(hit) {
     this.setState({focusedResult: hit && hit._source})
   },
+
+  changeView(next) {
+    var nextView = next || (this.state.view == SearchResultsA ? SearchResultsB : SearchResultsA)
+    this.setState({view: nextView})
+  },
 })
 
 module.exports = SearchResults
+
+var SearchResultViewToggle = React.createClass({
+  render() {
+    var {views, click, activeView} = this.props
+    var toggles = views.map((r) => {
+      var name = r.displayName.replace('SearchResults', '')
+      var style={marginRight: '0.25em'}
+      if(activeView === r) style.fontWeight = 'bold'
+      return <span key={name} onClick={this.toggleView.bind(this, r)} style={style}>{name}</span>
+    })
+    return <div>{toggles}</div>
+  },
+
+  toggleView(view) {
+    this.props.click(view)
+  },
+})
