@@ -12,7 +12,7 @@
   "license": "MIT",
   "browserify": {
     "transform": [
-      "babelify"
+      ["babelify", {"stage": 1}]
     ]
   },
   "devDependencies": {

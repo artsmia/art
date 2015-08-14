@@ -7,6 +7,7 @@ var ArtworkResult = require('./artwork-result')
 var SEARCH = require('./search-endpoint')
 var SearchResultsA = require('./search-results/a')
 var SearchResultsB = require('./search-results/b')
+var SearchResultsC = require('./search-results/c')
 
 var SearchResults = React.createClass({
   mixins: [Router.State],
@@ -25,7 +26,7 @@ var SearchResults = React.createClass({
     var firstHit = this.props.hits[0]
     return {
       focusedResult: firstHit && firstHit._source,
-      view: SearchResultsB,
+      view: SearchResultsC,
     }
   },
 
@@ -54,8 +55,12 @@ var SearchResults = React.createClass({
       <SearchResultViewToggle 
         click={this.changeView}
         activeView={this.state.view}
-        views={[SearchResultsA, SearchResultsB]} />
-      <this.state.view results={results} focusedResult={focusedResult} />
+        views={[SearchResultsA, SearchResultsB, SearchResultsC]} />
+      <this.state.view
+        results={results}
+        focusedResult={focusedResult}
+        search={search}
+        hits={this.props.hits} />
     </div>
   },
 

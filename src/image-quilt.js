@@ -22,14 +22,25 @@ const ImageQuilt = React.createClass({
 
   render() {
     const artworks = this.props.artworks.slice(0, this.props.maxWorks)
-    const _art = artworks.map((art) => art._source)
+    const _art = artworks.map((art) => {
+      var s = art._source
+      if(s.image == 'invalid' || (s.image_width == 0 && s.image_height == 0)) {
+        var text = s.title + s.artist
+        s.text_length = text.length
+        var deltaAverageTextLength = text.length/25 // bigger box for items with more text
+        s.image_width = deltaAverageTextLength > 2 ? 500 : 300
+        s.image_height = 150
+      }
+      return s
+    })
 
     _art.map((art) => art.aspect_ratio = art.image_width/art.image_height)
     const viewportWidth = window.innerWidth
     const summedAspectRatio = _art.reduce((sum, art) => {return sum+art.aspect_ratio}, 0)
     // Fit the images into `maxRows` or however many rows it would take to show each 
     // approx 250px tall
-    const numRows = Math.min(this.props.maxRows, summedAspectRatio*250/viewportWidth) 
+    var rowHeight = this.props.rowHeight || 250
+    var numRows = Math.min(this.props.maxRows, Math.ceil(summedAspectRatio*rowHeight/viewportWidth))
 
     const partitionBy = function(collection, weightFn, k) {
       let weights = collection.map(weightFn)
@@ -55,16 +66,12 @@ const ImageQuilt = React.createClass({
         // Multiplying the initial computed width, flooring that, then dividing by
         // the same factor "shaves" the right amount off each image.
         const _width = Math.floor(computedWidth*3)/3
-        return <img style={{
-          display: 'inline-block',
-          width: _width,
-          height: _width/_art.aspect_ratio
-        }}
-        key={id}
-        onClick={this.clicked.bind(this, art)}
-        onMouseEnter={this.hovered.bind(this, art, true)}
-        onMouseLeave={this.hovered.bind(this, art, false)}
-        src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
+        return <QuiltPatch art={_art}
+          width={_width}
+          onClick={this.clicked.bind(this, art)}
+          onMouseEnter={this.hovered.bind(this, art, true)}
+          onMouseLeave={this.hovered.bind(this, art, false)}
+          />
       })
 
       return <div className='quilt-row-wrap' key={'row'+index} style={{background: 'black'}}>{images}</div>
@@ -83,6 +90,7 @@ const ImageQuilt = React.createClass({
   // …after the interaction is finished.
   // Clicking the pinned artwork un-pins it
   clicked(art, updateState=true) {
+    var {onClick} = this.props
     if(updateState) this.setState({active: art, unpinned: false})
     const sameArt = this.state.unpinned && !updateState ||
       updateState && this.state.active && art == this.state.active
@@ -90,10 +98,11 @@ const ImageQuilt = React.createClass({
       this.setState({active: null, unpinned: true})
       art = null
     }
-    this.props.onClick(art)
+    onClick && onClick(art)
     this.state.unpinned && this.setState({unpinned: false})
   },
   hovered(art, active) {
+    if(this.props.disableHover) return
     // cancel the delayed 'float' on mouseleave
     // if an artwork was clicked, leave it pinned
     if(!active) {
@@ -106,3 +115,26 @@ const ImageQuilt = React.createClass({
 })
 
 module.exports = ImageQuilt
+
+var QuiltPatch = React.createClass({
+  render() {
+    var {art, width, ...other} = this.props
+    var id = art.id
+
+    var style = {
+      display: 'inline-block',
+      verticalAlign: 'top',
+      overflow: 'hidden',
+      width: width,
+      height: width/art.aspect_ratio
+    }
+    var image = <img style={style}
+      key={id}
+      src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} {...other} />
+
+    return art.image == 'valid' ? image : <span style={style} {...other}>
+      <p><strong>{art.title}</strong></p>
+      <p>{art.artist}</p>
+    </span>
+  },
+})
