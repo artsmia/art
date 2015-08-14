@@ -5,8 +5,7 @@ var Markdown = require('./markdown')
 
 var ArtworkImage = React.createClass({
   render() {
-    let art = this.props.art
-    let id = this.props.id
+    let {art, id} = this.props
     let aspectRatio = art.image_height/art.image_width
     let maxWidth = Math.min(window.innerWidth, 400)
     let height = 'auto'

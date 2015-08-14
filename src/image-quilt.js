@@ -1,5 +1,7 @@
 var React = require('react')
 var linearPartition = require('linear-partitioning')
+var ArtworkImage = require('./artwork-image')
+var LazyLoad = require('react-lazy-load')
 
 const ImageQuilt = React.createClass({
   getInitialState() {
@@ -82,13 +84,18 @@ const ImageQuilt = React.createClass({
           onMouseEnter={this.hovered.bind(this, art, true)}
           onMouseLeave={this.hovered.bind(this, art, false)}
           key={_art.id}
+          lazyLoad={this.props.lazyLoad}
           />
       })
 
       // centered doesn't work on the first row because the search box is in the way
       // space-around looks best on bottom rows
       const justify = index == 0 && row.length <=3 ? 'space-around' : 'center'
-      return <div className='quilt-row-wrap' key={'row'+index} style={{background: 'black', display: 'flex', justifyContent: justify}}>{images}</div>
+      return <div className='quilt-row-wrap'
+        key={'row'+index}
+        style={{background: 'black', minHeight: Math.min(unadjustedHeight, this.props.maxRowHeight), display: 'flex', justifyContent: justify}}>
+        {images}
+      </div>
     })
 
     return (
@@ -136,7 +143,7 @@ module.exports = ImageQuilt
 
 var QuiltPatch = React.createClass({
   render() {
-    var {art, width, ...other} = this.props
+    var {art, width, lazyLoad, ...other} = this.props
     var id = art.id
 
     var style = {
@@ -147,8 +154,14 @@ var QuiltPatch = React.createClass({
       height: width/art.aspect_ratio
     }
 
-    var image = <img style={style}
-      src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} {...other} />
+    var nakedImage = <img style={style}
+        key={id}
+        src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
+        {...other} />
+
+    var image = !lazyLoad ? nakedImage : <LazyLoad wrapper="span" style={{display: 'inline'}} width={width}>
+      {nakedImage}
+    </LazyLoad>
 
     var textStyle = {
       ...style,
@@ -160,5 +173,11 @@ var QuiltPatch = React.createClass({
     return art.image == 'valid' ? image : <span style={textStyle} {...other}>
       <p><strong>{art.title_short}</strong></p>
     </span>
+  },
+
+  getDefaultProps() {
+    return {
+      lazyLoad: true
+    }
   },
 })
