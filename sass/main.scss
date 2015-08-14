@@ -139,8 +139,6 @@ header{
     padding:10px;
     margin-right:10px;
     background-color:#e0e0e0;
-    overflow:scroll;
-    max-height:1750px;
 }
 
     .artwork-result{
@@ -191,12 +189,10 @@ header{
     position: fixed;
     top: 0;
     left: 33%;
-    width:66%;
 }
     
 .objects-focus{
     float:left;
-    width:66%;
     padding-top:2em;
     border-top:3px solid $primary;
 }
