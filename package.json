@@ -31,6 +31,7 @@
     "react-click-to-select": "^1.0.0",
     "react-lazy-load": "loktar00/react-lazy-load#aa5f38695fa38dbfd287ec7d12872dfd94f0de76",
     "react-router": "^0.13.0",
+    "react-sticky": "^2.4.0",
     "rest": "^1.2.0",
     "when": "^3.6.4"
   }

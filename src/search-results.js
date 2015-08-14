@@ -8,6 +8,7 @@ var SEARCH = require('./search-endpoint')
 var SearchResultsA = require('./search-results/a')
 var SearchResultsB = require('./search-results/b')
 var SearchResultsC = require('./search-results/c')
+var SearchResultsD = require('./search-results/d')
 
 var SearchResults = React.createClass({
   mixins: [Router.State],
@@ -26,7 +27,7 @@ var SearchResults = React.createClass({
     var firstHit = this.props.hits[0]
     return {
       focusedResult: firstHit && firstHit._source,
-      view: SearchResultsC,
+      view: SearchResultsD,
     }
   },
 
@@ -55,10 +56,12 @@ var SearchResults = React.createClass({
       <SearchResultViewToggle 
         click={this.changeView}
         activeView={this.state.view}
-        views={[SearchResultsA, SearchResultsB, SearchResultsC]} />
+        views={[SearchResultsA, SearchResultsB, SearchResultsC, SearchResultsD]}
+      />
       <this.state.view
         results={results}
         focusedResult={focusedResult}
+        focusHandler={this.focusResult}
         search={search}
         hits={this.props.hits} />
     </div>
@@ -79,6 +82,7 @@ module.exports = SearchResults
 var SearchResultViewToggle = React.createClass({
   render() {
     var {views, click, activeView} = this.props
+
     var toggles = views.map((r) => {
       var name = r.displayName.replace('SearchResults', '')
       var style={marginRight: '0.25em'}
