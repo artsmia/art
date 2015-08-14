@@ -2,7 +2,6 @@ var React = require('react')
 var Router = require('react-router')
 var rest = require('rest')
 
-var SearchSummary = require('./search-summary')
 var ArtworkResult = require('./artwork-result')
 var SEARCH = require('./search-endpoint')
 var SearchResultsA = require('./search-results/a')

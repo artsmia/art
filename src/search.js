@@ -45,6 +45,7 @@ var Search = React.createClass({
     return (
       <div id="search">
         {searchBox}
+        <SearchSummary search={this.props.data.searchResults} hits={this.state.hits} params={this.props.params} />
         {this.props.hideResults || <SearchResults {...this.props} hits={this.state.hits} />}
       </div>
     )
