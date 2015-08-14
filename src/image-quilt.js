@@ -11,9 +11,11 @@ const ImageQuilt = React.createClass({
   },
 
   handleResize: function(e) {
-    this.setState({width: window.innerWidth})
+    console.info('handleResize node width', React.findDOMNode(this).clientWidth)
+    this.setState({width: React.findDOMNode(this).clientWidth})
   },
   componentDidMount: function() {
+    this.handleResize()
     window.addEventListener('resize', this.handleResize)
   },
   componentWillUnmount: function() {
@@ -35,12 +37,11 @@ const ImageQuilt = React.createClass({
     })
 
     _art.map((art) => art.aspect_ratio = art.image_width/art.image_height)
-    const viewportWidth = window.innerWidth
     const summedAspectRatio = _art.reduce((sum, art) => {return sum+art.aspect_ratio}, 0)
     // Fit the images into `maxRows` or however many rows it would take to show each 
     // approx 250px tall
     var rowHeight = this.props.rowHeight || 250
-    var numRows = Math.min(this.props.maxRows, Math.ceil(summedAspectRatio*rowHeight/viewportWidth))
+    var numRows = Math.min(this.props.maxRows, Math.ceil(summedAspectRatio*rowHeight/this.state.width))
 
     const partitionBy = function(collection, weightFn, k) {
       let weights = collection.map(weightFn)
@@ -59,7 +60,7 @@ const ImageQuilt = React.createClass({
       var images = row.map((art) => {
         var _art = art._source
         const id = _art.id
-        const computedWidth = _art.aspect_ratio/rowSummedAspectRatio*viewportWidth
+        const computedWidth = _art.aspect_ratio/rowSummedAspectRatio*this.state.width
         // browsers do their own thing when resizing images, which can break this row layout
         // `.floor`ing the computed width ensures that the images in this row will fit,
         // but leaves a gap at the right edge.
