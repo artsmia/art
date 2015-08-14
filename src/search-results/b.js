@@ -1,5 +1,7 @@
 var React = require('react')
 
+var Sticky = require('react-sticky')
+
 var ArtworkImage = require('../artwork-image')
 var Markdown = require('../markdown')
 
@@ -10,6 +12,7 @@ var SearchResultsB = React.createClass({
     return (
       <div className='search-results-wrap clearfix'>
         <div className='objects-wrap' style={{clear: 'both'}}>{results}</div>
+        <Sticky stickyClass="objects-focus-sticky" stickyStyle={{}}>
         {focusedResult && <div className='objects-focus'>
             <h2>{focusedResult.title}, <span className='date'>{focusedResult.dated}</span></h2>
             <h5>{focusedResult.artist}</h5>
@@ -21,6 +24,7 @@ var SearchResultsB = React.createClass({
             </div>
             <Markdown>{focusedResult.text}</Markdown>
         </div>}
+        </Sticky>
       </div>
     )
   },
