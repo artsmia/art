@@ -7,6 +7,7 @@ var ArtworkResult = require('./artwork-result')
 var SEARCH = require('./search-endpoint')
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
+var Sticky = require('react-sticky');
 
 var SearchResults = React.createClass({
   mixins: [Router.State],
@@ -53,6 +54,7 @@ var SearchResults = React.createClass({
       <div className='search-results-wrap clearfix'>
         <SearchSummary search={search} hits={this.props.hits} results={results} />
         <div className='objects-wrap' style={{clear: 'both'}}>{results}</div>
+        <Sticky stickyClass="objects-focus-sticky" stickyStyle={{}}>
         {focusedResult && <div className='objects-focus'>
             <h2>{focusedResult.title}, <span className='date'>{focusedResult.dated}</span></h2>
             <h5>{focusedResult.artist}</h5>
@@ -64,6 +66,7 @@ var SearchResults = React.createClass({
             </div>
             <Markdown>{focusedResult.text}</Markdown>
         </div>}
+        </Sticky>
       </div>
     )
   },

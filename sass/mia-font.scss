@@ -42,3 +42,17 @@
        url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-Regular.woff') format('woff'), /* Pretty Modern Browsers */
        url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-Regular.svg#svgMiaGrotesk-Regular') format('svg'); /* Legacy iOS */
 }
+@font-face {
+  font-family: 'MiaGrotesk-Black';
+  src: url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-Black.eot'); /* IE9 Compat Modes */
+  src: url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-Black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-Black.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-Black.svg#svgMiaGrotesk-Regular') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'MiaGrotesk-BlackItalic';
+  src: url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-BlackItalic.eot'); /* IE9 Compat Modes */
+  src: url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-BlackItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-BlackItalic.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/wp-content/themes/new_artsmia/webfonts/MiaGrotesk-BlackItalic.svg#svgMiaGrotesk-Regular') format('svg'); /* Legacy iOS */
+}
