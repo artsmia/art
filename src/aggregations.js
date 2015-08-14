@@ -17,8 +17,8 @@ var Aggregations = React.createClass({
     const order = ["Artist", "Country", "On View", "Room", "Image", "Image_rights_type", "Department", "Title", "Style"]
 
     _aggs.sort((a, b) => {
-      let [a, b] = [order.indexOf(a.name), order.indexOf(b.name)].map(index => index == -1 ? 100 : index)
-      return a - b
+      let [_a, _b] = [order.indexOf(a.name), order.indexOf(b.name)].map(index => index == -1 ? 100 : index)
+      return _a - _b
     })
 
     const customFilters = {
