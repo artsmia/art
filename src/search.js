@@ -27,7 +27,7 @@ var Search = React.createClass({
     const quiltProps = this.props.params.terms ? [2, 10] : [3, 30]
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
     const headerArtworks = ImageQuilt.getImagedResults(hits)
-    const showQuilt = (headerArtworks && headerArtworks.length >= 2)
+    const showQuilt = (headerArtworks)
     const simpleSearchBox = <div className='mdl-textfield mdl-js-textfield'><input className='mdl-textfield__input' type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}} /></div>
 
     const searchBox = (

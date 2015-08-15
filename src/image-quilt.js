@@ -11,7 +11,6 @@ const ImageQuilt = React.createClass({
   },
 
   handleResize: function(e) {
-    console.info('handleResize node width', React.findDOMNode(this).clientWidth)
     this.setState({width: React.findDOMNode(this).clientWidth})
   },
   componentDidMount: function() {
@@ -59,6 +58,9 @@ const ImageQuilt = React.createClass({
 
     const images = rows.map((row, index) => {
       var rowSummedAspectRatio = row.reduce((sum, art) => {return sum+art._source.aspect_ratio}, 0)
+      var rowAspectRatio = rowSummedAspectRatio/row.length
+      var unadjustedHeight = this.state.width/rowSummedAspectRatio
+
       var images = row.map((art) => {
         var _art = art._source
         const id = _art.id
@@ -69,15 +71,23 @@ const ImageQuilt = React.createClass({
         // Multiplying the initial computed width, flooring that, then dividing by
         // the same factor "shaves" the right amount off each image.
         const _width = Math.floor(computedWidth*3)/3
+        const height = _width/_art.aspect_ratio
+        const maxRowHeight = 200
+        const widthAdjustedToClipTallRows = unadjustedHeight > maxRowHeight ? _width/(unadjustedHeight/maxRowHeight) : _width
+        // const widthAdjustedToClipTallRows = _width
+
         return <QuiltPatch art={_art}
-          width={_width}
+          width={widthAdjustedToClipTallRows}
           onClick={this.clicked.bind(this, art)}
           onMouseEnter={this.hovered.bind(this, art, true)}
           onMouseLeave={this.hovered.bind(this, art, false)}
           />
       })
 
-      return <div className='quilt-row-wrap' key={'row'+index} style={{background: 'black'}}>{images}</div>
+      // centered doesn't work on the first row because the search box is in the way
+      // space-around looks best on bottom rows
+      const justify = index == 0 && row.length <=3 ? 'space-around' : 'center'
+      return <div className='quilt-row-wrap' key={'row'+index} style={{background: 'black', display: 'flex', justifyContent: justify}}>{images}</div>
     })
 
     return (
@@ -144,6 +154,7 @@ var QuiltPatch = React.createClass({
       ...style,
       backgroundColor: '#fff',
       padding: '0.25em',
+      flexGrow: 1,
     }
 
     return art.image == 'valid' ? image : <span style={textStyle} {...other}>

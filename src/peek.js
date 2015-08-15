@@ -25,7 +25,7 @@ var Peek = React.createClass({
       <ClickToSelect>
         {this.props.children}
       </ClickToSelect>
-      {this.state.open && <div className="peek" style={{fontSize: '73%'}}>
+      {this.state.open && <div className="peek" style={{fontSize: '73%', display: 'table'}}>
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
           {result && this.quiltFromResults()}
           {result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
