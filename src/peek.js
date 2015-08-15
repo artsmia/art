@@ -101,7 +101,19 @@ var Peek = React.createClass({
         loading: false,
       })
     })
-  }
+  },
+
+  quiltFromResults() {
+    var {results, facetedQ} = this.state
+    var result = results && results[facetedQ]
+
+    if(!result) return ''
+    var wImg = ImageQuilt.getImagedResults(result.hits.hits)
+    return <ImageQuilt
+      maxRows={1}
+      maxWorks={7}
+      artworks={wImg.length > 3 ? wImg : result.hits.hits} />
+  },
 })
 
 module.exports = Peek
