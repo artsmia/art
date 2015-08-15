@@ -21,11 +21,11 @@ var Peek = React.createClass({
     var {results, facetedQ} = this.state
     var result = results && results[facetedQ]
 
-    return <div onClick={this.onClick} testing={123}>
+    return <div onClick={this.onClick} style={{maxWidth: this.state.maxWidth || "100%"}}>
       <ClickToSelect>
         {this.props.children}
       </ClickToSelect>
-      {this.state.open && <div className="peek">
+      {this.state.open && <div className="peek" style={{fontSize: '73%'}}>
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
           {result && this.quiltFromResults()}
           {result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
@@ -63,7 +63,14 @@ var Peek = React.createClass({
 
     if(!result) return ''
     var wImg = ImageQuilt.getImagedResults(result.hits.hits)
-    return <ImageQuilt maxRows={2} maxWorks={10} artworks={wImg} />
+    return <ImageQuilt
+      maxRows={1}
+      maxWorks={7}
+      artworks={wImg.length > 3 ? wImg : result.hits.hits} />
+  },
+
+  componentDidMount: function() {
+    this.setState({maxWidth: React.findDOMNode(this).clientWidth})
   },
 })
 

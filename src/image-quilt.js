@@ -27,11 +27,13 @@ const ImageQuilt = React.createClass({
     const _art = artworks.map((art) => {
       var s = art._source
       if(s.image == 'invalid' || (s.image_width == 0 && s.image_height == 0)) {
-        var text = s.title + s.artist
+        var splitOn = /,|;|:|\]/;
+        ([s.title_short, s.artist_short] = [s.title.split(splitOn)[0], s.artist.split(splitOn)[0]])
+        var text = s.title_short
         s.text_length = text.length
-        var deltaAverageTextLength = text.length/25 // bigger box for items with more text
-        s.image_width = deltaAverageTextLength > 2 ? 500 : 300
-        s.image_height = 150
+        var deltaAverageTextLength = text.length/17 // bigger box for items with more text
+        s.image_width = deltaAverageTextLength > 2 ? 300 : 200
+        s.image_height = 200
       }
       return s
     })
@@ -145,8 +147,7 @@ var QuiltPatch = React.createClass({
     }
 
     return art.image == 'valid' ? image : <span style={textStyle} {...other}>
-      <p><strong>{art.title}</strong></p>
-      <p>{art.artist}</p>
+      <p><strong>{art.title_short}</strong></p>
     </span>
   },
 })
