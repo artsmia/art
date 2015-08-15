@@ -12,12 +12,14 @@ var ImageQuilt = require('./image-quilt')
 var Peek = React.createClass({
   getInitialState() {
     return {
-      open: false
+      open: false,
+      results: {},
     }
   },
 
   render() {
-    var {result} = this.state
+    var {results, facetedQ} = this.state
+    var result = results && results[facetedQ]
 
     return <div onClick={this.onClick} testing={123}>
       <ClickToSelect>
@@ -45,16 +47,19 @@ var Peek = React.createClass({
       facetedQ: facetedQ,
     })
     
-    this.state.result || rest(`${SEARCH}/${facetedQ}?size=10`).then((r) => {
+    this.state.results[facetedQ] || rest(`${SEARCH}/${facetedQ}?size=10`).then((r) => {
+      var results = this.state.results
+      results[facetedQ] = JSON.parse(r.entity)
       this.setState({
-        result: JSON.parse(r.entity),
+        results: results,
         loading: false,
       })
     })
   },
 
   quiltFromResults() {
-    var {result} = this.state
+    var {results, facetedQ} = this.state
+    var result = results && results[facetedQ]
 
     if(!result) return ''
     var wImg = ImageQuilt.getImagedResults(result.hits.hits)
