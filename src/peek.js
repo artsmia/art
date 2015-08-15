@@ -60,8 +60,9 @@ var Peek = React.createClass({
   quiltFromResults() {
     var {results, facetedQ} = this.state
     var result = results && results[facetedQ]
+    var hits = result ? result.hits.hits : []
 
-    if(!result) return ''
+    if(!result || hits.length === 1) return ''
     var wImg = ImageQuilt.getImagedResults(result.hits.hits)
     return <ImageQuilt
       maxRows={1}
