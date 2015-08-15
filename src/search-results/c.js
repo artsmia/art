@@ -1,13 +1,11 @@
 var React = require('react')
-var Router = require('react-router')
 
 var ImageQuilt = require('../image-quilt')
 var ArtworkImage = require('../artwork-image')
 var Markdown = require('../markdown')
+var SearchResultsD = require('./d')
 
 var SearchResultsC = React.createClass({
-  mixins: [Router.Navigation],
-
   render() {
     var hits = this.props.hits
     return <div>
@@ -20,7 +18,8 @@ var SearchResultsC = React.createClass({
   },
 
   clickResult(art) {
-    this.transitionTo('artwork', {id: art._id})
+    this.props.focusHandler(art)
+    this.props.changeView(SearchResultsD)
   },
 })
 

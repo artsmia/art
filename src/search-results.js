@@ -45,7 +45,7 @@ var SearchResults = React.createClass({
     var results = this.props.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       var focused = this.state.focusedResult === hit._source
-      return <div key={id} onClick={this.focusResult.bind(this, hit)} className={focused && 'focused'}>
+      return <div key={id} onClick={this.focusResult.bind(this, hit, SearchResultsB)} className={focused && 'focused'}>
         <ArtworkResult id={id} data={{artwork: hit._source}} />
       </div>
     })
@@ -61,12 +61,14 @@ var SearchResults = React.createClass({
         results={results}
         focusedResult={focusedResult}
         focusHandler={this.focusResult}
+        changeView={this.changeView}
         search={search}
         hits={this.props.hits} />
     </div>
   },
 
-  focusResult(hit) {
+  focusResult(hit, nextView = false) {
+    nextView && this.changeView(nextView)
     this.setState({focusedResult: hit && hit._source})
   },
 
