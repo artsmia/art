@@ -12,12 +12,13 @@ var SearchResultsD = React.createClass({
 
   render() {
     var {hits, focusedResult} = this.props
+    var targetHeight = hits.length < 20 ? 250 : 150
 
     return <div>
       <div style={{width: '45%', float: 'left'}}>
         <ImageQuilt artworks={hits}
           maxRows={1000}
-          rowHeight={125}
+          rowHeight={targetHeight}
           onClick={this.clickResult}
           disableHover={true} />
       </div>
