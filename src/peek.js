@@ -19,6 +19,7 @@ var Peek = React.createClass({
 
   render() {
     var {results, facetedQ} = this.state
+    var {child} = this.props
     var result = results && results[facetedQ]
 
     return <div onClick={this.onClick}>
@@ -28,14 +29,16 @@ var Peek = React.createClass({
       {this.state.open && result && <div className="peek" style={{fontSize: '73%', maxWidth: this.state.maxWidth || "100%"}}>
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
           {result && this.quiltFromResults()}
-          {result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
+          {result.hits && result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
         </Link>
       </div>}
+      {this.state.open && this.getQs().map((q) => <Peek facet={this.props.facet} q={q} key={q} />)}
     </div>
   },
 
   onClick() {
     if(this.state.open) return this.setState({open: false})
+    console.info('peek q & qs', this.getText(), this.getQs())
 
     this.setState({
       open: true,
@@ -48,14 +51,14 @@ var Peek = React.createClass({
   quiltFromResults() {
     var {results, facetedQ} = this.state
     var result = results && results[facetedQ]
-    var hits = result ? result.hits.hits : []
+    var hits = result && result.hits && result.hits.hits || []
 
-    if(!result || hits.length === 1) return ''
-    var wImg = ImageQuilt.getImagedResults(result.hits.hits)
+    if(!result || !hits || hits.length <= 1) return <span/>
+    var wImg = ImageQuilt.getImagedResults(hits)
     return <ImageQuilt
       maxRows={1}
       maxWorks={7}
-      artworks={wImg.length > 3 ? wImg : result.hits.hits}
+      artworks={wImg.length > 3 ? wImg : hits}
       {...this.props.quiltProps}
       />
   },
@@ -74,6 +77,18 @@ var Peek = React.createClass({
 
   getText() {
     return this.props.q || React.findDOMNode(this).querySelector('span').innerText
+  },
+
+  getQs() {
+    var q = this.getText()
+    var qs
+    if(q.match(';')) {
+      qs = q.split(/;/).map(_q => {
+        return _q.replace(/^.*attributed to|unknown|artist|\w+ by|after/ig, '').trim()
+      })
+      return qs
+    }
+    return []
   },
 
   componentDidUpdate() {
@@ -101,18 +116,6 @@ var Peek = React.createClass({
         loading: false,
       })
     })
-  },
-
-  quiltFromResults() {
-    var {results, facetedQ} = this.state
-    var result = results && results[facetedQ]
-
-    if(!result) return ''
-    var wImg = ImageQuilt.getImagedResults(result.hits.hits)
-    return <ImageQuilt
-      maxRows={1}
-      maxWorks={7}
-      artworks={wImg.length > 3 ? wImg : result.hits.hits} />
   },
 })
 
