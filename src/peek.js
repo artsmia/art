@@ -37,7 +37,7 @@ var Peek = React.createClass({
   onClick() {
     if(this.state.open) return this.setState({open: false})
 
-    var q = React.findDOMNode(this).innerText
+    var q = this.getSelectedText()
     var facetedQ = this.props.facet ? `${this.props.facet}:"${encodeURIComponent(q)}"` : q
 
     this.setState({
@@ -72,6 +72,17 @@ var Peek = React.createClass({
 
   componentDidMount: function() {
     this.setState({maxWidth: React.findDOMNode(this).clientWidth})
+  },
+
+  getSelectedText() {
+    return React.findDOMNode(this).querySelector('span').innerText
+  },
+
+  componentDidUpdate() {
+    var text = this.getSelectedText()
+    var query = this.state.query
+    var sameQuery = query ? !!query.match(text) : true
+    if(this.state.open && !sameQuery) this.setState({open: false})
   },
 })
 
