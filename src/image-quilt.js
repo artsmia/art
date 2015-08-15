@@ -129,11 +129,18 @@ var QuiltPatch = React.createClass({
       width: width,
       height: width/art.aspect_ratio
     }
+
     var image = <img style={style}
       key={id}
       src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} {...other} />
 
-    return art.image == 'valid' ? image : <span style={style} {...other}>
+    var textStyle = {
+      ...style,
+      backgroundColor: '#fff',
+      padding: '0.25em',
+    }
+
+    return art.image == 'valid' ? image : <span style={textStyle} {...other}>
       <p><strong>{art.title}</strong></p>
       <p>{art.artist}</p>
     </span>
