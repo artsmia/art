@@ -2,36 +2,24 @@ var React = require('react')
 var { Link } = require('react-router')
 
 var Aggregations = React.createClass({
+  getInitialState() {
+    return {
+      aggs: this.buildAndSortAggregationsArray(),
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({aggs: this.buildAndSortAggregationsArray(nextProps)})
+  },
+
   render() {
     const search = this.props.search
-    const aggs = search.aggregations
-    const _aggs = []
-
-    for(var agg in aggs) {
-      var _agg = aggs[agg]
-      _agg.name = agg
-      _aggs.push(_agg)
-    }
-
-    // Sort aggregations in this order, with any others sorted last
-    const order = ["Artist", "Country", "On View", "Room", "Image", "Image_rights_type", "Department", "Title", "Style"]
-
-    _aggs.sort((a, b) => {
-      let [_a, _b] = [order.indexOf(a.name), order.indexOf(b.name)].map(index => index == -1 ? 100 : index)
-      return _a - _b
-    })
-
-    const customFilters = {
-      'On View': {
-        'On View': 'room:G*',
-        'Not on View': 'room:"Not on View"'
-      },
-      'Gist': {}
-    }
+    const {aggs} = this.state
+    const customFilters = this.customFilters
 
     return (
       <div id="aggs" style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px'}}>
-        {_aggs.map(function(agg) {
+        {aggs.map(function(agg) {
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
           // (search.filters.match(new RegExp(agg.name, 'i')) || customFilters[agg.name] && search.filters.match(new RegExp(customFilters[agg.name])
           const showAgg = agg.buckets.length > 1 || aggIsActive
@@ -58,7 +46,40 @@ var Aggregations = React.createClass({
         })}
       </div>
     )
-  }
+  },
+
+  // Aggregations come from ES as an object with named keys.
+  //     {"On View": {…}, "Artist": {…}}
+  // I want a `map`able array of the objects:
+  //     [{name: "On View", …}, {name: "Artist", …}]
+  // This does that transform and sorts the new array in the order they should
+  // be displayed.
+  buildAndSortAggregationsArray(props = this.props) {
+    const aggs = props.search.aggregations
+    const _aggs = []
+    const order = ["Artist", "Country", "On View", "Room", "Image", "Image_rights_type", "Department", "Title", "Style"]
+
+    for(var agg in aggs) {
+      _aggs.push({
+        ...aggs[agg],
+        name: agg,
+      })
+    }
+
+    // Sort aggregations in this order, with any others sorted last
+    return _aggs.sort((a, b) => {
+      let [_a, _b] = [order.indexOf(a.name), order.indexOf(b.name)].map(index => index == -1 ? 100 : index)
+      return _a - _b
+    })
+  },
+
+  customFilters: {
+    'On View': {
+      'On View': 'room:G*',
+      'Not on View': 'room:"Not on View"'
+    },
+    'Gist': {}
+  },
 })
 
 module.exports = Aggregations
