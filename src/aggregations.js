@@ -5,6 +5,7 @@ var Aggregations = React.createClass({
   getInitialState() {
     return {
       aggs: this.buildAndSortAggregationsArray(),
+      showAdder: true,
     }
   },
 
@@ -14,18 +15,18 @@ var Aggregations = React.createClass({
 
   render() {
     const search = this.props.search
-    const {aggs} = this.state
+    const {aggs, showAdder} = this.state
     const customFilters = this.customFilters
     const toggleAgg = (agg) => this.toggleAggregation.bind(this, agg)
+    const toggleMoreAggs = this.toggleMoreAggs
 
     return (
       <div id="aggs" style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px'}}>
         {aggs.map(function(agg) {
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
-          // (search.filters.match(new RegExp(agg.name, 'i')) || customFilters[agg.name] && search.filters.match(new RegExp(customFilters[agg.name])
-          const showAgg = agg.buckets.length >= 1 || aggIsActive
-          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0', verticalAlign: 'top'}}>
-            <dt style={{fontWeight: aggIsActive && 'bold'}} onClick={toggleAgg(agg)}>{agg.name.replace(/_/g, ' ')}</dt>
+          const showAgg = agg.open || aggIsActive
+          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0', verticalAlign: 'top', opacity: showAgg ? 1 : 0.5}}>
+            <dt style={{fontWeight: aggIsActive && 'bold'}} onClick={toggleAgg(agg)}>{agg.displayName}</dt>
             {(agg.open || aggIsActive) && agg.buckets.slice(0, 5).map(function(bucket) { 
               const filterString = customFilters[agg.name] ? customFilters[agg.name][bucket.key] || bucket.key : agg.name.toLowerCase()+':"'+encodeURIComponent(bucket.key)+'"'
               const filterRegex = new RegExp(decodeURIComponent(filterString).replace(/([\[\]\?])/, '\\$1'), 'i')
@@ -45,6 +46,14 @@ var Aggregations = React.createClass({
             })}
           </dl>)
         })}
+        {showAdder &&
+          (<div id="more-aggs">
+            <div style={{width: '100%', display: 'flex', flexFlow: 'row wrap'}}>{aggs.slice(3).map(agg => {
+              return <p key={agg.name} onClick={toggleAgg(agg)} style={{padding: '0.25em', opacity: agg.open || agg.active ? 1 : 0.5}}>{agg.displayName}</p>
+            })}</div>
+            <p onClick={toggleMoreAggs}>(x)</p>
+          </div>) || <p onClick={toggleMoreAggs}>(+)</p>
+        }
       </div>
     )
   },
@@ -56,6 +65,10 @@ var Aggregations = React.createClass({
     this.setState({aggs: aggs})
   },
 
+  toggleMoreAggs() {
+    this.setState({showAdder: !this.state.showAdder})
+  },
+
   // Aggregations come from ES as an object with named keys.
   //     {"On View": {…}, "Artist": {…}}
   // I want a `map`able array of the objects:
@@ -63,15 +76,19 @@ var Aggregations = React.createClass({
   // This does that transform and sorts the new array in the order they should
   // be displayed.
   buildAndSortAggregationsArray(props = this.props) {
+    const {search} = props
     const aggs = props.search.aggregations
     const _aggs = []
     const order = ["On View", "Image", "Department", "Artist", "Country", "Room", "Image_rights_type", "Title", "Style"]
 
     for(var agg in aggs) {
+      const open = order.slice(0, 3).indexOf(agg) > -1
       _aggs.push({
         ...aggs[agg],
         name: agg,
-        open: order.slice(0, 3).indexOf(agg) > -1
+        open: open,
+        displayName: agg.replace(/_/g, ' '),
+        active: search.filters && search.filters.match(new RegExp(agg, 'i')),
       })
     }
 

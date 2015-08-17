@@ -108,6 +108,7 @@ header{
     -o-transition: height 0.3s ease-in;
     -ms-transition: height 0.3s ease-in;
     transition: height 0.3s ease-in;
+    position: relative;
 }
 
 .agg-wrap h2{
@@ -132,6 +133,17 @@ header{
 
 #aggs dd{
     line-height:1.65em;
+}
+
+#aggs #more-aggs {
+  // position: absolute;
+  // top: 0;
+  // right: 0;
+  // height: 100%;
+  background: white;
+  border: 1px solid black;
+  width: 35%;
+  display: inline-block;
 }
 
 .objects-wrap{
