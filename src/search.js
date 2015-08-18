@@ -57,12 +57,12 @@ var Search = React.createClass({
   throttledSearch(event) {
     var terms = event.target.value
     this.setState({terms: terms})
-    if(terms === '') return
     this.debouncedSearch()
   },
 
   search() {
-    this.transitionTo('searchResults', {terms: this.normalizeTerms(this.state.terms)})
+    var terms = this.normalizeTerms(this.state.terms)
+    if(terms !== '') this.transitionTo('searchResults', {terms: terms})
   },
 
   keyDown(event) {
