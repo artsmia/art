@@ -5,6 +5,7 @@ var {Link} = Router
 var SEARCH = require('./search-endpoint')
 var rest = require('rest')
 var Search = require('./search')
+var departmentNamesMap = require('./department-slug')
 
 var Home = React.createClass({
   statics: {
@@ -26,19 +27,42 @@ module.exports = Home
 
 var HomeDepartments = React.createClass({
   departments: [
-    "Prints and Drawings",
-    "Photography & New Media",
-    "Decorative Arts, Textiles & Sculpture",
-    "Chinese, South and Southeast Asian Art",
-    "Japanese and Korean Art",
     "Art of Africa and the Americas",
-    "Paintings",
+    "Chinese, South and Southeast Asian Art",
     "Contemporary Art",
+    "Decorative Arts, Textiles & Sculpture",
+    "Japanese and Korean Art",
+    "Paintings",
+    "Photography & New Media",
+    "Prints and Drawings",
   ],
 
   render() {
-    return <ul>{this.departments.map((dept) => {
-      return <li><Link to='department' params={{dept: dept}}>{dept}</Link></li>
-    })}</ul>
-  },
-})
+    return <div className="landingPageBody">
+    <div className="shortcutLinks">
+      <Link to='searchResults' params={{terms: 'highlight:true'}} className="mdl-cell--4-col" >
+        <div className="shortcutHighlights">
+        </div>
+          <h2>Highlights</h2>
+            <sub>The pride and joy of Mia</sub>
+      </Link>
+      <div className="mdl-cell--4-col">
+        <div className="shortcutAccessions">
+        </div>
+          <h2>New Art<sup>*</sup></h2>
+          <sub>*new to Mia</sub>
+      </div>
+      <div className="mdl-cell--4-col">
+        <div className="shortcutBrowse">
+        </div>
+          <h2>Browse</h2>
+          <sub>Not sure what to search?</sub>
+      </div>
+    </div>
+    <div className="departmentList">
+      <h2>Departments</h2>
+        {this.departments.map((dept) => {
+          return <Link to='department' params={{dept: dept}} className="departmentLink mdl-cell--6-col"><div className={[departmentNamesMap[dept], "departmentListItem"].join(' ')}></div><h2>{dept}</h2></Link>
+        })}</div></div>
+      },
+    })

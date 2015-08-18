@@ -2,6 +2,7 @@ var React = require('react')
 var {Link} = require('react-router')
 
 var Markdown = require('../markdown')
+var departmentNamesMap = require('../department-slug')
 
 var DepartmentDecorator = React.createClass({
   getInitialState() {
@@ -18,24 +19,43 @@ var DepartmentDecorator = React.createClass({
     var {department} = this.props
     var {deptName, selector, blurb, expanded} = this.state
 
-    return <div>
-      <h3><Link to='department' params={{dept: deptName, terms: department}}>{deptName}</Link></h3>
-      {expanded ? <Markdown>{blurb}</Markdown> : this.shortBlurb()}
+    return <div className="departmentPage">
+      <h2><Link to='department' params={{dept: deptName, terms: department}}>{deptName}</Link></h2>
+      <div className="departmentContent mdl-cell--6-col">{expanded ? <Markdown>{blurb}</Markdown> : this.shortBlurb()}</div>
+      <div className="departmentResources mdl-cell--6-col">
+        <h3>Curator</h3>
+          <div className="curatorBio">
+            <div className="curatorPic"></div>
+            <h4>Curator Name</h4>
+            <h5>Curator title</h5>
+            <p>
+            Here is a paragraph introduction for a curator. It would end with a link to their full bio which will live on the main website.
+            </p>
+          </div>
+        <h3>Affinity Group</h3>
+          <div className="affinity">
+            <div className="affinityImage"></div>
+            <h4>Become a member of the {deptName} affinity group.</h4>
+            <p>
+            Here is what you get if you join this affinity group. There may be a list of items or we could have a custom paragraph for each affinity group.
+            </p>
+          </div>
+        <h3>Resources</h3>
+          <div className="resources">
+            <h4>Learn More. Read More.</h4>
+            <ul>
+              <li>Link to Article</li>
+              <li>Link to academic resource</li>
+              <li>Link to another site</li>
+            </ul>
+          </div>
+      </div>
     </div>
   },
 
   getNameAndSelector(term) {
     var deptName = term[0] && term[0].match(/department:"?([^"]*)"?/)[1]
-    return [deptName, {
-      "Art of Africa and the Americas": 'africa',
-      "Contemporary Art": 'contemporary',
-      "Decorative Arts, Textiles & Sculpture": 'dats',
-      "Paintings": 'paintings',
-      "Photography & New Media": 'photography',
-      "Prints and Drawings": 'prints',
-      "Chinese, South and Southeast Asian Art": 'cssaa',
-      "Japanese and Korean Art": 'jka'
-    }[deptName]]
+    return [deptName, departmentNamesMap[deptName]]
   },
 
   shortBlurb() {
@@ -53,7 +73,7 @@ var DepartmentContent = {
   photography: `Begun in 1973, the MIA’s collection of photographs spans the history of photography from the 1860s to the present. Representing more than 800 photographers and 11,500 works of art, the collection has outstanding examples of twentieth-century American photography, with particular depth in the genres of documentary photography, photojournalism, and pictorialism. Since 2008, the museum has focused on expanding its holdings of contemporary photography and new media from all countries. This initiative increases the scope and relevance of the photography collection and enhances its links to the MIA’s diverse, global holdings.\r\n\r\nThe Department of Photography &amp; New Media continues to thrive thanks to the active, generous support of loyal donors. The earliest acquisitions were funded by Kate Butler and Hall James Peterson. Their initiative inspired others, including Harry Drake, Martin Weinstein, and Fred and Ellen Wells. More recently, the creation of the Alfred and Ingrid Lenz Harrison Fund and the establishment of the Harrison Photography Galleries (364 &amp; 365) have given the department enormous momentum. These superb new galleries are devoted to presenting the permanent collection. In addition, Linda and Lawrence Perlman established the Perlman Gallery (262), which is dedicated to featuring contemporary photography and is located in the MIA’s Target Wing, hosting <a href=\"http://www2.artsmia.org/blogs/new-pictures\">New Pictures</a>, a semi-annual series highlighting emerging photographers from around the world. You, too, can contribute to and enjoy special access to exhibitions and events by joining the <a href=\"http://new.artsmia.org/join-and-invest/affinity-groups/\">Photography &amp; New Media Affinity Group</a>.\r\n\r\nOver the years, the Department of Photography &amp; New Media has been committed to using its collection for educational purposes, and the MIA now serves as a major resource for the five-state region. Numerous exhibitions drawn from the collection have traveled to other institutions, and students and teachers frequently visit the galleries and <a href=\"http://new.artsmia.org/visit/museum-facilities/study-rooms/\">Photography Study Room</a> to learn from the collection firsthand. Click on the photograph below to browse the collection and prepare for your next visit to the MIA.`,
   prints: `The Department of Prints &amp; Drawings keeps up an active program of thematic exhibitions, but it is also the MIA’s hidden treasure chest. At any given time, only a fraction of the museum’s collection of nearly 40,000 prints and 3,000 drawings is on view in the galleries. Nearly all, however, are available to the public in the comfort of the <a href=\"http://new.artsmia.org/visit/study-rooms/\">Herschel V. Jones Print Study Room</a>. To prepare for your visit, please make an appointment by phone (612) 870-3105 or by e-mail (<a href=\"mailto:printstudy@artsmia.org\">printstudy@artsmia.org</a>).\r\n\r\nMany of the greatest European and American artists from the Renaissance to the present are represented, often in considerable depth and quality. Among the highlights are old master prints by Albrecht Dürer and Rembrandt van Rijn; Jacopo de’Barbari’s amazing bird’s-eye view of Venice; a rare presentation copy of Francisco de Goya’s <em>Los Caprichos</em>; a fabulous monotype by William Blake; extensive holdings in nineteenth-century French and British prints and drawings, featuring artists such as James McNeill Whistler, Edgar Degas, and Félix Buhot; and outstanding twentieth-century drawings by Lovis Corinth, Egon Schiele, Ernst Ludwig Kirchner, Erich Heckel, Piet Mondrian, Georges Rouault, Henri Matisse, Jasper Johns, Andy Warhol, Roy Lichtenstein, Jim Dine, Ed Ruscha, Nicola Hicks, and many more. The department is building its collection of twenty-first-century prints and drawings, which is reaching ever further beyond America and Europe to other parts of the world. P&amp;D has secured works by William Kentridge, Julie Mehretu, Mequitta Ahuja, Jaune Quick-to-See Smith, Chuck Close, Luis Jimenez, Cynthia Lin, Carlos Amorales, Diane Victor, and more.\r\n\r\nThere are also fascinating collections within the collection. The department has a large number of books designed and illustrated by artists, which is especially rich in works from France. Students of modern printmaking will want to explore the Vermillion Editions Limited Archival Collection, which contains examples of all the prints published by that Twin Cities press as well as preparatory drawings, proofs, and maquettes that led to the finished work. Botanical, zoological, fashion, and ornamental illustrations from the fifteenth through the twentieth centuries all figure in the mix, as does a wide array of works by Minnesota and regional artists.\r\n\r\nThe <a href=\"http://new.artsmia.org/join-and-invest/affinity-groups/\">Prints &amp; Drawings Affinity Group</a> provides a terrific opportunity to learn more about this vital field of art, to meet others with similar interests, and to help the MIA improve its ability to make art available to the public.`,
   cssaa: `The Department of Chinese and South and Southeast Asian Art has benefited greatly from generous gifts from knowledgeable collectors. Augustus L. Searle, Alfred F. Pillsbury, Richard P. Gale, Louis W. Hill, Jr., and Ruth and Bruce Dayton have donated collections of international reputation. These include ancient Chinese bronzes, ancient and post-Song jade, Chinese monochrome ceramics, and classical Chinese furniture. In addition, curators have built exquisite collections of Qing dynasty silk textiles and Miao textiles.\r\n\r\nSome of the first works of art to enter the museum’s collection were from South (India, Bangladesh, Sri Lanka, Pakistan, Nepal, Bhutan, and Afghanistan) and Southeast Asia (Cambodia, Laos, Myanmar, Thailand, Malaysia, Vietnam, Singapore, Indonesia, Brunei and the Philippines), beginning in 1914 when Charles Freer donated several Thai Buddhist sculptures.  In 1929 Sarah Bell Pillsbury Gale gave the museum its first major Indian work of art, a 12th century bronze (ca. 1100) Dancing Shiva (Nataraja).  The highlight of the South Asian collection is a monumental stone Yogini sculpture from 10<span style=\"font-size: 11px;\">th </span>century south India. Today the South Asian collection numbers about 150 objects and the Southeast Asian collection numbers around 183.\r\n\r\nWithin the galleries there are two Chinese period rooms including an original reception hall from the late Ming dynasty and a ca. 1700 Suzchou-area library.`,
-  jka: `<p>The collection of Japanese and Korean art includes over 7,000 works ranging from ancient to contemporary and is amongst the top five collections in the United States. The permanent display space for Japanese art is the largest in the Western world with 15 galleries and over 10,000 square feet (930 sqm). The collection itself includes Buddhist sculpture, woodblock prints, paintings, lacquer, works of bamboo, and ceramics, and it is particularly rich in works from the Edo period (1610–1868).</p><p>Two historic rooms, a formal audience hall (<i>shoin</i>) and a teahouse (<i>chashitsu</i>), allow highly visible installations within the permanent galleries and serve to heighten awareness of the relationship between art and architecture.</p><p>The Department of Japanese and Korean art has benefited greatly from generous gifts from knowledgeable collectors. Richard P. Gale, Louis W. Hill, Jr., Ruth and Bruce Dayton, and Ellen and Fred Wells have all donated specialized collections of international reputation. With the addition of over 1,500 works of art from the collections of Elizabeth and Willard “Bill” Clark and the Clark Center for Japanese Art in 2013 and half of the world-renowned Mary Griggs Burke collection, the Japanese and Korean art galleries are no doubt a destination for both art enthusiasts and scholars alike.</p><p>The department is dedicated to providing the public with a broad overview of Japanese and Korean art. By showcasing art both chronologically and by medium, the galleries show the history of not only the objects themselves, but also of a collected process of artistic creation. This can be seen, for example, by the scope of ceramics, ranging from early utilitarian to contemporary sculptures.</p><p>Of notable strength is the collection of <i>ukiyo-e</i> paintings and prints, popularly known as “pictures of the floating world”. The core of the collection was built by Richard P. Gale and Louis W. Hill, Jr., and the Gale bequest included some 57 paintings and 206 prints, many of which are rare and in admirable condition. A strong collection of <i>Ōtsu-e</i>, folk paintings produced in and around the town of Ōtsu during the Edo period, came from collectors Edson and Harriet Spencer who also donated their collection of tiger paintings.</p>`,
+  jka: `The collection of Japanese and Korean art includes over 7,000 works ranging from ancient to contemporary and is amongst the top five collections in the United States. The permanent display space for Japanese art is the largest in the Western world with 15 galleries and over 10,000 square feet (930 sqm). The collection itself includes Buddhist sculpture, woodblock prints, paintings, lacquer, works of bamboo, and ceramics, and it is particularly rich in works from the Edo period (1610–1868).</p><p>Two historic rooms, a formal audience hall (<i>shoin</i>) and a teahouse (<i>chashitsu</i>), allow highly visible installations within the permanent galleries and serve to heighten awareness of the relationship between art and architecture.</p><p>The Department of Japanese and Korean art has benefited greatly from generous gifts from knowledgeable collectors. Richard P. Gale, Louis W. Hill, Jr., Ruth and Bruce Dayton, and Ellen and Fred Wells have all donated specialized collections of international reputation. With the addition of over 1,500 works of art from the collections of Elizabeth and Willard “Bill” Clark and the Clark Center for Japanese Art in 2013 and half of the world-renowned Mary Griggs Burke collection, the Japanese and Korean art galleries are no doubt a destination for both art enthusiasts and scholars alike.</p><p>The department is dedicated to providing the public with a broad overview of Japanese and Korean art. By showcasing art both chronologically and by medium, the galleries show the history of not only the objects themselves, but also of a collected process of artistic creation. This can be seen, for example, by the scope of ceramics, ranging from early utilitarian to contemporary sculptures.</p><p>Of notable strength is the collection of <i>ukiyo-e</i> paintings and prints, popularly known as “pictures of the floating world”. The core of the collection was built by Richard P. Gale and Louis W. Hill, Jr., and the Gale bequest included some 57 paintings and 206 prints, many of which are rare and in admirable condition. A strong collection of <i>Ōtsu-e</i>, folk paintings produced in and around the town of Ōtsu during the Edo period, came from collectors Edson and Harriet Spencer who also donated their collection of tiger paintings.`,
 }
 
 module.exports = DepartmentDecorator

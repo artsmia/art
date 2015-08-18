@@ -10,7 +10,7 @@ var SearchResults = require('./search-results')
 var SearchSummary = require('./search-summary')
 
 var Search = React.createClass({
-    
+
   mixins: [Router.State, Router.Navigation],
 
   getInitialState() {

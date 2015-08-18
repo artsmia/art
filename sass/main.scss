@@ -13,7 +13,7 @@ $MiaGroteskRlackItalic: 'MiaGrotesk-BlackItalic', sans-serif;
 
 
 body{
-    font-family: $MiaGroteskRegular;
+    font-family: $MiaGroteskLight;
     font-weight: 400;
     color:$primary;
     margin: 0;
@@ -27,7 +27,7 @@ body{
       height: 100%;
       z-index: -1;
     }
-    
+
 a {
   color: rgba(239, 53, 53, .75);
   font-weight: 500;
@@ -39,7 +39,7 @@ a:hover {
   color: rgba(35, 35, 35, .65);
   font-weight: 500;
 }
-    
+
 #search {
       /*margin: 8px;*/
     }
@@ -161,14 +161,14 @@ header{
         box-shadow: 2px 2px 4px 0 rgba(0,0,0,.25);
         cursor: pointer;
     }
-    
+
     .artwork-result h1{margin:0;padding:0;}
     .artwork-result h2{margin:0;padding:0;line-height:1em;}
-    
+
     .objects-wrap .artwork-image{
         height:100px;
     }
-    
+
     .objects-wrap .artwork-image > div > img{
         max-height:100px;
     }
@@ -177,32 +177,32 @@ header{
       border-top: 3px solid $primary;
       margin-top: -3px;
     }
-    
+
     /* not working
     .artwork-result p:not(:first-child){
         display:none;
     }
     */
-    
+
     .artwork-image div > p, .artwork-result .provenance {
         display: none;
     }
-    
+
     .artwork-result p.location{
         text-align:right;
         display: inline-block;
     }
-    
+
     .artwork-image div > p:first-child{
         display: none;
     }
-    
+
 .objects-focus-sticky{
     position: fixed;
     top: 0;
     left: 33%;
 }
-    
+
 .objects-focus{
     float:left;
     padding-top:2em;
@@ -215,19 +215,19 @@ header{
         font-family: $MiaGroteskLightItalic;
         font-style: italic;
     }
-    
+
 
     .objects-focus .date{
         font-size:0.65em;
         font-family: $MiaGroteskRegular;
         font-style: normal;
     }
-    
+
     .objects-focus h5{
         font-family: $MiaGroteskBold;
         margin-bottom:20px;
     }
-    
+
     .objects-focus .tombstone{
         margin:20px 0;
         font-size:smaller;
@@ -238,7 +238,7 @@ header{
 .search-wrap div:first-child {
     width:33%;
     margin:0 auto;
-    color:$primary; 
+    color:$primary;
 }
 
 .search-wrap div h2{
@@ -262,9 +262,9 @@ header{
     padding-left:1em;
     padding-right:1em;
     background-color: white;
-    border-radius:3px; 
+    border-radius:3px;
     -webkit-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);  
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .mdl-textfield__input {
@@ -289,13 +289,194 @@ header{
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   color: $support;  
+   color: $support;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: $support;  
+   color: $support;
 }
 
-:-ms-input-placeholder {  
-   color: $support;  
+:-ms-input-placeholder {
+   color: $support;
+}
+
+/* ===== LANDING PAGE STYLES ===== */
+.landingPageBody, .departmentPage {
+  margin: 1em;
+  display: inline-block;
+}
+.shortcutLinks {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+  margin-bottom: 20px;
+}
+.shortcutLinks a {
+  color: rgb(35,35,35);
+  transition: ease all 0.8s;
+}
+.shortcutlinks a:hover {
+  opacity: .5;
+}
+.shortcutLinks sub {
+  font-family: $MiaGroteskLight, sans-serif;
+  font-size: 1em;
+  margin-right: 5px;
+}
+.shortcutLinks h2 {
+  font-family: $MiaGroteskRegular, sans-serif;
+  font-size: 1.5em;
+  border-top: 3px solid rgb(35,35,35);
+  padding: 7px 0 0;
+  margin: 7px 5px;
+  line-height: 1em;
+}
+.mdl-cell--4-col, a.mdl-cell--4-col {
+  display: inline-block;
+  float: left;
+}
+.mdl-cell--4-col div {
+  border: 5px solid #ffffff;
+}
+.shortcutAccessions {
+  width: 100%;
+  background: url(../images/recent.png) no-repeat top center;
+  background-size: cover;
+  min-height: 150px;
+  color: #ffffff;
+  padding: 20px;
+}
+.shortcutHighlights {
+  width: 100%;
+  background: url(../images/highlights.png) no-repeat top center;
+  background-size: cover;
+  min-height: 150px;
+  color: #ffffff;
+  padding: 20px;
+}
+.shortcutBrowse {
+  width: 100%;
+  background: url(../images/dots.png) no-repeat top center;
+  background-size: cover;
+  min-height: 150px;
+  color: #ffffff;
+  padding: 20px;
+}
+.departmentList {
+  display: inline-block;
+}
+.departmentList h2 {
+  font-family: $MiaGroteskRegular, sans-serif;
+  font-size:2em;
+}
+.departmentLink h2 {
+  font-size: 1.5em;
+  font-family: $MiaGroteskLight, sans-serif;
+  border-top: 3px solid rgba(35,35,35,1);
+  padding: 7px 0;
+  margin: 7px 0;
+  line-height: 1em;
+  color: rgb(35,35,35);
+}
+.departmentLink {
+  float:left;
+  display: inline-block;
+  vertical-align: bottom;
+  text-align: right;
+  border:5px solid #ffffff;
+}
+.departmentListItem {
+  width: 100%;
+  height: 150px;
+}
+.departmentListItem.africa {
+  background:url("https://api.artsmia.org/images/4866/600/medium.jpg") no-repeat center center;
+  background-size: cover;
+}
+.departmentListItem.cssaa {
+  background:url("https://api.artsmia.org/images/12134/600/medium.jpg") no-repeat center center;
+  background-size: cover;
+}
+.departmentListItem.contemporary {
+  background:url("https://api.artsmia.org/images/1721/600/medium.jpg") no-repeat center center;
+  background-size: cover;
+}
+.departmentListItem.dats {
+  background:url("https://api.artsmia.org/images/8024/800/medium.jpg") no-repeat center center;
+  background-size: cover;
+}
+.departmentListItem.jka {
+  background:url("https://api.artsmia.org/images/7505/600/medium.jpg") no-repeat center center;
+  background-size: cover;
+}
+.departmentListItem.paintings {
+  background:url("https://api.artsmia.org/images/1348/800/medium.jpg") no-repeat center center;
+  background-size: cover;
+}
+.departmentListItem.photography {
+  background:url("https://api.artsmia.org/images/89324/800/medium.jpg") no-repeat center center;
+  background-size: cover;
+}
+.departmentListItem.prints {
+  background:url("https://api.artsmia.org/images/9194/800/medium.jpg") no-repeat center center;
+  background-size: cover;
+}
+a.departmentLink {
+  transition: ease all 0.8s;
+}
+a.departmentLink:hover  {
+  opacity: .5;
+}
+/* ===== DEPARTMENT PAGES ===== */
+.departmentPage .mdl-cell--6-col {
+  display: inline-block;
+  float: left;
+}
+.departmentPage h2 {
+  background: transparent;
+  border-top: 3px solid rgb(35,35,35);
+  font-size: 1.5em;
+  width: 100%;
+  text-align: left;
+  padding: 7px 0 0;
+  margin: 0;
+}
+.departmentContent, .departmentResources {
+  padding: 0 5px;
+}
+.departmentResources h3 {
+  border-top: 3px solid rgb(35,35,35);
+  font-size: 1.2em;
+  width: 100%;
+  font-family: $MiaGroteskRegular;
+  line-height: 1em;
+  padding: 7px 0;
+}
+.departmentPage h2 a{
+  color: rgb(35,35,35);
+}
+.departmentPage p {
+  margin: 0 0 7px 0;
+}
+.curatorBio, .affinity, .resources {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+.curatorPic, .affinityImage {
+  width: 150px;
+  height: 150px;
+  float:left;
+  display: inline-block;
+  background: rgba(35,35,35,.3);
+  margin-right: 20px;
+}
+.curatorBio h4 {
+  font-size: 1.1em;
+}
+.curatorBio h5 {
+  font-family: $MiaGroteskRegular;
+  font-size: .9em;
+  padding-bottom: 1em;
 }

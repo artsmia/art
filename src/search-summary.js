@@ -10,7 +10,7 @@ const SearchSummary = React.createClass({
       showAggs: false,
     }
   },
-  
+
   render() {
     const search = this.props.search
     if(!search || !search.hits) return <div />
@@ -29,7 +29,7 @@ const SearchSummary = React.createClass({
     </span>
 
     const showingAll = hits.length == search.hits.total
-    
+
     return (
       <div className='agg-wrap'>
         <h2 onClick={this.toggleContent}>
@@ -40,7 +40,7 @@ const SearchSummary = React.createClass({
           {showingAll || {showAllLink}}
           {toggleAggs}
         </h2>
-        
+
         {showAggs && <Aggregations search={search} />}
         <Decorate search={search} params={this.props.params} />
       </div>
