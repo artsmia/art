@@ -12,7 +12,7 @@ var ImageQuilt = require('./image-quilt')
 var Peek = React.createClass({
   getInitialState() {
     return {
-      open: false,
+      open: !!this.props.q,
       results: {},
     }
   },
@@ -25,7 +25,7 @@ var Peek = React.createClass({
       <ClickToSelect>
         {this.props.children}
       </ClickToSelect>
-      {this.state.open && <div className="peek" style={{fontSize: '73%', display: 'table'}}>
+      {this.state.open && result && <div className="peek" style={{fontSize: '73%', display: 'table'}}>
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
           {result && this.quiltFromResults()}
           {result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
@@ -37,24 +37,12 @@ var Peek = React.createClass({
   onClick() {
     if(this.state.open) return this.setState({open: false})
 
-    var q = this.getSelectedText()
-    var facetedQ = this.props.facet ? `${this.props.facet}:"${encodeURIComponent(q)}"` : q
-
     this.setState({
       open: true,
       loading: true,
-      query: q,
-      facetedQ: facetedQ,
     })
-    
-    this.state.results[facetedQ] || rest(`${SEARCH}/${facetedQ}?size=10`).then((r) => {
-      var results = this.state.results
-      results[facetedQ] = JSON.parse(r.entity)
-      this.setState({
-        results: results,
-        loading: false,
-      })
-    })
+
+    this.fetchResults()
   },
 
   quiltFromResults() {
@@ -72,6 +60,7 @@ var Peek = React.createClass({
 
   componentDidMount: function() {
     this.setState({maxWidth: React.findDOMNode(this).clientWidth})
+    if(this.state.open) this.fetchResults()
   },
 
   getSelectedText() {
@@ -84,6 +73,26 @@ var Peek = React.createClass({
     var sameQuery = query ? !!query.match(text) : true
     if(this.state.open && !sameQuery) this.setState({open: false})
   },
+
+  fetchResults() {
+    var {results, facetedQ} = this.state
+    var q = this.props.q || this.getSelectedText()
+    var facetedQ = this.props.facet ? `${this.props.facet}:"${encodeURIComponent(q)}"` : q
+
+    this.setState({
+      query: q,
+      facetedQ: facetedQ,
+    })
+
+    this.state.results[facetedQ] || rest(`${SEARCH}/${facetedQ}?size=10`).then((r) => {
+      var results = this.state.results
+      results[facetedQ] = JSON.parse(r.entity)
+      this.setState({
+        results: results,
+        loading: false,
+      })
+    })
+  }
 })
 
 module.exports = Peek
