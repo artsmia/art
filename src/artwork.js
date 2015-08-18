@@ -4,30 +4,14 @@ var rest = require('rest')
 
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
+var ArtworkPreview = require('./artwork-preview')
 
 var L = window.L = require('leaflet-0.8-dev')
 var museumTileLayer = require('../museumTileLayer')
 
-let mui = require('material-ui')
-let ThemeManager = new mui.Styles.ThemeManager()
-let Card = mui.Card;
-let CardHeader = mui.CardHeader;
-let CardMedia = mui.CardMedia;
-let CardActions = mui.CardActions;
-let CardText = mui.CardText;
+var Sticky = require('react-sticky')
 
 var Artwork = React.createClass({
-    
-    childContextTypes: {
-        muiTheme: React.PropTypes.object
-    },
-    
-    getChildContext: function() {
-        return {
-            muiTheme: ThemeManager.getCurrentTheme()
-        };
-    },
-  
   mixins: [Router.State],
   statics: {
     fetchData: (params) => {
@@ -38,39 +22,27 @@ var Artwork = React.createClass({
     var art = this.state.art
     var id = this.props.id || this.state.id
     const highlights = this.props.highlights
-    const style = {
-      margin: `${art.restricted != 1 ? '90vh' : '1em'} auto 0 auto`,
-      background: 'white',
-      maxWidth: '35em',
-      padding: '0 1em 1em 1em',
-    }
 
     return (
-      <Card className='artwork' style={{maxWidth: '35em', margin: '90vh auto 0 auto', padding: '0 1em 1em 1em'}}>
-        <CardHeader title={{__html: highlights && highlights.title || art.title}}  subtitle={art.dated} avatar="http://lorempixel.com/100/100/nature/" />
-        <h2><span dangerouslySetInnerHTML={{__html: highlights && highlights.artist || art.artist}}></span></h2>
-        <CardText>{art.country}, {art.continent} </CardText>
-        <CardText>{art.medium}</CardText>
-        <CardText>{art.dimension}</CardText>
-        <CardText>{art.creditline}</CardText>
-        <CardMedia>
-        <ArtworkImage art={art} id={id} />
-        </CardMedia>
-        <CardText>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</CardText>
-        <CardText>{art.text}</CardText>
+      <div className='artwork'>
+        <div className='info'>
+          <ArtworkPreview art={art} showLink={false} />
+          <a href="#" onClick={() => history.go(-1)}>&larr; back</a>
+        </div>
 
-        <div ref='map' id='map'></div>
-        <a href="#" onClick={() => history.go(-1)}>&larr; back</a>
-      </Card>
+        <Sticky stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}>
+          <div ref='map' id='map'></div>
+        </Sticky>
+      </div>
     )
-
   },
 
   getInitialState() {
     var art = this.props.data.artwork
+    art.id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
     return {
       art: art,
-      id: this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
+      id: art.id,
     }
   },
 
@@ -88,7 +60,6 @@ var Artwork = React.createClass({
           id: this.state.id,
           width: art.image_width,
           height: art.image_height,
-          fill: true,
         })
         this.tiles.addTo(this.map)
         // this.tiles.fillContainer()
