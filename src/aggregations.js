@@ -47,12 +47,12 @@ var Aggregations = React.createClass({
           </dl>)
         })}
         {showAdder &&
-          (<div id="more-aggs" className="mdl-cell--3-col">
-            <dl><dt><span className="toggleClose" onClick={toggleMoreAggs}><i className="material-icons">remove</i>Show Fewer Filters</span></dt>{aggs.slice(3).map(agg => {
-              return <dd key={agg.name} onClick={toggleAgg(agg)} style={{ opacity: agg.open || agg.active ? 1 : 0.5}}>{agg.displayName}</dd>
+          (<div id="more-aggs">
+            <dl><span className="toggleClose" onClick={toggleMoreAggs}><i className="material-icons">remove</i>Show Fewer Filters</span>{aggs.slice(3).map(agg => {
+              return <dd key={agg.name} onClick={toggleAgg(agg)} style={{ background: agg.open || agg.active ? 'rgb(35,35,35)' : 'white', color: agg.open || agg.active ? 'white' : 'rgb(35,35,35)'}}>{agg.displayName}</dd>
             })}</dl>
 
-          </div>) || (<div id="more-aggs" className="mdl-cell--3-col"><dl><dt><span className="toggleClose" onClick={toggleMoreAggs}><i className="material-icons">add</i>Show More Filters</span></dt></dl></div>)
+          </div>) || (<div id="more-aggs"><span className="toggleOpen" onClick={toggleMoreAggs}><i className="material-icons">add</i>Show More Filters</span></div>)
         }
       </div>
     )

@@ -120,13 +120,19 @@ header{
     padding:0 23px 0 0;
     white-space: normal;
 }
-#more-aggs dl {
+#more-aggs {
   width: 100%;
+  position: relative;
+  float: left;
+  margin: 10px 0;
+  display: inline-block;
+  background: rgba(35,35,35,.3);
+  height: 39px;
 }
 #more-aggs .material-icons {
   font-size: 1em;
 }
-#aggs dt, #more-aggs dt{
+#aggs dt{
     font-weight:400;
     color:$primary;
     text-transform:uppercase;
@@ -137,21 +143,27 @@ header{
     border-top:3px solid $primary;
     white-space: normal;
 }
-
+#aggs #more-aggs dd {
+  padding: 9px 15px;
+  background: $primary;
+  color: #ffffff;
+  display: inline-block;
+  border: none;
+  opacity: 1;
+  margin: 2px;
+  cursor: pointer;
+}
+.toggleOpen, .toggleClose {
+  position: absolute;
+  right: 0;
+  background: $primary;
+  color: white;
+  padding: 10px;
+}
 #aggs dd{
     line-height:1.1em;
     padding: .25em;
 }
-
-#aggs #more-aggs {
-  // position: absolute;
-  // top: 0;
-  // right: 0;
-  // height: 100%;
-  background: white;
-  display: inline-block;
-}
-
 .objects-wrap{
     width:33%;float:left;
     padding:10px;
