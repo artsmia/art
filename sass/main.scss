@@ -29,7 +29,7 @@ body{
     }
 
 a {
-  color: rgba(239, 53, 53, .75);
+  color: rgba(239, 53, 53, .9);
   font-weight: 500;
   text-decoration: none;
   font-size:1em;
@@ -118,9 +118,15 @@ header{
 #aggs dl{
     display:inline-block;
     padding:0 23px 0 0;
+    white-space: normal;
 }
-
-#aggs dt{
+#more-aggs dl {
+  width: 100%;
+}
+#more-aggs .material-icons {
+  font-size: 1em;
+}
+#aggs dt, #more-aggs dt{
     font-weight:400;
     color:$primary;
     text-transform:uppercase;
@@ -129,10 +135,12 @@ header{
     text-align: left;
     margin:0 0 10px 0;
     border-top:3px solid $primary;
+    white-space: normal;
 }
 
 #aggs dd{
-    line-height:1.65em;
+    line-height:1.1em;
+    padding: .25em;
 }
 
 #aggs #more-aggs {
@@ -141,8 +149,6 @@ header{
   // right: 0;
   // height: 100%;
   background: white;
-  border: 1px solid black;
-  width: 35%;
   display: inline-block;
 }
 
@@ -275,15 +281,16 @@ header{
     text-align:center;
 }
 
-.mdl-badge[data-badge]:after {
+.objectTotal {
     top:0;
-    right:-30px;
-    background-color: white;
     color:$primary;
-    border:1px solid $primary;
-    border-radius: 0;
 }
-
+.numbers {
+  font-family: $MiaGroteskBold;
+  color: rgba(35,35,35,.5);
+  padding-left: 10px;
+  font-size: .9em;
+}
 ::-webkit-input-placeholder {
    color: $support;
 }
@@ -434,12 +441,12 @@ a.departmentLink:hover  {
 }
 .departmentPage h2 {
   background: transparent;
-  border-top: 3px solid rgb(35,35,35);
-  font-size: 1.5em;
+  font-size: 1.75em;
   width: 100%;
   text-align: left;
-  padding: 7px 0 0;
+  padding: 7px 0 15px;
   margin: 0;
+  line-height: 1em;
 }
 .departmentContent, .departmentResources {
   padding: 0 5px;

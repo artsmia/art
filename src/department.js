@@ -16,7 +16,7 @@ var Department = React.createClass({
   },
 
   render() {
-    return <Search {...this.props} />
+    return <Search {...this.props} hideResults={true} />
   }
 })
 

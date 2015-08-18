@@ -25,21 +25,21 @@ var Aggregations = React.createClass({
         {aggs.map(function(agg) {
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
           const showAgg = agg.open || aggIsActive
-          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0', verticalAlign: 'top', opacity: showAgg ? 1 : 0.5}}>
+          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0', verticalAlign: 'top', opacity: showAgg ? 1 : 0.5}} className="mdl-cell--3-col">
             <dt style={{fontWeight: aggIsActive && 'bold'}} onClick={toggleAgg(agg)}>{agg.displayName}</dt>
-            {(agg.open || aggIsActive) && agg.buckets.slice(0, 5).map(function(bucket) { 
+            {(agg.open || aggIsActive) && agg.buckets.slice(0, 5).map(function(bucket) {
               const filterString = customFilters[agg.name] ? customFilters[agg.name][bucket.key] || bucket.key : agg.name.toLowerCase()+':"'+encodeURIComponent(bucket.key)+'"'
               const filterRegex = new RegExp(decodeURIComponent(filterString).replace(/([\[\]\?])/, '\\$1'), 'i')
               const bucketIsActive = search.filters && search.filters.match(filterRegex)
-              const newFilters = bucketIsActive ? 
+              const newFilters = bucketIsActive ?
                 search.filters.replace(filterRegex, '').trim() :
                 `${search.filters || ''} ${filterString}`.trim()
               const bucketText = `${bucket.key || '""'}`
 
               if(bucket.key) return (
-                <dd key={agg.name+bucket.key} style={{margin: '0', fontWeight: bucketIsActive && 'bold', textDecoration: bucketIsActive && 'underline'}}><span className='mdl-badge' data-badge={bucket.doc_count}>
+                <dd key={agg.name+bucket.key} style={{margin: '0', fontWeight: bucketIsActive && 'bold', textDecoration: bucketIsActive && 'underline'}}><span className='objectTotal'>
                   {<Link to={newFilters == '' ? 'searchResults' : 'filteredSearchResults'} params={{terms: `${search.query}`, splat: newFilters}}>
-                      {bucketText}
+                      {bucketText} <span className="numbers">{bucket.doc_count}</span>
                   </Link>}</span>
                 </dd>
               )
@@ -47,12 +47,12 @@ var Aggregations = React.createClass({
           </dl>)
         })}
         {showAdder &&
-          (<div id="more-aggs">
-            <div style={{width: '100%', display: 'flex', flexFlow: 'row wrap'}}>{aggs.slice(3).map(agg => {
-              return <p key={agg.name} onClick={toggleAgg(agg)} style={{padding: '0.25em', opacity: agg.open || agg.active ? 1 : 0.5}}>{agg.displayName}</p>
-            })}</div>
-            <p onClick={toggleMoreAggs}>(x)</p>
-          </div>) || <p onClick={toggleMoreAggs}>(+)</p>
+          (<div id="more-aggs" className="mdl-cell--3-col">
+            <dl><dt><span className="toggleClose" onClick={toggleMoreAggs}><i className="material-icons">remove</i>Show Fewer Filters</span></dt>{aggs.slice(3).map(agg => {
+              return <dd key={agg.name} onClick={toggleAgg(agg)} style={{ opacity: agg.open || agg.active ? 1 : 0.5}}>{agg.displayName}</dd>
+            })}</dl>
+
+          </div>) || (<div id="more-aggs" className="mdl-cell--3-col"><dl><dt><span className="toggleClose" onClick={toggleMoreAggs}><i className="material-icons">add</i>Show More Filters</span></dt></dl></div>)
         }
       </div>
     )
