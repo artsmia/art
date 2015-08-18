@@ -57,6 +57,7 @@ var Search = React.createClass({
   throttledSearch(event) {
     var terms = event.target.value
     this.setState({terms: terms})
+    if(terms === '') return
     this.debouncedSearch()
   },
 
