@@ -19,50 +19,59 @@ var DepartmentDecorator = React.createClass({
     var {department} = this.props
     var {deptName, selector, blurb, expanded} = this.state
 
+    var showFullInfo = this.getFullInfo()
+
     return <div className="departmentPage">
       <h2><Link to='department' params={{dept: deptName, terms: department}}>{deptName}</Link></h2>
       <div className="departmentContent mdl-cell--6-col">{expanded ? <Markdown>{blurb}</Markdown> : this.shortBlurb()}</div>
-      <div className="departmentResources mdl-cell--6-col">
-        <h3>Curator</h3>
-          <div className="curatorBio">
-            <div className="curatorPic"></div>
-            <h4>Curator Name</h4>
-            <h5>Curator title</h5>
-            <p>
-            Here is a paragraph introduction for a curator. It would end with a link to their full bio which will live on the main website.
-            </p>
-          </div>
-        <h3>Affinity Group</h3>
-          <div className="affinity">
-            <div className="affinityImage"></div>
-            <h4>Become a member of the {deptName} affinity group.</h4>
-            <p>
-            Here is what you get if you join this affinity group. There may be a list of items or we could have a custom paragraph for each affinity group.
-            </p>
-          </div>
-        <h3>Resources</h3>
-          <div className="resources">
-            <h4>Learn More. Read More.</h4>
-            <ul>
-              <li>Link to Article</li>
-              <li>Link to academic resource</li>
-              <li>Link to another site</li>
-            </ul>
-          </div>
-      </div>
+      {expanded && showFullInfo}
     </div>
   },
 
   getNameAndSelector(term) {
-    var deptName = term[0] && term[0].match(/department:"?([^"]*)"?/)[1]
-    return [deptName, departmentNamesMap[deptName]]
+    var namesMap = departmentNamesMap
+    var deptName = namesMap[term] ? term : term[0] && term[0].match(/department:"?([^"]*)"?/)[1]
+    return [deptName, namesMap[deptName]]
   },
 
   shortBlurb() {
     return <div>
       <Markdown>{this.state.blurb.split('\n')[0]}</Markdown>
     </div>
-  }
+  },
+
+  getFullInfo() {
+    var {deptName} = this.state
+
+    return <div className="departmentResources mdl-cell--6-col">
+      <h3>Curator</h3>
+        <div className="curatorBio">
+          <div className="curatorPic"></div>
+          <h4>Curator Name</h4>
+          <h5>Curator title</h5>
+          <p>
+          Here is a paragraph introduction for a curator. It would end with a link to their full bio which will live on the main website.
+          </p>
+        </div>
+      <h3>Affinity Group</h3>
+        <div className="affinity">
+          <div className="affinityImage"></div>
+          <h4>Become a member of the {deptName} affinity group.</h4>
+          <p>
+          Here is what you get if you join this affinity group. There may be a list of items or we could have a custom paragraph for each affinity group.
+          </p>
+        </div>
+      <h3>Resources</h3>
+        <div className="resources">
+          <h4>Learn More. Read More.</h4>
+          <ul>
+            <li>Link to Article</li>
+            <li>Link to academic resource</li>
+            <li>Link to another site</li>
+          </ul>
+        </div>
+    </div>
+  },
 })
 
 var DepartmentContent = {

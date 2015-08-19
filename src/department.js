@@ -4,6 +4,7 @@ var Router = require('react-router')
 var Search = require('./search')
 var SearchResults = require('./search-results')
 var Peek = require('./peek')
+var DepartmentDecorator = require('./decorate/department')
 
 var Department = React.createClass({
   mixins: [Router.State],
@@ -17,9 +18,11 @@ var Department = React.createClass({
   },
 
   render() {
+    var deptName = this.props.params.dept
     return <div>
       <Search {...this.props} hideResults={true} />
-      <Peek facet="department" q={this.props.params.dept} />
+      <DepartmentDecorator department={deptName} params={this.props.params} />
+      <Peek facet="department" q={deptName} />
     </div>
   }
 })
