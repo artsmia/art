@@ -7,10 +7,14 @@ var departmentNamesMap = require('../department-slug')
 var DepartmentDecorator = React.createClass({
   getInitialState() {
     var [deptName, selector] = this.getNameAndSelector(this.props.department)
+    var {departmentInfo} = this.props
+    var info = departmentInfo && departmentInfo.departments[selector]
+
     return {
       deptName: deptName,
       selector: selector,
-      blurb: DepartmentContent[selector] || `Sorry, there's no "${deptName}" department.`,
+      info: info,
+      blurb: info && info.content || DepartmentContent[selector] || `Sorry, there's no "${deptName}" department.`,
       expanded: this.props.expanded || !!this.props.params.dept || false,
     }
   },
@@ -19,12 +23,14 @@ var DepartmentDecorator = React.createClass({
     var {department} = this.props
     var {deptName, selector, blurb, expanded} = this.state
 
-    var showFullInfo = this.getFullInfo()
+    var [blurbA, blurbB] = blurb.split('<hr />')
 
-    return <div className="departmentPage">
+    var fullInfo = this.getFullInfo(blurbB)
+
+    return <div className="departmentBlurb">
       <h2><Link to='department' params={{dept: deptName, terms: department}}>{deptName}</Link></h2>
-      <div className="departmentContent mdl-cell--6-col">{expanded ? <Markdown>{blurb}</Markdown> : this.shortBlurb()}</div>
-      {expanded && showFullInfo}
+      <div className="departmentContent mdl-cell--6-col">{expanded ? <Markdown alreadyRendered={true}>{blurbA}</Markdown> : this.shortBlurb()}</div>
+      {expanded && fullInfo}
     </div>
   },
 

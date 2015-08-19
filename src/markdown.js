@@ -8,8 +8,9 @@ marked.setOptions({
 
 var Markdown = React.createClass({
   render() {
+    var content = this.props.children.replace('\n', '\n\n')
     if(!this.props.children) return <span />
-    const rendered = marked(this.props.children.replace('\n', '\n\n'))
+    const rendered = this.props.alreadyRendered ? content : marked(content)
     return <div dangerouslySetInnerHTML={{__html: rendered}}></div>
   },
 })

@@ -19,7 +19,7 @@ var Department = React.createClass({
         return SearchResults.fetchData.searchResults(params, query)
       },
       departments: (params, query) => {
-        return rest("http://cdn.dx.artsmia.org/collections/index.json").then((r) => JSON.parse(r.entity))
+        return rest("http://artsmia.github.io/collection-info/index.json").then((r) => JSON.parse(r.entity))
       }
     },
   },
@@ -28,7 +28,9 @@ var Department = React.createClass({
     var deptName = this.props.params.dept
     return <div>
       <Search {...this.props} hideResults={true} />
-      <DepartmentDecorator department={deptName} params={this.props.params} />
+      <div className="departmentPage">
+        <DepartmentDecorator department={deptName} params={this.props.params} departmentInfo={this.props.data.departments} />
+      </div>
       <Peek facet="department" q={deptName} />
     </div>
   }
