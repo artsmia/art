@@ -1,6 +1,8 @@
 var React = require('react')
 var Router = require('react-router')
 
+var rest = require('rest')
+
 var Search = require('./search')
 var SearchResults = require('./search-results')
 var Peek = require('./peek')
@@ -10,10 +12,15 @@ var Department = React.createClass({
   mixins: [Router.State],
 
   statics: {
-    fetchData: (params, query) => {
-      params.terms = '*'
-      params.splat = 'department:"'+encodeURIComponent(params.dept)+'"'
-      return SearchResults.fetchData(params, query)
+    fetchData: {
+      searchResults: (params, query) => {
+        params.terms = '*'
+        params.splat = 'department:"'+encodeURIComponent(params.dept)+'"'
+        return SearchResults.fetchData.searchResults(params, query)
+      },
+      departments: (params, query) => {
+        return rest("http://cdn.dx.artsmia.org/collections/index.json").then((r) => JSON.parse(r.entity))
+      }
     },
   },
 

@@ -9,9 +9,11 @@ var departmentNamesMap = require('./department-slug')
 
 var Home = React.createClass({
   statics: {
-    fetchData: (params, query) => {
-      let searchUrl = `${SEARCH}/highlight:true`
-      return rest(searchUrl).then((r) => JSON.parse(r.entity))
+    fetchData: {
+      searchResults: (params, query) => {
+        let searchUrl = `${SEARCH}/highlight:true`
+        return rest(searchUrl).then((r) => JSON.parse(r.entity))
+      }
     }
   },
 

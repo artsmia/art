@@ -14,7 +14,6 @@ var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
   getInitialState() {
-    this.props.data.searchResults = this.props.data.searchResults || this.props.data.home || this.props.data.department
     const results = this.props.data.searchResults
     return {
       terms: this.props.params.terms,

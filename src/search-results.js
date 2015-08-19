@@ -13,12 +13,14 @@ var SearchResults = React.createClass({
   mixins: [Router.State],
 
   statics: {
-    fetchData: (params, query) => {
-      var size = query.size || 100
-      const filters = params.splat
-      let searchUrl = `${SEARCH}/${params.terms}?size=${size}`
-      if(filters) searchUrl += `&filters=${filters}`
-      return rest(searchUrl).then((r) => JSON.parse(r.entity))
+    fetchData: {
+      searchResults: (params, query) => {
+        var size = query.size || 100
+        const filters = params.splat
+        let searchUrl = `${SEARCH}/${params.terms}?size=${size}`
+        if(filters) searchUrl += `&filters=${filters}`
+        return rest(searchUrl).then((r) => JSON.parse(r.entity))
+      }
     }
   },
 

@@ -49,12 +49,22 @@ Router.run(routes, (Handler, state) => {
 
     return route.handler.fetchData
   }).reduce((promises, route) => {
-    promises[route.name] = route.handler.fetchData(state.params, state.query)
+    const fetchData = route.handler.fetchData
+    // `fetchData` is either a function, or an object with keyed functions.
+    // If a component requires custom-named data or pulls data from multiple sources,
+    // each data is fetched from the value of each entry in the object and made 
+    // available under the key
+    if(typeof fetchData == 'function') {
+      promises[route.name] = fetchData(state.params, state.query)
+    } else if(typeof fetchData == 'object') {
+      Object.entries(fetchData).map(([name, _fetchData]) => promises[name] = _fetchData(state.params, state.query))
+    }
+    console.info('promises', promises)
     return promises
   }, {})
 
   resolveHash(promises).then(data => {
-    const search = data.searchResults || data.filteredSearchResults
+    const search = data.searchResults
     if(search) console.info('search took', search.took, search)
     React.render(<Handler {...state} data={data}/>, document.body)
   })
