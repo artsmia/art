@@ -72,7 +72,7 @@ const ImageQuilt = React.createClass({
         // the same factor "shaves" the right amount off each image.
         const _width = Math.floor(computedWidth*3)/3
         const height = _width/_art.aspect_ratio
-        const maxRowHeight = 200
+        const maxRowHeight = this.props.maxRowHeight || 200
         const widthAdjustedToClipTallRows = unadjustedHeight > maxRowHeight ? _width/(unadjustedHeight/maxRowHeight) : _width
         // const widthAdjustedToClipTallRows = _width
 

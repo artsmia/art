@@ -21,11 +21,11 @@ var Peek = React.createClass({
     var {results, facetedQ} = this.state
     var result = results && results[facetedQ]
 
-    return <div onClick={this.onClick} style={{maxWidth: this.state.maxWidth || "100%"}}>
+    return <div onClick={this.onClick}>
       <ClickToSelect>
         {this.props.children}
       </ClickToSelect>
-      {this.state.open && result && <div className="peek" style={{fontSize: '73%', display: 'table'}}>
+      {this.state.open && result && <div className="peek" style={{fontSize: '73%', maxWidth: this.state.maxWidth || "100%"}}>
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
           {result && this.quiltFromResults()}
           {result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
@@ -55,12 +55,21 @@ var Peek = React.createClass({
     return <ImageQuilt
       maxRows={1}
       maxWorks={7}
-      artworks={wImg.length > 3 ? wImg : result.hits.hits} />
+      artworks={wImg.length > 3 ? wImg : result.hits.hits}
+      {...this.props.quiltProps}
+      />
   },
 
-  componentDidMount: function() {
+  handleResize() {
     this.setState({maxWidth: React.findDOMNode(this).clientWidth})
+  },
+  componentDidMount: function() {
     if(this.state.open) this.fetchResults()
+    this.handleResize()
+    window.addEventListener('resize', this.handleResize)
+  },
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize)
   },
 
   getSelectedText() {

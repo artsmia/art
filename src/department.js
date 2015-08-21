@@ -31,7 +31,7 @@ var Department = React.createClass({
       <div className="departmentPage">
         <DepartmentDecorator department={deptName} params={this.props.params} departmentInfo={this.props.data.departments} />
       </div>
-      <Peek facet="department" q={deptName} />
+      <Peek facet="department" q={deptName} quiltProps={{maxRowHeight: 400}} />
     </div>
   }
 })
