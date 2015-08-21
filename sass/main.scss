@@ -488,12 +488,15 @@ a.departmentLink:hover  {
   margin-bottom: 20px;
 }
 .curatorPic, .affinityImage {
-  width: 150px;
-  height: 150px;
   float:left;
   display: inline-block;
   background: rgba(35,35,35,.3);
   margin-right: 20px;
+
+  img {
+    max-width: 150px;
+    max-height: 150px;
+  }
 }
 .curatorBio h4 {
   font-size: 1.1em;

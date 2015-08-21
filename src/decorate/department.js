@@ -25,7 +25,7 @@ var DepartmentDecorator = React.createClass({
 
     var [blurbA, blurbB] = blurb.split('<hr />')
 
-    var fullInfo = this.getFullInfo(blurbB)
+    var fullInfo = expanded && this.getFullInfo(blurbB)
 
     return <div className="departmentBlurb">
       <h2><Link to='department' params={{dept: deptName, terms: department}}>{deptName}</Link></h2>
@@ -46,37 +46,49 @@ var DepartmentDecorator = React.createClass({
     </div>
   },
 
-  getFullInfo() {
+  getFullInfo(info) {
     var {deptName} = this.state
 
     return <div className="departmentResources mdl-cell--6-col">
-      <h3>Curator</h3>
-        <div className="curatorBio">
-          <div className="curatorPic"></div>
-          <h4>Curator Name</h4>
-          <h5>Curator title</h5>
-          <p>
-          Here is a paragraph introduction for a curator. It would end with a link to their full bio which will live on the main website.
-          </p>
-        </div>
-      <h3>Affinity Group</h3>
-        <div className="affinity">
-          <div className="affinityImage"></div>
-          <h4>Become a member of the {deptName} affinity group.</h4>
-          <p>
-          Here is what you get if you join this affinity group. There may be a list of items or we could have a custom paragraph for each affinity group.
-          </p>
-        </div>
-      <h3>Resources</h3>
-        <div className="resources">
-          <h4>Learn More. Read More.</h4>
-          <ul>
-            <li>Link to Article</li>
-            <li>Link to academic resource</li>
-            <li>Link to another site</li>
-          </ul>
-        </div>
+      <div>{this.getCurators()}</div>
+      <Markdown alreadyRendered={true}>{info}</Markdown>
+      <div>{this.getAffinity()}</div>
     </div>
+  },
+
+  getCurators() {
+    var curators = this.state.info.curators
+    .map(name => this.props.departmentInfo.curators[name])
+    .filter(exists => !!exists)
+
+    return <div id="curators">
+      <h3>Curators</h3>
+      {curators.map(curator => {
+        return <div className="curatorBio" key={curator.slug}>
+          <div className="curatorPic">
+            <img src={curator.photo} />
+          </div>
+          <h4>{curator.name}</h4>
+          <h5><Markdown>{curator.title}</Markdown></h5>
+        </div>
+      })}
+    </div>
+  },
+
+  getAffinity() {
+    var affinities = this.props.departmentInfo.affinityGroups
+    .filter(ag => ag.departments && ag.departments.indexOf(departmentNamesMap[this.props.department]) > -1) 
+
+    return affinities.map(a => {
+      var image = <img src={a.featuredArt ? `http://api.artsmia.org/images/${a.featuredArt}/400/medium.jpg` : a.image} />
+      image = a.featuredArt ? <Link to="artwork" params={{id: a.featuredArt}}>{image}</Link> : image
+
+      return <div className="affinity">
+        <h3>{a.title}</h3>
+        <div className="affinityImage">{image}</div>
+        <Markdown alreadyRendered={true}>{a.content}</Markdown>
+      </div>
+    })
   },
 })
 
