@@ -23,10 +23,15 @@ var Search = React.createClass({
 
   render() {
     const results = this.props.data.searchResults || this.props.data.home || this.props.data.department
-    const quiltProps = this.props.params.terms ? [2, 10] : [3, 30]
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
     const headerArtworks = ImageQuilt.getImagedResults(hits)
     const showQuilt = (headerArtworks)
+    var quiltProps = Object.assign({
+      maxRows: 2,
+      maxWorks: 10,
+      artworks: headerArtworks,
+      onClick: this.updateFromQuilt,
+    }, this.props.quiltProps || {})
     const simpleSearchBox = <div className='mdl-textfield mdl-js-textfield'><input className='mdl-textfield__input' type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}} /></div>
 
     const searchBox = (
@@ -36,7 +41,7 @@ var Search = React.createClass({
                 {simpleSearchBox}
             </div>
         </div>
-        {showQuilt && <ImageQuilt maxRows={quiltProps[0]} maxWorks={quiltProps[1]} artworks={headerArtworks} onClick={this.updateFromQuilt} />}
+        {showQuilt && <ImageQuilt {...quiltProps} />}
       </div>
     )
 

@@ -19,7 +19,7 @@ var Home = React.createClass({
 
   render() {
     return <div>
-      <Search hideResults={true} {...this.props} />
+      <Search hideResults={true} quiltProps={{maxRows: 3, maxWorks: 30}} {...this.props} />
       <HomeDepartments />
     </div>
   },
