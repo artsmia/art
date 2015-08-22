@@ -18,6 +18,7 @@ var Search = React.createClass({
     return {
       terms: this.props.params.terms,
       hits: results && results.hits && results.hits.hits || [],
+      showAggs: this.props.showAggs,
     }
   },
 
@@ -27,7 +28,7 @@ var Search = React.createClass({
     const headerArtworks = ImageQuilt.getImagedResults(hits)
     const showQuilt = (headerArtworks)
     var quiltProps = Object.assign({
-      maxRows: 2,
+      maxRows: this.state.showAggs ? 1 : 2,
       maxWorks: 10,
       artworks: headerArtworks,
       onClick: this.updateFromQuilt,
@@ -49,7 +50,12 @@ var Search = React.createClass({
       <div id="search">
         {searchBox}
         {this.props.hideResults || <div>
-          <SearchSummary search={this.props.data.searchResults} hits={this.state.hits} params={this.props.params} />
+          <SearchSummary
+            search={this.props.data.searchResults}
+            hits={this.state.hits}
+            params={this.props.params}
+            showAggs={this.state.showAggs}
+            toggleAggs={this.toggleAggs} />
           <SearchResults {...this.props} hits={this.state.hits} />
         </div>}
       </div>
@@ -100,6 +106,10 @@ var Search = React.createClass({
       nextHits.splice(index, 1)
     }
     this.setState({hits: nextHits || hits})
+  },
+
+  toggleAggs() {
+    this.setState({showAggs: !this.state.showAggs})
   },
 })
 

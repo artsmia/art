@@ -5,18 +5,12 @@ var Decorate = require('./decorate')
 var Aggregations = require('./aggregations')
 
 const SearchSummary = React.createClass({
-  getInitialState() {
-    return {
-      showAggs: false,
-    }
-  },
-
   render() {
     const search = this.props.search
     if(!search || !search.hits) return <div />
     const hits = this.props.hits
     const results = this.props.results
-    const {showAggs} = this.state
+    const {showAggs} = this.props
 
     const showAllLink = search &&
       <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
@@ -48,7 +42,7 @@ const SearchSummary = React.createClass({
   },
 
   toggleAggs() {
-    this.setState({showAggs: !this.state.showAggs})
+    this.props.toggleAggs()
   },
 })
 
