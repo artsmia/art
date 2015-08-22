@@ -254,9 +254,13 @@ header{
 
 
 .search-wrap div:first-child {
-    width:33%;
+    width: 23em;
     margin:0 auto;
     color:$primary;
+    opacity: 0.95;
+}
+.search-wrap .mdl-textfield {
+  min-width: 100px;
 }
 
 .search-wrap div h2{
