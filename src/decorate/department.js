@@ -83,7 +83,7 @@ var DepartmentDecorator = React.createClass({
       var image = <img src={a.featuredArt ? `http://api.artsmia.org/images/${a.featuredArt}/400/medium.jpg` : a.image} />
       image = a.featuredArt ? <Link to="artwork" params={{id: a.featuredArt}}>{image}</Link> : image
 
-      return <div className="affinity">
+      return <div className="affinity" key={a.title}>
         <h3>{a.title}</h3>
         <div className="affinityImage">{image}</div>
         <Markdown alreadyRendered={true}>{a.content}</Markdown>

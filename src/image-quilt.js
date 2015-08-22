@@ -81,6 +81,7 @@ const ImageQuilt = React.createClass({
           onClick={this.clicked.bind(this, art)}
           onMouseEnter={this.hovered.bind(this, art, true)}
           onMouseLeave={this.hovered.bind(this, art, false)}
+          key={_art.id}
           />
       })
 
@@ -147,7 +148,6 @@ var QuiltPatch = React.createClass({
     }
 
     var image = <img style={style}
-      key={id}
       src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} {...other} />
 
     var textStyle = {
