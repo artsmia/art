@@ -19,6 +19,7 @@ var SearchResultsD = React.createClass({
         <ImageQuilt artworks={hits}
           maxRows={1000}
           rowHeight={targetHeight}
+          maxRowHeight={500}
           onClick={this.clickResult}
           disableHover={true} />
       </div>
