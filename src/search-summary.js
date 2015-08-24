@@ -18,7 +18,7 @@ const SearchSummary = React.createClass({
              query={{size: search.hits.total}}>show all</Link>)
       </span>
 
-    const toggleAggs = hits.length > 0 && <span>
+    const toggleAggs = hits.length > 1 && <span>
       &nbsp; (<a onClick={this.toggleAggs} style={{cursor: 'pointer'}}>{showAggs ? 'hide filters' : 'filter search'}</a>)
     </span>
 
