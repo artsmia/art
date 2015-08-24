@@ -27,7 +27,10 @@ var Department = React.createClass({
   render() {
     var deptName = this.props.params.dept
     return <div>
-      <Search {...this.props} hideResults={true} />
+      <Search
+        link={['searchResults', {terms: `department:${deptName}`}]}
+        {...this.props}
+        hideResults={true} />
       <div className="departmentPage">
         <DepartmentDecorator department={deptName} params={this.props.params} departmentInfo={this.props.data.departments} />
       </div>

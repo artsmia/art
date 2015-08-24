@@ -32,8 +32,8 @@ var Search = React.createClass({
       maxWorks: 10,
       artworks: headerArtworks,
       onClick: this.updateFromQuilt,
+      disableHover: this.props.hideResults,
     }, this.props.quiltProps || {})
-    console.info('search', quiltProps)
     const simpleSearchBox = <div className='mdl-textfield mdl-js-textfield'><input className='mdl-textfield__input' type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}} /></div>
 
     var quiltSearchStyles = {
@@ -111,15 +111,25 @@ var Search = React.createClass({
   updateFromQuilt(art) {
     const hits = this.props.data.searchResults.hits.hits
     if(art) {
-      const index = hits.indexOf(art)+1
+      if(this.props.link) this.linkToClickedArtwork(this.props.link, art)
+      var index = hits.indexOf(art)+1
+      if(hits.indexOf(art) === -1) {
+        var sameArtDifferentObject = hits.filter(h => h._id === art._id)
+        if(sameArtDifferentObject) index = hits.indexOf(sameArtDifferentObject[0])+1
+      }
       var nextHits = ([art].concat(hits))
       nextHits.splice(index, 1)
+      this.setState({hits: nextHits || hits})
     }
-    this.setState({hits: nextHits || hits})
   },
 
   toggleAggs() {
     this.setState({showAggs: !this.state.showAggs})
+  },
+
+  linkToClickedArtwork(link, art) {
+    window.clickedArtwork = art
+    this.transitionTo(...link)
   },
 })
 

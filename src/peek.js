@@ -10,6 +10,8 @@ var ImageQuilt = require('./image-quilt')
 // TODO: I can't get onClick to work directly on <ClickToSelect>??
 
 var Peek = React.createClass({
+  mixins: [Router.State, Router.Navigation],
+
   getInitialState() {
     return {
       open: !!this.props.q,
@@ -27,8 +29,8 @@ var Peek = React.createClass({
         {this.props.children}
       </ClickToSelect>}
       {this.state.open && result && <div className="peek" style={{fontSize: '73%', maxWidth: this.state.maxWidth || "100%"}}>
+        {result && this.quiltFromResults()}
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
-          {result && this.quiltFromResults()}
           {result.hits && result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
         </Link>
       </div>}
@@ -38,7 +40,6 @@ var Peek = React.createClass({
 
   onClick() {
     if(this.state.open) return this.setState({open: false})
-    console.info('peek q & qs', this.getText(), this.getQs())
 
     this.setState({
       open: true,
@@ -60,6 +61,8 @@ var Peek = React.createClass({
       maxWorks={7}
       artworks={wImg.length > 3 ? wImg : hits}
       {...this.props.quiltProps}
+      onClick={this.linkToResults}
+      disableHover={true}
       />
   },
 
@@ -117,6 +120,12 @@ var Peek = React.createClass({
       })
     })
   },
+
+  linkToResults(art) {
+    if(!art) return
+    window.clickedArtwork = art
+    this.transitionTo('searchResults', {terms: this.state.facetedQ})
+  }
 })
 
 module.exports = Peek

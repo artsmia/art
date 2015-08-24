@@ -25,9 +25,11 @@ var SearchResults = React.createClass({
   },
 
   getInitialState() {
-    var firstHit = this.props.hits[0]
+    var focus = window.clickedArtwork || this.props.hits[0]
+    setTimeout(() => window.clickedArtwork = null)
+
     return {
-      focusedResult: firstHit && firstHit._source,
+      focusedResult: focus && focus._source,
       view: SearchResultsD,
     }
   },
@@ -39,7 +41,8 @@ var SearchResults = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.focusResult(nextProps.hits[0])
+    this.focusResult(window.clickedArtwork || nextProps.hits[0])
+    if(window.clickedArtwork) window.clickedArtwork = null
   },
 
   render() {
