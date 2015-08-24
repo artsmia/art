@@ -81,17 +81,17 @@ const ImageQuilt = React.createClass({
           />
       })
 
+      // centered doesn't work on the first row because the search box is in the way
+      // space-around looks best on bottom rows
+      const justify = index == 0 && row.length <=3 ? 'space-around' : 'center'
       var rowStyle = {
         background: 'black',
         minHeight: Math.min(unadjustedHeight, this.props.maxRowHeight),
         display: 'flex',
         justifyContent: justify,
-        'white-space': 'nowrap',
+        whiteSpace: 'nowrap',
       }
 
-      // centered doesn't work on the first row because the search box is in the way
-      // space-around looks best on bottom rows
-      const justify = index == 0 && row.length <=3 ? 'space-around' : 'center'
       return <div className='quilt-row-wrap'
         key={'row'+index}
         style={rowStyle}>
@@ -169,7 +169,7 @@ var QuiltPatch = React.createClass({
       backgroundColor: '#fff',
       padding: '0.25em',
       flexGrow: 1,
-      'white-space': 'normal',
+      whiteSpace: 'normal',
     }
 
     return art.image == 'valid' ? image : <span style={textStyle} {...other}>
