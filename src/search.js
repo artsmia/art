@@ -10,11 +10,11 @@ var SearchResults = require('./search-results')
 var SearchSummary = require('./search-summary')
 
 var Search = React.createClass({
-
   mixins: [Router.State, Router.Navigation],
 
   getInitialState() {
     const results = this.props.data.searchResults
+    results || this.transitionTo('home')
     return {
       terms: this.props.params.terms,
       hits: results && results.hits && results.hits.hits || [],
