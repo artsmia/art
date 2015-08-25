@@ -1,4 +1,5 @@
 var React = require('react')
+
 var linearPartition = require('linear-partitioning')
 var ArtworkImage = require('./artwork-image')
 var LazyLoad = require('react-lazy-load')
@@ -46,17 +47,7 @@ const ImageQuilt = React.createClass({
     var rowHeight = this.props.rowHeight || 200
     var numRows = Math.min(this.props.maxRows, Math.max(Math.floor(summedAspectRatio*rowHeight/this.state.width), 1))
 
-    const partitionBy = function(collection, weightFn, k) {
-      let weights = collection.map(weightFn)
-      let partition = linearPartition(weights, k)
-
-      let index = 0
-      return partition.map((weightedRow) => {
-        return weightedRow.map((weight, i) => collection[index++])
-      })
-    }
-
-    var rows = partitionBy(artworks, (art) => art._source.aspect_ratio*100, numRows)
+    var rows = this.getPartition(artworks, numRows)
 
     const images = rows.map((row, index) => {
       var rowSummedAspectRatio = row.reduce((sum, art) => {return sum+art._source.aspect_ratio}, 0)
@@ -104,6 +95,28 @@ const ImageQuilt = React.createClass({
         {images}
       </div>
     )
+  },
+
+  cachedPartitions: {},
+
+  getPartition(artworks, numRows) {
+    var memoKey = `${this.state.width}|${artworks.map(art => art._id).join('-')}`
+    var memo = this.cachedPartitions[memoKey]
+    if(memo) return memo
+
+    const partitionBy = function(collection, weightFn, k) {
+      let weights = collection.map(weightFn)
+      let partition = linearPartition(weights, k)
+
+      let index = 0
+      return partition.map((weightedRow) => {
+        return weightedRow.map((weight, i) => collection[index++])
+      })
+    }
+
+    var rows = partitionBy(artworks, (art) => art._source.aspect_ratio*100, numRows)
+    this.cachedPartitions[memoKey] = rows
+    return rows
   },
 
   // The quilt changes the order of search results in 2 ways:
