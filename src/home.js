@@ -68,7 +68,7 @@ var HomeDepartments = React.createClass({
     <div className="departmentList">
       <h2>Departments</h2>
         {this.departments.map((dept) => {
-          return <Link to='department' params={{dept: dept}} className="departmentLink mdl-cell--6-col"><div className={[departmentNamesMap[dept], "departmentListItem"].join(' ')}></div><h2>{dept}</h2></Link>
+          return <Link to='department' key={departmentNamesMap[dept]} params={{dept: dept}} className="departmentLink mdl-cell--6-col"><div className={[departmentNamesMap[dept], "departmentListItem"].join(' ')}></div><h2>{dept}</h2></Link>
         })}</div></div>
       },
     })
