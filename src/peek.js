@@ -55,7 +55,7 @@ var Peek = React.createClass({
     var hits = result && result.hits && result.hits.hits || []
 
     if(!result || !hits || hits.length <= 1) return <span/>
-    var wImg = ImageQuilt.getImagedResults(hits)
+    var wImg = ImageQuilt.getImagedResults(hits).slice(10, 20)
     return <ImageQuilt
       maxRows={1}
       maxWorks={7}
@@ -111,7 +111,7 @@ var Peek = React.createClass({
       facetedQ: facetedQ,
     })
 
-    this.state.results[facetedQ] || rest(`${SEARCH}/${facetedQ}?size=10`).then((r) => {
+    this.state.results[facetedQ] || rest(`${SEARCH}/${facetedQ}?size=20`).then((r) => {
       var results = this.state.results
       results[facetedQ] = JSON.parse(r.entity)
       this.setState({
