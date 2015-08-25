@@ -4,6 +4,7 @@ var rest = require('rest')
 
 var ArtworkResult = require('./artwork-result')
 var SEARCH = require('./search-endpoint')
+var SearchSummary = require('./search-summary')
 var SearchResultsA = require('./search-results/a')
 var SearchResultsB = require('./search-results/b')
 var SearchResultsC = require('./search-results/c')
@@ -31,6 +32,7 @@ var SearchResults = React.createClass({
     return {
       focusedResult: focus && focus._source,
       view: SearchResultsD,
+      showAggs: this.props.showAggs,
     }
   },
 
@@ -57,11 +59,18 @@ var SearchResults = React.createClass({
     var {focusedResult} = this.state
 
     return <div>
-      <SearchResultViewToggle 
-        click={this.changeView}
-        activeView={this.state.view}
-        views={[SearchResultsA, SearchResultsB, SearchResultsC, SearchResultsD]}
-      />
+      <SearchSummary
+        search={this.props.data.searchResults}
+        hits={this.props.hits}
+        params={this.props.params}
+        showAggs={this.state.showAggs}
+        toggleAggs={this.toggleAggs}>
+        <SearchResultViewToggle 
+          click={this.changeView}
+          activeView={this.state.view}
+          views={[SearchResultsA, SearchResultsB, SearchResultsC, SearchResultsD]}
+        />
+      </SearchSummary>
       <this.state.view
         results={results}
         focusedResult={focusedResult}
@@ -81,6 +90,10 @@ var SearchResults = React.createClass({
     var nextView = next || (this.state.view == SearchResultsA ? SearchResultsB : SearchResultsA)
     this.setState({view: nextView})
   },
+
+  toggleAggs() {
+    this.setState({showAggs: !this.state.showAggs})
+  },
 })
 
 module.exports = SearchResults
@@ -95,7 +108,7 @@ var SearchResultViewToggle = React.createClass({
       if(activeView === r) style.fontWeight = 'bold'
       return <span key={name} onClick={this.toggleView.bind(this, r)} style={style}>{name}</span>
     })
-    return <div>{toggles}</div>
+    return <span>{toggles}</span>
   },
 
   toggleView(view) {

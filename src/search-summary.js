@@ -26,6 +26,7 @@ const SearchSummary = React.createClass({
 
     return (
       <div className='agg-wrap'>
+        {this.props.children}
         <h2 onClick={this.toggleContent}>
           showing {hits.length} {' '}
           {showingAll || <span>of {search.hits.total} {' '}</span>}
