@@ -1,10 +1,13 @@
 var React = require('react')
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
 var linearPartition = require('linear-partitioning')
 var ArtworkImage = require('./artwork-image')
 var LazyLoad = require('react-lazy-load')
 
 const ImageQuilt = React.createClass({
+  mixins: [PureRenderMixin],
+
   getInitialState() {
     return {
       active: null,
