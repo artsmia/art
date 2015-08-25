@@ -225,13 +225,15 @@ header{
 
 .objects-focus{
     float:left;
-    padding-top:2em;
-    border-top:3px solid $primary;
+    padding:1.25em 20px;
+    background-color:#ededed;
+    width:100%;
 }
 
     .objects-focus h2{
-        font-size:2.5em;
-        margin-bottom:10px;
+        font-size:2em;
+        line-height:0.9em;
+        margin-bottom:7px;
         font-family: $MiaGroteskLightItalic;
         font-style: italic;
     }
@@ -241,17 +243,36 @@ header{
         font-size:0.65em;
         font-family: $MiaGroteskRegular;
         font-style: normal;
+        display:inline-block;
     }
 
     .objects-focus h5{
         font-family: $MiaGroteskBold;
         margin-bottom:20px;
+        color:$support;
+        display:inline-block;
+    }
+    
+     .objects-focus h6{
+         color:$support;
+     }
+    
+    .objects-focus h5:after{
+        content:"\00bb";
     }
 
     .objects-focus .tombstone{
         margin:20px 0;
         font-size:smaller;
         line-height:1.2em;
+        border-top:1px solid $primary;
+        width:100%;
+        padding-top:4px;
+    }
+    
+    .objects-focus .artwork-image{
+        width:100%;
+        height:auto;
     }
 
 
