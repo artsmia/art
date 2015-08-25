@@ -74,7 +74,7 @@ var SearchResults = React.createClass({
 
   focusResult(hit, nextView = false) {
     nextView && this.changeView(nextView)
-    this.setState({focusedResult: hit && hit._source})
+    hit && this.setState({focusedResult: hit._source})
   },
 
   changeView(next) {
