@@ -27,9 +27,9 @@ var DepartmentDecorator = React.createClass({
 
     var fullInfo = expanded && this.getFullInfo(blurbB)
 
-    return <div className="departmentBlurb">
+    return <div className="departmentBlurb mdl-grid">
       <h2><Link to='department' params={{dept: deptName, terms: department}}>{deptName}</Link></h2>
-      <div className="departmentContent mdl-cell--6-col">{expanded ? <Markdown alreadyRendered={true}>{blurbA}</Markdown> : this.shortBlurb()}</div>
+      <div className="departmentContent mdl-cell mdl-cell--6-col">{expanded ? <Markdown alreadyRendered={true}>{blurbA}</Markdown> : this.shortBlurb()}</div>
       {expanded && fullInfo}
     </div>
   },
@@ -49,7 +49,7 @@ var DepartmentDecorator = React.createClass({
   getFullInfo(info) {
     var {deptName} = this.state
 
-    return <div className="departmentResources mdl-cell--6-col">
+    return <div className="departmentResources mdl-cell mdl-cell--6-col">
       <div>{this.getCurators()}</div>
       <Markdown alreadyRendered={true}>{info}</Markdown>
       <div>{this.getAffinity()}</div>
@@ -77,7 +77,7 @@ var DepartmentDecorator = React.createClass({
 
   getAffinity() {
     var affinities = this.props.departmentInfo.affinityGroups
-    .filter(ag => ag.departments && ag.departments.indexOf(departmentNamesMap[this.props.department]) > -1) 
+    .filter(ag => ag.departments && ag.departments.indexOf(departmentNamesMap[this.props.department]) > -1)
 
     return affinities.map(a => {
       var image = <img src={a.featuredArt ? `http://api.artsmia.org/images/${a.featuredArt}/400/medium.jpg` : a.image} />

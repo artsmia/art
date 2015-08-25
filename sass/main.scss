@@ -1,6 +1,6 @@
 @import "reset.scss";
 @import "brand-colors.scss";
-@import "mia-font.scss";
+@import "ui-icons-font.scss";
 
 $MiaGroteskBold: 'MiaGrotesk-Bold', sans-serif;
 $MiaGroteskBoldItalic: 'MiaGrotesk-BoldItalic', sans-serif;
@@ -90,19 +90,19 @@ header{
 }
 
 .agg-wrap{
-    background-color:#fff;
+    background-color:#ffffff;
 }
 
 .agg-wrap h2{
-    padding:1em;
     color:$whitish;
-    background-color:$primary;
     text-align:center;
     cursor: pointer;
+    line-height: 1em;
+    padding-top: 7px;
 }
 
 #aggs{
-    padding:1em;
+    padding:1em 0;
     height:auto;
     overflow: hidden;
     -webkit-transition: height 0.3s ease-in;
@@ -324,14 +324,33 @@ header{
 :-ms-input-placeholder {
    color: $support;
 }
-
+/* ===== TOOLBAR STYLES ===== */
+.toolbar {
+  background: $primary;
+}
+.filter-button {
+  border: 3px solid #ffffff;
+  padding: 5px 20px;
+  float: right;
+}
+.filter-button a, .filter-button a:hover {
+  color: #ffffff;
+}
+.filter-button:hover {
+  opacity: .7;
+}
+.views {
+  color: #ffffff;
+  font-size: 2em;
+}
+.views .B:hover, .views .D:hover {
+  opacity: .7;
+}
 /* ===== LANDING PAGE STYLES ===== */
 .landingPageBody, .departmentPage {
-  margin: 1em;
   display: inline-block;
 }
 .shortcutLinks {
-  display: inline-block;
   width: 100%;
   text-align: right;
   margin-bottom: 20px;
@@ -353,16 +372,10 @@ header{
   font-size: 1.5em;
   border-top: 3px solid rgb(35,35,35);
   padding: 7px 0 0;
-  margin: 7px 5px;
+  margin: 7px 0;
   line-height: 1em;
 }
-.mdl-cell--4-col, a.mdl-cell--4-col {
-  display: inline-block;
-  float: left;
-}
-.mdl-cell--4-col div {
-  border: 5px solid #ffffff;
-}
+
 .shortcutAccessions {
   width: 100%;
   background: url(../images/recent.png) no-repeat top center;
@@ -453,10 +466,6 @@ a.departmentLink:hover  {
   opacity: .5;
 }
 /* ===== DEPARTMENT PAGES ===== */
-.departmentPage .mdl-cell--6-col {
-  display: inline-block;
-  float: left;
-}
 .departmentPage h2 {
   background: transparent;
   font-size: 1.75em;
@@ -516,4 +525,3 @@ a.departmentLink:hover  {
 .quilt-wrap .lazy-load {
   display: inline-block;
 }
-

@@ -65,7 +65,7 @@ var SearchResults = React.createClass({
         params={this.props.params}
         showAggs={this.state.showAggs}
         toggleAggs={this.toggleAggs}>
-        <SearchResultViewToggle 
+        <SearchResultViewToggle
           click={this.changeView}
           activeView={this.state.view}
           views={[SearchResultsB, SearchResultsD]}
@@ -111,11 +111,9 @@ var SearchResultViewToggle = React.createClass({
 
     var toggles = views.map((r) => {
       var name = r.displayName.replace('SearchResults', '')
-      var style={marginRight: '0.25em'}
-      if(activeView === r) style.fontWeight = 'bold'
-      return <span key={name} onClick={this.toggleView.bind(this, r)} style={style}>{name}</span>
+      return <span key={name} onClick={this.toggleView.bind(this, r)}><i className={name}></i></span>
     })
-    return <span>{toggles}</span>
+    return <div className="mdl-cell mdl-cell--2-col views">{toggles}</div>
   },
 
   toggleView(view) {

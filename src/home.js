@@ -45,30 +45,32 @@ var HomeDepartments = React.createClass({
 
   render() {
     return <div className="landingPageBody">
-    <div className="shortcutLinks">
-      <Link to='searchResults' params={{terms: 'highlight:true'}} className="mdl-cell--4-col" >
-        <div className="shortcutHighlights">
-        </div>
-          <h2>Highlights</h2>
-            <sub>The pride and joy of Mia</sub>
-      </Link>
-      <div className="mdl-cell--4-col">
+    <div className="shortcutLinks mdl-grid">
+      <div className="mdl-cell mdl-cell--4-col">
+        <Link to='searchResults' params={{terms: 'highlight:true'}} >
+          <div className="shortcutHighlights">
+          </div>
+            <h2>Highlights</h2>
+              <sub>The pride and joy of Mia</sub>
+        </Link>
+      </div>
+      <div className="mdl-cell mdl-cell--4-col">
         <div className="shortcutAccessions">
         </div>
           <h2>New Art<sup>*</sup></h2>
           <sub>*new to Mia</sub>
       </div>
-      <div className="mdl-cell--4-col">
+      <div className="mdl-cell mdl-cell--4-col">
         <div className="shortcutBrowse">
         </div>
           <h2>Browse</h2>
           <sub>Not sure what to search?</sub>
       </div>
     </div>
-    <div className="departmentList">
+    <div className="departmentList mdl-grid">
       <h2>Departments</h2>
         {this.departments.map((dept) => {
-          return <Link to='department' key={departmentNamesMap[dept]} params={{dept: dept}} className="departmentLink mdl-cell--6-col"><div className={[departmentNamesMap[dept], "departmentListItem"].join(' ')}></div><h2>{dept}</h2></Link>
+          return <Link to='department' key={departmentNamesMap[dept]} params={{dept: dept}} className="departmentLink mdl-cell mdl-cell--6-col"><div className={[departmentNamesMap[dept], "departmentListItem"].join(' ')}></div><h2>{dept}</h2></Link>
         })}</div></div>
       },
     })

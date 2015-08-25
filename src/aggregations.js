@@ -21,7 +21,8 @@ var Aggregations = React.createClass({
     const toggleMoreAggs = this.toggleMoreAggs
 
     return (
-      <div id="aggs" style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px'}}>
+      <div id="aggs" >
+        <div style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px', paddingLeft: '10px'}}>
         {aggs.map(function(agg) {
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
           const showAgg = agg.open || aggIsActive
@@ -45,7 +46,7 @@ var Aggregations = React.createClass({
               )
             })}
           </dl>)
-        })}
+        })}</div>
         {showAdder &&
           (<div id="more-aggs">
             <dl><span className="toggleClose" onClick={toggleMoreAggs}><i className="material-icons">remove</i>Show Fewer Filters</span>{aggs.slice(3).map(agg => {
