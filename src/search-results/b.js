@@ -13,9 +13,14 @@ var SearchResultsB = React.createClass({
         <Sticky stickyClass="objects-focus-sticky" stickyStyle={{}}>
           {focusedResult && <ArtworkPreview art={focusedResult} 
             style={{width: '66%'}} />}
+            <button style={{position: 'absolute', right: '1em'}} onClick={this.closeFocusBox}>(x)</button>
         </Sticky>
       </div>
     )
+  },
+
+  closeFocusBox() {
+    this.props.changeView()
   },
 })
 

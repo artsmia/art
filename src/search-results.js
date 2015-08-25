@@ -68,7 +68,7 @@ var SearchResults = React.createClass({
         <SearchResultViewToggle 
           click={this.changeView}
           activeView={this.state.view}
-          views={[SearchResultsA, SearchResultsB, SearchResultsC, SearchResultsD]}
+          views={[SearchResultsB, SearchResultsD]}
         />
       </SearchSummary>
       <this.state.view
@@ -86,8 +86,15 @@ var SearchResults = React.createClass({
     hit && this.setState({focusedResult: hit._source})
   },
 
+  viewSequence: {
+    SearchResultsA: SearchResultsB,
+    SearchResultsB: SearchResultsA,
+    SearchResultsC: SearchResultsD,
+    SearchResultsD: SearchResultsC
+  },
+
   changeView(next) {
-    var nextView = next || (this.state.view == SearchResultsA ? SearchResultsB : SearchResultsA)
+    var nextView = next || this.viewSequence[this.state.view.displayName]
     this.setState({view: nextView})
   },
 
