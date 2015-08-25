@@ -15,7 +15,7 @@ const SearchSummary = React.createClass({
     const showAllLink = search &&
       <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
              params={{terms: search.query, splat: search.filters}}
-             query={{size: search.hits.total}}>show all</Link>)
+             query={{size: Math.min(500, search.hits.total)}}>show all</Link>)
       </span>
 
     const toggleAggs = hits.length > 1 && <span>
