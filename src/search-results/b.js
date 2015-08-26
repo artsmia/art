@@ -11,9 +11,9 @@ var SearchResultsB = React.createClass({
       <div className='search-results-wrap clearfix'>
         <div className='objects-wrap' style={{clear: 'both'}}>{results}</div>
         <Sticky stickyClass="objects-focus-sticky" stickyStyle={{}}>
-          {focusedResult && <ArtworkPreview art={focusedResult} 
+          {focusedResult && <ArtworkPreview art={focusedResult}
             style={{width: '66%'}} />}
-            <button style={{position: 'absolute', right: '1em'}} onClick={this.closeFocusBox}>(x)</button>
+            <span style={{position: 'absolute', right: '1em', marginTop: '1em', cursor: 'pointer'}} onClick={this.closeFocusBox}><i className="material-icons">clear</i></span>
         </Sticky>
       </div>
     )

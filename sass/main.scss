@@ -91,6 +91,7 @@ header{
 
 .agg-wrap{
     background-color:#ffffff;
+    padding: 0 0 1em 0;
 }
 
 .agg-wrap h2{
@@ -102,7 +103,7 @@ header{
 }
 
 #aggs{
-    padding:1em 0;
+    padding:1em 0 0 0;
     height:auto;
     overflow: hidden;
     -webkit-transition: height 0.3s ease-in;

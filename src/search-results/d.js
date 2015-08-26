@@ -25,7 +25,7 @@ var SearchResultsD = React.createClass({
       </div>
       {focusedResult && <div style={{width: '54%', float: 'right'}}><Sticky stickyStyle={{right: 0, top: 0, position: 'fixed', width: '54%'}}>
         <ArtworkPreview art={focusedResult} />
-        <button style={{position: 'absolute', right: '1em'}} onClick={this.closeFocusBox}>(x)</button>
+        <span style={{position: 'absolute', right: '1em', marginTop: '1em', cursor: 'pointer'}} onClick={this.closeFocusBox}><i className="material-icons">clear</i></span>
       </Sticky></div>}
     </div>
   },

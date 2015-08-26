@@ -113,7 +113,7 @@ var SearchResultViewToggle = React.createClass({
       var name = r.displayName.replace('SearchResults', '')
       return <span key={name} onClick={this.toggleView.bind(this, r)}><i className={name}></i></span>
     })
-    return <div className="mdl-cell mdl-cell--2-col views">{toggles}</div>
+    return <div className="mdl-cell mdl-cell--1-col views">{toggles}</div>
   },
 
   toggleView(view) {
