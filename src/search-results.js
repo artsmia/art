@@ -111,7 +111,13 @@ var SearchResultViewToggle = React.createClass({
 
     var toggles = views.map((r) => {
       var name = r.displayName.replace('SearchResults', '')
-      return <span key={name} onClick={this.toggleView.bind(this, r)}><i className={name}></i></span>
+      var activeStyle = activeView === r && {
+        color: '#222',
+        backgroundColor: 'white',
+        borderRadius: 5,
+        margin: '0 5px',
+      } || {}
+      return <span key={name} onClick={this.toggleView.bind(this, r)} style={activeStyle}><i className={name}></i></span>
     })
     return <div className="mdl-cell mdl-cell--1-col views">{toggles}</div>
   },
