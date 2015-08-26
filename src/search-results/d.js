@@ -5,7 +5,7 @@ var ImageQuilt = require('../image-quilt')
 var ArtworkImage = require('../artwork-image')
 var ArtworkPreview = require('../artwork-preview')
 var Markdown = require('../markdown')
-var Sticky = require('react-sticky')
+var Sticky = require('../bottom-sticky')
 
 var SearchResultsD = React.createClass({
   mixins: [Router.Navigation],
@@ -23,10 +23,13 @@ var SearchResultsD = React.createClass({
           onClick={this.clickResult}
           disableHover={true} />
       </div>
-      {focusedResult && <div style={{width: '54%', float: 'right'}}><Sticky stickyStyle={{right: 0, top: 0, position: 'fixed', width: '54%'}}>
-        <ArtworkPreview art={focusedResult} />
-        <span style={{position: 'absolute', right: '1em', marginTop: '1em', cursor: 'pointer'}} onClick={this.closeFocusBox}><i className="material-icons">clear</i></span>
-      </Sticky></div>}
+
+      {focusedResult && <div style={{width: '54%', float: 'right'}}>
+        <Sticky stickyStyle={{right: 0, top: 0, position: 'fixed', width: '54%'}}>
+          <ArtworkPreview art={focusedResult} />
+          <span style={{position: 'absolute', right: '1em', marginTop: '1em', cursor: 'pointer'}} onClick={this.closeFocusBox}><i className="material-icons">clear</i></span>
+        </Sticky>
+      </div>}
     </div>
   },
 
