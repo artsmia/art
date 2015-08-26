@@ -10,10 +10,14 @@ var ArtworkPreview = React.createClass({
 
     return (
       <div className='objects-focus' style={style}>
-        <h2>{art.title}, <span className='date'>{art.dated}</span></h2>
-        <h5><Peek facet="artist">{art.artist}</Peek></h5>
+        <div className='preview-header'>
+            <h2>{art.title}, <span className='date'>{art.dated}</span></h2>
+            <div className='preview-subhead clearfix'>
+                <h5><Peek facet="artist">{art.artist}</Peek></h5>
+                <h6><Peek facet="room">{art.room}</Peek></h6>
+            </div>
+        </div>
         <ArtworkImage art={art} id={art.id} />
-        <h6><Peek facet="room">{art.room}</Peek></h6>
         <div className='tombstone'>
           {art.medium}<br />
           {art.dimension}<br/>

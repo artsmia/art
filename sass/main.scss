@@ -12,6 +12,14 @@ $MiaGroteskBlack: 'MiaGrotesk-Black', sans-serif;
 $MiaGroteskRlackItalic: 'MiaGrotesk-BlackItalic', sans-serif;
 
 
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
 body{
     font-family: $MiaGroteskLight;
     font-weight: 400;
@@ -181,6 +189,14 @@ header{
         box-shadow: 2px 2px 4px 0 rgba(0,0,0,.25);
         cursor: pointer;
     }
+    
+    .artwork-image{
+        text-align:center
+    }
+    
+    .artwork-image .lazy-load{
+        text-align:inherit
+    }
 
     .artwork-result h1{margin:0;padding:0;}
     .artwork-result h2{margin:0;padding:0;line-height:1em;}
@@ -216,6 +232,7 @@ header{
     .artwork-image div > p:first-child{
         display: none;
     }
+    
 
 .objects-focus-sticky{
     position: fixed;
@@ -230,37 +247,45 @@ header{
     width:100%;
 }
 
-    .objects-focus h2{
+
+    .preview-header h2{
         font-size:2em;
-        line-height:0.9em;
+        line-height:1.3em;
         margin-bottom:7px;
         font-family: $MiaGroteskLightItalic;
         font-style: italic;
     }
-
-
-    .objects-focus .date{
-        font-size:0.65em;
-        font-family: $MiaGroteskRegular;
-        font-style: normal;
-        display:inline-block;
+    
+    .preview-subhead{
+        display:relative;
     }
 
-    .objects-focus h5{
+    .preview-subhead h5{
         font-family: $MiaGroteskBold;
         margin-bottom:20px;
         color:$support;
         display:inline-block;
     }
     
-     .objects-focus h6{
+     .preview-subhead h6{
          color:$support;
+         float:right;
+         display:inline-block;
      }
-    
+
+
+    .preview-header .date{
+        font-size:0.65em;
+        font-family: $MiaGroteskRegular;
+        font-style: normal;
+        display:inline-block;
+    }
+
+    /*
     .objects-focus h5:after{
         content:"\00bb";
     }
-
+    */
     .objects-focus .tombstone{
         margin:20px 0;
         font-size:smaller;
