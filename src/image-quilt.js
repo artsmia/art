@@ -1,5 +1,6 @@
 var React = require('react')
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin
+var debounce = require('debounce')
 
 var linearPartition = require('linear-partitioning')
 var ArtworkImage = require('./artwork-image')
@@ -17,11 +18,12 @@ const ImageQuilt = React.createClass({
   },
 
   handleResize: function(e) {
+    if(!this.isMounted()) return
     this.setState({width: React.findDOMNode(this).clientWidth})
   },
   componentDidMount: function() {
     this.handleResize()
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', debounce(this.handleResize, 200))
   },
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.handleResize)
