@@ -37,6 +37,7 @@ var Search = React.createClass({
       position: 'absolute',
       top: '50%',
       transform: "translateY(-50%)",
+      WebkitTransform: "translateY(-50%)",
       left: 0,
       right: 0,
       width: '100%',
