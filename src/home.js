@@ -47,7 +47,7 @@ var HomeDepartments = React.createClass({
     return <div className="landingPageBody">
     <div className="shortcutLinks mdl-grid">
       <div className="mdl-cell mdl-cell--4-col">
-        <Link to='searchResults' params={{terms: 'highlight:true'}} >
+        <Link to='searchResults' params={{terms: 'highlight:true'}}>
           <div className="shortcutHighlights">
           </div>
             <h2>Highlights</h2>
@@ -55,10 +55,11 @@ var HomeDepartments = React.createClass({
         </Link>
       </div>
       <div className="mdl-cell mdl-cell--4-col">
-        <div className="shortcutAccessions">
-        </div>
-          <h2>New Art<sup>*</sup></h2>
-          <sub>*new to Mia</sub>
+        <Link to="searchResults" params={{terms: 'recent:true'}}>
+          <div className="shortcutAccessions"></div>
+            <h2>New Art<sup>*</sup></h2>
+            <sub>*new to Mia</sub>
+        </Link>
       </div>
       <div className="mdl-cell mdl-cell--4-col">
         <Link to='browse'>
