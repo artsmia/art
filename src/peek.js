@@ -39,7 +39,7 @@ var Peek = React.createClass({
       {this.state.open && result && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
-          {result.hits && result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
+          {result.hits && result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} <i className="material-icons">more_horiz</i>
         </Link>
       </div>}
       {this.state.open && this.getQs().map((q) => <Peek facet={this.props.facet} q={q} key={q} />)}

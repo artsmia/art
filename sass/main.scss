@@ -160,30 +160,37 @@ header{
     padding: .25em;
 }
 .objects-wrap{
-    width:33%;float:left;
+    width:33%;
+    float:left;
     padding:10px;
     margin-right:10px;
-    background-color:#e0e0e0;
 }
 
     .artwork-result{
         padding:10px;
         margin-bottom:10px;
         background-color:#fff;
-        -webkit-box-shadow: 2px 2px 4px 0 rgba(0,0,0,.25);
-        box-shadow: 2px 2px 4px 0 rgba(0,0,0,.25);
         cursor: pointer;
+        display: inline-block;
+        width: 100%;
     }
 
     .artwork-result h1{margin:0;padding:0;}
     .artwork-result h2{margin:0;padding:0;line-height:1em;}
 
     .objects-wrap .artwork-image{
-        height:100px;
+        width: 50%;
+        float: left;
+        text-align: center;
     }
-
+    .artwork-summary {
+      width: 50%;
+      float: right;
+      padding-left: 10px;
+    }
     .objects-wrap .artwork-image > div > img{
-        max-height:100px;
+        max-width: 90%;
+        max-height: 200px;
     }
 
     .objects-wrap .focused {
@@ -196,7 +203,6 @@ header{
         display:none;
     }
     */
-
     .artwork-image div > p, .artwork-result .provenance {
         display: none;
     }
@@ -218,16 +224,19 @@ header{
 
 .objects-focus{
     float:left;
-    padding-top:2em;
-    border-top:3px solid $primary;
     position:relative;
+    width: 100%;
 }
 
     .objects-focus h2{
         font-size:2.5em;
+        margin-right: 1.5em;
+        line-height: 1em;
+        padding-top:7px;
+        margin:10px 0;
         font-family: $MiaGroteskLightItalic;
         font-style: italic;
-        margin-right: 1.5em;
+        border-top:3px solid $primary;
     }
 
     .objects-focus h2 a {
@@ -346,6 +355,16 @@ header{
 .views .B:hover, .views .D:hover {
   opacity: .7;
 }
+/* ===== SEARCH RESULTS STYLES ===== */
+.objects-focus i.material-icons {
+  font-size: 24px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+.art-details i.material-icons {
+  color: $primary;
+}
+
 /* ===== LANDING PAGE STYLES ===== */
 .landingPageBody, .departmentPage {
   display: inline-block;

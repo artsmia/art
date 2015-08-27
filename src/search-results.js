@@ -52,7 +52,7 @@ var SearchResults = React.createClass({
     var results = this.props.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       var focused = this.state.focusedResult === hit._source
-      return <div key={id} onClick={this.focusResult.bind(this, hit, SearchResultsB)} className={focused && 'focused'}>
+      return <div key={id} onClick={this.focusResult.bind(this, hit, SearchResultsB)} className={focused && 'focused' || ''}>
         <ArtworkResult id={id} data={{artwork: hit._source}} />
       </div>
     })

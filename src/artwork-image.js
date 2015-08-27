@@ -14,10 +14,10 @@ var ArtworkImage = React.createClass({
 
     return art.image == 'valid' && art.image_width > 0 && (
       <div className='artwork-image'>
-        <LazyLoad height={height}>
+        <LazyLoad>
           <img
             src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
-            style={{maxWidth: maxWidth, margin: window.innerWidth <= 400 && `0 ${padding}`}} />
+             />
         </LazyLoad>
         <Markdown>{art.image_copyright}</Markdown>
       </div>
