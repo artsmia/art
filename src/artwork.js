@@ -31,7 +31,9 @@ var Artwork = React.createClass({
           <a href="#" onClick={() => history.go(-1)}>&larr; back</a>
         </div>
 
-        <Sticky stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}>
+        <Sticky
+          stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}
+          onStickyStateChange={this.resizeMap}>
           <div ref='map' id='map'>
             <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
               style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}} />
@@ -75,7 +77,14 @@ var Artwork = React.createClass({
       // this.tiles.fillContainer()
       window.tiles = this.tiles
     })
-  }
+  },
+
+  resizeMap() {
+    if(this.map && this.tiles) {
+      this.map.invalidateSize()
+      this.tiles.fillContainer()
+    }
+  },
 })
 
 module.exports = Artwork
