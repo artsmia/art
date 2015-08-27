@@ -18,6 +18,7 @@ var Artwork = React.createClass({
       return rest('http://caption-search.dx.artsmia.org/id/'+params.id).then((r) => JSON.parse(r.entity))
     }
   },
+
   render() {
     var art = this.state.art
     var id = this.props.id || this.state.id
@@ -31,7 +32,10 @@ var Artwork = React.createClass({
         </div>
 
         <Sticky stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}>
-          <div ref='map' id='map'></div>
+          <div ref='map' id='map'>
+            <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
+              style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}} />
+          </div>
         </Sticky>
       </div>
     )
@@ -48,24 +52,29 @@ var Artwork = React.createClass({
 
   componentDidMount() {
     var art = this.state.art
-    if(art.restricted != 1) {
-      this.map = L.map(this.refs.map.getDOMNode(), {
-        crs: L.CRS.Simple,
-        zoomControl: false,
+    if(art.restricted != 1) this.loadZoom()
+  },
+
+  loadZoom() {
+    var art = this.state.art
+
+    this.map = L.map(this.refs.map.getDOMNode(), {
+      crs: L.CRS.Simple,
+      zoomControl: false,
+    })
+
+    this.map.setView([art.image_width/2, art.image_height/2], 0)
+    rest('//tilesaw.dx.artsmia.org/'+this.state.id).then((data) => {
+      this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
+        attribution: '',
+        id: this.state.id,
+        width: art.image_width,
+        height: art.image_height,
       })
-      this.map.setView([art.image_width/2, art.image_height/2], 0)
-      rest('//tilesaw.dx.artsmia.org/'+this.state.id).then((data) => {
-        this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
-          attribution: '',
-          id: this.state.id,
-          width: art.image_width,
-          height: art.image_height,
-        })
-        this.tiles.addTo(this.map)
-        // this.tiles.fillContainer()
-        window.tiles = this.tiles
-      })
-    }
+      this.tiles.addTo(this.map)
+      // this.tiles.fillContainer()
+      window.tiles = this.tiles
+    })
   }
 })
 
