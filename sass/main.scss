@@ -17,6 +17,7 @@ body{
     font-weight: 400;
     color:$primary;
     margin: 0;
+    line-height:1.3em;
 }
 
 a {
@@ -223,7 +224,6 @@ header{
 
     .objects-focus h2{
         font-size:2.5em;
-        margin-bottom:10px;
         font-family: $MiaGroteskLightItalic;
         font-style: italic;
     }
@@ -232,21 +232,23 @@ header{
   color: $primary;
 }
 
+    .objects-focus h5{
+        font-family: $MiaGroteskBold;
+        font-size:1.25em;
+        margin-bottom:10px;
+        
+    }
+    
     .objects-focus .date{
-        font-size:0.65em;
+        font-size:1em;
         font-family: $MiaGroteskRegular;
         font-style: normal;
     }
 
-    .objects-focus h5{
-        font-family: $MiaGroteskBold;
-        margin-bottom:20px;
-    }
-
     .objects-focus .tombstone{
-        margin:20px 0;
         font-size:smaller;
-        line-height:1.2em;
+        line-height:1.3em;
+        margin:1em 0;
     }
 
 
@@ -497,6 +499,9 @@ a.departmentLink:hover  {
   display: inline-block;
 }
 
+
+/* ===== artwork.js STYLES ===== */
+
 .artwork #map {
   position: relative;
   left: 0;
@@ -516,7 +521,6 @@ a.departmentLink:hover  {
   padding: 0 20%;
 }
 
-
 .artwork .info {
   position: absolute;
   width: 35%;
@@ -524,13 +528,13 @@ a.departmentLink:hover  {
   min-height: calc(100% - 4em);
   padding: 1em;
   right: 0;
+  overflow-y:scroll;
 }
 .artwork .objects-focus {
   border-top: none;
   float: none;
   padding-top: 0;
 }
-
 .artwork .objects-focus .artwork-image {
   display: none;
 }
@@ -546,4 +550,28 @@ a.departmentLink:hover  {
 .objects-focus i.material-icons {
   font-size: 0.8em;
   margin: 0 0.5em 0 0.1em;
+}
+
+.artwork-detail{
+    display:table;
+    font-size:smaller;
+    line-height:1.3em;
+}
+.detail-row{
+    display:table-row;
+}
+.detail-title{
+    display:table-cell;
+    padding:5px 0;
+    font-family: $MiaGroteskRegular, sans-serif;
+}
+.detail-content{
+    display:table-cell;
+    padding:5px 5px 5px 15px;
+}
+h5.details-title {
+    border-top:3px solid $primary;
+    margin-top:1em;
+    margin-bottom:0.5em;
+    padding-top:3px;
 }
