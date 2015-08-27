@@ -61,10 +61,12 @@ var HomeDepartments = React.createClass({
           <sub>*new to Mia</sub>
       </div>
       <div className="mdl-cell mdl-cell--4-col">
-        <div className="shortcutBrowse">
-        </div>
-          <h2>Browse</h2>
-          <sub>Not sure what to search?</sub>
+        <Link to='browse'>
+          <div className="shortcutBrowse">
+          </div>
+            <h2>Browse</h2>
+            <sub>Not sure what to search?</sub>
+        </Link>
       </div>
     </div>
     <div className="departmentList mdl-grid">

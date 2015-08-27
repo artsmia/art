@@ -354,7 +354,7 @@ header{
   color: rgb(35,35,35);
   transition: ease all 0.8s;
 }
-.shortcutlinks a:hover {
+.shortcutlinks div:hover {
   opacity: .5;
 }
 .shortcutLinks sub {
@@ -371,30 +371,6 @@ header{
   line-height: 1em;
 }
 
-.shortcutAccessions {
-  width: 100%;
-  background: url(../images/recent.png) no-repeat top center;
-  background-size: cover;
-  min-height: 150px;
-  color: #ffffff;
-  padding: 20px;
-}
-.shortcutHighlights {
-  width: 100%;
-  background: url(../images/highlights.png) no-repeat top center;
-  background-size: cover;
-  min-height: 150px;
-  color: #ffffff;
-  padding: 20px;
-}
-.shortcutBrowse {
-  width: 100%;
-  background: url(../images/dots.png) no-repeat top center;
-  background-size: cover;
-  min-height: 150px;
-  color: #ffffff;
-  padding: 20px;
-}
 .departmentList {
   display: inline-block;
 }

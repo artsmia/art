@@ -21,6 +21,7 @@ var Artwork = require('./src/artwork')
 var ArtistsByLetter = require('./src/artists-by-letter')
 var ObjectsById = require('./src/objects-by-id')
 var Department = require('./src/department')
+var Browse = require('./src/browse')
 
 var routes = (
   <Route handler={App} path="/">
@@ -32,6 +33,7 @@ var routes = (
       </Route>
     </Route>
     <Route name="department" path="/departments/:dept" handler={Department} />
+    <Route name="browse" path="/browse" handler={Browse} />
     <Route name="artistsByName" path="/search/artists/:letter" handler={ArtistsByLetter} />
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
   </Route>
