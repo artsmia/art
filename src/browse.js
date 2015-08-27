@@ -18,9 +18,6 @@ var Browse = React.createClass({
           <hr style={{visibility: 'hidden'}} />
         </section>
       })}
-
-      <h2>Or search for whatever you want!</h2>
-      <Search {...this.props} />
     </div>
   },
 

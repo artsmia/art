@@ -16,6 +16,7 @@ var Peek = React.createClass({
     return {
       open: !!this.props.q,
       results: {},
+      offset: this.props.offset || 0
     }
   },
 
@@ -28,7 +29,7 @@ var Peek = React.createClass({
       {this.props.children && <ClickToSelect>
         {this.props.children}
       </ClickToSelect>}
-      {this.state.open && result && <div className="peek" style={{fontSize: '73%', maxWidth: this.state.maxWidth || "100%"}}>
+      {this.state.open && result && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
           {result.hits && result.hits.total} results for {this.state.query} {this.props.facet && `(${this.props.facet})`} &rarr;
@@ -53,9 +54,10 @@ var Peek = React.createClass({
     var {results, facetedQ} = this.state
     var result = results && results[facetedQ]
     var hits = result && result.hits && result.hits.hits || []
+    var offset = this.props.offset || 0
 
     if(!result || !hits || hits.length <= 1) return <span/>
-    var wImg = ImageQuilt.getImagedResults(hits).slice(10, 20)
+    var wImg = ImageQuilt.getImagedResults(hits).slice(offset, offset+10)
     return <ImageQuilt
       maxRows={1}
       maxWorks={7}
