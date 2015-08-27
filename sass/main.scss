@@ -51,12 +51,11 @@ h1,h2,h3,h4,h5,h6 {
 header{
     width:100%;
     background-color:$primary;
-    padding-top:30px;
+    padding-top: 1em;
     position:relative;
 }
 
 .quilt-search-wrap{
-    margin-top:-3px;
     min-height: 3em;
     background: #222;
 }
@@ -64,9 +63,10 @@ header{
 .logo-container{
     background-image: url("../images/MIA_LOGO_MARK.svg");
     background-repeat: no-repeat;
-    height:100px;
+    height: 3em;
     width:auto;
     color:#fff;
+    margin: 0 0 -2px -2px;
 }
 
 .wordmark-container{

@@ -7,7 +7,7 @@ var App = React.createClass({
   render() {
     return (
       <div>
-        <header><a href="/"><div className='logo-container'></div></a><div className='wordmark-container'></div></header>
+        <header><a href="/"><div className='logo-container'></div></a></header>
         <RouteHandler {...this.props}/>
       </div>
     )
