@@ -534,3 +534,16 @@ a.departmentLink:hover  {
 .artwork .objects-focus .artwork-image {
   display: none;
 }
+
+.objects-focus div > p {
+  margin-bottom: 1em;
+}
+
+.objects-focus span {
+  font-style: normal;
+}
+
+.objects-focus i.material-icons {
+  font-size: 0.8em;
+  margin: 0 0.5em 0 0.1em;
+}

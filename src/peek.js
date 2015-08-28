@@ -24,11 +24,17 @@ var Peek = React.createClass({
     var {results, facetedQ} = this.state
     var {child} = this.props
     var result = results && results[facetedQ]
+    var Tag = this.props.tag
+    var {showIcon} = this.props
+    var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
 
-    return <div onClick={this.onClick}>
-      {this.props.children && <ClickToSelect>
-        {this.props.children}
-      </ClickToSelect>}
+    return <Tag onClick={this.onClick}>
+      {this.props.children && <i>
+        <ClickToSelect>
+          {this.props.children}
+        </ClickToSelect>
+        {showIcon && icon}
+      </i>}
       {this.state.open && result && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
@@ -36,7 +42,7 @@ var Peek = React.createClass({
         </Link>
       </div>}
       {this.state.open && this.getQs().map((q) => <Peek facet={this.props.facet} q={q} key={q} />)}
-    </div>
+    </Tag>
   },
 
   onClick() {
@@ -127,7 +133,14 @@ var Peek = React.createClass({
     if(!art) return
     window.clickedArtwork = art
     this.transitionTo('searchResults', {terms: this.state.facetedQ})
-  }
+  },
+
+  getDefaultProps() {
+    return {
+      tag: "div",
+      showIcon: true,
+    }
+  },
 })
 
 module.exports = Peek
