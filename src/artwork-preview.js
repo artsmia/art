@@ -22,7 +22,7 @@ var ArtworkPreview = React.createClass({
       
     var details = showLink ? <div className="objects-page-link"><div className="objects-page-icon"></div>details</div> : ''
       
-    /* TO DO LOGIC: if no artist, replace with culture */
+    /* TO DO LOGIC: if no artist or artist unknown, replace with culture */
 
     return (
       <div className='objects-focus' style={style}>
