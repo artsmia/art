@@ -35,8 +35,11 @@ var Artwork = React.createClass({
           stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}
           onStickyStateChange={this.resizeMap}>
           <div ref='map' id='map'>
-            <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
-              style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}} />
+            {this.state.zoomLoaded || <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
+                style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}} />}
+            <span className="imageStatus">
+              {this.state.zoomLoaded === false && "(—Is that the best image you've got!!? —Nope! We're loading a bigger image right now. It just takes a few seconds…)"}
+            </span>
           </div>
         </Sticky>
       </div>
@@ -59,11 +62,13 @@ var Artwork = React.createClass({
 
   loadZoom() {
     var art = this.state.art
+    this.setState({zoomLoaded: false})
 
     this.map = L.map(this.refs.map.getDOMNode(), {
       crs: L.CRS.Simple,
       zoomControl: false,
     })
+    this.map.attributionControl.setPrefix('')
 
     this.map.setView([art.image_width/2, art.image_height/2], 0)
     rest('//tilesaw.dx.artsmia.org/'+this.state.id).then((data) => {
@@ -76,6 +81,7 @@ var Artwork = React.createClass({
       this.tiles.addTo(this.map)
       // this.tiles.fillContainer()
       window.tiles = this.tiles
+      this.setState({zoomLoaded: true})
     })
   },
 

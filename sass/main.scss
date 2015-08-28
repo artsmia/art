@@ -501,19 +501,27 @@ a.departmentLink:hover  {
   position: relative;
   left: 0;
   width: 65%;
-  height: calc(100% - 130px);
+  height: calc(100% - 4em);
   z-index: 1000;
 }
 .artwork .sticky #map {
   width: 100%;
   height: 100%;
 }
+.artwork #map .imageStatus {
+  position: absolute;
+  bottom: 3em;
+  width: 100%;
+  text-align: center;
+  padding: 0 20%;
+}
+
 
 .artwork .info {
   position: absolute;
   width: 35%;
   background: #eee;
-  min-height: calc(100% - 130px);
+  min-height: calc(100% - 4em);
   padding: 1em;
   right: 0;
 }
