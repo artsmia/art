@@ -20,10 +20,13 @@ var ArtworkPreview = React.createClass({
       <Link to="artwork" params={{id: art.id}}>{art.title}</Link> :
       art.title
       
-    /* if no artist, replace with culture */
+    var details = showLink ? <div className="objects-page-link"><div className="objects-page-icon"></div>details</div> : ''
+      
+    /* TO DO LOGIC: if no artist, replace with culture */
 
     return (
       <div className='objects-focus' style={style}>
+        {details}
         <h2>{title}</h2>
         <h5 className='date'><Peek tag="span" showIcon={false}>{art.dated}</Peek></h5>
         <h5><Peek facet='artist'>{art.artist}</Peek></h5>
