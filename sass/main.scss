@@ -351,7 +351,7 @@ header{
 }
 .shortcutLinks {
   width: 100%;
-  text-align: right;
+  text-align: left;
   margin-bottom: 20px;
 }
 .shortcutLinks a {
@@ -395,7 +395,7 @@ header{
   float:left;
   display: inline-block;
   vertical-align: bottom;
-  text-align: right;
+  text-align: left;
   border:5px solid #ffffff;
 }
 .departmentListItem {
@@ -536,6 +536,7 @@ a.departmentLink:hover  {
   border-top: none;
   float: none;
   padding-top: 0;
+  background-color:#fff;
 }
 .artwork .objects-focus .artwork-image {
   display: none;
