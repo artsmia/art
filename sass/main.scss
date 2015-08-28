@@ -220,6 +220,7 @@ header{
     float:left;
     padding-top:2em;
     border-top:3px solid $primary;
+    position:relative;
 }
 
     .objects-focus h2{
@@ -228,14 +229,15 @@ header{
         font-style: italic;
     }
 
-.objects-focus h2 a {
-  color: $primary;
-}
+    .objects-focus h2 a {
+      color: $primary;
+    }
 
     .objects-focus h5{
         font-family: $MiaGroteskBold;
         font-size:1.25em;
         margin-bottom:10px;
+        cursor:hand;
         
     }
     
@@ -574,4 +576,29 @@ h5.details-title {
     margin-top:1em;
     margin-bottom:0.5em;
     padding-top:3px;
+    cursor:pointer;
 }
+
+.objects-page-link{
+    font-size:8px;
+    text-transform: uppercase;
+    text-align:center;
+    width:32px;
+    position:absolute;
+    top:50px;
+    right:10px;
+    line-height:1em; 
+    font-family: $MiaGroteskBold;  
+}
+
+.objects-page-icon{
+    border:3px solid $primary;
+    border-radius: 5px;
+    background-image:url('../images/ic_remove_red_eye_black_24px.svg');
+    width:32px;
+    height:32px;
+    color:$primary;
+    background-size:cover;
+    margin-bottom:3px;
+    cursor: hand;
+ }

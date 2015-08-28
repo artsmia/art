@@ -5,6 +5,7 @@ var rest = require('rest')
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
 var ArtworkPreview = require('./artwork-preview')
+var ArtworkDetails = require('./artwork-details')
 
 var L = window.L = require('leaflet-0.8-dev')
 var museumTileLayer = require('../museumTileLayer')
@@ -29,6 +30,7 @@ var Artwork = React.createClass({
         <div className='info'>
           <ArtworkPreview art={art} showLink={false} />
           <a href="#" onClick={() => history.go(-1)}>&larr; back</a>
+          <ArtworkDetails art={art} />
         </div>
 
         <Sticky
