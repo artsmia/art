@@ -381,6 +381,7 @@ header{
 .departmentList h2 {
   font-family: $MiaGroteskRegular, sans-serif;
   font-size:2em;
+  padding-left:11px;
 }
 .departmentLink h2 {
   font-size: 1.5em;
@@ -446,7 +447,7 @@ a.departmentLink:hover  {
   font-size: 1.75em;
   width: 100%;
   text-align: left;
-  padding: 7px 0 15px;
+  padding: 7px 0 15px 11px;
   margin: 0;
   line-height: 1em;
 }
