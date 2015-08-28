@@ -35,10 +35,13 @@ var Artwork = React.createClass({
           stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}
           onStickyStateChange={this.resizeMap}>
           <div ref='map' id='map'>
-            {this.state.zoomLoaded || <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
-                style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}} />}
+            {this.state.zoomLoaded || <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
+              <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
+              {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
+            </div>}
             <span className="imageStatus">
               {this.state.zoomLoaded === false && "(—Is that the best image you've got!!? —Nope! We're loading a bigger image right now. It just takes a few seconds…)"}
+              {art.restricted === 1 && "Because of © restrictions we have to show you a small image of this artwork. Sorry! (You'll have to come see it in person.)"}
             </span>
           </div>
         </Sticky>
@@ -73,7 +76,7 @@ var Artwork = React.createClass({
     this.map.setView([art.image_width/2, art.image_height/2], 0)
     rest('//tilesaw.dx.artsmia.org/'+this.state.id).then((data) => {
       this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
-        attribution: '',
+        attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
         id: this.state.id,
         width: art.image_width,
         height: art.image_height,
