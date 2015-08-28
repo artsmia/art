@@ -20,7 +20,9 @@ var ArtworkPreview = React.createClass({
       <Link to="artwork" params={{id: art.id}}>{art.title}</Link> :
       art.title
       
-    var details = showLink ? <div className="objects-page-link"><div className="objects-page-icon"></div>details</div> : ''
+    var details = showLink ? <Link to="artwork" params={{id: art.id}}>
+      <div className="objects-page-link"><div className="objects-page-icon"></div>details</div>
+    </Link> : ''
       
     /* TO DO LOGIC: if no artist or artist unknown, replace with culture */
 
