@@ -18,7 +18,7 @@ var Decorate = React.createClass({
 module.exports = Decorate
 
 var DecorationFinder = (search, filters, params) => {
-  let terms = search.split(' ')
+  let terms = search.match(/\w+.+|"(?:\\"|[^"])+"/g) || search.split(' ')
   if(filters) terms = terms.concat(filters.split('" ').map(f => f.trim()))
 
   var Decor = {
