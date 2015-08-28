@@ -2,6 +2,7 @@ var React = require('react')
 var Router = require('react-router')
 var { Link } = Router
 var rest = require('rest')
+var debounce = require('debounce')
 
 var SEARCH = require('./search-endpoint')
 var ClickToSelect = require('react-click-to-select')
@@ -28,7 +29,7 @@ var Peek = React.createClass({
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
 
-    return <Tag onClick={this.onClick}>
+    return <Tag onClick={debounce(this.onClick, 200)}>
       {this.props.children && <i>
         <ClickToSelect>
           {this.props.children}
@@ -105,8 +106,10 @@ var Peek = React.createClass({
   componentDidUpdate() {
     var text = this.getText()
     var query = this.state.query
-    var sameQuery = query ? !!query.match(text) : true
-    if(this.state.open && !sameQuery) this.setState({open: false})
+    var sameQuery = query ? query === text || !!query.match(text) : true
+    if((this.state.open || this.state.query) && (!text || !sameQuery)) {
+      this.setState({open: false, query: null})
+    }
   },
 
   fetchResults() {
