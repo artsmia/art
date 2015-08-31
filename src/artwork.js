@@ -8,9 +8,6 @@ var Markdown = require('./markdown')
 var ArtworkPreview = require('./artwork-preview')
 var ArtworkDetails = require('./artwork-details')
 
-var museumTileLayer = require('museum-tile-layer')
-var L = window.L = museumTileLayer
-
 var Sticky = require('react-sticky')
 
 var Artwork = React.createClass({
@@ -64,6 +61,8 @@ var Artwork = React.createClass({
   },
 
   loadZoom() {
+    var L = require('museum-tile-layer')
+
     var art = this.state.art
     this.setState({zoomLoaded: false})
 
