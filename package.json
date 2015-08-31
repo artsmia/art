@@ -31,7 +31,7 @@
     "babel-runtime": "^5.8.20",
     "debounce": "^1.0.0",
     "humanize-number": "0.0.2",
-    "leaflet-0.8-dev": "^0.8.0-dev-20150217",
+    "leaflet": "^1.0.0-beta.1",
     "linear-partitioning": "^0.3.1",
     "marked": "^0.3.3",
     "material-ui": "^0.10.1",
