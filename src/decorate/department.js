@@ -36,7 +36,8 @@ var DepartmentDecorator = React.createClass({
 
   getNameAndSelector(term) {
     var namesMap = departmentNamesMap
-    var deptName = namesMap[term] ? term : term[0] && term[0].match(/department:"?([^"]*)"?/)[1]
+    var decodedTerm = decodeURIComponent(term)
+    var deptName = namesMap[decodedTerm] ? decodedTerm : term[0] && term[0].match(/department:"?([^"]*)"?/)[1]
     return [deptName, namesMap[deptName]]
   },
 

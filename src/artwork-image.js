@@ -12,17 +12,23 @@ var ArtworkImage = React.createClass({
     let height = aspectRatio >= 1 ? maxWidth/aspectRatio : maxWidth
     let padding = width >= maxWidth ? -8 : -8+(maxWidth-width)/2
 
+    var nakedImage = <img
+      src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
+    var image = this.props.lazyLoad ?
+      <LazyLoad height={height}>{nakedImage}</LazyLoad> :
+      nakedImage
+
     return art.image == 'valid' && art.image_width > 0 && (
       <div className='artwork-image'>
-        <LazyLoad>
-          <img
-            src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
-             />
-        </LazyLoad>
+        {image}
         <Markdown>{art.image_copyright}</Markdown>
       </div>
     )
-  }
+  },
+
+  getDefaultProps() {
+    return {lazyLoad: true}
+  },
 })
 
 module.exports = ArtworkImage

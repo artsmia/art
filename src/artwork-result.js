@@ -18,15 +18,19 @@ var ArtworkResult = React.createClass({
     const showHighlights = highlights && Object.keys(highlights).filter((field) => {
       return !field.match(/title|artist|image|room|highlight/)
     }) || []
+    var nakedTitle = <h1><span dangerouslySetInnerHTML={{__html: highlights && (highlights.title || highlights['title.ngram']) || art.title}}></span></h1>
+    var title = this.props.universal ?
+      <Link to="artwork" params={{id: id}}>{nakedTitle}</Link> :
+      nakedTitle
 
     return (
       <div className='artwork-result'>
         <ArtworkImage art={art} id={id} />
-          <div className="artwork-summary">
-            <h1><span dangerouslySetInnerHTML={{__html: highlights && (highlights.title || highlights['title.ngram']) || art.title}}></span></h1>
-            <h2><span dangerouslySetInnerHTML={{__html: highlights && (highlights.artist || highlights['artist.ngram']) || art.artist}}></span></h2>
-            <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
-          </div>
+        <div className="artwork-summary">
+          {title}
+          <h2><span dangerouslySetInnerHTML={{__html: highlights && (highlights.artist || highlights['artist.ngram']) || art.artist}}></span></h2>
+          <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
+        </div>
         <div>
           {showHighlights.map((key) => {
             return <p key={`highlight${key}`} className={['highlight', key].join(' ')} dangerouslySetInnerHTML={{__html: highlights[key][0].replace('\n', '<br>')}}></p>

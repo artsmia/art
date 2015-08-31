@@ -13,7 +13,7 @@ const ImageQuilt = React.createClass({
     return {
       active: null,
       unpinned: false,
-      width: window.innerWidth,
+      width: window.innerWidth || this.props.universal && 1000,
     }
   },
 

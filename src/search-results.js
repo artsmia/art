@@ -14,8 +14,8 @@ var SearchResults = React.createClass({
     fetchData: {
       searchResults: (params, query) => {
         var size = query.size || 100
-        const filters = params.splat
-        let searchUrl = `${SEARCH}/${params.terms}?size=${size}`
+        const filters = params.splat && decodeURIComponent(params.splat)
+        let searchUrl = `${SEARCH}/${decodeURIComponent(params.terms)}?size=${size}`
         if(filters) searchUrl += `&filters=${filters}`
         return rest(searchUrl).then((r) => JSON.parse(r.entity))
       }
@@ -25,10 +25,11 @@ var SearchResults = React.createClass({
   getInitialState() {
     var focus = window.clickedArtwork || this.props.hits[0]
     setTimeout(() => window.clickedArtwork = null)
+    var defaultView = this.props.universal ? ResultsList : ResultsGrid
 
     return {
       focusedResult: focus && focus._source,
-      view: ResultsGrid,
+      view: defaultView,
     }
   },
 
@@ -66,7 +67,9 @@ var SearchResults = React.createClass({
         focusedResult={focusedResult}
         focusHandler={this.focusResult}
         search={search}
-        hits={this.props.hits} />
+        hits={this.props.hits}
+        universal={this.props.universal}
+        />
     </div>
   },
 

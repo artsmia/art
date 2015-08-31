@@ -13,8 +13,9 @@ var Search = React.createClass({
   getInitialState() {
     const results = this.props.data.searchResults
     results || this.transitionTo('home')
+    var {terms} = this.props.params
     return {
-      terms: this.props.params.terms,
+      terms: terms && decodeURIComponent(terms),
       hits: results && results.hits && results.hits.hits || [],
       showAggs: this.props.showAggs,
     }
@@ -31,8 +32,23 @@ var Search = React.createClass({
       artworks: headerArtworks,
       onClick: this.updateFromQuilt,
       disableHover: this.props.hideResults,
+      lazyLoad: !this.props.universal,
+      universal: this.props.universal,
     }, this.props.quiltProps || {})
-    const simpleSearchBox = <div className='mdl-textfield mdl-js-textfield'><input className='mdl-textfield__input' type="search" placeholder="search for something" value={this.state.terms} onKeyDown={this.keyDown} onChange={this.throttledSearch} style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}} /></div>
+    const nakedSimpleSearchBox = <div className='mdl-textfield mdl-js-textfield'>
+      <input className='mdl-textfield__input' type="search"
+        placeholder="search for something"
+        value={this.state.terms}
+        onKeyDown={this.keyDown}
+        onChange={this.throttledSearch}
+        style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}}
+        name="q"
+        />
+    </div>
+
+    const simpleSearchBox = this.props.universal ?
+      <form action="/search/" method="get">{nakedSimpleSearchBox}</form> :
+      nakedSimpleSearchBox
 
     var quiltSearchStyles = {
       position: 'absolute',
