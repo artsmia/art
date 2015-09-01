@@ -56,6 +56,7 @@ var ArtworkPreview = React.createClass({
       {lifeDateWithoutNationality && <Peek facet="life_date" tag="span" showIcon={false}>{lifeDateWithoutNationality}</Peek>}
     </span>
 
+    if(!nationality && !life_date) return <span/>
     return <div className='display-bio'>
       {nationAndDates}<br/>
       {art.role}
