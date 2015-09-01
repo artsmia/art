@@ -32,10 +32,7 @@ var ArtworkPreview = React.createClass({
         <h2>{title}</h2>
         <h5 className='date'><Peek tag="span" showIcon={false}>{art.dated}</Peek></h5>
         <h5><Peek facet='artist'>{art.artist}</Peek></h5>
-        <div className='display-bio'>
-            {art.nationality}, {art.life_date}<br/>
-            {art.role}
-        </div>
+        {this.displayBio()}
         <ArtworkImage art={art} id={art.id} />
         <h6><Peek facet='room'>{art.room}</Peek></h6>
         <div className='tombstone'>
@@ -48,6 +45,21 @@ var ArtworkPreview = React.createClass({
         {showLink && <Link to="artwork" params={{id: art.id}}>View Details &rarr;</Link>}
       </div>
     )
+  },
+
+  displayBio() {
+    var {art} = this.props
+    var {nationality, life_date} = art
+    var lifeDateWithoutNationality = life_date && life_date.replace(nationality+', ', '');
+    var nationAndDates = <span>
+      {nationality && (<span><Peek facet="nationality" tag="span" showIcon={false}>{nationality}</Peek>, </span>)}
+      {lifeDateWithoutNationality && <Peek facet="life_date" tag="span" showIcon={false}>{lifeDateWithoutNationality}</Peek>}
+    </span>
+
+    return <div className='display-bio'>
+      {nationAndDates}<br/>
+      {art.role}
+    </div>
   },
 })
 
