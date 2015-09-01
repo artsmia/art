@@ -41,10 +41,7 @@ var Artwork = React.createClass({
               <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
               {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
             </div>}
-            <span className="imageStatus">
-              {this.state.zoomLoaded === false && "(—Is that the best image you've got!!? —Nope! We're loading a bigger image right now. It just takes a few seconds…)"}
-              {art.restricted === 1 && "Because of © restrictions we have to show you a small image of this artwork. Sorry! (You'll have to come see it in person.)"}
-            </span>
+            {this.imageStatus()}
           </div>
         </Sticky>
       </div>
@@ -95,6 +92,16 @@ var Artwork = React.createClass({
       this.map.invalidateSize()
       this.tiles.fillContainer()
     }
+  },
+
+  imageStatus() {
+    var {art, zoomLoaded} = this.state
+    var copyrightAndOnViewMessage = art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
+
+    return <span className="imageStatus">
+      {zoomLoaded === false && "(—Is that the best image you've got!!? —Nope! We're loading a bigger one right now. It can take a few seconds.)"}
+      {art.restricted === 1 && "Because of © restrictions we have to show you a small image of this artwork. Sorry!" + copyrightAndOnViewMessage}
+    </span>
   },
 })
 
