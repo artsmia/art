@@ -16,7 +16,7 @@ var Artwork = React.createClass({
   mixins: [Router.State],
   statics: {
     fetchData: (params) => {
-      return rest('http://caption-search.dx.artsmia.org/id/'+params.id).then((r) => JSON.parse(r.entity))
+      return rest('http://search.staging.artsmia.org/id/'+params.id).then((r) => JSON.parse(r.entity))
     }
   },
 

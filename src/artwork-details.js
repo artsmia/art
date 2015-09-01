@@ -34,6 +34,10 @@ var ArtworkDetails = React.createClass({
                 <div className='detail-content'>{art.room}</div>
             </div>
             <div className='detail-row'>
+                <div className='detail-title'>Department</div>
+                <div className='detail-content'>{art.department}</div>
+            </div>
+            <div className='detail-row'>
                 <div className='detail-title'>Description</div>
                 <div className='detail-content'>{art.description}</div>
             </div>
@@ -71,7 +75,11 @@ var ArtworkDetails = React.createClass({
             </div>
              <div className='detail-row'>
                 <div className='detail-title'>Image Copyright</div>
-                <div className='detail-content'>{art.image_copyright}</div>
+                <div className='detail-content'>
+                  <span>{decodeURIComponent(art.image_copyright)}</span>
+                  {art.image_copyright && art.image_rights_type && <br/>}
+                  {art.image_rights_type && <span>{art.image_rights_type}</span>}
+                </div>
             </div>
           </div>
         </div>
