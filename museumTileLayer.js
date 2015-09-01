@@ -41,8 +41,9 @@ L.MuseumTileLayer = L.TileLayer.extend({
 
   _adjustNonSquareTile: function (data) {
     var tile = data.tile
-    tile.style.width = tile.naturalWidth + 'px'
-    tile.style.height = tile.naturalHeight + 'px'
+    var pad = 0.5
+    tile.style.width = tile.naturalWidth + pad + 'px'
+    tile.style.height = tile.naturalHeight + pad +'px'
   },
 
   _isValidTile: function(coords) {
