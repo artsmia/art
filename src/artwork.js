@@ -24,6 +24,11 @@ var Artwork = React.createClass({
           return art
         })
       },
+
+      relatedContent: (params) => {
+        return rest('http://collection.staging.artsmia.org/links/'+params.id+'.json')
+        .then(r => JSON.parse(r.entity))
+      },
     },
 
     willTransitionTo: function (transition, params, query, callback) {
@@ -51,6 +56,7 @@ var Artwork = React.createClass({
         <div className='info'>
           <ArtworkPreview art={art} showLink={false} />
           <a href="#" onClick={() => history.go(-1)}>&larr; back</a>
+          <ArtworkRelatedContent links={this.props.data.relatedContent} />
           <ArtworkDetails art={art} />
         </div>
 
@@ -169,3 +175,16 @@ Artwork.contextTypes = {
 }
 
 module.exports = Artwork
+
+var ArtworkRelatedContent = React.createClass({
+  render() {
+    var {links} = this.props
+
+    return links && links.length > 0 && <div>
+      <h5 className="details-title">Other Resources</h5>
+      <ul style={{listStyle: 'inside lower-latin'}}>
+        {links.map(link => <li><a href={link.link}>{link.title}</a></li>)}
+      </ul>
+    </div>
+  },
+})
