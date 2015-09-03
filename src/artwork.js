@@ -104,7 +104,7 @@ var Artwork = React.createClass({
       It can take a few seconds.)`
 
     return art.image === 'valid' && <span className="imageStatus">
-      {zoomLoaded === false && loadingZoomMessage}
+      {zoomLoaded === false && !this.context.universal && loadingZoomMessage}
       {art.restricted === 1 && "Because of © restrictions we have to show you a small image of this artwork. Sorry!" + copyrightAndOnViewMessage}
     </span>
   },

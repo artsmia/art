@@ -32,8 +32,7 @@ var Search = React.createClass({
       artworks: headerArtworks,
       onClick: this.updateFromQuilt,
       disableHover: this.props.hideResults,
-      lazyLoad: !this.props.universal,
-      universal: this.props.universal,
+      lazyLoad: !this.context.universal,
     }, this.props.quiltProps || {})
     const nakedSimpleSearchBox = <div className='mdl-textfield mdl-js-textfield'>
       <input className='mdl-textfield__input' type="search"
@@ -46,7 +45,7 @@ var Search = React.createClass({
         />
     </div>
 
-    const simpleSearchBox = this.props.universal ?
+    const simpleSearchBox = this.context.universal ?
       <form action="/search/" method="get">{nakedSimpleSearchBox}</form> :
       nakedSimpleSearchBox
 
@@ -148,5 +147,9 @@ var Search = React.createClass({
     this.setState({showAggs: !this.state.showAggs})
   },
 })
+Search.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
 
 module.exports = Search

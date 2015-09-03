@@ -25,7 +25,7 @@ var SearchResults = React.createClass({
   getInitialState() {
     var focus = window.clickedArtwork || this.props.hits[0]
     setTimeout(() => window.clickedArtwork = null)
-    var defaultView = this.props.universal ? ResultsList : ResultsGrid
+    var defaultView = this.context.universal ? ResultsList : ResultsGrid
 
     return {
       focusedResult: focus && focus._source,
@@ -68,7 +68,6 @@ var SearchResults = React.createClass({
         focusHandler={this.focusResult}
         search={search}
         hits={this.props.hits}
-        universal={this.props.universal}
         />
     </div>
   },
@@ -82,6 +81,10 @@ var SearchResults = React.createClass({
     next && this.setState({view: next})
   },
 })
+SearchResults.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
 
 module.exports = SearchResults
 

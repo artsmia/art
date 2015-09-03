@@ -19,8 +19,15 @@ var App = React.createClass({
         <RouteHandler {...this.props}/>
       </div>
     )
-  }
+  },
+
+  getChildContext() {
+    return {
+      universal: this.props.universal,
+    }
+  },
 })
+App.childContextTypes = {universal: React.PropTypes.bool}
 
 var routes = (
   <Route handler={App} path="/">

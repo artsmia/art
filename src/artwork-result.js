@@ -19,13 +19,13 @@ var ArtworkResult = React.createClass({
       return !field.match(/title|artist|image|room|highlight/)
     }) || []
     var nakedTitle = <h1><span dangerouslySetInnerHTML={{__html: highlights && (highlights.title || highlights['title.ngram']) || art.title}}></span></h1>
-    var title = this.props.universal ?
+    var title = this.context.universal ?
       <Link to="artwork" params={{id: id}}>{nakedTitle}</Link> :
       nakedTitle
 
     return (
       <div className='artwork-result'>
-        <ArtworkImage art={art} id={id} />
+        <ArtworkImage art={art} id={id} lazyLoad={!this.context.universal} />
         <div className="artwork-summary">
           {title}
           <h2><span dangerouslySetInnerHTML={{__html: highlights && (highlights.artist || highlights['artist.ngram']) || art.artist}}></span></h2>
@@ -40,5 +40,9 @@ var ArtworkResult = React.createClass({
     )
   }
 })
+ArtworkResult.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
 
 module.exports = ArtworkResult

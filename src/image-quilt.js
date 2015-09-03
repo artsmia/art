@@ -13,7 +13,7 @@ const ImageQuilt = React.createClass({
     return {
       active: null,
       unpinned: false,
-      width: window.innerWidth || this.props.universal && 1000,
+      width: window.innerWidth || this.context.universal && 1000,
     }
   },
 
@@ -153,7 +153,10 @@ const ImageQuilt = React.createClass({
     this.activate = setTimeout(this.clicked.bind(this, art, false), 300)
   },
 })
-
+ImageQuilt.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
 
 ImageQuilt.getImagedResults = (hits) => hits && hits
   .filter((hit) => hit._source.image == 'valid' && hit._source.image_width > 0)
