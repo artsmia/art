@@ -22,6 +22,7 @@ var Artwork = React.createClass({
     var art = this.state.art
     var id = this.props.id || this.state.id
     const highlights = this.props.highlights
+    var stickyMapStyle = this.context.universal ? {position: 'fixed'} : {}
 
     return (
       <div className='artwork'>
@@ -34,7 +35,7 @@ var Artwork = React.createClass({
         <Sticky
           stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}
           onStickyStateChange={this.resizeMap}>
-          <div ref='map' id='map'>
+          <div ref='map' id='map' style={stickyMapStyle}>
             {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
               <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
               {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
@@ -125,5 +126,9 @@ var Artwork = React.createClass({
     )
   },
 })
+Artwork.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
 
 module.exports = Artwork

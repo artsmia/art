@@ -551,7 +551,7 @@ a.departmentLink:hover  {
   position: relative;
   left: 0;
   width: 65%;
-  height: calc(100% - 4em);
+  height: calc(100vh - 4em);
   z-index: 1000;
 }
 .artwork .sticky #map {
@@ -646,4 +646,8 @@ h5.details-title {
     background-size:cover;
     margin-bottom:3px;
     cursor: hand;
+ }
+
+ .peek i > a {
+   color: $primary;
  }

@@ -12,12 +12,17 @@ var ImageQuilt = require('./image-quilt')
 
 var Peek = React.createClass({
   mixins: [Router.State, Router.Navigation],
+  propTypes: {
+    children: React.PropTypes.string,
+  },
 
   getInitialState() {
     var {q} = this.props
+    var open = !!q
+    if(!q) q = this.props.children
 
     return {
-      open: !!q,
+      open,
       results: {},
       offset: this.props.offset || 0,
       query: q,
@@ -32,13 +37,14 @@ var Peek = React.createClass({
     var Tag = this.props.tag
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
+    var peekText = this.context.universal ?
+      <Link to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
+      <ClickToSelect>{this.props.children}</ClickToSelect>
 
-    return <Tag onClick={debounce(this.onClick, 200)}>
+    return <Tag onClick={debounce(this.onClick, 200)} className="peek">
       {this.props.children && <i>
-        <ClickToSelect>
-          {this.props.children}
-        </ClickToSelect>
-        {showIcon && icon}
+        {peekText}
+        {!this.props.universal && showIcon && icon}
       </i>}
       {this.state.open && this.state.facetedQ && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
@@ -92,7 +98,7 @@ var Peek = React.createClass({
   },
 
   getText() {
-    return this.props.q || React.findDOMNode(this).querySelector('span').innerText
+    return this.props.q || this.state.q || this.props.children
   },
 
   getQs() {
@@ -149,5 +155,9 @@ var Peek = React.createClass({
     }
   },
 })
+Peek.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
 
 module.exports = Peek

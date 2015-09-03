@@ -1,4 +1,5 @@
 var React = require('react')
+var {Link} = require('react-router')
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin
 var debounce = require('debounce')
 
@@ -193,9 +194,13 @@ var QuiltPatch = React.createClass({
       whiteSpace: 'normal',
     }
 
-    return art.image == 'valid' ? image : <span style={textStyle} {...other}>
+    var patch = art.image == 'valid' ? image : <span style={textStyle} {...other}>
       <p><strong>{art.title_short}</strong></p>
     </span>
+
+    return this.context.universal ?
+      <Link to="artwork" params={{id: art.id}}>{patch}</Link> :
+      patch
   },
 
   getDefaultProps() {
@@ -204,3 +209,7 @@ var QuiltPatch = React.createClass({
     }
   },
 })
+QuiltPatch.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
