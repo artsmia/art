@@ -22,10 +22,11 @@
     ]
   },
   "devDependencies": {
-    "uglify-js": "^2.3.6",
+    "babel": "^5.8.23",
+    "babelify": "^6.1.3",
     "browserify": "^8.1.0",
-    "watchify": "^2.2.1",
-    "babelify": "^6.1.3"
+    "uglify-js": "^2.3.6",
+    "watchify": "^2.2.1"
   },
   "dependencies": {
     "babel-runtime": "^5.8.20",
