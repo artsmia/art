@@ -20,14 +20,12 @@ app.get('/search/', (req, res, next) => {
   next()
 })
 
-app.use(function home (req, res, next) {
-  var context = {
-    routes: routes,
-    location: req.url,
-  }
-  
-  Router.create(context).run((Handler, state) => {
-    if(state.routes.length === 0) return next()
+var router = Router.create(routes, Router.HistoryLocation)
+
+app.use((req, res, next) => {
+  if(!router.match(req.url)) return next()
+
+  Router.run(routes, req.url, (Handler, state) => {
     fetchComponentData(state).then(data => {
       res.send(index + React.renderToString(<Handler {...state} data={data} universal={true} />))
     })
