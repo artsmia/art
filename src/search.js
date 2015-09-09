@@ -65,13 +65,15 @@ var Search = React.createClass({
   },
 
   componentWillMount() {
-    this.debouncedSearch = debounce(this.search, 1000)
+    this.debouncedSearch = (typeof window.orientation === 'undefined') ?
+      debounce(this.search, 1000) :
+      undefined
   },
 
   throttledSearch(event) {
     var terms = event.target.value
     this.setState({terms: terms})
-    this.debouncedSearch()
+    this.debouncedSearch && this.debouncedSearch()
   },
 
   search() {
