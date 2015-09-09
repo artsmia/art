@@ -7,8 +7,8 @@ var Markdown = require('./markdown')
 var ArtworkPreview = require('./artwork-preview')
 var ArtworkDetails = require('./artwork-details')
 
-var L = window.L = require('leaflet-0.8-dev')
-var museumTileLayer = require('../museumTileLayer')
+var museumTileLayer = require('museum-tile-layer')
+var L = window.L = museumTileLayer
 
 var Sticky = require('react-sticky')
 
@@ -73,16 +73,17 @@ var Artwork = React.createClass({
     this.map.attributionControl.setPrefix('')
 
     this.map.setView([art.image_width/2, art.image_height/2], 0)
-    rest('//tilesaw.dx.artsmia.org/'+this.state.id).then((data) => {
-      this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
+    rest('//tilesaw.dx.artsmia.org/'+this.state.id)
+      .then(response => JSON.parse(response.entity))
+      .then((data) => {
+        this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
         attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
         id: this.state.id,
-        width: art.image_width,
-        height: art.image_height,
+        width: data.width,
+        height: data.height,
       })
       this.tiles.addTo(this.map)
       // this.tiles.fillContainer()
-      window.tiles = this.tiles
       this.setState({zoomLoaded: true})
     })
   },
@@ -90,7 +91,7 @@ var Artwork = React.createClass({
   resizeMap() {
     if(this.map && this.tiles) {
       this.map.invalidateSize()
-      this.tiles.fillContainer()
+      this.tiles.fitBoundsExactly()
     }
   },
 
