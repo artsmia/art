@@ -9,7 +9,7 @@
 	font-style: normal;
 }
 
-.D, .B {
+.Grid, .List {
 	font-family: 'artsmia-grid-icons';
 	speak: none;
 	font-style: normal;
@@ -18,19 +18,20 @@
 	text-transform: none;
 	line-height: 1;
 	cursor: pointer;
+  text-indent: -1000em;
 
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.D:before {
+.Grid:before {
 	content: "\e600";
 }
 .icon-view-icon-grid:before {
 	content: "\e601";
 }
-.B:before {
+.List:before {
 	content: "\e602";
 }
 .icon-view-icon-list:before {

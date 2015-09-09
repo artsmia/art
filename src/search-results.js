@@ -2,13 +2,10 @@ var React = require('react')
 var Router = require('react-router')
 var rest = require('rest')
 
-var ArtworkResult = require('./artwork-result')
 var SEARCH = require('./search-endpoint')
 var SearchSummary = require('./search-summary')
-var SearchResultsA = require('./search-results/a')
-var SearchResultsB = require('./search-results/b')
-var SearchResultsC = require('./search-results/c')
-var SearchResultsD = require('./search-results/d')
+var ResultsList = require('./search-results/list')
+var ResultsGrid = require('./search-results/grid')
 
 var SearchResults = React.createClass({
   mixins: [Router.State],
@@ -31,7 +28,7 @@ var SearchResults = React.createClass({
 
     return {
       focusedResult: focus && focus._source,
-      view: SearchResultsD,
+      view: ResultsGrid,
       showAggs: this.props.showAggs,
     }
   },
@@ -49,14 +46,8 @@ var SearchResults = React.createClass({
 
   render() {
     var search = this.props.data.searchResults
-    var results = this.props.hits.map((hit) => {
-      var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
-      var focused = this.state.focusedResult === hit._source
-      return <div key={id} onClick={this.focusResult.bind(this, hit, SearchResultsB)} className={focused && 'focused' || ''}>
-        <ArtworkResult id={id} data={{artwork: hit._source}} />
-      </div>
-    })
     var {focusedResult} = this.state
+    var leftColumnWidth = '35%'
 
     return <div>
       <SearchSummary
@@ -68,14 +59,13 @@ var SearchResults = React.createClass({
         <SearchResultViewToggle
           click={this.changeView}
           activeView={this.state.view}
-          views={[SearchResultsB, SearchResultsD]}
+          views={[ResultsList, ResultsGrid]}
         />
       </SearchSummary>
       <this.state.view
-        results={results}
+        leftColumnWidth={leftColumnWidth}
         focusedResult={focusedResult}
         focusHandler={this.focusResult}
-        changeView={this.changeView}
         search={search}
         hits={this.props.hits} />
     </div>
@@ -83,19 +73,11 @@ var SearchResults = React.createClass({
 
   focusResult(hit, nextView = false) {
     nextView && this.changeView(nextView)
-    hit && this.setState({focusedResult: hit._source})
-  },
-
-  viewSequence: {
-    SearchResultsA: SearchResultsB,
-    SearchResultsB: SearchResultsA,
-    SearchResultsC: SearchResultsD,
-    SearchResultsD: SearchResultsC
+    this.setState({focusedResult: hit ? hit._source : null})
   },
 
   changeView(next) {
-    var nextView = next || this.viewSequence[this.state.view.displayName]
-    this.setState({view: nextView})
+    next && this.setState({view: next})
   },
 
   toggleAggs() {
@@ -119,6 +101,7 @@ var SearchResultViewToggle = React.createClass({
       } || {}
       return <span key={name} onClick={this.toggleView.bind(this, r)} style={activeStyle}><i className={name}></i></span>
     })
+
     return <div className="mdl-cell mdl-cell--1-col views">{toggles}</div>
   },
 
