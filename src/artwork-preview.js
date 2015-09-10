@@ -32,7 +32,7 @@ var ArtworkPreview = React.createClass({
     return (
       <div className='objects-focus' style={style}>
         <ArtworkImage art={art} id={art.id} />
-        <div className="art-details">
+        <div className="art-details preview-header">
           {details}
           <h2>{title}</h2>
           <h5 className='date'><Peek tag="span" showIcon={false}>{art.dated}</Peek></h5>

@@ -12,6 +12,14 @@ $MiaGroteskBlack: 'MiaGrotesk-Black', sans-serif;
 $MiaGroteskRlackItalic: 'MiaGrotesk-BlackItalic', sans-serif;
 
 
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
 body{
     font-family: $MiaGroteskLight;
     font-weight: 400;
@@ -215,6 +223,7 @@ header{
     .artwork-image div > p:first-child{
         display: none;
     }
+    
 
 .objects-focus-sticky{
     position: fixed;
@@ -229,14 +238,18 @@ header{
 }
 
     .objects-focus h2{
-        font-size:2.5em;
-        margin-right: 1.5em;
-        line-height: 1em;
+        font-size:2em;
+        line-height:1.3em;
         padding-top:7px;
         margin:10px 0;
         font-family: $MiaGroteskLightItalic;
         font-style: italic;
         border-top:3px solid $primary;
+    }
+    .info .objects-focus h2 {
+      border-top: none;
+      padding-top: 0;
+      margin: 0;
     }
 
     .objects-focus h2 a {
@@ -248,19 +261,26 @@ header{
         font-size:1.25em;
         margin-bottom:10px;
         cursor:hand;
-        
     }
     
     .objects-focus .date{
-        font-size:1em;
+        font-size:0.9em;
         font-family: $MiaGroteskRegular;
         font-style: normal;
+        display:inline-block;
     }
 
+    // @niffur
     .objects-focus .tombstone{
+        margin-bottom:1em;
         font-size:smaller;
         line-height:1.3em;
-        margin:1em 0;
+        line-height:1.2em;
+    }
+    
+    .objects-focus .artwork-image{
+        width:100%;
+        height:auto;
     }
 
 
@@ -356,7 +376,7 @@ header{
   opacity: .7;
 }
 /* ===== SEARCH RESULTS STYLES ===== */
-.objects-focus i.material-icons {
+.link-bar i.material-icons {
   font-size: 24px;
   padding-right: 10px;
   padding-top: 10px;
