@@ -16,6 +16,7 @@ var Search = React.createClass({
     return {
       terms: this.props.params.terms,
       hits: results && results.hits && results.hits.hits || [],
+      showAggs: this.props.showAggs,
     }
   },
 
@@ -54,11 +55,16 @@ var Search = React.createClass({
       </div>
     )
 
+    var aggsProps = {
+      showAggs: this.state.showAggs,
+      toggleAggs: this.toggleAggs,
+    }
+
     return (
       <div id="search">
         {searchBox}
         {this.props.hideResults || <div>
-          <SearchResults {...this.props} hits={this.state.hits} />
+          <SearchResults {...this.props} hits={this.state.hits} {...aggsProps} />
         </div>}
       </div>
     )
@@ -120,6 +126,10 @@ var Search = React.createClass({
   linkToClickedArtwork(link, art) {
     window.clickedArtwork = art
     this.transitionTo(...link)
+  },
+
+  toggleAggs() {
+    this.setState({showAggs: !this.state.showAggs})
   },
 })
 

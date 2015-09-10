@@ -29,7 +29,6 @@ var SearchResults = React.createClass({
     return {
       focusedResult: focus && focus._source,
       view: ResultsGrid,
-      showAggs: this.props.showAggs,
     }
   },
 
@@ -54,8 +53,8 @@ var SearchResults = React.createClass({
         search={this.props.data.searchResults}
         hits={this.props.hits}
         params={this.props.params}
-        showAggs={this.state.showAggs}
-        toggleAggs={this.toggleAggs}>
+        showAggs={this.props.showAggs}
+        toggleAggs={this.props.toggleAggs}>
         <SearchResultViewToggle
           click={this.changeView}
           activeView={this.state.view}
@@ -78,10 +77,6 @@ var SearchResults = React.createClass({
 
   changeView(next) {
     next && this.setState({view: next})
-  },
-
-  toggleAggs() {
-    this.setState({showAggs: !this.state.showAggs})
   },
 })
 

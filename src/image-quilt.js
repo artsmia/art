@@ -105,7 +105,7 @@ const ImageQuilt = React.createClass({
   cachedPartitions: {},
 
   getPartition(artworks, numRows) {
-    var memoKey = `${this.state.width}|${artworks.map(art => art._id).join('-')}`
+    var memoKey = `rows:${this.props.maxRows}|width:${this.state.width}|${artworks.map(art => art._id).join('-')}`
     var memo = this.cachedPartitions[memoKey]
     if(memo) return memo
 
