@@ -27,8 +27,6 @@ var ArtworkPreview = React.createClass({
       <div className="objects-page-link"><div className="objects-page-icon"></div>details</div>
     </Link> : ''
       
-    /* TO DO LOGIC: if no artist or artist unknown, replace with culture */
-
     return (
       <div className='objects-focus' style={style}>
         <ArtworkImage art={art} id={art.id} />
@@ -36,7 +34,7 @@ var ArtworkPreview = React.createClass({
           {details}
           <h2>{title}</h2>
           <h5 className='date'><Peek tag="span" showIcon={false}>{art.dated}</Peek></h5>
-          <h5><Peek facet="artist">{art.artist}</Peek></h5>
+          <h5>{this.artistOrCulture()}</h5>
           <h6><Peek facet="room">{art.room}</Peek></h6>
           <div className='tombstone'>
             <Peek facet="medium" tag="span">{art.medium}</Peek><br />
@@ -69,6 +67,18 @@ var ArtworkPreview = React.createClass({
       {nationAndDates}<br/>
       {art.role}
     </div>
+  },
+
+  artistOrCulture() {
+    var {artist, culture, country} = this.props.art
+
+    return +
+      !(artist == '' || artist.match(/unknown/i))
+        && <Peek facet="artist">{artist}</Peek>
+      || !!culture
+        && <Peek facet="culture">{culture.replace(/ culture/i, '')}</Peek>
+      || !!country
+        && <span>Unknown artist, <Peek facet="country" tag="span">{country}</Peek></span>
   },
 })
 
