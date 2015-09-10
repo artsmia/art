@@ -176,7 +176,7 @@ header{
 
     .artwork-result{
         padding:10px;
-        margin-bottom:10px;
+        margin-bottom: 3px;
         background-color:#fff;
         cursor: pointer;
         display: inline-block;
@@ -202,8 +202,10 @@ header{
     }
 
     .objects-wrap .focused {
-      border-top: 3px solid $primary;
-      margin-top: -3px;
+      border-bottom: 3px solid $primary;
+    }
+    .objects-wrap .focused .artwork-result {
+      margin-bottom: 0;
     }
 
     /* not working
