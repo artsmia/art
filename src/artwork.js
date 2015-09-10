@@ -1,6 +1,7 @@
 var React = require('react')
 var Router = require('react-router')
 var rest = require('rest')
+var humanizeNumber = require('humanize-number')
 
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
@@ -37,7 +38,7 @@ var Artwork = React.createClass({
           stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}
           onStickyStateChange={this.resizeMap}>
           <div ref='map' id='map'>
-            {this.state.zoomLoaded || <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
+            {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
               <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
               {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
             </div>}
@@ -59,7 +60,7 @@ var Artwork = React.createClass({
 
   componentDidMount() {
     var art = this.state.art
-    if(art.restricted != 1) this.loadZoom()
+    if(art.image === 'valid' && art.restricted != 1) this.loadZoom()
   },
 
   loadZoom() {
@@ -98,11 +99,31 @@ var Artwork = React.createClass({
   imageStatus() {
     var {art, zoomLoaded} = this.state
     var copyrightAndOnViewMessage = art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
+    var loadingZoomMessage =  `
+      (—Is that the best image you've got!!?
+      —Nope! We're loading ${humanizeNumber(this.getPixelDifference(400))} more pixels right now.
+      It can take a few seconds.)`
 
-    return <span className="imageStatus">
-      {zoomLoaded === false && "(—Is that the best image you've got!!? —Nope! We're loading a bigger one right now. It can take a few seconds.)"}
+    return art.image === 'valid' && <span className="imageStatus">
+      {zoomLoaded === false && loadingZoomMessage}
       {art.restricted === 1 && "Because of © restrictions we have to show you a small image of this artwork. Sorry!" + copyrightAndOnViewMessage}
     </span>
+  },
+
+  calculateImagePixelSize(size) {
+    var {image_width, image_height} = this.state.art
+    var maxDimension = Math.max(image_width, image_height)
+    var size = size || maxDimension
+    var ratio = Math.floor(maxDimension/size)
+
+    return Math.floor(image_width/ratio) * Math.floor(image_height/ratio)
+  },
+
+  // how many more pixels are in the full sized image than the given thumbnail?
+  getPixelDifference(size=400) {
+    return Math.floor(
+      this.calculateImagePixelSize() - this.calculateImagePixelSize(400)
+    )
   },
 })
 
