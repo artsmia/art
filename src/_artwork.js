@@ -61,21 +61,29 @@ Figure.contextTypes = {
 
 var Creator = React.createClass({
   render() {
-    var wrapper = this.props.wrapper || React.DOM.h5
-    var {artist, culture, country} = this.props.art
+    var Wrapper = this.props.wrapper || React.DOM.h5
+    var [facet, value] = Creator.getFacetAndValue(this.props.art)
+    var creatorPeek = (facet == 'artist' || facet == 'culture')
+      && <Peek microdata={true} facet={facet}>{value}</Peek>
+      || facet == 'country'
+      && <span>Unknown artist, <Peek microdata={true} facet="country" tag="span">{value}</Peek></span>
 
-    return <wrapper itemProp="creator" itemScope itemType="http://schema.org/Person">
-      <span>{
-        !(artist == '' || artist.match(/unknown/i))
-          && <Peek microdata={true} facet="artist">{artist}</Peek>
-        || !!culture
-          && <Peek microdata={true} facet="culture">{culture.replace(/ culture/i, '')}</Peek>
-        || !!country
-          && <span>Unknown artist, <Peek microdata={true} facet="country" tag="span">{country}</Peek></span>
-      }</span>
-    </wrapper>
+    return <Wrapper itemProp="creator" itemScope itemType="http://schema.org/Person">
+      {creatorPeek}
+    </Wrapper>
   },
 })
+Creator.getFacetAndValue = (art) => {
+  var {artist, culture, country} = art
+
+  return !(artist == '' || artist.match(/unknown/i)) &&
+    ['artist', artist]
+  || !!culture
+    && ['culture', culture.replace(/ culture/i, '')]
+  || !!country
+    && ['country', country]
+  || [undefined, undefined]
+}
 
 module.exports = {
   Title,

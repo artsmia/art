@@ -1,5 +1,6 @@
 var React = require('react')
 var Router = require('react-router')
+var Helmet = require('react-helmet')
 var express = require('express')
 var fs = require('fs')
 var index = fs.readFileSync('./index.html', 'utf-8')
@@ -22,12 +23,18 @@ app.get('/search/', (req, res, next) => {
 
 var router = Router.create(routes, Router.HistoryLocation)
 
+var html = ({title, meta, link}, body) => index
+  .replace('<!--HEAD-->', [`<title>${title}</title>`, meta, link]
+    .filter(e => e).join('  \n'))
+  .replace('<!--BODY-->', body);
+
 app.use((req, res, next) => {
   if(!router.match(req.url)) return next()
 
   Router.run(routes, req.url, (Handler, state) => {
     fetchComponentData(state).then(data => {
-      res.send(index + React.renderToString(<Handler {...state} data={data} universal={true} />))
+      var body = React.renderToString(<Handler {...state} data={data} universal={true} />)
+      res.send(html(Helmet.rewind(), body))
     })
   })
 })

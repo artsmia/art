@@ -1,5 +1,6 @@
 var React = require('react')
 var { Link } = require('react-router')
+var Helmet = require('react-helmet')
 
 var Decorate = require('./decorate')
 var Aggregations = require('./aggregations')
@@ -38,6 +39,7 @@ const SearchSummary = React.createClass({
 
         {showAggs && <Aggregations search={search} />}
         <Decorate search={search} params={this.props.params} />
+        <Helmet title={`🔍  ${search.query}`} />
       </div>
     )
   },

@@ -1,5 +1,6 @@
 var React = require('react')
 var Router = require('react-router')
+var Helmet = require('react-helmet')
 
 var rest = require('rest')
 
@@ -25,7 +26,7 @@ var Department = React.createClass({
   },
 
   render() {
-    var deptName = this.props.params.dept
+    var deptName = decodeURIComponent(this.props.params.dept)
     return <div>
       <Search
         link={['searchResults', {terms: `department:${deptName}`}]}
@@ -35,6 +36,7 @@ var Department = React.createClass({
         <DepartmentDecorator department={deptName} params={this.props.params} departmentInfo={this.props.data.departments} />
       </div>
       <Peek facet="department" q={deptName} quiltProps={{maxRowHeight: 400}} offset={10}/>
+      <Helmet title={deptName} />
     </div>
   }
 })

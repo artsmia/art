@@ -1,4 +1,5 @@
 var React = require('react')
+var Helmet = require('react-helmet')
 
 var Peek = require('./peek')
 var Department = require('./department')
@@ -18,6 +19,7 @@ var Browse = React.createClass({
           <hr style={{visibility: 'hidden'}} />
         </section>
       })}
+      <Helmet title="Browse the art" />
     </div>
   },
 

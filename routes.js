@@ -1,6 +1,7 @@
 var React = require('react')
 var Router = require('react-router')
-var {Route, Redirect, RouteHandler, DefaultRoute} = Router
+var {Route, Redirect, RouteHandler, DefaultRoute, Link} = Router
+var Helmet = require('react-helmet')
 
 var Home = require('./src/home')
 var Search = require('./src/search')
@@ -15,7 +16,11 @@ var App = React.createClass({
   render() {
     return (
       <div>
-        <header><a href="/"><div className='logo-container'></div></a></header>
+        <header><Link to="home"><div className='logo-container'></div></Link></header>
+        <Helmet
+          title="Art!"
+          titleTemplate="%s ˆ Mia"
+          />
         <RouteHandler {...this.props}/>
       </div>
     )

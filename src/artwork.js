@@ -2,11 +2,13 @@ var React = require('react')
 var Router = require('react-router')
 var rest = require('rest')
 var humanizeNumber = require('humanize-number')
+var Helmet = require('react-helmet')
 
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
 var ArtworkPreview = require('./artwork-preview')
 var ArtworkDetails = require('./artwork-details')
+var _Artwork = require('./_artwork')
 
 var Sticky = require('react-sticky')
 
@@ -23,6 +25,8 @@ var Artwork = React.createClass({
     var id = this.props.id || this.state.id
     const highlights = this.props.highlights
     var stickyMapStyle = this.context.universal ? {position: 'fixed'} : {}
+
+    var pageTitle = [art.title, _Artwork.Creator.getFacetAndValue(art)[1]].filter(e => e).join(', ')
 
     return (
       <div className='artwork'>
@@ -43,6 +47,7 @@ var Artwork = React.createClass({
             {this.imageStatus()}
           </div>
         </Sticky>
+        <Helmet title={pageTitle} />
       </div>
     )
   },
