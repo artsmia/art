@@ -7,6 +7,11 @@ var SearchResultsList = React.createClass({
   render() {
     var {leftColumnWidth, focusedResult, focusHandler, ...focusedProps} = this.props
 
+    if(this.context.universal) {
+      focusedResult = null
+    }
+    if(!focusedResult) leftColumnWidth = '100%'
+
     var results = this.props.hits.map((hit) => {
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       var focused = focusedResult === hit._source
@@ -29,5 +34,9 @@ var SearchResultsList = React.createClass({
     this.props.focusHandler(hit, SearchResultsList)
   },
 })
+SearchResultsList.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
 
 module.exports = SearchResultsList
