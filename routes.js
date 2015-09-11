@@ -38,6 +38,7 @@ var routes = (
   <Route handler={App} path="/">
     <DefaultRoute name="home" handler={Home}/>
     <Route name="artwork" path="art/:id" handler={Artwork} />
+    <Route name="artworkSlug" path="art/:id/:slug" handler={Artwork} />
     <Route name="search" path="/search/" handler={Search}>
       <Route name="searchResults" path=":terms" handler={SearchResults}>
         <Route name="filteredSearchResults" path="filters/*" handler={SearchResults} />

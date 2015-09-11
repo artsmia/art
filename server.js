@@ -21,17 +21,24 @@ app.get('/search/', (req, res, next) => {
   next()
 })
 
-var router = Router.create(routes, Router.HistoryLocation)
-
 var html = ({title, meta, link}, body) => index
   .replace('<!--HEAD-->', [`<title>${title}</title>`, meta, link]
     .filter(e => e).join('  \n'))
   .replace('<!--BODY-->', body);
 
 app.use((req, res, next) => {
+  var router = Router.create({
+    routes,
+    location: req.url,
+    onAbort: ({to, params, query}) => {
+      var url = to && router.makePath(to, params, query) || '/'
+      res.redirect(302, url)
+    },
+  })
+
   if(!router.match(req.url)) return next()
 
-  Router.run(routes, req.url, (Handler, state) => {
+  router.run((Handler, state) => {
     fetchComponentData(state).then(data => {
       var body = React.renderToString(<Handler {...state} data={data} universal={true} />)
       res.send(html(Helmet.rewind(), body))
@@ -41,4 +48,5 @@ app.use((req, res, next) => {
 
 app.use(serveStatic('.'))
 
-app.listen(process.env.PORT || 3413)
+var port = process.env.PORT || 3413
+app.listen(port, () => console.info('👌 ', port))

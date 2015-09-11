@@ -44,6 +44,7 @@
     "react-router": "^0.13.0",
     "react-sticky": "^2.4.0",
     "rest": "^1.2.0",
+    "speakingurl": "^6.0.0",
     "when": "^3.6.4"
   }
 }

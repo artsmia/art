@@ -1,5 +1,6 @@
 var React = require('react')
 var {Link} = require('react-router')
+var toSlug = require('speakingurl')
 
 var ArtworkImage = require('./artwork-image')
 var Peek = require('./peek')
@@ -89,10 +90,19 @@ Creator.getFacetAndValue = (art) => {
   || [undefined, undefined]
 }
 
+var slug = (art) => {
+  var creator = Creator.getFacetAndValue(art)[1]
+  var string = [art.title, creator && creator.split(';')[0]]
+  .filter(e => e)
+  .join(' ').replace(/\(.*\)/, '')
+  return toSlug(string)
+}
+
 module.exports = {
   Title,
   Tombstone,
   LinkBar,
   Figure,
-  Creator
+  Creator,
+  slug
 }

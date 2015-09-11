@@ -15,8 +15,24 @@ var Sticky = require('react-sticky')
 var Artwork = React.createClass({
   mixins: [Router.State],
   statics: {
-    fetchData: (params) => {
-      return rest('http://search.staging.artsmia.org/id/'+params.id).then((r) => JSON.parse(r.entity))
+    fetchData: {
+      artwork: (params) => {
+        return rest('http://search.staging.artsmia.org/id/'+params.id)
+        .then((r) => JSON.parse(r.entity))
+        .then(art => {
+          art.slug = _Artwork.slug(art)
+          return art
+        })
+      },
+    },
+
+    willTransitionTo: function (transition, params, query, callback) {
+      Artwork.fetchData.artwork(params).then(art => {
+        if(art.slug !== params.slug) {
+          params.slug = art.slug
+          transition.redirect('artworkSlug', params)
+        }
+      }).then(callback)
     }
   },
 
@@ -55,6 +71,7 @@ var Artwork = React.createClass({
   getInitialState() {
     var art = this.props.data.artwork
     art.id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
+
     return {
       art: art,
       id: art.id,
