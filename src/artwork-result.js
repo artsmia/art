@@ -25,7 +25,7 @@ var ArtworkResult = React.createClass({
       <Artwork.Figure art={art} className='artwork-result'>
         <div className="artwork-summary">
           {title}
-          <Artwork.Creator art={art} wrapper="h2" />
+          <Artwork.Creator art={art} wrapper="h2" peek={false} />
           <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
         </div>
         <div>

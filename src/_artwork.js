@@ -61,16 +61,20 @@ Figure.contextTypes = {
 
 var Creator = React.createClass({
   render() {
-    var Wrapper = this.props.wrapper || React.DOM.h5
+    var Wrapper = this.props.wrapper || "h5"
     var [facet, value] = Creator.getFacetAndValue(this.props.art)
     var creatorPeek = (facet == 'artist' || facet == 'culture')
       && <Peek microdata={true} facet={facet}>{value}</Peek>
       || facet == 'country'
-      && <span>Unknown artist, <Peek microdata={true} facet="country" tag="span">{value}</Peek></span>
+      && <span>Unknown artist, <Peek microdata={true} facet="country" tag="span" showIcon={this.props.showIcon}>{value}</Peek></span>
 
     return <Wrapper itemProp="creator" itemScope itemType="http://schema.org/Person">
-      {creatorPeek}
+      {this.props.peek ? creatorPeek : value}
     </Wrapper>
+  },
+
+  getDefaultProps() {
+    return {peek: true}
   },
 })
 Creator.getFacetAndValue = (art) => {
