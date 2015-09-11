@@ -2,7 +2,7 @@ var React = require('react')
 var Router = require('react-router')
 var { Link } = Router
 
-var ArtworkImage = require('./artwork-image')
+var Artwork = require('./_artwork')
 
 var ArtworkResult = React.createClass({
   mixins: [Router.State],
@@ -14,21 +14,18 @@ var ArtworkResult = React.createClass({
   render() {
     var art = this.props.data.artwork
     var id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
+    var title = <Artwork.Title art={art} link={this.context.universal} />
+
     const highlights = this.props.highlights
     const showHighlights = highlights && Object.keys(highlights).filter((field) => {
       return !field.match(/title|artist|image|room|highlight/)
     }) || []
-    var nakedTitle = <h1><span dangerouslySetInnerHTML={{__html: highlights && (highlights.title || highlights['title.ngram']) || art.title}}></span></h1>
-    var title = this.context.universal ?
-      <Link to="artwork" params={{id: id}}>{nakedTitle}</Link> :
-      nakedTitle
 
     return (
-      <div className='artwork-result'>
-        <ArtworkImage art={art} id={id} lazyLoad={!this.context.universal} />
+      <Artwork.Figure art={art} className='artwork-result'>
         <div className="artwork-summary">
           {title}
-          <h2><span dangerouslySetInnerHTML={{__html: highlights && (highlights.artist || highlights['artist.ngram']) || art.artist}}></span></h2>
+          <Artwork.Creator art={art} wrapper="h2" />
           <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
         </div>
         <div>
@@ -36,7 +33,7 @@ var ArtworkResult = React.createClass({
             return <p key={`highlight${key}`} className={['highlight', key].join(' ')} dangerouslySetInnerHTML={{__html: highlights[key][0].replace('\n', '<br>')}}></p>
           })}
         </div>
-      </div>
+      </Artwork.Figure>
     )
   }
 })

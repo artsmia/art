@@ -176,11 +176,12 @@ header{
 
     .artwork-result{
         padding:10px;
-        margin-bottom: 3px;
         background-color:#fff;
         cursor: pointer;
         display: inline-block;
         width: 100%;
+        margin: 0;
+        margin-bottom: 3px;
     }
 
     .artwork-result h1{margin:0;padding:0;}
@@ -196,9 +197,11 @@ header{
       float: right;
       padding-left: 10px;
     }
-    .objects-wrap .artwork-image > div > img{
-        max-width: 90%;
-        max-height: 200px;
+    .objects-wrap .artwork-image > div {
+        max-height: 200px !important;
+    }
+    .objects-wrap .artwork-image img {
+        max-width: 90% !important;
     }
 
     .objects-wrap .focused {
@@ -237,9 +240,10 @@ header{
     float:left;
     position:relative;
     width: 100%;
+    margin: 0;
 }
 
-    .objects-focus h2{
+    .objects-focus h1{
         font-size:2em;
         line-height:1.3em;
         padding-top:7px;
@@ -248,7 +252,7 @@ header{
         font-style: italic;
         border-top:3px solid $primary;
     }
-    .info .objects-focus h2 {
+    .info .objects-focus h1 {
       border-top: none;
       padding-top: 0;
       margin: 0;
@@ -648,6 +652,6 @@ h5.details-title {
     cursor: hand;
  }
 
- .peek i > a {
+ .peek a {
    color: $primary;
  }

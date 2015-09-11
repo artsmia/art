@@ -32,18 +32,18 @@ var Peek = React.createClass({
 
   render() {
     var {results, facetedQ} = this.state
-    var {child} = this.props
+    var {child, microdata} = this.props
     var result = results && results[facetedQ]
     var Tag = this.props.tag
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
     var peekText = this.context.universal ?
-      <Link to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
+      <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
       <ClickToSelect>{this.props.children}</ClickToSelect>
 
     return <Tag onClick={debounce(this.onClick, 200)} className="peek">
       {this.props.children && <i>
-        {peekText}
+        <span itemProp={microdata ? "name" : ''}>{peekText}</span>
         {!this.props.universal && showIcon && icon}
       </i>}
       {this.state.open && this.state.facetedQ && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>

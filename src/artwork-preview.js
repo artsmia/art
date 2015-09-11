@@ -7,6 +7,7 @@ var {Link} = require('react-router')
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
+var Artwork = require('./_artwork')
 
 var ArtworkPreview = React.createClass({
   getDefaultProps() {
@@ -19,37 +20,23 @@ var ArtworkPreview = React.createClass({
     var {art, style, showLink} = this.props
     var id = art.id.replace('http://api.artsmia.org/objects/', '')
 
-    var title = showLink ? 
-      <Link to="artwork" params={{id: art.id}}>{art.title}</Link> :
-      art.title
-      
     var details = showLink ? <Link to="artwork" params={{id: art.id}}>
       <div className="objects-page-link"><div className="objects-page-icon"></div>details</div>
     </Link> : ''
       
     return (
-      <div className='objects-focus' style={style}>
-        <ArtworkImage art={art} id={art.id} />
+      <Artwork.Figure art={art} className='objects-focus' style={style}>
         <div className="art-details preview-header">
           {details}
-          <h2>{title}</h2>
+          <h2><Artwork.Title art={art} link={showLink} /></h2>
           <h5 className='date'><Peek tag="span" showIcon={false}>{art.dated}</Peek></h5>
-          <h5>{this.artistOrCulture()}</h5>
+          <Artwork.Creator art={art} />
           <h6><Peek facet="room">{art.room}</Peek></h6>
-          <div className='tombstone'>
-            <Peek facet="medium" tag="span">{art.medium}</Peek><br />
-            {art.dimension}<br/>
-            <Peek facet="creditline" tag="span">{art.creditline}</Peek>
-            {art.accession_number}
-          </div>
-          <Markdown>{art.text}</Markdown>
-          <div className="link-bar">
-            <i className="material-icons">favorite_border</i>
-            <i className="material-icons">launch</i>
-            {showLink && <Link to="artwork" params={{id: art.id}}>View Details &rarr;</Link>}
-          </div>
+          <Artwork.Tombstone art={art} />
+          <Markdown itemProp="description">{art.text}</Markdown>
+          <Artwork.LinkBar art={art} link={showLink} />
         </div>
-      </div>
+      </Artwork.Figure>
     )
   },
 
@@ -67,18 +54,6 @@ var ArtworkPreview = React.createClass({
       {nationAndDates}<br/>
       {art.role}
     </div>
-  },
-
-  artistOrCulture() {
-    var {artist, culture, country} = this.props.art
-
-    return +
-      !(artist == '' || artist.match(/unknown/i))
-        && <Peek facet="artist">{artist}</Peek>
-      || !!culture
-        && <Peek facet="culture">{culture.replace(/ culture/i, '')}</Peek>
-      || !!country
-        && <span>Unknown artist, <Peek facet="country" tag="span">{country}</Peek></span>
   },
 })
 
