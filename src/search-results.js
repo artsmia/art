@@ -13,8 +13,8 @@ var SearchResults = React.createClass({
   statics: {
     fetchData: {
       searchResults: (params, query) => {
-        var size = query.size || 100
-        const filters = params.splat && decodeURIComponent(params.splat)
+        var size = query && query.size || 100
+        const filters = params.splat
         let searchUrl = `${SEARCH}/${decodeURIComponent(params.terms)}?size=${size}`
         if(filters) searchUrl += `&filters=${filters}`
         return rest(searchUrl).then((r) => JSON.parse(r.entity))

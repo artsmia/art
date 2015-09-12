@@ -21,6 +21,7 @@ var Home = React.createClass({
     return <div>
       <Search
         hideResults={true}
+        activateInput={true}
         quiltProps={{maxRows: 3, maxWorks: 30}}
         link={['searchResults', {terms: 'highlight:true'}]}
         {...this.props} />

@@ -82,7 +82,7 @@ const ImageQuilt = React.createClass({
       // space-around looks best on bottom rows
       const justify = index == 0 && row.length <=3 ? 'space-around' : 'center'
       var rowStyle = {
-        background: 'black',
+        background: '#222',
         minHeight: Math.min(unadjustedHeight, this.props.maxRowHeight),
         display: 'flex',
         justifyContent: justify,

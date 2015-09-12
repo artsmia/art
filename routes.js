@@ -1,8 +1,8 @@
 var React = require('react')
 var Router = require('react-router')
-var {Route, Redirect, RouteHandler, DefaultRoute, Link} = Router
-var Helmet = require('react-helmet')
+var {Route, Redirect, DefaultRoute} = Router
 
+var App = require('./src/app')
 var Home = require('./src/home')
 var Search = require('./src/search')
 var SearchResults = require('./src/search-results')
@@ -11,28 +11,6 @@ var ArtistsByLetter = require('./src/artists-by-letter')
 var ObjectsById = require('./src/objects-by-id')
 var Department = require('./src/department')
 var Browse = require('./src/browse')
-
-var App = React.createClass({
-  render() {
-    return (
-      <div>
-        <header><Link to="home"><div className='logo-container'></div></Link></header>
-        <Helmet
-          title="Art!"
-          titleTemplate="%s ˆ Mia"
-          />
-        <RouteHandler {...this.props}/>
-      </div>
-    )
-  },
-
-  getChildContext() {
-    return {
-      universal: this.props.universal,
-    }
-  },
-})
-App.childContextTypes = {universal: React.PropTypes.bool}
 
 var routes = (
   <Route handler={App} path="/">

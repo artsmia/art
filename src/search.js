@@ -11,18 +11,21 @@ var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
   getInitialState() {
-    const results = this.props.data.searchResults
-    results || this.transitionTo('home')
-    var {terms} = this.props.params
+    const {blank} = this.props
+    const results = this.props.results || this.props.data && this.props.data.searchResults || []
+    results || this.props.blank || this.transitionTo('home')
+    
     return {
-      terms: terms && decodeURIComponent(terms),
+      results: results,
+      terms: blank ? '' : this.props.params && this.props.params.terms && decodeURIComponent(this.props.params.terms),
       hits: results && results.hits && results.hits.hits || [],
       showAggs: this.props.showAggs,
+      blank: this.props.blank,
     }
   },
 
   render() {
-    const results = this.props.data.searchResults || this.props.data.home || this.props.data.department
+    const results = this.state.results || this.props.data.home || this.props.data.department
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
     const headerArtworks = ImageQuilt.getImagedResults(hits)
     const showQuilt = (headerArtworks)
@@ -34,6 +37,7 @@ var Search = React.createClass({
       disableHover: this.props.hideResults,
       lazyLoad: !this.context.universal,
     }, this.props.quiltProps || {})
+
     const nakedSimpleSearchBox = <div className='mdl-textfield mdl-js-textfield'>
       <input className='mdl-textfield__input' type="search"
         placeholder="search for something"
@@ -42,6 +46,7 @@ var Search = React.createClass({
         onChange={this.throttledSearch}
         style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}}
         name="q"
+        ref="searchInput"
         />
     </div>
 
@@ -63,7 +68,7 @@ var Search = React.createClass({
 
     const searchBox = (
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
-        <div className='search-wrap' style={showQuilt && quiltSearchStyles || {}}>
+        <div className='search-wrap' ref="test" style={showQuilt && quiltSearchStyles || {}}>
           <div>{simpleSearchBox}</div>
         </div>
         {showQuilt && <ImageQuilt {...quiltProps} />}
@@ -78,6 +83,7 @@ var Search = React.createClass({
     return (
       <div id="search">
         {searchBox}
+        {this.props.children}
         {this.props.hideResults || <div>
           <SearchResults {...this.props} hits={this.state.hits} {...aggsProps} />
         </div>}
@@ -86,19 +92,27 @@ var Search = React.createClass({
   },
 
   componentWillMount() {
+    var update = this.props.onUpdate || this.search
     this.debouncedSearch = (typeof window.orientation === 'undefined') ?
-      debounce(this.search, 1000) :
+      debounce(update, 1000) :
       undefined
+  },
+
+  componentDidMount() {
+    if(this.props.activateInput) {
+      this.activateSearch()
+    }
   },
 
   throttledSearch(event) {
     var terms = event.target.value
     this.setState({terms: terms})
-    this.debouncedSearch && this.debouncedSearch()
+    this.debouncedSearch && this.debouncedSearch(terms)
   },
 
   search() {
     var terms = this.normalizeTerms(this.state.terms)
+    this.props.onSearch && this.props.onSearch(terms)
     if(terms !== '') this.transitionTo('searchResults', {terms: terms})
   },
 
@@ -109,11 +123,20 @@ var Search = React.createClass({
   componentWillReceiveProps(nextProps) {
     // Replace `terms` with the terms from the current search, so back+forward
     // work correctly. UNLESS the only difference is insignificant whitespace.
-    if(this.normalizeTerms() != nextProps.params.terms) {
-      this.setState({terms: nextProps.params.terms})
+    var nextTerms = nextProps.params && nextProps.params.terms || nextProps.terms
+    if(this.normalizeTerms() != nextTerms) {
+      this.setState({terms: nextTerms})
     }
-    const results = nextProps.data.searchResults
-    this.setState({hits: results && results.hits && results.hits.hits || []})
+    const results = nextProps.results || nextProps.data && nextProps.data.searchResults
+    this.setState({results, hits: results && results.hits && results.hits.hits || []})
+  },
+
+  componentDidUpdate(prevProps) {
+    var {activateSearch} = this.props
+    if(activateSearch && activateSearch !== this.state.activateSearch) {
+      this.activateSearch()
+      this.setState({activateSearch: activateSearch})
+    }
   },
 
   normalizeTerms(terms=this.state.terms) {
@@ -124,7 +147,7 @@ var Search = React.createClass({
   // If no `art` is passed, that means the quilt has lost focus,
   // reset hits to be the searchResults straigt from ES
   updateFromQuilt(art) {
-    const hits = this.props.data.searchResults.hits.hits
+    const hits = this.state.results.hits.hits
     if(art) {
       if(this.props.link) this.linkToClickedArtwork(this.props.link, art)
       var index = hits.indexOf(art)+1
@@ -140,11 +163,18 @@ var Search = React.createClass({
 
   linkToClickedArtwork(link, art) {
     window.clickedArtwork = art
+    this.props.onSearch && this.props.onSearch('clicked a link')
     this.transitionTo(...link)
   },
 
   toggleAggs() {
     this.setState({showAggs: !this.state.showAggs})
+  },
+
+  activateSearch() {
+    var node = React.findDOMNode(this.refs.searchInput)
+    node.focus()
+    node.value && node.setSelectionRange(0, node.value.length)
   },
 })
 Search.contextTypes = {
