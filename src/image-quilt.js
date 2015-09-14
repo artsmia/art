@@ -96,8 +96,14 @@ const ImageQuilt = React.createClass({
       </div>
     })
 
+    var quiltStyle = {
+      cursor: 'pointer',
+      WebkitFilter: this.props.darken ? 'brightness(0.3)' : '',
+      ...this.props.style,
+    }
+
     return (
-      <div className='quilt-wrap'  onMouseLeave={this.hovered.bind(this, null, false)} style={{cursor: 'pointer'}}>
+      <div className='quilt-wrap' onMouseLeave={this.hovered.bind(this, null, false)} style={quiltStyle}>
         {images}
       </div>
     )
@@ -205,7 +211,8 @@ var QuiltPatch = React.createClass({
 
   getDefaultProps() {
     return {
-      lazyLoad: true
+      lazyLoad: true,
+      darken: false,
     }
   },
 })

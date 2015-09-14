@@ -292,6 +292,9 @@ header{
     }
 
 
+.search-wrap {
+  z-index: 1000;
+}
 .search-wrap div:first-child {
     width: 23em;
     margin:0 auto;
