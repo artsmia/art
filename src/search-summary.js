@@ -39,7 +39,13 @@ const SearchSummary = React.createClass({
 
         {showAggs && <Aggregations search={search} />}
         <Decorate search={search} params={this.props.params} />
-        <Helmet title={`🔍  ${search.query}`} />
+        <Helmet
+          title={`🔍  ${search.query}`}
+          meta={[
+            {property: "robots", content: "noindex"},
+            {property: "og:title", content: `${search.query} | Minneapolis Institute of Art`},
+          ]}
+          />
       </div>
     )
   },

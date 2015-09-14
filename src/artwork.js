@@ -43,6 +43,8 @@ var Artwork = React.createClass({
     var stickyMapStyle = this.context.universal ? {position: 'fixed'} : {}
 
     var pageTitle = [art.title, _Artwork.Creator.getFacetAndValue(art)[1]].filter(e => e).join(', ')
+    var imageUrl = `http://api.artsmia.org/images/${id}/400/medium.jpg`
+    var canonicalURL = `https://collection.staging.artsmia.org/art/${art.id}/${art.slug}`
 
     return (
       <div className='artwork'>
@@ -57,13 +59,26 @@ var Artwork = React.createClass({
           onStickyStateChange={this.resizeMap}>
           <div ref='map' id='map' style={stickyMapStyle}>
             {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
-              <img src={`http://api.artsmia.org/images/${id}/400/medium.jpg`} />
+              <img src={imageUrl} />
               {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
             </div>}
             {this.imageStatus()}
           </div>
         </Sticky>
-        <Helmet title={pageTitle} />
+        <Helmet
+          title={pageTitle}
+          meta={[
+            {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
+            {property: "og:description", content: art.text},
+            {property: "og:image", content: imageUrl},
+            {property: "og:url", content: canonicalURL},
+            {property: "twitter:card", content: "summary-large-image"},
+            {property: "twitter:site", content: "@artsmia"},
+          ]}
+          link={[
+            {"rel": "canonical", "href": canonicalURL},
+          ]}
+          />
       </div>
     )
   },
