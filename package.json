@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "watchify index.js -o bundle.js & serve -p 1314",
+    "start": "npm run watch & npm run serve",
+    "watch": "watchify index.js -o bundle.js -dv",
+    "serve": "PORT=1314 node server.babel.js",
     "build": "NODE_ENV=production browserify index.js | uglifyjs -c -m > bundle.js"
   },
   "author": "",
