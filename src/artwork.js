@@ -106,7 +106,7 @@ var Artwork = React.createClass({
 
     this.map = L.map(this.refs.map.getDOMNode(), {
       crs: L.CRS.Simple,
-      zoomControl: false,
+      zoomControl: !L.Browser.touch,
     })
     this.map.attributionControl.setPrefix('')
 
