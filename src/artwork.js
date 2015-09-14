@@ -44,7 +44,7 @@ var Artwork = React.createClass({
 
     var pageTitle = [art.title, _Artwork.Creator.getFacetAndValue(art)[1]].filter(e => e).join(', ')
     var imageUrl = `http://api.artsmia.org/images/${id}/400/medium.jpg`
-    var canonicalURL = `https://collection.staging.artsmia.org/art/${art.id}/${art.slug}`
+    var canonicalURL = `http://collection.staging.artsmia.org/art/${art.id}/${art.slug}`
 
     return (
       <div className='artwork'>
