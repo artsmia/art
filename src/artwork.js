@@ -184,8 +184,20 @@ var ArtworkRelatedContent = React.createClass({
     return links && links.length > 0 && <div>
       <h5 className="details-title">Other Resources</h5>
       <ul style={{listStyle: 'inside lower-latin'}}>
-        {links.map(link => <li><a href={link.link}>{link.title}</a></li>)}
+        {links.map(this.build)}
       </ul>
     </div>
+  },
+
+  build(link) {
+    return <li key={link.link}>
+      {(this.templates[link.type] || this.templates.default)(link)}
+    </li>
+  },
+
+  templates: {
+    audio: (link) => <audio style={{maxWidth: '100%'}} src={link.link} controls></audio>,
+    newsflash: (link) => <span>📰 <a href={link.link}>{link.title}</a></span>,
+    default: (link) => <a href={link.link}>{link.title}</a>,
   },
 })
