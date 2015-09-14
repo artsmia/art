@@ -93,8 +93,10 @@ Creator.getFacetAndValue = (art) => {
 var slug = (art) => {
   var creator = Creator.getFacetAndValue(art)[1]
   var string = [art.title, creator && creator.split(';')[0]]
-  .filter(e => e)
-  .join(' ').replace(/\(.*\)/, '')
+    .filter(e => e)
+    .join(' ')
+    .replace(/\(.*\)/, '')
+    .replace('ō', 'o')
   return toSlug(string)
 }
 
