@@ -28,6 +28,7 @@ var Artwork = React.createClass({
       relatedContent: (params) => {
         return rest('http://collection.staging.artsmia.org/links/'+params.id+'.json')
         .then(r => JSON.parse(r.entity))
+        .catch(err => [])
       },
     },
 
