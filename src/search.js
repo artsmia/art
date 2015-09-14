@@ -36,7 +36,7 @@ var Search = React.createClass({
       onClick: this.updateFromQuilt,
       disableHover: this.props.hideResults,
       lazyLoad: !this.context.universal,
-      darken: true,
+      darken: this.props.path && this.props.path.match(/search/),
     }, this.props.quiltProps || {})
 
     const nakedSimpleSearchBox = <div className='mdl-textfield mdl-js-textfield'>
