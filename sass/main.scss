@@ -662,10 +662,12 @@ button.material-icons {
   margin: 0px;
   padding: 0px;
   font-weight: bold;
-  padding: 2em;
-  margin: -2em;
 }
 
+button.material-icons.search {
+  padding: 2em 0 2em 2em;
+  margin: -2em 0 -2em -2em;
+}
 /* ===== page.js STYLES ===== */
 
 .page{}
