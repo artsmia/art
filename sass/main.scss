@@ -492,13 +492,19 @@ a.departmentLink:hover  {
   font-size: 1.75em;
   width: 100%;
   text-align: left;
-  padding: 7px 0 15px 11px;
+  padding: 0 0 10px 21px;
   margin: 0;
+  margin-top:0.7em;
   line-height: 1em;
 }
 .departmentContent, .departmentResources {
   padding: 0 5px;
 }
+.departmentContent p {
+  line-height:1.4em;
+  padding-left:10px;
+}
+
 .departmentResources h3 {
   border-top: 3px solid rgb(35,35,35);
   font-size: 1.2em;
@@ -506,10 +512,13 @@ a.departmentLink:hover  {
   font-family: $MiaGroteskRegular;
   line-height: 1em;
   padding: 7px 0;
-  margin-top: 1em;
 }
+
 .departmentResources h3:first-child {
   margin-top: 0;
+}
+.departmentResources ul{
+    margin-bottom:2em;
 }
 .departmentPage h2 a{
   color: rgb(35,35,35);
@@ -667,3 +676,36 @@ button.material-icons {
   padding: 2em;
   margin: -2em;
 }
+
+/* ===== page.js STYLES ===== */
+
+.page{}
+.pageText{margin:2em;max-width:38em;}
+.pageText h1{
+    font-size: 1.75em;
+    width: 100%;
+    text-align: left;
+    margin: 0;
+    line-height: 1em;
+}
+.pageText h2{
+    font-size: 1.25em;
+    width: 100%;
+    text-align: left;
+    margin: 0;
+    margin-top:2em;
+    line-height: 1em;
+    border-top:3px solid $primary;
+    padding-top:5px;
+}
+.pageText h3{
+    font-size: 1em;
+    text-transform:uppercase;
+    width: 100%;
+    text-align: left;
+    margin: 0;
+    margin-top:2em;
+    line-height: 1em;
+}
+
+.pageText p{line-height: 1.4em;margin:0.5em 0;}
