@@ -46,32 +46,31 @@ var HomeDepartments = React.createClass({
 
   render() {
     return <div className="landingPageBody">
-    <div className="shortcutLinks mdl-grid">
-      <div className="mdl-cell mdl-cell--4-col">
-        <Link to='searchResults' params={{terms: 'highlight:true'}}>
-          <div className="shortcutHighlights">
-          </div>
+      <div className="shortcutLinks mdl-grid">
+        <div className="mdl-cell mdl-cell--4-col">
+          <Link to='searchResults' params={{terms: 'highlight:true'}}>
+            <div className="shortcutHighlights"></div>
             <h2>Highlights</h2>
-              <sub>The pride and joy of Mia</sub>
-        </Link>
-      </div>
-      <div className="mdl-cell mdl-cell--4-col">
-        <Link to="searchResults" params={{terms: 'recent:true'}}>
-          <div className="shortcutAccessions"></div>
+            <sub>The pride and joy of Mia</sub>
+          </Link>
+        </div>
+        <div className="mdl-cell mdl-cell--4-col">
+          <Link to="searchResults" params={{terms: 'recent:true'}}>
+            <div className="shortcutAccessions"></div>
             <h2>New Art<sup>*</sup></h2>
             <sub>*new to Mia</sub>
-        </Link>
-      </div>
-      <div className="mdl-cell mdl-cell--4-col">
-        <Link to='browse'>
-          <div className="shortcutBrowse">
-          </div>
+          </Link>
+        </div>
+        <div className="mdl-cell mdl-cell--4-col">
+          <Link to='browse'>
+            <div className="shortcutBrowse"></div>
             <h2>Browse</h2>
             <sub>Not sure what to search?</sub>
-        </Link>
+          </Link>
+        </div>
       </div>
-    </div>
-    <div className="departmentList mdl-grid">
+
+      <div className="departmentList mdl-grid">
       <h2>Departments</h2>
         {this.departments.map((dept) => {
           var name = index => findDepartment(dept)[index]
@@ -79,6 +78,9 @@ var HomeDepartments = React.createClass({
             <div className={[name(1), "departmentListItem"].join(' ')}></div>
             <h2>{dept}</h2>
           </Link>
-        })}</div></div>
-      },
-    })
+          }
+        )}
+      </div>
+  </div>
+  },
+})
