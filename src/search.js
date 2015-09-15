@@ -112,8 +112,11 @@ var Search = React.createClass({
 
   search() {
     var terms = this.normalizeTerms(this.state.terms)
+    var {facet} = this.props
+    if(terms === '') return
+
     this.props.onSearch && this.props.onSearch(terms)
-    if(terms !== '') this.transitionTo('searchResults', {terms: terms})
+    this.transitionTo(facet ? 'filteredSearchResults' : 'searchResults', {terms: terms, splat: facet})
   },
 
   keyDown(event) {
@@ -149,7 +152,7 @@ var Search = React.createClass({
   updateFromQuilt(art) {
     const hits = this.state.results.hits.hits
     if(art) {
-      if(this.props.link) this.linkToClickedArtwork(this.props.link, art)
+      if(this.props.facet) this.linkToClickedArtwork(this.props.facet, art)
       var index = hits.indexOf(art)+1
       if(hits.indexOf(art) === -1) {
         var sameArtDifferentObject = hits.filter(h => h._id === art._id)
@@ -161,10 +164,10 @@ var Search = React.createClass({
     }
   },
 
-  linkToClickedArtwork(link, art) {
+  linkToClickedArtwork(facet, art) {
     window.clickedArtwork = art
     this.props.onSearch && this.props.onSearch('clicked a link')
-    this.transitionTo(...link)
+    this.transitionTo(facet ? 'filteredSearchResults' : 'searchResults', {terms: '*', splat: facet})
   },
 
   toggleAggs() {

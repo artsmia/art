@@ -29,9 +29,10 @@ var Department = React.createClass({
 
   render() {
     var [deptName, _, slug] = findDepartment(this.props.params.dept)
+    var facet = `department:${deptName}`
     return <div>
       <Search
-        link={['searchResults', {terms: `department:${deptName}`}]}
+        facet={facet}
         {...this.props}
         hideResults={true} />
       <div className="departmentPage">
