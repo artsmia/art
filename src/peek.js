@@ -23,11 +23,12 @@ var Peek = React.createClass({
     if(!q) q = this.props.children
 
     return {
+      facet,
       open,
       results: {},
       offset: this.props.offset || 0,
       query: q,
-      facetedQ: q && this.props.facet ? `${this.props.facet}:"${encodeURIComponent(q)}"` : q
+      facetedQ: q && facet ? `${facet}:"${encodeURIComponent(q)}"` : q
     }
   },
 
@@ -50,10 +51,10 @@ var Peek = React.createClass({
       {this.state.open && this.state.facetedQ && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
         <Link to="searchResults" params={{terms: this.state.facetedQ}}>
-          {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.props.facet && `(${this.props.facet})`}
+          {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.state.facet && `(${this.state.facet})`}
         </Link>
       </div>}
-      {this.state.open && this.getQs().map((q) => <Peek facet={this.props.facet} q={q} key={q} />)}
+      {this.state.open && this.getQs().map((q) => <Peek facet={this.state.facet} q={q} key={q} />)}
     </Tag>
   },
 
@@ -126,7 +127,7 @@ var Peek = React.createClass({
   fetchResults() {
     var {results, facetedQ} = this.state
     var q = this.getText()
-    var facetedQ = this.props.facet ? `${this.props.facet}:"${encodeURIComponent(q)}"` : q
+    var facetedQ = this.state.facet ? `${this.state.facet}:"${encodeURIComponent(q)}"` : q
 
     this.setState({
       query: q,

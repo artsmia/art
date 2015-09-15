@@ -54,6 +54,7 @@ var Search = React.createClass({
       <form action="/search/" method="get">{nakedSimpleSearchBox}</form> :
       nakedSimpleSearchBox
 
+    const hideInput = this.props.hideInput && !this.state.activateSearch
     var quiltSearchStyles = {
       position: 'absolute',
       top: '50%',
@@ -63,12 +64,13 @@ var Search = React.createClass({
       right: 0,
       width: '100%',
       textAlign: 'center',
-      pointerEvents: 'none'
+      pointerEvents: 'none',
+      display: hideInput ? 'none' : 'inherit',
     }
 
     const searchBox = (
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
-        <div className='search-wrap' ref="test" style={showQuilt && quiltSearchStyles || {}}>
+        <div className='search-wrap' style={showQuilt && quiltSearchStyles || {}}>
           <div>{simpleSearchBox}</div>
         </div>
         {showQuilt && <ImageQuilt {...quiltProps} />}
@@ -176,8 +178,10 @@ var Search = React.createClass({
 
   activateSearch() {
     var node = React.findDOMNode(this.refs.searchInput)
-    node.focus()
-    node.value && node.setSelectionRange(0, node.value.length)
+    if(node) {
+      node.focus()
+      node.value && node.setSelectionRange(0, node.value.length)
+    }
   },
 })
 Search.contextTypes = {

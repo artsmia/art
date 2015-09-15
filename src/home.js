@@ -2,6 +2,8 @@ var React = require('react')
 var Router = require('react-router')
 var {Link} = Router
 
+var toSlug = require('speakingurl')
+
 var SEARCH = require('./search-endpoint')
 var rest = require('rest')
 var Search = require('./search')
@@ -44,6 +46,8 @@ var HomeDepartments = React.createClass({
     "Prints and Drawings",
   ],
 
+  pages: ['Purcell-Cutts House', 'Provenance Research', 'Deaccessions'],
+
   render() {
     return <div className="landingPageBody">
       <div className="shortcutLinks mdl-grid">
@@ -81,6 +85,14 @@ var HomeDepartments = React.createClass({
           }
         )}
       </div>
+
+      <ul className="info">
+        {this.pages.map(name => {
+          return <li>
+            <Link to="page" key={name} params={{name: toSlug(name)}}>{name}</Link>
+          </li>
+        })}
+    </ul>
   </div>
   },
 })

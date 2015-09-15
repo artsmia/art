@@ -34,6 +34,7 @@ var Department = React.createClass({
       <Search
         facet={facet}
         {...this.props}
+        hideInput={true}
         hideResults={true} />
       <div className="departmentPage">
         <DepartmentDecorator department={deptName} params={this.props.params} departmentInfo={this.props.data.departments} />
