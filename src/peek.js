@@ -31,6 +31,7 @@ var Peek = React.createClass({
   },
 
   render() {
+    console.info(this.state.query)
     var {results, facetedQ} = this.state
     var {child, microdata} = this.props
     var result = results && results[facetedQ]
