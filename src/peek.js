@@ -17,8 +17,9 @@ var Peek = React.createClass({
   },
 
   getInitialState() {
-    var {q} = this.props
+    var {q, facet} = this.props
     var open = !!q
+    if(q && q.match(/:/)) [facet, q] = q.split(/:/)
     if(!q) q = this.props.children
 
     return {
@@ -31,7 +32,6 @@ var Peek = React.createClass({
   },
 
   render() {
-    console.info(this.state.query)
     var {results, facetedQ} = this.state
     var {child, microdata} = this.props
     var result = results && results[facetedQ]
@@ -99,7 +99,7 @@ var Peek = React.createClass({
   },
 
   getText() {
-    return this.props.q || this.state.q || this.props.children
+    return this.props.children || this.state.query
   },
 
   getQs() {
