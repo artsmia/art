@@ -27,10 +27,13 @@ var App = React.createClass({
   },
 
   searchBar() {
+    var button = <button className="material-icons" style={{position: 'absolute', top: '0.5em', right: '0.5em'}} onClick={this.toggleSearch}>
+      {this.state.showSearch ? 'close' : 'search'}
+    </button>
+    var searchTrigger = this.props.universal ? <Link to="home">{button}</Link> : button
+
     return <div>
-      <button className="material-icons" style={{position: 'absolute', top: '0.5em', right: '0.5em'}} onClick={this.toggleSearch}>
-        {this.state.showSearch ? 'close' : 'search'}
-      </button>
+      {searchTrigger}
       {this.state.showSearch && <LiveSearch afterSearch={this.toggleSearch} />}
     </div>
   },
