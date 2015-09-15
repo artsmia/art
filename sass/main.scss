@@ -709,3 +709,11 @@ button.material-icons {
 }
 
 .pageText p{line-height: 1.4em;margin:0.5em 0;}
+
+/* ===== info links homepage STYLES ===== */
+
+ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
+
+.info li{display:inline-block;margin:0;padding-right:8px;}
+.info li a{background-color:$primary;color:#fff;text-align:center;padding:10px 0;width:100%;display:block;}
+.info li:last-child a{padding-right:0;}

@@ -88,7 +88,7 @@ var HomeDepartments = React.createClass({
 
       <ul className="info">
         {this.pages.map(name => {
-          return <li>
+          return <li className="mdl-cell mdl-cell--4-col">
             <Link to="page" key={name} params={{name: toSlug(name)}}>{name}</Link>
           </li>
         })}
