@@ -25,7 +25,7 @@ var Search = React.createClass({
   },
 
   render() {
-    const results = this.state.results || this.props.data.home || this.props.data.department
+    const results = this.state.results
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
     const headerArtworks = ImageQuilt.getImagedResults(hits)
     const showQuilt = (headerArtworks)

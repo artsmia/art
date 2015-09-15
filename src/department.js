@@ -8,6 +8,7 @@ var Search = require('./search')
 var SearchResults = require('./search-results')
 var Peek = require('./peek')
 var DepartmentDecorator = require('./decorate/department')
+var findDepartment = require('./department-slug')
 
 var Department = React.createClass({
   mixins: [Router.State],
@@ -16,7 +17,8 @@ var Department = React.createClass({
     fetchData: {
       searchResults: (params, query) => {
         params.terms = '*'
-        params.splat = 'department:"'+encodeURIComponent(params.dept)+'"'
+        var name = findDepartment(params.dept)[0]
+        params.splat = 'department:"'+encodeURIComponent(name)+'"'
         return SearchResults.fetchData.searchResults(params, query)
       },
       departments: (params, query) => {
@@ -26,7 +28,7 @@ var Department = React.createClass({
   },
 
   render() {
-    var deptName = decodeURIComponent(this.props.params.dept)
+    var [deptName, _, slug] = findDepartment(this.props.params.dept)
     return <div>
       <Search
         link={['searchResults', {terms: `department:${deptName}`}]}

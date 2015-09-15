@@ -2,17 +2,18 @@ var React = require('react')
 var {Link} = require('react-router')
 
 var Markdown = require('../markdown')
-var departmentNamesMap = require('../department-slug')
+var findDepartment = require('../department-slug')
 
 var DepartmentDecorator = React.createClass({
   getInitialState() {
-    var [deptName, selector] = this.getNameAndSelector(this.props.department)
+    var [deptName, selector, slug] = this.getNameAndSelector(this.props.department)
     var {departmentInfo} = this.props
     var info = departmentInfo && departmentInfo.departments[selector]
 
     return {
-      deptName: deptName,
-      selector: selector,
+      deptName,
+      selector,
+      slug,
       info: info,
       blurb: info && info.content || DepartmentContent[selector] || `Sorry, there's no "${deptName}" department.`,
       expanded: this.props.expanded || !!this.props.params.dept || false,
@@ -28,17 +29,16 @@ var DepartmentDecorator = React.createClass({
     var fullInfo = expanded && this.getFullInfo(blurbB)
 
     return <div className="departmentBlurb mdl-grid">
-      <h2><Link to='department' params={{dept: deptName, terms: department}}>{deptName}</Link></h2>
+      <h2><Link to='department' params={{dept: this.state.slug, terms: department}}>{this.state.deptName}</Link></h2>
       <div className="departmentContent mdl-cell mdl-cell--6-col">{expanded ? <Markdown alreadyRendered={true}>{blurbA}</Markdown> : this.shortBlurb()}</div>
       {expanded && fullInfo}
     </div>
   },
 
   getNameAndSelector(term) {
-    var namesMap = departmentNamesMap
     var decodedTerm = decodeURIComponent(term)
-    var deptName = namesMap[decodedTerm] ? decodedTerm : term[0] && term[0].match(/department:"?([^"]*)"?/)[1]
-    return [deptName, namesMap[deptName]]
+    var deptName = findDepartment(decodedTerm) ? decodedTerm : term[0] && term[0].match(/department:"?([^"]*)"?/)[1]
+    return findDepartment(deptName)
   },
 
   shortBlurb() {
@@ -78,7 +78,7 @@ var DepartmentDecorator = React.createClass({
 
   getAffinity() {
     var affinities = this.props.departmentInfo.affinityGroups
-    .filter(ag => ag.departments && ag.departments.indexOf(departmentNamesMap[this.props.department]) > -1)
+    .filter(ag => ag.departments && ag.departments.indexOf(findDepartment(this.props.department)[1]) > -1)
 
     return affinities.map(a => {
       var image = <img src={a.featuredArt ? `http://api.artsmia.org/images/${a.featuredArt}/400/medium.jpg` : a.image} />

@@ -5,7 +5,7 @@ var {Link} = Router
 var SEARCH = require('./search-endpoint')
 var rest = require('rest')
 var Search = require('./search')
-var departmentNamesMap = require('./department-slug')
+var findDepartment = require('./department-slug')
 
 var Home = React.createClass({
   statics: {
@@ -74,7 +74,11 @@ var HomeDepartments = React.createClass({
     <div className="departmentList mdl-grid">
       <h2>Departments</h2>
         {this.departments.map((dept) => {
-          return <Link to='department' key={departmentNamesMap[dept]} params={{dept: dept}} className="departmentLink mdl-cell mdl-cell--6-col"><div className={[departmentNamesMap[dept], "departmentListItem"].join(' ')}></div><h2>{dept}</h2></Link>
+          var name = index => findDepartment(dept)[index]
+          return <Link to='department' key={name(1)} params={{dept: name(2)}} className="departmentLink mdl-cell mdl-cell--6-col">
+            <div className={[name(1), "departmentListItem"].join(' ')}></div>
+            <h2>{dept}</h2>
+          </Link>
         })}</div></div>
       },
     })
