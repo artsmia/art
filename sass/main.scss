@@ -408,11 +408,11 @@ header{
 }
 .shortcutLinks sub {
   font-family: $MiaGroteskLight, sans-serif;
-  font-size: 1em;
+  font-size: 1.5em;
   margin-right: 5px;
 }
 .shortcutLinks h2 {
-  font-family: $MiaGroteskRegular, sans-serif;
+  font-family: $MiaGroteskBold, sans-serif;
   font-size: 1.5em;
   border-top: 3px solid rgb(35,35,35);
   padding: 7px 0 0;
@@ -424,7 +424,7 @@ header{
   display: inline-block;
 }
 .departmentList h2 {
-  font-family: $MiaGroteskRegular, sans-serif;
+  font-family: $MiaGroteskBold, sans-serif;
   font-size:2em;
   padding-left:11px;
 }
@@ -715,5 +715,23 @@ button.material-icons {
 ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
 
 .info li{display:inline-block;margin:0;padding-right:8px;}
-.info li a{background-color:$primary;color:#fff;text-align:center;padding:10px 0;width:100%;display:block;}
+.info li a{
+    padding:10px 0;
+    width:100%;
+    display:block;
+    border-top:3px solid $primary;
+    font-family: $MiaGroteskBold, sans-serif;
+    font-size:1.5em;
+    color:$primary;
+    -webkit-transition: all 150ms linear;
+    -moz-transition: all 150ms linear;
+    -ms-transition: all 150ms linear;
+    -o-transition: all 150ms linear;
+    transition: all 150ms linear;
+}
+.info li a:hover{
+    background-color:$primary;
+    color:white;
+    padding-left:20px;
+}
 .info li:last-child a{padding-right:0;}
