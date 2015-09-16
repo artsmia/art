@@ -182,7 +182,7 @@ var ArtworkRelatedContent = React.createClass({
     var {links} = this.props
 
     return links && links.length > 0 && <div>
-      <h5 className="details-title">Other Resources</h5>
+      <h5 className="details-title">Explore</h5>
       <ul style={{listStyle: 'inside lower-latin'}}>
         {links.map(this.build)}
       </ul>
