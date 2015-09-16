@@ -382,13 +382,51 @@ header{
   opacity: .7;
 }
 /* ===== SEARCH RESULTS STYLES ===== */
-.link-bar i.material-icons {
-  font-size: 24px;
-  padding-right: 10px;
-  padding-top: 10px;
+.link-bar, .back-button {
+  display: inline-block;
+  background: rgb(35,35,35);
+  margin-top: 10px;
+}
+.link-bar i{
+  font-size: 1.5em;
+  line-height: 1em;
+  padding: 10px;
+  border-right: 2px solid #fff;
+  cursor: pointer;
+  -webkit-transition: all .5s ease; /* Safari and Chrome */
+  -moz-transition: all .5s ease; /* Firefox */
+  -ms-transition: all .5s ease; /* IE 9 */
+  -o-transition: all .5s ease; /* Opera */
+  transition: all .5s ease;
+}
+.link-bar a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 0 10px;
+    line-height: 1em;
+}
+.link-bar i:hover {
+    -webkit-transform:scale(1.1); /* Safari and Chrome */
+    -moz-transform:scale(1.1); /* Firefox */
+    -ms-transform:scale(1.1); /* IE 9 */
+    -o-transform:scale(1.1); /* Opera */
+     transform:scale(1.1);
+}
+.back-button a {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    line-height: 1.5em;
+}
+.back-button a i {
+    position: relative;
+    top: 5px;
 }
 .art-details i.material-icons {
-  color: $primary;
+  color: #ffffff;
 }
 
 /* ===== LANDING PAGE STYLES ===== */
@@ -571,7 +609,7 @@ a.departmentLink h2{
 .artwork .info {
   position: absolute;
   width: 35%;
-  background: #eee;
+  background: #fff;
   min-height: calc(100% - 4em);
   padding: 1em;
   right: 0;
@@ -594,12 +632,6 @@ a.departmentLink h2{
 .objects-focus span {
   font-style: normal;
 }
-
-.objects-focus i.material-icons {
-  font-size: 0.8em;
-  margin: 0 0.5em 0 0.1em;
-}
-
 .artwork-detail{
     display:table;
     font-size:smaller;
@@ -623,8 +655,56 @@ h5.details-title {
     margin-bottom:0.5em;
     padding-top:3px;
     cursor:pointer;
+    font-size: 1.5em;
 }
-
+.explore{
+  display: inline-block;
+}
+.explore a {
+  font-size:1.1em;
+  color: #ffffff;
+  font-family: $MiaGroteskBold, sans-serif;
+  position: absolute;
+  bottom:10px;
+  left: 10px;
+}
+.newsflash i, .artstory i, .explore-content i{
+  font-size:1.5em;
+  color: #ffffff;
+  position: absolute;
+  bottom:11px;
+  right: 10px;
+}
+.explore a sub{
+  font-size:1.1em;
+  color: #ffffff;
+  font-family: $MiaGroteskLight, sans-serif;
+}
+.audioClip a, .audioClip a sub {
+  position: relative;
+  color: #232323;
+  display: inline-block;
+  top: 0;
+}
+.audioClip a {
+  top: 13px;
+}
+.newsflash, .artstory, .explore-content {
+  display: inline-block;
+  width: 175px;
+  height: 175px;
+  float: left;
+  margin:20px 10px 0 0;
+  background-image: url("http://api.artsmia.org/images/1218/400/medium.jpg");
+  background-size: cover;
+  position: relative;
+}
+.audioClip{
+  width: 100%;
+  float: none;
+  clear: both;
+  background-image: none;
+}
 .objects-page-link{
     font-size:8px;
     text-transform: uppercase;

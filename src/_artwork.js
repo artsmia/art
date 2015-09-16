@@ -45,7 +45,8 @@ var LinkBar = React.createClass({
 
     return <div className="link-bar">
       <i className="material-icons">favorite_border</i>
-      <i className="material-icons">launch</i>
+      <i className="material-icons">file_download</i>
+      <i className="material-icons">send</i>
       {this.props.link && <Link to="artwork" params={{id: art.id}}>View Details &rarr;</Link>}
     </div>
   },
