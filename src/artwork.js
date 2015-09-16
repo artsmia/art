@@ -199,6 +199,6 @@ var ArtworkRelatedContent = React.createClass({
     audio: (link) => <div className="audioClip"><audio style={{maxWidth: '100%'}} src={link.link} controls></audio><a href={link.link}>Audio Clip<br/><sub>Listen.</sub></a></div>,
     newsflash: (link) => <div className="newsflash"><a href={link.link}>{link.title}<br/><sub>Read more.</sub></a><i className="material-icons">launch</i></div>,
     artstory: (link) => <div className="artstory"><a href={link.link}>ArtStories<br/><sub>Zoom in.</sub></a><i className="material-icons">launch</i></div>,
-    default: (link) => <div className="explore-content"><a href={link.link}>{link.title}<br/></a><sub>Explore more.</sub><i className="material-icons">launch</i></div>,
+    default: (link) => <div className="explore-content"><a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a><i className="material-icons">launch</i></div>,
   },
 })
