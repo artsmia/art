@@ -716,7 +716,7 @@ ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
 
 .info li{display:inline-block;margin:0;padding-right:8px;}
 .info li a{
-    padding:10px 0;
+    padding:7px 0;
     width:100%;
     display:block;
     border-top:3px solid $primary;
@@ -732,6 +732,6 @@ ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
 .info li a:hover{
     background-color:$primary;
     color:white;
-    padding-left:20px;
+    padding-left:10px;
 }
 .info li:last-child a{padding-right:0;}
