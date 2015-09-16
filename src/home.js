@@ -50,35 +50,36 @@ var HomeDepartments = React.createClass({
 
   render() {
     return <div className="landingPageBody">
-      <div className="shortcutLinks mdl-grid">
-        <div className="mdl-cell mdl-cell--4-col">
+      <div className="mdl-grid">
+      <ul className="info">
+        <li className="mdl-cell mdl-cell--4-col">
           <Link to='searchResults' params={{terms: 'highlight:true'}}>
-            <div className="shortcutHighlights"></div>
-            <h2>Highlights</h2>
-            <sub>The pride and joy of Mia</sub>
+            Highlights
           </Link>
-        </div>
-        <div className="mdl-cell mdl-cell--4-col">
+        </li>
+        <li className="mdl-cell mdl-cell--4-col">
           <Link to="searchResults" params={{terms: 'recent:true'}}>
-            <div className="shortcutAccessions"></div>
-            <h2>New Art<sup>*</sup></h2>
-            <sub>*new to Mia</sub>
+            New Art<sup>*</sup>
           </Link>
-        </div>
-        <div className="mdl-cell mdl-cell--4-col">
+        </li>
+        <li className="mdl-cell mdl-cell--4-col">
           <Link to='browse'>
-            <div className="shortcutBrowse"></div>
-            <h2>Browse</h2>
-            <sub>Not sure what to search?</sub>
+            Browse
           </Link>
-        </div>
+        </li>
+        </ul>
       </div>
-
+      <div className="welcome mdl-grid">
+      <h2>Welcome to Mia&#39;s Collection</h2>
+      <div className="mdl-cell mdl-cell--9-col">
+        <p>Lorem ipsum dolor sit amet, suspendisse justo ultricies erat nulla scelerisque, est class rhoncus. In ac, nibh vitae. Bibendum blandit libero at curabitur porttitor quis, cras dis varius tempor donec in velit. Justo sed risus suspendisse interdum, platea adipiscing sociis libero integer at augue, ac at mattis facilisis pellentesque bibendum, mauris omnis, quis odio amet maecenas. Purus felis nibh velit, nulla aenean sodales hymenaeos nam erat, est scelerisque eget at suscipit ex, nec nibh consectetuer nulla mattis tellus, ullamcorper placerat sed. Dignissim erat ante rutrum vehicula dolor, maecenas purus penatibus velit, quam duis ligula consectetuer bibendum lacinia. Nec augue scelerisque in, lectus eu commodo torquent nunc feugiat, tristique tempor odio, leo etiam.</p>
+      </div>
+      </div>
       <div className="departmentList mdl-grid">
       <h2>Departments</h2>
         {this.departments.map((dept) => {
           var name = index => findDepartment(dept)[index]
-          return <Link to='department' key={name(1)} params={{dept: name(2)}} className="departmentLink mdl-cell mdl-cell--6-col">
+          return <Link to='department' key={name(1)} params={{dept: name(2)}} className="departmentLink mdl-cell mdl-cell--3-col">
             <div className={[name(1), "departmentListItem"].join(' ')}></div>
             <h2>{dept}</h2>
           </Link>
@@ -86,13 +87,15 @@ var HomeDepartments = React.createClass({
         )}
       </div>
 
-      <ul className="info">
-        {this.pages.map(name => {
-          return <li className="mdl-cell mdl-cell--4-col">
-            <Link to="page" key={name} params={{name: toSlug(name)}}>{name}</Link>
-          </li>
-        })}
-    </ul>
+      <div className="mdl-grid">
+        <ul className="info">
+          {this.pages.map(name => {
+            return <li className="mdl-cell mdl-cell--4-col">
+              <Link to="page" key={name} params={{name: toSlug(name)}}>{name}</Link>
+            </li>
+          })}
+        </ul>
+    </div>
   </div>
   },
 })

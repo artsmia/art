@@ -227,7 +227,7 @@ header{
     .artwork-image div > p:first-child{
         display: none;
     }
-    
+
 
 .objects-focus-sticky{
     position: fixed;
@@ -267,7 +267,7 @@ header{
         margin-bottom:10px;
         cursor:hand;
     }
-    
+
     .objects-focus .date{
         font-size:0.9em;
         font-family: $MiaGroteskRegular;
@@ -282,7 +282,7 @@ header{
         line-height:1.3em;
         line-height:1.2em;
     }
-    
+
     .objects-focus .artwork-image{
         width:100%;
         height:auto;
@@ -403,34 +403,22 @@ header{
   color: rgb(35,35,35);
   transition: ease all 0.8s;
 }
-.shortcutlinks div:hover {
-  opacity: .5;
-}
-.shortcutLinks sub {
-  font-family: $MiaGroteskLight, sans-serif;
-  font-size: 1.5em;
-  margin-right: 5px;
-}
-.shortcutLinks h2 {
-  font-family: $MiaGroteskBold, sans-serif;
-  font-size: 1.5em;
-  border-top: 3px solid rgb(35,35,35);
-  padding: 7px 0 0;
-  margin: 7px 0;
-  line-height: 1em;
-}
 
-.departmentList {
+.departmentList.mdl-grid, .welcome.mdl-grid {
+  margin: 0 1.5em;
+  margin-bottom:2em;
+}
+.departmentList, .welcome {
   display: inline-block;
 }
-.departmentList h2 {
+.departmentList h2, .welcome h2 {
   font-family: $MiaGroteskBold, sans-serif;
   font-size:2em;
-  padding-left:11px;
+  padding-left:8px;
 }
 .departmentLink h2 {
-  font-size: 1.5em;
-  font-family: $MiaGroteskLight, sans-serif;
+  font-size: 1em;
+  font-family: $MiaGroteskBold, sans-serif;
   border-top: 3px solid rgba(35,35,35,1);
   padding: 7px 0;
   margin: 7px 0;
@@ -442,7 +430,6 @@ header{
   display: inline-block;
   vertical-align: bottom;
   text-align: left;
-  border:5px solid #ffffff;
 }
 .departmentListItem {
   width: 100%;
@@ -480,12 +467,14 @@ header{
   background:url("https://api.artsmia.org/images/9194/800/medium.jpg") no-repeat center center;
   background-size: cover;
 }
-a.departmentLink {
-  transition: ease all 0.8s;
+a.departmentLink h2{
+  -webkit-transition: all 150ms linear;
+  -moz-transition: all 150ms linear;
+  -ms-transition: all 150ms linear;
+  -o-transition: all 150ms linear;
+  transition: all 150ms linear;
 }
-a.departmentLink:hover  {
-  opacity: .5;
-}
+
 /* ===== DEPARTMENT PAGES ===== */
 .departmentPage h2 {
   background: transparent;
@@ -643,8 +632,8 @@ h5.details-title {
     position:absolute;
     top:50px;
     right:10px;
-    line-height:1em; 
-    font-family: $MiaGroteskBold;  
+    line-height:1em;
+    font-family: $MiaGroteskBold;
     color: #222;
 }
 
@@ -716,7 +705,7 @@ button.material-icons {
 
 ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
 
-.info li{display:inline-block;margin:0;padding-right:8px;}
+.info li{display:inline-block;}
 .info li a{
     padding:7px 0;
     width:100%;
@@ -731,7 +720,7 @@ ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
     -o-transition: all 150ms linear;
     transition: all 150ms linear;
 }
-.info li a:hover{
+.info li a:hover, .departmentLink:hover h2{
     background-color:$primary;
     color:white;
     padding-left:10px;
