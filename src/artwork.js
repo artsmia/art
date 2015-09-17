@@ -72,7 +72,7 @@ var Artwork = React.createClass({
             {property: "og:description", content: art.text},
             {property: "og:image", content: imageUrl},
             {property: "og:url", content: canonicalURL},
-            {property: "twitter:card", content: "summary-large-image"},
+            {property: "twitter:card", content: "summary_large_image"},
             {property: "twitter:site", content: "@artsmia"},
           ]}
           link={[
