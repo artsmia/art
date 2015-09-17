@@ -14,7 +14,7 @@ var ArtworkImage = React.createClass({
 
     var nakedImage = <img
             src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
-            style={{maxWidth: maxWidth, margin: window.innerWidth <= 400 && `0 ${padding}`}}
+            //style={{maxWidth: maxWidth, margin: window.innerWidth <= 400 && `0 ${padding}`}}
             itemProp="image"
             />
     var image = this.props.lazyLoad ?

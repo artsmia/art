@@ -201,7 +201,8 @@ header{
         max-height: 200px !important;
     }
     .objects-wrap .artwork-image img {
-        max-width: 90% !important;
+        max-width: 100%;
+        max-height: 100%;
     }
 
     .objects-wrap .focused {
@@ -282,6 +283,7 @@ header{
         font-size:smaller;
         line-height:1.3em;
         line-height:1.2em;
+        width: 75%;
     }
 
     .objects-focus .artwork-image{
@@ -611,7 +613,7 @@ a.departmentLink h2{
   width: 35%;
   background: #fff;
   min-height: calc(100% - 4em);
-  padding: 1em;
+  padding: 1em 2em;
   right: 0;
   overflow-y:scroll;
   min-height: 100vh;
@@ -627,6 +629,7 @@ a.departmentLink h2{
 
 .objects-focus div > p {
   margin-bottom: 1em;
+  width:75%;
 }
 
 .objects-focus span {
@@ -809,3 +812,9 @@ ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
     padding-left:10px;
 }
 .info li:last-child a{padding-right:0;}
+
+@media screen and (max-width: 768px) {
+  .objects-focus div > p, .objects-focus .tombstone {
+    width:100%;
+  }
+}
