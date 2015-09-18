@@ -43,11 +43,14 @@ var LinkBar = React.createClass({
   render() {
     var {art} = this.props
 
-    return <div className="link-bar">
-      <i className="material-icons">favorite_border</i>
-      <i className="material-icons">file_download</i>
-      <i className="material-icons">send</i>
-      {this.props.link && <Link to="artwork" params={{id: art.id}}>View Details &rarr;</Link>}
+    return <div>
+      <div className="link-bar">
+        <i className="material-icons">favorite_border</i>
+        <i className="material-icons">file_download</i>
+        <i className="material-icons">send</i>
+      </div>
+      <div className="clear"></div>
+      <div className="back-button">{this.props.link && <Link to="artwork" params={{id: art.id}}>View Details <i className="material-icons">arrow_forward</i></Link>}</div>
     </div>
   },
 })
