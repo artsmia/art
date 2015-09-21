@@ -57,7 +57,7 @@ var Artwork = React.createClass({
         <div className='info'>
           <ArtworkPreview art={art} showLink={false} />
           <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
-          <ArtworkRelatedContent links={this.props.data.relatedContent} />
+          <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
           <ArtworkDetails art={art} />
         </div>
 
@@ -191,14 +191,26 @@ var ArtworkRelatedContent = React.createClass({
 
   build(link) {
     return <div key={link.link}>
-      {(this.templates[link.type] || this.templates.default)(link)}
+      {(this.templates[link.type] || this.templates.default)(link, this.props.id)}
     </div>
   },
 
   templates: {
-    audio: (link) => <div className="audioClip"><audio style={{maxWidth: '100%'}} src={link.link} controls></audio><a href={link.link}>Audio Clip<br/><sub>Listen.</sub></a></div>,
-    newsflash: (link) => <div className="newsflash"><a href={link.link}>{link.title}<br/><sub>Read more.</sub></a><i className="material-icons">launch</i></div>,
-    artstory: (link) => <div className="artstory"><a href={link.link}>ArtStories<br/><sub>Zoom in.</sub></a><i className="material-icons">launch</i></div>,
-    default: (link) => <div className="explore-content"><a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a><i className="material-icons">launch</i></div>,
+    audio: (link) => <div className="audioClip">
+      <audio style={{maxWidth: '100%'}} src={link.link} controls></audio>
+      <a href={link.link}>Audio Clip<br/><sub>Listen.</sub></a>
+    </div>,
+    newsflash: (link) => <div className="newsflash" style={{backgroundImage: `url(http://newsflash.dx.artsmia.org${link.image})`}}>
+      <a href={link.link}>{link.title}<br/><sub>Read more.</sub></a>
+      <i className="material-icons">launch</i>
+    </div>,
+    artstory: (link, id) => <div className="artstory" style={{backgroundImage: `url(http://api.artsmia.org/images/${id}/400/medium.jpg)`}}>
+      <a href={link.link}>ArtStories<br/><sub>Zoom in.</sub></a>
+      <i className="material-icons">launch</i>
+    </div>,
+    default: (link) => <div className="explore-content">
+      <a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a>
+      <i className="material-icons">launch</i>
+    </div>,
   },
 })
