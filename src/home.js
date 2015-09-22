@@ -26,6 +26,7 @@ var Home = React.createClass({
         activateInput={true}
         quiltProps={{maxRows: 3, maxWorks: 30}}
         facet={'highlight:true'}
+        searchAll={true}
         {...this.props} />
       <HomeDepartments />
     </div>

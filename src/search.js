@@ -114,11 +114,11 @@ var Search = React.createClass({
 
   search() {
     var terms = this.normalizeTerms(this.state.terms)
-    var {facet} = this.props
+    var {facet, searchAll} = this.props
     if(terms === '') return
 
     this.props.onSearch && this.props.onSearch(terms)
-    this.transitionTo(facet ? 'filteredSearchResults' : 'searchResults', {terms: terms, splat: facet})
+    this.transitionTo(facet && !searchAll ? 'filteredSearchResults' : 'searchResults', {terms: terms, splat: facet})
   },
 
   keyDown(event) {
