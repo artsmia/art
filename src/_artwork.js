@@ -5,14 +5,24 @@ var toSlug = require('speakingurl')
 var ArtworkImage = require('./artwork-image')
 var Peek = require('./peek')
 
+var ConditionalLinkWrapper = React.createClass({
+  render() {
+    var {art, link} = this.props
+
+    return link ? 
+      <Link to="artwork" params={{id: art.id}}>{this.props.children}</Link> :
+      this.props.children
+  }
+})
+
 var Title = React.createClass({
   render() {
     var {art, link} = this.props
     var title = <h1 itemProp="name">{art.title}</h1>
 
-    return link ? 
-      <Link to="artwork" params={{id: art.id}}>{title}</Link> :
-      title
+    return <ConditionalLinkWrapper {...this.props}>
+      {title}
+    </ConditionalLinkWrapper>
   },
 })
 
@@ -43,13 +53,15 @@ var LinkBar = React.createClass({
 
 var Figure = React.createClass({
   render() {
-    var {art, ...figureProps} = this.props
+    var {art, link, ...figureProps} = this.props
     var id = art.id
 
     return <figure {...figureProps}
       itemScope itemType="http://schema.org/VisualArtwork">
       <link itemProp="url" href={`/art/${id}`} />
-      <ArtworkImage art={art} id={id} lazyLoad={!this.context.universal} className="artwork-image" />
+      <ConditionalLinkWrapper art={art} link={link}>
+        <ArtworkImage art={art} id={id} lazyLoad={!this.context.universal} className="artwork-image" />
+      </ConditionalLinkWrapper>
       <figcaption>
         {this.props.children}
       </figcaption>

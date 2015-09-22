@@ -25,7 +25,7 @@ var ArtworkPreview = React.createClass({
     </Link> : ''
       
     return (
-      <Artwork.Figure art={art} className='objects-focus' style={style}>
+      <Artwork.Figure art={art} className='objects-focus' style={style} link={showLink}>
         <div className="art-details preview-header">
           {details}
           <h2><Artwork.Title art={art} link={showLink} /></h2>
