@@ -16,7 +16,7 @@ var SearchResults = React.createClass({
         var size = query && query.size || 100
         const filters = params.splat
         let searchUrl = `${SEARCH}/${decodeURIComponent(params.terms)}?size=${size}`
-        if(filters) searchUrl += `&filters=${filters}`
+        if(filters) searchUrl += `&filters=${encodeURIComponent(filters)}`
         return rest(searchUrl).then((r) => JSON.parse(r.entity))
       }
     }

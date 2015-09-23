@@ -29,7 +29,7 @@ var Aggregations = React.createClass({
           if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0', verticalAlign: 'top', opacity: showAgg ? 1 : 0.5}}>
             <dt style={{fontWeight: aggIsActive && 'bold'}} onClick={toggleAgg(agg)}>{agg.displayName}</dt>
             {(agg.open || aggIsActive) && agg.buckets.slice(0, 5).map(function(bucket) {
-              const filterString = customFilters[agg.name] ? customFilters[agg.name][bucket.key] || bucket.key : agg.name.toLowerCase()+':"'+encodeURIComponent(bucket.key)+'"'
+              const filterString = customFilters[agg.name] ? customFilters[agg.name][bucket.key] || bucket.key : agg.name.toLowerCase()+':"'+bucket.key+'"'
               const filterRegex = new RegExp(decodeURIComponent(filterString).replace(/([\[\]\?])/, '\\$1'), 'i')
               const bucketIsActive = search.filters && search.filters.match(filterRegex)
               const newFilters = bucketIsActive ?

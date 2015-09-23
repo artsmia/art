@@ -18,7 +18,7 @@ var Department = React.createClass({
       searchResults: (params, query) => {
         params.terms = '*'
         var name = findDepartment(params.dept)[0]
-        params.splat = 'department:"'+encodeURIComponent(name)+'"'
+        params.splat = 'department:"'+name+'"'
         return SearchResults.fetchData.searchResults(params, query)
       },
       departments: (params, query) => {
@@ -29,7 +29,7 @@ var Department = React.createClass({
 
   render() {
     var [deptName, _, slug] = findDepartment(this.props.params.dept)
-    var facet = `department:${deptName}`
+    var facet = `department:"${deptName}"`
     return <div>
       <Search
         facet={facet}
