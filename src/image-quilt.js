@@ -2,6 +2,7 @@ var React = require('react')
 var {Link} = require('react-router')
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin
 var debounce = require('debounce')
+var cookie = require('react-cookie')
 
 var linearPartition = require('linear-partitioning')
 var ArtworkImage = require('./artwork-image')
@@ -15,6 +16,7 @@ const ImageQuilt = React.createClass({
       active: null,
       unpinned: false,
       width: window.innerWidth || this.context.universal && 1000,
+      alwaysShow: cookie.load('freeTheQuilt')
     }
   },
 
@@ -31,6 +33,8 @@ const ImageQuilt = React.createClass({
   },
 
   render() {
+    if(this.hideDarkenedQuilt()) return this.emptyQuiltToggleControl()
+
     const artworks = this.props.artworks.slice(0, this.props.maxWorks)
     const _art = artworks.map((art) => {
       var s = art._source
@@ -83,7 +87,7 @@ const ImageQuilt = React.createClass({
       const justify = index == 0 && row.length <=3 ? 'space-around' : 'center'
       var rowStyle = {
         background: '#222',
-        minHeight: Math.min(unadjustedHeight, this.props.maxRowHeight),
+        minHeight: Math.min(unadjustedHeight, this.props.maxRowHeight || 200, 50),
         display: 'flex',
         justifyContent: justify,
         whiteSpace: 'nowrap',
@@ -98,7 +102,6 @@ const ImageQuilt = React.createClass({
 
     var quiltStyle = {
       cursor: 'pointer',
-      WebkitFilter: this.props.darken ? 'brightness(0.3)' : '',
       ...this.props.style,
     }
 
@@ -158,6 +161,29 @@ const ImageQuilt = React.createClass({
       return
     }
     this.activate = setTimeout(this.clicked.bind(this, art, false), 300)
+  },
+
+  hideDarkenedQuilt() {
+    return this.props.darken && !this.state.alwaysShow
+  },
+
+  emptyQuiltToggleControl() {
+    var styles = {
+      minHeight: '7rem',
+      display: 'inline-block',
+      width: '100%',
+      WebkitUserSelect: 'none',
+      cursor: 'pointer',
+      backgroundColor: 'red',
+      zIndex: 100,
+    }
+
+    return <span style={styles} onClick={this.freeTheQuilt} />
+  },
+
+  freeTheQuilt() {
+    cookie.save('freeTheQuilt', true)
+    this.setState({alwaysShow: true})
   },
 })
 ImageQuilt.contextTypes = {
