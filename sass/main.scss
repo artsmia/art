@@ -280,8 +280,7 @@ header{
     .objects-focus .tombstone{
         margin-bottom:1em;
         font-size:smaller;
-        line-height:1.3em;
-        line-height:1.2em;
+        line-height:1.4em;
     }
 
     .objects-focus .artwork-image{
@@ -729,3 +728,31 @@ ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
     padding-left:10px;
 }
 .info li:last-child a{padding-right:0;}
+
+/* ===== peek STYLES ===== */
+
+hr{margin:0;}
+
+.peek > .peek{
+    background-color:$primary;
+    margin-bottom:-1px;
+}
+
+.peek a{
+    padding:0 0 10px 10px;
+    display:inline-block;
+    margin-top:10px;
+    color:#fff;
+    font-family:$MiaGroteskRegular;
+    font-size:12px;
+}
+
+.peek .more-results-link{
+    color:$support;
+    font-family:$MiaGroteskBold;
+}
+.peek .more-results-link:hover{
+    color:rgba(35,35,35,.5);
+}
+
+
