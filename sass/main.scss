@@ -660,6 +660,12 @@ h5.details-title {
     cursor:pointer;
     font-size: 1.5em;
 }
+.overlay {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: rgba(35,35,35,.2);
+}
 .explore{
   display: inline-block;
 }
@@ -700,12 +706,15 @@ h5.details-title {
   margin:20px 10px 0 0;
   background-size: cover;
   position: relative;
+  background-color: rgb(35,35,35);
 }
 .audioClip{
+  display: inline-block;
   width: 100%;
   float: none;
   clear: both;
   background-image: none;
+  margin-top:10px;
 }
 .objects-page-link{
     font-size:8px;

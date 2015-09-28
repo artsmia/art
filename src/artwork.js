@@ -201,16 +201,22 @@ var ArtworkRelatedContent = React.createClass({
       <a href={link.link}>Audio Clip<br/><sub>Listen.</sub></a>
     </div>,
     newsflash: (link) => <div className="newsflash" style={{backgroundImage: `url(http://newsflash.dx.artsmia.org${link.image})`}}>
+      <div className="overlay">
       <a href={link.link}>{link.title}<br/><sub>Read more.</sub></a>
       <i className="material-icons">launch</i>
+      </div>
     </div>,
     artstory: (link, id) => <div className="artstory" style={{backgroundImage: `url(http://api.artsmia.org/images/${id}/400/medium.jpg)`}}>
+      <div className="overlay">
       <a href={link.link}>ArtStories<br/><sub>Zoom in.</sub></a>
       <i className="material-icons">launch</i>
+      </div>
     </div>,
-    default: (link) => <div className="explore-content">
+    default: (link) => <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
+      <div className="overlay">
       <a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a>
       <i className="material-icons">launch</i>
+      </div>
     </div>,
   },
 })
