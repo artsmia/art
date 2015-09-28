@@ -174,7 +174,6 @@ const ImageQuilt = React.createClass({
       width: '100%',
       WebkitUserSelect: 'none',
       cursor: 'pointer',
-      backgroundColor: 'red',
       zIndex: 100,
     }
 
