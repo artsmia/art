@@ -49,10 +49,12 @@ var SearchResults = React.createClass({
     var search = this.props.data.searchResults
     var {focusedResult} = this.state
     var leftColumnWidth = '35%'
-    var showAllLink = search &&
+    var unloadedResults = search.hits.total - this.props.hits.length
+    var loadThisManyMore = Math.min(200, unloadedResults)
+    var showMoreLink = search &&
       <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
              params={{terms: search.query, splat: search.filters}}
-             query={{size: Math.min(500, search.hits.total)}}>show all</Link>)
+             query={{size: Math.min(500, this.props.hits.length+loadThisManyMore)}}>load {loadThisManyMore} more</Link>)
       </span>
 
     var summaryProps = {
@@ -61,7 +63,7 @@ var SearchResults = React.createClass({
       params: this.props.params,
       showAggs: this.props.showAggs,
       toggleAggs: this.props.toggleAggs,
-      showAllLink,
+      showMoreLink,
     }
 
     return <div>
@@ -97,7 +99,7 @@ var SearchResults = React.createClass({
   // * load more
   // * did you find what you were looking for? (solicit feedback)
   // * related searches?
-  postSearch({hits, search, showAllLink}) {
+  postSearch({hits, search, showMoreLink}) {
     var showingAll = hits.length == search.hits.total
     var style = {
       minHeight: '59vh',
@@ -111,7 +113,7 @@ var SearchResults = React.createClass({
       {showingAll || <span>of {search.hits.total} {' '}</span>}
       results matching <code>{search.query}</code>
       {search.filters && <span> and <code>{search.filters}</code></span>}
-      {showingAll || showAllLink}
+      {showingAll || showMoreLink}
     </div>
   },
 })

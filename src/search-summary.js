@@ -27,7 +27,7 @@ const SearchSummary = React.createClass({
           {showingAll || <span>of {search.hits.total} {' '}</span>}
           results matching <code>{search.query}</code>
           {search.filters && <span> and <code>{decodeURIComponent(search.filters)}</code></span>}
-          {showingAll || this.props.showAllLink}
+          {showingAll || this.props.showMoreLink}
         </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
         </div>
 
