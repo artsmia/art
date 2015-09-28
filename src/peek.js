@@ -50,8 +50,9 @@ var Peek = React.createClass({
       </i>}
       {this.state.open && this.state.facetedQ && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
-        <Link to="searchResults" params={{terms: this.state.facetedQ}}>
-          {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.state.facet && `(${this.state.facet})`} <span className="more-results-link">View more results</span>
+        <Link to="searchResults" params={{terms: this.state.facetedQ}} style={{width: '100%'}}>
+          {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.state.facet && `(${this.state.facet})`}
+          <span style={{float: 'right', marginRight: '10px'}} className="more-results-link">View more results</span>
         </Link>
       </div>}
       {this.state.open && this.getQs().map((q) => <Peek facet={this.state.facet} q={q} key={q} />)}
