@@ -3,6 +3,7 @@ var Router = require('react-router')
 var { Link } = Router
 var rest = require('rest')
 var debounce = require('debounce')
+var classnames = require('classnames')
 
 var SEARCH = require('./search-endpoint')
 var ClickToSelect = require('react-click-to-select')
@@ -43,7 +44,7 @@ var Peek = React.createClass({
       <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
       <ClickToSelect>{this.props.children}</ClickToSelect>
 
-    return <Tag onClick={debounce(this.onClick, 200)} className="peek">
+    return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: !!this.props.q})}>
       {this.props.children && <i>
         <span itemProp={microdata ? "name" : ''}>{peekText}</span>
         {!this.props.universal && showIcon && icon}

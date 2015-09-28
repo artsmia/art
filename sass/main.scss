@@ -842,6 +842,13 @@ ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
 
 hr{margin:0;}
 
+.peek {
+  margin-right: 3px;
+}
+.peek.startedOpen, .startedOpen .peek {
+  margin-right: 0;
+}
+
 .peek > .peek{
     background-color:$primary;
     margin-bottom:-1px;
