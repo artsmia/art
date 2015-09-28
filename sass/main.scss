@@ -854,6 +854,12 @@ hr{margin:0;}
     margin-bottom:-1px;
 }
 
+.peek p{
+  line-height:1em;
+  font-size:1em;
+  font-family:$MiaGroteskLight; 
+}
+
 .peek a{
     padding:0 0 10px 10px;
     display:inline-block;
@@ -866,7 +872,10 @@ hr{margin:0;}
 .peek .more-results-link{
     color:$support;
     font-family:$MiaGroteskBold;
+    text-align:right;
+    display:inline-block;
 }
+
 .peek .more-results-link:hover{
-    color:rgba(35,35,35,.5);
+    color:rgba(255,255,255,.5);
 }
