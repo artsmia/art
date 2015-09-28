@@ -24,6 +24,7 @@ var SearchResultsList = React.createClass({
       <div className='search-results-wrap clearfix' style={{position: 'relative'}}>
         <div className='objects-wrap' style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: leftColumnWidth}}>
           {results}
+          {this.props.postSearch}
         </div>
         {focusedResult && <FocusedResult art={focusedResult} {...this.props}/>}
       </div>

@@ -1,5 +1,6 @@
 var React = require('react')
 var Router = require('react-router')
+var {Link} = require('react-router')
 var rest = require('rest')
 
 var SEARCH = require('./search-endpoint')
@@ -48,14 +49,23 @@ var SearchResults = React.createClass({
     var search = this.props.data.searchResults
     var {focusedResult} = this.state
     var leftColumnWidth = '35%'
+    var showAllLink = search &&
+      <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
+             params={{terms: search.query, splat: search.filters}}
+             query={{size: Math.min(500, search.hits.total)}}>show all</Link>)
+      </span>
+
+    var summaryProps = {
+      search: this.props.data.searchResults,
+      hits: this.props.hits,
+      params: this.props.params,
+      showAggs: this.props.showAggs,
+      toggleAggs: this.props.toggleAggs,
+      showAllLink,
+    }
 
     return <div>
-      <SearchSummary
-        search={this.props.data.searchResults}
-        hits={this.props.hits}
-        params={this.props.params}
-        showAggs={this.props.showAggs}
-        toggleAggs={this.props.toggleAggs}>
+      <SearchSummary {...summaryProps}>
         <SearchResultViewToggle
           click={this.changeView}
           activeView={this.state.view}
@@ -68,6 +78,7 @@ var SearchResults = React.createClass({
         focusHandler={this.focusResult}
         search={search}
         hits={this.props.hits}
+        postSearch={this.postSearch(summaryProps)}
         />
     </div>
   },
@@ -79,6 +90,29 @@ var SearchResults = React.createClass({
 
   changeView(next) {
     next && this.setState({view: next})
+  },
+
+  // How to code this: after seeing all the results (on a page?)
+  // summarize them and give the chance to do something. Such as:
+  // * load more
+  // * did you find what you were looking for? (solicit feedback)
+  // * related searches?
+  postSearch({hits, search, showAllLink}) {
+    var showingAll = hits.length == search.hits.total
+    var style = {
+      minHeight: '59vh',
+      marginTop: '1em',
+      padding: '1em',
+      borderTop: '1em solid #232323',
+    }
+
+    return <div style={style}>
+      showing {hits.length} {' '}
+      {showingAll || <span>of {search.hits.total} {' '}</span>}
+      results matching <code>{search.query}</code>
+      {search.filters && <span> and <code>{search.filters}</code></span>}
+      {showingAll || showAllLink}
+    </div>
   },
 })
 SearchResults.contextTypes = {

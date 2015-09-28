@@ -4,6 +4,7 @@ var Router = require('react-router')
 var ImageQuilt = require('../image-quilt')
 var ArtworkImage = require('../artwork-image')
 var FocusedResult = require('./focused.js')
+var SearchSummary = require('../search-summary')
 
 var SearchResultsGrid = React.createClass({
   mixins: [Router.Navigation],
@@ -17,10 +18,18 @@ var SearchResultsGrid = React.createClass({
       maxRowHeight={500}
       onClick={this.clickResult}
       disableHover={true} />
+
+    var more = this.props.postSearch
+
+    var stuff = <div>
+      {quilt}
+      {more}
+    </div>
+
     var wrappedQuilt = !focusedResult ?
-      quilt :
+      stuff :
       <div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: leftColumnWidth}}>
-        {quilt}
+        {stuff}
       </div>
 
     return <div style={{position: 'relative'}}>

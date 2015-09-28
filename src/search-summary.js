@@ -1,5 +1,4 @@
 var React = require('react')
-var { Link } = require('react-router')
 var Helmet = require('react-helmet')
 
 var Decorate = require('./decorate')
@@ -12,12 +11,6 @@ const SearchSummary = React.createClass({
     const hits = this.props.hits
     const results = this.props.results
     const {showAggs} = this.props
-
-    const showAllLink = search &&
-      <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
-             params={{terms: search.query, splat: search.filters}}
-             query={{size: Math.min(500, search.hits.total)}}>show all</Link>)
-      </span>
 
     const toggleAggs = hits.length > 1 && <span className="filter-button">
       <a onClick={this.toggleAggs} style={{cursor: 'pointer'}}>{showAggs ? 'hide filters' : 'filter search'}</a>
@@ -34,6 +27,7 @@ const SearchSummary = React.createClass({
           {showingAll || <span>of {search.hits.total} {' '}</span>}
           results matching <code>{search.query}</code>
           {search.filters && <span> and <code>{decodeURIComponent(search.filters)}</code></span>}
+          {showingAll || this.props.showAllLink}
         </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
         </div>
 
