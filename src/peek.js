@@ -3,6 +3,7 @@ var Router = require('react-router')
 var { Link } = Router
 var rest = require('rest')
 var debounce = require('debounce')
+var classnames = require('classnames')
 
 var SEARCH = require('./search-endpoint')
 var ClickToSelect = require('react-click-to-select')
@@ -43,15 +44,16 @@ var Peek = React.createClass({
       <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
       <ClickToSelect>{this.props.children}</ClickToSelect>
 
-    return <Tag onClick={debounce(this.onClick, 200)} className="peek">
+    return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: !!this.props.q})}>
       {this.props.children && <i>
         <span itemProp={microdata ? "name" : ''}>{peekText}</span>
         {!this.props.universal && showIcon && icon}
       </i>}
       {this.state.open && this.state.facetedQ && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
-        <Link to="searchResults" params={{terms: this.state.facetedQ}}>
+        <Link to="searchResults" params={{terms: this.state.facetedQ}} style={{width: '100%'}}>
           {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.state.facet && `(${this.state.facet})`}
+          <span style={{float: 'right', marginRight: '10px'}} className="more-results-link">View more results</span>
         </Link>
       </div>}
       {this.state.open && this.getQs().map((q) => <Peek facet={this.state.facet} q={q} key={q} />)}
