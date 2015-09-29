@@ -781,11 +781,10 @@ hr{margin:0;}
     padding-left:10px;
 }
 
-.tombstone .open i {
-    margin-top:15px;
-    padding: 0 5px 7px 2px;
-    line-height:1em;
-    
+.peek.startedClosed.open {
+  margin-bottom: 5px
 }
-
-
+.tombstone .open i {
+    padding: 5px 5px 7px 2px;
+    line-height:1em;
+}
