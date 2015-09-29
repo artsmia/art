@@ -771,4 +771,21 @@ hr{margin:0;}
     color:rgba(255,255,255,.5);
 }
 
+.open i {
+    background-color:#ededed;
+    display: inline-block;
+    padding:5px;
+}
+
+.open i > span{
+    padding-left:10px;
+}
+
+.tombstone .open i {
+    margin-top:15px;
+    padding: 0 5px 7px 2px;
+    line-height:1em;
+    
+}
+
 
