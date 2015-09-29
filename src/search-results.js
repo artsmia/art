@@ -99,6 +99,7 @@ var SearchResultViewToggle = React.createClass({
         backgroundColor: 'white',
         borderRadius: 5,
         margin: '0 5px',
+        display: 'inline-block',
       } || {}
       return <span key={name} onClick={this.toggleView.bind(this, r)} style={activeStyle}><i className={name}></i></span>
     })
