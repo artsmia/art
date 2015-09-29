@@ -430,10 +430,13 @@ header{
     position: relative;
     top: 5px;
 }
-.art-details i.material-icons {
+.link-bar i.material-icons {
   color: #ffffff;
 }
-
+.peek i.material-icons{
+  position: relative;
+  top: 7px;
+}
 /* ===== LANDING PAGE STYLES ===== */
 .landingPageBody, .departmentPage {
   display: inline-block;
