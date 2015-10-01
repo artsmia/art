@@ -61,8 +61,9 @@ var DepartmentDecorator = React.createClass({
     var curators = this.state.info.curators
     .map(name => this.props.departmentInfo.curators[name])
     .filter(exists => !!exists)
+    .filter(({emeritus}) => !emeritus)
 
-    return <div id="curators">
+    return curators.length > 0 && <div id="curators">
       <h3>Curators</h3>
       {curators.map(curator => {
         return <div className="curatorBio" key={curator.slug}>
