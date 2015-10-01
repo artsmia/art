@@ -37,7 +37,7 @@ var DepartmentDecorator = React.createClass({
 
   getNameAndSelector(term) {
     var decodedTerm = decodeURIComponent(term)
-    var deptName = findDepartment(decodedTerm) ? decodedTerm : term[0] && term[0].match(/department:"?([^"]*)"?/)[1]
+    var deptName = findDepartment(decodedTerm) ? decodedTerm : decodedTerm.match(/department:"?([^"]*)"?/)[1]
     return findDepartment(deptName)
   },
 
