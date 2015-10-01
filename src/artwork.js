@@ -118,7 +118,7 @@ var Artwork = React.createClass({
     this.map.attributionControl.setPrefix('')
 
     this.map.setView([art.image_width/2, art.image_height/2], 0)
-    rest('//tilesaw.dx.artsmia.org/'+this.state.id)
+    rest('//tiles.dx.artsmia.org/'+this.state.id)
       .then(response => JSON.parse(response.entity))
       .then((data) => {
         this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {

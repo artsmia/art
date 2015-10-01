@@ -177,7 +177,7 @@ const ImageQuilt = React.createClass({
       zIndex: 100,
     }
 
-    return <span style={styles} onClick={this.freeTheQuilt} />
+    return <span style={styles} onDoubleClick={this.freeTheQuilt} />
   },
 
   freeTheQuilt() {
