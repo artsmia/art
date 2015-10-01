@@ -74,7 +74,7 @@ var ArtworkDetails = React.createClass({
                 <div className='detail-content'>{art.provenance}</div>
             </div>
              <div className='detail-row'>
-                <div className='detail-title'>Image Copyright</div>
+                <div className='detail-title'>Rights</div>
                 <div className='detail-content'>
                   <span>{decodeURIComponent(art.image_copyright)}</span>
                   {art.image_copyright && art.image_rights_type && <br/>}

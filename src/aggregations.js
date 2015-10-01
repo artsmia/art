@@ -80,7 +80,7 @@ var Aggregations = React.createClass({
     const {search} = props
     const aggs = props.search.aggregations
     const _aggs = []
-    const order = ["On View", "Image", "Department", "Artist", "Country", "Room", "Image_rights_type", "Title", "Style"]
+    const order = ["On View", "Image", "Department", "Artist", "Country", "Room", "Rights", "Title", "Style"]
 
     for(var agg in aggs) {
       const open = order.slice(0, 3).indexOf(agg) > -1
