@@ -129,6 +129,7 @@ var Artwork = React.createClass({
         id: this.state.id,
         width: data.width,
         height: data.height,
+        tileSize: data.tileSize || 256,
       })
       this.tiles.addTo(this.map)
 
