@@ -111,19 +111,19 @@ var Artwork = React.createClass({
     var art = this.state.art
     this.setState({zoomLoaded: false, zoomLoading: true})
 
-    this.map = L.map(this.refs.map.getDOMNode(), {
-      crs: L.CRS.Simple,
-      zoomControl: !L.Browser.touch,
-    })
-    this.map.attributionControl.setPrefix('')
-
-    this.map.setView([art.image_width/2, art.image_height/2], 0)
     rest('//tiles.dx.artsmia.org/'+this.state.id)
     .then(
       response => JSON.parse(response.entity),
       rejected => Promise.reject(new Error(`can't load tiles for ${art.id}`))
     )
     .then((data) => {
+      this.map = L.map(this.refs.map.getDOMNode(), {
+        crs: L.CRS.Simple,
+        zoomControl: !L.Browser.touch,
+      })
+      this.map.attributionControl.setPrefix('')
+      this.map.setView([art.image_width/2, art.image_height/2], 0)
+
       this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
         attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
         id: this.state.id,
@@ -131,6 +131,7 @@ var Artwork = React.createClass({
         height: data.height,
       })
       this.tiles.addTo(this.map)
+
       // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})
     })
