@@ -109,7 +109,7 @@ var Artwork = React.createClass({
     var L = require('museum-tile-layer')
 
     var art = this.state.art
-    this.setState({zoomLoaded: false})
+    this.setState({zoomLoaded: false, zoomLoading: true})
 
     this.map = L.map(this.refs.map.getDOMNode(), {
       crs: L.CRS.Simple,
@@ -119,9 +119,12 @@ var Artwork = React.createClass({
 
     this.map.setView([art.image_width/2, art.image_height/2], 0)
     rest('//tiles.dx.artsmia.org/'+this.state.id)
-      .then(response => JSON.parse(response.entity))
-      .then((data) => {
-        this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
+    .then(
+      response => JSON.parse(response.entity),
+      rejected => Promise.reject(new Error(`can't load tiles for ${art.id}`))
+    )
+    .then((data) => {
+      this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
         attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
         id: this.state.id,
         width: data.width,
@@ -129,8 +132,9 @@ var Artwork = React.createClass({
       })
       this.tiles.addTo(this.map)
       // this.tiles.fillContainer()
-      this.setState({zoomLoaded: true})
+      this.setState({zoomLoading: false, zoomLoaded: true})
     })
+    .catch(err => this.setState({zoomLoading: false}))
   },
 
   resizeMap() {
@@ -141,15 +145,16 @@ var Artwork = React.createClass({
   },
 
   imageStatus() {
-    var {art, zoomLoaded} = this.state
+    var {art, zoomLoaded, zoomLoading} = this.state
     var copyrightAndOnViewMessage = art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
     var loadingZoomMessage =  `
       (—Is that the best image you've got!!?
       —Nope! We're loading ${humanizeNumber(this.getPixelDifference(400))} more pixels right now.
       It can take a few seconds.)`
+    var showLoadingMessage = zoomLoading && zoomLoaded === false && !this.context.universal 
 
     return art.image === 'valid' && <span className="imageStatus">
-      {zoomLoaded === false && !this.context.universal && loadingZoomMessage}
+      {showLoadingMessage && loadingZoomMessage}
       {art.restricted === 1 && "Because of © restrictions we have to show you a small image of this artwork. Sorry!" + copyrightAndOnViewMessage}
     </span>
   },
