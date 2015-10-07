@@ -12,15 +12,19 @@ var Browse = React.createClass({
 
   render() {
     return <div>
-      {this.searches.map((term) => {
-        var [facet, ...terms] = term.split(':')
-        return <section>
-          <Peek facet={facet} q={terms.join(':')} quiltProps={{maxRowHeight: 600}} />
-          <hr style={{visibility: 'hidden'}} />
-        </section>
-      })}
+      {this.peekRandomSearchTerms()}
       <Helmet title="Browse the art" />
     </div>
+  },
+
+  peekRandomSearchTerms() {
+    return this.searches.map((term) => {
+      var [facet, ...terms] = term.split(':')
+      return <section>
+        <Peek facet={facet} q={terms.join(':')} quiltProps={{maxRowHeight: 600}} />
+        <hr style={{visibility: 'hidden'}} />
+      </section>
+    })
   },
 
   searches: [
