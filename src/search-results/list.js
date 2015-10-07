@@ -5,9 +5,15 @@ var FocusedResult = require('./focused')
 
 var SearchResultsList = React.createClass({
   render() {
-    var {leftColumnWidth, focusedResult, focusHandler, ...focusedProps} = this.props
+    var {
+      leftColumnWidth,
+      focusedResult,
+      focusHandler,
+      smallViewport,
+      ...focusedProps
+    } = this.props
 
-    if(this.context.universal) {
+    if(smallViewport || this.context.universal) {
       focusedResult = null
     }
     if(!focusedResult) leftColumnWidth = '100%'

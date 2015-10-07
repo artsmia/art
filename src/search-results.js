@@ -9,7 +9,7 @@ var ResultsList = require('./search-results/list')
 var ResultsGrid = require('./search-results/grid')
 
 var SearchResults = React.createClass({
-  mixins: [Router.State],
+  mixins: [Router.State, Router.Navigation],
 
   statics: {
     fetchData: {
@@ -26,11 +26,13 @@ var SearchResults = React.createClass({
   getInitialState() {
     var focus = window.clickedArtwork || this.props.hits[0]
     setTimeout(() => window.clickedArtwork = null)
-    var defaultView = this.context.universal ? ResultsList : ResultsGrid
+    var smallViewport = window && window.innerWidth <= 400 
+    var defaultView = (smallViewport || this.context.universal) ? ResultsList : ResultsGrid
 
     return {
       focusedResult: focus && focus._source,
       view: defaultView,
+      smallViewport,
     }
   },
 
@@ -81,13 +83,18 @@ var SearchResults = React.createClass({
         search={search}
         hits={this.props.hits}
         postSearch={this.postSearch(summaryProps)}
+        smallViewport={this.state.smallViewport}
         />
     </div>
   },
 
   focusResult(hit, nextView = false) {
-    nextView && this.changeView(nextView)
-    this.setState({focusedResult: hit ? hit._source : null})
+    if(this.state.smallViewport) {
+      this.transitionTo('artwork', {id: hit._id})
+    } else {
+      nextView && this.changeView(nextView)
+      this.setState({focusedResult: hit ? hit._source : null})
+    }
   },
 
   changeView(next) {
