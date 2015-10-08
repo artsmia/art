@@ -603,12 +603,10 @@ a.departmentLink h2{
   background-color: #ddd;
 }
 .artwork.smallviewport #map {
-  position: relative;
-  left: 0;
-  width: 65%;
+  top: 0;
+  z-index: 2;
   height: calc(100vh - 10em);
-  z-index: 1000;
-  background-color: #ddd;
+  overflow: hidden;
 }
 .artwork .sticky #map {
   width: 100%;

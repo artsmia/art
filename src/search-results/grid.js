@@ -10,7 +10,7 @@ var SearchResultsGrid = React.createClass({
   mixins: [Router.Navigation],
 
   render() {
-    var {hits, leftColumnWidth, focusedResult, focusHandler, ...focusedProps} = this.props
+    var {hits, leftColumnWidth, focusedResult, smallViewport, focusHandler, ...focusedProps} = this.props
     var targetHeight = hits.length < 20 ? 250 : 150
     var quilt = <ImageQuilt artworks={hits}
       maxRows={1000}
@@ -25,6 +25,12 @@ var SearchResultsGrid = React.createClass({
       {quilt}
       {more}
     </div>
+
+    if(smallViewport || this.context.universal) {
+      focusedResult = null
+    }
+
+    if(!focusedResult) leftColumnWidth = '100%'
 
     var wrappedQuilt = !focusedResult ?
       stuff :

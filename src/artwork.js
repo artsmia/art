@@ -47,7 +47,7 @@ var Artwork = React.createClass({
     var id = this.props.id || this.state.id
     const highlights = this.props.highlights
     var stickyMapStyle = this.context.universal ? {position: 'fixed'} : {}
-    var smallViewport = window && window.innerWidth <= 400
+    var smallViewport = window && window.innerWidth <= 500
 
     var pageTitle = [art.title, _Artwork.Creator.getFacetAndValue(art)[1]].filter(e => e).join(', ')
     var imageUrl = `http://api.artsmia.org/images/${id}/400/medium.jpg`
@@ -69,6 +69,20 @@ var Artwork = React.createClass({
             <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
             <ArtworkDetails art={art} />
           </div>
+          <Helmet
+            title={pageTitle}
+            meta={[
+              {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
+              {property: "og:description", content: art.text},
+              {property: "og:image", content: imageUrl},
+              {property: "og:url", content: canonicalURL},
+              {property: "twitter:card", content: "summary_large_image"},
+              {property: "twitter:site", content: "@artsmia"},
+            ]}
+            link={[
+              {"rel": "canonical", "href": canonicalURL},
+            ]}
+            />
         </div>
       )
     } else {
