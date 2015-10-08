@@ -602,6 +602,14 @@ a.departmentLink h2{
   z-index: 1000;
   background-color: #ddd;
 }
+.artwork.smallviewport #map {
+  position: relative;
+  left: 0;
+  width: 65%;
+  height: calc(100vh - 10em);
+  z-index: 1000;
+  background-color: #ddd;
+}
 .artwork .sticky #map {
   width: 100%;
   height: 100%;
@@ -623,6 +631,9 @@ a.departmentLink h2{
   right: 0;
   overflow-y:scroll;
   min-height: 100vh;
+}
+.artwork.smallviewport .info {
+  width: 100%;
 }
 .artwork .objects-focus {
   border-top: none;
@@ -852,7 +863,7 @@ hr{margin:0;}
 .peek p{
   line-height:1em;
   font-size:1em;
-  font-family:$MiaGroteskLight; 
+  font-family:$MiaGroteskLight;
 }
 
 .peek a{
