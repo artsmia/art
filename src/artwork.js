@@ -47,47 +47,84 @@ var Artwork = React.createClass({
     var id = this.props.id || this.state.id
     const highlights = this.props.highlights
     var stickyMapStyle = this.context.universal ? {position: 'fixed'} : {}
+    var smallViewport = window && window.innerWidth <= 500
 
     var pageTitle = [art.title, _Artwork.Creator.getFacetAndValue(art)[1]].filter(e => e).join(', ')
     var imageUrl = `http://api.artsmia.org/images/${id}/400/medium.jpg`
     var canonicalURL = `http://collection.staging.artsmia.org/art/${art.id}/${art.slug}`
 
-    return (
-      <div className='artwork'>
-        <div className='info'>
-          <ArtworkPreview art={art} showLink={false} />
-          <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
-          <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
-          <ArtworkDetails art={art} />
-        </div>
-
-        <Sticky
-          stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}
-          onStickyStateChange={this.resizeMap}>
-          <div ref='map' id='map' style={stickyMapStyle}>
+    if(smallViewport) {
+      return (
+        <div className='artwork smallviewport'>
+          <div ref='map' id='map' style={{width: '100%', display: 'inline-block'}}>
             {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
               <img src={imageUrl} />
               {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
             </div>}
             {this.imageStatus()}
           </div>
-        </Sticky>
-        <Helmet
-          title={pageTitle}
-          meta={[
-            {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
-            {property: "og:description", content: art.text},
-            {property: "og:image", content: imageUrl},
-            {property: "og:url", content: canonicalURL},
-            {property: "twitter:card", content: "summary_large_image"},
-            {property: "twitter:site", content: "@artsmia"},
-          ]}
-          link={[
-            {"rel": "canonical", "href": canonicalURL},
-          ]}
-          />
-      </div>
-    )
+          <div className='info'>
+            <ArtworkPreview art={art} showLink={false} />
+            <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
+            <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
+            <ArtworkDetails art={art} />
+          </div>
+          <Helmet
+            title={pageTitle}
+            meta={[
+              {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
+              {property: "og:description", content: art.text},
+              {property: "og:image", content: imageUrl},
+              {property: "og:url", content: canonicalURL},
+              {property: "twitter:card", content: "summary_large_image"},
+              {property: "twitter:site", content: "@artsmia"},
+            ]}
+            link={[
+              {"rel": "canonical", "href": canonicalURL},
+            ]}
+            />
+        </div>
+      )
+    } else {
+      return (
+        <div className='artwork'>
+          <div className='info'>
+            <ArtworkPreview art={art} showLink={false} />
+            <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
+            <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
+            <ArtworkDetails art={art} />
+          </div>
+
+          <Sticky
+            stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}
+            onStickyStateChange={this.resizeMap}>
+            <div ref='map' id='map' style={stickyMapStyle}>
+              {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
+                <img src={imageUrl} />
+                {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
+              </div>}
+              {this.imageStatus()}
+            </div>
+          </Sticky>
+          <Helmet
+            title={pageTitle}
+            meta={[
+              {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
+              {property: "og:description", content: art.text},
+              {property: "og:image", content: imageUrl},
+              {property: "og:url", content: canonicalURL},
+              {property: "twitter:card", content: "summary_large_image"},
+              {property: "twitter:site", content: "@artsmia"},
+            ]}
+            link={[
+              {"rel": "canonical", "href": canonicalURL},
+            ]}
+            />
+        </div>
+      )
+    }
+
+
   },
 
   getInitialState() {
@@ -153,7 +190,7 @@ var Artwork = React.createClass({
       (—Is that the best image you've got!!?
       —Nope! We're loading ${humanizeNumber(this.getPixelDifference(400))} more pixels right now.
       It can take a few seconds.)`
-    var showLoadingMessage = zoomLoading && zoomLoaded === false && !this.context.universal 
+    var showLoadingMessage = zoomLoading && zoomLoaded === false && !this.context.universal
 
     return art.image === 'valid' && <span className="imageStatus">
       {showLoadingMessage && loadingZoomMessage}
