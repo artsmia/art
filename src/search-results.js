@@ -89,10 +89,12 @@ var SearchResults = React.createClass({
   },
 
   focusResult(hit, nextView = false) {
-    if(this.state.smallViewport) {
+    var {smallViewport} = this.state
+
+    if(smallViewport && nextView) {
       this.transitionTo('artwork', {id: hit._id})
     } else {
-      nextView && this.changeView(nextView)
+      !smallViewport && nextView && this.changeView(nextView)
       this.setState({focusedResult: hit ? hit._source : null})
     }
   },
