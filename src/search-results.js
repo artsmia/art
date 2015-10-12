@@ -7,6 +7,7 @@ var SEARCH = require('./search-endpoint')
 var SearchSummary = require('./search-summary')
 var ResultsList = require('./search-results/list')
 var ResultsGrid = require('./search-results/grid')
+var Suggest = require('./suggest')
 
 var SearchResults = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -76,6 +77,7 @@ var SearchResults = React.createClass({
           views={[ResultsList, ResultsGrid]}
         />
       </SearchSummary>
+      <Suggest search={search} />
       <this.state.view
         leftColumnWidth={leftColumnWidth}
         focusedResult={focusedResult}
