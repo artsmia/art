@@ -20,7 +20,7 @@ var Peek = React.createClass({
   getInitialState() {
     var {q, facet} = this.props
     var open = !!q
-    if(q && q.match(/:/)) [facet, q] = q.split(/:/)
+    if(q && q.match(/:/) && !facet) [facet, q] = q.split(/:/)
     if(!q) q = this.props.children
 
     return {
