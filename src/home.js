@@ -65,7 +65,7 @@ var HomeDepartments = React.createClass({
         </li>
         <li className="mdl-cell mdl-cell--4-col">
           <Link to='browse'>
-            Browse
+            Explore
           </Link>
         </li>
         </ul>

@@ -4,6 +4,7 @@ var Helmet = require('react-helmet')
 var Peek = require('./peek')
 var Department = require('./department')
 var Search = require('./search')
+var Artwork = require('./artwork')
 
 var Browse = React.createClass({
   statics: {
@@ -11,9 +12,16 @@ var Browse = React.createClass({
   },
 
   render() {
-    return <div>
-      {this.peekRandomSearchTerms()}
-      <Helmet title="Browse the art" />
+    return <div style={{padding: '0 40px'}}>
+      {this.searches.map((term) => {
+        var [facet, ...terms] = term.split(':')
+        return <section>
+          <h2 style={{fontSize: '1.5em', padding:'10px 0'}}>Explore <span style={{fontFamily: '"MiaGrotesk-Light",sans-serif'}}>{terms[1]}</span></h2>
+          <Peek facet={facet} q={terms.join(':')} quiltProps={{maxRowHeight: 600}} />
+          <hr style={{visibility: 'hidden'}} />
+        </section>
+      })}
+      <Helmet title="Explore the art" />
     </div>
   },
 
@@ -29,9 +37,8 @@ var Browse = React.createClass({
 
   searches: [
     '_exists_:related:artstories',
-    '_exists_:related:newsflashes',
     '_exists_:related:audio-stops',
-    'artist:Richard Avedon',
+    'artist:Hokumyō',
   ],
 })
 
