@@ -17,7 +17,7 @@ var Browse = React.createClass({
         var [facet, ...terms] = term.split(':')
         return <section>
           <h2 style={{fontSize: '1.5em', padding:'10px 0'}}>Explore <span style={{fontFamily: '"MiaGrotesk-Light",sans-serif'}}>{terms[1]}</span></h2>
-          <Peek facet={facet} q={terms.join(':')} quiltProps={{maxRowHeight: 600}} />
+          <Peek offset={1} facet={facet} q={terms.join(':')} quiltProps={{maxRowHeight: 600}} />
           <hr style={{visibility: 'hidden'}} />
         </section>
       })}
@@ -37,6 +37,7 @@ var Browse = React.createClass({
 
   searches: [
     '_exists_:related:artstories',
+    '_exists_:related:newsflashes',
     '_exists_:related:audio-stops',
     'artist:Hokumyō',
   ],
