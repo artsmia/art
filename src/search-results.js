@@ -77,7 +77,7 @@ var SearchResults = React.createClass({
           views={[ResultsList, ResultsGrid]}
         />
       </SearchSummary>
-      <Suggest search={search} />
+      <Suggest search={search} completions={this.props.completions} />
       <this.state.view
         leftColumnWidth={leftColumnWidth}
         focusedResult={focusedResult}

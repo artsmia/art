@@ -88,7 +88,7 @@ var Search = React.createClass({
         {searchBox}
         {this.props.children}
         {this.props.hideResults || <div>
-          <SearchResults {...this.props} hits={this.state.hits} {...aggsProps} />
+          <SearchResults {...this.props} hits={this.state.hits} completions={this.state.completions} {...aggsProps} />
         </div>}
       </div>
     )
@@ -97,8 +97,21 @@ var Search = React.createClass({
   componentWillMount() {
     var update = this.props.onUpdate || this.search
     this.debouncedSearch = (typeof window.orientation === 'undefined') ?
-      debounce(update, 1000) :
+      debounce(update, 3000) :
       undefined
+    this.debouncedAutocomplete = debounce(this.autocomplete, 100)
+  },
+
+  autocomplete() {
+    rest(`${SEARCH}/autofill/${decodeURIComponent(this.state.terms)}`)
+    .then((r) => JSON.parse(r.entity) )
+    .then(json => {
+      var completions = json.artist_completion && json.artist_completion[0].options
+      .map(option => option.text)
+      .filter(text => text !== this.state.terms)
+
+      this.setState({completions})
+    })
   },
 
   componentDidMount() {
@@ -111,6 +124,7 @@ var Search = React.createClass({
     var terms = event.target.value
     this.setState({terms: terms})
     this.debouncedSearch && this.debouncedSearch(terms)
+    this.debouncedAutocomplete()
   },
 
   search() {
