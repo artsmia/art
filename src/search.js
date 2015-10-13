@@ -48,7 +48,12 @@ var Search = React.createClass({
         style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}}
         name="q"
         ref="searchInput"
+        autoComplete="off"
+        list="searchCompletions"
         />
+      {this.state.completions && <datalist id="searchCompletions">
+        {this.state.completions.map(text => <option>{text}</option>)}
+      </datalist>}
     </div>
 
     const simpleSearchBox = this.context.universal ?
