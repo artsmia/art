@@ -12,9 +12,9 @@ var GalleryDecorator =  React.createClass({
     var number = galleryId.replace(/g/i, '')
     var gallery = galleries[number]
 
-    return <div style={{clear: 'both'}}>
-      <img style={{float: 'left', maxWidth: 250}} src={`http://artsmia.github.io/map/galleries/${number}.png`} />
-      <div style={{float: 'left', marginLeft: '1em'}}>
+    return <div style={{clear: 'both'}} className="decorator d-gallery">
+      <img src={`http://artsmia.github.io/map/galleries/${number}.png`} />
+      <div>
         <h3>{gallery.title}</h3>
         <Link to='searchResults' params={{terms: `G${gallery.prev}`}}>&larr; G{gallery.prev}</Link>
         <span> {galleryId} </span>
