@@ -38,10 +38,6 @@ var ArtworkDetails = React.createClass({
                 <div className='detail-content'>{art.department}</div>
             </div>
             <div className='detail-row'>
-                <div className='detail-title'>Description</div>
-                <div className='detail-content'>{art.description}</div>
-            </div>
-            <div className='detail-row'>
                 <div className='detail-title'>Dimension</div>
                 <div className='detail-content'>{art.dimension}</div>
             </div>
