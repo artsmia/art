@@ -11,7 +11,7 @@ var Decorate = React.createClass({
     var {query, filters} = this.props.search
     if(!query && !filters) return <span />
     var decorations = DecorationFinder(query, filters, this.props.params)
-    return <div>
+    return <div className="decorator-wrap">
       {decorations}
     </div>
   }
