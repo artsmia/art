@@ -6,7 +6,7 @@ var Department = require('./department')
 var Search = require('./search')
 var Artwork = require('./artwork')
 
-var Browse = React.createClass({
+var Explore = React.createClass({
   statics: {
     searchResults: Department.fetchData.searchResults
   },
@@ -43,4 +43,4 @@ var Browse = React.createClass({
   ],
 })
 
-module.exports = Browse
+module.exports = Explore
