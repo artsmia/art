@@ -51,9 +51,6 @@ var Search = React.createClass({
         autoComplete="off"
         list="searchCompletions"
         />
-      {this.state.completions && <datalist id="searchCompletions">
-        {this.state.completions.map(text => <option>{text}</option>)}
-      </datalist>}
     </div>
 
     const simpleSearchBox = this.context.universal ?
@@ -107,19 +104,14 @@ var Search = React.createClass({
     this.debouncedSearch = (delay || isDesktop) ?
       debounce(update, this.props.delay || 3000) :
       undefined
-    this.debouncedAutocomplete = debounce(this.autocomplete, 100)
+    this.debouncedAutocomplete = debounce(this.autocomplete, 300)
   },
 
-  autocomplete() {
-    rest(`${SEARCH}/autofill/${decodeURIComponent(this.state.terms)}`)
+  autocomplete(terms) {
+    if(terms == '') return
+    rest(`${SEARCH}/autofill/${decodeURIComponent(terms)}`)
     .then((r) => JSON.parse(r.entity) )
-    .then(json => {
-      var completions = json.artist_completion && json.artist_completion[0].options
-      .map(option => option.text)
-      .filter(text => text !== this.state.terms)
-
-      this.setState({completions})
-    })
+    .then(completions => this.setState({completions}))
   },
 
   componentDidMount() {
@@ -132,7 +124,7 @@ var Search = React.createClass({
     var terms = event.target.value
     this.setState({terms: terms})
     this.debouncedSearch && this.debouncedSearch(terms)
-    this.debouncedAutocomplete()
+    this.debouncedAutocomplete(terms)
   },
 
   search() {
