@@ -37,6 +37,7 @@ var LiveSearch = React.createClass({
         terms={this.state.terms}
         results={this.state.results}
         link={['searchResults', {terms: this.state.terms}]}
+        delay={1000}
         >
         <span style={styles.message}>{this.getText()}</span>
       </Search>

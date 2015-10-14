@@ -101,8 +101,11 @@ var Search = React.createClass({
 
   componentWillMount() {
     var update = this.props.onUpdate || this.search
-    this.debouncedSearch = (typeof window.orientation === 'undefined') ?
-      debounce(update, 3000) :
+    var {delay} = this.props
+    var isDesktop = typeof window.orientation === 'undefined'
+
+    this.debouncedSearch = (delay || isDesktop) ?
+      debounce(update, this.props.delay || 3000) :
       undefined
     this.debouncedAutocomplete = debounce(this.autocomplete, 100)
   },
