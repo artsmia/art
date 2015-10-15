@@ -71,9 +71,12 @@ var HomeDepartments = React.createClass({
         </ul>
       </div>
       <div className="welcome mdl-grid">
-      <h2>Welcome to Mia&#39;s Collection</h2>
+      <h2>Welcome to Mia&#39;s new Collections website</h2>
       <div className="mdl-cell mdl-cell--9-col">
-        <p>Mia inspires wonder with extraordinary exhibitions and one of the finest wide-ranging art collections in the country. From Monet to Matisse, Asian to African, 40,000-year-old artifacts to world-famous masterpieces, Mia links the past to the present and enables global conversations. Mia inspires wonder with extraordinary exhibitions and one of the finest wide-ranging art collections in the country. From Monet to Matisse, Asian to African, 40,000-year-old artifacts to world-famous masterpieces, Mia links the past to the present and enables global conversations. Mia inspires wonder with extraordinary exhibitions and one of the finest wide-ranging art collections in the country. From Monet to Matisse, Asian to African, 40,000-year-old artifacts to world-famous masterpieces, Mia links the past to the present and enables global conversations.</p>
+        <p>We are excited to see what you think. A few things to keep in mind. This is a prototype. That means that it is a work in progress and some things may be broken or it may not work perfectly. This is not your fault!</p>
+
+        <p style={{paddingTop:"15px"}}>We also want you to be honest about what you are thinking. You will not hurt our feelings by saying something negative. This is not a test of you or your internet abilities. There are no wrong answers. We want your feedback so we can make this site better.</p>
+        <h3>Thank you</h3>
       </div>
       </div>
       <div className="departmentList mdl-grid">
