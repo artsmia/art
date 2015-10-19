@@ -31,6 +31,8 @@ var Suggest = React.createClass({
     .reduce((flattenedArray, options) => flattenedArray.concat(options), [])
     // re-score title completions to 10%, artist is more important
     .map(option => ({...option, score: option.score / (option.type == 'title_completion' ? 10 : 1)}))
+    // re-score highlight completions to 10x
+    .map(option => ({...option, score: option.score * (option.type == 'highlight_artist_completion' ? 10 : 1)}))
     .sort((a, b) => a.score < b.score)
     .map(option => option ? option.text : null)
     .filter(text => text && text !== search.query)
