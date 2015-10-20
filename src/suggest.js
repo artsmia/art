@@ -4,7 +4,7 @@ var {Link} = require('react-router')
 var Suggest = React.createClass({
   render() {
     var {search} = this.props
-    var suggestions = this.getSuggestions()
+    var suggestions = Array.from(this.getSuggestions())
     .slice(0, 5)
 
     if(suggestions.length == 0) return <span></span>
@@ -31,14 +31,13 @@ var Suggest = React.createClass({
     .reduce((flattenedArray, options) => flattenedArray.concat(options), [])
     // re-score title completions to 10%, artist is more important
     .map(option => ({...option, score: option.score / (option.type == 'title_completion' ? 10 : 1)}))
-    // re-score highlight completions to 10x
-    .map(option => ({...option, score: option.score * (option.type == 'highlight_artist_completion' ? 10 : 1)}))
+    // re-score highlight completions
+    .map(option => ({...option, score: option.score * (option.type == 'highlight_artist_completion' ? 5000 : 1)}))
     .sort((a, b) => a.score < b.score)
     .map(option => option ? option.text : null)
     .filter(text => text && text !== search.query)
 
-
-    return suggestions
+    return new Set(suggestions)
   },
 })
 
