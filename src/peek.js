@@ -146,6 +146,10 @@ var Peek = React.createClass({
   linkToResults(art) {
     if(!art) return
     window.clickedArtwork = art
+    if(this.props.directLinkTo) {
+      var url = art._source[`related:${this.props.directLinkTo}`]
+      if(url) return window.location = url
+    }
     this.transitionTo('searchResults', {terms: this.state.facetedQ})
   },
 
