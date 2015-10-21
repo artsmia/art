@@ -28,6 +28,7 @@ var Home = React.createClass({
         quiltProps={{maxRows: 3, maxWorks: 30}}
         facet={'highlight:true'}
         searchAll={true}
+        suggestStyle={{margin: "1em 3em"}}
         {...this.props} />
       <HomeDepartments />
     </div>

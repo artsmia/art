@@ -38,6 +38,7 @@ var LiveSearch = React.createClass({
         results={this.state.results}
         link={['searchResults', {terms: this.state.terms}]}
         delay={1000}
+        suggestStyle={{margin: "1em 3em"}}
         >
         <span style={styles.message}>{this.getText()}</span>
       </Search>

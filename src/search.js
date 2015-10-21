@@ -7,6 +7,8 @@ var SEARCH = require('./search-endpoint')
 
 var ImageQuilt = require('./image-quilt')
 var SearchResults = require('./search-results')
+var Suggest = require('./suggest')
+
 var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
@@ -85,12 +87,18 @@ var Search = React.createClass({
       toggleAggs: this.toggleAggs,
     }
 
+    var suggestions = <Suggest 
+      search={this.props.data && this.props.data.searchResults}
+      completions={this.state.completions}
+      style={this.props.suggestStyle} 
+      />
+
     return (
       <div id="search">
         {searchBox}
         {this.props.children}
-        {this.props.hideResults || <div>
-          <SearchResults {...this.props} hits={this.state.hits} completions={this.state.completions} {...aggsProps} />
+        {this.props.hideResults && suggestions || <div>
+          <SearchResults {...this.props} hits={this.state.hits} {...aggsProps} suggestions={suggestions} />
         </div>}
       </div>
     )
