@@ -6,10 +6,7 @@ var debounce = require('debounce')
 var classnames = require('classnames')
 
 var SEARCH = require('./search-endpoint')
-var ClickToSelect = require('react-click-to-select')
 var ImageQuilt = require('./image-quilt')
-
-// TODO: I can't get onClick to work directly on <ClickToSelect>??
 
 var Peek = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -42,7 +39,7 @@ var Peek = React.createClass({
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
     var peekText = this.context.universal ?
       <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
-      <ClickToSelect>{this.props.children}</ClickToSelect>
+      this.props.children
 
     return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: !!this.props.q, startedClosed: !this.props.q, open:this.state.open})}>
       {this.props.children && <i>
