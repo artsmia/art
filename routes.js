@@ -12,6 +12,7 @@ var ObjectsById = require('./src/objects-by-id')
 var Department = require('./src/department')
 var Explore = require('./src/explore')
 var Page = require('./src/page')
+var Info = require('./src/info')
 
 var routes = (
   <Route handler={App} path="/">
@@ -28,6 +29,7 @@ var routes = (
     <Route name="artistsByName" path="/search/artists/:letter" handler={ArtistsByLetter} />
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
     <Route name="page" path="/info/:name" handler={Page} />
+    <Route name="info" path="/info" handler={Info} />
   </Route>
 );
 
