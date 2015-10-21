@@ -1,6 +1,7 @@
 var React = require('react')
 var {Link} = require('react-router')
 var toSlug = require('speakingurl')
+var classnames = require('classnames')
 
 var ArtworkImage = require('./artwork-image')
 var Peek = require('./peek')
@@ -57,10 +58,11 @@ var LinkBar = React.createClass({
 
 var Figure = React.createClass({
   render() {
-    var {art, link, ...figureProps} = this.props
+    var {art, link, className, ...figureProps} = this.props
     var id = art.id
+    var classes = classnames(className, {validImage: art.image === 'valid' && art.image_width > 0})
 
-    return <figure {...figureProps}
+    return <figure {...figureProps} className={classes}
       itemScope itemType="http://schema.org/VisualArtwork">
       <link itemProp="url" href={`/art/${id}`} />
       <ConditionalLinkWrapper art={art} link={link}>

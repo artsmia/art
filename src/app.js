@@ -7,7 +7,7 @@ var LiveSearch = require('./live-search')
 var App = React.createClass({
   render() {
     return (
-      <div>
+      <div className={this.props.universal && 'universal'}>
         <header><Link to="home"><div className='logo-container'></div></Link></header>
         <Helmet
           title="Art!"
