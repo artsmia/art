@@ -34,7 +34,7 @@ var SearchResultsGrid = React.createClass({
 
     var wrappedQuilt = !focusedResult ?
       stuff :
-      <div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: leftColumnWidth}}>
+      <div className="leftBar" style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: leftColumnWidth}}>
         {stuff}
       </div>
 

@@ -66,7 +66,7 @@ var Figure = React.createClass({
       itemScope itemType="http://schema.org/VisualArtwork">
       <link itemProp="url" href={`/art/${id}`} />
       <ConditionalLinkWrapper art={art} link={link}>
-        <ArtworkImage art={art} id={id} lazyLoad={!this.context.universal} className="artwork-image" />
+        <ArtworkImage art={art} id={id} lazyLoad={false} className="artwork-image" />
       </ConditionalLinkWrapper>
       <figcaption>
         {this.props.children}

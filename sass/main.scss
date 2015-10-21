@@ -2,6 +2,9 @@
 @import "brand-colors.scss";
 @import "ui-icons-font.scss";
 @import "mia-font.scss";
+@media print {
+  @import "print.scss";
+}
 
 $MiaGroteskBold: 'MiaGrotesk-Bold', sans-serif;
 $MiaGroteskBoldItalic: 'MiaGrotesk-BoldItalic', sans-serif;

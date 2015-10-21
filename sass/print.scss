@@ -1,0 +1,34 @@
+header, .link-bar,
+button.material-icons.search, .peek i.material-icons,
+{
+  display: none !important;
+}
+
+/* Object page */
+
+.artwork .objects-focus .artwork-image {
+  display: block !important;
+}
+
+#map, .back-button, .exploreWrapper {
+  display: none !important;
+}
+
+.artwork .info {
+  width: 100% !important;
+}
+
+/* Search Results */
+
+.quilt-search-wrap .quilt-wrap, .filter-button, .views,
+#suggestions, .summaryText a, .focusedResult {
+  display: none !important;
+}
+
+.summaryText, .summaryText h2, .leftBar {
+  width: 100% !important;
+}
+
+.objects-wrap .focused {
+  border-bottom: none !important;
+}

@@ -225,7 +225,7 @@ var ArtworkRelatedContent = React.createClass({
   render() {
     var {links} = this.props
 
-    return links && links.length > 0 && <div>
+    return links && links.length > 0 && <div className="exploreWrapper">
       <h5 className="details-title">Explore</h5>
       <div className="explore">
         {links.map(this.build)}
