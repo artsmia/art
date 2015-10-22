@@ -66,11 +66,13 @@ var CopyableLabel = React.createClass({
       padding: '0.25em',
     }
 
-    var join = this.join
+    var {join, formatDates, titlecase} = this
 
     var hasValidArtist = art.artist !== "" && !art.artist.match(/Unknown/i)
     var [facet, creator] = Creator.getFacetAndValue(art)
-    if(facet == 'country' || facet == undefined) creator = 'Unknown artist'
+    if(facet == 'country' || facet == undefined) creator = undefined
+
+    var title = hasValidArtist ? <i>{art.title}</i> : art.title
 
     // Artist name [if known], Country of origin, birth/death dates,
     // or
@@ -83,12 +85,12 @@ var CopyableLabel = React.createClass({
             [
               creator,
               art.country,
-              art.life_date.replace(/[A-Za-z ,]+/, '')
+              formatDates(art.life_date)
             ] ||
             [creator, art.country, art.continent]
         )}</p>
         <p>
-          <i>{art.title}</i>,&nbsp;{join([art.dated, art.medium])}
+          {title},&nbsp;{join([formatDates(art.dated), titlecase(art.medium)])}
         </p>
         <p>
           {join([
@@ -105,6 +107,20 @@ var CopyableLabel = React.createClass({
 
   join(fields) {
     return fields.filter(f => !!f).join(', ')
+  },
+
+  formatDates(dateString) {
+    var dates = dateString.replace(/^[A-Za-z ,\(\)]+/, '').split(/\s*-\s*/)
+    if(dates.length > 1) {
+      var [start, end] = dates
+      if(start.substr(0, 2) === end.substr(0, 2)) return start+"–"+end.substr(2)
+      return start+"–"+end
+    }
+    return dates.join("–")
+  },
+
+  titlecase(string) {
+    return string[0].toUpperCase() + string.substr(1).toLowerCase()
   },
 })
 
