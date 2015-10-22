@@ -28,15 +28,83 @@ var Title = React.createClass({
 })
 
 var Tombstone = React.createClass({
+  getInitialState() {
+    return {
+      showLabels: false,
+    }
+  },
+
   render() {
     var {art} = this.props
 
-    return <div className='tombstone'>
+    return <div className='tombstone' onDoubleClick={this.handleDoubleClick}>
       <Peek facet="medium" tag="span">{art.medium}</Peek><br />
       {art.dimension}<br/>
       <Peek facet="creditline" tag="span">{art.creditline}</Peek>
       {art.accession_number}
+
+      {this.state.showLabels && <CopyableLabel art={art} onClose={this.handleDoubleClick} />}
     </div>
+  },
+
+  handleDoubleClick() {
+    // show a copy-able tombstone/label in different formats
+    this.setState({showLabels: !this.state.showLabels})
+  }
+})
+
+var ClickToSelect = require('react-click-to-select')
+
+var CopyableLabel = React.createClass({
+  render() {
+    var {art} = this.props
+
+    var style = {
+      border: '1px solid red',
+      position: 'absolute',
+      background: 'white',
+      padding: '0.25em',
+    }
+
+    var join = this.join
+
+    var hasValidArtist = art.artist !== "" && !art.artist.match(/Unknown/i)
+    var [facet, creator] = Creator.getFacetAndValue(art)
+    if(facet == 'country' || facet == undefined) creator = 'Unknown artist'
+
+    // Artist name [if known], Country of origin, birth/death dates,
+    // or
+    // Self-designation of people/tribe, location (country +/- continent)
+    // Title of object [italicized if simply nondescriptive, like Table], creation date, media, 
+    // Source of purchase funds, accession number [+ © or ARS info]
+    return <div style={style}>
+      <ClickToSelect>
+        <p>{join(hasValidArtist &&
+            [
+              creator,
+              art.country,
+              art.life_date.replace(/[A-Za-z ,]+/, '')
+            ] ||
+            [creator, art.country, art.continent]
+        )}</p>
+        <p>
+          <i>{art.title}</i>,&nbsp;{join([art.dated, art.medium])}
+        </p>
+        <p>
+          {join([
+            art.creditline,
+            art.accession_number,
+            decodeURIComponent(art.image_copyright),
+          ])}
+        </p>
+      </ClickToSelect>
+
+      <button onClick={this.props.onClose}>(close)</button>
+    </div>
+  },
+
+  join(fields) {
+    return fields.filter(f => !!f).join(', ')
   },
 })
 
