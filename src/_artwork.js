@@ -109,18 +109,95 @@ var CopyableLabel = React.createClass({
 })
 
 var LinkBar = React.createClass({
+  getDefaultProps() {
+    return {
+      actions: {
+        like: {
+          enabled: false,
+          icon: 'favorite_border',
+        },
+        download: {
+          enabled: false,
+          icon: 'file_download',
+        },
+        print: {
+          enabled: true,
+        },
+        share: {
+          enabled: true,
+          icon: 'send',
+        },
+      }
+    }
+  },
+
+  getInitialState() {
+    return {
+      showShare: true || false,
+    }
+  },
+
   render() {
     var {art} = this.props
 
+    var actions = Object.keys(this.props.actions)
+    .map(key => {
+      this.props.actions[key].key = key
+      return this.props.actions[key]
+    }, [])
+    .filter(action => action.enabled)
+    console.info(actions)
+
     return <div>
       <div className="link-bar">
-        <i className="material-icons">favorite_border</i>
-        <i className="material-icons">file_download</i>
-        <i className="material-icons">send</i>
+        {actions.map(action => {
+          var key = action.key
+          var handler = eval(`_this.handle${key[0].toUpperCase() + key.substr(1)}`) // TODO alert alert warning warning (shouldn't have to reference _this, sketchy code)
+          return <i className="material-icons" onClick={handler}>{action.icon || action.key}</i>
+        })}
       </div>
+      {this.state.showShare && this.showShare()}
       <div className="clear"></div>
       <div className="back-button">{this.props.link && <Link to="artwork" params={{id: art.id}}>View Details <i className="material-icons">arrow_forward</i></Link>}</div>
     </div>
+  },
+
+  getUrl() {
+    return window.location.href.replace('localhost:1314', 'collection.staging.artsmia.org')
+  },
+
+  handleShare() {
+    var {art} = this.props
+
+    this.setState({showShare: !this.state.showShare})
+  },
+
+  showShare() {
+    var facebookURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURI(this.getUrl())}`
+    var twitterURL = `https://twitter.com/intent/tweet?url=${encodeURI(this.getUrl())}`
+
+    return <div className="share">
+      <a href={facebookURL} target="_blank">
+        <img src="http://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/facebook.svg" />
+        Share this on Facebook
+      </a>
+      <a href={twitterURL} target="_blank">
+        <img src="http://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/twitter.svg" />
+        Share this on Twitter
+      </a>
+    </div>
+  },
+
+  handlePrint() {
+    window.print()
+  },
+
+  handleDownload() {
+    console.info('TODO')
+  },
+
+  handleLike() {
+    console.info('TODO')
   },
 })
 

@@ -395,7 +395,7 @@ header{
   background: rgb(35,35,35);
   margin-top: 10px;
 }
-.link-bar i{
+.link-bar i {
   font-size: 1.5em;
   line-height: 1em;
   padding: 10px;
@@ -421,6 +421,24 @@ header{
     -o-transform:scale(1.1); /* Opera */
      transform:scale(1.1);
 }
+
+.share {
+  background-color: rgb(35,35,35);
+  margin-top: 0.5em;
+}
+.share a {
+  display: block;
+  padding: 0.25em 0.5em;
+
+  &:hover {
+    color: white;
+  }
+}
+.share img {
+  max-width: .75em;
+  margin-right: 0.5em;
+}
+
 .back-button a {
     display: inline-block;
     color: #ffffff;
