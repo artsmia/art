@@ -49,7 +49,7 @@ var HomeDepartments = React.createClass({
     "Prints and Drawings",
   ],
 
-  pages: ['Purcell-Cutts House', 'Provenance Research', 'Deaccessions'],
+  pages: ['Purcell-Cutts House', 'Provenance Research', 'Deaccessions', 'Conservation'],
 
   render() {
     return <div className="landingPageBody">
@@ -75,10 +75,7 @@ var HomeDepartments = React.createClass({
       <div className="welcome mdl-grid">
       <h2>Welcome to Mia&#39;s new Collections website</h2>
       <div className="mdl-cell mdl-cell--9-col">
-        <p>We are excited to see what you think. A few things to keep in mind. This is a prototype. That means that it is a work in progress and some things may be broken or it may not work perfectly. This is not your fault!</p>
-
-        <p style={{paddingTop:"15px"}}>We also want you to be honest about what you are thinking. You will not hurt our feelings by saying something negative. This is not a test of you or your internet abilities. There are no wrong answers. We want your feedback so we can make this site better.</p>
-        <h3>Thank you</h3>
+        <p>It is our mission to enrich the community by collecting, preserving, and making accessible outstanding works of art from the world’s diverse cultures. With over 89,000 artworks, Mia’s collection includes art from six continents, spanning nearly 40,000 years.  Here you will find world-famous artworks that embody the highest levels of artistic achievement and speak to the enduring power of human creativity to shape our world. </p>
       </div>
       </div>
       <div className="departmentList mdl-grid">
@@ -96,7 +93,7 @@ var HomeDepartments = React.createClass({
       <div className="mdl-grid">
         <ul className="info">
           {this.pages.map(name => {
-            return <li key={name} className="mdl-cell mdl-cell--4-col">
+            return <li key={name} className="mdl-cell mdl-cell--3-col">
               <Link to="page" params={{name: toSlug(name)}}>{name}</Link>
             </li>
           })}
