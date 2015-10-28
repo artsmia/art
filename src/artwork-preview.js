@@ -23,17 +23,16 @@ var ArtworkPreview = React.createClass({
     var details = showLink ? <Link to="artwork" params={{id: art.id}}>
       <div className="objects-page-link"><div className="objects-page-icon"></div>details</div>
     </Link> : ''
-      
+
     return (
       <Artwork.Figure art={art} className='objects-focus' style={style} link={showLink}>
         <div className="art-details preview-header">
           {details}
-          <h2><Artwork.Title art={art} link={showLink} /></h2>
-          <h5 className='date'><Peek tag="span" showIcon={false}>{art.dated}</Peek></h5>
           <Artwork.Creator art={art} />
-          <h6><Peek facet="room">{art.room}</Peek></h6>
+          <Artwork.Title art={art} link={showLink} />
           <Artwork.Tombstone art={art} />
-          <Markdown itemProp="description">{art.text}</Markdown>
+          <h6><Peek facet="room">{art.room}</Peek></h6>
+          <div className="description"><Markdown itemProp="description">{art.text}</Markdown></div>
           <Artwork.LinkBar art={art} link={showLink} />
         </div>
       </Artwork.Figure>

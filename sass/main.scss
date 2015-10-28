@@ -30,6 +30,7 @@ body{
     color:$primary;
     margin: 0;
     line-height:1.3em;
+    font-size:1em;
 }
 
 a {
@@ -66,7 +67,6 @@ header{
     background-color:$primary;
     position:relative;
 }
-
 .quilt-search-wrap{
     min-height: 3em;
     background: #222;
@@ -201,6 +201,21 @@ header{
         float: right;
         padding-left: 10px;
       }
+      .artwork-summary h1{
+        font-size: 1em;
+        line-height: 1.1em;
+      }
+      .artwork-summary h2{
+        font-size: .9em;
+        line-height: 1em;
+        font-family: $MiaGroteskRegular;
+        margin-top: .5em;
+      }
+      .artwork-summary p{
+        font-size: .857em;
+        line-height: 1.143em;
+        margin-top: .5em;
+      }
       .artwork-image > div {
           max-height: 200px !important;
       }
@@ -250,13 +265,14 @@ header{
 }
 
     .objects-focus h1{
-        font-size:2em;
-        line-height:1.3em;
-        padding-top:7px;
-        margin:10px 0;
-        font-family: $MiaGroteskLightItalic;
-        font-style: italic;
-        border-top:3px solid $primary;
+        font-size:1.214em;
+        line-height:1.429em;
+        margin-top:.637em;
+        font-family: $MiaGroteskBold;
+        color: $primary;
+    }
+    span.dated{
+      font-family: $MiaGroteskRegular;
     }
     .info .objects-focus h1 {
       border-top: none;
@@ -269,26 +285,30 @@ header{
     }
 
     .objects-focus h5{
-        font-family: $MiaGroteskBold;
-        font-size:1.25em;
-        margin-bottom:10px;
-        cursor:hand;
-    }
-
-    .objects-focus .date{
-        font-size:0.9em;
         font-family: $MiaGroteskRegular;
-        font-style: normal;
-        display:inline-block;
+        font-size:1.357em;
+        line-height: 1.643em;
+        cursor:hand;
+        padding-top: 7px;
+        margin-top:10px;
+        border-top: 3px solid $primary;
     }
-
-    // @niffur
     .objects-focus .tombstone{
-        margin-bottom:1em;
-        font-size:smaller;
-        line-height:1.4em;
+        font-size:.857em;
+        line-height:1.143em;
+        margin-top: .5em;
+        padding:0;
+        margin-bottom: 0;
     }
-
+    .objects-focus .gifted{
+        font-size:.714em;
+        line-height:1.3em;
+        text-transform: uppercase;
+        padding-top:1.92em;
+    }
+    .objects-focus .description{
+      padding-top:1em;
+    }
     .objects-focus .artwork-image{
         width:100%;
         height:auto;
@@ -415,30 +435,31 @@ header{
     line-height: 1em;
 }
 .link-bar i:hover {
-    -webkit-transform:scale(1.1); /* Safari and Chrome */
-    -moz-transform:scale(1.1); /* Firefox */
-    -ms-transform:scale(1.1); /* IE 9 */
-    -o-transform:scale(1.1); /* Opera */
-     transform:scale(1.1);
+    opacity: .7;
 }
 
 .share {
-  background-color: rgb(35,35,35);
   margin-top: 0.5em;
 }
-.share a {
-  display: block;
-  padding: 0.25em 0.5em;
-
-  &:hover {
-    color: white;
-  }
-}
-.share img {
-  max-width: .75em;
+.social img {
+  width: 1.5em;
+  height: auto;
   margin-right: 0.5em;
 }
-
+.social {
+  background-color: $primary;
+  display: inline-block;
+  padding: 10px 2px 5px 10px;
+  margin-right: 2px;
+  -webkit-transition: all .5s ease; /* Safari and Chrome */
+  -moz-transition: all .5s ease; /* Firefox */
+  -ms-transition: all .5s ease; /* IE 9 */
+  -o-transition: all .5s ease; /* Opera */
+  transition: all .5s ease;
+}
+.social a:hover img {
+  opacity: .7;
+}
 .back-button a {
     display: inline-block;
     color: #ffffff;
@@ -933,7 +954,7 @@ hr{margin:0;}
 .decorator-wrap{
     width:100%;
     background-color:rgba(35,35,35,0.8);
-    
+
     display: -webkit-flex;
     display:flex;
     -webkit-flex-direction: row;
@@ -958,7 +979,7 @@ hr{margin:0;}
     align-items: center;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
-    
+
 }
 
 .decorator-wrap>.decorator h2{
@@ -994,8 +1015,8 @@ hr{margin:0;}
 .decorator-wrap>.d-department>.departmentContent p{padding-left:0;}
 
 .bigflex {
-   -webkit-flex: 2 0 0; 
-   flex: 2 0 0; 
+   -webkit-flex: 2 0 0;
+   flex: 2 0 0;
 }
 .smallflex {
    -webkit-flex: 1 0 0;

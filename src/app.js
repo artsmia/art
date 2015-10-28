@@ -27,7 +27,7 @@ var App = React.createClass({
   },
 
   searchBar() {
-    var button = <button className="material-icons search" style={{position: 'absolute', top: '0.5em', right: '0.5em'}} onClick={this.toggleSearch}>
+    var button = <button className="material-icons search" style={{position: 'fixed', top: '0.5em', right: '0.5em', zIndex: '2'}} onClick={this.toggleSearch}>
       {this.state.showSearch ? 'close' : 'search'}
     </button>
     var searchTrigger = this.props.universal ? <Link to="home">{button}</Link> : button

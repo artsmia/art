@@ -10,7 +10,7 @@ var ConditionalLinkWrapper = React.createClass({
   render() {
     var {art, link} = this.props
 
-    return link ? 
+    return link ?
       <Link to="artwork" params={{id: art.id}}>{this.props.children}</Link> :
       this.props.children
   }
@@ -19,7 +19,7 @@ var ConditionalLinkWrapper = React.createClass({
 var Title = React.createClass({
   render() {
     var {art, link} = this.props
-    var title = <h1 itemProp="name">{art.title}</h1>
+    var title = <h1 itemProp="name">{art.title}, <span className="dated">{art.dated}</span></h1>
 
     return <ConditionalLinkWrapper {...this.props}>
       {title}
@@ -37,13 +37,10 @@ var Tombstone = React.createClass({
   render() {
     var {art} = this.props
 
-    return <div className='tombstone' onDoubleClick={this.handleDoubleClick}>
-      <Peek facet="medium" tag="span">{art.medium}</Peek><br />
-      {art.dimension}<br/>
-      <Peek facet="creditline" tag="span">{art.creditline}</Peek>
-      {art.accession_number}
-
+    return <div onDoubleClick={this.handleDoubleClick}>
+      <p className="tombstone"><Peek facet="medium" tag="span">{art.medium}</Peek></p>
       {this.state.showLabels && <CopyableLabel art={art} onClose={this.handleDoubleClick} />}
+      <p className="gifted"><Peek facet="creditline" tag="span">{art.creditline}</Peek> {art.accession_number}</p>
     </div>
   },
 
@@ -77,7 +74,7 @@ var CopyableLabel = React.createClass({
     // Artist name [if known], Country of origin, birth/death dates,
     // or
     // Self-designation of people/tribe, location (country +/- continent)
-    // Title of object [italicized if simply nondescriptive, like Table], creation date, media, 
+    // Title of object [italicized if simply nondescriptive, like Table], creation date, media,
     // Source of purchase funds, accession number [+ © or ARS info]
     return <div style={style}>
       <ClickToSelect>
@@ -129,19 +126,23 @@ var LinkBar = React.createClass({
     return {
       actions: {
         like: {
-          enabled: false,
+          enabled: true,
           icon: 'favorite_border',
         },
         download: {
-          enabled: false,
+          enabled: true,
           icon: 'file_download',
         },
         print: {
           enabled: true,
         },
-        share: {
+        email: {
           enabled: true,
           icon: 'send',
+        },
+        share: {
+          enabled: true,
+          icon: 'share',
         },
       }
     }
@@ -192,14 +193,12 @@ var LinkBar = React.createClass({
     var twitterURL = `https://twitter.com/intent/tweet?url=${encodeURI(this.getUrl())}`
 
     return <div className="share">
-      <a href={facebookURL} target="_blank">
+      <div className="social"><a href={facebookURL} target="_blank">
         <img src="http://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/facebook.svg" />
-        Share this on Facebook
-      </a>
-      <a href={twitterURL} target="_blank">
+      </a></div>
+      <div className="social"><a href={twitterURL} target="_blank">
         <img src="http://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/twitter.svg" />
-        Share this on Twitter
-      </a>
+      </a></div>
     </div>
   },
 
