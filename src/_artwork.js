@@ -149,7 +149,7 @@ var LinkBar = React.createClass({
 
   getInitialState() {
     return {
-      showShare: true || false,
+      showShare: false,
     }
   },
 
@@ -162,14 +162,13 @@ var LinkBar = React.createClass({
       return this.props.actions[key]
     }, [])
     .filter(action => action.enabled)
-    console.info(actions)
 
     return <div>
       <div className="link-bar">
         {actions.map(action => {
           var key = action.key
           var handler = eval(`_this.handle${key[0].toUpperCase() + key.substr(1)}`) // TODO alert alert warning warning (shouldn't have to reference _this, sketchy code)
-          return <i className="material-icons" onClick={handler}>{action.icon || action.key}</i>
+          return <i key={key} className="material-icons" onClick={handler}>{action.icon || action.key}</i>
         })}
       </div>
       {this.state.showShare && this.showShare()}
@@ -179,7 +178,7 @@ var LinkBar = React.createClass({
   },
 
   getUrl() {
-    return window.location.href.replace('localhost:1314', 'collection.staging.artsmia.org')
+    return 'http://collection.staging.artsmia.org'+this.context.router.getCurrentPath()
   },
 
   handleShare() {
@@ -216,6 +215,9 @@ var LinkBar = React.createClass({
     console.info('TODO')
   },
 })
+LinkBar.contextTypes = {
+  router: React.PropTypes.func,
+}
 
 var Figure = React.createClass({
   render() {
