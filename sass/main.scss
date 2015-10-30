@@ -1010,3 +1010,37 @@ hr{margin:0;}
   .decorator-wrap>.decorator{margin-bottom:1em;}
   .decorator-wrap>.decorator:last-child{margin-bottom:0;}
 }
+
+/* ===== invalid (no image) STYLES ===== */
+
+.quilt-wrap{
+}
+
+.quilt-row-wrap{
+    display:flex;
+    padding:2px 1px 0 1px;
+}
+
+.lazy-load-visible{
+     border:3px solid $primary;
+     border-width:0 1px;
+}
+
+.invalid{
+    border:3px solid $primary;
+    background-color:white;
+    border-width:0 1px;
+    flex-grow:1;
+}
+
+.invalid p{
+    padding:1em;
+    line-height:1em;
+    font-family: $MiaGroteskBold;
+    display:block;
+    height:100%;
+}
+
+.invalid:hover{
+    background-color:rgba(255,255,255, 0.75);
+}
