@@ -219,14 +219,10 @@ var QuiltPatch = React.createClass({
     </LazyLoad>
 
     var textStyle = {
-      ...style,
-      backgroundColor: '#fff',
-      padding: '0.25em',
-      flexGrow: 1,
       whiteSpace: 'normal',
     }
 
-    var patch = art.image == 'valid' ? image : <span style={textStyle} {...other}>
+    var patch = art.image == 'valid' ? image : <span className='invalid' style={textStyle} {...other}>
       <p><strong>{art.title_short}</strong></p>
     </span>
 
