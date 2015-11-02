@@ -219,6 +219,7 @@ var QuiltPatch = React.createClass({
 
     var textStyle = {
         ...style,
+        display: 'table',
         whiteSpace: 'normal',
     }
 

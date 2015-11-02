@@ -626,7 +626,10 @@ a.departmentLink h2{
   width: 65%;
   height: calc(100vh - 4em);
   z-index: 1000;
-  background-color: #ddd;
+  /* background-color: #ddd;*/
+  background:
+    url('../images/image-not-available-OP.png') 50% 50% no-repeat,
+    url('../images/image-not-available-1.png') left top repeat #ddd;
 }
 .artwork.smallviewport #map {
   top: 0;
@@ -1033,16 +1036,17 @@ hr{margin:0;}
     border-width:0 1px;
     flex-grow:1;
     min-height:6.25rem;
+    display: table;
 }
 
 .invalid p{
     padding:1em;
     line-height:1em;
     font-family: $MiaGroteskBold;
-    display:block;
-    height:100%;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .invalid:hover{
-    background-color:rgba(255,255,255, 0.75);
+    background-color:rgba(0,0,0,.15);
 }
