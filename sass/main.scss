@@ -1019,18 +1019,20 @@ hr{margin:0;}
 .quilt-row-wrap{
     display:flex;
     padding:2px 1px 0 1px;
+    background:rgba(0,0,0,.1);
 }
 
 .lazy-load-visible{
-     border:3px solid $primary;
+     border:3px solid rgba(0,0,0,.1);
      border-width:0 1px;
 }
 
 .invalid{
-    border:3px solid $primary;
+    border:3px solid rgba(0,0,0,.1);
     background-color:white;
     border-width:0 1px;
     flex-grow:1;
+    min-height:6.25rem;
 }
 
 .invalid p{

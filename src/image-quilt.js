@@ -87,7 +87,6 @@ const ImageQuilt = React.createClass({
       // space-around looks best on bottom rows
       const justify = index == 0 && row.length <=3 ? 'space-around' : 'center'
       var rowStyle = {
-        background: '#222',
         minHeight: Math.min(unadjustedHeight, this.props.maxRowHeight || 200, 50),
         display: 'flex',
         justifyContent: justify,
@@ -219,7 +218,8 @@ var QuiltPatch = React.createClass({
     </LazyLoad>
 
     var textStyle = {
-      whiteSpace: 'normal',
+        ...style,
+        whiteSpace: 'normal',
     }
 
     var patch = art.image == 'valid' ? image : <span className='invalid' style={textStyle} {...other}>
