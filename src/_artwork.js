@@ -126,19 +126,15 @@ var LinkBar = React.createClass({
     return {
       actions: {
         like: {
-          enabled: true,
+          enabled: false,
           icon: 'favorite_border',
         },
         download: {
-          enabled: true,
+          enabled: false,
           icon: 'file_download',
         },
         print: {
           enabled: true,
-        },
-        email: {
-          enabled: true,
-          icon: 'send',
         },
         share: {
           enabled: true,
@@ -189,14 +185,20 @@ var LinkBar = React.createClass({
   },
 
   showShare() {
+    var {art} = this.props
+
     var facebookURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURI(this.getUrl())}`
     var twitterURL = `https://twitter.com/intent/tweet?url=${encodeURI(this.getUrl())}`
+    var emailURL = `mailto:?subject=${art.title}&body=${encodeURI(this.getUrl())}`
 
     return <div className="share">
-      <div className="social"><a href={facebookURL} target="_blank">
+      <div className="social"><a title="Share via email" href={emailURL} target="_blank">
+        <img src="https://simpleicons.org/icons/email.svg" />
+      </a></div>
+      <div className="social"><a title="Share on Facebook" href={facebookURL} target="_blank">
         <img src="http://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/facebook.svg" />
       </a></div>
-      <div className="social"><a href={twitterURL} target="_blank">
+      <div className="social"><a title="Share on Twitter" href={twitterURL} target="_blank">
         <img src="http://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/twitter.svg" />
       </a></div>
     </div>
