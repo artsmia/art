@@ -53,7 +53,7 @@ const ImageQuilt = React.createClass({
 
     _art.map((art) => art.aspect_ratio = art.image_width/art.image_height)
     const summedAspectRatio = _art.reduce((sum, art) => {return sum+art.aspect_ratio}, 0)
-    // Fit the images into `maxRows` or however many rows it would take to show each 
+    // Fit the images into `maxRows` or however many rows it would take to show each
     // approx 200px tall
     var rowHeight = this.props.rowHeight || 200
     var numRows = Math.min(this.props.maxRows, Math.max(Math.floor(summedAspectRatio*rowHeight/this.state.width), 1))
@@ -219,6 +219,7 @@ var QuiltPatch = React.createClass({
 
     var textStyle = {
         ...style,
+        display: 'table',
         whiteSpace: 'normal',
     }
 
