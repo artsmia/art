@@ -267,8 +267,8 @@ header{
     .objects-focus h1{
         font-family: $MiaGroteskBold;
         font-size:1.357em;
-        line-height: 1.643em;
         color: $primary;
+        padding-top: 7px;
         border-top: 3px solid $primary;
     }
     span.dated{
@@ -290,7 +290,6 @@ header{
         line-height:1.429em;
         margin-top:.637em;
         cursor:hand;
-        padding-top: 7px;
         margin-top:10px;
     }
     .objects-focus .tombstone{

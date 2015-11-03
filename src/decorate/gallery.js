@@ -29,6 +29,6 @@ module.exports = GalleryDecorator
 
 var NotOnViewGalleryDecorator = React.createClass({
   render() {
-    return <p>Very few of the artworks at the MIA can be "on view" at any point in time.</p>
+    return <p>Very few of the artworks at Mia can be "on view" at any point in time.</p>
   }
 })

@@ -28,8 +28,8 @@ var ArtworkPreview = React.createClass({
       <Artwork.Figure art={art} className='objects-focus' style={style} link={showLink}>
         <div className="art-details preview-header">
           {details}
-          <Artwork.Creator art={art} />
           <Artwork.Title art={art} link={showLink} />
+          <Artwork.Creator art={art} />
           <Artwork.Tombstone art={art} />
           <h6><Peek facet="room">{art.room}</Peek></h6>
           <div className="description"><Markdown itemProp="description">{art.text}</Markdown></div>
