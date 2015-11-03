@@ -265,11 +265,11 @@ header{
 }
 
     .objects-focus h1{
-        font-size:1.214em;
-        line-height:1.429em;
-        margin-top:.637em;
         font-family: $MiaGroteskBold;
+        font-size:1.357em;
+        line-height: 1.643em;
         color: $primary;
+        border-top: 3px solid $primary;
     }
     span.dated{
       font-family: $MiaGroteskRegular;
@@ -286,12 +286,12 @@ header{
 
     .objects-focus h5{
         font-family: $MiaGroteskRegular;
-        font-size:1.357em;
-        line-height: 1.643em;
+        font-size:1.214em;
+        line-height:1.429em;
+        margin-top:.637em;
         cursor:hand;
         padding-top: 7px;
         margin-top:10px;
-        border-top: 3px solid $primary;
     }
     .objects-focus .tombstone{
         font-size:.857em;
