@@ -626,10 +626,7 @@ a.departmentLink h2{
   width: 65%;
   height: calc(100vh - 4em);
   z-index: 1000;
-  /* background-color: #ddd;*/
-  background:
-    url('../images/image-not-available-OP.png') 50% 50% no-repeat,
-    url('../images/image-not-available-1.png') left top repeat #ddd;
+  background-color: #ddd;
 }
 .artwork.smallviewport #map {
   top: 0;
@@ -648,7 +645,11 @@ a.departmentLink h2{
   text-align: center;
   padding: 0 20%;
 }
-
+.invalidImage #map{
+    background:
+    url('../images/image-not-available-OP.png') 50% 50% no-repeat,
+    url('../images/image-not-available-1.png') left top repeat #ddd;
+}
 .artwork .info {
   position: absolute;
   width: 35%;

@@ -3,6 +3,7 @@ var Router = require('react-router')
 var rest = require('rest')
 var humanizeNumber = require('humanize-number')
 var Helmet = require('react-helmet')
+var cx = require('classnames')
 
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
@@ -55,7 +56,7 @@ var Artwork = React.createClass({
 
     if(smallViewport) {
       return (
-        <div className='artwork smallviewport'>
+        <div className={cx('artwork smallviewport', {invalidImage: art.image == 'invalid'})}>
           <div ref='map' id='map' style={{width: '100%', display: 'inline-block'}}>
             {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
               <img src={imageUrl} />
@@ -87,7 +88,7 @@ var Artwork = React.createClass({
       )
     } else {
       return (
-        <div className='artwork'>
+        <div className={cx('artwork', {invalidImage: art.image == 'invalid'})}>
           <div className='info'>
             <ArtworkPreview art={art} showLink={false} />
             <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
