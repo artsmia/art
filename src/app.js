@@ -3,19 +3,23 @@ var {RouteHandler, Link} = require('react-router')
 var Helmet = require('react-helmet')
 
 var LiveSearch = require('./live-search')
+var GlobalNavigation = require('./navigation')
+var GlobalFooter = require('./footer')
 
 var App = React.createClass({
   render() {
     return (
       <div className={this.props.universal && 'universal'}>
-        <header><Link to="home"><div className='logo-container'></div></Link></header>
+        <header><Link to="home"><div className='logo-container'></div></Link>
+        {this.globalToolBar()}
+        </header>
         <Helmet
           title="Art!"
           titleTemplate="%s ˆ Mia"
           />
         <RouteHandler {...this.props} activateSearch={this.state.activateSearch} />
 
-        {this.searchBar()}
+        <GlobalFooter />
       </div>
     )
   },
@@ -26,15 +30,24 @@ var App = React.createClass({
     }
   },
 
-  searchBar() {
-    var button = <button className="material-icons search" style={{position: 'fixed', top: '0.5em', right: '0.5em', zIndex: '2'}} onClick={this.toggleSearch}>
+  globalToolBar() {
+    var searchButton = <button className="material-icons search" onClick={this.toggleSearch}>
       {this.state.showSearch ? 'close' : 'search'}
     </button>
-    var searchTrigger = this.props.universal ? <Link to="home">{button}</Link> : button
-
+    var searchTrigger = this.props.universal ? <Link to="home">{searchButton}</Link> : searchButton
+    var menuButton = <button className="material-icons menu" onClick={this.toggleMenu}>
+      {this.state.showMenu ? 'close' : 'menu'}
+    </button>
+    var menuTrigger = menuButton
     return <div>
-      {searchTrigger}
+      <div className="global_buttons">
+        {menuTrigger}
+        {searchTrigger}
+      </div>
+      <div className="global_display">
+      {this.state.showMenu && <GlobalNavigation />}
       {this.state.showSearch && <LiveSearch afterSearch={this.toggleSearch} />}
+      </div>
     </div>
   },
 
@@ -45,6 +58,9 @@ var App = React.createClass({
         {activateSearch: event.timeStamp} :
         {showSearch: forceClose ? false : !this.state.showSearch}
     )
+  },
+  toggleMenu() {
+    this.setState({showMenu:false ? false : !this.state.showMenu})
   },
 
   getInitialState() {

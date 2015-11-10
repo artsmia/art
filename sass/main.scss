@@ -64,8 +64,10 @@ h1,h2,h3,h4,h5,h6 {
 
 header{
     width:100%;
-    background-color:$primary;
-    position:relative;
+    position:fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1
 }
 .quilt-search-wrap{
     min-height: 3em;
@@ -75,12 +77,25 @@ header{
 .logo-container{
     background-image: url("../images/MIA_LOGO_MARK.svg");
     background-repeat: no-repeat;
-    height: 3em;
-    width:auto;
+    height: 3.3em;
+    width:8em;
     color:#fff;
-    background-position: -2px 2px;
+    background-position: -2px 3px;
 }
-
+.global_buttons {
+  background: $primary;
+  width: 5em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: .7em 0;
+}
+.global_display {
+  background: rgb(35,35,35);
+}
+.global_buttons button.material-icons {
+  padding: 2px 0 0 10px;
+}
 .wordmark-container{
     background-image: url("../images/MIA_LOGO_WORDMARK.svg");
     background-repeat: no-repeat;
@@ -327,18 +342,21 @@ header{
   min-width: 100px;
 }
 
-.search-wrap div h2{
-    color:$whitish;
-    background-color:$primary;
-    padding:0.65em;
+.search-wrapper {
+    background-color:$whitish;
+    padding:2em;
     margin-bottom:15px;
-    font-size:2em;
-    font-family: $MiaGroteskRegular;
+    border-radius:3px;
+    -webkit-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-.search-wrap div input{
-    width:100%;
-    color:$primary;
+.search-input {
+    font-size: 1.5em;
+    border: none;
+    background: transparent;
+    text-align: center;
+    border-bottom: 3px solid $primary;
     font-family: $MiaGroteskLight;
 }
 
@@ -348,9 +366,7 @@ header{
     padding-left:1em;
     padding-right:1em;
     background-color: white;
-    border-radius:3px;
-    -webkit-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
 }
 
 .mdl-textfield__input {
@@ -436,7 +452,6 @@ header{
 .link-bar i:hover {
     opacity: .7;
 }
-
 .share {
   margin-top: 0.5em;
 }
@@ -450,13 +465,13 @@ header{
   display: inline-block;
   padding: 10px 2px 5px 10px;
   margin-right: 2px;
-  -webkit-transition: all .5s ease; /* Safari and Chrome */
-  -moz-transition: all .5s ease; /* Firefox */
-  -ms-transition: all .5s ease; /* IE 9 */
-  -o-transition: all .5s ease; /* Opera */
-  transition: all .5s ease;
 }
 .social a:hover img {
+  -webkit-transition: all 1s ease; /* Safari and Chrome */
+  -moz-transition: all 1s ease; /* Firefox */
+  -ms-transition: all 1s ease; /* IE 9 */
+  -o-transition: all 1s ease; /* Opera */
+  transition: all 1s ease;
   opacity: .7;
 }
 .back-button a {
@@ -835,10 +850,6 @@ button.material-icons {
   font-weight: bold;
 }
 
-button.material-icons.search {
-  padding: 2em 0 2em 2em;
-  margin: -2em 0 -2em -2em;
-}
 /* ===== page.js STYLES ===== */
 
 .page{}
@@ -926,6 +937,7 @@ hr{margin:0;}
 
 .peek {
   margin-right: 3px;
+  cursor: pointer;
 }
 .peek.startedOpen, .startedOpen .peek {
   margin-right: 0;
@@ -1058,6 +1070,73 @@ hr{margin:0;}
 .smallflex {
    -webkit-flex: 1 0 0;
    flex: 1 0 0;
+}
+.nav_bar {
+  width: 100%;
+  display: inline-block;
+  border-top: 4px solid white;
+  height: 50px;
+  padding: 13px 7px;
+}
+ul.nav_list li {
+  display: inline;
+  color: white;
+  text-transform: uppercase;
+  padding: 0 13px;
+  font-family: $MiaGroteskRegular;
+  font-size:1.1em;
+  -webkit-transition: all .5s linear;
+  -moz-transition: all .5s linear;
+  -ms-transition: all .5s linear;
+  -o-transition: all .5s linear;
+  transition: all .5s linear;
+}
+.global_nav {
+  float: left;
+}
+.quick_nav {
+  float:right;
+}
+.nav_item.button {
+    margin-right: 3px;
+    padding: 9px 15px;
+    margin-top: 4px;
+    background: white;
+    color: $primary;
+}
+.nav_item a {
+  color: white;
+  -webkit-transition: all .5s linear;
+  -moz-transition: all .5s linear;
+  -ms-transition: all .5s linear;
+  -o-transition: all .5s linear;
+  transition: all .5s linear;
+}
+.nav_item a:hover {
+  color: white;
+  border-bottom: 4px solid white;
+}
+.nav_item.button a {
+  color: $primary;
+}
+.nav_item.button:hover a {
+  color: white;
+  border-bottom: none;
+}
+.donate.nav_item.button:hover {
+  background-color: #ef3535;
+}
+.calendar.nav_item.button:hover {
+  background-color: #805696;
+}
+.tickets.nav_item.button:hover {
+  background-color: #8cd2cd;
+}
+button  {
+  background: transparent;
+  color: white;
+  font-family: $MiaGroteskRegular;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

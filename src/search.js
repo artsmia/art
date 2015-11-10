@@ -16,7 +16,7 @@ var Search = React.createClass({
     const {blank} = this.props
     const results = this.props.results || this.props.data && this.props.data.searchResults || []
     results || this.props.blank || this.transitionTo('home')
-    
+
     return {
       results: results,
       terms: blank ? '' : this.props.params && this.props.params.terms && decodeURIComponent(this.props.params.terms),
@@ -41,13 +41,13 @@ var Search = React.createClass({
       darken: this.props.path && this.props.path.match(/\/search/),
     }, this.props.quiltProps || {})
 
-    const nakedSimpleSearchBox = <div className='mdl-textfield mdl-js-textfield'>
-      <input className='mdl-textfield__input' type="search"
+    const nakedSimpleSearchBox = <div className='search-wrapper'>
+      <input className='search-input' type="search"
         placeholder="search for something"
         value={this.state.terms}
         onKeyDown={this.keyDown}
         onChange={this.throttledSearch}
-        style={{fontSize: '1.5em', width: '100%', maxWidth: '500px', pointerEvents: 'all'}}
+        style={{width: '100%', maxWidth: '500px', pointerEvents: 'all'}}
         name="q"
         ref="searchInput"
         autoComplete="off"
@@ -87,10 +87,10 @@ var Search = React.createClass({
       toggleAggs: this.toggleAggs,
     }
 
-    var suggestions = <Suggest 
+    var suggestions = <Suggest
       search={this.props.data && this.props.data.searchResults}
       completions={this.state.completions}
-      style={this.props.suggestStyle} 
+      style={this.props.suggestStyle}
       />
 
     return (
