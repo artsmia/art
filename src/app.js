@@ -4,7 +4,6 @@ var Helmet = require('react-helmet')
 
 var LiveSearch = require('./live-search')
 var GlobalNavigation = require('./navigation')
-var GlobalFooter = require('./footer')
 
 var App = React.createClass({
   render() {
@@ -19,7 +18,6 @@ var App = React.createClass({
           />
         <RouteHandler {...this.props} activateSearch={this.state.activateSearch} />
 
-        <GlobalFooter />
       </div>
     )
   },
