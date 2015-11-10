@@ -742,6 +742,13 @@ h5.details-title {
   height: 100%;
   background: rgba(35,35,35,.7);
 }
+.explore-header {
+  height: 200px;
+  display: inline-block;
+  width: 100%;
+  background: url('http://api.artsmia.org/images/8747/1200/large.jpg') no-repeat center center;
+  background-size: cover;
+}
 .explore{
   display: inline-block;
 }
