@@ -1052,6 +1052,8 @@ hr{margin:0;}
    -webkit-flex: 1 0 0;
    flex: 1 0 0;
 }
+
+/* ===== global navigation ===== */
 .nav_bar {
   width: 100%;
   display: inline-block;
@@ -1119,7 +1121,67 @@ button  {
   font-family: $MiaGroteskRegular;
   cursor: pointer;
 }
-
+/* ===== Footer =====*/
+.footer-wrapper {
+  display: inline-block;
+  width: 100%;
+  background: $primary;
+  color: white;
+  padding: 2em 1.5em;
+}
+.footer-wrapper a {
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all 250ms ease-in;
+  -moz-transition: all 250ms ease-in;
+  -ms-transition: all 250ms ease-in;
+  -o-transition: all 250ms ease-in;
+  transition: all 250ms ease-in;
+}
+.footer-wrapper a:hover {
+  opacity: .7;
+}
+.footer-wrapper p {
+  margin-bottom: 1.25em;
+  font-size: 1.1em;
+}
+.footer-logo {
+  background:  url("../images/MIA_LOGO_MARK.svg") no-repeat;
+  background-size: auto;
+  position: relative;
+  width: 50%;
+  height: 50px;
+}
+.footer-tag {
+  font-family: $MiaGroteskRegular, sans-serif;
+  font-size: 1.2em;
+}
+.footer-nav_item {
+  padding: 5px 0;
+}
+.footer-nav_item a {
+  color: white;
+  font-size: 1.1em;
+  line-height: 1.2em;
+}
+.footer_nav ul {
+  border-top: 4px solid #fff;
+  padding-top: 15px;
+}
+.social-nav_item {
+  display: inline-block;
+  padding-bottom: 10px;
+}
+.social-nav_item a {
+  font-size: 1.7em;
+}
+.sub_footer a {
+  padding-top: 7px;
+}
+.call-link, .privacy-link {
+  padding-top: 6px;
+}
+/* ===== media-queries =====*/
 @media screen and (max-width: 768px) {
   .decorator-wrap{
      -webkit-flex-direction: column;

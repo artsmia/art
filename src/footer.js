@@ -6,7 +6,7 @@ var GlobalFooter =  React.createClass({
   footernav: [
     {navItem: 'Highlights', link:'http://artsmia.org/donate'},
     {navItem: 'Accessions', link:'http://new.artsmia.org/visit/calendar/'},
-    {navItem: 'Explore, ', link:'http://artsmia.org/donate'},
+    {navItem: 'Explore', link:'http://artsmia.org/donate'},
     {navItem: 'Purcell-Cutts House', link:'http://artsmia.org/donate'},
     {navItem: 'Provenance Research', link:'http://new.artsmia.org/visit/calendar/'},
     {navItem: 'Deaccessions', link:'http://artsmia.org/donate'},
@@ -23,19 +23,33 @@ var GlobalFooter =  React.createClass({
     {navItem: 'Photography & New Media', link: 'departments/photography-and-new-media'},
     {navItem: 'Prints and Drawings', link: 'departments/prints-and-drawings'},
   ],
+  socialnav: [
+    {navItem: 'facebook', link:'http://www.facebook.com/artsmia'},
+    {navItem: 'flickr', link:'http://www.flickr.com/photos/minneapolisinstituteofarts/'},
+    {navItem: 'instagram', link:'http://instagram.com/artsmia'},
+    {navItem: 'twitter', link:'http://twitter.com/artsmia'},
+    {navItem: 'youtube', link:'http://www.youtube.com/user/artsmia'},
+    {navItem: 'tumblr', link:'http://artsmia.tumblr.com/'},
+    {navItem: 'vimeo', link:'https://vimeo.com/artsmia/'},
+    {navItem: 'contact', link:'http://new.artsmia.org/contact-us/e-mail-us/'}
+  ],
   render() {
     return <div className="footer-wrapper">
       <div className="footer_nav mdl-grid">
-        <div className="column-1 mdl-cell mdl-cell--4">
-          <ul>
-            {this.footernav.map(({navItem, link}) => {
-              return <li key={navItem} className="footer-nav_item">
-                <a href={link}>{navItem}</a>
-              </li>
-            })}
-          </ul>
+        <div className="mdl-cell mdl-cell--4">
+        <div className="footer-logo">
+
         </div>
-      <div className="column-2 mdl-cell mdl-cell--4">
+        <p>
+          <span className="footer-tag">is mine</span>
+        </p>
+        <p>
+          <strong>Minneapolis Institute of Art</strong><br />
+          2400 Third Avenue South<br />Minneapolis, Minnesota 55404<br />
+
+        </p>
+        </div>
+      <div className="mdl-cell mdl-cell--4">
         <ul>
         {this.departments.map(({navItem, link}) => {
             return <li key={navItem} className="footer-nav_item">
@@ -44,7 +58,7 @@ var GlobalFooter =  React.createClass({
           })}
         </ul>
       </div>
-      <div className="column-3 mdl-cell mdl-cell--4">
+      <div className="mdl-cell mdl-cell--4">
         <ul>
         {this.footernav.map(({navItem, link}) => {
             return <li key={navItem} className="footer-nav_item">
@@ -53,6 +67,27 @@ var GlobalFooter =  React.createClass({
           })}
         </ul>
       </div>
+      </div>
+      <div className="sub_footer mdl-grid">
+        <div className="mdl-cell mdl-cell--4">
+          <div className="call-link">
+            <a href="tel:8886422787">888 642 2787 (Toll Free)</a>
+          </div>
+        </div>
+        <div className="mdl-cell mdl-cell--4 privacy-link">
+          <a href="http://new.artsmia.org/about/privacy-policy-and-website-info/">Privacy Policy and Website Info</a>
+        </div>
+        <div className="mdl-cell mdl-cell--4">
+          <div className="social-links">
+            <ul>
+            {this.socialnav.map(({navItem, link}) => {
+                return <li key={navItem} className="social-nav_item">
+                  <a className={["icon-mia", navItem].join('')} href={link}></a>
+                </li>
+              })}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   }
