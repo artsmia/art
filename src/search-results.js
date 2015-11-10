@@ -14,7 +14,7 @@ var SearchResults = React.createClass({
   statics: {
     fetchData: {
       searchResults: (params, query) => {
-        var size = query && query.size || 100
+        var size = query && query.size || 30
         const filters = params.splat
         let searchUrl = `${SEARCH}/${decodeURIComponent(params.terms)}?size=${size}`
         if(filters) searchUrl += `&filters=${encodeURIComponent(filters)}`
@@ -26,7 +26,7 @@ var SearchResults = React.createClass({
   getInitialState() {
     var focus = window.clickedArtwork || this.props.hits[0]
     setTimeout(() => window.clickedArtwork = null)
-    var smallViewport = window && window.innerWidth <= 500 
+    var smallViewport = window && window.innerWidth <= 500
     var defaultView = (smallViewport || this.context.universal) ? ResultsList : ResultsGrid
 
     return {

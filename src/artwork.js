@@ -158,6 +158,7 @@ var Artwork = React.createClass({
         crs: L.CRS.Simple,
         zoomControl: false,
       })
+      new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
       this.map.attributionControl.setPrefix('')
       this.map.setView([art.image_width/2, art.image_height/2], 0)
       if(!L.Browser.touch) new L.Control.Zoom({ position: 'topright' }).addTo(this.map)

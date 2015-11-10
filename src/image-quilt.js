@@ -6,7 +6,7 @@ var cookie = require('react-cookie')
 
 var linearPartition = require('linear-partitioning')
 var ArtworkImage = require('./artwork-image')
-var LazyLoad = require('react-lazy-load')
+var Image = require('./image')
 
 const ImageQuilt = React.createClass({
   mixins: [PureRenderMixin],
@@ -197,7 +197,7 @@ module.exports = ImageQuilt
 
 var QuiltPatch = React.createClass({
   render() {
-    var {art, width, lazyLoad, ...other} = this.props
+    var {art, width, ...other} = this.props
     var id = art.id
 
     var style = {
@@ -208,14 +208,11 @@ var QuiltPatch = React.createClass({
       height: width/art.aspect_ratio
     }
 
-    var nakedImage = <img style={style}
-        key={id}
-        src={`http://api.artsmia.org/images/${id}/400/medium.jpg`}
-        {...other} />
-
-    var image = !lazyLoad ? nakedImage : <LazyLoad wrapper="span" style={{display: 'inline'}} width={width}>
-      {nakedImage}
-    </LazyLoad>
+    var image = <Image
+      art={art}
+      style={style}
+      {...other}
+    />
 
     var textStyle = {
         ...style,

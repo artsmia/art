@@ -2,6 +2,7 @@ var React = require('react')
 let LazyLoad = require('react-lazy-load')
 
 var Markdown = require('./markdown')
+var Image = require('./image')
 
 var ArtworkImage = React.createClass({
   render() {
