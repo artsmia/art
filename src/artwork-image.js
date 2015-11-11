@@ -22,7 +22,7 @@ var ArtworkImage = React.createClass({
       nakedImage
 
     return art.image == 'valid' && art.image_width > 0 && (
-      <div className='artwork-image'>
+      <div className='artwork-image' style={{minHeight: '173px'}}>
         {image}
         <Markdown>{art.image_copyright}</Markdown>
       </div>
