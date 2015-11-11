@@ -21,6 +21,7 @@ var GlobalNavigation =  React.createClass({
   ],
   render() {
     return <div className="nav_bar">
+    <div className="background-fill"></div>
       <div className="global_nav">
         <ul className="nav_list">
           {this.mainnav.map(({navItem, link}) => {

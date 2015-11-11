@@ -81,6 +81,8 @@ header{
     width:8em;
     color:#fff;
     background-position: -2px 3px;
+    z-index: 5;
+    position: relative;
 }
 .global_buttons {
   background: $primary;
@@ -89,9 +91,19 @@ header{
   top: 0;
   right: 0;
   padding: .7em 0;
+  z-index: 4;
 }
 .global_display {
   background: rgb(35,35,35);
+}
+.background-fill {
+  display: inline-block;
+  width: 100%;
+  height: 3.3em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #232323;
 }
 .global_buttons button.material-icons {
   padding: 2px 0 0 10px;
