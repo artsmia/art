@@ -12,11 +12,11 @@ var Explore = React.createClass({
   },
 
   render() {
-    return <div style={{padding: '0 40px'}}>
+    return <div  className="explore-section" style={{padding: '0 2.5em'}}>
       {this.searches.map(({term, blurb}) => {
         var [facet, ...terms] = term.split(':')
         return <section>
-          <h2 style={{fontSize: '1.5em', padding:'10px 0 0'}}>Explore <span style={{fontFamily: '"MiaGrotesk-Light",sans-serif'}}>{terms[1]}</span></h2>
+          <h2>Explore <span style={{fontFamily: '"MiaGrotesk-Light",sans-serif'}}>{terms[1]}</span></h2>
           <p>{blurb}</p>
           <Peek
             offset={1}

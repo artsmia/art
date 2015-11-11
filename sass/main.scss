@@ -1104,3 +1104,29 @@ hr{margin:0;}
 .mdl-cell {
   align-items: flex-start;
 }
+
+/* ===== explore STYLES ===== */
+
+.explore-section:last-child{
+	margin-bottom:2.5em;
+}
+
+.explore-section h2{
+	margin-top:1.6em;
+	padding:0;
+	font-size:1.6em;
+	line-height:1.6em;
+}
+
+.explore-section h2 span{
+	padding:0;
+}
+
+.explore-section p{
+	line-height:1.3em;
+	margin-bottom:10px;
+}
+/*
+.explore-section p strong{font-family: $MiaGroteskBold;}
+.explore-section p em{font-family:$MiaGroteskBoldItalic}
+*/
