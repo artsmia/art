@@ -604,8 +604,12 @@ a.departmentLink h2{
 .departmentPage h2 a{
   color: rgb(35,35,35);
 }
-.departmentPage p {
-  margin: 0 0 7px 0;
+
+.departmentContent p{
+  padding: 0 0 20px 0;
+}
+.departmentResources h3{
+  padding-bottom: 15px;
 }
 .curatorBio, .affinity, .resources {
   display: inline-block;
@@ -632,7 +636,17 @@ a.departmentLink h2{
   font-size: .9em;
   padding-bottom: 1em;
 }
-
+.affinity-intro {
+  display: inline-block;
+  width: 100%;
+  margin: 15px 0;
+}
+.affinity-intro .button {
+  float: right;
+  padding: 5px 15px;
+  background: $primary;
+  color: white;
+}
 .quilt-wrap .lazy-load {
   display: inline-block;
   overflow: hidden;

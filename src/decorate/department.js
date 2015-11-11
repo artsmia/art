@@ -89,6 +89,10 @@ var DepartmentDecorator = React.createClass({
         <h3>{a.title}</h3>
         <div className="affinityImage">{image}</div>
         <Markdown alreadyRendered={true}>{a.content}</Markdown>
+        <div className="affinity-intro" style={{clear:"both"}}>
+          <p>Mia’s Affinity Groups are a great way for museum members to connect more closely with special areas of art interest, allowing you to delve deeper into the curatorial area of your choice.</p>
+          <a href="http://new.artsmia.org/join-and-invest/affinity-groups/" className="button">Learn More</a>
+        </div>
       </div>
     })
   },
