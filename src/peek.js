@@ -26,12 +26,13 @@ var Peek = React.createClass({
       results: {},
       offset: this.props.offset || 0,
       query: q,
-      facetedQ: q && facet ? `${facet}:"${encodeURIComponent(q)}"` : q
+      facetedQ: q && facet ? `${facet}:"${encodeURIComponent(q)}"` : q,
+      startedOpen: !!this.props.q
     }
   },
 
   render() {
-    var {results, facetedQ} = this.state
+    var {results, facetedQ, startedOpen} = this.state
     var {child, microdata} = this.props
     var result = results && results[facetedQ]
     var Tag = this.props.tag
@@ -41,7 +42,7 @@ var Peek = React.createClass({
       <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
       this.props.children
 
-    return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: !!this.props.q, startedClosed: !this.props.q, open:this.state.open})}>
+    return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: startedOpen, startedClosed: !startedOpen, open:this.state.open})}>
       {this.props.children && <i>
         <span itemProp={microdata ? "name" : ''}>{peekText}</span>
         {!this.props.universal && showIcon && icon}
@@ -58,6 +59,7 @@ var Peek = React.createClass({
   },
 
   onClick() {
+    if(this.state.startedOpen) return
     if(this.state.open) return this.setState({open: false})
 
     this.setState({
