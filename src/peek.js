@@ -42,7 +42,7 @@ var Peek = React.createClass({
       <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
       this.props.children
 
-    return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: startedOpen, startedClosed: !startedOpen, open:this.state.open})}>
+    return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: startedOpen, startedClosed: !startedOpen, open:this.state.open})} style={{cursor: 'pointer'}}>
       {this.props.children && <i>
         <span itemProp={microdata ? "name" : ''}>{peekText}</span>
         {!this.props.universal && showIcon && icon}
