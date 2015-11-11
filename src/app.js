@@ -56,9 +56,13 @@ var App = React.createClass({
         {activateSearch: event.timeStamp} :
         {showSearch: forceClose ? false : !this.state.showSearch}
       )
+      this.setState({showMenu: false})
   },
   toggleMenu() {
-    this.setState({showMenu:false ? false : !this.state.showMenu})
+    this.setState({
+      showMenu: !this.state.showMenu,
+      showSearch: false
+    })
   },
 
   getInitialState() {

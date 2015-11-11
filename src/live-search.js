@@ -6,15 +6,16 @@ var SearchResults = require('./search-results')
 var styles = {
   searchBox: {
     position: 'absolute',
-    top: '3em',
+    top: 0,
     left: 0,
     right: 0,
     minHeight: '3em',
-    zIndex: '1000',
+    zIndex: '1',
     backgroundColor: 'white',
     borderBottom: '1em solid #222',
-    background: '#222',
+    background: 'rgb(35,35,35)',
     color: 'white',
+    paddingTop:'3.3em'
   },
 
   message: {
