@@ -70,8 +70,10 @@ var DepartmentDecorator = React.createClass({
           <div className="curatorPic">
             <img src={curator.photo} />
           </div>
+          <div className="curator-intro">
           <h4>{curator.name}</h4>
           <h5><Markdown>{curator.title}</Markdown></h5>
+          </div>
         </div>
       })}
     </div>
@@ -88,8 +90,8 @@ var DepartmentDecorator = React.createClass({
       return <div className="affinity" key={a.title}>
         <h3>{a.title}</h3>
         <div className="affinityImage">{image}</div>
+        <div className="affinity-intro">
         <Markdown alreadyRendered={true}>{a.content}</Markdown>
-        <div className="affinity-intro" style={{clear:"both"}}>
           <p>Mia’s Affinity Groups are a great way for museum members to connect more closely with special areas of art interest, allowing you to delve deeper into the curatorial area of your choice.</p>
           <a href="http://new.artsmia.org/join-and-invest/affinity-groups/" className="button">Learn More</a>
         </div>

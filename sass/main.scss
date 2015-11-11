@@ -611,6 +611,9 @@ a.departmentLink h2{
 .departmentResources h3{
   padding-bottom: 15px;
 }
+.departmentResources li{
+  padding-bottom: 10px;
+}
 .curatorBio, .affinity, .resources {
   display: inline-block;
   width: 100%;
@@ -618,16 +621,23 @@ a.departmentLink h2{
   margin-bottom: 20px;
 }
 .curatorPic, .affinityImage {
-  float:left;
+  width: 30%;
+  float: left;
   display: inline-block;
-  background: rgba(35,35,35,.3);
   margin-right: 20px;
 
-  img {
-    max-width: 150px;
-    max-height: 150px;
+  img{
+    width: 100%;
   }
 }
+.curator-intro, .affinity-intro {
+  width: 64%;
+  display: inline-block;
+  margin-left: .5em;
+}
+.affinity-intro  p{
+    margin-bottom: 15px;
+  }
 .curatorBio h4 {
   font-size: 1.1em;
 }
@@ -635,11 +645,6 @@ a.departmentLink h2{
   font-family: $MiaGroteskRegular;
   font-size: .9em;
   padding-bottom: 1em;
-}
-.affinity-intro {
-  display: inline-block;
-  width: 100%;
-  margin: 15px 0;
 }
 .affinity-intro .button {
   float: right;
