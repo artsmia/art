@@ -4,6 +4,7 @@ var Helmet = require('react-helmet')
 
 var LiveSearch = require('./live-search')
 var GlobalNavigation = require('./navigation')
+var FooterNavigation = require('./footer')
 
 var App = React.createClass({
   render() {
@@ -17,7 +18,7 @@ var App = React.createClass({
           titleTemplate="%s ˆ Mia"
           />
         <RouteHandler {...this.props} activateSearch={this.state.activateSearch} />
-
+        <FooterNavigation />
       </div>
     )
   },

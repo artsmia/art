@@ -34,7 +34,7 @@ var GlobalFooter =  React.createClass({
     {navItem: 'contact', link:'http://new.artsmia.org/contact-us/e-mail-us/'}
   ],
   render() {
-    return <div className="footer-wrapper">
+    return <div className="footer-wrapper" style={{marginTop: '40px'}}>
       <div className="footer_nav mdl-grid">
         <div className="mdl-cell mdl-cell--4">
         <div className="footer-logo">

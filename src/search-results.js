@@ -26,7 +26,7 @@ var SearchResults = React.createClass({
   getInitialState() {
     var focus = window.clickedArtwork || this.props.hits[0]
     setTimeout(() => window.clickedArtwork = null)
-    var smallViewport = window && window.innerWidth <= 500 
+    var smallViewport = window && window.innerWidth <= 500
     var defaultView = (smallViewport || this.context.universal) ? ResultsList : ResultsGrid
 
     return {
@@ -113,7 +113,7 @@ var SearchResults = React.createClass({
   postSearch({hits, search, showMoreLink}) {
     var showingAll = hits.length == search.hits.total
     var style = {
-      minHeight: '59vh',
+      minHeight: '20vh',
       marginTop: '1em',
       padding: '1em',
       borderTop: '1em solid #232323',

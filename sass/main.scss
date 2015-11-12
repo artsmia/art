@@ -32,7 +32,6 @@ body{
     line-height:1.3em;
     font-size:1em;
 }
-
 a {
   color: rgba(239, 53, 53, .9);
   font-weight: 500;
@@ -61,7 +60,17 @@ h1,h2,h3,h4,h5,h6 {
     color:#fff;
     background-color:$primary;
 }
-
+.leftBar.mdl-cell {
+  margin-left:-8px;
+  margin-right: 22px;
+  max-height: 1000px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.focusedResult.mdl-cell {
+  margin-right:-8px;
+  margin-left: 22px;
+}
 header{
     width:100%;
     position:fixed;
@@ -196,12 +205,6 @@ header{
 #aggs dd{
     line-height:1.1em;
     padding: .25em;
-}
-.objects-wrap{
-    width:33%;
-    float:left;
-    padding:10px;
-    margin-right:10px;
 }
 
     .artwork-result{
@@ -1068,11 +1071,11 @@ ul.nav_list li {
   padding: 0 13px;
   font-family: $MiaGroteskRegular;
   font-size:1.1em;
-  -webkit-transition: all .5s linear;
-  -moz-transition: all .5s linear;
-  -ms-transition: all .5s linear;
-  -o-transition: all .5s linear;
-  transition: all .5s linear;
+  -webkit-transition: all 250ms ease-in;
+  -moz-transition: all 250ms ease-in;
+  -ms-transition: all 250ms ease-in;
+  -o-transition: all 250ms ease-in;
+  transition: all 250ms ease-in;
 }
 .global_nav {
   float: left;
@@ -1089,11 +1092,11 @@ ul.nav_list li {
 }
 .nav_item a {
   color: white;
-  -webkit-transition: all .5s linear;
-  -moz-transition: all .5s linear;
-  -ms-transition: all .5s linear;
-  -o-transition: all .5s linear;
-  transition: all .5s linear;
+  -webkit-transition: all 250ms ease-in;
+  -moz-transition: all 250ms ease-in;
+  -ms-transition: all 250ms ease-in;
+  -o-transition: all 250ms ease-in;
+  transition: all 250ms ease-in;
 }
 .nav_item a:hover {
   color: white;

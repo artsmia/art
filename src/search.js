@@ -71,6 +71,7 @@ var Search = React.createClass({
       textAlign: 'center',
       pointerEvents: 'none',
       display: hideInput ? 'none' : 'inherit',
+      zIndex: '0'
     }
 
     const searchBox = (

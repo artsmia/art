@@ -27,8 +27,8 @@ var SearchResultsList = React.createClass({
     })
 
     return (
-      <div className='search-results-wrap clearfix' style={{position: 'relative'}}>
-        <div className='objects-wrap leftBar' style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: leftColumnWidth}}>
+      <div className='mdl-grid'>
+        <div className='objects-wrap leftBar mdl-cell mdl-cell--5-col'>
           {results}
           {this.props.postSearch}
         </div>
