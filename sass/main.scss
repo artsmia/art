@@ -716,10 +716,13 @@ a.departmentLink h2{
   width: 35%;
   background: #fff;
   min-height: calc(100% - 4em);
-  padding: 1em 2em;
+  padding: 3.3em 2em;
   right: 0;
   overflow-y:scroll;
   min-height: 100vh;
+}
+.artwork .info p{
+  width:100%;
 }
 .artwork.smallviewport .info {
   width: 100%;
