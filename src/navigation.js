@@ -20,7 +20,37 @@ var GlobalNavigation =  React.createClass({
     {navItem: 'donate', link:'http://artsmia.org/donate'}
   ],
   render() {
-    return <div className="nav_bar">
+
+    var smallViewport = window && window.innerWidth <= 780
+
+
+      if(smallViewport){
+        return (
+          <div className='mobile-nav nav_bar'>
+          <div className="background-fill"></div>
+            <div className="global_nav">
+              <ul className="nav_list">
+                {this.mainnav.map(({navItem, link}) => {
+                  return <li key={navItem} className="nav_item">
+                    <a href={link}>{navItem}</a>
+                  </li>
+                })}
+              </ul>
+            </div>
+            <div className="quick_nav">
+              <ul className="nav_list">
+              {this.quicknav.map(({navItem, link}) => {
+                  return <li key={navItem} className={[navItem, "button nav_item"].join(' ')}>
+                    <a href={link}>{navItem}</a>
+                  </li>
+                })}
+              </ul>
+            </div>
+          </div>
+        )
+      } else {
+        return (
+          <div className="nav_bar">
     <div className="background-fill"></div>
       <div className="global_nav">
         <ul className="nav_list">
@@ -41,8 +71,8 @@ var GlobalNavigation =  React.createClass({
         </ul>
       </div>
     </div>
-  }
-
+  )}
+}
 })
 
 module.exports = GlobalNavigation

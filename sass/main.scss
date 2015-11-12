@@ -1098,7 +1098,7 @@ hr{margin:0;}
   padding: 13px 7px;
 }
 ul.nav_list li {
-  display: inline;
+  display: inline-block;
   color: white;
   text-transform: uppercase;
   padding: 0 13px;
@@ -1115,6 +1115,7 @@ ul.nav_list li {
 }
 .quick_nav {
   float:right;
+  margin-top: -12px;
 }
 .nav_item.button {
     margin-right: 3px;
@@ -1122,6 +1123,7 @@ ul.nav_list li {
     margin-top: 4px;
     background: white;
     color: $primary;
+    text-align: center;
 }
 .nav_item a {
   color: white;
@@ -1151,6 +1153,36 @@ ul.nav_list li {
 .tickets.nav_item.button:hover {
   background-color: #8cd2cd;
 }
+/* ===== MOBILE navigation ===== */
+.mobile-nav.nav_bar {
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  border-top: 4px solid white;
+}
+.mobile-nav ul.nav_list li {
+  display: block;
+  font-size:1.1em;
+  padding: 15px 0;
+  border-bottom: 1px solid #fff;
+}
+.mobile-nav .global_nav {
+  width: 60%;
+  float: left;
+}
+.mobile-nav .quick_nav {
+  width: 35%;
+  float:right;
+}
+.mobile-nav .nav_item.button {
+    margin-right: 3px;
+    padding: 9px 15px;
+    margin-top: 4px;
+    background: white;
+    color: $primary;
+}
+
+
 button  {
   background: transparent;
   color: white;
@@ -1166,7 +1198,24 @@ button  {
   .decorator-wrap>.decorator{margin-bottom:1em;}
   .decorator-wrap>.decorator:last-child{margin-bottom:0;}
 }
-
+@media screen and (max-width: 1050px) and (min-width: 768px)
+{
+  .nav_bar  {
+    height: auto;
+  }
+  .global_nav {
+    width:65%;
+  }
+  .nav_bar .global_nav ul {
+      display: block;
+      max-width: 100%;
+      text-align: right;
+      font-size: 13px;
+  }
+  .nav_item.button {
+    font-size: 13px;
+  }
+}
 /* ===== invalid (no image) STYLES ===== */
 
 .quilt-row-wrap{
