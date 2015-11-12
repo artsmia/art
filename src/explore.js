@@ -12,9 +12,9 @@ var Explore = React.createClass({
   },
 
   render() {
-    return <div  className="explore-section" style={{padding: '0 2.5em'}}>
-      <div className="explore-header">
-      </div>
+    return <div>
+      <div className="explore-header"></div>
+      <div className="explore-section" style={{padding: '0 2.5em'}}>
       {this.searches.map(({term, blurb}) => {
         var [facet, ...terms] = term.split(':')
         return <section>
@@ -31,7 +31,7 @@ var Explore = React.createClass({
         </section>
       })}
       <Helmet title="Explore the art" />
-    </div>
+    </div></div>
   },
 
 
