@@ -877,9 +877,23 @@ button.material-icons.search {
 
 /* ===== info links homepage STYLES ===== */
 
-ul.info {margin:0 1.5em;width:100%;margin-bottom:2em;}
+ul.info {
+  margin:0 1.5em;
+  width:100%;
+  max-width: 100vw;
+  margin-bottom:2em;
 
-.info li{display:inline-block;}
+  @media screen and (min-width: 480px) {
+    display: flex;
+  }
+}
+
+.info li{
+  @media screen and (min-width: 480px) {
+    width: calc(33% - 16px);
+  }
+}
+
 .info li a{
     padding:7px 0;
     width:100%;
