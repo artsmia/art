@@ -36,6 +36,15 @@ var Decorate = React.createClass({
   toggleDecoration() {
     this.setState({showDecorators: !this.state.showDecorators})
   },
+
+  componentWillReceiveProps(nextProps) {
+    // unhide decorators when query changes
+    var {query, filters} = this.props.search
+    var nextQuery = nextProps.search.query
+    var nextFilters = nextProps.search.filters
+
+    if(query !== nextQuery || filters !== nextFilters) this.setState({showDecorators: true})
+  },
 })
 
 module.exports = Decorate
