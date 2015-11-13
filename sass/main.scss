@@ -345,7 +345,7 @@ header{
   z-index: 1000;
 }
 .search-wrap div:first-child {
-    width: 23em;
+    max-width: 23em;
     margin:0 auto;
     color:$primary;
     opacity: 0.95;

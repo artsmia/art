@@ -29,8 +29,9 @@ var Search = React.createClass({
   render() {
     const results = this.state.results
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
+    const darkenQuilt = this.props.path && this.props.path.match(/\/search/)
     const headerArtworks = ImageQuilt.getImagedResults(hits)
-    const showQuilt = (headerArtworks)
+    const showQuilt = !darkenQuilt && headerArtworks
     var quiltProps = Object.assign({
       maxRows: this.state.showAggs ? 1 : 2,
       maxWorks: 10,
@@ -38,7 +39,7 @@ var Search = React.createClass({
       onClick: this.updateFromQuilt,
       disableHover: this.props.hideResults,
       lazyLoad: !this.context.universal,
-      darken: this.props.path && this.props.path.match(/\/search/),
+      darken: darkenQuilt,
     }, this.props.quiltProps || {})
 
     const nakedSimpleSearchBox = <div className='search-wrapper'>
@@ -60,25 +61,32 @@ var Search = React.createClass({
       nakedSimpleSearchBox
 
     const hideInput = this.props.hideInput && !this.state.activateSearch
-    var quiltSearchStyles = {
-      position: 'absolute',
-      top: '50%',
-      transform: "translateY(-50%)",
-      WebkitTransform: "translateY(-50%)",
+    var searchStyles = {
       left: 0,
       right: 0,
       width: '100%',
       textAlign: 'center',
       pointerEvents: 'none',
       display: hideInput ? 'none' : 'inherit',
+      padding: this.props.bumpSearchBox ? '0.5em' : '0',
     }
 
+    var searchOverQuiltStyles = {
+      ...searchStyles,
+      position: 'absolute',
+      top: '50%',
+      transform: "translateY(-50%)",
+      WebkitTransform: "translateY(-50%)",
+    }
+
+    console.info('Search quiltProps', this.props.quiltProps, quiltProps, 'showQuilt', showQuilt)
     const searchBox = (
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
-        <div className='search-wrap' style={showQuilt && quiltSearchStyles || {}}>
+        {showQuilt && <ImageQuilt {...quiltProps} /> || <span style={{display: 'block', minHeight: '3.5rem'}} />}
+        <div className='search-wrap'
+          style={showQuilt && !this.props.bumpSearchBox ? searchOverQuiltStyles : searchStyles}>
           <div>{simpleSearchBox}</div>
         </div>
-        {showQuilt && <ImageQuilt {...quiltProps} />}
       </div>
     )
 

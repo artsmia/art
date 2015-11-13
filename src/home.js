@@ -21,14 +21,21 @@ var Home = React.createClass({
   },
 
   render() {
+    let smallViewport = window && window.innerWidth < 600
+    let quiltProps = smallViewport ?
+      {maxRows: 2, maxWorks: 7} :
+      {maxRows: 3, maxWorks: 30}
+    console.info(smallViewport, quiltProps)
+
     return <div>
       <Search
         hideResults={true}
         activateInput={true}
-        quiltProps={{maxRows: 3, maxWorks: 30}}
+        quiltProps={quiltProps}
         facet={'highlight:true'}
         searchAll={true}
         suggestStyle={{margin: "1em 3em"}}
+        bumpSearchBox={smallViewport}
         {...this.props} />
       <HomeDepartments />
     </div>
