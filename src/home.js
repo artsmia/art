@@ -68,7 +68,7 @@ var HomeDepartments = React.createClass({
         </li>
         <li className="mdl-cell mdl-cell--4-col">
           <Link to="searchResults" params={{terms: 'recent:true'}}>
-            New Additions
+            New to Mia
           </Link>
         </li>
         <li className="mdl-cell mdl-cell--4-col">

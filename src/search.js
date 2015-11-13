@@ -44,7 +44,7 @@ var Search = React.createClass({
 
     const nakedSimpleSearchBox = <div className='search-wrapper'>
       <input className='search-input' type="search"
-        placeholder="search for something"
+        placeholder="search"
         value={this.state.terms}
         onKeyDown={this.keyDown}
         onChange={this.throttledSearch}
