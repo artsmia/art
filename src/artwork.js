@@ -160,7 +160,7 @@ var Artwork = React.createClass({
       })
       this.map.attributionControl.setPrefix('')
       this.map.setView([art.image_width/2, art.image_height/2], 0)
-      new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
+      if(!L.Browser.touch) new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
 
       this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
         attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
