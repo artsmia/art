@@ -79,7 +79,6 @@ var Search = React.createClass({
       WebkitTransform: "translateY(-50%)",
     }
 
-    console.info('Search quiltProps', this.props.quiltProps, quiltProps, 'showQuilt', showQuilt)
     const searchBox = (
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
         {showQuilt && <ImageQuilt {...quiltProps} /> || <span style={{display: 'block', minHeight: '3.5rem'}} />}

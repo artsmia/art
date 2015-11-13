@@ -25,7 +25,6 @@ var Home = React.createClass({
     let quiltProps = smallViewport ?
       {maxRows: 2, maxWorks: 7} :
       {maxRows: 3, maxWorks: 30}
-    console.info(smallViewport, quiltProps)
 
     return <div>
       <Search
