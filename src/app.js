@@ -9,8 +9,9 @@ var App = React.createClass({
   render() {
     return (
       <div className={this.props.universal && 'universal'}>
-        <header><Link to="home"><div className='logo-container'></div></Link>
-        {this.globalToolBar()}
+        <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
+          <Link to="home"><div className='logo-container'></div></Link>
+          {this.globalToolBar()}
         </header>
         <Helmet
           title="Art!"

@@ -724,8 +724,18 @@ a.departmentLink h2{
 .artwork .info p{
   width:100%;
 }
-.artwork.smallviewport .info {
-  width: 100%;
+.artwork.smallviewport {
+  .info {
+    width: 100%;
+    padding-top: 1em;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    height: 3.5em;
+    background-color: #232323;
+  }
 }
 .artwork .objects-focus {
   border-top: none;
