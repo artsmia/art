@@ -1,4 +1,5 @@
 var React = require('react')
+var cx = require('classnames')
 
 var Markdown = require('./markdown')
 
@@ -12,10 +13,29 @@ var Decorate = React.createClass({
     var {query, filters} = this.props.search
     if(!query && !filters) return <span />
     var decorations = DecorationFinder(query, filters, this.props.params)
-    return <div className="decorator-wrap">
-      {decorations}
+    var {showDecorators} = this.state
+
+    return decorations.length > 0 && <div
+      className={cx('decorator-wrap', {closed: !showDecorators})}
+      onClick={!showDecorators && this.toggleDecoration}
+    >
+      {showDecorators && decorations}
+      <i className="control material-icons" onClick={this.toggleDecoration}>
+        {false && 'expand_'+(showDecorators ? 'less' : 'more')}
+        {showDecorators ? 'close' : 'info'}
+      </i>
     </div>
-  }
+  },
+
+  getInitialState() {
+    return {
+      showDecorators: true,
+    }
+  },
+
+  toggleDecoration() {
+    this.setState({showDecorators: !this.state.showDecorators})
+  },
 })
 
 module.exports = Decorate

@@ -1030,6 +1030,20 @@ hr{margin:0;}
     -webkit-justify-content: center;
     justify-content: center;
     padding:1.5rem;
+
+    &.closed {
+      padding: 0.5rem;
+    }
+
+    .control {
+      align-self: start;
+      justify-self: end;
+
+      &:hover {
+        background: white;
+        color: #232323;
+      }
+    }
 }
 
 .decorator-wrap>.decorator{
