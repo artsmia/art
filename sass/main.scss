@@ -63,11 +63,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 header{
-    width:100%;
     position:fixed;
-    width: 100%;
     top: 0;
-    z-index: 1
+    z-index: 1;
 }
 .quilt-search-wrap{
     min-height: 3em;
@@ -81,8 +79,9 @@ header{
     width:8em;
     color:#fff;
     background-position: -2px 3px;
+    position: fixed;
+    display: inline-block;
     z-index: 5;
-    position: relative;
 }
 .global_buttons {
   background: $primary;
@@ -91,20 +90,14 @@ header{
   top: 0;
   right: 0;
   padding: .7em 0;
-  z-index: 4;
+  z-index: 1500;
 }
 .global_display {
+  width: 100%;
+  position: fixed;
   background: rgb(35,35,35);
 }
-.background-fill {
-  display: inline-block;
-  width: 100%;
-  height: 3.3em;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #232323;
-}
+
 .global_buttons button.material-icons {
   padding: 2px 0 0 10px;
 }
@@ -1107,8 +1100,12 @@ hr{margin:0;}
   width: 100%;
   display: inline-block;
   border-top: 4px solid white;
-  height: 50px;
+  height: 56px;
   padding: 13px 7px;
+  z-index: 5;
+  position: relative;
+  top: 3.3em;
+  background: $primary;
 }
 ul.nav_list li {
   display: inline-block;

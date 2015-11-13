@@ -27,7 +27,7 @@ var GlobalNavigation =  React.createClass({
       if(smallViewport){
         return (
           <div className='mobile-nav nav_bar'>
-          <div className="background-fill"></div>
+
             <div className="global_nav">
               <ul className="nav_list">
                 {this.mainnav.map(({navItem, link}) => {
@@ -51,7 +51,6 @@ var GlobalNavigation =  React.createClass({
       } else {
         return (
           <div className="nav_bar">
-    <div className="background-fill"></div>
       <div className="global_nav">
         <ul className="nav_list">
           {this.mainnav.map(({navItem, link}) => {
