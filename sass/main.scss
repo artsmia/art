@@ -1078,7 +1078,7 @@ hr{margin:0;}
     color:rgba(255,255,255,0.65);
 }
 
-.decorator-wrap>.decorator h2 a{
+.decorator-wrap .decorator h2 a{
     display:inline-block;
     width:100%;
     padding:0.68rem;
@@ -1086,14 +1086,22 @@ hr{margin:0;}
     color:white;
 }
 .d-highlights{}
-.d-gallery{}
 .d-department{}
 
+.decorator-wrap .d-gallery {
+  flex-direction: row;
+  align-items: start;
+
+  .info {
+    margin-right:1rem;
+  }
+}
+
+
 .d-gallery img {
-  max-width:150px;
-  max-height:150px;
+  max-width:200px;
+  max-height:200px;
   height:auto;
-  margin-right:1rem;
   align-self: flex-start;
 }
 .d-gallery h3{line-height:1.3em;margin-top:1rem;}
