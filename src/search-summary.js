@@ -26,13 +26,13 @@ const SearchSummary = React.createClass({
           <div className='agg-wrap'>
             <div className="toolbar mdl-grid">
             {this.props.children}
-            <div className="mdl-cell mdl-cell--3-col"><h2 onClick={this.toggleContent}>
+            <div className="mdl-cell mdl-cell--4-col"><h2 onClick={this.toggleContent}>
               showing {hits.length} {' '}
               {showingAll || <span>of {search.hits.total} {' '}</span>}
               results matching <code>{search.query}</code>
               {search.filters && <span> and <code>{decodeURIComponent(search.filters)}</code></span>}
               {showingAll || this.props.showMoreLink}
-            </h2></div>
+            </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
             </div>
             <Decorate search={search} params={this.props.params} />
             <Helmet
