@@ -520,7 +520,7 @@ header{
   padding-right: .5em;
 }
 /* ===== LANDING PAGE STYLES ===== */
-.landingPageBody, .departmentPage {
+.landingPageBody, .departmentPage, .curatorProfile {
   display: inline-block;
 }
 .shortcutLinks {
@@ -625,7 +625,7 @@ a.departmentLink h2{
   padding-left:10px;
 }
 
-.departmentResources h3 {
+.departmentResources h3, .curatorProfile.pageText .curatorContent h2 {
   border-top: 3px solid rgb(35,35,35);
   font-size: 1.2em;
   width: 100%;
@@ -692,6 +692,31 @@ a.departmentLink h2{
 .quilt-wrap .lazy-load {
   display: inline-block;
   overflow: hidden;
+}
+/* ===== CURATOR PROFILES ===== */
+#curators a {
+  color: $primary;
+}
+.curatorProfile.pageText {
+  margin-top: 4em;
+}
+.curatorProfile.pageText h2 {
+  background: transparent;
+  font-size: 1.75em;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  margin-top:0.7em;
+  line-height: 1em;
+  border:none;
+}
+.curatorContent {
+  margin-top: 2em;
+}
+.curatorContent p {
+  line-height:1.4em;
+  padding-left:10px;
+  padding: 0 0 20px 0;
 }
 
 /* ===== artwork.js STYLES ===== */
@@ -802,6 +827,13 @@ h5.details-title {
   width: 100%;
   background: url('http://api.artsmia.org/images/8747/1200/large.jpg') no-repeat center center;
   background-size: cover;
+}
+.curator-header {
+  height: 3.3em;
+  display: inline-block;
+  width: 100%;
+  background: $primary;
+  position: fixed
 }
 .explore{
   display: inline-block;

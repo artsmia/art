@@ -7,7 +7,7 @@ var Suggest = React.createClass({
     var suggestions = Array.from(this.getSuggestions())
     .slice(0, 5)
 
-    if(suggestions.length == 0) return <span class="noSuggestions"></span>
+    if(suggestions.length == 0) return <span className="noSuggestions"></span>
 
     var suggestionLinks = suggestions
     .map(name => <Link to={`/search/${name}`}>{name}</Link>)

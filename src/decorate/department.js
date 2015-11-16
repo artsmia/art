@@ -69,13 +69,15 @@ var DepartmentDecorator = React.createClass({
       <h3>Curators</h3>
       {curators.map(curator => {
         return <div className="curatorBio" key={curator.slug}>
-          <div className="curatorPic">
-            <img src={curator.photo} />
-          </div>
-          <div className="curator-intro">
-          <h4>{curator.name}</h4>
-          <h5><Markdown>{curator.title}</Markdown></h5>
-          </div>
+          <Link to="curator" params={{slug:curator.slug}}>
+            <div className="curatorPic">
+              <img src={curator.photo} />
+            </div>
+            <div className="curator-intro">
+            <h4>{curator.name}</h4>
+            <h5><Markdown>{curator.title}</Markdown></h5>
+            </div>
+          </Link>
         </div>
       })}
     </div>
