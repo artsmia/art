@@ -49,7 +49,7 @@ const SearchSummary = React.createClass({
         <div className='agg-wrap'>
           <div className="toolbar mdl-grid">
           {this.props.children}
-          <div className="summaryText mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet"><h2 onClick={this.toggleContent}>
+          <div className="summaryText mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet"><h2 onClick={this.toggleContent}>
             showing {hits.length} {' '}
             {showingAll || <span>of {search.hits.total} {' '}</span>}
             results matching <code>{search.query}</code>
