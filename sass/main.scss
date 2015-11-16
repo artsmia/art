@@ -697,6 +697,9 @@ a.departmentLink h2{
 #curators a {
   color: $primary;
 }
+#curators a:hover {
+  opacity:.7;
+}
 .curatorProfile.pageText {
   margin-top: 4em;
 }
