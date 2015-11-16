@@ -429,6 +429,26 @@ header{
 .views .List:hover, .views .Grid:hover {
   opacity: .7;
 }
+
+@media screen and (max-width: 414px) {
+    
+    .toolbar{
+        & .mdl-grid{
+            justify-content:space-between;
+        }
+    }
+    .mdl-cell--2-col{
+        & .filter-button {
+            align-self:flex-start;
+            order: 1;
+        }
+    }
+    .mdl-cell--4-col{
+        align-self:flex-end;
+        order:2;
+    }
+}
+
 /* ===== SEARCH RESULTS STYLES ===== */
 .link-bar, .back-button {
   display: inline-block;
@@ -665,7 +685,6 @@ a.departmentLink h2{
   padding-bottom: 1em;
 }
 .departmentBlurb .button {
-  float: right;
   padding: 5px 15px;
   background: $primary;
   color: white;
@@ -1065,11 +1084,11 @@ hr{margin:0;}
 .decorator-wrap>.decorator h2{
     border:3px solid white;
     color:white;
-    max-width:250px;
+    max-width:100%;
     margin-top:1rem;
     padding:0;
     text-align:left;
-    align-self: flex-start;
+    align-self: center;
     order:1;
 }
 
