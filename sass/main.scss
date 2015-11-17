@@ -153,7 +153,7 @@ header{
   margin: 10px 0;
   display: inline-block;
   background: rgba(35,35,35,.3);
-  height: 39px;
+  min-height: 39px;
 }
 #more-aggs .material-icons {
   font-size: 1em;
@@ -434,7 +434,7 @@ header{
 }
 
 @media screen and (max-width: 414px) {
-    
+
     .toolbar{
         & .mdl-grid{
             justify-content:space-between;
