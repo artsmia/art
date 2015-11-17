@@ -1365,67 +1365,20 @@ button  {
 .explore-section p em{font-family:$MiaGroteskBoldItalic}
 */
 
-/* ===== image loading animation ===== */
-// https://gist.github.com/niffur/5249f69292f9436a2bd1
-
-// Sine
+// Ceasar ease Sine
 $easeInSine     : cubic-bezier(0.470, 0.000, 0.745, 0.715);
 $easeOutSine    : cubic-bezier(0.390, 0.575, 0.565, 1.000);
 $easeInOutSine  : cubic-bezier(0.445, 0.050, 0.550, 0.950);
 
-@-webkit-keyframes greyscaleFill {
-	0%  {
-			background-color:rgba(35,35,35,0);
-	}
-
-	20% {
-			background-color:rgba(35,35,35,.2);
-	}
-
-	40% {
-			background-color:rgba(35,35,35,.4);
-	}
-
-	60% {
-			background-color:rgba(35,35,35,.6);
-	}
-
-	80% {
-			background-color:rgba(35,35,35,.8);
-	}
-
-	to {
-			background-color:rgba(35,35,35,1);
-	}
-
-}
-
-@keyframes greyscaleFill {
-	0%  {
-			background-color:rgba(35,35,35,0.1);
-	}
-
-	to {
-			background-color:rgba(35,35,35,0.7);
-	}
-
-}
-
-.greyscaleFill{
-	display:inline-block;
-	width:100%;
-	height:100%;
-	background-color:rgba(35,35,35,0);
-	-webkit-animation: greyscaleFill 3s  forwards $easeInSine;
-	animation: greyscaleFill 3s forwards $easeInSine;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-}
-
-img.image, span.image {
+img.image {
 	opacity: 0.3;
 	transition: opacity, background-color 1s $easeInSine;
 }
-img.loaded, span.loaded {
+img.loading {
+  border: 1px solid white;
+  box-sizing: border-box;
+  background-color: #232323;
+}
+img.loaded {
 	opacity: 1 !important;
 }
