@@ -363,6 +363,9 @@ header{
     text-align: center;
     border-bottom: 3px solid $primary;
     font-family: $MiaGroteskLight;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
 }
 
 .mdl-textfield{
