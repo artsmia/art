@@ -34,6 +34,7 @@ const SearchSummary = React.createClass({
               {showingAll || this.props.showMoreLink}
             </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
             </div>
+            {showAggs && <Aggregations search={search} />}
             <Decorate search={search} params={this.props.params} />
             <Helmet
               title={`${search.query}`}
