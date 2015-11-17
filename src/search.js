@@ -43,7 +43,7 @@ var Search = React.createClass({
     }, this.props.quiltProps || {})
 
     const nakedSimpleSearchBox = <div className='search-wrapper'>
-      <input className='search-input' type="search"
+      <form action="#"><input className='search-input' type="search"
         placeholder="search"
         value={this.state.terms}
         onKeyDown={this.keyDown}
@@ -53,7 +53,7 @@ var Search = React.createClass({
         ref="searchInput"
         autoComplete="off"
         list="searchCompletions"
-        />
+        /></form>
     </div>
 
     const simpleSearchBox = this.context.universal ?
