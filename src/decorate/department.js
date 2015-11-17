@@ -30,9 +30,8 @@ var DepartmentDecorator = React.createClass({
 
     return <div className="departmentBlurb mdl-grid decorator d-department">
       <h2><Link to='department' params={{dept: this.state.slug, terms: department}}><span className="d-visit">Visit </span>{this.state.deptName}</Link></h2>
-      <div className="mdl-cell mdl-cell--6-col departmentContent">{expanded ? <Markdown alreadyRendered={true}>{blurbA}</Markdown> : this.shortBlurb()}
-      <p>Mia’s Affinity Groups are a great way for museum members to connect more closely with special areas of art interest, allowing you to delve deeper into the curatorial area of your choice.</p>
-      <a href="http://new.artsmia.org/join-and-invest/affinity-groups/" className="button">Learn More</a>
+      <div className="mdl-cell mdl-cell--6-col departmentContent">
+        {expanded ? <Markdown alreadyRendered={true}>{blurbA}</Markdown> : this.shortBlurb()}
       </div>
       {expanded && fullInfo}
     </div>
@@ -56,6 +55,8 @@ var DepartmentDecorator = React.createClass({
     return <div className="departmentResources mdl-cell mdl-cell--6-col">
       <div>{this.getCurators()}</div>
       <Markdown alreadyRendered={true}>{info}</Markdown>
+      <p>Mia’s Affinity Groups are a great way for museum members to connect more closely with special areas of art interest, allowing you to delve deeper into the curatorial area of your choice.</p>
+      <a href="http://new.artsmia.org/join-and-invest/affinity-groups/" className="button">Learn More</a>
     </div>
   },
 
