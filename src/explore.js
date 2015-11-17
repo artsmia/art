@@ -39,7 +39,7 @@ var Explore = React.createClass({
     {term:'_exists_:related:artstories', blurb:'ArtStories are digital explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories—available on your computer, phone, or tablet.'},
     {term:'_exists_:related:newsflashes', blurb:'Thought-provoking and a little cheeky, Newsflash updates connect current events to the art in the museum. Look for new updates taped to the gallery walls, or find old ones online.'},
     {term:'_exists_:related:audio-stops', blurb:'Audio Stops are mini-podcasts that present many of Mia’s highlights and favorite artworks through sound and stories. Connect in the galleries or at home.'},
-    {term:'artist:Hokumyō'},
+    {term:'_exists_:related:stories', blurb:'Mia Stories is the museum beyond the walls, outside the frame, at the lively intersection of life and art. From behind-the-scenes buzz to inspiring connections with current events, it’s the museum in conversation.'},
   ],
 })
 
