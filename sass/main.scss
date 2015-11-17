@@ -1095,10 +1095,11 @@ hr{margin:0;}
     .control {
       align-self: start;
       justify-self: end;
+      color: white;
+      cursor: pointer;
 
       &:hover {
-        background: white;
-        color: #232323;
+        opacity:.7;
       }
     }
 }
@@ -1153,7 +1154,6 @@ hr{margin:0;}
     margin-right:1rem;
   }
 }
-
 
 .d-gallery img {
   max-width:200px;
