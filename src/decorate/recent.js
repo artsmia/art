@@ -3,9 +3,8 @@ var React = require('react')
 var RecentDecorator =  React.createClass({
   render() {
     return <div className="decorator d-highlights"><p>
-      Mia continually searches for important works of art to add to the
-      collection and enrich it by offering greater perspective on an artist,
-      era, or culture.
+      Mia continues to add important artworks to its collection that enrich our
+      perspectives on artists, eras, and cultures.
     </p></div>
   }
 })
