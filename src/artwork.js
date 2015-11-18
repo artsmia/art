@@ -96,7 +96,7 @@ var Artwork = React.createClass({
           </div>
 
           <Sticky
-            stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0}}
+            stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0, transform: 'translate3d(0px,0px,0px)'}}
             onStickyStateChange={this.resizeMap}>
             <div ref='map' id='map' style={stickyMapStyle}>
               {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>

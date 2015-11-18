@@ -7,8 +7,9 @@ var Sticky = require('react-sticky')
 var BottomSticky = React.createClass({
   render() {
     var {stickyStyle, ...other} = this.props
-    
-    return <Sticky stickyStyle={this.state.style} {...other} onStickyStateChange={this.stickyChanged}>
+    var {style} = this.state
+
+    return <Sticky stickyStyle={style} {...other} onStickyStateChange={this.stickyChanged}>
       {this.props.children}
     </Sticky>
   },
@@ -19,7 +20,7 @@ var BottomSticky = React.createClass({
       style: !isSticky ? this.props.stickyStyle : this.state.style,
       initialScrollY: 0,
     })
-    
+
     this.getSizeAndScroll()
   },
 
