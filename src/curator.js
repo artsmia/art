@@ -53,7 +53,7 @@ var Curator = React.createClass({
         <div className="curatorPic">
           <img src={curator.photo} />
         </div>
-        <Markdown>{curator.output}</Markdown>
+        <Markdown alreadyRendered={true}>{curator.output}</Markdown>
       </div>
     </div>
   </div>
