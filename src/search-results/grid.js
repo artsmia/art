@@ -45,7 +45,7 @@ var SearchResultsGrid = React.createClass({
   },
 
   clickResult(art) {
-    art && this.props.focusHandler(art)
+    art && this.props.focusHandler(art, SearchResultsGrid)
   },
 })
 
