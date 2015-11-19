@@ -44,9 +44,13 @@ const Image = React.createClass({
 
   getInitialState() {
     return {
-      loaded: false,
+      loaded: this.context.universal || false,
     }
   },
 })
+Image.contextTypes = {
+  router: React.PropTypes.func,
+  universal: React.PropTypes.bool,
+}
 
 module.exports = Image
