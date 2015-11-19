@@ -24,6 +24,7 @@ const Image = React.createClass({
       onLoad={this.handleImageLoad}
       onError={this.handleError}
       className={classes}
+      alt={art.description}
       {...other} />
 
     var image = !lazyLoad ? nakedImage : <LazyLoad wrapper="span" style={{display: 'inline'}} width={width}>

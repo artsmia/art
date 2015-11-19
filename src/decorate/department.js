@@ -72,7 +72,7 @@ var DepartmentDecorator = React.createClass({
         return <div className="curatorBio" key={curator.slug}>
           <Link to="curator" params={{slug:curator.slug}}>
             <div className="curatorPic">
-              <img src={curator.photo} />
+              <img src={curator.photo} alt={`portrait of ${curator.name}`} />
             </div>
             <div className="curator-intro">
             <h4>{curator.name}</h4>

@@ -58,7 +58,7 @@ var Artwork = React.createClass({
         <div className='artwork smallviewport'>
           <div ref='map' id='map' style={{width: '100%', display: 'inline-block'}}>
             {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
-              <img src={imageUrl} />
+              <img src={imageUrl} alt={art.description} />
               {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
             </div>}
             {this.imageStatus()}
@@ -100,7 +100,7 @@ var Artwork = React.createClass({
             onStickyStateChange={this.resizeMap}>
             <div ref='map' id='map' style={stickyMapStyle}>
               {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
-                <img src={imageUrl} />
+                <img src={imageUrl} alt={art.description} />
                 {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
               </div>}
               {this.imageStatus()}
