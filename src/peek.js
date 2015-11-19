@@ -14,21 +14,27 @@ var Peek = React.createClass({
     children: React.PropTypes.string,
   },
 
-  getInitialState() {
-    var {q, facet} = this.props
+  // TODO: this is a mess, simplify to using props better so there's less
+  // state to manage
+  setup(props) {
+    var {q, facet} = props
     var open = !!q
     if(q && q.match(/:/) && !facet) [facet, q] = q.split(/:/)
-    if(!q) q = this.props.children
+    if(!q) q = props.children
 
     return {
       facet,
       open,
       results: {},
-      offset: this.props.offset || 0,
+      offset: props.offset || 0,
       query: q,
-      facetedQ: q && facet ? `${facet}:"${encodeURIComponent(q)}"` : q,
-      startedOpen: !!this.props.q
+      facetedQ: this.getFacetedQ(q, facet),
+      startedOpen: !!props.q
     }
+  },
+
+  getInitialState() {
+    return this.setup(this.props)
   },
 
   render() {
@@ -100,12 +106,15 @@ var Peek = React.createClass({
     window.removeEventListener('resize', this.handleResize)
   },
 
-  getText() {
-    return this.props.children || this.state.query
+  getFacetedQ(q, facet) {
+    var q = q || this.state.query
+    var facet = facet || this.state.facet
+    if(q && q.match(/:/) && !facet) [facet, q] = q.split(/:/)
+    return facet ? `${facet}:"${encodeURIComponent(q)}"` : q
   },
 
   getQs() {
-    var q = this.getText()
+    var q = this.state.query
     var qs
     if(q.match(';')) {
       qs = q.split(/;/).map(_q => {
@@ -116,24 +125,12 @@ var Peek = React.createClass({
     return []
   },
 
-  componentDidUpdate() {
-    var text = this.getText()
-    var query = this.state.query
-    var sameQuery = query ? query === text || !!query.match(text) : true
-    if((this.state.open || this.state.query) && (!text || !sameQuery)) {
-      this.setState({open: false, query: null})
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.setup(nextProps))
   },
 
   fetchResults() {
     var {results, facetedQ} = this.state
-    var q = this.getText()
-    var facetedQ = this.state.facet ? `${this.state.facet}:"${encodeURIComponent(q)}"` : q
-
-    this.setState({
-      query: q,
-      facetedQ: facetedQ,
-    })
 
     this.state.results[facetedQ] || rest(`${SEARCH}/${facetedQ}?size=20`).then((r) => {
       var results = this.state.results
