@@ -935,7 +935,10 @@ button.material-icons {
 /* ===== page.js STYLES ===== */
 
 .page{}
-.pageText{margin:2em;max-width:38em;}
+.pageText{
+  margin:2em;
+  max-width:38em;
+}
 .pageText h1{
     font-size: 1.75em;
     width: 100%;
@@ -966,6 +969,16 @@ button.material-icons {
 }
 
 .pageText p{line-height: 1.4em;margin:0.5em 0;}
+
+.pageText ul, .pageText ol {
+  list-style: inherit;
+  list-style-position: inside;
+
+  br {
+    display: none;
+  }
+}
+.pageText ol { list-style-type: decimal; }
 
 /* ===== info links homepage STYLES ===== */
 
