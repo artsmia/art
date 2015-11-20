@@ -1,5 +1,7 @@
 var React = require('react')
 
+var Markdown = require('./markdown')
+
 var ArtworkDetails = React.createClass({
 
   render() {
@@ -67,7 +69,7 @@ var ArtworkDetails = React.createClass({
             </div>
              <div className='detail-row'>
                 <div className='detail-title'>Provenance</div>
-                <div className='detail-content'>{art.provenance}</div>
+                <div className='detail-content'><Markdown>{art.provenance}</Markdown></div>
             </div>
              <div className='detail-row'>
                 <div className='detail-title'>Rights</div>
