@@ -9,8 +9,10 @@ css/critical.css:
 	>> css/critical.css
 	./node_modules/clean-css/bin/cleancss < css/critical.css | sponge css/critical.css
 
+target = staging
+
 build: css/critical.css
 	npm run build
 	sassc -lm sass/main.scss css/main.css
-	scp index.html bundle.js staging:/var/www/art/
-	scp css/main.css css/critical.css staging:/var/www/art/css/
+	scp index.html bundle.js $(target):/var/www/art/
+	scp css/main.css css/critical.css $(target):/var/www/art/css/
