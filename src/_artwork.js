@@ -175,7 +175,7 @@ var LinkBar = React.createClass({
   },
 
   getUrl() {
-    return 'http://collection.staging.artsmia.org'+this.context.router.getCurrentPath()
+    return 'http://collections.artsmia.org'+this.context.router.getCurrentPath()
   },
 
   handleShare() {
