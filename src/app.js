@@ -18,7 +18,6 @@ var App = React.createClass({
           titleTemplate="%s ˆ Mia"
           />
         <RouteHandler {...this.props} activateSearch={this.state.activateSearch} />
-
       </div>
     )
   },

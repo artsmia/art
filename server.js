@@ -2,6 +2,7 @@ var React = require('react')
 var Router = require('react-router')
 var Helmet = require('react-helmet')
 var express = require('express')
+var ga = require('react-ga')
 var fs = require('fs')
 var index = fs.readFileSync('./index.html', 'utf-8')
 
@@ -13,6 +14,8 @@ var serveStatic = require('serve-static')
 app.locals.settings['x-powered-by'] = false
 
 if(typeof window === "undefined") GLOBAL.window = GLOBAL
+
+// ga.initialize(process.env.GA_TRACKING_ID)
 
 app.get('/search/', (req, res, next) => {
   // catch searches with JS disabled
@@ -39,6 +42,8 @@ app.use((req, res, next) => {
   if(!router.match(req.url)) return next()
 
   router.run((Handler, state) => {
+    // ga.pageview(state.pathname)
+
     fetchComponentData(state).then(data => {
       var body = React.renderToString(<Handler {...state} data={data} universal={true} />)
       res.send(html(Helmet.rewind(), body))
