@@ -17,9 +17,13 @@ var Peek = React.createClass({
   // TODO: this is a mess, simplify to using props better so there's less
   // state to manage
   setup(props) {
+    var qs
     var {q, facet} = props
     var open = !!q
-    if(q && q.match(/:/) && !facet) [facet, q] = q.split(/:/)
+    if(q && q.match(/:/) && !facet) {
+      [facet, ...qs] = q.split(/:/)
+      var q = qs.join(':')
+    }
     if(!q) q = props.children
 
     return {
@@ -108,14 +112,12 @@ var Peek = React.createClass({
 
   getFacetedQ(q, facet) {
     var q = q || this.state.query
-    var facet = facet || this.state.facet
-    if(q && q.match(/:/) && !facet) [facet, q] = q.split(/:/)
-    return facet ? `${facet}:"${encodeURIComponent(q)}"` : q
+    var facet = facet || this.state && this.state.facet
+    return facet ? `${facet}:"${encodeURIComponent(q.replace(/"/g, ''))}"` : q
   },
 
   getQs() {
     var q = this.state.query
-    var qs
     if(q.match(';')) {
       qs = q.split(/;/).map(_q => {
         return _q.replace(/^.*attributed to|unknown|artist|\w+ by|after/ig, '').trim()
