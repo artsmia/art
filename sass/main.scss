@@ -1025,7 +1025,7 @@ hr{margin:0;}
   margin-right: 0;
 }
 
-.peek > .peek{
+.peek > .peek, .peek span > .peek {
     background-color:$primary;
     margin-bottom:-1px;
 }
