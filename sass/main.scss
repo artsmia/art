@@ -1037,9 +1037,10 @@ hr{margin:0;}
 }
 
 .peek.open .peek a{
-    padding:0 0 10px 10px;
+    /*padding:0 0 10px 10px;*/
+    padding:10px;
     display:inline-block;
-    margin-top:10px;
+    /*margin-top:10px;*/
     color:#fff;
     font-family:$MiaGroteskRegular;
     font-size:12px;
