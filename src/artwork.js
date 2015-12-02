@@ -9,6 +9,8 @@ var Markdown = require('./markdown')
 var ArtworkPreview = require('./artwork-preview')
 var ArtworkDetails = require('./artwork-details')
 var _Artwork = require('./_artwork')
+var Image = require('./image')
+var imageCDN = require('./image-cdn')
 
 var Sticky = require('react-sticky')
 
@@ -50,15 +52,19 @@ var Artwork = React.createClass({
     var smallViewport = window && window.innerWidth <= 500
 
     var pageTitle = [art.title, _Artwork.Creator.getFacetAndValue(art)[1]].filter(e => e).join(', ')
-    var imageUrl = `http://api.artsmia.org/images/${id}/400/medium.jpg`
+    var imageUrl = imageCDN(id)
     var canonicalURL = `http://collections.artsmia.org/art/${art.id}/${art.slug}`
+
+    var image = <Image art={art}
+      style={{width: 400, height: 400}}
+      ignoreStyle={true} />
 
     if(smallViewport) {
       return (
         <div className='artwork smallviewport'>
           <div ref='map' id='map' style={{width: '100%', display: 'inline-block'}}>
             {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
-              <img src={imageUrl} alt={art.description} />
+              {image}
               {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
             </div>}
             {this.imageStatus()}
@@ -100,7 +106,7 @@ var Artwork = React.createClass({
             onStickyStateChange={this.resizeMap}>
             <div ref='map' id='map' style={stickyMapStyle}>
               {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
-                <img src={imageUrl} alt={art.description} />
+                {image}
                 {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
               </div>}
               {this.imageStatus()}
