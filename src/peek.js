@@ -8,6 +8,10 @@ var classnames = require('classnames')
 var SEARCH = require('./search-endpoint')
 var ImageQuilt = require('./image-quilt')
 
+var ctg = React.addons.CSSTransitionGroup
+//var ctg = require('react-addons-css-transition-group')
+//var ctg = require('react').addons.CSSTransitionGroup
+
 var Peek = React.createClass({
   mixins: [Router.State, Router.Navigation],
   propTypes: {
@@ -44,6 +48,8 @@ var Peek = React.createClass({
     var Tag = this.props.tag
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
+    var transitionKey = Math.random()
+
     var peekText = this.context.universal ?
       <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
       this.props.children
@@ -53,13 +59,13 @@ var Peek = React.createClass({
         <span itemProp={microdata ? "name" : ''}>{peekText}</span>
         {!this.props.universal && showIcon && icon}
       </i>}
-      {this.state.open && this.state.facetedQ && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
+      {this.state.open && this.state.facetedQ && <ctg transitionName="peek" transitionAppear={true}><div className="peek" key={transitionKey} style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
         <Link to="searchResults" params={{terms: this.state.facetedQ}} style={{width: '100%'}}>
           {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.state.facet && `(${this.state.facet})`}
           <span style={{float: 'right', marginRight: '10px'}} className="more-results-link">View more results</span>
         </Link>
-      </div>}
+      </div></ctg>}
       {this.state.open && this.getQs().map((q) => <Peek facet={this.state.facet} q={q} key={q} />)}
     </Tag>
   },

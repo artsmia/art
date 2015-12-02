@@ -1,0 +1,26 @@
+.peek-enter{
+    opacity:0;
+    min-height:0;
+    -webkit-transition:all 3s ease-out;
+    transition:all 3s ease-out;
+}
+.peek-enter.peek-enter-active{
+    opacity:1;
+    height:auto;
+}
+.peek-leave{
+    opacity:1;
+    -webkit-transition:all 3s ease-out;
+    transition:all 3s ease-out;
+}
+.peek-leave.peek-leave-active{
+    opacity:0;
+}
+.peek-appear{
+    -webkit-transition:all 3s ease-out;
+    transition:all 3s ease-out;
+}
+.peek-appear.peek-appear-active{
+    -webkit-transition:all 3s ease-out;
+    transition:all 3s ease-out;
+}
