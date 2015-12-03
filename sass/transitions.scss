@@ -1,10 +1,10 @@
 /* less than 2s you can still see jumping on initial open */
 $openduration: 2s;
-$closeduration: 0.2s;
+$closeduration: 0.5s;
 
 .peek-appear {
   opacity: 0.01;
-  min-height:0px;
+  height:0px;
   transition: all $openduration ease-in;
 
   &.peek-appear-active {
@@ -15,7 +15,7 @@ $closeduration: 0.2s;
 
 .peek-enter{
     opacity: 0.01;
-    min-height:0px;
+    height:0px;
     transition:all $openduration ease-in;
     
     &.peek-enter-active{

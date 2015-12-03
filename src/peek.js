@@ -58,7 +58,7 @@ var Peek = React.createClass({
         <span itemProp={microdata ? "name" : ''}>{peekText}</span>
         {!this.props.universal && showIcon && icon}
       </i>}
-      <CSSTransitionGroup transitionName="peek" transitionAppear={true}>
+      <CSSTransitionGroup transitionName="peek" transitionAppear={true} transitionEnterTimeout={2000} transitionLeaveTimeout={500}>
         {this.state.open && this.state.facetedQ && <div className="peek" key={peekKey} style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
           {result && this.quiltFromResults()}
           <Link to="searchResults" params={{terms: this.state.facetedQ}} style={{width: '100%'}}>
