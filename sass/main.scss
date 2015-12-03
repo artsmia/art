@@ -1090,9 +1090,11 @@ hr{margin:0;}
     -webkit-justify-content: center;
     justify-content: center;
     padding:1.5rem;
+    transition: all 0.5s ease-in;
 
     &.closed {
       padding: 0.5rem;
+       transition: all 1s ease-out;
     }
 
     .control {

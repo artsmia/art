@@ -7,6 +7,7 @@ var DepartmentDecorator = require('./decorate/department')
 var GalleryDecorator = require('./decorate/gallery')
 var HighlightsDecorator = require('./decorate/highlights')
 var RecentDecorator = require('./decorate/recent')
+var CSSTransitionGroup = React.addons.CSSTransitionGroup
 
 var Decorate = React.createClass({
   render() {
@@ -15,7 +16,7 @@ var Decorate = React.createClass({
     var decorations = DecorationFinder(query, filters, this.props.params)
     var {showDecorators} = this.state
 
-    return decorations.length > 0 && <div
+    return decorations.length > 0 &&  <div
       className={cx('decorator-wrap', {closed: !showDecorators})}
       onClick={!showDecorators && this.toggleDecoration}
     >
