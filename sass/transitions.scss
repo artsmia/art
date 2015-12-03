@@ -1,5 +1,6 @@
+/* less than 2s you can still see jumping on initial open */
 $openduration: 2s;
-$closeduration: 0.5s;
+$closeduration: 0.2s;
 
 .peek-appear {
   opacity: 0.01;
