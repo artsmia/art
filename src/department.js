@@ -15,13 +15,8 @@ var Department = React.createClass({
 
   statics: {
     fetchData: {
-      searchResults: (params, query) => {
-        params.terms = '*'
-        var name = findDepartment(params.dept)[0]
-        params.splat = 'department:"'+name+'"'
-        return SearchResults.fetchData.searchResults(params, query)
-      },
-      departments: (params, query) => {
+
+      curators: (params, query) => {
         return rest("http://artsmia.github.io/collection-info/index.json").then((r) => JSON.parse(r.entity))
       }
     },

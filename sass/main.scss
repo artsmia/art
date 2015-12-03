@@ -608,7 +608,7 @@ a.departmentLink h2{
 }
 
 /* ===== DEPARTMENT PAGES ===== */
-.departmentPage h2 {
+.departmentPage h2, .curatorsPage h2 {
   background: transparent;
   font-size: 1.75em;
   width: 100%;
@@ -703,6 +703,12 @@ a.departmentLink h2{
 }
 #curators a:hover {
   opacity:.7;
+}
+.curatorsPage .curatorBio{
+  width: 45%;
+  margin-right: 2%;
+  margin-left: 2%;
+  float: left;
 }
 .curatorProfile.pageText {
   margin-top: 4em;

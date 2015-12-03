@@ -11,6 +11,7 @@ var ArtistsByLetter = require('./src/artists-by-letter')
 var ObjectsById = require('./src/objects-by-id')
 var Department = require('./src/department')
 var Curator = require('./src/curator')
+var Curators = require('./src/curators')
 var Explore = require('./src/explore')
 var Page = require('./src/page')
 var Info = require('./src/info')
@@ -27,6 +28,7 @@ var routes = (
     </Route>
     <Route name="department" path="/departments/:dept" handler={Department} />
     <Route name="curator" path="/curators/:slug" handler={Curator} />
+    <Route name="curators" path="/curators" handler={Curators} />
     <Route name="explore" path="/explore" handler={Explore} />
     <Route name="artistsByName" path="/search/artists/:letter" handler={ArtistsByLetter} />
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
