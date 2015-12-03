@@ -5,6 +5,7 @@ var {Link} = Router
 
 var Markdown = require('./markdown')
 var rest = require('rest')
+var endpoint = require('./endpoints').info
 
 
 var Curators = React.createClass({
@@ -13,7 +14,7 @@ var Curators = React.createClass({
   statics: {
     fetchData: {
       curators: (params, query) => {
-        return rest("http://artsmia.github.io/collection-info/index.json").then((r) => JSON.parse(r.entity))
+        return rest(endpoint).then((r) => JSON.parse(r.entity))
       }
     },
   },

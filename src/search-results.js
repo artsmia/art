@@ -3,7 +3,7 @@ var Router = require('react-router')
 var {Link} = require('react-router')
 var rest = require('rest')
 
-var SEARCH = require('./search-endpoint')
+var SEARCH = require('./endpoints').search
 var SearchSummary = require('./search-summary')
 var ResultsList = require('./search-results/list')
 var ResultsGrid = require('./search-results/grid')

@@ -2,7 +2,7 @@ var React = require('react')
 var Router = require('react-router')
 var rest = require('rest')
 
-var SEARCH = require('./search-endpoint')
+var SEARCH = require('./endpoints').search
 var ArtworkResult = require('./artwork-result')
 
 var ObjectsById = React.createClass({

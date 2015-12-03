@@ -5,7 +5,7 @@ var rest = require('rest')
 var debounce = require('debounce')
 var classnames = require('classnames')
 
-var SEARCH = require('./search-endpoint')
+var SEARCH = require('./endpoints').search
 var ImageQuilt = require('./image-quilt')
 
 var Peek = React.createClass({

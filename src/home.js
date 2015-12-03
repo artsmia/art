@@ -5,7 +5,7 @@ var {Link} = Router
 var toSlug = require('speakingurl')
 var LazyLoad = require('react-lazy-load')
 
-var SEARCH = require('./search-endpoint')
+var SEARCH = require('./endpoints').search
 var rest = require('rest')
 var Search = require('./search')
 var findDepartment = require('./department-slug')

@@ -5,7 +5,7 @@ var Helmet = require('react-helmet')
 var rest = require('rest')
 
 var Markdown = require('./markdown')
-
+var endpoint = require('./endpoints').info
 var Search = require('./search')
 var SearchResults = require('./search-results')
 var Peek = require('./peek')
@@ -29,14 +29,8 @@ var Curator = React.createClass({
 ],
   statics: {
     fetchData: {
-      /*searchResults: (params, query) => {
-        params.terms = '*'
-        var name = findDepartment(params.slug)[0]
-        params.splat = 'department:"'+name+'"'
-        return SearchResults.fetchData.searchResults(params, query)
-      },*/
       curator: (params, query) => {
-        return rest("http://artsmia.github.io/collection-info/index.json").then((r) => JSON.parse(r.entity))
+        return rest(endpoint).then((r) => JSON.parse(r.entity))
       }
     },
   },

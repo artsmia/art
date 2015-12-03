@@ -9,6 +9,7 @@ var SearchResults = require('./search-results')
 var Peek = require('./peek')
 var DepartmentDecorator = require('./decorate/department')
 var findDepartment = require('./department-slug')
+var endpoint = require('./endpoints').info
 
 var Department = React.createClass({
   mixins: [Router.State],
@@ -22,7 +23,7 @@ var Department = React.createClass({
         return SearchResults.fetchData.searchResults(params, query)
       },
       departments: (params, query) => {
-        return rest("http://artsmia.github.io/collection-info/index.json").then((r) => JSON.parse(r.entity))
+        return rest(endpoint).then((r) => JSON.parse(r.entity))
       }
     },
   },
