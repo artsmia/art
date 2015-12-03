@@ -1,38 +1,36 @@
-$duration: .5s;
+$openduration: 2s;
+$closeduration: 0.5s;
 
 .peek-appear {
-  opacity: 0;
-  transition: all $duration ease-in;
+  opacity: 0.01;
+  min-height:0px;
+  transition: all $openduration ease-in;
 
   &.peek-appear-active {
     opacity: 1;
+    height:auto;
   }
 }
 
 .peek-enter{
     opacity: 0.01;
-    min-height:0;
-    -webkit-transition:all $duration ease-out;
-    transition:all $duration ease-out;
+    min-height:0px;
+    transition:all $openduration ease-in;
+    
+    &.peek-enter-active{
+        opacity:1;
+        height:auto;
+    }
+
 }
-.peek-enter.peek-enter-active{
-    opacity:1;
-    transition: opacity $duration ease-in;
-    height:auto;
-}
+
 .peek-leave{
     opacity:1;
-    -webkit-transition:all $duration ease-out;
-    transition:all $duration ease-out;
-}
-.peek-leave.peek-leave-active{
-    opacity:0;
-}
-.peek-appear{
-    -webkit-transition:all $duration ease-out;
-    transition:all $duration ease-out;
-}
-.peek-appear.peek-appear-active{
-    -webkit-transition:all $duration ease-out;
-    transition:all $duration ease-out;
+    height:auto;
+    transition:all $closeduration ease-out;
+
+    &.peek-leave-active{
+        opacity:0;
+        min-height:0px;
+    }
 }

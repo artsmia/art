@@ -46,6 +46,8 @@ var Peek = React.createClass({
     var Tag = this.props.tag
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
+    
+    var peekKey = this.state.open ? 'open' : 'closed'
 
     var peekText = this.context.universal ?
       <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
@@ -57,7 +59,7 @@ var Peek = React.createClass({
         {!this.props.universal && showIcon && icon}
       </i>}
       <CSSTransitionGroup transitionName="peek" transitionAppear={true}>
-        {this.state.open && this.state.facetedQ && <div className="peek" key="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
+        {this.state.open && this.state.facetedQ && <div className="peek" key={peekKey} style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
           {result && this.quiltFromResults()}
           <Link to="searchResults" params={{terms: this.state.facetedQ}} style={{width: '100%'}}>
             {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.state.facet && `(${this.state.facet})`}
