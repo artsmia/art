@@ -1,5 +1,6 @@
 var React = require('react')
 var Router = require('react-router')
+var {Link} = Router
 var Helmet = require('react-helmet')
 
 var rest = require('rest')
@@ -37,11 +38,19 @@ var Curator = React.createClass({
 
   render() {
     var curator = this.props.data.curator.curators[this.props.params.slug]
+    var departmentLink
+    var departmentNames = findDepartment(curator.department)
+    if(departmentNames) {
+      var [_, _, departmentSlug] = departmentNames
+      var departmentLink = <Link to="department" params={{dept: departmentSlug}}>{curator.department}</Link>
+    }
+
+
   return <div>
     <div className="curator-header"></div>
     <div className="curatorProfile pageText">
       <h2>{curator.name}</h2>
-      <h4>{curator.department}</h4>
+      <h4>{departmentLink || curator.department}</h4>
       <h5>{curator.title}</h5>
       <div className="curatorContent">
         <div className="curatorPic">
