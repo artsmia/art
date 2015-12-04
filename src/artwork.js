@@ -11,6 +11,7 @@ var ArtworkDetails = require('./artwork-details')
 var _Artwork = require('./_artwork')
 var Image = require('./image')
 var imageCDN = require('./image-cdn')
+var SEARCH = require('./endpoints').search
 
 var Sticky = require('react-sticky')
 
@@ -19,7 +20,7 @@ var Artwork = React.createClass({
   statics: {
     fetchData: {
       artwork: (params) => {
-        return rest('http://search.staging.artsmia.org/id/'+params.id)
+        return rest(`${SEARCH}/id/`+params.id)
         .then((r) => JSON.parse(r.entity))
         .then(art => {
           art.slug = _Artwork.slug(art)
