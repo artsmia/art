@@ -7,7 +7,6 @@ var DepartmentDecorator = require('./decorate/department')
 var GalleryDecorator = require('./decorate/gallery')
 var HighlightsDecorator = require('./decorate/highlights')
 var RecentDecorator = require('./decorate/recent')
-var CSSTransitionGroup = React.addons.CSSTransitionGroup
 
 var Decorate = React.createClass({
   render() {
