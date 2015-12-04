@@ -76,6 +76,7 @@ header{
 .logo-container{
     background-image: url("../images/MIA_LOGO_MARK.svg");
     background-repeat: no-repeat;
+    
     height: 3.3em;
     width:8em;
     color:#fff;
@@ -84,6 +85,7 @@ header{
     display: inline-block;
     z-index: 5;
 }
+
 .global_buttons {
   background: $primary;
   width: 5em;
