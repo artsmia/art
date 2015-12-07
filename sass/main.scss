@@ -566,38 +566,38 @@ header{
 .departmentListItem {
   width: 100%;
   height: 150px;
-}
-.departmentListItem.africa {
-  background:url("https://api.artsmia.org/images/4866/400/medium.jpg") no-repeat center center;
   background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+@function cdnImageUrl($id) {
+  @return "http://" + $id%7 + ".api.artsmia.org/" + $id + ".jpg";
+}
+
+.departmentListItem.africa {
+  background-image: url(cdnImageUrl(4866));
 }
 .departmentListItem.cssaa {
-  background:url("https://api.artsmia.org/images/12134/400/medium.jpg") no-repeat center center;
-  background-size: cover;
+  background-image: url(cdnImageUrl(12134));
 }
 .departmentListItem.contemporary {
-  background:url("https://api.artsmia.org/images/1721/400/medium.jpg") no-repeat center center;
-  background-size: cover;
+  background-image: url(cdnImageUrl(1721));
 }
 .departmentListItem.dats {
-  background:url("https://api.artsmia.org/images/8024/400/medium.jpg") no-repeat center center;
-  background-size: cover;
+  background-image: url(cdnImageUrl(8024));
 }
 .departmentListItem.jka {
-  background:url("https://api.artsmia.org/images/7505/400/medium.jpg") no-repeat center center;
-  background-size: cover;
+  background-image: url(cdnImageUrl(7505));
 }
 .departmentListItem.paintings {
-  background:url("https://api.artsmia.org/images/1348/400/medium.jpg") no-repeat center center;
-  background-size: cover;
+  background-image: url(cdnImageUrl(1348));
 }
 .departmentListItem.photography {
-  background:url("https://api.artsmia.org/images/89324/400/medium.jpg") no-repeat center center;
-  background-size: cover;
+  background-image: url(cdnImageUrl(89324));
 }
 .departmentListItem.prints {
-  background:url("https://api.artsmia.org/images/9194/400/medium.jpg") no-repeat center center;
-  background-size: cover;
+  background-image: url(cdnImageUrl(9194));
 }
 a.departmentLink h2{
   -webkit-transition: all 150ms linear;
