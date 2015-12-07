@@ -28,7 +28,7 @@ var Suggest = React.createClass({
     var suggest = this.props.completions || search && search.suggest || {}
 
     var suggestions = Object.keys(suggest)
-    .filter(key => key !== '_shards')
+    .filter(key => key !== '_shards' && suggest[key].length > 0)
     .map(key => suggest[key][0].options.map(suggestion => ({...suggestion, type: key})))
     .reduce((flattenedArray, options) => flattenedArray.concat(options), [])
     // re-score title completions to 10%, artist is more important

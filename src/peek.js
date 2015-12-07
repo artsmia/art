@@ -111,7 +111,7 @@ var Peek = React.createClass({
   },
 
   getFacetedQ(q, facet) {
-    var q = q || this.state.query
+    var q = q || (this.state ? this.state.query : "")
     var facet = facet || this.state && this.state.facet
     return facet ? `${facet}:"${encodeURIComponent(q.replace(/"/g, ''))}"` : q
   },
@@ -119,10 +119,9 @@ var Peek = React.createClass({
   getQs() {
     var q = this.state.query
     if(q.match(';')) {
-      qs = q.split(/;/).map(_q => {
+      return q.split(/;/).map(_q => {
         return _q.replace(/^.*attributed to|unknown|artist|\w+ by|after/ig, '').trim()
       })
-      return qs
     }
     return []
   },
