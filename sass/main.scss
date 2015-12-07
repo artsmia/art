@@ -118,6 +118,8 @@ header{
 .agg-wrap{
     background-color:#ffffff;
     padding: 0 0 1em 0;
+    -webkit-transition: all 0.5s ease-in;
+    transition: all 0.5s ease-in;
 }
 
 .agg-wrap h2{
