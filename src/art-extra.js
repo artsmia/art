@@ -74,19 +74,24 @@ var ArtworkExtraModule = React.createClass({
     c.width = image.width
     c.height = image.height
     var ctx = c.getContext('2d')
-    ctx.strokeStyle = 'red'
     var img = new Image();
     img.onload = function(){
       ctx.drawImage(img, 0, 0);
 
-      vision.responses[0].faceAnnotations.map(faceData => {
+      function drawBox(poly, color='red') {
+        ctx.strokeStyle = color
         ctx.beginPath()
-        var [first, ...rest] = faceData.fdBoundingPoly.vertices
+        var [first, ...rest] = poly.vertices
         var {x: x1, y: y1} = first
         ctx.moveTo(x1, y1)
         rest.concat(first).map(({x, y}) => ctx.lineTo(x, y))
         ctx.stroke()
         ctx.closePath()
+      }
+
+      vision.responses[0].faceAnnotations.map(faceData => {
+        drawBox(faceData.boundingPoly, 'gray')
+        drawBox(faceData.fdBoundingPoly)
       })
     };
     img.src = image.src;
