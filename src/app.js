@@ -9,10 +9,10 @@ var App = React.createClass({
   render() {
     return (
       <div className={this.props.universal && 'universal'}>
-        <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
+        {!!this.state.hideHeader || <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
           <Link to="home"><div className='logo-container'></div></Link>
           {this.globalToolBar()}
-        </header>
+        </header>}
         <Helmet
           title="Art!"
           titleTemplate="%s ˆ Mia"
@@ -26,7 +26,12 @@ var App = React.createClass({
   getChildContext() {
     return {
       universal: this.props.universal,
+      hideHeader: this.hideHeader,
     }
+  },
+
+  hideHeader(bool) {
+    this.setState({hideHeader: bool})
   },
 
   globalToolBar() {
@@ -72,6 +77,9 @@ var App = React.createClass({
     }
   },
 })
-App.childContextTypes = {universal: React.PropTypes.bool}
+App.childContextTypes = {
+  universal: React.PropTypes.bool,
+  hideHeader: React.PropTypes.func,
+}
 
 module.exports = App

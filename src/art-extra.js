@@ -48,6 +48,10 @@ var ArtworkExtraModule = React.createClass({
     }
   },
 
+  componentWillMount() {
+    this.context.hideHeader(true)
+  },
+
   render() {
     var art = this.props.data.art
     var id = art.id.replace(/[^0-9]+/g, '')
@@ -55,7 +59,7 @@ var ArtworkExtraModule = React.createClass({
     var {vision} = this.props.data
     var isImageValid = art.image == 'valid'
 
-    return <section style={{padding: '3em 1em'}}>
+    return <section style={{padding: '1em'}}>
       <_Artwork.Title art={art} link={true} />
       {isImageValid && <div>
         <img src={imageURL} onLoad={this.handleImageLoad} />
@@ -144,5 +148,8 @@ var ArtworkExtraModule = React.createClass({
     img.src = image.src;
   },
 })
+ArtworkExtraModule.contextTypes = {
+  hideHeader: React.PropTypes.func,
+}
 
 module.exports = ArtworkExtraModule
