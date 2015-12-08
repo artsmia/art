@@ -10,7 +10,7 @@ module.exports = {
         },
         features: [
           {"type": "FACE_DETECTION", maxResults: 10},
-          {"type": "LABEL_DETECTION", maxResults: 10},
+          {"type": "LABEL_DETECTION", maxResults: 20},
         ]
       }]
     }
