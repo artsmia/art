@@ -25,7 +25,7 @@ var Aggregations = React.createClass({
     return (
       <CSSTransitionGroup transitionName="peek" transitionAppear={true} transitionEnterTimeout={2000} transitionLeaveTimeout={500}>  
       <div id="aggs" >
-        <div style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingLeft: '10px'}}>
+        <div style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px', paddingLeft: '10px'}}>
         {aggs.map(function(agg) {
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
           const showAgg = agg.open || aggIsActive
