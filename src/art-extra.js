@@ -7,8 +7,8 @@ window.transpose = function transpose(a) {
   return R.addIndex(R.map)(R.pipe(R.nthArg(1), R.nth, R.map(R.__, a)), R.head(a));
 };
 
-
 var Artwork = require('./artwork')
+var _Artwork = require('./_artwork')
 var imageCDN = require('./image-cdn')
 var vis = require('./cloud-vision')
 
@@ -55,8 +55,9 @@ var ArtworkExtraModule = React.createClass({
     var {vision} = this.props.data
     var isImageValid = art.image == 'valid'
 
-    return <section>
-      {isImageValid && <div style={{padding: '1em'}}>
+    return <section style={{padding: '3em 1em'}}>
+      <_Artwork.Title art={art} link={true} />
+      {isImageValid && <div>
         <img src={imageURL} onLoad={this.handleImageLoad} />
         {this.state.hasFaces && <canvas ref="annotateFaces" style={{verticalAlign: 'top'}} />}
         {this.state.hasFaces && <canvas ref="smartCrop" style={{verticalAlign: 'top'}} />}
