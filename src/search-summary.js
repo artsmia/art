@@ -4,8 +4,6 @@ var Helmet = require('react-helmet')
 var Decorate = require('./decorate')
 var Aggregations = require('./aggregations')
 
-var CSSTransitionGroup = React.addons.CSSTransitionGroup
-
 const SearchSummary = React.createClass({
   render() {
     const search = this.props.search
@@ -22,11 +20,9 @@ const SearchSummary = React.createClass({
 
     var smallViewport = window && window.innerWidth <= 500
 
-
       if(smallViewport){
         return (
-            <CSSTransitionGroup transitionName="peek" transitionAppear={true} transitionEnterTimeout={2000} transitionLeaveTimeout={500}>
-          <div className='agg-wrap' key={showAggs}>
+          <div className='agg-wrap' key={aggKey}>
             <div className="toolbar mdl-grid">
             {this.props.children}
             <div className="mdl-cell mdl-cell--4-col"><h2 onClick={this.toggleContent}>
@@ -47,7 +43,6 @@ const SearchSummary = React.createClass({
               ]}
               />
           </div>
-          </CSSTransitionGroup>
         )
       } else {
         return (

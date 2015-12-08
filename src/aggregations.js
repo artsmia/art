@@ -1,5 +1,6 @@
 var React = require('react')
 var { Link } = require('react-router')
+var CSSTransitionGroup = React.addons.CSSTransitionGroup
 
 var Aggregations = React.createClass({
   getInitialState() {
@@ -19,10 +20,12 @@ var Aggregations = React.createClass({
     const customFilters = this.customFilters
     const toggleAgg = (agg) => this.toggleAggregation.bind(this, agg)
     const toggleMoreAggs = this.toggleMoreAggs
+    var aggKey = Math.random();
 
     return (
+      <CSSTransitionGroup transitionName="peek" transitionAppear={true} transitionEnterTimeout={2000} transitionLeaveTimeout={500}>  
       <div id="aggs" >
-        <div style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px', paddingLeft: '10px'}}>
+        <div style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingLeft: '10px'}}>
         {aggs.map(function(agg) {
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
           const showAgg = agg.open || aggIsActive
@@ -54,6 +57,7 @@ var Aggregations = React.createClass({
 
           </div>
       </div>
+      </CSSTransitionGroup>
     )
   },
 
