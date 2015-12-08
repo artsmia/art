@@ -998,11 +998,11 @@ ul.info {
     font-family: $MiaGroteskBold, sans-serif;
     font-size:1.5em;
     color:$primary;
-    -webkit-transition: all 150ms linear;
-    -moz-transition: all 150ms linear;
-    -ms-transition: all 150ms linear;
-    -o-transition: all 150ms linear;
-    transition: all 150ms linear;
+    -webkit-transition: all 150ms ease-in;
+    -moz-transition: all 150ms ease-in;
+    -ms-transition: all 150ms ease-in;
+    -o-transition: all 150ms ease-in;
+    transition: all 150ms ease-in;
 }
 .info li a:hover, .departmentLink:hover h2{
     background-color:$primary;
@@ -1200,11 +1200,11 @@ ul.nav_list li {
   padding: 0 13px;
   font-family: $MiaGroteskRegular;
   font-size:1.1em;
-  -webkit-transition: all .5s linear;
-  -moz-transition: all .5s linear;
-  -ms-transition: all .5s linear;
-  -o-transition: all .5s linear;
-  transition: all .5s linear;
+  -webkit-transition: all .5s ease-in;
+  -moz-transition: all .5s ease-in;
+  -ms-transition: all .5s ease-in;
+  -o-transition: all .5s ease-in;
+  transition: all .5s ease-in;
 }
 .global_nav {
   float: left;
@@ -1223,11 +1223,11 @@ ul.nav_list li {
 }
 .nav_item a {
   color: white;
-  -webkit-transition: all .5s linear;
-  -moz-transition: all .5s linear;
-  -ms-transition: all .5s linear;
-  -o-transition: all .5s linear;
-  transition: all .5s linear;
+  -webkit-transition: all .5s ease-in;
+  -moz-transition: all .5s ease-in;
+  -ms-transition: all .5s ease-in;
+  -o-transition: all .5s ease-in;
+  transition: all .5s ease-in;
 }
 .nav_item a:hover {
   color: white;
