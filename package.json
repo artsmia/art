@@ -51,6 +51,7 @@
     "rest": "^1.2.0",
     "serve-static": "^1.10.0",
     "speakingurl": "^6.0.0",
+    "whatwg-fetch": "0.10.1",
     "when": "^3.6.4"
   }
 }
