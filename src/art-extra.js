@@ -1,6 +1,12 @@
 var React = require('react')
 var Router = require('react-router')
 var _fetch = require('whatwg-fetch')
+var R = require('ramda')
+window.R = R
+window.transpose = function transpose(a) {
+  return R.addIndex(R.map)(R.pipe(R.nthArg(1), R.nth, R.map(R.__, a)), R.head(a));
+};
+
 
 var Artwork = require('./artwork')
 var imageCDN = require('./image-cdn')
@@ -52,7 +58,8 @@ var ArtworkExtraModule = React.createClass({
     return <section>
       {isImageValid && <div style={{padding: '1em'}}>
         <img src={imageURL} onLoad={this.handleImageLoad} />
-        {this.state.hasFaces && <canvas ref="canvas" style={{verticalAlign: 'top'}} />}
+        {this.state.hasFaces && <canvas ref="annotateFaces" style={{verticalAlign: 'top'}} />}
+        {this.state.hasFaces && <canvas ref="smartCrop" style={{verticalAlign: 'top'}} />}
         {vision && <ul>
           {vision.responses[0].labelAnnotations.map(label => <li>{label.description} ({label.score})</li>)}
         </ul>}
@@ -64,13 +71,16 @@ var ArtworkExtraModule = React.createClass({
   handleImageLoad(event) {
     this.setState({image: event.target})
     var {hasFaces} = this.state
-    if(this.state.hasFaces) this.buildAnnotatedImage(event.target)
+    if(this.state.hasFaces) {
+      this.buildAnnotatedImage(event.target)
+      this.buildSmartCrop(event.target)
+    }
   },
 
   buildAnnotatedImage(image) {
     var {vision} = this.props.data
 
-    var c = React.findDOMNode(this.refs.canvas)
+    var c = React.findDOMNode(this.refs.annotateFaces)
     c.width = image.width
     c.height = image.height
     var ctx = c.getContext('2d')
@@ -95,8 +105,43 @@ var ArtworkExtraModule = React.createClass({
       })
     };
     img.src = image.src;
-    this.setState({canvas: c})
-  }
+    this.setState({annotatedFaces: c})
+  },
+
+  buildSmartCrop(image) {
+    var {vision} = this.props.data
+    var faces = vision.responses[0].faceAnnotations
+    var l = transpose(faces.map(face => face.boundingPoly.vertices))
+    var [topLeft, , bottomRight] = l
+
+    var least = (({x: x1, y: y1}, {x: x2, y: y2}) => {
+      return {x: R.min(x1, x2), y: R.min(y1, y2)}
+    })
+    var most = (({x: x1, y: y1}, {x: x2, y: y2}) => {
+      return {x: R.max(x1, x2), y: R.max(y1, y2)}
+    })
+
+    var extent = [
+      R.reduce(least, {x: 1000, y: 1000}, topLeft),
+      R.reduce(most, {x: 0, y: 0}, bottomRight),
+    ]
+    console.info(extent)
+
+    var width = extent[1].x - extent[0].x
+    var height = extent[1].y - extent[0].y
+
+    var c = React.findDOMNode(this.refs.smartCrop)
+    var ctx = c.getContext('2d')
+    var img = new Image();
+    img.onload = function(){
+      var pad = 50
+      var [paddedWidth, paddedHeight] = R.map(R.add(pad*2), [width, height])
+      c.width = paddedWidth
+      c.height = paddedHeight
+      ctx.drawImage(img, extent[0].x - pad, extent[0].y - pad, paddedWidth, paddedHeight, 0, 0, paddedWidth, paddedHeight)
+    };
+    img.src = image.src;
+  },
 })
 
 module.exports = ArtworkExtraModule
