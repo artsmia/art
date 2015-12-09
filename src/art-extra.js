@@ -60,7 +60,9 @@ var ArtworkExtraModule = React.createClass({
     var isImageValid = art.image == 'valid'
 
     return <section style={{padding: '1em'}}>
-      <_Artwork.Title art={art} link={true} />
+      <_Artwork.Title art={art} link={true}>
+        <span>, <_Artwork.Creator art={art} peek={false} wrapper="span" /> (id:{id})</span>
+      </_Artwork.Title>
       {isImageValid && <div>
         <img src={imageURL} onLoad={this.handleImageLoad} />
         {this.state.hasFaces && <canvas ref="annotateFaces" style={{verticalAlign: 'top'}} />}

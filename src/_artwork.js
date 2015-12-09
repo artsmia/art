@@ -19,7 +19,11 @@ var ConditionalLinkWrapper = React.createClass({
 var Title = React.createClass({
   render() {
     var {art, link} = this.props
-    var title = <h1 itemProp="name">{art.title}, <span className="dated">{art.dated}</span></h1>
+    var title = <h1 itemProp="name">
+      {art.title},&nbsp;
+      <span className="dated">{art.dated}</span>
+      {this.props.children && <span>{this.props.children}</span>}
+    </h1>
 
     return <ConditionalLinkWrapper {...this.props}>
       {title}
