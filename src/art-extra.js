@@ -132,7 +132,6 @@ var ArtworkExtraModule = React.createClass({
       R.reduce(least, {x: 1000, y: 1000}, topLeft),
       R.reduce(most, {x: 0, y: 0}, bottomRight),
     ]
-    console.info(extent)
 
     var width = extent[1].x - extent[0].x
     var height = extent[1].y - extent[0].y
@@ -141,7 +140,8 @@ var ArtworkExtraModule = React.createClass({
     var ctx = c.getContext('2d')
     var img = new Image();
     img.onload = function(){
-      var pad = 50
+      // pad cropped face by 50px or the smallest distance from the face's bounding poly to the edge of the image
+      var pad = R.apply(R.min, R.append(50, R.flatten(R.map(R.values, extent))))
       var [paddedWidth, paddedHeight] = R.map(R.add(pad*2), [width, height])
       c.width = paddedWidth
       c.height = paddedHeight
