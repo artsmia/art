@@ -2,6 +2,8 @@ var React = require('react')
 
 var Search = require('./search')
 var SearchResults = require('./search-results')
+var CSSTransitionGroup = React.addons.CSSTransitionGroup
+
 
 var styles = {
   searchBox: {
@@ -15,7 +17,10 @@ var styles = {
     borderBottom: '1em solid #222',
     background: 'rgb(35,35,35)',
     color: 'white',
-    paddingTop:'3.3em'
+    paddingTop:'3.3em',
+    webkitBoxShadow: '0px 6px 18px -4px rgba(35,35,35,.75)',
+    mozBoxShadow: '0px 6px 18px -4px rgba(35,35,35,.75)',
+    boxShadow: '0px 6px 18px -4px rgba(35,35,35,.75)'
   },
 
   message: {
@@ -28,7 +33,10 @@ var styles = {
 
 var LiveSearch = React.createClass({
   render() {
-    return <div style={styles.searchBox}>
+    return (
+    
+    <div style={styles.searchBox}>
+    <CSSTransitionGroup transitionName="livesearch" transitionAppear={true} transitionEnterTimeout={2000} transitionLeaveTimeout={500}>
       <Search
         hideResults={true}
         blank={this.state.blank}
@@ -40,10 +48,14 @@ var LiveSearch = React.createClass({
         link={['searchResults', {terms: this.state.terms}]}
         delay={1000}
         suggestStyle={{margin: "1em 3em"}}
+        key="livesearch"
+        className="lsearch"
         >
         <span style={styles.message}>{this.getText()}</span>
       </Search>
+      </CSSTransitionGroup>
     </div>
+    )
   },
 
   updateQuilt(terms) {

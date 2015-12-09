@@ -38,9 +38,43 @@ $closeduration: 0.5s;
 
 .navbar-appear {
   opacity: 0.01;
-  transition: all 500ms ease-in;
+  transition: all 250ms ease-in;
 
   &.navbar-appear-active {
     opacity: 1;
   }
+}
+
+.livesearch-appear {
+  opacity: 0.01;
+  height:0px;
+  transition: all $openduration ease-in;
+
+  &.livesearch-appear-active {
+    opacity: 1;
+    height:auto;
+  }
+}
+
+.livesearch-enter{
+    opacity: 0.01;
+    height:0px;
+    transition:all $openduration ease-in;
+    
+    &.livesearch-enter-active{
+        opacity:1;
+        height:auto;
+    }
+
+}
+
+.livesearch-leave{
+    opacity:1;
+    height:auto;
+    transition:all $closeduration ease-out;
+
+    &.livesearch-leave-active{
+        opacity:0;
+        min-height:0px;
+    }
 }
