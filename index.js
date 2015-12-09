@@ -4,11 +4,12 @@ var fetchComponentData = require('./fetch')
 var ga = require('react-ga')
 
 var routes = require('./routes')
+var trackAnalytics = process.env.NODE_ENV == 'production'
 
-ga.initialize(process.env.GA_TRACKING_ID)
+if(trackAnalytics) ga.initialize(process.env.GA_TRACKING_ID)
 
 Router.run(routes, Router.HistoryLocation, (Handler, state) => {
-  ga.pageview(state.pathname)
+  if(trackAnalytics) ga.pageview(state.pathname)
 
   fetchComponentData(state).then(data => {
     React.render(<Handler {...state} data={data}/>, document.body)

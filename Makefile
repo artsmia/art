@@ -11,8 +11,11 @@ css/critical.css:
 
 target = staging
 
+ENV = 'staging'
 build: css/critical.css
-	npm run build
+	NODE_ENV=$(ENV) npm run build
 	sassc -lm sass/main.scss css/main.css
+
+deploy: build
 	scp index.html bundle.js $(target):/var/www/art/
 	scp css/main.css css/critical.css $(target):/var/www/art/css/
