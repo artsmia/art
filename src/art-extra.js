@@ -128,24 +128,24 @@ var ArtworkExtraModule = React.createClass({
       return {x: R.max(x1, x2), y: R.max(y1, y2)}
     })
 
-    var extent = [
+    var faceExtent = [
       R.reduce(least, {x: 1000, y: 1000}, topLeft),
       R.reduce(most, {x: 0, y: 0}, bottomRight),
     ]
 
-    var width = extent[1].x - extent[0].x
-    var height = extent[1].y - extent[0].y
+    var width = faceExtent[1].x - faceExtent[0].x
+    var height = faceExtent[1].y - faceExtent[0].y
 
     var c = React.findDOMNode(this.refs.smartCrop)
     var ctx = c.getContext('2d')
     var img = new Image();
     img.onload = function(){
       // pad cropped face by 50px or the smallest distance from the face's bounding poly to the edge of the image
-      var pad = R.apply(R.min, R.append(50, R.flatten(R.map(R.values, extent))))
+      var pad = R.apply(R.min, R.append(50, R.flatten(R.map(R.values, faceExtent))))
       var [paddedWidth, paddedHeight] = R.map(R.add(pad*2), [width, height])
       c.width = paddedWidth
       c.height = paddedHeight
-      ctx.drawImage(img, extent[0].x - pad, extent[0].y - pad, paddedWidth, paddedHeight, 0, 0, paddedWidth, paddedHeight)
+      ctx.drawImage(img, faceExtent[0].x - pad, faceExtent[0].y - pad, paddedWidth, paddedHeight, 0, 0, paddedWidth, paddedHeight)
     };
     img.src = image.src;
   },
