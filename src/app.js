@@ -39,7 +39,7 @@ var App = React.createClass({
     </button>
     var menuTrigger = menuButton
     return <div>
-      <div className="global_buttons">
+      <div className= {this.state.showMenu ? 'global_buttons_open' : 'global_buttons'}>
         {menuTrigger}
         {searchTrigger}
       </div>
