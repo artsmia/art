@@ -71,6 +71,9 @@ header{
 .quilt-search-wrap{
     min-height: 3em;
     background: #222;
+    -webkit-box-shadow: 0px 6px 18px -6px rgba(35,35,35,.75);
+    -moz-box-shadow: 0px 6px 18px -6px rgba(35,35,35,.75); 
+    box-shadow: 0px 6px 18px -6px rgba(35,35,35,.75);
 }
 
 .logo-container{
@@ -94,6 +97,10 @@ header{
   right: 0;
   padding: .7em 0;
   z-index: 1500;
+  -webkit-box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75);
+  -moz-box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75); 
+  box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75);
+  
 }
 .global_display {
   width: 100%;
