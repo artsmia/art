@@ -160,12 +160,16 @@ var LinkBar = React.createClass({
       return this.props.actions[key]
     }, [])
     .filter(action => action.enabled)
+    // don't show 'download' for art with an invalid image
+    .filter(action => !(action.key == 'download' && art.image == 'invalid'))
 
     return <div>
       <div className="link-bar">
-        {actions.map(action => {
+        {actions
+        .map(action => {
           var key = action.key
           var handler = eval(`_this.handle${key[0].toUpperCase() + key.substr(1)}`) // TODO alert alert warning warning (shouldn't have to reference _this, sketchy code)
+
           var icon = <i key={key} className="material-icons" onClick={handler}>{action.icon || action.key}</i>
           return (key == 'download') ?
             <a href={imageCDN(art.id)} download style={{padding: 0}}>{icon}</a> :
