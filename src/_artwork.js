@@ -5,6 +5,7 @@ var classnames = require('classnames')
 
 var ArtworkImage = require('./artwork-image')
 var Peek = require('./peek')
+var imageCDN = require('./image-cdn')
 
 var ConditionalLinkWrapper = React.createClass({
   render() {
@@ -130,7 +131,7 @@ var LinkBar = React.createClass({
           icon: 'favorite_border',
         },
         download: {
-          enabled: false,
+          enabled: true,
           icon: 'file_download',
         },
         print: {
@@ -165,7 +166,10 @@ var LinkBar = React.createClass({
         {actions.map(action => {
           var key = action.key
           var handler = eval(`_this.handle${key[0].toUpperCase() + key.substr(1)}`) // TODO alert alert warning warning (shouldn't have to reference _this, sketchy code)
-          return <i key={key} className="material-icons" onClick={handler}>{action.icon || action.key}</i>
+          var icon = <i key={key} className="material-icons" onClick={handler}>{action.icon || action.key}</i>
+          return (key == 'download') ?
+            <a href={imageCDN(art.id)} download style={{padding: 0}}>{icon}</a> :
+            icon
         })}
       </div>
       {this.state.showShare && this.showShare()}
