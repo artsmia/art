@@ -459,7 +459,7 @@ header{
   background: rgb(35,35,35);
   margin-top: 10px;
 }
-.link-bar i {
+.link-bar i, .link-bar > a {
   font-size: 1.5em;
   line-height: 1em;
   padding: 10px;
@@ -471,7 +471,7 @@ header{
   -o-transition: all .5s ease; /* Opera */
   transition: all .5s ease;
 }
-.link-bar a {
+.link-bar .social a {
     color: #ffffff;
     text-decoration: none;
     font-size: 1em;
@@ -515,7 +515,7 @@ header{
     position: relative;
     top: 5px;
 }
-.link-bar i.material-icons {
+.link-bar i.material-icons, .link-bar a.material-icons {
   color: #ffffff;
 }
 .peek i.material-icons{

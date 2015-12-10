@@ -170,10 +170,20 @@ var LinkBar = React.createClass({
           var key = action.key
           var handler = eval(`_this.handle${key[0].toUpperCase() + key.substr(1)}`) // TODO alert alert warning warning (shouldn't have to reference _this, sketchy code)
 
-          var icon = <i key={key} className="material-icons" onClick={handler}>{action.icon || action.key}</i>
+          var options = {
+            key: key,
+            className: "material-icons",
+            onClick: handler,
+          }
+          if(key == 'download') {
+            options.download = ''
+            options.href = imageCDN(art.id)
+          }
+          var content = action.icon || action.key
+
           return (key == 'download') ?
-            <a href={imageCDN(art.id)} download style={{padding: 0}}>{icon}</a> :
-            icon
+            <a {...options}>{content}</a> :
+            <i {...options}>{content}</i>
         })}
       </div>
       {this.state.showShare && this.showShare()}
@@ -217,7 +227,18 @@ var LinkBar = React.createClass({
   },
 
   handleDownload() {
-    console.info('TODO')
+    var {art} = this.props
+    var {id} = art
+    if(process.env.NODE_ENV == 'production') {
+      require('react-ga').event({
+        category: 'Artwork',
+        action: 'Image Download',
+        label: art.title,
+        value: parseInt(id)
+      })
+    } else {
+       console.info('ga.event', 'downloaded', id)
+    }
   },
 
   handleLike() {
