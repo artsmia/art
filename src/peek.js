@@ -83,6 +83,7 @@ var Peek = React.createClass({
     })
 
     this.fetchResults()
+    this.dispatchEvent()
   },
 
   quiltFromResults() {
@@ -164,6 +165,10 @@ var Peek = React.createClass({
       showIcon: true,
       showSingleResult: false,
     }
+  },
+
+  dispatchEvent() {
+    window.dispatchEvent(new CustomEvent('peek'))
   },
 })
 Peek.contextTypes = {

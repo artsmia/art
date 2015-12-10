@@ -33,17 +33,16 @@ var BottomSticky = React.createClass({
   componentDidMount: function() {
     this.getSizeAndScroll()
     window.addEventListener('scroll', this.scrolled)
+    window.addEventListener('peek', this.refresh)
   },
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.scrolled)
+    window.removeEventListener('peek', this.refresh)
   },
 
   componentWillReceiveProps(nextProps) {
-    setTimeout(() => {
-      this.getSizeAndScroll()
-      this.scrolled()
-    }, 0)
+    this.refresh()
   },
 
   getSizeAndScroll() {
@@ -70,7 +69,14 @@ var BottomSticky = React.createClass({
     var top = scrollAdjustment+scrollAdjustment/amountToScroll*16
     style.top = top === 0 ? top : -top
     this.setState({style: style})
-  }
+  },
+
+  refresh() {
+    setTimeout(() => {
+      this.getSizeAndScroll()
+      this.scrolled()
+    }, 0)
+  },
 })
 
 module.exports = BottomSticky
