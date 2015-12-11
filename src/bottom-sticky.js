@@ -42,7 +42,13 @@ var BottomSticky = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.refresh()
+    this.refresh(0, true)
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    if(this.state.isSticky !== nextState.isSticky) {
+      this.refresh(0)
+    }
   },
 
   getSizeAndScroll() {
@@ -60,10 +66,9 @@ var BottomSticky = React.createClass({
   },
 
   adjustScroll() {
-    // if(this.state.isSticky && React.findDOMNode(this).clientHeight > window.innerHeight) {
-    var {style, initialScrollY, height} = this.state
+    var {style, initialScrollY, height, isSticky} = this.state
     var currentScrollY = window.scrollY
-    var amountToScroll = height - window.innerHeight
+    var amountToScroll = height - window.innerHeight + 200
     var scrollAdjustment = Math.max(0, Math.min(amountToScroll, currentScrollY - initialScrollY))
 
     var top = scrollAdjustment+scrollAdjustment/amountToScroll*16
@@ -71,11 +76,11 @@ var BottomSticky = React.createClass({
     this.setState({style: style})
   },
 
-  refresh() {
+  refresh(delay=300, adjustScroll=false) {
     setTimeout(() => {
       this.getSizeAndScroll()
       this.scrolled()
-    }, 0)
+    }, delay)
   },
 })
 

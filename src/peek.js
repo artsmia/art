@@ -83,7 +83,6 @@ var Peek = React.createClass({
     })
 
     this.fetchResults()
-    this.dispatchEvent()
   },
 
   quiltFromResults() {
@@ -134,6 +133,10 @@ var Peek = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     this.setState(this.setup(nextProps))
+  },
+
+  componentWillUpdate(_, nextState) {
+    if(this.state.open !== nextState.open) this.dispatchEvent()
   },
 
   fetchResults() {
