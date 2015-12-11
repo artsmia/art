@@ -177,7 +177,7 @@ var LinkBar = React.createClass({
           }
           if(key == 'download') {
             options.download = ''
-            options.href = imageCDN(art.id)
+            options.href = imageCDN(art.id, art.restricted ? 400 : 800)
           }
           var content = action.icon || action.key
 
