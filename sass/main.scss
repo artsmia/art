@@ -193,7 +193,7 @@ header{
 .objects-wrap{
     width:33%;
     float:left;
-    padding:10px;
+    padding: 0 10px;
     margin-right:10px;
 }
 
@@ -244,12 +244,14 @@ header{
           max-height: 100%;
       }
     }
-
     .objects-wrap .focused {
-      border-bottom: 3px solid $primary;
+      border-top: 3px solid $primary;
+    }
+    .objects-wrap .unfocused {
+      border-top: 3px solid white;
     }
     .objects-wrap .focused .artwork-result {
-      margin-bottom: 0;
+      margin-top: 0;
     }
 
     /* not working
