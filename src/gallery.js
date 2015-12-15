@@ -45,7 +45,10 @@ var Gallery = React.createClass({
       <Search
         facet={facet}
         {...this.props}
-        summaryProps={{showFullGalleryInfo: true}}
+        summaryProps={{
+          galleryInfo: galleryInfo,
+          showFullGalleryInfo: true
+        }}
       />
       <Helmet
         title={pageTitle}

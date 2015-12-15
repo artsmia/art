@@ -16,6 +16,7 @@ var GalleryDecorator =  React.createClass({
     return {
       number,
       gallery,
+      panel: this.props.galleryInfo,
     }
   },
 
