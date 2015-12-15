@@ -72,14 +72,13 @@ header{
     min-height: 3em;
     background: #222;
     -webkit-box-shadow: 0px 6px 18px -6px rgba(35,35,35,.75);
-    -moz-box-shadow: 0px 6px 18px -6px rgba(35,35,35,.75); 
+    -moz-box-shadow: 0px 6px 18px -6px rgba(35,35,35,.75);
     box-shadow: 0px 6px 18px -6px rgba(35,35,35,.75);
 }
 
 .logo-container{
     background-image: url("../images/MIA_LOGO_MARK.svg");
     background-repeat: no-repeat;
-    
     height: 3.3em;
     width:8em;
     color:#fff;
@@ -98,8 +97,8 @@ header{
   padding: .7em 0;
   z-index: 1500;
   -webkit-box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75);
-  -moz-box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75); 
-  box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75); 
+  -moz-box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75);
+  box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75);
 }
 .global_buttons_open {
   background: $primary;
@@ -108,7 +107,7 @@ header{
   top: 0;
   right: 0;
   padding: .7em 0;
-  z-index: 1500;  
+  z-index: 1500;
 }
 .global_display {
   width: 100%;
@@ -116,7 +115,7 @@ header{
   background: rgb(35,35,35);
 }
 
-.global_buttons button.material-icons {
+.global_buttons button.material-icons, .global_buttons_open button.material-icons {
   padding: 2px 0 0 10px;
 }
 .wordmark-container{
@@ -339,6 +338,7 @@ header{
         margin-top: .5em;
         padding:0;
         margin-bottom: 0;
+        padding-top: 5px;
     }
     .objects-focus .gifted{
         font-size:.714em;
@@ -1045,12 +1045,16 @@ hr{margin:0;}
 .peek.startedOpen, .startedOpen .peek {
   margin-right: 0;
 }
-
-.peek > .peek, .peek span > .peek {
+.peek > .peek {
     background-color:$primary;
     margin-bottom:-1px;
+    margin-left: 0;
 }
-
+.peek span > .peek {
+    background-color:$primary;
+    margin-bottom:-1px;
+    margin-left: -5px;
+}
 .peek p{
   line-height:1em;
   font-size:1em;
@@ -1077,23 +1081,22 @@ hr{margin:0;}
 .peek .more-results-link:hover{
     color:rgba(255,255,255,.5);
 }
-
-.open i {
-    background-color:#ededed;
-    display: inline-block;
-    padding:5px;
+.peek i {
+  margin-bottom: 5px;
+  display: inline-block;
+  transition: all 1s ease-in;
 }
-
-.open i > span{
-    padding-left:10px;
+.peek i > span{
+    padding-right: 5px;
 }
-
+.open i > span {
+    padding: 5px 5px 7px 5px;
+    line-height:1em;
+    background: #ededed;
+    margin-left: -5px;
+}
 .peek.startedClosed.open {
   margin-bottom: 5px
-}
-.tombstone .open i {
-    padding: 5px 5px 7px 2px;
-    line-height:1em;
 }
 
 /* ===== decorator STYLES ===== */
@@ -1210,7 +1213,7 @@ hr{margin:0;}
   top: 3.3em;
   background: $primary;
   -webkit-box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75);
-  -moz-box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75); 
+  -moz-box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75);
   box-shadow: 0px 6px 18px -4px rgba(35,35,35,.75);
 }
 ul.nav_list li {
@@ -1339,7 +1342,7 @@ button  {
 }
 
 .invalid{
-    background:url(../images/no-image-bg.png) repeat top left;
+    background:url(../images/no-image-bg.png) repeat top left white;
     flex-grow:1;
     min-height:6.25rem;
     -webkit-transition: all 0.5s ease;

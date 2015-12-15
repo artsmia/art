@@ -46,7 +46,7 @@ var Peek = React.createClass({
     var Tag = this.props.tag
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
-    
+
     var peekKey = this.state.open ? 'open' : 'closed'
 
     var peekText = this.context.universal ?
@@ -55,8 +55,9 @@ var Peek = React.createClass({
 
     return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: startedOpen, startedClosed: !startedOpen, open:this.state.open})} style={{cursor: 'pointer'}}>
       {this.props.children && <i>
-        <span itemProp={microdata ? "name" : ''}>{peekText}</span>
+        <span itemProp={microdata ? "name" : ''}>{peekText}
         {!this.props.universal && showIcon && icon}
+</span>
       </i>}
       <CSSTransitionGroup transitionName="peek" transitionAppear={true} transitionEnterTimeout={2000} transitionLeaveTimeout={500}>
         {this.state.open && this.state.facetedQ && <div className="peek" key={peekKey} style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
