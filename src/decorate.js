@@ -12,7 +12,7 @@ var Decorate = React.createClass({
   render() {
     var {query, filters} = this.props.search
     if(!query && !filters) return <span />
-    var decorations = DecorationFinder(query, filters, this.props.params)
+    var decorations = DecorationFinder(query, filters, this.props)
     var {showDecorators} = this.state
 
     return decorations.length > 0 && <div
@@ -49,13 +49,14 @@ var Decorate = React.createClass({
 
 module.exports = Decorate
 
-var DecorationFinder = (search, filters, params) => {
+var DecorationFinder = (search, filters, props) => {
+  let {params} = props
   let terms = search.match(/\w+.+|"(?:\\"|[^"])+"/g) || search.split(' ')
   if(filters) terms = terms.concat(filters.split('" ').map(f => f.trim()))
 
   var Decor = {
     "department:": (term) => <DepartmentDecorator department={term} params={params} />,
-    "g[0-9]{3}a?": (gallery) => <GalleryDecorator gallery={gallery[0]} />,
+    "g[0-9]{3}a?": (gallery) => <GalleryDecorator gallery={gallery[0]} {...props} />,
     "Not on View": (gallery) => <GalleryDecorator notOnView={true} />,
     "highlight:": () => <HighlightsDecorator />,
     "recent:": () => <RecentDecorator />,

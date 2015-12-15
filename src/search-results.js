@@ -67,6 +67,7 @@ var SearchResults = React.createClass({
       showAggs: this.props.showAggs,
       toggleAggs: this.props.toggleAggs,
       showMoreLink,
+      ...this.props.summaryProps
     }
 
     return <div>

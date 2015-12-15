@@ -15,6 +15,7 @@ var Curators = require('./src/curators')
 var Explore = require('./src/explore')
 var Page = require('./src/page')
 var Info = require('./src/info')
+var Gallery = require('./src/gallery')
 
 var routes = (
   <Route handler={App} path="/">
@@ -34,6 +35,7 @@ var routes = (
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
     <Route name="page" path="/info/:name" handler={Page} />
     <Route name="info" path="/info" handler={Info} />
+    <Route name="gallery" path="/galleries/:gallery" handler={Gallery} />
   </Route>
 );
 

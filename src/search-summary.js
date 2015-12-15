@@ -35,7 +35,7 @@ const SearchSummary = React.createClass({
             </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
             </div>
             {showAggs && <Aggregations search={search} />}
-            <Decorate search={search} params={this.props.params} />
+            <Decorate search={search} params={this.props.params} {...this.props} />
             <Helmet
               title={`${search.query}`}
               meta={[
@@ -60,7 +60,7 @@ const SearchSummary = React.createClass({
           </div>
 
           {showAggs && <Aggregations search={search} />}
-          <Decorate search={search} params={this.props.params} />
+          <Decorate search={search} params={this.props.params} {...this.props} />
           <Helmet
             title={`${search.query}`}
             meta={[
