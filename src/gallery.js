@@ -18,7 +18,9 @@ var Gallery = React.createClass({
       gallery: (params, query) => {
         var id = params.gallery.replace(/g/i, '')
         var url = `https://cdn.rawgit.com/artsmia/mia-gallery-panels/master/${id}.md`
-        return rest(url).then(result => result.entity)
+        return rest(url).then(result => {
+          return result.status.code == 200 ? result.entity : false
+        })
       },
       searchResults: (params, query) => {
         if(!params.gallery.match(/g/i)) params.gallery = `G${params.gallery}`
@@ -35,12 +37,24 @@ var Gallery = React.createClass({
   render() {
     var {gallery} = this.props.params
     var facet = `room:"${gallery}"`
+    var galleryInfo = this.props.data.gallery
+    var galleryTitle = galleryInfo && galleryInfo.replace(/^# /, '').split('\n')[0]
+    var pageTitle = `${gallery}: ${galleryTitle || 'On view now'}`
 
-    return <Search
-      facet={facet}
-      {...this.props}
-      summaryProps={{showFullGalleryInfo: true}}
-    />
+    return <div>
+      <Search
+        facet={facet}
+        {...this.props}
+        summaryProps={{showFullGalleryInfo: true}}
+      />
+      <Helmet
+        title={pageTitle}
+        meta={[
+          {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
+          {property: "og:description", content: galleryTitle || ''},
+        ]}
+      />
+      </div>
   },
 })
 
