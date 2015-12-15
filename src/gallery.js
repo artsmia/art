@@ -48,7 +48,7 @@ var Gallery = React.createClass({
         summaryProps={{
           galleryInfo: galleryInfo,
           showFullGalleryInfo: true,
-          changeTo: this.changeGallery,
+          // changeTo: this.changeGallery,
         }}
       />
       <Helmet
@@ -59,11 +59,6 @@ var Gallery = React.createClass({
         ]}
       />
       </div>
-  },
-
-  changeGallery(nextGallery) {
-    console.info('changing to', nextGallery)
-    this.transitionTo('gallery', {gallery: nextGallery})
   },
 })
 

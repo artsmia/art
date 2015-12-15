@@ -1,5 +1,6 @@
 var React = require('react')
-var  {Link} = require('react-router')
+var Router = require('react-router')
+var {Link} = require('react-router')
 var rest = require('rest')
 
 var {galleries, messages} = require('../../data/galleries.json')
@@ -7,6 +8,7 @@ var Markdown = require('../markdown')
 var Map = require('../map')
 
 var GalleryDecorator =  React.createClass({
+  mixins: [Router.Navigation],
   getGalleryInfo(gallery) {
     // gallery can either be `G215` or `room:G215` (or `room:"G215"`)
     var galleryId = gallery.match(/(room:)?"?([^"]*)"?/)[2]
@@ -44,7 +46,7 @@ var GalleryDecorator =  React.createClass({
        number,
        prevLink,
        nextLink,
-       changeTo: this.props.changeTo,
+       changeTo: this.changeGallery,
      }
 
     return <div style={{clear: 'both'}} className="decorator d-gallery">
@@ -57,6 +59,11 @@ var GalleryDecorator =  React.createClass({
       </div>}
       <hr style={{clear: 'both', visibility: 'hidden'}} />
     </div>
+  },
+
+  changeGallery(nextGallery) {
+    console.info('changing to', nextGallery)
+    this.transitionTo('gallery', {gallery: nextGallery})
   },
 
   nextPrevLinks() {
