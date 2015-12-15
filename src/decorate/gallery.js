@@ -4,6 +4,7 @@ var rest = require('rest')
 
 var {galleries, messages} = require('../../data/galleries.json')
 var Markdown = require('../markdown')
+var Map = require('../map')
 
 var GalleryDecorator =  React.createClass({
   getGalleryInfo(gallery) {
@@ -38,14 +39,17 @@ var GalleryDecorator =  React.createClass({
 
      let [prevLink, nextLink] = this.nextPrevLinks()
 
+     let mapProps = {
+       closed: true,
+       number,
+       prevLink,
+       nextLink,
+       changeTo: this.props.changeTo,
+     }
+
     return <div style={{clear: 'both'}} className="decorator d-gallery">
       <div className="info">
-        <img src={`http://artsmia.github.io/map/galleries/${number}.png`} />
-        <div>
-          {prevLink}
-          <span> G{number} </span>
-          {nextLink}
-        </div>
+        <Map {...mapProps} />
       </div>
       {panel && <div>
         <Markdown>{panel}</Markdown>

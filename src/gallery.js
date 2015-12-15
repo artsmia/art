@@ -11,7 +11,7 @@ var Markdown = require('./markdown')
 var Peek = require('./peek')
 
 var Gallery = React.createClass({
-  mixins: [Router.State],
+  mixins: [Router.State, Router.Navigation],
 
   statics: {
     fetchData: {
@@ -47,7 +47,8 @@ var Gallery = React.createClass({
         {...this.props}
         summaryProps={{
           galleryInfo: galleryInfo,
-          showFullGalleryInfo: true
+          showFullGalleryInfo: true,
+          changeTo: this.changeGallery,
         }}
       />
       <Helmet
@@ -58,6 +59,11 @@ var Gallery = React.createClass({
         ]}
       />
       </div>
+  },
+
+  changeGallery(nextGallery) {
+    console.info('changing to', nextGallery)
+    this.transitionTo('gallery', {gallery: nextGallery})
   },
 })
 
