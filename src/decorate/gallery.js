@@ -11,13 +11,13 @@ var GalleryDecorator =  React.createClass({
     // gallery can either be `G215` or `room:G215` (or `room:"G215"`)
     var galleryId = gallery.match(/(room:)?"?([^"]*)"?/)[2]
     var number = galleryId.replace(/g/i, '')
-    var gallery = galleries[number]
+    var galleryInfo = galleries[number]
     this.fetchData(number)
 
     return {
       number,
-      gallery,
-      panel: this.props.galleryInfo,
+      galleryInfo,
+      panel: this.props.galleryPanel,
     }
   },
 
@@ -31,7 +31,7 @@ var GalleryDecorator =  React.createClass({
 
   render() {
     if(this.props.notOnView) return <NotOnViewGalleryDecorator />
-    var {number, gallery, panel} = this.state
+    var {number, galleryInfo, panel} = this.state
     var showFullInfo = this.props.showFullGalleryInfo
     if(panel && !showFullInfo) {
        panel = panel.slice(0, 200) + '…'
@@ -46,12 +46,14 @@ var GalleryDecorator =  React.createClass({
        nextLink,
      }
 
+     var info = panel || `# ${galleryInfo.title}`
+
     return <div style={{clear: 'both'}} className="decorator d-gallery">
       <div>
         <Map {...mapProps} />
       </div>
-      {panel && <div className="info">
-        <Markdown>{panel}</Markdown>
+      {info && <div className="info">
+        <Markdown>{info}</Markdown>
         {!showFullInfo && <Link to='gallery' params={{gallery: number}}>More info</Link>}
       </div>}
       <hr style={{clear: 'both', visibility: 'hidden'}} />
@@ -59,12 +61,12 @@ var GalleryDecorator =  React.createClass({
   },
 
   nextPrevLinks() {
-    var {number, gallery, panel} = this.state
-    if(!gallery) return []
+    var {number, galleryInfo, panel} = this.state
+    if(!galleryInfo) return []
 
     return this.props.showFullGalleryInfo ?
-      [<Link to='gallery' params={{gallery: gallery.prev}}>&larr; G{gallery.prev}</Link>, <Link to='gallery' params={{gallery: gallery.next}}>G{gallery.next} &rarr;</Link>] :
-      [<Link to='searchResults' params={{terms: `G${gallery.prev}`}}>&larr; G{gallery.prev}</Link>, <Link to='searchResults' params={{terms: `G${gallery.next}`}}>G{gallery.next} &rarr;</Link>]
+      [<Link to='gallery' params={{gallery: galleryInfo.prev}}>&larr; G{galleryInfo.prev}</Link>, <Link to='gallery' params={{gallery: galleryInfo.next}}>G{galleryInfo.next} &rarr;</Link>] :
+      [<Link to='searchResults' params={{terms: `G${galleryInfo.prev}`}}>&larr; G{galleryInfo.prev}</Link>, <Link to='searchResults' params={{terms: `G${galleryInfo.next}`}}>G{galleryInfo.next} &rarr;</Link>]
   },
 
   fetchData(number) {

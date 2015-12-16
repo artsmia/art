@@ -9,6 +9,7 @@ var SearchResults = require('./search-results')
 var GalleryDecorator = require('./decorate/gallery.js')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
+var {galleries, messages} = require('../data/galleries.json')
 
 var Gallery = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -37,8 +38,12 @@ var Gallery = React.createClass({
   render() {
     var {gallery} = this.props.params
     var facet = `room:"${gallery}"`
-    var galleryInfo = this.props.data.gallery
-    var galleryTitle = galleryInfo && galleryInfo.replace(/^# /, '').split('\n')[0]
+    var galleryPanel = this.props.data.gallery
+    var number = gallery.replace(/g/i, '')
+    var galleryInfo = galleries[number]
+    var galleryTitle = galleryPanel ?
+      galleryPanel.replace(/^# /, '').split('\n')[0] :
+      galleryInfo.title
     var pageTitle = `${gallery}: ${galleryTitle || 'On view now'}`
 
     return <div>
@@ -46,7 +51,7 @@ var Gallery = React.createClass({
         facet={facet}
         {...this.props}
         summaryProps={{
-          galleryInfo: galleryInfo,
+          galleryPanel: galleryPanel,
           showFullGalleryInfo: true,
           // changeTo: this.changeGallery,
         }}
