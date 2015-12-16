@@ -9,6 +9,7 @@ var SEARCH = require('./endpoints').search
 var rest = require('rest')
 var Search = require('./search')
 var findDepartment = require('./department-slug')
+var Map = require('./map')
 
 var Home = React.createClass({
   statics: {
@@ -36,14 +37,18 @@ var Home = React.createClass({
         suggestStyle={{margin: "1em 3em"}}
         bumpSearchBox={smallViewport}
         {...this.props} />
-      <HomeDepartments />
+      <HomeDepartmentsAndPages />
+      <Map
+        startOpen={true}
+        floor={3}
+      />
     </div>
   },
 })
 
 module.exports = Home
 
-var HomeDepartments = React.createClass({
+var HomeDepartmentsAndPages = React.createClass({
   departments: [
     "Art of Africa and the Americas",
     "Chinese, South and Southeast Asian Art",

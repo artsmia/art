@@ -1,33 +1,38 @@
 var React = require('react')
+var Router = require('react-router')
 var cx = require('classnames')
 var Isvg = require('react-inlinesvg')
 
 var Map = React.createClass({
+  mixins: [Router.Navigation],
+
   render() {
     var {number, prevLink, nextLink} = this.props
     var thumbnail = <img src={`http://artsmia.github.io/map/galleries/${number}.png`} />
+    var floor = this.props.floor || parseInt(number/100)
     var svg = <Isvg
-      src={`http://localhost:1314/map/svgs/${parseInt(number/100)}.svg`}
+      src={`/map/svgs/${floor}.svg`}
       onLoad={this.handleSvgLoad}
+      preloader={React.createClass({render: () => thumbnail})}
     >
-      oops no svg
+      {thumbnail}
     </Isvg>
 
     return <div>
       <span className={cx('map', {open: this.state.open})} onClick={this.handleClick}>
         {this.state.open ? svg : thumbnail}
       </span>
-      <div>
+      {number && prevLink && <div>
         {prevLink}
         <span> G{number} </span>
         {nextLink}
-      </div>
+      </div>}
     </div>
   },
 
   getInitialState() {
     return {
-      open: false,
+      open: this.props.startOpen || false,
     }
   },
 
@@ -37,7 +42,7 @@ var Map = React.createClass({
 
     var text = this.getSvgText(event.target)
     var gallery = text.textContent.match(/(\d+a?)/)[0]
-    this.props.changeTo(gallery)
+    this.changeGallery(gallery)
   },
 
   // recursively climb the SVG from where the click event happened
@@ -54,6 +59,11 @@ var Map = React.createClass({
 
   handleSvgLoad(event) {
   },
+
+  changeGallery(nextGallery) {
+    this.transitionTo('gallery', {gallery: nextGallery})
+  },
+
 })
 
 module.exports = Map
