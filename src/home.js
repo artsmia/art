@@ -41,6 +41,7 @@ var Home = React.createClass({
       <Map
         startOpen={true}
         floor={3}
+        style={{backgroundColor: 'rgba(35, 35, 35, 0.8)'}}
       />
     </div>
   },

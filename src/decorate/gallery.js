@@ -47,10 +47,10 @@ var GalleryDecorator =  React.createClass({
      }
 
     return <div style={{clear: 'both'}} className="decorator d-gallery">
-      <div className="info">
+      <div>
         <Map {...mapProps} />
       </div>
-      {panel && <div>
+      {panel && <div className="info">
         <Markdown>{panel}</Markdown>
         {!showFullInfo && <Link to='gallery' params={{gallery: number}}>More info</Link>}
       </div>}
@@ -60,6 +60,7 @@ var GalleryDecorator =  React.createClass({
 
   nextPrevLinks() {
     var {number, gallery, panel} = this.state
+    if(!gallery) return []
 
     return this.props.showFullGalleryInfo ?
       [<Link to='gallery' params={{gallery: gallery.prev}}>&larr; G{gallery.prev}</Link>, <Link to='gallery' params={{gallery: gallery.next}}>G{gallery.next} &rarr;</Link>] :

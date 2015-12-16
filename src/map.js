@@ -7,26 +7,39 @@ var Map = React.createClass({
   mixins: [Router.Navigation],
 
   render() {
-    var {number, prevLink, nextLink} = this.props
-    var thumbnail = <img src={`http://artsmia.github.io/map/galleries/${number}.png`} />
-    var floor = this.props.floor || parseInt(number/100)
-    var svg = <Isvg
-      src={`/map/svgs/${floor}.svg`}
-      onLoad={this.handleSvgLoad}
-      preloader={React.createClass({render: () => thumbnail})}
-    >
-      {thumbnail}
-    </Isvg>
-
-    return <div>
-      <span className={cx('map', {open: this.state.open})}
+    var {number, prevLink, nextLink, ...extraProps} = this.props
+    var thumbnail = <img
+        src={`http://artsmia.github.io/map/galleries/${number}.png`}
         onClick={this.handleClick}
+        />
+    var floor = this.state.floor || this.props.floor || parseInt(number/100)
+    var svg = <div>
+      <div
+        onClick={this.handleMapClick}
         onMouseOver={this.handleMouseOver}
-        onMouseOut={this.handleMouseOut}
-      >
+        onMouseOut={this.handleMouseOut}>
+        <Isvg
+          src={`/map/svgs/${floor}.svg`}
+          key={floor}
+          onLoad={this.handleSvgLoad}
+          preloader={React.createClass({render: () => thumbnail})}
+        >
+          {thumbnail}
+        </Isvg>
+      </div>
+      <FloorControls
+        map={this}
+        active={floor}
+        handleChange={this.changeFloor}
+        closeMap={() => this.setState({open: false})}
+        />
+    </div>
+
+    return <div {...extraProps}>
+      <div className={cx('map', {open: this.state.open})}>
         {this.state.open ? svg : thumbnail}
-      </span>
-      {number && prevLink && <div>
+      </div>
+      {number && prevLink && <div style={{textAlign: 'center'}}>
         {prevLink}
         <span> G{number} </span>
         {nextLink}
@@ -42,19 +55,25 @@ var Map = React.createClass({
 
   handleClick() {
     if(!this.state.open) return this.setState({open: true})
+  },
 
+  handleMapClick() {
     var text = this.getSvgText(event.target)
-    var gallery = text.textContent.match(/(\d+a?)/)[0]
-    this.highlightGallery(text)
-    this.changeGallery(gallery)
+    if(text) {
+      var gallery = text.textContent.match(/(\d+a?)/)[0]
+      this.highlightGallery(text)
+      this.changeGallery(gallery)
+    }
   },
 
   handleMouseOver() {
     if(!this.state.open) return // don't handle mouseover until map opens
 
     var text = this.getSvgText(event.target)
-    var gallery = text.textContent.match(/(\d+a?)/)[0]
-    this.hoverGallery(text)
+    if(text) {
+      var gallery = text.textContent.match(/(\d+a?)/)[0]
+      this.hoverGallery(text)
+    }
   },
 
   handleMouseOut() {
@@ -107,7 +126,7 @@ var Map = React.createClass({
   resetGallery(poly) {
     // `style.fill` overrides the `fill` attribute without clobbering it
     // so we can reset it to the original color with `''`
-    poly.style.setProperty('fill', '')
+    poly && poly.style.setProperty('fill', '')
   },
 
   componentDidUpdate(_, prevState) {
@@ -117,6 +136,34 @@ var Map = React.createClass({
 
     if(prevActive != activePoly) this.resetGallery(prevActive)
     if(prevHovered != hoveredPoly && prevHovered != activePoly) this.resetGallery(prevHovered)
+  },
+
+  changeFloor(toFloor) {
+    this.setState({floor: toFloor})
+  },
+})
+
+var FloorControls = React.createClass({
+  render() {
+    var buttonStyle = {display: 'block'}
+    var floorControls = [3,2,1].map(_floor => {
+      var text = _floor == this.props.active ? `floor ${_floor}` : _floor
+      return <button style={buttonStyle} onClick={this.props.handleChange.bind(this.props.map, _floor)}>
+        {text}
+      </button>
+    })
+
+    var controlStyle = {
+      float: 'right',
+      marginTop: '-5em',
+      position: 'relative',
+      zIndex: '10',
+    }
+
+    return <div style={controlStyle}>
+      {floorControls}
+      <button style={buttonStyle} onClick={this.props.closeMap}>close map</button>
+    </div>
   },
 })
 
