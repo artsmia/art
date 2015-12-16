@@ -38,11 +38,13 @@ var Home = React.createClass({
         bumpSearchBox={smallViewport}
         {...this.props} />
       <HomeDepartmentsAndPages />
-      <Map
-        startOpen={true}
-        floor={3}
-        style={{backgroundColor: 'rgba(35, 35, 35, 0.8)'}}
-      />
+      <div style={{backgroundColor: 'rgba(35, 35, 35, 0.8)', paddingBottom: '3em', width: '100%', overflow: 'scroll'}}>
+        <Map
+          startOpen={true}
+          floor={3}
+          style={{maxWidth: '60em', margin: '0 auto'}}
+        />
+      </div>
     </div>
   },
 })
