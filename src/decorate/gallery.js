@@ -34,19 +34,19 @@ var GalleryDecorator =  React.createClass({
     var {number, galleryInfo, panel} = this.state
     var showFullInfo = this.props.showFullGalleryInfo
     if(panel && !showFullInfo) {
-       panel = panel.slice(0, 200) + '…'
-     }
+      panel = panel.split('\n').slice(0,3).join('\n')
+    }
 
-     let [prevLink, nextLink] = this.nextPrevLinks()
+    let [prevLink, nextLink] = this.nextPrevLinks()
 
-     let mapProps = {
-       closed: true,
-       number,
-       prevLink,
-       nextLink,
-     }
+    let mapProps = {
+      closed: true,
+      number,
+      prevLink,
+      nextLink,
+    }
 
-     var info = panel || `# ${galleryInfo.title}`
+    var info = panel || `# ${galleryInfo.title}`
 
     return <div style={{clear: 'both'}} className="decorator d-gallery">
       <div>
