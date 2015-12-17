@@ -12,7 +12,9 @@ var Map = React.createClass({
         src={`http://artsmia.github.io/map/galleries/${number}.png`}
         onClick={this.handleClick}
         />
-    var floor = this.state.floor || this.props.floor || parseInt(number/100)
+    var floor = this.state.floor
+      || this.props.floor
+      || parseInt(parseInt(number)/100)
     var svg = <div>
       <div
         onClick={this.handleMapClick}
