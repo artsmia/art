@@ -37,7 +37,7 @@ var Search = React.createClass({
       maxWorks: 10,
       artworks: headerArtworks,
       onClick: this.updateFromQuilt,
-      disableHover: this.props.hideResults,
+      disableHover: this.props.hideResults || this.props.disableHover,
       lazyLoad: !this.context.universal,
       darken: darkenQuilt,
     }, this.props.quiltProps || {})

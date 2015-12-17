@@ -55,6 +55,7 @@ var Gallery = React.createClass({
           showFullGalleryInfo: true,
           // changeTo: this.changeGallery,
         }}
+        disableHover={true} // TODO: fix :hover going to the search results page
       />
       <Helmet
         title={pageTitle}
