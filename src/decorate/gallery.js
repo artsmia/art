@@ -64,9 +64,16 @@ var GalleryDecorator =  React.createClass({
     var {number, galleryInfo, panel} = this.state
     if(!galleryInfo) return []
 
-    return this.props.showFullGalleryInfo ?
-      [<Link to='gallery' params={{gallery: galleryInfo.prev}}>&larr; G{galleryInfo.prev}</Link>, <Link to='gallery' params={{gallery: galleryInfo.next}}>G{galleryInfo.next} &rarr;</Link>] :
-      [<Link to='searchResults' params={{terms: `G${galleryInfo.prev}`}}>&larr; G{galleryInfo.prev}</Link>, <Link to='searchResults' params={{terms: `G${galleryInfo.next}`}}>G{galleryInfo.next} &rarr;</Link>]
+    var {prev, next} = galleryInfo
+
+    var linkParams = (adjacentGallery) => this.props.showFullGalleryInfo ?
+      {to: 'gallery', params: {gallery: adjacentGallery}} :
+      {to: 'searchResults', params: {terms: `G${adjacentGallery}`}}
+
+    return [
+      prev && <Link {...linkParams(prev)}>&larr; G{prev}</Link>,
+      next && <Link {...linkParams(next)}>G{next} &rarr;</Link>,
+    ]
   },
 
   fetchData(number) {

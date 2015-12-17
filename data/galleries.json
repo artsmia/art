@@ -6,7 +6,7 @@
   },
 
   "galleries": {
-    "100": {"title": "General Mills Welcome Gallery - Museum Lobby", "next": "103", "id": "100"},
+    "100": {"title": "General Mills Welcome Gallery - Museum Lobby", "prev": "380", "next": "103", "id": "100"},
     "103": {"title": "Cargill Gallery", "prev": "100", "next": "110", "id": "103"},
     "110": {"title": "Katherine Kierland Herberger Gallery - Community Commons Gallery", "prev": "103", "next": "180", "id": "110"},
     "111": {"title": "Carol Jackley Educational Classroom", "prev": "110", "next": "112", "id": "111"},
@@ -156,7 +156,7 @@
     "377": {"title": "Modern & Contemporary: Mary Ingebrand-Pohlad Gallery", "prev": "376", "next": "378", "photo": "img/galleries/headers/377.jpg", "id": "377"},
     "378": {"title": "Modern & Contemporary: Wells Fargo Gallery", "prev": "377", "next": "379", "id": "378"},
     "379": {"title": "Modern & Contemporary: Wells Fargo Gallery", "prev": "378", "next": "380", "id": "379"},
-    "380": {"title": "Donna and Cargill MacMillan Atrium", "prev": "379", "id": "380"}
+    "380": {"title": "Donna and Cargill MacMillan Atrium", "prev": "379", "next": "100", "id": "380"}
   },
 
   "messages": {

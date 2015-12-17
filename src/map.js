@@ -41,7 +41,7 @@ var Map = React.createClass({
       <div className={cx('map', {open: this.state.open})}>
         {this.state.open ? svg : thumbnail}
       </div>
-      {number && prevLink && <div style={{textAlign: 'center'}}>
+      {number && (prevLink || nextLink) && <div style={{textAlign: 'center'}}>
         {prevLink}
         <span> G{number} </span>
         {nextLink}
