@@ -11,6 +11,7 @@ var GalleryDecorator =  React.createClass({
     // gallery can either be `G215` or `room:G215` (or `room:"G215"`)
     var galleryId = gallery.match(/(room:)?"?([^"]*)"?/)[2]
     var number = galleryId.replace(/g/i, '')
+    if(number == '266-274') number = '266-G274'
     var galleryInfo = galleries[number]
     this.fetchData(number)
 

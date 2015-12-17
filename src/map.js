@@ -63,6 +63,7 @@ var Map = React.createClass({
     var text = this.getSvgText(event.target)
     if(text) {
       var gallery = text.textContent.match(/(\d+a?)/)[0]
+      if(266 <= parseInt(gallery) && parseInt(gallery) <= 274) gallery = '266-G274'
       this.highlightGallery(text)
       this.changeGallery(gallery)
     }

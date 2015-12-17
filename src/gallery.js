@@ -24,7 +24,7 @@ var Gallery = React.createClass({
         })
       },
       searchResults: (params, query) => {
-        if(!params.gallery.match(/g/i)) params.gallery = `G${params.gallery}`
+        if(!params.gallery.match(/^g/i)) params.gallery = `G${params.gallery}`
         params.terms = '*'
         params.splat = 'room:"'+params.gallery+'"'
         return SearchResults.fetchData.searchResults(params, query)
@@ -40,6 +40,7 @@ var Gallery = React.createClass({
     var facet = `room:"${gallery}"`
     var galleryPanel = this.props.data.gallery
     var number = gallery.replace(/g/i, '')
+    if(number == '266-274') number = '266-G274'
     var galleryInfo = galleries[number]
     var galleryTitle = galleryPanel ?
       galleryPanel.replace(/^# /, '').split('\n')[0] :
