@@ -15,7 +15,7 @@ var Map = React.createClass({
     var floor = this.state.floor
       || this.props.floor
       || parseInt(parseInt(number)/100)
-    var svg = <div>
+    var svg = <div style={{cursor: 'pointer'}}>
       <div
         onClick={this.handleMapClick}
         onMouseOver={this.handleMouseOver}
@@ -59,7 +59,7 @@ var Map = React.createClass({
     if(!this.state.open) return this.setState({open: true})
   },
 
-  handleMapClick() {
+  handleMapClick(event) {
     var text = this.getSvgText(event.target)
     if(text) {
       var gallery = text.textContent.match(/(\d+a?)/)[0]
@@ -69,7 +69,7 @@ var Map = React.createClass({
     }
   },
 
-  handleMouseOver() {
+  handleMouseOver(event) {
     if(!this.state.open) return // don't handle mouseover until map opens
 
     var text = this.getSvgText(event.target)
@@ -79,7 +79,7 @@ var Map = React.createClass({
     }
   },
 
-  handleMouseOut() {
+  handleMouseOut(event) {
     this.setState({hoveredPoly: null})
   },
 
@@ -122,7 +122,7 @@ var Map = React.createClass({
   colorGallery(element) {
     var accentColor = '#fff'
     var poly = element.parentElement.querySelector('polygon')
-    poly.style.setProperty('fill', accentColor)
+    poly && poly.style.setProperty('fill', accentColor)
     return poly
   },
 
