@@ -7,10 +7,12 @@ var GlobalNavigation = require('./navigation')
 
 var App = React.createClass({
   render() {
+    var logo = this.makeLogo()
+
     return (
       <div className={this.props.universal && 'universal'}>
         <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
-          <Link to="home"><div className='logo-container'></div></Link>
+          {logo}
           {this.globalToolBar()}
         </header>
         <Helmet
@@ -58,17 +60,30 @@ var App = React.createClass({
       )
       this.setState({showMenu: false})
   },
-  toggleMenu() {
+  toggleMenu(event) {
     this.setState({
       showMenu: !this.state.showMenu,
       showSearch: false
     })
+
+    event.preventDefault()
   },
 
   getInitialState() {
     return {
       showSearch: false
     }
+  },
+
+  // wrap in a click handler when the navigation isn't visible, and open the nav
+  // once nav is open, a second click goes to artsmia.org
+  makeLogo() {
+    var {showMenu} = this.state
+    var logo = <div className='logo-container'></div>
+
+    return showMenu ?
+      <a href="http://new.artsmia.org" title="Back to artsmia.org">{logo}</a> :
+      <a href="#" title="Show menu" onClick={this.toggleMenu}>{logo}</a>
   },
 })
 App.childContextTypes = {universal: React.PropTypes.bool}
