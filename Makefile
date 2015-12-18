@@ -16,6 +16,8 @@ build: css/critical.css
 	NODE_ENV=$(ENV) npm run build
 	sassc -lm sass/main.scss css/main.css
 
-deploy: build
+deploy:
 	scp index.html bundle.js $(target):/var/www/art/
 	scp css/main.css css/critical.css $(target):/var/www/art/css/
+	rsync -avz ~/Sites/mia-map/svgs/* $(target):/var/www/art/map/svgs/
+	rsync -avz ~/Sites/mia-map/galleries/* $(target):/var/www/art/map/galleries/
