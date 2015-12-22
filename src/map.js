@@ -120,6 +120,7 @@ var Map = React.createClass({
   },
 
   colorGallery(element) {
+    if(!element) return
     var accentColor = '#fff'
     var poly = element.parentElement.querySelector('polygon')
     poly && poly.style.setProperty('fill', accentColor)
@@ -158,14 +159,14 @@ var FloorControls = React.createClass({
 
     var controlStyle = {
       float: 'right',
-      marginTop: '-5em',
+      margin: '-7em 2em 0 0',
       position: 'relative',
       zIndex: '10',
     }
 
     return <div style={controlStyle}>
       {floorControls}
-      <button style={buttonStyle} onClick={this.props.closeMap}>close map</button>
+      {!this.props.startOpen && <button style={buttonStyle} onClick={this.props.closeMap}>close map</button>}
     </div>
   },
 })

@@ -1193,13 +1193,31 @@ hr{margin:0;}
 
 .d-gallery .info {
   padding: 1em;
+  padding-top: 0;
   max-width: 35em;
+}
+
+.map.open > div {
+  min-height: 77vh;
+  position: relative;
+}
+
+.map.open .controls {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  z-index: 10;
 }
 
 @media screen and (max-width: 1268px) {
   .decorator-wrap .d-gallery {
     flex-direction: column;
   }
+
+  .d-gallery .info {
+    padding-top: 1em;
+  }
+
 
   .d-gallery .map.open {
     overflow: scroll;
