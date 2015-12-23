@@ -76,6 +76,7 @@ var Map = React.createClass({
     if(text) {
       var gallery = text.textContent.match(/(\d+a?)/)[0]
       this.hoverGallery(text)
+      this.props.onHover && this.props.onHover(gallery)
     }
   },
 

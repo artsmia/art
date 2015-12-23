@@ -9,7 +9,7 @@ var SEARCH = require('./endpoints').search
 var rest = require('rest')
 var Search = require('./search')
 var findDepartment = require('./department-slug')
-var Map = require('./map')
+var MapPage = require('./map-page')
 
 var Home = React.createClass({
   statics: {
@@ -38,13 +38,7 @@ var Home = React.createClass({
         bumpSearchBox={smallViewport}
         {...this.props} />
       <HomeDepartmentsAndPages />
-      <div style={{backgroundColor: 'rgba(35, 35, 35, 0.8)', paddingBottom: '3em', width: '100%', overflow: 'scroll'}}>
-        <Map
-          startOpen={true}
-          floor={3}
-          style={{maxWidth: '60em', margin: '0 auto'}}
-        />
-      </div>
+      <MapPage hideList={true} />
     </div>
   },
 })
