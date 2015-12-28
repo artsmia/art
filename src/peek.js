@@ -91,7 +91,7 @@ var Peek = React.createClass({
     var hits = result && result.hits && result.hits.hits || []
     var offset = this.props.offset || 0
 
-    if(!result || !hits || hits.length <= 1) return <span/>
+    if(!result || !hits || hits.length <= (this.props.showSingleResult ? 0 : 1)) return <span/>
     var wImg = ImageQuilt.getImagedResults(hits).slice(offset, offset+10)
     return <ImageQuilt
       maxRows={1}
@@ -162,6 +162,7 @@ var Peek = React.createClass({
     return {
       tag: "div",
       showIcon: true,
+      showSingleResult: false,
     }
   },
 })
