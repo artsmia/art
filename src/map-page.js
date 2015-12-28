@@ -12,6 +12,8 @@ var MapPage = React.createClass({
     var gallery = this.state && this.state.hoveredGallery
     var galleryInfo = galleries[gallery]
 
+    var minHeight = this.props.hideList ? '25rem' : '1rem'
+
     return <div>
       <div style={{backgroundColor: 'rgba(35, 35, 35, 0.8)', paddingBottom: '3em', width: '100%', overflow: 'scroll'}}>
         <Map
@@ -23,7 +25,7 @@ var MapPage = React.createClass({
         />
       </div>
 
-      <div style={{minHeight: '5rem'}}>
+      <div style={{minHeight}}>
         {gallery && <div>
           <h3 style={{textAlign: 'center'}}>{galleryInfo.id} — {galleryInfo.title}</h3>
           <Peek key={gallery} q={`room:G${gallery}`} />
