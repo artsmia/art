@@ -48,8 +48,12 @@ var Peek = React.createClass({
     var Tag = this.props.tag
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
+    var linkProps = this.props.linkProps || {
+      to: "searchResults",
+      params: {terms: this.state.facetedQ || this.state.q}
+    }
     var peekText = this.context.universal ?
-      <Link itemProp={microdata ? "url" : ''} to="searchResults" params={{terms: this.state.facetedQ || this.state.q}}>{this.props.children}</Link> :
+      <Link itemProp={microdata ? "url" : ''} {...linkProps}>{this.props.children}</Link> :
       this.props.children
 
     return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: startedOpen, startedClosed: !startedOpen, open:this.state.open})} style={{cursor: 'pointer'}}>
@@ -59,7 +63,7 @@ var Peek = React.createClass({
       </i>}
       {this.state.open && this.state.facetedQ && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
-        <Link to="searchResults" params={{terms: this.state.facetedQ}} style={{width: '100%'}}>
+        <Link {...linkProps} style={{width: '100%'}}>
           {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.state.facet && `(${this.state.facet})`}
           <span style={{float: 'right', marginRight: '10px'}} className="more-results-link">View more results</span>
         </Link>

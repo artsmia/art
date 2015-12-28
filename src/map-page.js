@@ -69,8 +69,11 @@ var GalleryPeek = React.createClass({
   render() {
     var {g} = this.props
     var {universal} = this.context
+    var link = {to: "gallery", params: {gallery: g.id}}
     var peek = <li style={{marginTop: !universal ? '1em' : 0}}>
-      <Peek q={`room:G${g.id}`}>{g.id} — {g.title}</Peek>
+      <Peek q={`room:G${g.id}`} linkProps={link}>
+        {g.id} — {g.title}
+      </Peek>
     </li>
 
     return universal ?
