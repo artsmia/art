@@ -34,6 +34,7 @@ var Map = React.createClass({
         active={floor}
         handleChange={this.changeFloor}
         closeMap={() => this.setState({open: false})}
+        startOpen={this.props.startOpen}
         />
     </div>
 

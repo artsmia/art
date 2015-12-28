@@ -1081,7 +1081,8 @@ hr{margin:0;}
 }
 
 .open i > span{
-    padding-left:10px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .peek.startedClosed.open {
@@ -1398,7 +1399,7 @@ button  {
     transition: all 0.5s ease;
  }
 
-.invalid:hover, .lazy-load-visible:hover{
+.invalid:hover, .quilt-wrap .lazy-load-visible:hover{
 	opacity:0.68;
 }
 

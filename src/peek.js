@@ -19,6 +19,7 @@ var Peek = React.createClass({
   setup(props) {
     var qs
     var {q, facet} = props
+    var results = this.state && this.state.results || {}
     var open = !!q
     if(q && q.match(/:/) && !facet) {
       [facet, ...qs] = q.split(/:/)
@@ -29,7 +30,7 @@ var Peek = React.createClass({
     return {
       facet,
       open,
-      results: {},
+      results,
       offset: props.offset || 0,
       query: q,
       facetedQ: this.getFacetedQ(q, facet),

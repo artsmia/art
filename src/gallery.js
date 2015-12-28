@@ -29,9 +29,6 @@ var Gallery = React.createClass({
         params.splat = 'room:"'+params.gallery+'"'
         return SearchResults.fetchData.searchResults(params, query)
       },
-      // departments: (params, query) => {
-      //   return rest(endpoint).then((r) => JSON.parse(r.entity))
-      // }
     },
 
     willTransitionTo: function (transition, params, query, callback) {

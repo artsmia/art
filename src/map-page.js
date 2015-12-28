@@ -12,7 +12,7 @@ var MapPage = React.createClass({
     var gallery = this.state && this.state.hoveredGallery
     var galleryInfo = galleries[gallery]
 
-    var minHeight = this.props.hideList ? '25rem' : '1rem'
+    var minHeight = this.props.hideList ? '15rem' : '1rem'
 
     return <div>
       <div style={{backgroundColor: 'rgba(35, 35, 35, 0.8)', paddingBottom: '3em', width: '100%', overflow: 'scroll'}}>
@@ -28,7 +28,7 @@ var MapPage = React.createClass({
       <div style={{minHeight}}>
         {gallery && <div>
           <h3 style={{textAlign: 'center'}}>{galleryInfo.id} — {galleryInfo.title}</h3>
-          <Peek key={gallery} q={`room:G${gallery}`} />
+          <Peek key={`preview-${gallery}`} q={`room:G${gallery}`} />
         </div>}
       </div>
 
@@ -43,7 +43,7 @@ var MapPage = React.createClass({
     .map(number => galleries[number])
 
     return <ul style={{margin: '1em'}}>
-      {gs.map(g => <GalleryPeek g={g} style={{minHeight: '78px'}} />)}
+      {gs.map(g => <GalleryPeek key={g.id} g={g} style={{minHeight: '78px'}} />)}
     </ul>
   },
 
@@ -71,7 +71,7 @@ var GalleryPeek = React.createClass({
     var {universal} = this.context
     var link = {to: "gallery", params: {gallery: g.id}}
     var peek = <li style={{marginTop: !universal ? '1em' : 0}}>
-      <Peek q={`room:G${g.id}`} linkProps={link}>
+      <Peek q={`room:G${g.id}`} linkProps={link} showIcon={false}>
         {g.id} — {g.title}
       </Peek>
     </li>
