@@ -1038,6 +1038,7 @@ hr{margin:0;}
 .peek {
   margin-right: 3px;
   cursor: pointer;
+  overflow: hidden;
 }
 .peek.startedOpen, .startedOpen .peek {
   margin-right: 0;
