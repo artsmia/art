@@ -37,9 +37,13 @@ var MapPage = React.createClass({
   },
 
   listGalleries() {
-    var gs = Object.keys(galleries).map(number => galleries[number])
+    var skipGalleries = [111, 112, 113, 114, 267, 268, 269, 270, 271, 272, 273, 274]
+    var gs = Object.keys(galleries)
+    .filter(g => skipGalleries.indexOf(parseInt(g)) < 0)
+    .map(number => galleries[number])
+
     return <ul style={{margin: '1em'}}>
-      {gs.map(g => <li><Link to="gallery" params={{gallery: g.id}}>{g.id} — {g.title}</Link></li>)}
+      {gs.map(g => <GalleryPeek g={g} style={{minHeight: '78px'}} />)}
     </ul>
   },
 
@@ -58,5 +62,26 @@ var MapPage = React.createClass({
     debugger
   }
 })
+
+var LazyLoad = require('react-lazy-load')
+
+var GalleryPeek = React.createClass({
+  render() {
+    var {g} = this.props
+    var {universal} = this.context
+    var peek = <li style={{marginTop: !universal ? '1em' : 0}}>
+      <Peek q={`room:G${g.id}`}>{g.id} — {g.title}</Peek>
+    </li>
+
+    return universal ?
+      peek :
+      <div style={this.props.style}>
+        <LazyLoad>{peek}</LazyLoad>
+      </div>
+  },
+})
+GalleryPeek.contextTypes = {
+  universal: React.PropTypes.bool
+}
 
 module.exports = MapPage
