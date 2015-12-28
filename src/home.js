@@ -38,7 +38,13 @@ var Home = React.createClass({
         bumpSearchBox={smallViewport}
         {...this.props} />
       <HomeDepartmentsAndPages />
-      <MapPage hideList={true} />
+      <div id="map">
+        <MapPage hideList={true}>
+          <Link to="map" style={{textAlign: 'center', float: 'right', paddingRight: '1em'}}>
+            All galleries
+          </Link>
+        </MapPage>
+      </div>
     </div>
   },
 })

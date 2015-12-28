@@ -23,6 +23,8 @@ var MapPage = React.createClass({
           onHover={this.handleGalleryHover}
           onLeave={this.focusLost}
         />
+
+        {this.props.children && this.props.children}
       </div>
 
       <div style={{minHeight}}>
