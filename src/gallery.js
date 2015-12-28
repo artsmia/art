@@ -33,6 +33,20 @@ var Gallery = React.createClass({
       //   return rest(endpoint).then((r) => JSON.parse(r.entity))
       // }
     },
+
+    willTransitionTo: function (transition, params, query, callback) {
+      var {gallery} = params
+
+      var isWithinTargetGalleries = gallery !== '266-G274' &&
+        266 <= parseInt(gallery)
+        && parseInt(gallery) <= 274
+
+      if(isWithinTargetGalleries) {
+        transition.redirect('gallery', {...params, gallery: '266-G274'})
+      }
+
+      callback()
+    },
   },
 
   render() {
