@@ -264,7 +264,22 @@ var ArtworkRelatedContent = React.createClass({
       <i className="material-icons">launch</i>
       </div>
     </div>,
-    "adopt-a-painting": (json) => <span />,
+    "adopt-a-painting": (json) => {if(json.adopted === "1") {
+      return <div className="adopt-ptg" style={{clear:'both'}}>
+      <h3>This painting has been adopted.</h3>
+      <a href="/info/adopt-a-painting">Learn more about adopting a painting. <i className="material-icons">launch</i></a>
+      </div>
+    } else {
+      return <div className="adopt-ptg">
+        <div style={{width: "100%"}}>
+        <h3>Adopt-a-Painting</h3>
+        <p>Cost <span className="cost">{json.cost}</span></p>
+        <p dangerouslySetInnerHTML={{__html: json.description.replace('/>', '/><br/>')}}>
+        </p>
+        <a href="/info/adopt-a-painting">Learn how to adopt this painting. <i className="material-icons">launch</i></a>
+        </div>
+      </div>
+    }},
     default: (link) => <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
       <div className="overlay">
       <a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a>

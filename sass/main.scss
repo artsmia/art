@@ -859,6 +859,26 @@ h5.details-title {
   bottom:10px;
   left: 10px;
 }
+.explore .adopt-ptg a {
+  font-size:.9em;
+  color: $primary;
+  font-family: $MiaGroteskRegular, sans-serif;
+  position: relative;
+  left:0;
+  bottom:0;
+}
+.explore .adopt-ptg a i {
+  font-size:.9em;
+  color: $primary;
+  position: relative;
+  top: 2px;
+}
+.explore .adopt-ptg a:hover {
+  opacity: .7;
+}
+.explore .adopt-ptg span.cost {
+  font-family: $MiaGroteskBold, sans-serif;
+}
 .newsflash i, .artstory i, .explore-content i{
   font-size:1.5em;
   color: #ffffff;
