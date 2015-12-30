@@ -264,6 +264,7 @@ var ArtworkRelatedContent = React.createClass({
       <i className="material-icons">launch</i>
       </div>
     </div>,
+    "adopt-a-painting": (json) => <span />,
     default: (link) => <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
       <div className="overlay">
       <a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a>
