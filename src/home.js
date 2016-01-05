@@ -89,7 +89,7 @@ var HomeDepartmentsAndPages = React.createClass({
       <div className="welcome mdl-grid">
       <h2>Welcome to Mia&#39;s new Collections website</h2>
       <div className="mdl-cell mdl-cell--9-col">
-        <p>It is our mission to enrich the community by collecting, preserving, and making accessible outstanding works of art from the world’s diverse cultures. With over 89,000 artworks, Mia’s collection includes art from six continents, spanning nearly 40,000 years.  Here you will find world-famous artworks that embody the highest levels of artistic achievement and speak to the enduring power of human creativity to shape our world. </p>
+        <p>It is our mission to enrich the community by collecting, preserving, and making accessible outstanding works of art from the world’s diverse cultures. With over 89,000 artworks, Mia’s collection includes art from six continents, spanning about 20,000 years.  Here you will find world-famous artworks that embody the highest levels of artistic achievement and speak to the enduring power of human creativity to shape our world. </p>
       </div>
       </div>
       <div className="departmentList mdl-grid">
