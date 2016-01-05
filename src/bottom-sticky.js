@@ -50,7 +50,7 @@ var BottomSticky = React.createClass({
     var domNode = React.findDOMNode(this)
 
     var state = {
-      height: domNode.children[0].clientHeight,
+      height: domNode.clientHeight,
       initialScrollY: this.state.isSticky && window.scrollY,
     }
     this.setState(state)

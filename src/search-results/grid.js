@@ -40,7 +40,7 @@ var SearchResultsGrid = React.createClass({
 
     return <div style={{position: 'relative'}}>
       {wrappedQuilt}
-      {focusedResult && <FocusedResult art={focusedResult} {...this.props}/>}
+      {focusedResult && <FocusedResult key={focusedResult.id} art={focusedResult} {...this.props}/>}
     </div>
   },
 

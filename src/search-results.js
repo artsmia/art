@@ -87,6 +87,7 @@ var SearchResults = React.createClass({
         hits={this.props.hits}
         postSearch={this.postSearch(summaryProps)}
         smallViewport={this.state.smallViewport}
+        showRelated={this.props.params.terms.match(/related/)}
         />
     </div>
   },
