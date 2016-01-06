@@ -23,6 +23,9 @@ const SearchSummary = React.createClass({
       "mdl-cell--4-col" :
       "mdl-cell--8-col mdl-cell--4-col-tablet")
 
+    var prettyQuery = searchLanguageMap(search.query)
+    var prettyFilters = searchLanguageMap(search.filters)
+
     return (
       <div className='agg-wrap'>
         <div className="toolbar mdl-grid">
@@ -30,8 +33,8 @@ const SearchSummary = React.createClass({
         <div className={toolbarClasses}><h2 onClick={this.toggleContent}>
           showing {hits.length} {' '}
           {showingAll || <span>of {search.hits.total} {' '}</span>}
-          results matching <code>{search.query}</code>
-          {search.filters && <span> and <code>{decodeURIComponent(search.filters)}</code></span>}
+          results matching <code>{prettyQuery}</code>
+          {search.filters && <span> and <code>{decodeURIComponent(prettyFilters)}</code></span>}
           {showingAll || this.props.showMoreLink}
         </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
         </div>
@@ -39,10 +42,10 @@ const SearchSummary = React.createClass({
         {showAggs && <Aggregations search={search} />}
         <Decorate search={search} params={this.props.params} {...this.props} />
         <Helmet
-          title={`${search.query}`}
+          title={`${prettyQuery}`}
           meta={[
             {property: "robots", content: "noindex"},
-            {property: "og:title", content: `${search.query} | Minneapolis Institute of Art`},
+            {property: "og:title", content: `${prettyQuery} | Minneapolis Institute of Art`},
           ]}
           />
       </div>
@@ -53,5 +56,23 @@ const SearchSummary = React.createClass({
     this.props.toggleAggs()
   },
 })
+
+var searchLanguageMap = (queryText) => {
+  var map = {
+    'recent:true': "Recent Accessions",
+    'highlight:true': "Museum Highlights",
+    'deaccessioned:"true"': "Deaccessioned",
+    '_exists_:"provenance"': "provenance information exists",
+    '_exists_:"related:conservation"': 'Conserved artworks',
+    '_exists_:"related:artstories"': "ArtStories",
+    '_exists_:"related:newsflashes"': "NewsFlashes",
+    '_exists_:"related:audio-stops"': "Audio stops",
+    '_exists_:"related:stories"': "Mia Stories",
+    'room:G*': 'On View',
+    'room:"Not on View"': 'Not on View',
+  }
+
+  return map[queryText] || queryText
+}
 
 module.exports = SearchSummary
