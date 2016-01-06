@@ -103,7 +103,11 @@ var Aggregations = React.createClass({
       'On View': 'room:G*',
       'Not on View': 'room:"Not on View"'
     },
-    'Gist': {}
+    'Image': {
+      'Available': 'image:valid',
+      'Unavailable': 'image:invalid',
+    },
+    'Gist': {},
   },
 })
 

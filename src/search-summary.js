@@ -70,6 +70,8 @@ var searchLanguageMap = (queryText) => {
     '_exists_:"related:stories"': "Mia Stories",
     'room:G*': 'On View',
     'room:"Not on View"': 'Not on View',
+    'image:valid': "Image Available",
+    'image:invalid': "Image Unavailable",
   }
 
   return map[queryText] || queryText
