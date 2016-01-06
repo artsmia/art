@@ -19,58 +19,34 @@ const SearchSummary = React.createClass({
     const showingAll = hits.length == search.hits.total
 
     var smallViewport = window && window.innerWidth <= 500
+    var toolbarClasses = "summaryText mdl-cell " + (smallViewport ?
+      "mdl-cell--4-col" :
+      "mdl-cell--8-col mdl-cell--4-col-tablet")
 
-
-      if(smallViewport){
-        return (
-          <div className='agg-wrap'>
-            <div className="toolbar mdl-grid">
-            {this.props.children}
-            <div className="mdl-cell mdl-cell--4-col"><h2 onClick={this.toggleContent}>
-              showing {hits.length} {' '}
-              {showingAll || <span>of {search.hits.total} {' '}</span>}
-              results matching <code>{search.query}</code>
-              {search.filters && <span> and <code>{decodeURIComponent(search.filters)}</code></span>}
-              {showingAll || this.props.showMoreLink}
-            </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
-            </div>
-            {showAggs && <Aggregations search={search} />}
-            <Decorate search={search} params={this.props.params} {...this.props} />
-            <Helmet
-              title={`${search.query}`}
-              meta={[
-                {property: "robots", content: "noindex"},
-                {property: "og:title", content: `${search.query} | Minneapolis Institute of Art`},
-              ]}
-              />
-          </div>
-        )
-      } else {
-        return (
-        <div className='agg-wrap'>
-          <div className="toolbar mdl-grid">
-          {this.props.children}
-          <div className="summaryText mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet"><h2 onClick={this.toggleContent}>
-            showing {hits.length} {' '}
-            {showingAll || <span>of {search.hits.total} {' '}</span>}
-            results matching <code>{search.query}</code>
-            {search.filters && <span> and <code>{decodeURIComponent(search.filters)}</code></span>}
-            {showingAll || this.props.showMoreLink}
-          </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
-          </div>
-
-          {showAggs && <Aggregations search={search} />}
-          <Decorate search={search} params={this.props.params} {...this.props} />
-          <Helmet
-            title={`${search.query}`}
-            meta={[
-              {property: "robots", content: "noindex"},
-              {property: "og:title", content: `${search.query} | Minneapolis Institute of Art`},
-            ]}
-            />
+    return (
+      <div className='agg-wrap'>
+        <div className="toolbar mdl-grid">
+        {this.props.children}
+        <div className={toolbarClasses}><h2 onClick={this.toggleContent}>
+          showing {hits.length} {' '}
+          {showingAll || <span>of {search.hits.total} {' '}</span>}
+          results matching <code>{search.query}</code>
+          {search.filters && <span> and <code>{decodeURIComponent(search.filters)}</code></span>}
+          {showingAll || this.props.showMoreLink}
+        </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
         </div>
-      )
-      }
+
+        {showAggs && <Aggregations search={search} />}
+        <Decorate search={search} params={this.props.params} {...this.props} />
+        <Helmet
+          title={`${search.query}`}
+          meta={[
+            {property: "robots", content: "noindex"},
+            {property: "og:title", content: `${search.query} | Minneapolis Institute of Art`},
+          ]}
+          />
+      </div>
+    )
   },
 
   toggleAggs() {
