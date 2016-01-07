@@ -135,13 +135,17 @@ var Map = React.createClass({
     poly && poly.style.setProperty('fill', '')
   },
 
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     let prevActive = prevState.activePoly
     let prevHovered = prevState.hoveredPoly
     let {activePoly, hoveredPoly} = this.state
 
     if(prevActive != activePoly) this.resetGallery(prevActive)
     if(prevHovered != hoveredPoly && prevHovered != activePoly) this.resetGallery(prevHovered)
+
+    if(prevProps.number !== this.props.number) {
+      this.handleSvgLoad() // reset the highlighted gallery
+    }
   },
 
   changeFloor(toFloor) {
