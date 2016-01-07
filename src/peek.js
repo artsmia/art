@@ -7,6 +7,7 @@ var classnames = require('classnames')
 
 var SEARCH = require('./endpoints').search
 var ImageQuilt = require('./image-quilt')
+var searchLanguageMap = require('./search-language')
 
 var Peek = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -57,6 +58,12 @@ var Peek = React.createClass({
       <Link itemProp={microdata ? "url" : ''} {...linkProps}>{this.props.children}</Link> :
       this.props.children
 
+    var queryString = decodeURIComponent(this.state.facetedQ)
+    var humanLanguage =searchLanguageMap(queryString)
+    var searchExplanation = humanLanguage !== queryString ?
+      humanLanguage :
+      `${this.state.query} ${this.state.facet && `(${this.state.facet})`}`
+
     return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: startedOpen, startedClosed: !startedOpen, open:this.state.open})} style={{cursor: 'pointer'}}>
       {this.props.children && <i>
         <span itemProp={microdata ? "name" : ''}>{peekText}</span>
@@ -65,7 +72,7 @@ var Peek = React.createClass({
       {this.state.open && this.state.facetedQ && <div className="peek" style={{fontSize: '80%', maxWidth: this.state.maxWidth || "100%"}}>
         {result && this.quiltFromResults()}
         <Link {...linkProps} style={{width: '100%'}}>
-          {result && result.hits && result.hits.total || 'search'} results for {this.state.query} {this.state.facet && `(${this.state.facet})`}
+          {result && result.hits && result.hits.total || 'search'} results for {searchExplanation}
           <span style={{float: 'right', marginRight: '10px'}} className="more-results-link">View more results</span>
         </Link>
       </div>}
