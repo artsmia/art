@@ -9,6 +9,7 @@ var searchLanguageMap = (queryText) => {
     '_exists_:"related:newsflashes"': "NewsFlashes",
     '_exists_:"related:audio-stops"': "Audio stops",
     '_exists_:"related:stories"': "Mia Stories",
+    '_exists_:"related:adopt-a-painting"': "Adopt-a-Painting",
     'room:G*': 'On View',
     'room:"Not on View"': 'Not on View',
     'image:valid': "Image Available",
