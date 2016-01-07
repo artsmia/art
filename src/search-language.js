@@ -16,7 +16,13 @@ var searchLanguageMap = (queryText) => {
     'image:invalid': "Image Unavailable",
   }
 
-  return map[queryText] || queryText
+
+  var reversedMap = Object.keys(map)
+    .reduce((reversed, key) => { reversed[map[key]] = key; return reversed }, {})
+
+  var trimmedQuery = queryText && queryText.trim()
+
+  return map[trimmedQuery] || reversedMap[trimmedQuery] || queryText
 }
 
 module.exports = searchLanguageMap

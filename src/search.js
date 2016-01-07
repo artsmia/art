@@ -8,6 +8,8 @@ var SEARCH = require('./endpoints').search
 var ImageQuilt = require('./image-quilt')
 var SearchResults = require('./search-results')
 var Suggest = require('./suggest')
+var searchLanguageMap = require('./search-language')
+
 
 var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -45,7 +47,7 @@ var Search = React.createClass({
     const nakedSimpleSearchBox = <div className='search-wrapper'>
       <form action=''><input className='search-input' type="search"
         placeholder="search"
-        value={this.state.terms}
+        value={searchLanguageMap(this.state.terms)}
         onKeyDown={this.keyDown}
         onChange={this.throttledSearch}
         style={{width: '100%', maxWidth: '500px', pointerEvents: 'all'}}
@@ -141,7 +143,7 @@ var Search = React.createClass({
   },
 
   throttledSearch(event) {
-    var terms = event.target.value
+    var terms = searchLanguageMap(event.target.value)
     this.setState({terms: terms})
     this.debouncedSearch && this.debouncedSearch(terms)
     this.debouncedAutocomplete(terms)
