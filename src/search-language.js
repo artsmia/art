@@ -14,6 +14,7 @@ var searchLanguageMap = (queryText) => {
     'room:"Not on View"': 'Not on View',
     'image:valid': "Image Available",
     'image:invalid': "Image Unavailable",
+    'room:"G320"': "TODO: need to match parameters more cleverly? This should return 'In Gallery 320' or something",
   }
 
 
