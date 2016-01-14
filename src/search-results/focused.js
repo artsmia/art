@@ -18,7 +18,7 @@ var FocusedResult = React.createClass({
           <i className="material-icons">clear</i>
         </span>
         {this.props.showRelated && relatedLinks &&
-          <ArtworkRelated art={art.id} links={relatedLinks} skipWrapper={true} />
+          <ArtworkRelated id={art.id} links={relatedLinks} skipWrapper={true} />
         }
       </Sticky>
     </div>

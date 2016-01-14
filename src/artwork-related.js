@@ -2,6 +2,12 @@ var React = require('react')
 var rest = require('rest')
 
 var Markdown = require('./markdown')
+var imageCDN = require('./image-cdn')
+
+var artstoryStampStyle = {
+  backgroundPosition: 'center center',
+  backgroundSize: 'contain',
+}
 
 var ArtworkRelatedContent = React.createClass({
   statics: {
@@ -46,7 +52,7 @@ var ArtworkRelatedContent = React.createClass({
       <i className="material-icons">launch</i>
       </div>
     </div>,
-    artstory: (link, id) => <div className="artstory" style={{backgroundImage: `url(http://api.artsmia.org/images/${id}/400/medium.jpg)`}}>
+    artstory: (link, id) => <div className="artstory" style={{backgroundImage: `url(${imageCDN(id)})`, ...artstoryStampStyle}}>
       <div className="overlay">
       <a href={link.link}>ArtStories<br/><sub>Zoom in.</sub></a>
       <i className="material-icons">launch</i>
