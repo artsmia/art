@@ -8,6 +8,7 @@ var classnames = require('classnames')
 var SEARCH = require('./endpoints').search
 var ImageQuilt = require('./image-quilt')
 var searchLanguageMap = require('./search-language')
+var Markdown = require('./markdown')
 
 var Peek = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -54,9 +55,10 @@ var Peek = React.createClass({
       to: "searchResults",
       params: {terms: this.state.facetedQ || this.state.q}
     }
+    var text = this.props.highlightedValue ? <Markdown tag="span">{this.props.highlightedValue}</Markdown> : this.props.children
     var peekText = this.context.universal ?
-      <Link itemProp={microdata ? "url" : ''} {...linkProps}>{this.props.children}</Link> :
-      this.props.children
+      <Link itemProp={microdata ? "url" : ''} {...linkProps}>{text}</Link> :
+      text
 
     var queryString = decodeURIComponent(this.state.facetedQ)
     var humanLanguage =searchLanguageMap(queryString)

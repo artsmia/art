@@ -8,6 +8,7 @@ var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
 var Artwork = require('./_artwork')
+var highlighter = require('./highlighter')
 
 var ArtworkPreview = React.createClass({
   getDefaultProps() {
@@ -17,8 +18,9 @@ var ArtworkPreview = React.createClass({
   },
 
   render() {
-    var {art, style, showLink} = this.props
+    var {art, style, showLink, highlights} = this.props
     var id = art.id.replace('http://api.artsmia.org/objects/', '')
+    var highlight = highlighter.bind(null, art, highlights)
 
     var details = showLink ? <Link to="artwork" params={{id: art.id}}>
       <div className="objects-page-link"><div className="objects-page-icon"></div>details</div>
@@ -27,11 +29,11 @@ var ArtworkPreview = React.createClass({
     return (
       <Artwork.Figure art={art} className='objects-focus' style={style} link={showLink}>
         <div className="art-details preview-header">
-          <Artwork.Title art={art} link={showLink} />
-          <Artwork.Creator art={art} />
-          <Artwork.Tombstone art={art} />
-          <h6><Peek facet="room">{art.room}</Peek></h6>
-          <div className="description"><Markdown itemProp="description">{art.text}</Markdown></div>
+          <Artwork.Title art={art} link={showLink} {...this.props} />
+          <Artwork.Creator art={art} {...this.props} />
+          <Artwork.Tombstone art={art} {...this.props} />
+          <h6><Peek facet="room" highlightedValue={highlight('room')}>{art.room}</Peek></h6>
+          <div className="description"><Markdown itemProp="description">{highlight('text')}</Markdown></div>
           <Artwork.LinkBar art={art} link={showLink} />
         </div>
       </Artwork.Figure>

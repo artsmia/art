@@ -22,7 +22,7 @@ var SearchResultsList = React.createClass({
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       var focused = focusedResult === hit._source
       return <div key={id} onClick={this.handleClick.bind(this, hit)} className={focused ? 'focused' : ''}>
-        <ArtworkResult id={id} data={{artwork: hit._source}} />
+        <ArtworkResult id={id} data={{artwork: hit._source}} highlights={hit.highlight} />
       </div>
     })
 
@@ -32,7 +32,7 @@ var SearchResultsList = React.createClass({
           {results}
           {this.props.postSearch}
         </div>
-        {focusedResult && <FocusedResult art={focusedResult} {...this.props}/>}
+        {focusedResult && <FocusedResult key={focusedResult._source.id} art={focusedResult._source} highlights={focusedResult.highlight} {...this.props}/>}
       </div>
     )
   },

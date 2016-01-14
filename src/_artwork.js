@@ -6,6 +6,8 @@ var classnames = require('classnames')
 var ArtworkImage = require('./artwork-image')
 var Peek = require('./peek')
 var imageCDN = require('./image-cdn')
+var highlighter = require('./highlighter')
+var Markdown = require('./markdown')
 
 var ConditionalLinkWrapper = React.createClass({
   render() {
@@ -19,8 +21,9 @@ var ConditionalLinkWrapper = React.createClass({
 
 var Title = React.createClass({
   render() {
-    var {art, link} = this.props
-    var title = <h1 itemProp="name">{art.title}, <span className="dated">{art.dated}</span></h1>
+    var {art, link, highlights} = this.props
+    var title = <Markdown tag="span">{highlighter(art, highlights, "title")}</Markdown>
+    var title = <h1 itemProp="name">{title}, <span className="dated">{art.dated}</span></h1>
 
     return <ConditionalLinkWrapper {...this.props}>
       {title}
@@ -37,11 +40,16 @@ var Tombstone = React.createClass({
 
   render() {
     var {art} = this.props
+    var highlight = highlighter.bind(null, art, this.props.highlights)
 
     return <div onDoubleClick={this.handleDoubleClick}>
-      <p className="tombstone"><Peek facet="medium" tag="span">{art.medium}</Peek></p>
+      <p className="tombstone">
+        <Peek facet="medium" tag="span" highlightedValue={highlight('medium')}>{art.medium}</Peek>
+      </p>
       {this.state.showLabels && <CopyableLabel art={art} onClose={this.handleDoubleClick} />}
-      <p className="gifted"><Peek facet="creditline" tag="span">{art.creditline}</Peek> {art.accession_number}</p>
+      <p className="gifted">
+        <Peek facet="creditline" tag="span" highlightedValue={highlight('creditline')}>{art.creditline}</Peek> {art.accession_number}
+      </p>
     </div>
   },
 
@@ -274,14 +282,14 @@ Figure.contextTypes = {
 var Creator = React.createClass({
   render() {
     var Wrapper = this.props.wrapper || "h5"
-    var [facet, value] = Creator.getFacetAndValue(this.props.art)
+    var [facet, value, highlightedValue] = Creator.getFacetAndValue(this.props.art, this.props.highlights)
     var creatorPeek = (facet == 'artist' || facet == 'culture')
-      && <Peek microdata={true} facet={facet}>{value}</Peek>
+      && <Peek microdata={true} facet={facet} {...{highlightedValue}}>{value}</Peek>
       || facet == 'country'
-      && <span>Unknown artist, <Peek microdata={true} facet="country" tag="span" showIcon={this.props.showIcon}>{value}</Peek></span>
+      && <span>Unknown artist, <Peek microdata={true} facet="country" tag="span" showIcon={this.props.showIcon} {...{highlightedValue}}>{value}</Peek></span>
 
     return <Wrapper itemProp="creator" itemScope itemType="http://schema.org/Person">
-      {this.props.peek ? creatorPeek : value}
+      {this.props.peek ? creatorPeek : (highlightedValue ? <Markdown>{highlightedValue}</Markdown> : value)}
     </Wrapper>
   },
 
@@ -289,15 +297,16 @@ var Creator = React.createClass({
     return {peek: true}
   },
 })
-Creator.getFacetAndValue = (art) => {
+Creator.getFacetAndValue = (art, highlights) => {
   var {artist, culture, country} = art
+  var highlight = highlighter.bind(null, art, highlights)
 
   return !(artist == '' || artist.match(/unknown/i)) &&
-    ['artist', artist]
+    ['artist', art.artist, highlight('artist')]
   || !!culture
-    && ['culture', culture.replace(/ culture/i, '')]
+    && ['culture', art.culture.replace(/ culture/i, ''), highlight('culture').replace(/ culture/i, '')]
   || !!country
-    && ['country', country]
+    && ['country', art.country, highlight('country')]
   || [undefined, undefined]
 }
 

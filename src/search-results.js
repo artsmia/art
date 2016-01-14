@@ -31,7 +31,7 @@ var SearchResults = React.createClass({
     var defaultView = (smallViewport || this.context.universal) ? ResultsList : ResultsGrid
 
     return {
-      focusedResult: focus && focus._source,
+      focusedResult: focus && focus,
       view: defaultView,
       smallViewport,
     }
@@ -104,7 +104,7 @@ var SearchResults = React.createClass({
       this.transitionTo('artwork', {id: hit._id})
     } else {
       !smallViewport && nextView && this.changeView(nextView)
-      this.setState({focusedResult: hit ? hit._source : null})
+      this.setState({focusedResult: hit ? hit : null})
     }
   },
 

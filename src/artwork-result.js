@@ -3,6 +3,8 @@ var Router = require('react-router')
 var { Link } = Router
 
 var Artwork = require('./_artwork')
+var Markdown = require('./markdown')
+var highlighter = require('./highlighter')
 
 var ArtworkResult = React.createClass({
   mixins: [Router.State],
@@ -14,24 +16,16 @@ var ArtworkResult = React.createClass({
   render() {
     var art = this.props.data.artwork
     var id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
-    var title = <Artwork.Title art={art} link={this.context.universal} />
+    var title = <Artwork.Title art={art} link={this.context.universal} highlights={this.props.highlights} />
 
-    const highlights = this.props.highlights
-    const showHighlights = highlights && Object.keys(highlights).filter((field) => {
-      return !field.match(/title|artist|image|room|highlight/)
-    }) || []
+    var roomHighlight = highlighter(art, this.props.highlights, 'room')
 
     return (
       <Artwork.Figure art={art} className='artwork-result'>
         <div className="artwork-summary">
           {title}
-          <Artwork.Creator art={art} wrapper="h2" peek={false} />
-          <p>{art.room === 'Not on View' ? art.room : <strong>{art.room}</strong>}</p>
-        </div>
-        <div>
-          {showHighlights.map((key) => {
-            return <p key={`highlight${key}`} className={['highlight', key].join(' ')} dangerouslySetInnerHTML={{__html: highlights[key][0].replace('\n', '<br>')}}></p>
-          })}
+          <Artwork.Creator art={art} wrapper="h2" peek={false} highlights={this.props.highlights} />
+          <p>{art.room === 'Not on View' ? art.room : <strong><Markdown>{roomHighlight}</Markdown></strong>}</p>
         </div>
       </Artwork.Figure>
     )

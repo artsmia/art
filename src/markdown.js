@@ -8,13 +8,16 @@ marked.setOptions({
 
 var Markdown = React.createClass({
   render() {
+    if(!this.props.children) return <span />
+
     var content = this.props.children
       .replace('\n', '\n\n')
       .replace(/<i>([^<]+)<\/?i>/gi, '<i>$1</i>')
 
-    if(!this.props.children) return <span />
-    const rendered = this.props.alreadyRendered ? content : marked(content)
-    return <div dangerouslySetInnerHTML={{__html: rendered}}></div>
+    let Tag = this.props.tag || 'div'
+    let rendered = this.props.alreadyRendered ? content : marked(content)
+    if(this.props.tag) rendered = rendered.replace(/<.?p>/g, '').trim()
+    return <Tag dangerouslySetInnerHTML={{__html: rendered}}></Tag>
   },
 })
 
