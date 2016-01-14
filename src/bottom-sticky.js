@@ -49,6 +49,12 @@ var BottomSticky = React.createClass({
     if(this.state.isSticky !== nextState.isSticky) {
       this.refresh(0)
     }
+    if(this.state.height !== nextState.height && nextState.height > 0) {
+      // if the height changes, notify Search through this method exposed
+      // on `context` so it can adjust things to ensure smooth, happy
+      // scrolling
+      this.context.onHeightChange(nextState.height + 123)
+    }
   },
 
   getSizeAndScroll() {
@@ -77,11 +83,16 @@ var BottomSticky = React.createClass({
   },
 
   refresh(delay=300, adjustScroll=false) {
+    this.getSizeAndScroll()
+    adjustScroll && this.scrolled()
     setTimeout(() => {
       this.getSizeAndScroll()
-      this.scrolled()
+      adjustScroll && this.scrolled()
     }, delay)
   },
 })
+BottomSticky.contextTypes = {
+  onHeightChange: React.PropTypes.func,
+}
 
 module.exports = BottomSticky

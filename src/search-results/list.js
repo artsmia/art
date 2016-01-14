@@ -27,7 +27,7 @@ var SearchResultsList = React.createClass({
     })
 
     return (
-      <div className='search-results-wrap clearfix' style={{position: 'relative'}}>
+      <div className='search-results-wrap clearfix' style={{position: 'relative', minHeight: this.props.minHeight}}>
         <div className='objects-wrap leftBar' style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: leftColumnWidth}}>
           {results}
           {this.props.postSearch}

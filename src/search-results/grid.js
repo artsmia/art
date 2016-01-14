@@ -38,7 +38,7 @@ var SearchResultsGrid = React.createClass({
         {stuff}
       </div>
 
-    return <div style={{position: 'relative'}}>
+    return <div className="dogs!" style={{position: 'relative', minHeight: this.props.minHeight}}>
       {wrappedQuilt}
       {focusedResult && <FocusedResult key={focusedResult.id} art={focusedResult} {...this.props}/>}
     </div>
@@ -46,6 +46,12 @@ var SearchResultsGrid = React.createClass({
 
   clickResult(art) {
     art && this.props.focusHandler(art, SearchResultsGrid)
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // don't update if only the minHeight prop changed.
+    // Because when it re-renders, it closes open peeks? I haven't figured out why but this fixes is. Tread carefully.
+    return this.props.minHeight == nextProps.minHeight
   },
 })
 

@@ -105,7 +105,12 @@ var Search = React.createClass({
         {searchBox}
         {this.props.children}
         {this.props.hideResults && suggestions || <div>
-          <SearchResults {...this.props} hits={this.state.hits} {...aggsProps} suggestions={suggestions} />
+          <SearchResults {...this.props}
+            hits={this.state.hits}
+            {...aggsProps}
+            suggestions={suggestions}
+            minHeight={this.state.minHeight}
+          />
         </div>}
       </div>
     )

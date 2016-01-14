@@ -88,6 +88,7 @@ var SearchResults = React.createClass({
         postSearch={this.postSearch(summaryProps)}
         smallViewport={this.state.smallViewport}
         showRelated={this.props.params.terms.match(/related/)}
+        minHeight={this.state.minHeight}
         />
     </div>
   },
@@ -129,7 +130,18 @@ var SearchResults = React.createClass({
       {showingAll || showMoreLink}
     </div>
   },
+
+  onHeightChange(newHeight) {
+    this.setState({minHeight: newHeight})
+  },
+
+  getChildContext() {
+    return {
+      onHeightChange: this.onHeightChange,
+    }
+  },
 })
+SearchResults.childContextTypes = {onHeightChange: React.PropTypes.func}
 SearchResults.contextTypes = {
   router: React.PropTypes.func,
   universal: React.PropTypes.bool,
