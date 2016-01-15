@@ -53,8 +53,9 @@ h1,h2,h3,h4,h5,h6 {
     font-family: $MiaGroteskBold;
 }
 
-.objects-focus em, .artwork-result em {
-  background-color: yellow;
+.objects-focus em, .artwork-result em, .focusedResult em {
+  background-color: rgba(255, 255, 0, 0.5);
+  padding: 0 1px;
 }
 
 .main-app-bar{
