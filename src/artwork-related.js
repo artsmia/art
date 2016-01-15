@@ -37,7 +37,7 @@ var ArtworkRelatedContent = React.createClass({
 
   build(link) {
     return <div key={link.link}>
-      {(this.templates[link.type] || this.templates.default)(link, this.props.id)}
+      {(this.templates[link.type] || this.templates.default)(link, this.props.id, this.props.highlights)}
     </div>
   },
 
@@ -59,18 +59,22 @@ var ArtworkRelatedContent = React.createClass({
       <i className="material-icons">launch</i>
       </div>
     </div>,
-    "adopt-a-painting": (json) => {
+    "adopt-a-painting": (json, id, highlights) => {
+      var highlight = highlights && highlights["related:adopt-a-painting"]
+      var highlight = highlight ? JSON.parse(highlight[0]) : null
+
       if(json.adopted === "1") {
         return <div className="adopt-ptg" style={{clear:'both'}}>
-        <h3>This painting has been adopted.</h3>
-        <a href="/info/adopt-a-painting">Learn more about adopting a painting. <i className="material-icons">launch</i></a>
+          <h3>This painting has been adopted.</h3>
+          <a href="/info/adopt-a-painting">Learn more about adopting a painting. <i className="material-icons">launch</i></a>
+          {highlight && <blockquote style={{marginTop: '1em'}}><Markdown>{highlight.description}</Markdown></blockquote>}
         </div>
       } else {
         return <div className="adopt-ptg">
           <div style={{width: "100%"}}>
           <h3>Adopt-a-Painting</h3>
           <p>Cost <span className="cost">{json.cost}</span></p>
-          <Markdown>{json.description}</Markdown>
+          <Markdown>{highlight ? highlight.description : json.description}</Markdown>
           <a href="/info/adopt-a-painting">Learn how to adopt this painting. <i className="material-icons">launch</i></a>
           </div>
         </div>
