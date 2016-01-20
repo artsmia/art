@@ -7,7 +7,9 @@ var ArtworkDetails = React.createClass({
   build(field, fn) {
     var {art} = this.props
     var humanFieldName = capitalize.words(field).replace('_', ' ')
-    var content = fn ? fn(art) : art[field]
+    var value = art[field]
+    if(!value || value == '') return
+    var content = fn ? fn(art) : value
 
     return <div className="detail-row">
       <div className="detail-title">{humanFieldName}</div>
@@ -40,7 +42,9 @@ var ArtworkDetails = React.createClass({
           {art.image_rights_type && <span>{art.image_rights_type}</span>}
         </div>
       }]
-    ].map(field => this.build(...field))
+    ]
+    .map(field => this.build(...field))
+    .filter(detail => !!detail)
 
     return (
         <div>
