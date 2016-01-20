@@ -8,7 +8,7 @@
     "start": "npm run watch & npm run serve",
     "watch": "watchify index.js -o bundle.js -dv",
     "serve": "PORT=1314 node server.babel.js",
-    "build": "NODE_ENV=production browserify index.js | uglifyjs -c -m > bundle.js"
+    "build": "NODE_ENV=production browserify index.js | uglifyjs -c -m | sed 's/localhost:4680/collections.artsmia.org:4680/'> bundle.js"
   },
   "author": "",
   "license": "MIT",
