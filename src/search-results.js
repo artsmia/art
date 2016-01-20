@@ -71,6 +71,9 @@ var SearchResults = React.createClass({
       ...this.props.summaryProps
     }
 
+    var {terms, splat} = this.props.params
+    var showFocusRelatedContent = [terms, splat].join(' ').match(/related/)
+
     return <div>
       <SearchSummary {...summaryProps}>
         <SearchResultViewToggle
@@ -88,7 +91,7 @@ var SearchResults = React.createClass({
         hits={this.props.hits}
         postSearch={this.postSearch(summaryProps)}
         smallViewport={this.state.smallViewport}
-        showRelated={this.props.params.terms.match(/related/)}
+        showRelated={showFocusRelatedContent}
         minHeight={this.state.minHeight}
         />
     </div>
