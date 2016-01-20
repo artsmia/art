@@ -21,9 +21,10 @@ var ArtworkPreview = React.createClass({
     var {art, style, showLink, highlights} = this.props
     var id = art.id.replace('http://api.artsmia.org/objects/', '')
     var highlight = highlighter.bind(null, art, highlights)
-    var highlightedDescription = this.props.highlights &&
-      this.props.highlights.description &&
+    var highlightedDescription = highlights && highlights.description &&
       <Markdown>{highlight('description')}</Markdown>
+    var highlightedMarks = highlights && highlights.marks &&
+      <Markdown>{highlight('marks')}</Markdown>
 
     var details = showLink ? <Link to="artwork" params={{id: art.id}}>
       <div className="objects-page-link"><div className="objects-page-icon"></div>details</div>
@@ -41,6 +42,10 @@ var ArtworkPreview = React.createClass({
             {highlightedDescription && <div>
               <hr style={{paddingBottom: '1em'}}/>
               {highlightedDescription}
+            </div>}
+            {highlightedMarks && <div>
+              <hr style={{paddingBottom: '1em'}}/>
+              {highlightedMarks}
             </div>}
           </div>
           <Artwork.LinkBar art={art} link={showLink} />

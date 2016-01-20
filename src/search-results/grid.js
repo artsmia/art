@@ -38,7 +38,7 @@ var SearchResultsGrid = React.createClass({
         {stuff}
       </div>
 
-    return <div className="dogs!" style={{position: 'relative', minHeight: this.props.minHeight}}>
+    return <div style={{position: 'relative', minHeight: this.props.minHeight}}>
       {wrappedQuilt}
       {focusedResult && <FocusedResult key={focusedResult._source.id} art={focusedResult._source} highlights={focusedResult.highlight} {...this.props}/>}
     </div>
