@@ -21,6 +21,7 @@ var ArtworkPreview = React.createClass({
     var {art, style, showLink, highlights} = this.props
     var id = art.id.replace('http://api.artsmia.org/objects/', '')
     var highlight = highlighter.bind(null, art, highlights)
+    // TODO show all highlighted fields that aren't otherwise in the Preview, not just description and marks…
     var highlightedDescription = highlights && highlights.description &&
       <Markdown>{highlight('description')}</Markdown>
     var highlightedMarks = highlights && highlights.marks &&
