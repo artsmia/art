@@ -22,7 +22,7 @@ var Peek = React.createClass({
     var qs
     var {q, facet} = props
     var results = this.state && this.state.results || {}
-    var open = !!q
+    var open = this.state ? this.state.open : !!q
     if(q && q.match(/:/) && !facet) {
       [facet, ...qs] = q.split(/:/)
       var q = qs.join(':')

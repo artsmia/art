@@ -41,7 +41,7 @@ var SearchResults = React.createClass({
     return this.props.data.searchResults != nextProps.data.searchResults ||
       this.props.hits != nextProps.hits ||
       this.props.completions !== nextProps.completions ||
-      this.props.state != nextState
+      this.state !== nextState
   },
 
   componentWillReceiveProps(nextProps) {
