@@ -53,7 +53,7 @@ var BottomSticky = React.createClass({
       // if the height changes, notify Search through this method exposed
       // on `context` so it can adjust things to ensure smooth, happy
       // scrolling
-      this.context.onHeightChange(nextState.height + 123)
+      this.context.onHeightChange(nextState.height)
     }
   },
 

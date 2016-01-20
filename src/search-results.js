@@ -92,7 +92,6 @@ var SearchResults = React.createClass({
         postSearch={this.postSearch(summaryProps)}
         smallViewport={this.state.smallViewport}
         showRelated={showFocusRelatedContent}
-        minHeight={this.state.minHeight}
         />
     </div>
   },
@@ -117,16 +116,22 @@ var SearchResults = React.createClass({
   // * load more
   // * did you find what you were looking for? (solicit feedback)
   // * related searches?
+  //
+  // Also fudge the height of this so the right column scroll doesn't get cut off.
   postSearch({hits, search, showMoreLink}) {
     var showingAll = hits.length == search.hits.total
+    var domNode = this.isMounted() && React.findDOMNode(this.refs.postSearch)
+    var postSearchOffset = 0
+    if(domNode) postSearchOffset = domNode.getBoundingClientRect().top
+
     var style = {
-      minHeight: '59vh',
       marginTop: '1em',
       padding: '1em',
       borderTop: '1em solid #232323',
+      minHeight: Math.max(50, this.state.minHeight - postSearchOffset)
     }
 
-    return <div style={style}>
+    return <div ref="postSearch" style={style}>
       showing {hits.length} {' '}
       {showingAll || <span>of {search.hits.total} {' '}</span>}
       results matching <code>{search.query}</code>
