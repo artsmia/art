@@ -1,84 +1,52 @@
 var React = require('react')
+var capitalize = require('capitalize')
 
 var Markdown = require('./markdown')
 
 var ArtworkDetails = React.createClass({
+  build(field, fn) {
+    var {art} = this.props
+    var humanFieldName = capitalize.words(field).replace('_', ' ')
+    var content = fn ? fn(art) : art[field]
+
+    return <div className="detail-row">
+      <div className="detail-title">{humanFieldName}</div>
+      <div className='detail-content'>{content}</div>
+    </div>
+  },
 
   render() {
-    var art = this.props.art
+    var {art, highlights} = this.props
+    var details = [
+      ['title'],
+      ['dated'],
+      ['artist'],
+      ['nationality'],
+      ['role'],
+      ['gallery', art => art.room],
+      ['department'],
+      ['dimension'],
+      ['credit', art => art.creditline],
+      ['accession_number'],
+      ['medium'],
+      ['country'],
+      ['culture'],
+      ['century', art => art.style],
+      ['provenance', art => <Markdown>{art.provenance}</Markdown>],
+      ['rights', art => {
+        return <div>
+          <span>{decodeURIComponent(art.image_copyright)}</span>
+          {art.image_copyright && art.image_rights_type && <br/>}
+          {art.image_rights_type && <span>{art.image_rights_type}</span>}
+        </div>
+      }]
+    ].map(field => this.build(...field))
 
     return (
         <div>
           <h5 className='details-title'>Details</h5>
           <div className='artwork-detail'>
-            <div className='detail-row'>
-                <div className='detail-title'>Title</div>
-                <div className='detail-content'>{art.title}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Dated</div>
-                <div className='detail-content'>{art.dated}</div>
-            </div>
-             <div className='detail-row'>
-                <div className='detail-title'>Artist</div>
-                <div className='detail-content'>{art.artist}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Nationality</div>
-                <div className='detail-content'>{art.nationality}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Role</div>
-                <div className='detail-content'>{art.role}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Gallery</div>
-                <div className='detail-content'>{art.room}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Department</div>
-                <div className='detail-content'>{art.department}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Dimension</div>
-                <div className='detail-content'>{art.dimension}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Credit</div>
-                <div className='detail-content'>{art.creditline}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Accession Number</div>
-                <div className='detail-content'>{art.accession_number}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Medium</div>
-                <div className='detail-content'>{art.medium}</div>
-            </div>
-            <div className='detail-row'>
-                <div className='detail-title'>Country</div>
-                <div className='detail-content'>{art.country}</div>
-            </div>
-             <div className='detail-row'>
-                <div className='detail-title'>Culture</div>
-                <div className='detail-content'>{art.culture}</div>
-            </div>
-             <div className='detail-row'>
-                <div className='detail-title'>Century</div>
-                <div className='detail-content'>{art.style}</div>
-            </div>
-             <div className='detail-row'>
-                <div className='detail-title'>Provenance</div>
-                <div className='detail-content'><Markdown>{art.provenance}</Markdown></div>
-            </div>
-             <div className='detail-row'>
-                <div className='detail-title'>Rights</div>
-                <div className='detail-content'>
-                  <span>{decodeURIComponent(art.image_copyright)}</span>
-                  {art.image_copyright && art.image_rights_type && <br/>}
-                  {art.image_rights_type && <span>{art.image_rights_type}</span>}
-                </div>
-            </div>
+            {details}
           </div>
         </div>
     )
