@@ -46,14 +46,9 @@ var ArtworkDetails = React.createClass({
     .map(field => this.build(...field))
     .filter(detail => !!detail)
 
-    return (
-        <div>
-          <h5 className='details-title'>Details</h5>
-          <div className='artwork-detail'>
-            {details}
-          </div>
-        </div>
-    )
+    return <div className='artwork-detail'>
+      {details}
+    </div>
   },
 })
 

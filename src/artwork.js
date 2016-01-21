@@ -71,7 +71,10 @@ var Artwork = React.createClass({
             <ArtworkPreview art={art} showLink={false} />
             <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
             <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
-            <ArtworkDetails art={art} />
+            <div>
+              <h5 className='details-title'>Details</h5>
+              <ArtworkDetails art={art} />
+            </div>
           </div>
           <Helmet
             title={pageTitle}
@@ -96,7 +99,10 @@ var Artwork = React.createClass({
             <ArtworkPreview art={art} showLink={false} />
             <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
             <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
-            <ArtworkDetails art={art} />
+            <div>
+              <h5 className='details-title'>Details</h5>
+              <ArtworkDetails art={art} />
+            </div>
           </div>
 
           <Sticky
