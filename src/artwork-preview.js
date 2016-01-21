@@ -9,6 +9,7 @@ var Markdown = require('./markdown')
 var Peek = require('./peek')
 var Artwork = require('./_artwork')
 var highlighter = require('./highlighter')
+var ArtworkDetails = require('./artwork-details')
 
 var ArtworkPreview = React.createClass({
   getDefaultProps() {
@@ -21,11 +22,15 @@ var ArtworkPreview = React.createClass({
     var {art, style, showLink, highlights} = this.props
     var id = art.id.replace('http://api.artsmia.org/objects/', '')
     var highlight = highlighter.bind(null, art, highlights)
-    // TODO show all highlighted fields that aren't otherwise in the Preview, not just description and marks…
-    var highlightedDescription = highlights && highlights.description &&
-      <Markdown>{highlight('description')}</Markdown>
-    var highlightedMarks = highlights && highlights.marks &&
-      <Markdown>{highlight('marks')}</Markdown>
+
+    var showHighlights = highlights && <div class='artwork-detail' style={{marginTop: '1em'}}>
+      <hr />
+      <ArtworkDetails
+        art={art}
+        highlights={highlights}
+        skipFields="title style artist medium credit accession_number gallery text"
+      />
+    </div>
 
     var details = showLink ? <Link to="artwork" params={{id: art.id}}>
       <div className="objects-page-link"><div className="objects-page-icon"></div>details</div>
@@ -40,16 +45,9 @@ var ArtworkPreview = React.createClass({
           <h6><Peek facet="room" highlightedValue={highlight('room')}>{art.room}</Peek></h6>
           <div className="description" itemProp="description">
             <Markdown>{highlight('text')}</Markdown>
-            {highlightedDescription && <div>
-              <hr style={{paddingBottom: '1em'}}/>
-              {highlightedDescription}
-            </div>}
-            {highlightedMarks && <div>
-              <hr style={{paddingBottom: '1em'}}/>
-              {highlightedMarks}
-            </div>}
           </div>
           <Artwork.LinkBar art={art} link={showLink} />
+          {showHighlights}
         </div>
       </Artwork.Figure>
     )

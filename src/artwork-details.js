@@ -5,11 +5,25 @@ var Markdown = require('./markdown')
 
 var ArtworkDetails = React.createClass({
   build(field, fn) {
-    var {art} = this.props
+    var {art, highlights} = this.props
     var humanFieldName = capitalize.words(field).replace('_', ' ')
-    var value = art[field]
+    var value = highlights ?
+      highlights[field] :
+      art[field]
     if(!value || value == '') return
-    var content = fn ? fn(art) : value
+
+    if(highlights && highlights[field]) value = <Markdown>{value[0]}</Markdown>
+
+    // merge `art` with `highlights`, replacing the un-highlighted values with
+    // their 'highlit' equivalent
+    var artAndHighlights = !highlights ? art : Object.assign({...art}, Object.keys(highlights).reduce((object, key) => {
+      var value = highlights[key] && highlights[key][0]
+      if(typeof value == 'string') value = <Markdown>{value}</Markdown>
+      object[key] = value
+      return object
+    }, {}))
+
+    var content = fn ? fn(artAndHighlights) : artAndHighlights[field]
 
     return <div className="detail-row">
       <div className="detail-title">{humanFieldName}</div>
@@ -35,7 +49,7 @@ var ArtworkDetails = React.createClass({
       ['country'],
       ['culture'],
       ['century', art => art.style],
-      ['provenance', art => <Markdown>{art.provenance}</Markdown>],
+      ['provenance'],
       ['rights', art => {
         return <div>
           <span>{decodeURIComponent(art.image_copyright)}</span>
