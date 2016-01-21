@@ -56,8 +56,10 @@ var ArtworkDetails = React.createClass({
           {art.image_copyright && art.image_rights_type && <br/>}
           {art.image_rights_type && <span>{art.image_rights_type}</span>}
         </div>
-      }]
+      }],
+      ['marks'],
     ]
+    if(highlights && highlights.description) details.push(['description'])
     details = details.filter(([field]) => skip.indexOf(field) < 0)
     .map(field => this.build(...field))
     .filter(detail => !!detail)
