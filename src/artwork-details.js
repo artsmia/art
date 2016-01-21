@@ -19,6 +19,7 @@ var ArtworkDetails = React.createClass({
 
   render() {
     var {art, highlights} = this.props
+    var skip = this.props.skipFields ? this.props.skipFields.split(' ') : []
     var details = [
       ['title'],
       ['dated'],
@@ -43,6 +44,7 @@ var ArtworkDetails = React.createClass({
         </div>
       }]
     ]
+    details = details.filter(([field]) => skip.indexOf(field) < 0)
     .map(field => this.build(...field))
     .filter(detail => !!detail)
 
