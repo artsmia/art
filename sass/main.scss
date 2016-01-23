@@ -826,6 +826,9 @@ a.departmentLink h2{
     display: inline-block;
     width: 67%;
 }
+.detail-row.dimension.expandable .detail-extra {
+  min-height: 10vh;
+}
 h5.details-title {
     border-top:3px solid $primary;
     margin-top:1em;
