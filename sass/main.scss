@@ -811,13 +811,14 @@ a.departmentLink h2{
 .artwork-detail p {
     width: 100% !important;
 }
-.detail-row{
+.detail-row.expandable {
+  cursor: pointer;
 }
 .detail-title{
     padding:5px 0;
     font-family: $MiaGroteskRegular, sans-serif;
     display: inline-block;
-    width: 7em;
+    width: 5em;
     vertical-align: top;
 }
 .detail-content{
