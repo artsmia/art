@@ -37,14 +37,12 @@ var ArtworkDetails = React.createClass({
   artAndHighlights() {
     var {art, highlights} = this.props
 
-    this.merged = this.merged || !highlights ? art : Object.assign({...art}, Object.keys(highlights).reduce((object, key) => {
+    return !highlights ? art : Object.assign({...art}, Object.keys(highlights).reduce((object, key) => {
       var value = highlights[key] && highlights[key][0]
       if(typeof value == 'string') value = <Markdown>{value}</Markdown>
       object[key] = value
       return object
     }, {}))
-
-    return this.merged
   },
 
   buildPeekableDetail(field) {
@@ -74,7 +72,11 @@ var ArtworkDetails = React.createClass({
           return <span style={{display: 'block'}} onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)}>{d}</span>
         })}</div>,
         art.dimension && <div>
-          {rawArt.dimension.match(/x.*cm/) && <Isvg src={dimensionSvg(art.id, this.state.dimensionGraphicName)} key={this.state.dimensionGraphicName} />}
+          {rawArt.dimension.match(/x.*cm/) && <Isvg
+            src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
+            key={this.state.dimensionGraphicName}
+            onLoad={this.dimensionSvgLoaded}
+          />}
         </div>
       ]],
       ['credit', (art, raw) => [art.creditline, <Peek facet="creditline" q={raw.creditline} />]],
@@ -125,6 +127,8 @@ var ArtworkDetails = React.createClass({
 
   dimensions() {
     var {dimension} = this.props.art
+    if(!dimension) return []
+    // var dimension = this.props.highlights ? this.props.highlights.dimension : this.props.art
     return dimension.split("\r\n")
     .map(string => {
       var aspect = string.match(/cm\)\s\(([^\(]+)\)$/)
@@ -136,6 +140,16 @@ var ArtworkDetails = React.createClass({
   toggleDimensionGraphic(aspect) {
     this.setState({dimensionGraphicName: aspect.replace(' ', '-')})
   },
+
+  dimensionSvgLoaded() {
+    if(this.state.heightAdjusted) return
+    this.setState({heightAdjusted: true})
+    var domNode = React.findDOMNode(this)
+    this.context.onHeightChange && this.context.onHeightChange(domNode.parentElement.parentElement.parentElement.parentElement.clientHeight)
+  },
 })
+ArtworkDetails.contextTypes = {
+  onHeightChange: React.PropTypes.func,
+}
 
 module.exports = ArtworkDetails

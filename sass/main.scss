@@ -828,6 +828,7 @@ a.departmentLink h2{
 }
 .detail-row.dimension.expandable .detail-extra {
   min-height: 10vh;
+  max-width: 31em;
 }
 h5.details-title {
     border-top:3px solid $primary;
