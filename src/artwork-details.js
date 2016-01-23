@@ -10,16 +10,12 @@ var dimensionSvg = require('./endpoints').dimensionSvg
 var ArtworkDetails = React.createClass({
   build(field, fn) {
     var {art, highlights} = this.props
+    if(this.props.onlyShowHighlightDetails && !highlights[field]) return
+
     var humanFieldName = capitalize.words(field).replace('_', ' ')
-    var value = highlights ?
-      highlights[field] :
-      art[field]
-    if(!value || value == '') return
-
-    if(highlights && highlights[field]) value = <Markdown>{value[0]}</Markdown>
-
     var artAndHighlights = this.artAndHighlights()
     var [content, extraContent] = fn ? fn(artAndHighlights, art) : [artAndHighlights[field]]
+    if(!content || content == '') return
     var showExtra = extraContent && this.state.expandDetailsMatrix[field]
     var classes = cx("detail-row", {expandable: extraContent})
 

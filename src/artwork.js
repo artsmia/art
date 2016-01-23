@@ -68,7 +68,7 @@ var Artwork = React.createClass({
             {this.imageStatus()}
           </div>
           <div className='info'>
-            <ArtworkPreview art={art} showLink={false} />
+            <ArtworkPreview art={art} showLink={false} showDuplicateDetails={true} />
             <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
             <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
             <div>
