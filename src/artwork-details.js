@@ -24,11 +24,12 @@ var ArtworkDetails = React.createClass({
       return object
     }, {}))
 
-    var content = fn ? fn(artAndHighlights, art) : artAndHighlights[field]
+    var [content, extraContent] = fn ? fn(artAndHighlights, art) : [artAndHighlights[field]]
 
     return <div className="detail-row">
-      <div className="detail-title">{humanFieldName}</div>
-      <div className='detail-content'>{content}</div>
+      <dt className="detail-title">{humanFieldName}</dt>
+      <dd className='detail-content'>{content}</dd>
+      {extraContent && <div className="detail-extra">{extraContent}</div>}
     </div>
   },
 
@@ -43,10 +44,9 @@ var ArtworkDetails = React.createClass({
       ['role'],
       ['gallery', art => art.room],
       ['department'],
-      ['dimension', (art, rawArt) => art.dimension && <div>
-        {art.dimension}
+      ['dimension', (art, rawArt) => [art.dimension, art.dimension && <div>
         {rawArt.dimension.match(/x.*cm/) && <Isvg src={`http://localhost:4009/svgs/${art.id}/dimension.svg`} />}
-      </div>],
+      </div>]],
       ['credit', art => art.creditline],
       ['accession_number'],
       ['medium'],
@@ -68,9 +68,9 @@ var ArtworkDetails = React.createClass({
     .map(field => this.build(...field))
     .filter(detail => !!detail)
 
-    return <div className='artwork-detail'>
+    return <dl className='artwork-detail'>
       {details}
-    </div>
+    </dl>
   },
 })
 

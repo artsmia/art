@@ -805,7 +805,6 @@ a.departmentLink h2{
   font-style: normal;
 }
 .artwork-detail{
-    display:table;
     font-size:smaller;
     line-height:1.3em;
 }
@@ -813,16 +812,18 @@ a.departmentLink h2{
     width: 100% !important;
 }
 .detail-row{
-    display:table-row;
 }
 .detail-title{
-    display:table-cell;
     padding:5px 0;
     font-family: $MiaGroteskRegular, sans-serif;
+    display: inline-block;
+    width: 7em;
+    vertical-align: top;
 }
 .detail-content{
-    display:table-cell;
     padding:5px 5px 5px 15px;
+    display: inline-block;
+    width: 67%;
 }
 h5.details-title {
     border-top:3px solid $primary;
