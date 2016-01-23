@@ -1490,3 +1490,21 @@ img.loading {
 img.loaded {
 	opacity: 1 !important;
 }
+
+.dimension-view {
+  padding: 1em;
+
+  rect {
+    fill-opacity: 0;
+  }
+
+  .edge {
+    stroke: black;
+  }
+
+  .tennis-ball {
+    fill: yellow;
+
+    .line { stroke: black; stroke-width: 2px; }
+  }
+}

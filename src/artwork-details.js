@@ -1,5 +1,6 @@
 var React = require('react')
 var capitalize = require('capitalize')
+var Isvg = require('react-inlinesvg')
 
 var Markdown = require('./markdown')
 
@@ -23,7 +24,7 @@ var ArtworkDetails = React.createClass({
       return object
     }, {}))
 
-    var content = fn ? fn(artAndHighlights) : artAndHighlights[field]
+    var content = fn ? fn(artAndHighlights, art) : artAndHighlights[field]
 
     return <div className="detail-row">
       <div className="detail-title">{humanFieldName}</div>
@@ -42,7 +43,10 @@ var ArtworkDetails = React.createClass({
       ['role'],
       ['gallery', art => art.room],
       ['department'],
-      ['dimension'],
+      ['dimension', (art, rawArt) => art.dimension && <div>
+        {art.dimension}
+        {rawArt.dimension.match(/x.*cm/) && <Isvg src={`http://localhost:4009/svgs/${art.id}/dimension.svg`} />}
+      </div>],
       ['credit', art => art.creditline],
       ['accession_number'],
       ['medium'],
