@@ -5,6 +5,7 @@ var cx = require('classnames')
 
 var Markdown = require('./markdown')
 var Peek = require('./peek')
+var dimensionSvg = require('./endpoints').dimensionSvg
 
 var ArtworkDetails = React.createClass({
   build(field, fn) {
@@ -73,7 +74,7 @@ var ArtworkDetails = React.createClass({
       ['gallery', (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
       this.buildPeekableDetail('department'),
       ['dimension', (art, rawArt) => [art.dimension, art.dimension && <div>
-        {rawArt.dimension.match(/x.*cm/) && <Isvg src={`http://localhost:4009/svgs/${art.id}/dimension.svg`} />}
+        {rawArt.dimension.match(/x.*cm/) && <Isvg src={dimensionSvg(art.id)} />}
       </div>]],
       ['credit', (art, raw) => [art.creditline, <Peek facet="creditline" q={raw.creditline} />]],
       ['accession_number'],
