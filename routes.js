@@ -17,6 +17,7 @@ var Page = require('./src/page')
 var Info = require('./src/info')
 var Gallery = require('./src/gallery')
 var Map = require('./src/map-page')
+var Exhibition = require('./src/exhibition')
 
 var routes = (
   <Route handler={App} path="/">
@@ -39,6 +40,8 @@ var routes = (
     <Route name="gallery" path="/galleries/:gallery" handler={Gallery} />
     <Route name="map" path="/map" handler={Map} />
     <Route name="galleries" path="/galleries" handler={Map} />
+    <Route name="exhibition" path="/exhibitions/:id" handler={Exhibition} />
+    <Route name="exhibitionSlug" path="exhibitions/:id/:slug" handler={Exhibition} />
   </Route>
 );
 

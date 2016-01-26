@@ -861,13 +861,17 @@ h5.details-title {
 .explore{
   display: inline-block;
 }
-.explore a {
-  font-size:1.1em;
-  color: #ffffff;
-  font-family: $MiaGroteskBold, sans-serif;
-  position: absolute;
-  bottom:10px;
-  left: 10px;
+.explore {
+  .newsflash, .artstory, .explore-content {
+    a {
+      font-size:1.1em;
+      color: #ffffff;
+      font-family: $MiaGroteskBold, sans-serif;
+      position: absolute;
+      bottom:10px;
+      left: 10px;
+    }
+  }
 }
 .explore .adopt-ptg {
   margin-top: 10px;

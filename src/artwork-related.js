@@ -1,5 +1,6 @@
 var React = require('react')
 var rest = require('rest')
+var {Link} = require('react-router')
 
 var Markdown = require('./markdown')
 var imageCDN = require('./image-cdn')
@@ -12,7 +13,7 @@ var artstoryStampStyle = {
 var ArtworkRelatedContent = React.createClass({
   statics: {
     fetchData: (params) => {
-      return rest('http://collection.staging.artsmia.org/links/'+params.id+'.json')
+      return rest('http://collections.artsmia.org/links/'+params.id+'.json')
       .then(r => JSON.parse(r.entity))
       .catch(err => [])
     },
@@ -79,6 +80,17 @@ var ArtworkRelatedContent = React.createClass({
           </div>
         </div>
       }
+    },
+    "exhibition": (json, id, highlights) => {
+      var otherArtCount = json.objectIds ? json.objectIds.length-1 : '(x)'
+
+      return <div className="exhibition" style={{clear: "both"}}>
+        <span>This was shown in the exhibition</span> &nbsp;
+        <h4 style={{display: 'inline'}}>
+          <Link to="exhibition" params={{id: json.id}}>{json.title}</Link>
+        </h4> &nbsp;
+        <span>with {otherArtCount} other objects. {json.description}</span>
+      </div>
     },
     default: (link) => <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
       <div className="overlay">
