@@ -35,7 +35,7 @@ app.use((req, res, next) => {
     location: req.url,
     onAbort: ({to, params, query}) => {
       var url = to && router.makePath(to, params, query) || '/'
-      res.redirect(302, url)
+      res.redirect(301, url)
     },
   })
 
