@@ -158,7 +158,7 @@ var FloorControls = React.createClass({
     var buttonStyle = {display: 'block'}
     var floorControls = [3,2,1].map(_floor => {
       var text = _floor == this.props.active ? `floor ${_floor}` : _floor
-      return <button style={buttonStyle} onClick={this.props.handleChange.bind(this.props.map, _floor)}>
+      return <button style={buttonStyle} onClick={this.props.handleChange.bind(this.props.map, _floor)} key={_floor}>
         {text}
       </button>
     })

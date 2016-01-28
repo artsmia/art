@@ -74,7 +74,7 @@ var GalleryPeek = React.createClass({
     var link = {to: "gallery", params: {gallery: g.id}}
     var peek = <li style={{marginTop: !universal ? '1em' : 0}}>
       <Peek q={`room:G${g.id}`} linkProps={link} showIcon={false} showSingleResult={true}>
-        {g.id} — {g.title}
+        <span>{g.id} — {g.title}</span>
       </Peek>
     </li>
 
