@@ -134,7 +134,9 @@ var Peek = React.createClass({
     var q = this.state.query
     if(q.match(';')) {
       return q.split(/;/).map(_q => {
-        return _q.replace(/^.*attributed to|unknown|artist|\w+ by|after/ig, '').trim()
+        var cleanedQ = _q.replace(/^.*attributed to|unknown|artist|after/ig, '').trim()
+        if(this.state && this.state.facet == 'artist') cleanedQ = cleanedQ.replace(/\w+ by/, '')
+        return cleanedQ
       })
     }
     return []
