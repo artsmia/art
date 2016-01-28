@@ -67,18 +67,22 @@ var ArtworkDetails = React.createClass({
       ['role'],
       ['gallery', (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
       this.buildPeekableDetail('department'),
-      ['dimension', (art, rawArt) => [
-        art.dimension && <div>{this.dimensions().map(([d, aspect]) => {
-          return <span style={{display: 'block'}} onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)}>{d}</span>
-        })}</div>,
-        art.dimension && <div>
-          {rawArt.dimension.match(/x.*cm/) && <Isvg
-            src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
-            key={this.state.dimensionGraphicName}
-            onLoad={this.dimensionSvgLoaded}
-          />}
-        </div>
-      ]],
+      ['dimension', (art, rawArt) => {
+        var showFancyDimension = art.dimension && this.dimensions().length > 0
+
+        return [
+          art.dimension && <div>{showFancyDimension ? this.dimensions().map(([d, aspect]) => {
+            return <span style={{display: 'block'}} onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)}>{d}</span>
+          }) : art.dimension}</div>,
+          showFancyDimension && <div>
+            {rawArt.dimension.match(/cm/) && <Isvg
+              src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
+              key={this.state.dimensionGraphicName}
+              onLoad={this.dimensionSvgLoaded}
+            />}
+          </div>
+        ]
+      }],
       ['credit', (art, raw) => [art.creditline, <Peek facet="creditline" q={raw.creditline} />]],
       ['accession_number'],
       this.buildPeekableDetail('medium'),
@@ -102,11 +106,14 @@ var ArtworkDetails = React.createClass({
   getInitialState() {
     var dimensions = this.dimensions()
     var firstDimensionName = dimensions && dimensions[0] && dimensions[0][1]
+    var expandDetails = this.details().reduce((reduced, [field]) => {
+      reduced[field] = false
+      return reduced
+    }, {})
+    expandDetails['dimension'] = !!firstDimensionName
+
     return {
-      expandDetailsMatrix: this.details().reduce((reduced, [field]) => {
-        reduced[field] = field == 'dimension'
-        return reduced
-      }, {}),
+      expandDetailsMatrix: expandDetails,
       dimensionGraphicName: firstDimensionName,
     }
   },
@@ -130,15 +137,16 @@ var ArtworkDetails = React.createClass({
     if(!dimension) return []
     // var dimension = this.props.highlights ? this.props.highlights.dimension : this.props.art
     return dimension.split("\r\n")
+    .filter(string => string.match(/[x\|×].*cm/))
     .map(string => {
-      var aspect = string.match(/cm\)\s\(([^\(]+)\)$/)
+      var aspect = string.match(/cm\)\s\(*([^\(]+)\)$/)
 
-      return [string, aspect ? aspect[1] : 'dimensions']
+      return [string, aspect ? aspect[1].replace(/[^a-zA-z]+/g, '-') : 'dimensions']
     })
   },
 
   toggleDimensionGraphic(aspect) {
-    this.setState({dimensionGraphicName: aspect.replace(' ', '-')})
+    this.setState({dimensionGraphicName: aspect})
   },
 
   dimensionSvgLoaded() {
