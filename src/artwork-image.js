@@ -20,7 +20,9 @@ var ArtworkImage = React.createClass({
       alt={art.description}
       lazyLoad={this.props.lazyLoad} />
 
-    return art.image == 'valid' && art.image_width > 0 && (
+    var showImage = art.image == 'valid' && art.image_width > 0 && art.rights !== 'Permission Denied'
+
+    return showImage && (
       <div className='artwork-image' style={{minHeight: '173px'}}>
         {image}
         <Markdown>{art.image_copyright}</Markdown>

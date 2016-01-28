@@ -38,7 +38,7 @@ const ImageQuilt = React.createClass({
     const artworks = this.props.artworks.slice(0, this.props.maxWorks)
     const _art = artworks.map((art) => {
       var s = art._source
-      if(s.image == 'invalid' || (s.image_width == 0 && s.image_height == 0)) {
+      if(s.image == 'invalid' || (s.image_width == 0 && s.image_height == 0) || s.rights == 'Permission Denied') {
         s.image = 'invalid'
         var splitOn = /,|;|:|\]/;
         ([s.title_short, s.artist_short] = [s.title.split(splitOn)[0], s.artist.split(splitOn)[0]])

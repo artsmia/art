@@ -29,6 +29,8 @@ const Image = React.createClass({
       alt={art.description}
       {...other} />
 
+    if(art.rights == 'Permission Denied') return <span />
+
     var image = !lazyLoad ? nakedImage : <LazyLoad wrapper="span" style={{display: 'inline'}} width={width} height={`${height}`}>
       {nakedImage}
     </LazyLoad>
