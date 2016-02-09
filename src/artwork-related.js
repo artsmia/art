@@ -25,6 +25,9 @@ var ArtworkRelatedContent = React.createClass({
     var meat = <div className="explore">
       {links.map(this.build)}
     </div>
+    var exhibitions = <div className="exhibition_item">
+      {links.map(this.exhibition)}
+    </div>
 
     var bones = this.props.skipWrapper ?
       meat :
@@ -33,13 +36,35 @@ var ArtworkRelatedContent = React.createClass({
         {meat}
       </div>
 
-    return links && links.length > 0 && bones
+      var exhib_bones = this.props.skipWrapper ?
+        exhibitions :
+        <div className="exhibitionWrapper">
+          <h5 className="details-title">Exhibitions</h5>
+          {exhibitions}
+        </div>
+
+    return <div>
+    {links && links.length > 0 && bones} {links && links.length > 0 && exhib_bones}
+          </div>
   },
 
   build(link) {
-    return <div key={link.link}>
-      {(this.templates[link.type] || this.templates.default)(link, this.props.id, this.props.highlights)}
-    </div>
+    if (!(link.type === "exhibition")){
+      return <div key={link.link}>
+        {(this.templates[link.type] || this.templates.default)(link, this.props.id, this.props.highlights)}
+      </div>
+    } else {
+
+    }
+  },
+  exhibition(link) {
+    if (link.type === "exhibition"){
+      return <div key={link.link}>
+        {(this.templates[link.type] || this.templates.default)(link, this.props.id, this.props.highlights)}
+      </div>
+    } else {
+
+    }
   },
 
   templates: {
@@ -85,11 +110,7 @@ var ArtworkRelatedContent = React.createClass({
       var otherArtCount = json.objectIds ? json.objectIds.length-1 : '(x)'
 
       return <div className="exhibition" style={{clear: "both"}}>
-        <span>This was shown in the exhibition</span> &nbsp;
-        <h4 style={{display: 'inline'}}>
-          <Link to="exhibition" params={{id: json.id}}>{json.title}</Link>
-        </h4> &nbsp;
-        <span>with {otherArtCount} other objects. {json.description}</span>
+        <p>This was shown in the exhibition <span className="exh_title"><Link to="exhibition" params={{id: json.id}}>{json.title}</Link></span> with {otherArtCount} other objects. {json.description}</p>
       </div>
     },
     default: (link) => <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
