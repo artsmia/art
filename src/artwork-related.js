@@ -21,11 +21,13 @@ var ArtworkRelatedContent = React.createClass({
 
   render() {
     var {links} = this.props
+    var exhibitions = links.filter(link => link.type == "exhibition")
+    var explore = links.filter(link => link.type !== "exhibition")
 
     var meat = <div className="explore">
       {links.map(this.build)}
     </div>
-    var exhibitions = <div className="exhibition_item">
+    var exhibition_wrap = <div className="exhibition_item">
       {links.map(this.exhibition)}
     </div>
 
@@ -40,11 +42,11 @@ var ArtworkRelatedContent = React.createClass({
         exhibitions :
         <div className="exhibitionWrapper">
           <h5 className="details-title">Exhibitions</h5>
-          {exhibitions}
+          {exhibition_wrap}
         </div>
 
     return <div>
-    {links && links.length > 0 && bones} {links && links.length > 0 && exhib_bones}
+    {explore && explore.length > 0 && bones} {exhibitions && exhibitions.length > 0 && exhib_bones}
           </div>
   },
 
