@@ -141,7 +141,7 @@ var ArtworkDetails = React.createClass({
     .map(string => {
       var aspect = string.match(/cm\)\s\(*([^\(]+)\)$/)
 
-      return [string, aspect ? aspect[1].replace(/[^a-zA-z]+/g, '-') : 'dimensions']
+      return [string, aspect ? aspect[1].replace(/[^a-zA-z]+/g, '-').replace(/^-|-$/, '') : 'dimensions']
     })
   },
 
