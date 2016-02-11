@@ -21,14 +21,16 @@ var ArtworkRelatedContent = React.createClass({
 
   render() {
     var {links} = this.props
-    var exhibitions = links.filter(link => link.type == "exhibition")
     var explore = links.filter(link => link.type !== "exhibition")
+    var exhibitions = links.filter(link => link.type == "exhibition")
+    // only show exhibitions with more than a single object
+    var significantExhibitions = exhibitions.filter(ex => ex.objectIds.length > 1)
 
     var meat = <div className="explore">
       {explore.map(this.build)}
     </div>
     var exhibition_wrap = <div className="exhibition_item">
-      {exhibitions.map(this.build)}
+      {significantExhibitions.map(this.build)}
     </div>
 
     var bones = this.props.skipWrapper ?
