@@ -25,10 +25,10 @@ var ArtworkRelatedContent = React.createClass({
     var explore = links.filter(link => link.type !== "exhibition")
 
     var meat = <div className="explore">
-      {links.map(this.build)}
+      {explore.map(this.build)}
     </div>
     var exhibition_wrap = <div className="exhibition_item">
-      {links.map(this.exhibition)}
+      {exhibitions.map(this.build)}
     </div>
 
     var bones = this.props.skipWrapper ?
@@ -46,27 +46,15 @@ var ArtworkRelatedContent = React.createClass({
         </div>
 
     return <div>
-    {explore && explore.length > 0 && bones} {exhibitions && exhibitions.length > 0 && exhib_bones}
-          </div>
+      {explore && explore.length > 0 && bones}
+      {exhibitions && exhibitions.length > 0 && exhib_bones}
+    </div>
   },
 
   build(link) {
-    if (!(link.type === "exhibition")){
-      return <div key={link.link}>
-        {(this.templates[link.type] || this.templates.default)(link, this.props.id, this.props.highlights)}
-      </div>
-    } else {
-
-    }
-  },
-  exhibition(link) {
-    if (link.type === "exhibition"){
-      return <div key={link.link}>
-        {(this.templates[link.type] || this.templates.default)(link, this.props.id, this.props.highlights)}
-      </div>
-    } else {
-
-    }
+    return <div key={link.link}>
+      {(this.templates[link.type] || this.templates.default)(link, this.props.id, this.props.highlights)}
+    </div>
   },
 
   templates: {
