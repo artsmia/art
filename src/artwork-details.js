@@ -2,6 +2,7 @@ var React = require('react')
 var capitalize = require('capitalize')
 var Isvg = require('react-inlinesvg')
 var cx = require('classnames')
+var ClickToSelect = require('react-click-to-select')
 
 var Markdown = require('./markdown')
 var Peek = require('./peek')
@@ -100,6 +101,13 @@ var ArtworkDetails = React.createClass({
         ]
       }],
       ['marks'],
+      ['wikipedia', (art) => {
+        return ['Cite this information', <div>
+          <ClickToSelect>
+            <code name="Mia">&#123;&#123;cite web |title={art.title} |url=http://collections.artsmia.org/art/{art.id} |author={art.artist} |year={art.dated} |accessdate={(new Date).toUTCString().split(' ').slice(1, 4).join(' ')} |publisher=Minneapolis Institute of Art&#125;&#125;</code>
+          </ClickToSelect>
+        </div>]
+      }],
     ]
   },
 
