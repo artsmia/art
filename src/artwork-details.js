@@ -20,9 +20,11 @@ var ArtworkDetails = React.createClass({
     var showExtra = extraContent && this.state.expandDetailsMatrix[field]
     var classes = cx("detail-row", {expandable: extraContent}, field)
 
-    return <div className={classes} onClick={this.toggleExtra.bind(this, field)}>
-      <dt className="detail-title">{humanFieldName}</dt>
-      <dd className='detail-content'>{content}</dd>
+    return <div className={classes}>
+      <div onClick={this.toggleExtra.bind(this, field)}>
+        <dt className="detail-title">{humanFieldName}</dt>
+        <dd className='detail-content'>{content}</dd>
+      </div>
       {showExtra && <div className="detail-extra">{extraContent}</div>}
     </div>
   },
