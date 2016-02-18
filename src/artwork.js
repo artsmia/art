@@ -150,7 +150,7 @@ var Artwork = React.createClass({
 
   componentDidMount() {
     var art = this.state.art
-    if(art.image === 'valid' && art.restricted != 1) this.loadZoom()
+    if(art.image === 'valid' && art.restricted != 1 && art.accession_number.match(/^[^L]/i)) this.loadZoom()
   },
 
   loadZoom() {
