@@ -10,6 +10,7 @@ var GalleryDecorator = require('./decorate/gallery.js')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
 var {galleries, messages} = require('../data/galleries.json')
+var galleryPanelUrl = require('./endpoints').galleryPanel
 
 var Gallery = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -18,7 +19,7 @@ var Gallery = React.createClass({
     fetchData: {
       gallery: (params, query) => {
         var id = params.gallery.replace(/g/i, '')
-        var url = `https://cdn.rawgit.com/artsmia/mia-gallery-panels/master/${id}.md`
+        var url = galleryPanelUrl(id)
         return rest(url).then(result => {
           return result.status.code == 200 ? result.entity : false
         })

@@ -3,6 +3,7 @@ var rest = require('rest')
 
 var Markdown = require('./markdown')
 var imageCDN = require('./image-cdn')
+var {relatedInfo} = require('./endpoints')
 
 var artstoryStampStyle = {
   backgroundPosition: 'center center',
@@ -12,7 +13,7 @@ var artstoryStampStyle = {
 var ArtworkRelatedContent = React.createClass({
   statics: {
     fetchData: (params) => {
-      return rest('http://collection.staging.artsmia.org/links/'+params.id+'.json')
+      return rest(relatedInfo(params.id))
       .then(r => JSON.parse(r.entity))
       .catch(err => [])
     },

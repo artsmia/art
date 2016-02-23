@@ -4,11 +4,12 @@ var {Link} = Router
 var Helmet = require('react-helmet')
 var rest = require('rest')
 var toSlug = require('speakingurl')
+var collectionInfo = require('./endpoints').info
 
 var Info = React.createClass({
   statics: {
     fetchData: {
-      pages: (params, query) => rest("http://artsmia.github.io/collection-info/index.json")
+      pages: (params, query) => rest(collectionInfo)
         .then(r => JSON.parse(r.entity).pages)
     }
   },

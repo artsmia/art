@@ -7,11 +7,12 @@ var Search = require('./search')
 var SearchResults = require('./search-results')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
+var collectionInfo = require('./endpoints').info
 
 var Page = React.createClass({
   statics: {
     fetchData: {
-      page: (params, query) => rest("http://artsmia.github.io/collection-info/index.json")
+      page: (params, query) => rest(collectionInfo)
         .then(r => JSON.parse(r.entity).pages)
         .then(pages => pages[params.name]),
       searchResults: (params, query) => Page.fetchData.page(params, query)

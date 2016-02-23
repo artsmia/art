@@ -5,6 +5,7 @@ var rest = require('rest')
 var {galleries, messages} = require('../../data/galleries.json')
 var Markdown = require('../markdown')
 var Map = require('../map')
+var galleryPanelUrl = require('../endpoints').galleryPanel
 
 var GalleryDecorator =  React.createClass({
   getGalleryInfo(gallery) {
@@ -78,7 +79,7 @@ var GalleryDecorator =  React.createClass({
   },
 
   fetchData(number) {
-    rest(`https://cdn.rawgit.com/artsmia/mia-gallery-panels/master/${number || this.state.number}.md`)
+    rest(galleryPanelUrl(number || this.state.number))
     .then((result) => {
       this.setState({
         panel: result.status.code == 200 ? result.entity : '',
