@@ -155,6 +155,8 @@ var Search = React.createClass({
     var {facet, searchAll} = this.props
     if(terms === '') return
 
+    var filters = this.props.params && this.props.params.splat
+    if(filters && filters.match(/deaccessioned:.?true.?/)) facet = filters
     this.props.onSearch && this.props.onSearch(terms)
     this.transitionTo(facet && !searchAll ? 'filteredSearchResults' : 'searchResults', {terms: terms, splat: facet})
   },

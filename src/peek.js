@@ -52,8 +52,8 @@ var Peek = React.createClass({
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
     var linkProps = this.props.linkProps || {
-      to: "searchResults",
-      params: {terms: this.state.facetedQ || this.state.q}
+      to: "filteredSearchResults",
+      params: {terms: '*', splat: this.state.facetedQ || this.state.q}
     }
     var text = this.props.highlightedValue ? <Markdown tag="span">{this.props.highlightedValue}</Markdown> : this.props.children
     var peekText = this.context.universal ?
