@@ -1,4 +1,5 @@
 var React = require('react')
+var {Link} = require('react-router')
 var capitalize = require('capitalize')
 var Isvg = require('react-inlinesvg')
 var cx = require('classnames')
@@ -63,6 +64,7 @@ var ArtworkDetails = React.createClass({
 
   details() {
     return [
+      ['deaccessioned', (art, raw) => [raw.deaccessioned && `${art.deaccessionedDate}`, <Link to="/info/deaccessions">Artworks are deaccessioned for many reasons</Link>]],
       ['title'],
       this.buildPeekableDetail('dated'),
       this.buildPeekableDetail('artist'),

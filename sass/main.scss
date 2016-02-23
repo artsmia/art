@@ -290,8 +290,6 @@ header{
         font-family: $MiaGroteskBold;
         font-size:1.357em;
         color: $primary;
-        padding-top: 7px;
-        border-top: 3px solid $primary;
     }
     span.dated{
       font-family: $MiaGroteskRegular;
@@ -333,6 +331,8 @@ header{
     .objects-focus .artwork-image{
         width:100%;
         height:auto;
+        margin-bottom: 7px;
+        border-bottom: 3px solid $primary;
     }
 
 

@@ -1,5 +1,6 @@
 var React = require('react')
 var Router = require('react-router')
+var {Link} = Router
 var rest = require('rest')
 var humanizeNumber = require('humanize-number')
 var Helmet = require('react-helmet')

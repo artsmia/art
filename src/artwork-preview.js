@@ -40,6 +40,7 @@ var ArtworkPreview = React.createClass({
     return (
       <Artwork.Figure art={art} className='objects-focus' style={style} link={showLink}>
         <div className="art-details preview-header">
+          {art.deaccessioned == 'true' && <DeaccessionedBanner art={art} />}
           <Artwork.Title art={art} link={showLink} {...this.props} />
           <Artwork.Creator art={art} {...this.props} />
           <Artwork.Tombstone art={art} {...this.props} />
@@ -72,3 +73,17 @@ var ArtworkPreview = React.createClass({
 })
 
 module.exports = ArtworkPreview
+
+var DeaccessionedBanner = React.createClass({
+  render() {
+    var {art} = this.props
+    var date = art.deaccessionedDate
+
+    return <div>
+      <strong>DEACCESSIONED</strong>
+      <p>
+        This artwork is <i>deaccessioned</i>. {date && <span>It left Mia on {date}.</span>} <Link to="/info/deaccessions">Huh?</Link>
+      </p>
+    </div>
+  },
+})
