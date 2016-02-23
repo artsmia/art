@@ -50,6 +50,7 @@ var Search = React.createClass({
         value={searchLanguageMap(this.state.terms)}
         onKeyDown={this.keyDown}
         onChange={this.throttledSearch}
+        onFocus={({target}) => target && target.select()}
         style={{width: '100%', maxWidth: '500px', pointerEvents: 'all'}}
         name="q"
         ref="searchInput"
