@@ -26,13 +26,15 @@ var GlobalNavigation =  React.createClass({
 
       if(smallViewport){
         return (
-          <div className='mobile-nav nav_bar'>
+          <div className='mobile-nav nav_bar' onClick={this.closeNav}>
 
             <div className="global_nav">
               <ul className="nav_list">
                 {this.mainnav.map(({navItem, link}) => {
                   return <li key={navItem} className="nav_item">
-                    <a href={link}>{navItem}</a>
+                    {navItem == 'Collection' ?
+                      <Link to="/">Collection</Link> :
+                      <a href={link}>{navItem}</a>}
                   </li>
                 })}
               </ul>
@@ -50,12 +52,14 @@ var GlobalNavigation =  React.createClass({
         )
       } else {
         return (
-          <div className="nav_bar">
+          <div className="nav_bar" onClick={this.closeNav}>
       <div className="global_nav">
         <ul className="nav_list">
           {this.mainnav.map(({navItem, link}) => {
             return <li key={navItem} className="nav_item">
-              <a href={link}>{navItem}</a>
+              {navItem == 'Collection' ?
+                <Link to="/">Collection</Link> :
+                <a href={link}>{navItem}</a>}
             </li>
           })}
         </ul>
@@ -71,7 +75,11 @@ var GlobalNavigation =  React.createClass({
       </div>
     </div>
   )}
-}
+},
+
+  closeNav() {
+    this.props.closeNav && this.props.closeNav()
+  }
 })
 
 module.exports = GlobalNavigation

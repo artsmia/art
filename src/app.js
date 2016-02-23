@@ -45,7 +45,7 @@ var App = React.createClass({
         {searchTrigger}
       </div>
       <div className="global_display">
-      {this.state.showMenu && <GlobalNavigation />}
+      {this.state.showMenu && <GlobalNavigation closeNav={this.toggleMenu} />}
       {this.state.showSearch && <LiveSearch afterSearch={this.toggleSearch} />}
       </div>
     </div>
@@ -66,7 +66,7 @@ var App = React.createClass({
       showSearch: false
     })
 
-    event.preventDefault()
+    event && event.preventDefault()
   },
 
   getInitialState() {
