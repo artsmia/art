@@ -48,7 +48,7 @@ var GalleryDecorator =  React.createClass({
       nextLink,
     }
 
-    var info = panel || `# ${galleryInfo.title}`
+    var info = panel || galleryInfo && `# ${galleryInfo.title}` || 'Gallery not Found'
 
     return <div style={{clear: 'both'}} className="decorator d-gallery">
       <div>
