@@ -1,5 +1,6 @@
 var React = require('react')
 var rest = require('rest')
+var cx = require('classnames')
 
 var Markdown = require('./markdown')
 var imageCDN = require('./image-cdn')
@@ -12,6 +13,7 @@ var artstoryStampStyle = {
 
 var ArtworkRelatedContent = React.createClass({
   statics: {
+    // TODO: refactor this to use the data that's now indexed in ES
     fetchData: (params) => {
       return rest(relatedInfo(params.id))
       .then(r => JSON.parse(r.entity))
@@ -36,28 +38,28 @@ var ArtworkRelatedContent = React.createClass({
     return links && links.length > 0 && bones
   },
 
-  build(link) {
-    return <div key={link.link}>
-      {(this.templates[link.type] || this.templates.default)(link, this.props.id, this.props.highlights)}
+  build(json) {
+    return <div key={json.link}>
+      {(this.templates[json.type] || this.templates.default)(json, this.props.id, this.props.highlights)}
     </div>
   },
 
   templates: {
-    audio: (link) => <div className="audioClip">
-      <audio style={{maxWidth: '100%'}} src={link.link} controls></audio>
-      <a href={link.link}>Audio Clip<br/><sub>Listen.</sub></a>
+    audio: (json) => <div className="audioClip">
+      <audio style={{maxWidth: '100%'}} src={json.link} controls></audio>
+      <a href={json.link}>Audio Clip<br/><sub>Listen.</sub></a>
     </div>,
-    /*newsflash: (link) => <div className="newsflash" style={{backgroundImage: `url(http://newsflash.dx.artsmia.org${link.image})`}}>
+    /*newsflash: (json) => <div className="newsflash" style={{backgroundImage: `url(http://newsflash.dx.artsmia.org${json.image})`}}>
       <div className="overlay">
-      <a href={link.link}>{link.title}<br/><sub>Read more.</sub></a>
+      <a href={json.link}>{json.title}<br/><sub>Read more.</sub></a>
       <i className="material-icons">launch</i>
       </div>
     </div>,*/
-    newsflash: (link) => <span />,
-    artstory: (link, id) => <div className="artstory" style={{backgroundImage: `url(${imageCDN(id)})`, ...artstoryStampStyle}}>
+    newsflash: (json) => <span />,
+    artstory: (json, id, highlight) => <div className={cx("artstory", {"block-highlight": highlight && highlight["related:artstories"]})} style={{backgroundImage: `url(${imageCDN(id)})`, ...artstoryStampStyle}}>
       <div className="overlay">
-      <a href={link.link}>ArtStories<br/><sub>Zoom in.</sub></a>
-      <i className="material-icons">launch</i>
+        <a href={json.link}>ArtStories<br/><sub>Zoom in.</sub></a>
+        <i className="material-icons">launch</i>
       </div>
     </div>,
     "adopt-a-painting": (json, id, highlights) => {
@@ -81,12 +83,18 @@ var ArtworkRelatedContent = React.createClass({
         </div>
       }
     },
-    default: (link) => <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
-      <div className="overlay">
-      <a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a>
-      <i className="material-icons">launch</i>
+    "exhibition": () => <span />,
+    "exhibitions": () => <span />,
+    default: (json, id, highlights) => {
+      var miaStoryMatches = highlights && highlights['related:stories'] && highlights['related:stories'].filter(h => { var h = JSON.parse(h); return json.title == h.title.replace(/<\/?em>/g, '') })
+
+      return <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
+        <div className={cx("overlay", {"block-highlight": miaStoryMatches && miaStoryMatches.length > 0})}>
+          <a href={json.link}>{json.title}<br/><sub>Explore more.</sub></a>
+          <i className="material-icons">launch</i>
+        </div>
       </div>
-    </div>,
+    },
   },
 })
 

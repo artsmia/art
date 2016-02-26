@@ -170,7 +170,8 @@ var Peek = React.createClass({
     if(!art) return
     window.clickedArtwork = art
     if(this.props.directLinkTo) {
-      var url = art._source[`related:${this.props.directLinkTo}`]
+      var relatedJson = JSON.parse(art._source[`related:${this.props.directLinkTo}`])
+      var url = relatedJson.link
       if(url) return window.location = url
     }
     this.props.filtered ?
