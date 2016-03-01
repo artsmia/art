@@ -86,7 +86,7 @@ var CopyableLabel = React.createClass({
     // Title of object [italicized if simply nondescriptive, like Table], creation date, media,
     // Source of purchase funds, accession number [+ © or ARS info]
     return <div style={style}>
-      <ClickToSelect>
+      <ClickToSelect ref="click">
         <p>{join(hasValidArtist &&
             [
               creator,
@@ -107,7 +107,7 @@ var CopyableLabel = React.createClass({
         </p>
       </ClickToSelect>
 
-      <button onClick={this.props.onClose}>(close)</button>
+      <button onClick={this.props.onClose} style={{color: '#111', float: 'right'}}>(close)</button>
     </div>
   },
 
@@ -127,6 +127,12 @@ var CopyableLabel = React.createClass({
 
   titlecase(string) {
     return string[0].toUpperCase() + string.substr(1).toLowerCase()
+  },
+
+  componentDidMount() {
+    // auto-select the text instead of requiring a click
+    var domNode = this.refs.click && React.findDOMNode(this.refs.click)
+    if(domNode) domNode.click()
   },
 })
 
