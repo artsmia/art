@@ -48,14 +48,18 @@ var GalleryDecorator =  React.createClass({
       nextLink,
     }
 
-    var info = panel || galleryInfo && `# ${galleryInfo.title}` || 'Gallery not Found'
+    if(!panel && !galleryInfo) return <div>
+      <h1>Gallery Not Found!</h1>
+      <Link to="galleries">Show all galleries</Link>
+    </div>
 
     return <div style={{clear: 'both'}} className="decorator d-gallery">
       <div>
         <Map {...mapProps} />
       </div>
-      {info && <div className="info">
-        <Markdown>{info}</Markdown>
+      {(panel || galleryInfo) && <div className="info">
+        {panel && <Markdown>{panel}</Markdown>}
+        {galleryInfo && <p><strong>{galleryInfo.title}</strong></p>}
         {!showFullInfo && <Link to='gallery' params={{gallery: number}}>More info</Link>}
       </div>}
       <hr style={{clear: 'both', visibility: 'hidden'}} />
