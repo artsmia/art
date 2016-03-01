@@ -12,17 +12,14 @@ var artstoryStampStyle = {
 }
 
 var ArtworkRelatedContent = React.createClass({
-  statics: {
-    // TODO: refactor this to use the data that's now indexed in ES
-    fetchData: (params) => {
-      return rest(relatedInfo(params.id))
-      .then(r => JSON.parse(r.entity))
-      .catch(err => [])
-    },
-  },
-
   render() {
-    var {links} = this.props
+    // gather any `related:` info on the artwork into `links[]`
+    var {art} = this.props
+    var links = Object.keys(art).filter(key => key.match('related:'))
+    .reduce((relateds, key) => {
+      relateds.push(JSON.parse(art[key]))
+      return relateds
+    }, [])
 
     var meat = <div className="explore">
       {links.map(this.build)}

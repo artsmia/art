@@ -30,8 +30,6 @@ var Artwork = React.createClass({
           return art
         })
       },
-
-      relatedContent: ArtworkRelatedContent.fetchData,
     },
 
     willTransitionTo: function (transition, params, query, callback) {
