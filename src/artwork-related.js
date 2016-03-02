@@ -15,6 +15,8 @@ var ArtworkRelatedContent = React.createClass({
   render() {
     // gather any `related:` info on the artwork into `links[]`
     var {art} = this.props
+    if(!art) return <span/>
+
     var links = Object.keys(art).filter(key => key.match('related:'))
     .reduce((relateds, key) => {
       relateds.push(JSON.parse(art[key]))
