@@ -41,6 +41,7 @@ var ArtworkPreview = React.createClass({
       <Artwork.Figure art={art} className='objects-focus' style={style} link={showLink}>
         <div className="art-details preview-header">
           {art.deaccessioned == 'true' && <DeaccessionedBanner art={art} />}
+          {art.accession_number.match(/^L/i) && <LoanBanner art={art} />}
           <Artwork.Title art={art} link={showLink} {...this.props} />
           <Artwork.Creator art={art} {...this.props} />
           <Artwork.Tombstone art={art} {...this.props} />
@@ -83,6 +84,20 @@ var DeaccessionedBanner = React.createClass({
       <strong>DEACCESSIONED</strong>
       <p>
         This artwork is <i>deaccessioned</i>. {date && <span>It left Mia on {date}.</span>} <Link to="/info/deaccessions">Huh?</Link>
+      </p>
+    </div>
+  },
+})
+
+var LoanBanner = React.createClass({
+  render() {
+    var {art} = this.props
+    var date = art.deaccessionedDate
+
+    return <div>
+      <strong>LOAN</strong>
+      <p>
+        This artwork was "loaned" to the museum by the owner. It was never owned by Mia. Loans are a common way to share art between museums.
       </p>
     </div>
   },
