@@ -54,11 +54,11 @@ var Artwork = React.createClass({
     var canonicalURL = `http://collections.artsmia.org/art/${art.id}/${art.slug}`
 
     var image = <Image art={art}
-      style={{width: 400, height: 400}}
+      style={{width: 400, height: 400, maxWidth: '100%'}}
       ignoreStyle={true} />
 
-    var map = <div ref='map' id='map' style={smallViewport ? {width: '100%', display: 'inline-block'} : {stickyMapStyle}}>
-      {this.state.zoomLoaded || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
+    var map = <div ref='map' id='map' style={smallViewport ? {width: '100%', display: 'inline-block'} : stickyMapStyle}>
+      {this.state.zoomLoaded || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
         {image}
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
       </div>}
@@ -178,10 +178,11 @@ var Artwork = React.createClass({
       —Nope! We're loading ${humanizeNumber(this.getPixelDifference(400))} more pixels right now.
       It can take a few seconds.)`
     var showLoadingMessage = zoomLoading && zoomLoaded === false && !this.context.universal
+    var smallViewport = window && window.innerWidth <= 500
 
     return art.image === 'valid' && <span className="imageStatus">
       {showLoadingMessage && loadingZoomMessage}
-      {art.restricted === 1 && "Because of © restrictions, we can only show you a small image of this artwork." + copyrightAndOnViewMessage}
+      {art.restricted === 1 && !smallViewport && "Because of © restrictions, we can only show you a small image of this artwork." + copyrightAndOnViewMessage}
     </span>
   },
 

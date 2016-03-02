@@ -21,7 +21,7 @@ const Image = React.createClass({
 
     var nakedImage = <img
       key={id}
-      style={ignoreStyle ? {} : style}
+      style={ignoreStyle ? {maxWidth: '100%'} : style}
       src={this.imageURL()}
       onLoad={this.handleImageLoad}
       onError={this.handleError}
