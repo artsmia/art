@@ -106,7 +106,7 @@ var Artwork = React.createClass({
           {property: "og:url", content: canonicalURL},
           {property: "twitter:card", content: "summary_large_image"},
           {property: "twitter:site", content: "@artsmia"},
-          {property: "robots", content:
+          {property: "robots", content: this.isLoan() ? 'noindex' : 'all'},
         ]}
         link={[
           {"rel": "canonical", "href": canonicalURL},
@@ -127,7 +127,7 @@ var Artwork = React.createClass({
 
   componentDidMount() {
     var art = this.state.art
-    if(art.image === 'valid' && art.restricted != 1 && art.accession_number.match(/^[^L]/i)) this.loadZoom()
+    if(art.image === 'valid' && art.restricted != 1 && !this.isLoan()) this.loadZoom()
   },
 
   loadZoom() {
@@ -201,6 +201,10 @@ var Artwork = React.createClass({
     return Math.floor(
       this.calculateImagePixelSize() - this.calculateImagePixelSize(400)
     )
+  },
+
+  isLoan() {
+    return this.state.art.accession_number.match(/^L/i)
   },
 })
 Artwork.contextTypes = {
