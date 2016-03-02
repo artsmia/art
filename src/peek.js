@@ -51,9 +51,12 @@ var Peek = React.createClass({
     var Tag = this.props.tag
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
-    var linkProps = this.props.linkProps || {
+    var linkProps = this.props.linkProps || this.props.filtered ? {
       to: "filteredSearchResults",
       params: {terms: '*', splat: this.state.facetedQ || this.state.q}
+    } : {
+      to: "searchResults",
+      params: {terms: this.state.facetedQ || this.state.q}
     }
     var text = this.props.highlightedValue ? <Markdown tag="span">{this.props.highlightedValue}</Markdown> : this.props.children
     var peekText = this.context.universal ?
@@ -170,7 +173,9 @@ var Peek = React.createClass({
       var url = art._source[`related:${this.props.directLinkTo}`]
       if(url) return window.location = url
     }
-    this.transitionTo('searchResults', {terms: this.state.facetedQ})
+    this.props.filtered ?
+      this.transitionTo('filteredSearchResults', {terms: '*', splat: this.state.facetedQ}) :
+      this.transitionTo('searchResults', {terms: this.state.facetedQ})
   },
 
   getDefaultProps() {

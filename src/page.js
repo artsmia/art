@@ -36,7 +36,7 @@ var Page = React.createClass({
         <Markdown>{content}</Markdown>
       </div>
 
-      {query && <Peek q={query} quiltProps={{maxRowHeight: 400}} offset={10} />}
+      {query && <Peek q={query} filtered={true} quiltProps={{maxRowHeight: 400}} offset={10} />}
       <Helmet title={title} />
     </section>
   },
