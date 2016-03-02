@@ -4,6 +4,7 @@ var {Link} = Router
 var rest = require('rest')
 var humanizeNumber = require('humanize-number')
 var Helmet = require('react-helmet')
+var cx = require('classnames')
 
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
@@ -58,84 +59,60 @@ var Artwork = React.createClass({
       style={{width: 400, height: 400}}
       ignoreStyle={true} />
 
-    if(smallViewport) {
-      return (
-        <div className='artwork smallviewport'>
-          <div ref='map' id='map' style={{width: '100%', display: 'inline-block'}}>
-            {this.state.zoomLoaded || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
-              {image}
-              {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
-            </div>}
-            {this.imageStatus()}
-          </div>
-          <div className='info'>
-            <ArtworkPreview art={art} showLink={false} showDuplicateDetails={true} />
-            <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
-            <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
-            <div>
-              <h5 className='details-title'>Details</h5>
-              <ArtworkDetails art={art} />
-            </div>
-          </div>
-          <Helmet
-            title={pageTitle}
-            meta={[
-              {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
-              {property: "og:description", content: art.text},
-              {property: "og:image", content: imageUrl},
-              {property: "og:url", content: canonicalURL},
-              {property: "twitter:card", content: "summary_large_image"},
-              {property: "twitter:site", content: "@artsmia"},
-            ]}
-            link={[
-              {"rel": "canonical", "href": canonicalURL},
-            ]}
-            />
-        </div>
-      )
-    } else {
-      return (
-        <div className='artwork'>
-          <div className='info'>
-            <ArtworkPreview art={art} showLink={false} />
-            <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
-            <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
-            <div>
-              <h5 className='details-title'>Details</h5>
-              <ArtworkDetails art={art} />
-            </div>
-          </div>
+    var map = <div ref='map' id='map' style={smallViewport ? {width: '100%', display: 'inline-block'} : {stickyMapStyle}}>
+      {this.state.zoomLoaded || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
+        {image}
+        {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
+      </div>}
+      {this.imageStatus()}
+    </div>
 
-          <Sticky
-            stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0, transform: 'translate3d(0px,0px,0px)'}}
-            onStickyStateChange={this.resizeMap}>
-            <div ref='map' id='map' style={stickyMapStyle}>
-              {this.state.zoomLoaded || art.image == 'valid' && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
-                {image}
-                {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
-              </div>}
-              {this.imageStatus()}
-            </div>
-          </Sticky>
-          <Helmet
-            title={pageTitle}
-            meta={[
-              {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
-              {property: "og:description", content: art.text},
-              {property: "og:image", content: imageUrl},
-              {property: "og:url", content: canonicalURL},
-              {property: "twitter:card", content: "summary_large_image"},
-              {property: "twitter:site", content: "@artsmia"},
-            ]}
-            link={[
-              {"rel": "canonical", "href": canonicalURL},
-            ]}
-            />
-        </div>
-      )
+    var info = <div className='info'>
+      <ArtworkPreview art={art} showLink={false} showDuplicateDetails={true} />
+      <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
+      <ArtworkRelatedContent id={id} links={this.props.data.relatedContent} />
+      <div>
+        <h5 className='details-title'>Details</h5>
+        <ArtworkDetails art={art} />
+      </div>
+    </div>
+
+    var content
+    if(smallViewport) {
+      content = <div>
+        {map}
+        {info}
+      </div>
+    } else {
+      content = <div>
+        {info}
+
+        <Sticky
+          stickyStyle={{position: 'fixed', height: '100%', width: '65%', top: 0, transform: 'translate3d(0px,0px,0px)'}}
+          onStickyStateChange={this.resizeMap}>
+          {map}
+        </Sticky>
+      </div>
     }
 
-
+    return <div className={cx('artwork', {smallviewport: smallViewport})}>
+      {content}
+      <Helmet
+        title={pageTitle}
+        meta={[
+          {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
+          {property: "og:description", content: art.text},
+          {property: "og:image", content: imageUrl},
+          {property: "og:url", content: canonicalURL},
+          {property: "twitter:card", content: "summary_large_image"},
+          {property: "twitter:site", content: "@artsmia"},
+          {property: "robots", content:
+        ]}
+        link={[
+          {"rel": "canonical", "href": canonicalURL},
+        ]}
+        />
+    </div>
   },
 
   getInitialState() {
