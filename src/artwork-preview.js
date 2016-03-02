@@ -23,7 +23,7 @@ var ArtworkPreview = React.createClass({
     var id = art.id.replace('http://api.artsmia.org/objects/', '')
     var highlight = highlighter.bind(null, art, highlights)
 
-    var showHighlights = highlights && <div class='artwork-detail' style={{marginTop: '1em'}}>
+    var showHighlights = highlights && <div className='artwork-detail' style={{marginTop: '1em'}}>
       <hr />
       <ArtworkDetails
         art={art}

@@ -21,7 +21,7 @@ var ArtworkDetails = React.createClass({
     var showExtra = extraContent && this.state.expandDetailsMatrix[field]
     var classes = cx("detail-row", {expandable: extraContent}, field)
 
-    return <div className={classes}>
+    return <div className={classes} key={field}>
       <div onClick={this.toggleExtra.bind(this, field)}>
         <dt className="detail-title">{humanFieldName}</dt>
         <dd className='detail-content'>{content}</dd>
@@ -77,7 +77,7 @@ var ArtworkDetails = React.createClass({
 
         return [
           art.dimension && <div>{showFancyDimension ? this.dimensions().map(([d, aspect]) => {
-            return <span style={{display: 'block'}} onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)}>{d}</span>
+            return <span style={{display: 'block'}} onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)} key={aspect}>{d}</span>
           }) : art.dimension}</div>,
           showFancyDimension && <div>
             {rawArt.dimension.match(/cm/) && <Isvg

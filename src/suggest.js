@@ -11,14 +11,14 @@ var Suggest = React.createClass({
 
     var suggestionLinks = suggestions
     .map(name => <Link to={`/search/${name}`}>{name}</Link>)
-    .map((link, index) => <span>{link}{index === suggestions.length-1 || ', '}</span>)
+    .map((link, index) => <span key={index}>{link}{index === suggestions.length-1 || ', '}</span>)
 
     var style = {marginBottom: '1em', textAlign: 'center', ...this.props.style}
 
     return <div id="suggestions" style={style}>
       <p>Looking for {suggestionLinks}?</p>
       <datalist id="searchCompletions">
-        {suggestions.map(option => <option>{option}</option>)}
+        {suggestions.map(option => <option key={option}>{option}</option>)}
       </datalist>
     </div>
   },

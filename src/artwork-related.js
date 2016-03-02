@@ -38,7 +38,7 @@ var ArtworkRelatedContent = React.createClass({
   },
 
   build(json) {
-    return <div key={json.link}>
+    return <div key={json.link || json.title}>
       {(this.templates[json.type] || this.templates.default)(json, this.props.id, this.props.highlights)}
     </div>
   },

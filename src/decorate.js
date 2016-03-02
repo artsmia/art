@@ -55,11 +55,11 @@ var DecorationFinder = (search, filters, props) => {
   if(filters) terms = terms.concat(filters.split('" ').map(f => f.trim()))
 
   var Decor = {
-    "department:": (term) => <DepartmentDecorator department={term} params={params} />,
-    "g[0-9]{3}a?": (gallery) => <GalleryDecorator gallery={gallery[0]} {...props} />,
-    "Not on View": (gallery) => <GalleryDecorator notOnView={true} />,
-    "highlight:": () => <HighlightsDecorator />,
-    "recent:": () => <RecentDecorator />,
+    "department:": (term) => <DepartmentDecorator department={term} params={params} key={term} />,
+    "g[0-9]{3}a?": (gallery) => <GalleryDecorator gallery={gallery[0]} {...props} key={gallery} />,
+    "Not on View": (gallery) => <GalleryDecorator notOnView={true} key={gallery} />,
+    "highlight:": () => <HighlightsDecorator key="highlight" />,
+    "recent:": () => <RecentDecorator key="recent" />,
   }
 
   let m = Object.keys(Decor).reduce((matches, d) => {

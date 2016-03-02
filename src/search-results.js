@@ -89,7 +89,7 @@ var SearchResults = React.createClass({
         focusHandler={this.focusResult}
         search={search}
         hits={this.props.hits}
-        postSearch={this.postSearch(summaryProps)}
+        postSearch={this.postSearch(summaryProps, this.state.postSearchOffset)}
         smallViewport={this.state.smallViewport}
         showRelated={showFocusRelatedContent}
         />
@@ -118,11 +118,8 @@ var SearchResults = React.createClass({
   // * related searches?
   //
   // Also fudge the height of this so the right column scroll doesn't get cut off.
-  postSearch({hits, search, showMoreLink}) {
+  postSearch({hits, search, showMoreLink}, postSearchOffset) {
     var showingAll = hits.length == search.hits.total
-    var domNode = this.isMounted() && React.findDOMNode(this.refs.postSearch)
-    var postSearchOffset = 0
-    if(domNode) postSearchOffset = domNode.getBoundingClientRect().top
 
     var style = {
       marginTop: '1em',
@@ -138,6 +135,14 @@ var SearchResults = React.createClass({
       {search.filters && <span> and <code>{search.filters}</code></span>}
       {showingAll || showMoreLink}
     </div>
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    var domNode = this.refs.postSearch && React.findDOMNode(this.refs.postSearch)
+    var offset = domNode.getBoundingClientRect().top
+    if(domNode && offset != prevState.postSearchOffset) {
+      this.setState({postSearchOffset: offset || 0})
+    }
   },
 
   onHeightChange(newHeight) {
