@@ -876,6 +876,7 @@ h5.details-title {
 }
 .explore .adopt-ptg {
   margin-top: 10px;
+  clear: both;
 }
 .explore .adopt-ptg h3 {
   font-size:1.1em;
@@ -900,6 +901,11 @@ h5.details-title {
 }
 .explore .adopt-ptg span.cost {
   font-family: $MiaGroteskBold, sans-serif;
+}
+.explore .adopt-ptg blockquote {
+  border-left: 5px solid #aaa;
+  padding-left: 1em;
+  margin-top: 1em;
 }
 .newsflash i, .artstory i, .explore-content i{
   font-size:1.5em;

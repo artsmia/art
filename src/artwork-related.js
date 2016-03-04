@@ -63,12 +63,13 @@ var ArtworkRelatedContent = React.createClass({
     "adopt-a-painting": (json, id, highlights) => {
       var highlight = highlights && highlights["related:adopt-a-painting"]
       var highlight = highlight ? JSON.parse(highlight[0]) : null
+      if(!(highlight || window.location.pathname.match(/related.*adopt/))) return <span />
 
       if(json.adopted === "1") {
         return <div className="adopt-ptg" style={{clear:'both'}}>
           <h3>This painting has been adopted.</h3>
           <a href="/info/adopt-a-painting">Learn more about adopting a painting. <i className="material-icons">launch</i></a>
-          {highlight && <blockquote style={{marginTop: '1em'}}><Markdown>{highlight.description}</Markdown></blockquote>}
+          {highlight && <div>It needed adoption because… <blockquote><Markdown>{highlight.description}</Markdown></blockquote></div>}
         </div>
       } else {
         return <div className="adopt-ptg">
