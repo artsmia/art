@@ -36,6 +36,7 @@ var Home = React.createClass({
         searchAll={true}
         suggestStyle={{margin: "1em 3em"}}
         bumpSearchBox={smallViewport}
+        shuffleQuilt={true}
         {...this.props} />
       <HomeDepartmentsAndPages />
       <div id="map">

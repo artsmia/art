@@ -42,6 +42,7 @@ var Search = React.createClass({
       disableHover: this.props.hideResults || this.props.disableHover,
       lazyLoad: !this.context.universal,
       darken: darkenQuilt,
+      shuffle: this.props.shuffleQuilt,
     }, this.props.quiltProps || {})
 
     const nakedSimpleSearchBox = <div className='search-wrapper'>

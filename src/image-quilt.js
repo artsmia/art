@@ -58,7 +58,11 @@ const ImageQuilt = React.createClass({
     var rowHeight = this.props.rowHeight || 200
     var numRows = Math.min(this.props.maxRows, Math.max(Math.floor(summedAspectRatio*rowHeight/this.state.width), 1))
 
-    var rows = this.getPartition(artworks, numRows)
+    const maybeShuffledArtworks = this.props.shuffle ?
+      artworks.sort(() => .5 - Math.random()) :
+      artworks
+
+    var rows = this.getPartition(maybeShuffledArtworks, numRows)
 
     const images = rows.map((row, index) => {
       var rowSummedAspectRatio = row.reduce((sum, art) => {return sum+art._source.aspect_ratio}, 0)

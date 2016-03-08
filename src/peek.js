@@ -112,6 +112,7 @@ var Peek = React.createClass({
       {...this.props.quiltProps}
       onClick={this.linkToResults}
       disableHover={true}
+      shuffle={this.props.shuffleQuilt}
       />
   },
 
