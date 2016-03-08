@@ -8,6 +8,7 @@ var ClickToSelect = require('react-click-to-select')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
 var dimensionSvg = require('./endpoints').dimensionSvg
+var rightsDescriptions = require('./rights-types.js')
 
 var ArtworkDetails = React.createClass({
   build(field, fn) {
@@ -96,12 +97,16 @@ var ArtworkDetails = React.createClass({
       ['century', (art, raw) => [art.style, <Peek facet="style" q={raw.style} />]],
       ['provenance'],
       ['rights', (art, raw) => {
-        return [(art.image_copyright || art.rights_type) && <div>
+        return [(art.image_copyright || art.rights) && <div>
           {art.image_copyright && decodeURIComponent(art.image_copyright)}
-          {art.image_copyright && art.rights_type && <br/>}
-          {art.rights_type && <span>{art.rights_type}</span>}
+          {art.image_copyright && art.rights && <br/>}
+          {art.rights && <span>{art.rights}</span>}
         </div>,
-        <Peek facet="rights_type" q={raw.rights_type} />
+        <div>
+          <p>{rightsDescriptions[raw.rights]}</p>
+          <Peek facet="rights" q={raw.rights} />
+          <p><a href="http://new.artsmia.org/visit/policies-guidelines/#websiteimageaccess&use">Mia's Image Access & Use Policy</a></p>
+        </div>
         ]
       }],
       ['marks'],

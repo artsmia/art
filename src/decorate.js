@@ -7,6 +7,7 @@ var DepartmentDecorator = require('./decorate/department')
 var GalleryDecorator = require('./decorate/gallery')
 var HighlightsDecorator = require('./decorate/highlights')
 var RecentDecorator = require('./decorate/recent')
+var RightsDecorator = require('./decorate/rights')
 
 var Decorate = React.createClass({
   render() {
@@ -60,6 +61,7 @@ var DecorationFinder = (search, filters, props) => {
     "Not on View": (gallery) => <GalleryDecorator notOnView={true} key={gallery} />,
     "highlight:": () => <HighlightsDecorator key="highlight" />,
     "recent:": () => <RecentDecorator key="recent" />,
+    "rights:": (term) => <RightsDecorator term={term} params={params} key={term} />,
   }
 
   let m = Object.keys(Decor).reduce((matches, d) => {
