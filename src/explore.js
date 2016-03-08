@@ -15,17 +15,18 @@ var Explore = React.createClass({
     return <div>
       <div className="explore-header"></div>
       <div className="explore-section" style={{padding: '0 2.5em'}}>
-      {this.searches.map(({term, blurb}) => {
+      {this.searches.map(({term, blurb}, index) => {
         var [facet, ...terms] = term.split(':')
         return <section>
           <h2>Explore <span style={{fontFamily: '"MiaGrotesk-Light",sans-serif'}}>{terms[1]}</span></h2>
           <p>{blurb}</p>
           <Peek
-            offset={1}
+            offset={index*5}
             facet={facet}
             q={terms.join(':')}
             quiltProps={{maxRowHeight: 600}}
             directLinkTo={terms[1]}
+            shuffleQuilt={true}
             />
           <hr style={{visibility: 'hidden'}} />
         </section>
