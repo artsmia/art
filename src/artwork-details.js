@@ -134,8 +134,7 @@ var ArtworkDetails = React.createClass({
     var {art, highlights} = this.props
     var skip = this.props.skipFields ? this.props.skipFields.split(' ') : []
     var details = this.details()
-    if(highlights && highlights.description) details.push(['description'])
-    details = details.filter(([field]) => skip.indexOf(field) < 0)
+    .filter(([field]) => skip.indexOf(field) < 0)
     .map(field => this.build(...field))
     .filter(detail => !!detail)
 
