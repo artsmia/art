@@ -10,6 +10,8 @@ var galleryPanelUrl = require('../endpoints').galleryPanel
 var GalleryDecorator =  React.createClass({
   getGalleryInfo(gallery) {
     // gallery can either be `G215` or `room:G215` (or `room:"G215"`)
+    // or, "Not on View", in which case skip retrieving info
+    if(this.props.notOnView) return {}
     var galleryId = gallery.match(/(room:)?"?([^"]*)"?/)[2]
     var number = galleryId.replace(/g/i, '')
     if(number == '266-274') number = '266-G274'
@@ -92,7 +94,7 @@ var GalleryDecorator =  React.createClass({
   },
 
   componentDidMount() {
-    this.fetchData()
+    if(!this.props.notOnView) this.fetchData()
   },
 })
 
