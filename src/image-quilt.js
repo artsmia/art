@@ -12,11 +12,17 @@ const ImageQuilt = React.createClass({
   mixins: [PureRenderMixin],
 
   getInitialState() {
+    const artworks = this.props.artworks.slice(0, this.props.maxWorks)
+    const maybeShuffledArtworks = this.props.shuffle ?
+      artworks.sort(() => .5 - Math.random()) :
+      artworks
+
     return {
       active: null,
       unpinned: false,
       width: window.innerWidth || this.context.universal && 1000,
-      alwaysShow: cookie.load('freeTheQuilt')
+      alwaysShow: cookie.load('freeTheQuilt'),
+      shuffledArtworks: this.props.shuffle ? maybeShuffledArtworks : undefined,
     }
   },
 
@@ -58,11 +64,7 @@ const ImageQuilt = React.createClass({
     var rowHeight = this.props.rowHeight || 200
     var numRows = Math.min(this.props.maxRows, Math.max(Math.floor(summedAspectRatio*rowHeight/this.state.width), 1))
 
-    const maybeShuffledArtworks = this.props.shuffle ?
-      artworks.sort(() => .5 - Math.random()) :
-      artworks
-
-    var rows = this.getPartition(maybeShuffledArtworks, numRows)
+    var rows = this.getPartition(this.state.shuffledArtworks || artworks, numRows)
 
     const images = rows.map((row, index) => {
       var rowSummedAspectRatio = row.reduce((sum, art) => {return sum+art._source.aspect_ratio}, 0)
