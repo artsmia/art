@@ -109,7 +109,22 @@ var ArtworkDetails = React.createClass({
         </div>
         ]
       }],
-      ['marks'],
+      ['markings', (art) => {
+        // show deprecated `marks` field if none of the new `markings, signature, inscription` fields exist yet
+        return [art.markings || (!art.signature && !art.inscription && art.marks)]
+      }],
+      ['inscription'],
+      ['signed'],
+      ['tags', art => {
+        if(!art.tags) return []
+
+        var linkedTags = art.tags.trim().split(' ')
+        .map(tag => <Link to="searchResults" params={{terms: `tags:${tag}`}}>{tag.replace(/-/g, ' ')}</Link>)
+
+        return [<p>{linkedTags.map((tag, index) => {
+          return <span>{tag}{(index == linkedTags.length-1 || ', ')}</span>
+        })}</p>]
+      }],
       ['wikipedia', (art) => {
         return ['Cite this information', <div>
           <ClickToSelect>

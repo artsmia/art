@@ -28,7 +28,7 @@ var ArtworkPreview = React.createClass({
       <ArtworkDetails
         art={art}
         highlights={highlights}
-        skipFields={!this.props.showDuplicateDetails && "title style artist medium credit accession_number gallery text"}
+        skipFields={!this.props.showDuplicateDetails && "title style artist medium credit accession_number gallery text tags"}
         {...this.props}
       />
     </div>
