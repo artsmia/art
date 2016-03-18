@@ -81,6 +81,8 @@ var App = React.createClass({
     var {showMenu} = this.state
     var logo = <div className='logo-container'></div>
 
+    if(this.props.universal) return <a href="/">{logo}</a>
+
     return showMenu ?
       <a href="http://new.artsmia.org" title="Back to artsmia.org">{logo}</a> :
       <a href="#" title="Show menu" onClick={this.toggleMenu}>{logo}</a>
