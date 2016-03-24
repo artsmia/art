@@ -49,6 +49,8 @@ var SearchResults = React.createClass({
     if(window.clickedArtwork) window.clickedArtwork = null
   },
 
+  maxResults: 500,
+
   render() {
     var search = this.props.data.searchResults
     var {focusedResult} = this.state
@@ -58,7 +60,7 @@ var SearchResults = React.createClass({
     var showMoreLink = search &&
       <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
              params={{terms: search.query, splat: search.filters}}
-             query={{size: Math.min(500, this.props.hits.length+loadThisManyMore)}}>load {loadThisManyMore} more</Link>)
+             query={{size: Math.min(this.maxResults, this.props.hits.length+loadThisManyMore)}}>load {loadThisManyMore} more</Link>)
       </span>
 
     var summaryProps = {
@@ -68,6 +70,7 @@ var SearchResults = React.createClass({
       showAggs: this.props.showAggs,
       toggleAggs: this.props.toggleAggs,
       showMoreLink,
+      maxResults: this.maxResults,
       ...this.props.summaryProps
     }
 
@@ -119,7 +122,7 @@ var SearchResults = React.createClass({
   //
   // Also fudge the height of this so the right column scroll doesn't get cut off.
   postSearch({hits, search, showMoreLink}, postSearchOffset) {
-    var showingAll = hits.length == search.hits.total
+    var showingAll = hits.length == search.hits.total || hits.length >= this.maxResults
 
     var style = {
       marginTop: '1em',
