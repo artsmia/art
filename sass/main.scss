@@ -345,7 +345,8 @@ header{
   z-index: 4;
 }
 .search-wrap div:first-child {
-    max-width: 23em;
+    min-width: 23em; // initial width, overridden in JS according to search term length
+    max-width: 99vw;
     margin:0 auto;
     color:$primary;
     opacity: 0.95;

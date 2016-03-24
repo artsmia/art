@@ -45,14 +45,15 @@ var Search = React.createClass({
       shuffle: this.props.shuffleQuilt,
     }, this.props.quiltProps || {})
 
-    const nakedSimpleSearchBox = <div className='search-wrapper'>
+    const idealSearchBoxWidth = Math.max(17, this.state.terms && this.state.terms.length*0.9 || 0)
+    const nakedSimpleSearchBox = <div className='search-wrapper' style={{width: idealSearchBoxWidth + 'em'}}>
       <form action=''><input className='search-input' type="search"
         placeholder="search"
         value={searchLanguageMap(this.state.terms)}
         onKeyDown={this.keyDown}
         onChange={this.throttledSearch}
         onFocus={({target}) => target && target.select()}
-        style={{width: '100%', maxWidth: '500px', pointerEvents: 'all'}}
+        style={{width: '100%', pointerEvents: 'all'}}
         name="q"
         ref="searchInput"
         autoComplete="off"
