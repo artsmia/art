@@ -45,11 +45,12 @@ var SearchResults = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.focusResult(window.clickedArtwork || nextProps.hits[0])
+    var focused = window.clickedArtwork || this.state && this.state.focusedResult || nextProps.hits[0]
+    this.focusResult(focused)
     if(window.clickedArtwork) window.clickedArtwork = null
   },
 
-  maxResults: 500,
+  maxResults: 5000,
 
   render() {
     var search = this.props.data.searchResults

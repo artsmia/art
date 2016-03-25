@@ -1,5 +1,6 @@
 var React = require('react')
 var Router = require('react-router')
+var splitArray = require('split-array')
 
 var ImageQuilt = require('../image-quilt')
 var ArtworkImage = require('../artwork-image')
@@ -9,20 +10,40 @@ var SearchSummary = require('../search-summary')
 var SearchResultsGrid = React.createClass({
   mixins: [Router.Navigation],
 
+  componentWillMount() {
+    this.cachedQuilts = []
+  },
+
+  componentWillReceiveProps(nextProps) {
+    var searchChanged = this.props.search.query != nextProps.search.query
+      || this.props.search.filters != nextProps.search.filters
+
+    if(searchChanged) {
+      this.cachedQuilts = []
+    }
+  },
+
   render() {
     var {hits, leftColumnWidth, focusedResult, smallViewport, focusHandler, ...focusedProps} = this.props
     var targetHeight = hits.length < 20 ? 250 : 150
-    var quilt = <ImageQuilt artworks={hits}
-      maxRows={1000}
-      rowHeight={targetHeight}
-      maxRowHeight={500}
-      onClick={this.clickResult}
-      disableHover={true} />
+    var quilts = splitArray(hits, 50).map((chunkedHits, index) => {
+      var chunkedQuilt = this.cachedQuilts[index] || <ImageQuilt
+        artworks={chunkedHits}
+        maxRows={1000}
+        rowHeight={targetHeight}
+        maxRowHeight={500}
+        onClick={this.clickResult}
+        key={index}
+        disableHover={true} />
+
+      this.cachedQuilts[index] = chunkedQuilt
+      return chunkedQuilt
+    })
 
     var more = this.props.postSearch
 
     var stuff = <div>
-      {quilt}
+      {quilts}
       {more}
     </div>
 
