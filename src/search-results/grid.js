@@ -36,7 +36,7 @@ var SearchResultsGrid = React.createClass({
         key={index}
         disableHover={true} />
 
-      this.cachedQuilts[index] = chunkedQuilt
+      if(chunkedHits.length >= 50) this.cachedQuilts[index] = chunkedQuilt
       return chunkedQuilt
     })
 

@@ -52,17 +52,26 @@ var SearchResults = React.createClass({
 
   maxResults: 5000,
 
+  triggerLoad(nextPage) {
+    this.setState({loadingMore: nextPage})
+  },
+
   render() {
     var search = this.props.data.searchResults
     var {focusedResult} = this.state
     var leftColumnWidth = '35%'
     var unloadedResults = search.hits.total - this.props.hits.length
     var loadThisManyMore = Math.min(200, unloadedResults)
+    var nextPage = Math.min(this.maxResults, this.props.hits.length+loadThisManyMore)
     var showMoreLink = search &&
       <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
              params={{terms: search.query, splat: search.filters}}
-             query={{size: Math.min(this.maxResults, this.props.hits.length+loadThisManyMore)}}>load {loadThisManyMore} more</Link>)
+             query={{size: nextPage}}
+             onClick={this.triggerLoad.bind(this, nextPage)}
+            >load {loadThisManyMore} more</Link>)
       </span>
+
+    if(this.state.loadingMore) showMoreLink = ' (…loading)'
 
     var summaryProps = {
       search: this.props.data.searchResults,
@@ -147,6 +156,8 @@ var SearchResults = React.createClass({
     if(domNode && offset != prevState.postSearchOffset) {
       this.setState({postSearchOffset: offset || 0})
     }
+
+    if(this.props.query.size == this.state.loadingMore) this.setState({loadingMore: false})
   },
 
   onHeightChange(newHeight) {
