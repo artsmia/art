@@ -51,7 +51,7 @@ var Curator = React.createClass({
     <div className="curatorProfile pageText">
       <h2>{curator.name}</h2>
       <h4>{departmentLink || curator.department}</h4>
-      <h5>{curator.title}</h5>
+      <h5><Markdown>{curator.title}</Markdown></h5>
       <div className="curatorContent">
         <div className="curatorPic">
           <img src={curator.photo} />
