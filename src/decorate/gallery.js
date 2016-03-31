@@ -11,7 +11,7 @@ var GalleryDecorator =  React.createClass({
   getGalleryInfo(gallery) {
     // gallery can either be `G215` or `room:G215` (or `room:"G215"`)
     // or, "Not on View", in which case skip retrieving info
-    if(this.props.notOnView) return {}
+    if(this.props.notOnView) return null
     var galleryId = gallery.match(/(room:)?"?([^"]*)"?/)[2]
     var number = galleryId.replace(/g/i, '')
     if(number == '266-274') number = '266-G274'
@@ -30,7 +30,10 @@ var GalleryDecorator =  React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState(this.getGalleryInfo(nextProps.gallery))
+    var dontUpdate = this.props.gallery == nextProps.gallery &&
+      this.props.showFullInfo == nextProps.showFullInfo
+
+    if(!dontUpdate) this.setState(this.getGalleryInfo(nextProps.gallery))
   },
 
   render() {
