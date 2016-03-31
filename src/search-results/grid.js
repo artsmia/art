@@ -40,10 +40,17 @@ var SearchResultsGrid = React.createClass({
       return chunkedQuilt
     })
 
+    var dividedQuilts = quilts.map((quilt, index) => {
+      var start = index*50
+      var end = (index+1)*50
+      return <div id={`range:${start}-${end}`}>
+        {quilt}
+      </div>
+    })
     var more = this.props.postSearch
 
     var stuff = <div>
-      {quilts}
+      {dividedQuilts}
       {more}
     </div>
 
