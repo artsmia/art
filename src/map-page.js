@@ -21,7 +21,7 @@ var MapPage = React.createClass({
           floor={3}
           style={{maxWidth: '60em', margin: '0 auto'}}
           onHover={this.handleGalleryHover}
-          onLeave={this.focusLost}
+          onMouseLeave={this.focusLost}
         />
 
         {this.props.children && this.props.children}
@@ -30,7 +30,10 @@ var MapPage = React.createClass({
       <div style={{minHeight}}>
         {gallery && <div>
           <h3 style={{textAlign: 'center'}}>{galleryInfo.id} — {galleryInfo.title}</h3>
-          <Peek key={`preview-${gallery}`} q={`room:G${gallery}`} />
+          <Peek
+            key={`preview-${gallery}`} q={`room:G${gallery}`}
+            showSingleResult={true}
+            />
         </div>}
       </div>
 
@@ -49,19 +52,25 @@ var MapPage = React.createClass({
     </ul>
   },
 
+  // Wait a second before 'Peek'ing the hovered gallery
   handleGalleryHover(gallery) {
-    this.debouncedPeek(gallery)
+    clearTimeout(this.debouncedPeek)
+    this.debouncedPeek = setTimeout(
+      this.showGalleryPeek.bind(this, gallery),
+      this.state && this.state.hoveredGallery ? 700 : 0
+    )
   },
 
-  componentWillMount() {
-    this.debouncedPeek = debounce((gallery) => this.setState({hoveredGallery: gallery}), 300)
+  showGalleryPeek(gallery) {
+    this.setState({hoveredGallery: gallery})
   },
+
   componentWillUnmount() {
-    this.debouncedPeek = undefined
+    clearTimeout(this.debouncedPeek)
   },
 
   focusLost() {
-    debugger
+    clearTimeout(this.debouncedPeek)
   }
 })
 
