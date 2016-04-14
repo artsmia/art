@@ -79,11 +79,14 @@ var DeaccessionedBanner = React.createClass({
   render() {
     var {art} = this.props
     var date = art.deaccessionedDate
+    var reason = art.deaccessionedReason
 
     return <div>
       <strong>DEACCESSIONED</strong>
       <p>
-        This artwork is <i>deaccessioned</i>. {date && <span>It left Mia on {date}.</span>} <Link to="/info/deaccessions">Huh?</Link>
+        This artwork is <i>deaccessioned</i>{reason && ` (${reason})`}.
+        &nbsp;{date && <span>It left Mia on {date}.</span>}
+        &nbsp;<Link to="/info/deaccessions">Huh?</Link>
       </p>
     </div>
   },

@@ -65,7 +65,12 @@ var ArtworkDetails = React.createClass({
 
   details() {
     return [
-      ['deaccessioned', (art, raw) => [raw.deaccessioned && `${art.deaccessionedDate}`, <Link to="/info/deaccessions">Artworks are deaccessioned for many reasons</Link>]],
+      ['deaccessioned', (art, raw) => [
+        raw.deaccessioned && `${art.deaccessionedDate}`, <div>
+          {raw.deaccessionedReason && <p>{raw.deaccessionedReason}</p>}
+          <Link to="/info/deaccessions">Artworks are deaccessioned for many reasons</Link>
+        </div>
+      ]],
       ['title'],
       this.buildPeekableDetail('dated'),
       this.buildPeekableDetail('artist'),
