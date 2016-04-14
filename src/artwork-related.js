@@ -94,6 +94,20 @@ var ArtworkRelatedContent = React.createClass({
         </div>
       </div>
     },
+    "3d": (json, id) => {
+      var style = {
+        backgroundColor: "rgb(35,35,35)",
+        backgroundImage: `url(${json.thumb})`,
+        ...artstoryStampStyle
+      }
+
+      return <div className="explore-content 3d" style={style}>
+        <div className="overlay">
+          <a href={json.link}><br/>👓<sub>Explore in 3D</sub></a>
+          <i className="material-icons">launch</i>
+        </div>
+      </div>
+    }
   },
 })
 
