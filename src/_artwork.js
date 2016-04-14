@@ -136,6 +136,16 @@ var CopyableLabel = React.createClass({
   },
 })
 
+// check if an image exists on our cloudfront distribution,
+// and if not, fall back to loading it from the API
+var testCloudfrontImage = (art, callback) => {
+  var i = document.createElement('img')
+  var cdnUrl = imageCDN(art.id, art.restricted ? 400 : 800)
+  i.onload = () => callback(cdnUrl)
+  i.onerror = () => callback(`http://api.artsmia.org/images/${art.id}/${art.restricted ? '400/medium.jpg' : '800/large.jpg'}`)
+  i.src = cdnUrl
+}
+
 var LinkBar = React.createClass({
   getDefaultProps() {
     return {
@@ -191,7 +201,11 @@ var LinkBar = React.createClass({
           }
           if(key == 'download') {
             options.download = ''
-            options.href = imageCDN(art.id, art.restricted ? 400 : 800)
+            if(this.state.resolvedImageDownloadUrl) {
+              options.href = this.state.resolvedImageDownloadUrl
+            } else {
+              testCloudfrontImage(art, url => { this.setState({resolvedImageDownloadUrl: url})})
+            }
           }
           var content = action.icon || action.key
 
