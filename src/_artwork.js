@@ -78,7 +78,9 @@ var CopyableLabel = React.createClass({
     var [facet, creator] = Creator.getFacetAndValue(art)
     if(facet == 'country' || facet == undefined) creator = undefined
 
-    var title = hasValidArtist ? <i>{art.title}</i> : art.title
+    // var title = hasValidArtist ? <i>{art.title}</i> : art.title
+    var title = this.state.useQuotes ? `“${art.title}”` : <i>{art.title}</i>
+    if(!hasValidArtist) title = title
 
     // Artist name [if known], Country of origin, birth/death dates,
     // or
@@ -107,8 +109,29 @@ var CopyableLabel = React.createClass({
         </p>
       </ClickToSelect>
 
-      <button onClick={this.props.onClose} style={{color: '#111', float: 'right'}}>(close)</button>
+      <div style={{opacity: '0.5'}}>
+        <label for="useQuotes" onDoubleClick={(e) => {e.stopPropagation(); e.preventDefault()}}>
+          <input type="checkbox"
+            onChange={this.toggleQuotes}
+            checked={this.state.useQuotes}
+          />
+          use quotes
+        </label>
+        <button onClick={this.props.onClose} style={{color: '#111', float: 'right'}}>(close)</button>
+      </div>
     </div>
+  },
+
+  getInitialState() {
+    return {
+      useQuotes: false,
+    }
+  },
+
+  toggleQuotes(event) {
+    event.stopPropagation()
+    const useQuotes = this.state ? !this.state.useQuotes : true
+    this.setState({useQuotes})
   },
 
   join(fields) {
