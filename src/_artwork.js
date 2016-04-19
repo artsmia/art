@@ -116,7 +116,7 @@ var CopyableLabel = React.createClass({
   },
 
   formatDates(dateString) {
-    var dates = dateString.replace(/^[A-Za-z ,\(\)]+/, '').split(/\s*-\s*/)
+    var dates = dateString.replace(/^[A-Za-z \.,\(\)]+/, '').split(/\s*-\s*/)
     if(dates.length > 1) {
       var [start, end] = dates
       if(start.substr(0, 2) === end.substr(0, 2)) return start+"–"+end.substr(2)
