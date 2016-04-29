@@ -78,9 +78,8 @@ var CopyableLabel = React.createClass({
     var [facet, creator] = Creator.getFacetAndValue(art)
     if(facet == 'country' || facet == undefined) creator = undefined
 
-    // var title = hasValidArtist ? <i>{art.title}</i> : art.title
     var title = this.state.useQuotes ? `“${art.title}”` : <i>{art.title}</i>
-    if(!hasValidArtist) title = title
+    if(!hasValidArtist) title = art.title
 
     // Artist name [if known], Country of origin, birth/death dates,
     // or
@@ -162,8 +161,13 @@ var CopyableLabel = React.createClass({
 // check if an image exists on our cloudfront distribution,
 // and if not, fall back to loading it from the API
 var testCloudfrontImage = (art, callback) => {
-  var i = document.createElement('img')
   var cdnUrl = imageCDN(art.id, art.restricted ? 400 : 800)
+
+  if(typeof document == 'undefined') {
+    return cdnUrl
+  }
+
+  var i = document.createElement('img')
   i.onload = () => callback(cdnUrl)
   i.onerror = () => callback(`http://api.artsmia.org/images/${art.id}/${art.restricted ? '400/medium.jpg' : '800/large.jpg'}`)
   i.src = cdnUrl

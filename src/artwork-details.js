@@ -124,10 +124,10 @@ var ArtworkDetails = React.createClass({
         if(!art.tags) return []
 
         var linkedTags = art.tags.trim().split(' ')
-        .map(tag => <Link to="searchResults" params={{terms: `tags:${tag}`}}>{tag.replace(/-/g, ' ')}</Link>)
+        .map(tag => <Link to="searchResults" params={{terms: `tags:${tag}`}} key={tag}>{tag.replace(/-/g, ' ')}</Link>)
 
         return [<p>{linkedTags.map((tag, index) => {
-          return <span>{tag}{(index == linkedTags.length-1 || ', ')}</span>
+          return <span key={index}>{tag}{(index == linkedTags.length-1 || ', ')}</span>
         })}</p>]
       }],
       ['wikipedia', (art) => {
