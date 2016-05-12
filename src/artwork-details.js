@@ -50,7 +50,7 @@ var ArtworkDetails = React.createClass({
     }, {}))
   },
 
-  buildPeekableDetail(field) {
+  buildPeekableDetail(field, extra) {
     var {art} = this.props
     var highlights = this.artAndHighlights()
 
@@ -58,7 +58,10 @@ var ArtworkDetails = React.createClass({
       field,
       art => [
         highlights[field],
-        <Peek facet={field} q={art[field]} />
+        <div>
+          {extra}
+          <Peek facet={field} q={art[field]} />
+        </div>
       ]
     ]
   },
@@ -73,8 +76,9 @@ var ArtworkDetails = React.createClass({
       ]],
       ['title'],
       this.buildPeekableDetail('dated'),
-      this.buildPeekableDetail('artist'),
+      this.buildPeekableDetail('artist', this.props.art.life_date),
       this.buildPeekableDetail('nationality'),
+      ['artist life', (art) => [art.life_date && art.life_date.replace(new RegExp(art.nationality+"(, )?"), '')]],
       ['role'],
       ['gallery', (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
       this.buildPeekableDetail('department'),
