@@ -780,6 +780,7 @@ a.departmentLink h2{
   right: 0;
   overflow-y:scroll;
   min-height: 100vh;
+  z-index: 10;
 }
 .artwork .info p{
   width:100%;

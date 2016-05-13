@@ -22,7 +22,7 @@ var SearchResultsList = React.createClass({
       var id = hit._source.id.replace('http://api.artsmia.org/objects/', '')
       var focused = focusedResult === hit._source
       return <div key={id} onClick={this.handleClick.bind(this, hit)} className={focused ? 'focused' : ''}>
-        <ArtworkResult id={id} data={{artwork: hit._source}} highlights={hit.highlight} />
+        <ArtworkResult id={id} data={{artwork: hit._source}} highlights={hit.highlight} showMore={smallViewport} />
       </div>
     })
 

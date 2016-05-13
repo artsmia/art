@@ -29,7 +29,7 @@ var ArtworkRelatedContent = React.createClass({
 
     var bones = this.props.skipWrapper ?
       meat :
-      <div className="exploreWrapper">
+      <div id="explore" className="exploreWrapper">
         <h5 className="details-title">Explore</h5>
         {meat}
       </div>

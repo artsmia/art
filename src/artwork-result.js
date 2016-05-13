@@ -19,6 +19,7 @@ var ArtworkResult = React.createClass({
     var title = <Artwork.Title art={art} link={this.context.universal} highlights={this.props.highlights} />
 
     var roomHighlight = highlighter(art, this.props.highlights, 'room')
+    var showMore = this.props.showMore && Object.keys(art).filter(key => key.match(/related:/)).length > 0
 
     return (
       <Artwork.Figure art={art} className='artwork-result'>
@@ -26,6 +27,7 @@ var ArtworkResult = React.createClass({
           {title}
           <Artwork.Creator art={art} wrapper="h2" peek={false} highlights={this.props.highlights} />
           <p>{art.room === 'Not on View' ? art.room : <strong><Markdown>{roomHighlight}</Markdown></strong>}</p>
+          {showMore && <Link to="artwork" params={{id: art.id, hash: 'explore'}}><img src="/images/more-icon.svg" style={{width: '3em'}}/></Link>}
         </div>
       </Artwork.Figure>
     )
