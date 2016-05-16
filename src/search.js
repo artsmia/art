@@ -45,7 +45,7 @@ var Search = React.createClass({
       shuffle: this.props.shuffleQuilt,
     }, this.props.quiltProps || {})
 
-    const idealSearchBoxWidth = Math.max(17, this.state.terms && this.state.terms.length*0.9 || 0)
+    const idealSearchBoxWidth = Math.max(17, this.state.terms && this.state.terms.length*1.1 || 0)
     const nakedSimpleSearchBox = <div className='search-wrapper' style={{width: idealSearchBoxWidth + 'em'}}>
       <form action=''><input className='search-input' type="search"
         placeholder="search"
