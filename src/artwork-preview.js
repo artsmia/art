@@ -78,15 +78,14 @@ module.exports = ArtworkPreview
 var DeaccessionedBanner = React.createClass({
   render() {
     var {art} = this.props
-    var date = art.deaccessionedDate
+    var date = art.deaccessionedDate.split('-')[0]
     var reason = art.deaccessionedReason
 
     return <div>
       <strong>DEACCESSIONED</strong>
       <p>
-        This artwork is <i>deaccessioned</i>{reason && ` (${reason})`}.
-        &nbsp;{date && <span>It left Mia on {date}.</span>}
-        &nbsp;<Link to="/info/deaccessions">Huh?</Link>
+        This artwork was <Link to="/info/deaccessions">deaccessioned</Link>{reason && ` (${reason})`}
+        &nbsp;{date && <span>in {date}.</span>}
       </p>
     </div>
   },
