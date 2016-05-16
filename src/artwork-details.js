@@ -118,12 +118,13 @@ var ArtworkDetails = React.createClass({
         </div>
         ]
       }],
-      ['markings', (art) => {
-        // show deprecated `marks` field if none of the new `markings, signature, inscription` fields exist yet
-        return [art.markings || (!art.signature && !art.inscription && art.marks)]
-      }],
-      ['inscription'],
-      ['signed'],
+      // apparently markings/inscription/signed are 'for our eyes only'
+      // ['markings', (art) => {
+      //   // show deprecated `marks` field if none of the new `markings, signature, inscription` fields exist yet
+      //   return [art.markings || (!art.signature && !art.inscription && art.marks)]
+      // }],
+      // ['inscription'],
+      // ['signed'],
       ['tags', art => {
         if(!art.tags) return []
 
