@@ -57,7 +57,14 @@ var Artwork = React.createClass({
       style={{width: 400, height: 400, maxWidth: '100%'}}
       ignoreStyle={true} />
 
-    var map = <div ref='map' id='map' style={smallViewport ? {width: '100%', display: 'inline-block'} : stickyMapStyle}>
+    var aspectRatio = art.image_width/art.image_height
+    var mapHeight = Math.max(40, Math.min(65, 1/aspectRatio*80))
+
+    var mapStyle = smallViewport ?
+      {width: '100%', display: 'inline-block', height: mapHeight+'vh'} :
+      stickyMapStyle
+
+    var map = <div ref='map' id='map' style={mapStyle}>
       {this.state.zoomLoaded || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
         {image}
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
