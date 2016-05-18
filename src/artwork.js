@@ -137,6 +137,7 @@ var Artwork = React.createClass({
 
   loadZoom() {
     var L = require('museum-tile-layer')
+    var fullscreen = require('leaflet-fullscreen')
 
     var art = this.state.art
     this.setState({zoomLoaded: false, zoomLoading: true})
@@ -154,6 +155,10 @@ var Artwork = React.createClass({
       this.map.attributionControl.setPrefix('')
       this.map.setView([art.image_width/2, art.image_height/2], 0)
       if(!L.Browser.touch) new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
+      new L.Control.Fullscreen({
+        position: 'topright',
+        pseudoFullscreen: true,
+      }).addTo(this.map)
 
       this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
         attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
@@ -166,6 +171,7 @@ var Artwork = React.createClass({
 
       // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})
+      this.map.on('fullscreenchange', this.props.toggleAppHeader)
     })
     .catch(err => this.setState({zoomLoading: false}))
   },

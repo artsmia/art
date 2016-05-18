@@ -11,17 +11,25 @@ var App = React.createClass({
 
     return (
       <div className={this.props.universal && 'universal'}>
-        <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
+        {this.state.hideHeader || <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
           {logo}
           {this.globalToolBar()}
-        </header>
+        </header>}
         <Helmet
           title="Art!"
           titleTemplate="%s ˆ Mia"
           />
-        <RouteHandler {...this.props} activateSearch={this.state.activateSearch} />
+        <RouteHandler
+          {...this.props}
+          activateSearch={this.state.activateSearch}
+          toggleAppHeader={this.toggleHeader}
+          />
       </div>
     )
+  },
+
+  toggleHeader() {
+    this.setState({hideHeader: !this.state.hideHeader})
   },
 
   getChildContext() {

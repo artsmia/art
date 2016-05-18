@@ -748,6 +748,11 @@ a.departmentLink h2{
   height: calc(100vh - 4em);
   background-color: #ddd;
 }
+.artwork #map.leaflet-pseudo-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+@import "node_modules/leaflet-fullscreen/dist/leaflet.fullscreen";
 .artwork.smallviewport #map {
   top: 0;
   z-index: 2;
