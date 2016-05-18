@@ -133,6 +133,11 @@ var Artwork = React.createClass({
   componentDidMount() {
     var art = this.state.art
     if(art.image === 'valid' && art.restricted != 1 && !this.isLoan()) this.loadZoom()
+    var smallViewport = window && window.innerWidth <= 500
+    // push the viewport down past the header to maximize image/text on the page
+    // scrolling back up reveals the menu
+    // TODO: is there a way to automatically trigger safari's minimal chrome other than a user-initiated scroll event? (probably not https://stackoverflow.com/a/26884561)
+    if(smallViewport && window.scrollX == 0) setTimeout(() => window.scrollTo(0, 56), 0)
   },
 
   loadZoom() {
