@@ -126,10 +126,10 @@ var ArtworkDetails = React.createClass({
       // ['inscription'],
       // ['signed'],
       ['classification', (art, raw) => {
-        if(!art.classification) return []
+        if(!raw.classification) return []
 
-        var classificationPeeks = art.classification.split(',')
-        .map(classification => <Peek facet="classification" q={classification} />)
+        var classificationPeeks = raw.classification.split(',')
+        .map((classification, index) => <Peek facet="classification" q={classification} key={index} />)
 
         return [
           <p>{art.classification}</p>,
