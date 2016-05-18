@@ -125,6 +125,17 @@ var ArtworkDetails = React.createClass({
       // }],
       // ['inscription'],
       // ['signed'],
+      ['classification', (art, raw) => {
+        if(!art.classification) return []
+
+        var classificationPeeks = art.classification.split(',')
+        .map(classification => <Peek facet="classification" q={classification} />)
+
+        return [
+          <p>{art.classification}</p>,
+          <div>{classificationPeeks}</div>
+        ]
+      }],
       ['tags', art => {
         if(!art.tags) return []
 
@@ -142,6 +153,10 @@ var ArtworkDetails = React.createClass({
           </ClickToSelect>
         </div>]
       }],
+      ['exhibition history', (art) => {
+        if(!art.exhibition_history) return []
+        return [<Markdown>{art.exhibition_history}</Markdown>]
+      }]
     ]
   },
 
