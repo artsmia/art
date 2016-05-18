@@ -57,10 +57,10 @@ var HomeDepartmentsAndPages = React.createClass({
     "Art of Africa and the Americas",
     "Chinese, South and Southeast Asian Art",
     "Contemporary Art",
-    "Decorative Arts, Textiles & Sculpture",
+    "Decorative Arts, Textiles and Sculpture",
     "Japanese and Korean Art",
     "Paintings",
-    "Photography & New Media",
+    "Photography and New Media",
     "Prints and Drawings",
   ],
 

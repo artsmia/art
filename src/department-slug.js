@@ -4,9 +4,9 @@ var toSlug = require('speakingurl')
 var representations = {
   "Art of Africa and the Americas": 'africa',
   "Contemporary Art": 'contemporary',
-  "Decorative Arts, Textiles & Sculpture": 'dats',
+  "Decorative Arts, Textiles and Sculpture": 'dats',
   "Paintings": 'paintings',
-  "Photography & New Media": 'photography',
+  "Photography and New Media": 'photography',
   "Prints and Drawings": 'prints',
   "Chinese, South and Southeast Asian Art": 'cssaa',
   "Japanese and Korean Art": 'jka'
