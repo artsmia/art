@@ -172,6 +172,35 @@ var Artwork = React.createClass({
       // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})
       this.map.on('fullscreenchange', this.props.toggleAppHeader)
+      var zoomCount, zoomInCount, zoomOutCount, prevZoom, nowZoom;
+      var zoomCount = zoomInCount = zoomOutCount = 0;
+      var prevZoom = nowZoom = this.map.getZoom();
+      var recentlyAutoZoomed = false;
+
+      this.map.on('zoomstart zoomend', (event) => {
+        [prevZoom, nowZoom] = [nowZoom, this.map.getZoom()]
+        zoomCount += 1
+        nowZoom > prevZoom ? zoomInCount += 1 : zoomOutCount += 1
+
+        var smallViewport = window && window.innerWidth <= 500
+        var isSecondZoomInAction = zoomInCount == 2
+        if(smallViewport && !recentlyAutoZoomed) {
+          // fullscreen the image when a user zooms twice in a row
+          // leave fullscreen when they return to minZoom
+          // mobile-only for now
+          var reasonsToChangeFullscreen = [
+            event.type == 'zoomstart' && zoomInCount == 2 && !this.map.isFullscreen(), // zooming in when not fullscreen
+            event.type == 'zoomend' && nowZoom >= 3 && !this.map.isFullscreen(), // not fullscreen and zoomed in quite far
+            event.type == 'zoomend' && this.map.getZoom() == this.map.getMinZoom() && this.map.isFullscreen(), // in fullscreen, zooming out to minZoom
+          ]
+          if(reasonsToChangeFullscreen.find(reason => reason)) { // if any of the valid reasons evaluate to true
+            this.map.toggleFullscreen({pseudoFullscreen: true})
+            recentlyAutoZoomed = true
+            clearTimeout(this.zoomCountResetTimer)
+            this.zoomCountResetTimer = setTimeout(() => { zoomCount = zoomInCount = zoomOutCount = 0; recentlyAutoZoomed = false }, 1000)
+          }
+        }
+      })
     })
     .catch(err => this.setState({zoomLoading: false}))
   },
