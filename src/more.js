@@ -40,23 +40,21 @@ var More = React.createClass({
 
       <div className="welcome mdl-grid">
         <div className="mdl-cell mdl-cell--9-col">
-          <p>There's MORE to explore for artworks with this icon. Things like audio, video, details, research, and stories.</p>
+          <p>There's more to explore. Use your digital device to visit more.artsmia.org and enjoy additional multimedia content wherever you see this symbol.</p>
           <p>To find more, search for an artwork by title, artist, or "accession number".</p>
-          <img src="/images/more-icon.svg" />
-
+          <p><img src="/images/more-icon.svg" style={{maxWidth: '11em'}} /></p>
 
           <div>
+            <h2>Personalize your Mia experience with new ways to explore art.</h2>
+
             <h3>Journeys</h3>
-            <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. Download the app free (iOS).</p>
+            <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="#">Download the app free (iOS).</a></p>
 
             <h3>Overheard</h3>
-            <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. Download it free (iOS).</p>
+            <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="#">Download it free (iOS)</a>.</p>
 
-            <h3><a href="http://artstories.artsmia.org">ArtStories</a></h3>
-            <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer.</p>
-
-            <h3>My Mia</h3>
-            <p>Become a Mia member, get a custom digital dashboard. Log in to receive advance museum news, member rewards, discounts on tickets and store purchases, and opportunities to support art in our community. (Coming soon.)</p>
+            <h3>ArtStories</h3>
+            <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="http://artstories.artsmia.org">ArtStories</a>.</p>
           </div>
         </div>
       </div>
