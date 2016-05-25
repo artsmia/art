@@ -63,7 +63,7 @@ var ArtworkRelatedContent = React.createClass({
     "adopt-a-painting": (json, id, highlights) => {
       var highlight = highlights && highlights["related:adopt-a-painting"]
       var highlight = highlight ? JSON.parse(highlight[0]) : null
-      if(!(highlight || window.location.pathname.match(/related.*adopt/))) return <span />
+      if(!(highlight || window.location && window.location.pathname.match(/related.*adopt/))) return <span />
 
       if(json.adopted === "1") {
         return <div className="adopt-ptg" style={{clear:'both'}}>
