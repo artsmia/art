@@ -50,23 +50,24 @@ var ArtworkDetails = React.createClass({
     }, {}))
   },
 
-  buildPeekableDetail(field, extra) {
+  buildPeekableDetail(field, extra, value) {
     var {art} = this.props
     var highlights = this.artAndHighlights()
 
     return [
       field,
       art => [
-        highlights[field],
+        value || highlights[field],
         <div>
           {extra}
-          <Peek facet={field} q={art[field]} />
+          <Peek facet={field} q={value || art[field]} />
         </div>
       ]
     ]
   },
 
   details() {
+    var {art} = this.props
     return [
       ['deaccessioned', (art, raw) => [
         raw.deaccessioned && `${art.deaccessionedDate}`, <div>
@@ -76,10 +77,13 @@ var ArtworkDetails = React.createClass({
       ]],
       ['title'],
       this.buildPeekableDetail('dated'),
-      this.buildPeekableDetail('artist', this.props.art.life_date),
+      this.buildPeekableDetail('artist', this.props.art.life_date, art.artist.replace(/^([^;]+):/, '')),
       this.buildPeekableDetail('nationality'),
       ['artist life', (art) => [art.life_date && art.life_date.replace(new RegExp(art.nationality+"(, )?"), '')]],
-      ['role'],
+      ['role', (_, raw) => {
+        var roleFromArtistField = raw.artist.match(/^([^;]+):/)
+        return [roleFromArtistField ? roleFromArtistField[1] : raw.role]
+      }],
       ['gallery', (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
       this.buildPeekableDetail('department'),
       ['dimension', (art, rawArt) => {

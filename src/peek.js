@@ -131,6 +131,7 @@ var Peek = React.createClass({
   getFacetedQ(q, facet) {
     var q = q || (this.state ? this.state.query : "")
     var facet = facet || this.state && this.state.facet
+    if(facet == 'artist') q = q.replace(/([^;]+:)/g, '').trim()
     return facet ? `${facet}:"${encodeURIComponent(q.replace(/"/g, '').replace('\r\n', ' '))}"` : q
   },
 
