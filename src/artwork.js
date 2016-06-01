@@ -49,7 +49,10 @@ var Artwork = React.createClass({
     var stickyMapStyle = this.context.universal ? {position: 'fixed'} : {}
     var smallViewport = window && window.innerWidth <= 500
 
-    var pageTitle = [art.title, _Artwork.Creator.getFacetAndValue(art)[1]].filter(e => e).join(', ')
+    var pageTitle = [
+      art.title.replace(/<[^ ]+?>/g, '"'),
+      _Artwork.Creator.getFacetAndValue(art)[1]
+    ].filter(e => e).join(', ')
     var imageUrl = imageCDN(id)
     var canonicalURL = `http://collections.artsmia.org/art/${art.id}/${art.slug}`
 
