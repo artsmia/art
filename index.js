@@ -11,8 +11,11 @@ if(trackAnalytics) ga.initialize(process.env.GA_TRACKING_ID)
 Router.run(routes, Router.HistoryLocation, (Handler, state) => {
   if(trackAnalytics) ga.pageview(state.pathname)
 
-  fetchComponentData(state).then(data => {
-    React.render(<Handler {...state} data={data}/>, document.body)
+  var rehydratedData = window.__DATA__
+  window.__DATA__ = null
+
+  fetchComponentData(state, rehydratedData).then(data => {
+    React.render(<Handler {...state} data={data} />, document.body)
   })
 });
 

@@ -24,8 +24,14 @@ app.get('/search/', (req, res, next) => {
   next()
 })
 
-var html = ({title, meta, link}, body) => index
-  .replace('<!--HEAD-->', [`<title>${title}</title>`, meta, link]
+var html = ({title, meta, link}, data, body) => index
+  .replace('<!--HEAD-->',
+           [
+             `<title>${title}</title>`,
+             meta,
+             link,
+             `<script>window.__DATA__ = ${JSON.stringify(data)};</script>`
+           ]
     .filter(e => e).join('  \n'))
   .replace('<!--BODY-->', body);
 
@@ -46,7 +52,7 @@ app.use((req, res, next) => {
 
     fetchComponentData(state).then(data => {
       var body = React.renderToString(<Handler {...state} data={data} universal={true} />)
-      res.send(html(Helmet.rewind(), body))
+      res.send(html(Helmet.rewind(), data, body))
     })
   })
 })
