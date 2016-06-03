@@ -22,7 +22,8 @@ var Artwork = React.createClass({
   mixins: [Router.State],
   statics: {
     fetchData: {
-      artwork: (params) => {
+      artwork: (params, existingData) => {
+        if(existingData) return Promise.resolve(existingData)
         return rest(`${SEARCH}/id/`+params.id)
         .then((r) => JSON.parse(r.entity))
         .then(art => {
@@ -33,7 +34,9 @@ var Artwork = React.createClass({
     },
 
     willTransitionTo: function (transition, params, query, callback) {
-      Artwork.fetchData.artwork(params).then(art => {
+      var existingArt = window.__DATA__ && window.__DATA__.artwork
+      Artwork.fetchData.artwork(params, existingArt).then(art => {
+        window.__DATA__ = {artwork: art}
         if(art.slug !== params.slug) {
           params.slug = art.slug
           transition.redirect('artworkSlug', params)
