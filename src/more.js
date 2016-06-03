@@ -9,6 +9,7 @@ var SEARCH = require('./endpoints').search
 var rest = require('rest')
 var Search = require('./search')
 var MapPage = require('./map-page')
+var Markdown = require('./markdown')
 
 var More = React.createClass({
   statics: {
@@ -52,6 +53,7 @@ var More = React.createClass({
 
             <h3>Overheard</h3>
             <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="#">Download it free (iOS)</a>.</p>
+            <ExpandableNewArtsmiaContentBlock page="/art-tech-award/overheard/" />
 
             <h3>ArtStories</h3>
             <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="http://artstories.artsmia.org">ArtStories</a>.</p>
@@ -71,3 +73,46 @@ var More = React.createClass({
 })
 
 module.exports = More
+
+var ExpandableNewArtsmiaContentBlock = React.createClass({
+  // statics: {
+  //   fetchData: (params, query) => {
+  //   }
+  // },
+  getInitialState() {
+    return {
+      expanded: false,
+      loaded: false,
+    }
+  },
+
+  componentWillMount() {
+    this.loadExternalContent()
+  },
+
+  loadExternalContent() {
+    return rest('http://new.artsmia.org'+this.props.page+'?json=1')
+    .then((r) => JSON.parse(r.entity))
+    .then(json => this.setState({loaded: true, json: json}))
+  },
+
+  render() {
+    var {loaded, expanded, json} = this.state
+    var toggleButton = <a href="#" onClick={this.toggle}>{expanded ? 'Less' : 'More'} Info</a>
+    var content = loaded && <Markdown>
+      {json.page.custom_fields.modules_1_content_0_text[0]}
+    </Markdown>
+
+    return <div>
+      {toggleButton}
+      {loaded && expanded && content}
+    </div>
+  },
+
+  toggle(event) {
+    this.setState({expanded: !this.state.expanded})
+    event.preventDefault()
+    return false
+  },
+})
+
