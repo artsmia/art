@@ -11,6 +11,7 @@ var Search = require('./search')
 var MapPage = require('./map-page')
 var Markdown = require('./markdown')
 
+// TODO: de-dupe this and src/home.js
 var More = React.createClass({
   statics: {
     fetchData: {

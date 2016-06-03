@@ -86,7 +86,7 @@ var Artwork = React.createClass({
     </div>
 
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/)).length > 0
-    var exploreIcon = showMoreIcon && <a href="#explore" style={{position: 'absolute', zIndex: '10000', right: '0', top: '63px'}}>
+    var exploreIcon = showMoreIcon && <a href="#explore" style={{position: 'absolute', zIndex: '10000', right: '7px', top: '107px'}}>
       <img src="/images/more-icon.svg" style={{width: '3em'}}/>
     </a>
 
