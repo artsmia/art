@@ -88,7 +88,9 @@ var Artwork = React.createClass({
       </div>
     </div>
 
-    var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/)).length > 0
+    var showMoreIcon = true &&
+      Object.keys(art).filter(key => key.match(/related:/)).length > 0 &&
+      !this.state.fullscreenImage
     var exploreIcon = showMoreIcon && <a href="#explore" style={{position: 'absolute', zIndex: '10000', right: '7px', top: '107px'}}>
       <img src="/images/more-icon.svg" style={{width: '3em'}}/>
     </a>
@@ -139,6 +141,7 @@ var Artwork = React.createClass({
     return {
       art: art,
       id: art.id,
+      fullscreenImage: false,
     }
   },
 
@@ -188,7 +191,10 @@ var Artwork = React.createClass({
 
       // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})
-      this.map.on('fullscreenchange', this.props.toggleAppHeader)
+      this.map.on('fullscreenchange', () => {
+        this.setState({fullscreenImage: !this.state.fullscreenImage})
+        this.props.toggleAppHeader()
+      })
       var zoomCount, zoomInCount, zoomOutCount, prevZoom, nowZoom;
       var zoomCount = zoomInCount = zoomOutCount = 0;
       var prevZoom = nowZoom = this.map.getZoom();
