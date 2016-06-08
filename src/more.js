@@ -50,10 +50,10 @@ var More = React.createClass({
             <h2>Personalize your Mia experience with new ways to explore art.</h2>
 
             <h3>Journeys</h3>
-            <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="#">Download the app free (iOS).</a></p>
+            <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="https://itunes.apple.com/us/app/mia-journeys/id1058993004">Download the app free (iOS).</a></p>
 
             <h3>Overheard</h3>
-            <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="#">Download it free (iOS)</a>.</p>
+            <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="https://itunes.apple.com/us/app/overheard-mia/id1116319582">Download it free (iOS)</a>.</p>
             <ExpandableNewArtsmiaContentBlock page="/art-tech-award/overheard/" />
 
             <h3>ArtStories</h3>
