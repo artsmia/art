@@ -43,7 +43,7 @@ var More = React.createClass({
       <div className="welcome mdl-grid">
         <div className="mdl-cell mdl-cell--9-col">
           <p>There's more to explore. Use your digital device to visit more.artsmia.org and enjoy additional multimedia content wherever you see this symbol.</p>
-          <p>To find more, search for an artwork by title, artist, or "accession number".</p>
+          <p style={{position: 'relative'}}>To find more, search for an artwork by <TombstoneTooltip>title</TombstoneTooltip>, <TombstoneTooltip>artist</TombstoneTooltip>, or <TombstoneTooltip>accession number</TombstoneTooltip>.</p>
           <p><img src="/images/more-icon.svg" style={{maxWidth: '11em'}} /></p>
 
           <div>
@@ -117,3 +117,45 @@ var ExpandableNewArtsmiaContentBlock = React.createClass({
   },
 })
 
+var RandomArtworkTombstone = require('./random-artwork-tombstone')
+var TombstoneTooltip = React.createClass({
+  render() {
+    var {expanded, timeClicked} = this.state
+
+    console.info('rendering TT', timeClicked)
+
+    var styles = {
+      position: 'absolute',
+      background: 'white',
+      zIndex: 1000,
+      width: '90vw',
+      padding: '1em',
+      border: '1px solid black',
+      marginTop: '1em',
+    }
+
+    var fieldToHighlight = this.props.children
+
+    return <span style={{display: 'inline', cursor: 'pointer'}}
+      onMouseOver={this.toggleExpanded.bind(this, true)}
+      onMouseOut={this.toggleExpanded.bind(this, false)}
+      onClick={this.toggleExpanded}>
+      {this.props.children}
+      {expanded && <div style={styles}>
+        <RandomArtworkTombstone fieldToHighlight={fieldToHighlight} />
+      </div>}
+    </span>
+  },
+
+  getInitialState() {
+    return {
+      expanded: false,
+    }
+  },
+
+  toggleExpanded(value) {
+    this.setState({
+      expanded: value || !this.state.expanded,
+    })
+  },
+})
