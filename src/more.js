@@ -24,9 +24,7 @@ var More = React.createClass({
 
   render() {
     let smallViewport = window && window.innerWidth < 600
-    let quiltProps = smallViewport ?
-      {maxRows: 2, maxWorks: 7} :
-      {maxRows: 3, maxWorks: 30}
+    let quiltProps = {maxRows: 2, maxWorks: 7}
 
     return <div>
       <Search
@@ -40,7 +38,7 @@ var More = React.createClass({
         shuffleQuilt={true}
         {...this.props} />
 
-      <div className="welcome mdl-grid">
+      <div id="more" className="welcome mdl-grid">
         <div className="mdl-cell mdl-cell--9-col">
           <p>There's more to explore. Use your digital device to visit more.artsmia.org and enjoy additional multimedia content wherever you see this symbol.</p>
           <p style={{position: 'relative'}}>To find more, search for an artwork by <TombstoneTooltip>title</TombstoneTooltip>, <TombstoneTooltip>artist</TombstoneTooltip>, or <TombstoneTooltip>accession number</TombstoneTooltip>.</p>
@@ -51,6 +49,7 @@ var More = React.createClass({
 
             <h3>Journeys</h3>
             <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="https://itunes.apple.com/us/app/mia-journeys/id1058993004">Download the app free (iOS).</a></p>
+            <ExpandableNewArtsmiaContentBlock page="/journeys/" />
 
             <h3>Overheard</h3>
             <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="https://itunes.apple.com/us/app/overheard-mia/id1116319582">Download it free (iOS)</a>.</p>
@@ -58,6 +57,7 @@ var More = React.createClass({
 
             <h3>ArtStories</h3>
             <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="http://artstories.artsmia.org">ArtStories</a>.</p>
+            <ExpandableNewArtsmiaContentBlock page="/artstories/" />
           </div>
         </div>
       </div>
@@ -100,12 +100,14 @@ var ExpandableNewArtsmiaContentBlock = React.createClass({
   render() {
     var {loaded, expanded, json} = this.state
     var toggleButton = <a href="#" onClick={this.toggle}>{expanded ? 'Less' : 'More'} Info</a>
-    var content = loaded && <Markdown>
-      {json.page.custom_fields.modules_1_content_0_text[0]}
-    </Markdown>
+
+    var field = this.props.field || 'modules_1_content_0_text'
+    var content = loaded && <div><Markdown>
+      {json.page.custom_fields[field][0]}
+    </Markdown><hr /></div>
 
     return <div>
-      {toggleButton}
+      <p>{toggleButton}</p>
       {loaded && expanded && content}
     </div>
   },
@@ -121,8 +123,6 @@ var RandomArtworkTombstone = require('./random-artwork-tombstone')
 var TombstoneTooltip = React.createClass({
   render() {
     var {expanded, timeClicked} = this.state
-
-    console.info('rendering TT', timeClicked)
 
     var styles = {
       position: 'absolute',
