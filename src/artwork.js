@@ -50,7 +50,7 @@ var Artwork = React.createClass({
     var id = this.props.id || this.state.id
     const highlights = this.props.highlights
     var stickyMapStyle = this.context.universal ? {position: 'fixed'} : {}
-    var smallViewport = window && window.innerWidth <= 500
+    var {smallViewport} = this.context
 
     var pageTitle = [
       art.title.replace(/<[^ ]+?>/g, '"'),
@@ -148,7 +148,7 @@ var Artwork = React.createClass({
   componentDidMount() {
     var art = this.state.art
     if(art.image === 'valid' && art.restricted != 1 && !this.isLoan()) this.loadZoom()
-    var smallViewport = window && window.innerWidth <= 500
+    var {smallViewport} = this.context
     // push the viewport down past the header to maximize image/text on the page
     // scrolling back up reveals the menu
     // TODO: is there a way to automatically trigger safari's minimal chrome other than a user-initiated scroll event? (probably not https://stackoverflow.com/a/26884561)
@@ -205,7 +205,7 @@ var Artwork = React.createClass({
         zoomCount += 1
         nowZoom > prevZoom ? zoomInCount += 1 : zoomOutCount += 1
 
-        var smallViewport = window && window.innerWidth <= 500
+        var {smallViewport} = this.context
         var isSecondZoomInAction = zoomInCount == 2
         if(smallViewport && !recentlyAutoZoomed) {
           // fullscreen the image when a user zooms twice in a row
@@ -243,7 +243,7 @@ var Artwork = React.createClass({
       —Nope! We're loading ${humanizeNumber(this.getPixelDifference(400))} more pixels right now.
       It can take a few seconds.)`
     var showLoadingMessage = zoomLoading && zoomLoaded === false && !this.context.universal
-    var smallViewport = window && window.innerWidth <= 500
+    var {smallViewport} = this.context
 
     return art.image === 'valid' && <span className="imageStatus">
       {showLoadingMessage && loadingZoomMessage}
@@ -274,6 +274,7 @@ var Artwork = React.createClass({
 Artwork.contextTypes = {
   router: React.PropTypes.func,
   universal: React.PropTypes.bool,
+  smallViewport: React.PropTypes.bool,
 }
 
 module.exports = Artwork

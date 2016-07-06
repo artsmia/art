@@ -23,7 +23,7 @@ var More = React.createClass({
   },
 
   render() {
-    let smallViewport = window && window.innerWidth < 600
+    let {smallViewport} = this.context
     let quiltProps = {maxRows: 2, maxWorks: 7}
 
     return <div>

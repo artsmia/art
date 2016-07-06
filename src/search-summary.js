@@ -19,7 +19,7 @@ const SearchSummary = React.createClass({
 
     const showingAll = hits.length == search.hits.total || hits.length >= this.props.maxResults
 
-    var smallViewport = window && window.innerWidth <= 500
+    var {smallViewport} = this.context
     var toolbarClasses = "summaryText mdl-cell " + (smallViewport ?
       "mdl-cell--4-col" :
       "mdl-cell--8-col mdl-cell--4-col-tablet")

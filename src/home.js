@@ -22,7 +22,7 @@ var Home = React.createClass({
   },
 
   render() {
-    let smallViewport = window && window.innerWidth < 600
+    let {smallViewport} = this.context
     let quiltProps = smallViewport ?
       {maxRows: 2, maxWorks: 7} :
       {maxRows: 3, maxWorks: 30}
@@ -49,6 +49,9 @@ var Home = React.createClass({
     </div>
   },
 })
+Home.contextTypes = {
+  smallViewport: React.PropTypes.bool,
+}
 
 module.exports = Home
 

@@ -22,6 +22,7 @@ var GlobalNavigation =  React.createClass({
   render() {
 
     var smallViewport = window && window.innerWidth <= 780
+    // … why 780 here instead of 600 elsewhere?
 
 
       if(smallViewport){

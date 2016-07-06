@@ -3,6 +3,7 @@ var Router = require('react-router')
 var Helmet = require('react-helmet')
 var express = require('express')
 var ga = require('react-ga')
+var {parse} = require('useragent')
 var fs = require('fs')
 var index = fs.readFileSync('./index.html', 'utf-8')
 
@@ -35,6 +36,17 @@ var html = ({title, meta, link}, data, body) => index
     .filter(e => e).join('  \n'))
   .replace('<!--BODY-->', body);
 
+function sniffUserAgent (req, res, next) {
+  const nonalpha = /[^a-z]/g;
+  const agent = req.headers['user-agent'];
+  const {family, source} = parse(agent);
+  let ua = family.toLowerCase().replace(nonalpha, '');
+  if(source.match(/iphone/i)) ua += ' palm'
+  req.ua = ua;
+  next();
+}; // https://ponyfoo.com/articles/double-edged-sword-web?
+app.use(sniffUserAgent)
+
 app.use((req, res, next) => {
   var router = Router.create({
     routes,
@@ -50,8 +62,10 @@ app.use((req, res, next) => {
   router.run((Handler, state) => {
     // ga.pageview(state.pathname)
 
+    window.__DATA__ = undefined
+
     fetchComponentData(state).then(data => {
-      var body = React.renderToString(<Handler {...state} data={data} universal={true} />)
+      var body = React.renderToString(<Handler {...state} ua={req.ua} data={data} universal={true} />)
       res.send(html(Helmet.rewind(), data, body))
     })
   })

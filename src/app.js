@@ -33,8 +33,13 @@ var App = React.createClass({
   },
 
   getChildContext() {
+    const isSmallViewportDevice =
+      this.props.ua && !!this.props.ua.match('palm') ||
+      window && window.innerWidth && window.innerWidth <= 500
+
     return {
       universal: this.props.universal,
+      smallViewport: isSmallViewportDevice,
     }
   },
 
@@ -96,6 +101,9 @@ var App = React.createClass({
       <a href="#" title="Show menu" onClick={this.toggleMenu}>{logo}</a>
   },
 })
-App.childContextTypes = {universal: React.PropTypes.bool}
+App.childContextTypes = {
+  universal: React.PropTypes.bool,
+  smallViewport: React.PropTypes.bool,
+}
 
 module.exports = App

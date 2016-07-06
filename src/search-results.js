@@ -27,8 +27,8 @@ var SearchResults = React.createClass({
   getInitialState() {
     var focus = window.clickedArtwork || this.props.hits[0]
     setTimeout(() => window.clickedArtwork = null)
-    var smallViewport = window && window.innerWidth <= 500
-    var defaultView = (smallViewport || this.context.universal) ? ResultsList : ResultsGrid
+    var {smallViewport, universal} = this.context
+    var defaultView = (smallViewport || universal) ? ResultsList : ResultsGrid
 
     return {
       focusedResult: focus && focus,
