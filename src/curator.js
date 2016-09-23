@@ -58,6 +58,7 @@ var Curator = React.createClass({
         </div>
         <Markdown alreadyRendered={true}>{curator.output}</Markdown>
       </div>
+      {curator.cv && <p><a href={`http://collections.artsmia.org/_info/cv/${curator.cv}`}>Cirriculum Vitae</a></p>}
     </div>
   </div>
   }
