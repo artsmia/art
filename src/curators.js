@@ -30,15 +30,16 @@ var Curators = React.createClass({
       .filter(name => ['kaywin-feldman', 'matthew-welch'].indexOf(name) == -1)
       .map(name => {
         var curator = curators[name]
+        if(!curator || !curator.slug) return
 
-          return <div className="mdl-cell curatorBio" key={curator.slug}>
+        return <div className="mdl-cell curatorBio" key={curator.slug}>
           <Link to="curator" params={{slug:curator.slug}}>
             <div className="curatorPic">
               <img src={curator.photo} alt={`portrait of ${curator.name}`} />
             </div>
             <div className="curator-intro">
-            <h4>{curator.name}</h4>
-            <h5><Markdown>{curator.title}</Markdown></h5>
+              <h4>{curator.name}</h4>
+              <h5><Markdown>{curator.title}</Markdown></h5>
             </div>
           </Link>
         </div>
