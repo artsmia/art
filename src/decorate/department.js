@@ -68,6 +68,8 @@ var DepartmentDecorator = React.createClass({
     return curators.length > 0 && <div id="curators">
       <h3>Curators</h3>
       {curators.map(curator => {
+        curator.photo = `http://collections.artsmia.org/_info/curator-portraits/${curator.slug}.jpg`
+
         return <div className="curatorBio" key={curator.slug}>
           <Link to="curator" params={{slug:curator.slug}}>
             <div className="curatorPic">
