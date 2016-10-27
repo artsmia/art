@@ -153,6 +153,10 @@ var ArtworkDetails = React.createClass({
         //})}</p>
       ]
       }],
+      ['catalogue raissonne', (art) => {
+        if(!art.catalogue_raissonne) return []
+        return [ <div>{art.catalogue_raissonne}</div>]
+      }],
       ['wikipedia', (art) => {
         return ['Cite this information', <div>
           <ClickToSelect>
