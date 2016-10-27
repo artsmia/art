@@ -122,6 +122,7 @@ var ArtworkDetails = React.createClass({
         </div>
         ]
       }],
+
       // apparently markings/inscription/signed are 'for our eyes only'
       // ['markings', (art) => {
       //   // show deprecated `marks` field if none of the new `markings, signature, inscription` fields exist yet
@@ -162,7 +163,14 @@ var ArtworkDetails = React.createClass({
       ['exhibition history', (art) => {
         if(!art.exhibition_history) return []
         return [<Markdown>{art.exhibition_history}</Markdown>]
-      }]
+      }],
+      ['', art => {
+        if(!art.curator_approved) return [<div><p>This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.</p></div>
+        ]
+        return [
+          <div><p>This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.</p></div>
+        ]
+      }],
     ]
   },
 
