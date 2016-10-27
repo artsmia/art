@@ -146,9 +146,11 @@ var ArtworkDetails = React.createClass({
         var linkedTags = art.tags.trim().split(' ')
         .map(tag => <Link to="searchResults" params={{terms: `tags:${tag}`}} key={tag}>{tag.replace(/-/g, ' ')}</Link>)
 
-        return [<p>{linkedTags.map((tag, index) => {
-          return <span key={index}>{tag}{(index == linkedTags.length-1 || ', ')}</span>
-        })}</p>]
+        return [
+          //<p>{linkedTags.map((tag, index) => {
+          //return <span key={index}>{tag}{(index == linkedTags.length-1 || ', ')}</span>
+        //})}</p>
+      ]
       }],
       ['wikipedia', (art) => {
         return ['Cite this information', <div>
