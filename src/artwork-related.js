@@ -4,7 +4,6 @@ var cx = require('classnames')
 
 var Markdown = require('./markdown')
 var imageCDN = require('./image-cdn')
-var {relatedInfo} = require('./endpoints')
 
 var artstoryStampStyle = {
   backgroundPosition: 'center center',
