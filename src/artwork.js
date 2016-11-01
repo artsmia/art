@@ -23,7 +23,7 @@ var Artwork = React.createClass({
   statics: {
     fetchData: {
       artwork: (params, existingData) => {
-        if(existingData && existingData.id) return Promise.resolve(existingData)
+        if(existingData && existingData.id && existingData.id == params.id) return Promise.resolve(existingData)
         return rest(`${SEARCH}/id/`+params.id)
         .then((r) => JSON.parse(r.entity))
         .then(art => {
