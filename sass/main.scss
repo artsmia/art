@@ -870,13 +870,17 @@ h5.details-title {
 .explore{
   display: inline-block;
 }
-.explore a {
-  font-size:1.1em;
-  color: #ffffff;
-  font-family: $MiaGroteskBold, sans-serif;
-  position: absolute;
-  bottom:10px;
-  left: 10px;
+.explore {
+  .newsflash, .artstory, .explore-content {
+    a {
+      font-size:1.1em;
+      color: #ffffff;
+      font-family: $MiaGroteskBold, sans-serif;
+      position: absolute;
+      bottom:10px;
+      left: 10px;
+    }
+  }
 }
 .explore .adopt-ptg {
   margin-top: 10px;
@@ -989,7 +993,21 @@ button.material-icons {
   padding: 0px;
   font-weight: bold;
 }
-
+.exhibition p {
+  padding: 0 0 10px 0;
+}
+.exhibition p > span.exh_title{
+  font-family: $MiaGroteskBold;
+  line-height: 1.1em;
+}
+.exhibition h4 {
+  color: #999999;
+  text-transform: uppercase;
+  line-height: 1em;
+  padding: 10px 0 0 0;
+  margin: 0;
+  font-family: $MiaGroteskLight;
+}
 /* ===== page.js STYLES ===== */
 
 .page{}

@@ -1,6 +1,7 @@
 var React = require('react')
 var rest = require('rest')
 var cx = require('classnames')
+var {Link} = require('react-router')
 
 var Markdown = require('./markdown')
 var imageCDN = require('./image-cdn')
@@ -12,7 +13,6 @@ var artstoryStampStyle = {
 
 var ArtworkRelatedContent = React.createClass({
   render() {
-    // gather any `related:` info on the artwork into `links[]`
     var {art} = this.props
     if(!art) return <span/>
 
@@ -22,8 +22,19 @@ var ArtworkRelatedContent = React.createClass({
       return relateds
     }, [])
 
+    var explore = links.filter(link => link.type !== "exhibition")
+    var exhibitions = links.filter(link => link.type == "exhibition")
+    // only show exhibitions with more than a single object
+    // and for now, also those tagged `rotation`
+    var significantExhibitions = exhibitions.filter(ex => {
+      return ex.objectIds.length > 1 && ex.rotation == "true"
+    })
+
     var meat = <div className="explore">
-      {links.map(this.build)}
+      {explore.map(this.build)}
+    </div>
+    var exhibition_wrap = <div className="exhibition_item">
+      {significantExhibitions.map(this.build)}
     </div>
 
     var bones = this.props.skipWrapper ?
@@ -33,7 +44,17 @@ var ArtworkRelatedContent = React.createClass({
         {meat}
       </div>
 
-    return links && links.length > 0 && bones
+      var exhib_bones = this.props.skipWrapper ?
+        significantExhibitions :
+        <div className="exhibitionWrapper">
+          <h5 className="details-title">Exhibitions</h5>
+          {exhibition_wrap}
+        </div>
+
+    return <div>
+      {explore && explore.length > 0 && bones}
+      {significantExhibitions && significantExhibitions.length > 0 && exhib_bones}
+    </div>
   },
 
   build(json) {
@@ -81,8 +102,6 @@ var ArtworkRelatedContent = React.createClass({
         </div>
       }
     },
-    "exhibition": () => <span />,
-    "exhibitions": () => <span />,
     default: (json, id, highlights) => {
       var miaStoryMatches = highlights && highlights['related:stories'] && highlights['related:stories'].filter(h => { var h = JSON.parse(h); return json.title == h.title.replace(/<\/?em>/g, '') })
 
@@ -93,6 +112,19 @@ var ArtworkRelatedContent = React.createClass({
         </div>
       </div>
     },
+    "exhibition": (json, id, highlights) => {
+      var otherArtCount = json.objectIds ? json.objectIds.length-1 : '(x)'
+
+      return <div className="exhibition" style={{clear: "both"}}>
+        <p>This was shown in the exhibition <span className="exh_title"><Link to="exhibition" params={{id: json.id}}>{json.title}</Link></span> with {otherArtCount} other objects. {json.description}</p>
+      </div>
+    },
+    olddefault: (link) => <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
+      <div className="overlay">
+        <a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a>
+        <i className="material-icons">launch</i>
+      </div>
+    </div>,
     "3d": (json, id) => {
       var style = {
         backgroundColor: "rgb(35,35,35)",
