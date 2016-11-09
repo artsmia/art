@@ -839,6 +839,16 @@ a.departmentLink h2{
   min-height: 10vh;
   max-width: 31em;
 }
+.detail-row.curator_approved {
+  dt {
+    display: none;
+  }
+
+  .detail-content {
+    width: 100%;
+    padding: 1em 0 0 0;
+  }
+}
 h5.details-title {
     border-top:3px solid $primary;
     margin-top:1em;

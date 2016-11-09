@@ -79,7 +79,7 @@ var ArtworkDetails = React.createClass({
       this.buildPeekableDetail('dated'),
       this.buildPeekableDetail('artist', this.props.art.life_date, art.artist.replace(/^([^;]+):/, '')),
       this.buildPeekableDetail('nationality'),
-      ['artist life', (art) => [art.life_date && art.life_date.replace(new RegExp(art.nationality+"(, )?"), '')]],
+      ['artist_life', (art) => [art.life_date && art.life_date.replace(new RegExp(art.nationality+"(, )?"), '')]],
       ['role', (_, raw) => {
         var roleFromArtistField = raw.artist.match(/^([^;]+):/)
         return [roleFromArtistField ? roleFromArtistField[1] : raw.role]
@@ -122,7 +122,6 @@ var ArtworkDetails = React.createClass({
         </div>
         ]
       }],
-
       // apparently markings/inscription/signed are 'for our eyes only'
       // ['markings', (art) => {
       //   // show deprecated `marks` field if none of the new `markings, signature, inscription` fields exist yet
@@ -141,19 +140,21 @@ var ArtworkDetails = React.createClass({
           <div>{classificationPeeks}</div>
         ]
       }],
-      ['tags', art => {
-        if(!art.tags) return []
+      this.buildPeekableDetail('object_name'),
+      // disable tags due to frequent inaccuracies
+      // ['tags', art => {
+      //   if(!art.tags) return []
 
-        var linkedTags = art.tags.trim().split(' ')
-        .map(tag => <Link to="searchResults" params={{terms: `tags:${tag}`}} key={tag}>{tag.replace(/-/g, ' ')}</Link>)
+      //   var linkedTags = art.tags.trim().split(' ')
+      //   .map(tag => <Link to="searchResults" params={{terms: `tags:${tag}`}} key={tag}>{tag.replace(/-/g, ' ')}</Link>)
 
-        return [
-          //<p>{linkedTags.map((tag, index) => {
-          //return <span key={index}>{tag}{(index == linkedTags.length-1 || ', ')}</span>
-        //})}</p>
-      ]
-      }],
-      ['catalogue raisonne', (art) => {
+      //   return [
+      //     <p>{linkedTags.map((tag, index) => {
+      //       return <span key={index}>{tag}{(index == linkedTags.length-1 || ', ')}</span>
+      //     })}</p>
+      // ]
+      // }],
+      ['catalogue_raisonne', (art) => {
         if(!art.catalogue_raissonne) return []
         return [ <div>{art.catalogue_raissonne}</div>]
       }],
@@ -164,16 +165,20 @@ var ArtworkDetails = React.createClass({
           </ClickToSelect>
         </div>]
       }],
-      ['exhibition history', (art) => {
+      ['exhibition_history', (art) => {
         if(!art.exhibition_history) return []
         return [<Markdown>{art.exhibition_history}</Markdown>]
       }],
-      ['', art => {
-        if(!art.curator_approved) return [<div><p>This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.</p></div>
-        ]
-        return [
-          <div><p>This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.</p></div>
-        ]
+      ['see_also', (art, raw) => {
+        var also = raw.see_also.filter(id => id !== raw.id)
+        return [`${also.length} other artwork${also.length > 1 ? 's' : ''}`, <Peek facet="see_also" q={raw.id} />]
+      }],
+      ['curator_approved', art => {
+        var message = art.curator_approved ?
+          `This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.` :
+          `This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.`
+
+        return [<Markdown>{message}</Markdown>]
       }],
     ]
   },
