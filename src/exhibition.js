@@ -7,6 +7,7 @@ var Search = require('./search')
 var endpoints = require('./endpoints')
 var SEARCH = endpoints.search
 var toSlug = require('speakingurl')
+var Markdown = require('./markdown')
 
 var Exhibition = React.createClass({
   mixins: [Router.State],
@@ -36,7 +37,9 @@ var Exhibition = React.createClass({
           params.slug = exhibition.slug
           transition.redirect('exhibitionSlug', params)
         }
-      }).then(callback)
+      })
+      .catch(err => transition.redirect('home'))
+      .then(callback)
     },
   },
 
@@ -51,6 +54,7 @@ var Exhibition = React.createClass({
         <div style={{textAlign: 'center'}}>
           <h2>{exhibition.exhibition_title}</h2>
           <p>{exhibition.display_date}</p>
+          <Markdown>{exhibition.exhibition_description}</Markdown>
         </div>
         <hr />
       </Search>

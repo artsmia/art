@@ -24,11 +24,8 @@ var ArtworkRelatedContent = React.createClass({
 
     var explore = links.filter(link => link.type !== "exhibition")
     var exhibitions = links.filter(link => link.type == "exhibition")
-    // only show exhibitions with more than a single object
-    // and for now, also those tagged `rotation`
-    var significantExhibitions = exhibitions.filter(ex => {
-      return ex.objectIds.length > 1 && ex.rotation == "true"
-    })
+    // only show exhibitions tagged `rotation`
+    var significantExhibitions = exhibitions.filter(ex => ex.rotation == "true")
 
     var meat = <div className="explore">
       {explore.map(this.build)}
@@ -44,12 +41,10 @@ var ArtworkRelatedContent = React.createClass({
         {meat}
       </div>
 
-      var exhib_bones = this.props.skipWrapper ?
-        significantExhibitions :
-        <div className="exhibitionWrapper">
-          <h5 className="details-title">Exhibitions</h5>
-          {exhibition_wrap}
-        </div>
+    var exhib_bones = <div className="exhibitionWrapper">
+        <h5 className="details-title">Exhibitions</h5>
+        {exhibition_wrap}
+      </div>
 
     return <div>
       {explore && explore.length > 0 && bones}
@@ -104,8 +99,9 @@ var ArtworkRelatedContent = React.createClass({
     },
     default: (json, id, highlights) => {
       var miaStoryMatches = highlights && highlights['related:stories'] && highlights['related:stories'].filter(h => { var h = JSON.parse(h); return json.title == h.title.replace(/<\/?em>/g, '') })
+      var defaultStyle = {backgroundColor: "rgb(35,35,35)"}
 
-      return <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
+      return <div className="explore-content" style={defaultStyle}>
         <div className={cx("overlay", {"block-highlight": miaStoryMatches && miaStoryMatches.length > 0})}>
           <a href={json.link}>{json.title}<br/><sub>Explore more.</sub></a>
           <i className="material-icons">launch</i>
@@ -115,16 +111,10 @@ var ArtworkRelatedContent = React.createClass({
     "exhibition": (json, id, highlights) => {
       var otherArtCount = json.objectIds ? json.objectIds.length-1 : '(x)'
 
-      return <div className="exhibition" style={{clear: "both"}}>
-        <p>This was shown in the exhibition <span className="exh_title"><Link to="exhibition" params={{id: json.id}}>{json.title}</Link></span> with {otherArtCount} other objects. {json.description}</p>
-      </div>
+      return <ul className="exhibitions" style={{clear: "both"}}>
+        <li><h4><Link to="exhibition" params={{id: json.id}}>{json.title}</Link></h4> {json.date}</li>
+      </ul>
     },
-    olddefault: (link) => <div className="explore-content" style={{backgroundColor: "rgb(35,35,35)"}}>
-      <div className="overlay">
-        <a href={link.link}>{link.title}<br/><sub>Explore more.</sub></a>
-        <i className="material-icons">launch</i>
-      </div>
-    </div>,
     "3d": (json, id) => {
       var style = {
         backgroundColor: "rgb(35,35,35)",
