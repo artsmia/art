@@ -13,7 +13,10 @@ const SearchSummary = React.createClass({
     const results = this.props.results
     const {showAggs} = this.props
 
-    const toggleAggs = hits.length > 1 && <span className="filter-button">
+    // only allow opening the filters box when
+    // 1. there's more than 1 result
+    // 2. there are filters applied that could be reducing the results to 0
+    const toggleAggs = (hits.length > 1 || search.filters.length > 0) && <span className="filter-button">
       <a onClick={this.toggleAggs} style={{cursor: 'pointer'}}>{showAggs ? 'hide filters' : 'filter search'}</a>
     </span>
 

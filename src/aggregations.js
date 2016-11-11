@@ -81,11 +81,21 @@ var Aggregations = React.createClass({
     const order = ["On View", "Image", "Department", "Artist", "Country", "Room", "Rights", "Title", "Style"]
 
     for(var agg in aggs) {
-      const open = order.slice(0, 3).indexOf(agg) > -1
+      const openByDefault = order.slice(0, 3).indexOf(agg) > -1
+      // make sure to show the value of the filter, even if there are no matches.
+      // If there's an active filter, and it's key isn't in the buckets of that aggregation,
+      // add it in.
+      // it's a big edge case, but happens when a filter is applied leading an empty
+      // result set.
+      const aggIsActive = search.filters && search.filters.match(new RegExp(`${agg}:"(.*?)"`, 'i'))
+      if(aggIsActive) {
+        var value = aggIsActive[1]
+        aggs[agg].buckets.find(({_, key}) => key == value) || aggs[agg].buckets.push({doc_count: 0, key: value})
+      }
       _aggs.push({
         ...aggs[agg],
         name: agg,
-        open: open,
+        open: openByDefault,
         displayName: agg.replace(/_/g, ' '),
         active: search.filters && search.filters.match(new RegExp(agg, 'i')),
       })
