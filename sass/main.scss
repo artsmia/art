@@ -210,6 +210,16 @@ header{
         width: 100%;
         margin: 0;
         margin-bottom: 3px;
+        position: relative;
+        z-index: 3;
+    }
+    .objects-wrap > div:nth-child(11n+11):after {
+      content: "";
+      display: block;
+      width: 110%;
+      margin-left: -7%;
+      height: 5em;
+      background: rgba(35, 35, 35, 1);
     }
 
     .artwork-result h1{margin:0;padding:0;}
@@ -750,6 +760,7 @@ a.departmentLink h2{
 .artwork #map.leaflet-pseudo-fullscreen {
   width: 100vw !important;
   height: 100vh !important;
+  z-index: 9 !important;
 }
 @import "node_modules/leaflet-fullscreen/dist/leaflet.fullscreen";
 .artwork.smallviewport #map {
@@ -787,6 +798,7 @@ a.departmentLink h2{
   .info {
     width: 100%;
     padding-top: 1em;
+    z-index: 2;
   }
 
   &::before {
@@ -1022,7 +1034,7 @@ button.material-icons {
 
 .page{}
 .pageText{
-  margin:2em;
+  padding:2em;
   max-width:38em;
 }
 .pageText h1{
@@ -1579,4 +1591,14 @@ img.loaded {
 #more h2 {
   padding-left: 0px;
   font-size: 1.25em;
+}
+
+.agg-wrap, .search-wrap, .landingPageBody, .departmentPage,
+.explore-section, .pageText, #map-and-gallery-list {
+  position: relative;
+  z-index: 3;
+  background: white;
+}
+.search-wrap {
+  background: rgba(35, 35, 35, 1);
 }

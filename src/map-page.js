@@ -47,7 +47,7 @@ var MapPage = React.createClass({
     .filter(g => skipGalleries.indexOf(parseInt(g)) < 0)
     .map(number => galleries[number])
 
-    return <ul style={{margin: '1em'}}>
+    return <ul id="map-and-gallery-list" style={{margin: '1em'}}>
       {gs.map(g => <GalleryPeek key={g.id} g={g} style={{minHeight: '78px'}} />)}
     </ul>
   },
