@@ -66,6 +66,12 @@ var Artwork = React.createClass({
     var aspectRatio = art.image_width/art.image_height
     var mapHeight = Math.max(40, Math.min(65, 1/aspectRatio*80))
 
+    var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
+      !this.state.fullscreenImage
+    var exploreIcon = showMoreIcon && <a href="#explore" style={{position: 'absolute', zIndex: '10000', right: '7px', bottom: '0px'}}>
+      <img src="/images/more-icon.svg" style={{width: '3em'}}/>
+    </a>
+
     var mapStyle = smallViewport ?
       {width: '100%', display: 'inline-block', height: mapHeight+'vh'} :
       stickyMapStyle
@@ -76,6 +82,7 @@ var Artwork = React.createClass({
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
       </div>}
       {this.imageStatus()}
+      {smallViewport && exploreIcon}
     </div>
 
     var info = <div className='info'>
@@ -88,17 +95,9 @@ var Artwork = React.createClass({
       </div>
     </div>
 
-    var showMoreIcon = true &&
-      Object.keys(art).filter(key => key.match(/related:/)).length > 0 &&
-      !this.state.fullscreenImage
-    var exploreIcon = showMoreIcon && <a href="#explore" style={{position: 'absolute', zIndex: '10000', right: '7px', top: '107px'}}>
-      <img src="/images/more-icon.svg" style={{width: '3em'}}/>
-    </a>
-
     var content
     if(smallViewport) {
       content = <div>
-        {exploreIcon}
         {map}
         {info}
       </div>

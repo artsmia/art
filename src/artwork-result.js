@@ -19,7 +19,7 @@ var ArtworkResult = React.createClass({
     var title = <Artwork.Title art={art} link={this.context.universal} highlights={this.props.highlights} />
 
     var roomHighlight = highlighter(art, this.props.highlights, 'room')
-    var showMore = this.props.showMore && Object.keys(art).filter(key => key.match(/related:/)).length > 0
+    var showMore = this.props.showMore && Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0
 
     return (
       <Artwork.Figure art={art} className='artwork-result'>
