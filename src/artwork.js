@@ -33,16 +33,49 @@ var Artwork = React.createClass({
       },
     },
 
-    willTransitionTo: function (transition, params, query, callback) {
+    checkRoute: (params, callback) => {
       var existingArt = window.__DATA__ && window.__DATA__.artwork
-      Artwork.fetchData.artwork(params, existingArt).then(art => {
+      return Artwork.fetchData.artwork(params, existingArt).then(art => {
         window.__DATA__ = {artwork: art}
         if(art.slug !== params.slug) {
           params.slug = art.slug
-          transition.redirect('artworkSlug', params)
+          return callback('mismatched slug', art)
         }
-      }).then(callback)
-    }
+        callback(false, art)
+      })
+    },
+
+    willTransitionTo: function (transition, params, query, callback) {
+      Artwork.checkRoute(params, (err) => {
+        if(err) transition.redirect('artworkSlug', params)
+      })
+      .then(callback)
+    },
+
+    pageMetadata(art, prependTitle='') {
+      var pageTitle = prependTitle + [
+        art.title.replace(/<[^ ]+?>/g, '"'),
+        _Artwork.Creator.getFacetAndValue(art)[1]
+      ].filter(e => e).join(', ')
+      var imageUrl = imageCDN(art.id)
+      var canonicalURL = `http://collections.artsmia.org/art/${art.id}/${art.slug}`
+
+      return <Helmet
+      title={pageTitle}
+      meta={[
+        {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
+        {property: "og:description", content: art.text},
+        {property: "og:image", content: imageUrl},
+        {property: "og:url", content: canonicalURL},
+        {property: "twitter:card", content: "summary_large_image"},
+        {property: "twitter:site", content: "@artsmia"},
+        {property: "robots", content: art.accession_number.match(/^L/i) ? 'noindex' : 'all'},
+      ]}
+      link={[
+        {"rel": "canonical", "href": canonicalURL},
+      ]}
+      />
+    },
   },
 
   render() {
@@ -142,17 +175,7 @@ var Artwork = React.createClass({
 
     return <div className={cx('artwork', {smallviewport: smallViewport})}>
       {content}
-      <Helmet
-        title={pageTitle}
-        meta={[
-          {property: "og:title", content: pageTitle + ' | Minneapolis Institute of Art'},
-          {property: "og:description", content: art.text},
-          {property: "og:image", content: imageUrl},
-          {property: "twitter:card", content: "summary_large_image"},
-          {property: "twitter:site", content: "@artsmia"},
-          {property: "robots", content: this.noIndex() ? 'follow,noindex' : 'all'},
-        ]}
-        />
+      {Artwork.pageMetadata(art)}
     </div>
   },
 

@@ -10,9 +10,14 @@ var AccessionHighlight = React.createClass({
   mixins: Artwork.mixins,
   statics: {
     fetchData: Artwork.fetchData,
+    willTransitionTo: (transition, params, query, callback) => {
+      Artwork.checkRoute(params, (err, art) => {
+        if(!art.accessionHighlight) transition.redirect('artworkSlug', params)
+        if(err) transition.redirect('accessionHighlight', params)
+      })
+      .then(callback)
+    },
   },
-
-  willTransitionTo: Artwork.willTransitionTo,
 
   render() {
     var {artwork: art} = this.props.data
@@ -27,6 +32,7 @@ var AccessionHighlight = React.createClass({
         <div className="back-button"><Link to="artworkSlug" params={{id: art.id, slug: art.slug}}>View full collection record</Link></div>
         <div className="back-button"><Link to="/new">Back to Accession Highlights</Link></div>
       </Artwork>
+      {Artwork.pageMetadata(art, 'Accession Highlight: ')}
     </div>
   }
 })
