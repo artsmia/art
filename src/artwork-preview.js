@@ -1,9 +1,6 @@
 var React = require('react')
 var Router = require('react-router')
 var { Link } = Router
-
-var {Link} = require('react-router')
-
 var ArtworkImage = require('./artwork-image')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
@@ -46,11 +43,13 @@ var ArtworkPreview = React.createClass({
           <Artwork.Creator art={art} {...this.props} />
           <Artwork.Tombstone art={art} {...this.props} />
           <h6><Peek facet="room" highlightedValue={highlight('room')}>{art.room}</Peek></h6>
-          <div className="description" itemProp="description">
-            <Markdown>{highlight('text')}</Markdown>
-          </div>
-          <Artwork.LinkBar art={art} link={showLink} />
-          {showHighlights}
+          {this.props.children || <div>
+            <div className="description" itemProp="description">
+              <Markdown>{highlight('text')}</Markdown>
+            </div>
+            <Artwork.LinkBar art={art} link={showLink} />
+            {showHighlights}
+          </div>}
         </div>
       </Artwork.Figure>
     )

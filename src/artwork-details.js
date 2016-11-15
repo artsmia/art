@@ -184,6 +184,13 @@ var ArtworkDetails = React.createClass({
 
         return [portfolioName, <Peek facet="portfolio" q={portfolioName} />]
       }],
+      ['accession_highlight', (art) => {
+        if(!art.accessionHighlight) return []
+        return [
+          `HIGHLIGHT! - accessioned ${art.accessionDate}`,
+          <Markdown>{art.accessionHighlightText}</Markdown>
+        ]
+      }],
       ['curator_approved', art => {
         var currentUrl = window.location && window.location.href.split('/').slice(0, 5).join('/')
         var dataSender = feedbackSender(undefined, undefined, 'Collections data feedback', currentUrl)

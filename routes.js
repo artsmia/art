@@ -20,12 +20,15 @@ var Map = require('./src/map-page')
 var More = require('./src/more')
 var Exhibition = require('./src/exhibition')
 var Artist = require('./src/artist')
+var RecentAccessions = require('./src/recent')
+var AccessionHighlight = require('./src/accession-highlight')
 
 var routes = (
   <Route handler={App} path="/">
     <DefaultRoute name="home" handler={Home}/>
     <Route name="artwork" path="art/:id" handler={Artwork} />
     <Route name="artworkSlug" path="art/:id/:slug" handler={Artwork} />
+    <Route name="accessionHighlight" path="art/:id/:slug/accessionHighlight" handler={AccessionHighlight} />
     <Route name="search" path="/search/" handler={Search}>
       <Route name="searchResults" path=":terms" handler={SearchResults}>
         <Route name="filteredSearchResults" path="filters/*" handler={SearchResults} />
@@ -47,6 +50,7 @@ var routes = (
     <Route name="more" path="/more" handler={More} />
     <Route name="exhibition" path="/exhibitions/:id" handler={Exhibition} />
     <Route name="exhibitionSlug" path="exhibitions/:id/:slug" handler={Exhibition} />
+    <Route name="recent" path="/new" handler={RecentAccessions} />
   </Route>
 );
 

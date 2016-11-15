@@ -13,6 +13,7 @@ var ArtworkResult = React.createClass({
       return rest(`${SEARCH}/id/`+params.id).then((r) => JSON.parse(r.entity))
     }
   },
+
   render() {
     var art = this.props.data.artwork
     var id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')

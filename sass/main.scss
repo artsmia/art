@@ -1627,8 +1627,15 @@ img, .LazyLoad {
   z-index: 3;
   background: white;
 }
+
 .search-wrap {
-  background: rgba(35, 35, 35, 1);
+  background: none;
+}
+
+@media (max-width: 501px) {
+  .search-wrap {
+    background: rgba(35, 35, 35, 1);
+  }
 }
 
 .sticky .closePreview {

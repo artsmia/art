@@ -96,16 +96,18 @@ var Artwork = React.createClass({
     </div>
 
     var info = <div className='info'>
-      <ArtworkPreview art={art} showLink={false} showDuplicateDetails={true} />
-      {this.state.has3d && <div className="images">
-        <p onClick={this.toggle3d}>{this.state.show3d ? 'show high-res image' : 'show 3D model'}</p> 
+      {this.props.children || <div>
+        <ArtworkPreview art={art} showLink={false} showDuplicateDetails={true} />
+        {this.state.has3d && <div className="images">
+          <p onClick={this.toggle3d}>{this.state.show3d ? 'show high-res image' : 'show 3D model'}</p> 
+        </div>}
+        <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
+        {smallViewport || relatedContent}
+        <div>
+          <h5 className='details-title'>Details</h5>
+          <ArtworkDetails art={art} show3d={this.state.show3d} />
+        </div>
       </div>}
-      <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
-      {smallViewport || relatedContent}
-      <div>
-        <h5 className='details-title'>Details</h5>
-        <ArtworkDetails art={art} show3d={this.state.show3d} />
-      </div>
     </div>
 
     var smallViewportWithTabbedInfoAndRelated = <div>
