@@ -34,7 +34,7 @@ var RecentAccessions = React.createClass({
         <div className="highlight_image">
           <div className="highlight_content">
             <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
-              {highlight.image == 'valid' && <ArtworkImage art={highlight} />}
+              <ArtworkImage art={highlight} />
             </Link>
           </div>
         </div>
