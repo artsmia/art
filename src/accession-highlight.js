@@ -29,8 +29,9 @@ var AccessionHighlight = React.createClass({
             <Markdown>{art.accessionHighlightText}</Markdown>
           </div>
         </ArtworkPreview>
-        <div className="back-button"><Link to="artworkSlug" params={{id: art.id, slug: art.slug}}>View full collection record</Link></div>
-        <div className="back-button"><Link to="/new">Back to Accession Highlights</Link></div>
+        <div className="back-button" style={{marginRight: '.5em'}}><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
+        <div className="back-button"><Link to="artworkSlug" params={{id: art.id, slug: art.slug}}>view details <i className="material-icons">arrow_forward</i></Link></div>
+
       </Artwork>
       {Artwork.pageMetadata(art, 'Accession Highlight: ')}
     </div>

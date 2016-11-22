@@ -551,6 +551,45 @@ header{
   margin-left: 0.1em;
   padding-right: .5em;
 }
+
+/* ===== NEW TO MIA REDESIGN ===== */
+.grid_wrapper {
+  width: 100%;
+}
+.single_highlight{
+	position: relative;
+  display: inline-block;
+	width: 24%;		/* desired width */
+  margin: .5%;
+  vertical-align: top;
+}
+.highlight_image{
+	position: relative;
+	width: 100%;		/* desired width */
+  background: #f1f1f1;
+  margin-bottom: 1em;
+}
+.highlight_image:before{
+	content: "";
+	display: block;
+	padding-top: 100%; 	/* initial ratio of 1:1*/
+}
+.highlight_content{
+	position:  absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.highlight_content img {
+  height: 100%;
+  max-width: none !important;
+  display: block;
+}
 /* ===== LANDING PAGE STYLES ===== */
 .landingPageBody, .departmentPage, .curatorProfile {
   display: inline-block;
@@ -774,7 +813,7 @@ a.departmentLink h2{
   height: 100vh !important;
   z-index: 9 !important;
 }
-@import "node_modules/leaflet-fullscreen/dist/leaflet.fullscreen";
+@import "node_modules/leaflet-fullscreen/dist/leaflet.fullscreen.css";
 .artwork.smallviewport #map {
   top: 0;
   z-index: 2;
@@ -886,6 +925,12 @@ h5.details-title {
   width: 100%;
   height: 100%;
   background: rgba(35,35,35,.7);
+}
+.new_mia_header {
+  height: 200px;
+  display: inline-block;
+  width: 100%;
+  background: $primary;
 }
 .explore-header {
   height: 200px;
@@ -1337,6 +1382,13 @@ hr{margin:0;}
     overflow: scroll;
     max-width: 10000vw;
   }
+  .single_highlight{
+  	position: relative;
+    display: inline-block;
+  	width: 49%;		/* desired width */
+    margin: .5%;
+    vertical-align: top;
+  }
 }
 
 .d-gallery h3{line-height:1.3em;margin-top:1rem;}
@@ -1483,6 +1535,13 @@ button  {
   }
   .nav_item.button {
     font-size: 13px;
+  }
+  .single_highlight{
+  	position: relative;
+    display: inline-block;
+  	width: 32%;		/* desired width */
+    margin: .5%;
+    vertical-align: top;
   }
 }
 /* ===== invalid (no image) STYLES ===== */
@@ -1635,6 +1694,13 @@ img, .LazyLoad {
 @media (max-width: 501px) {
   .search-wrap {
     background: rgba(35, 35, 35, 1);
+  }
+  .single_highlight{
+  	position: relative;
+    display: inline-block;
+  	width: 100%;		/* desired width */
+    margin: 0;
+    vertical-align: top;
   }
 }
 

@@ -26,23 +26,30 @@ var RecentAccessions = React.createClass({
   accessionHighlightsGrid() {
     var {accessionHighlights, recent} = this.props.data
 
-    return <div style={{margin: '5em'}}>
-      <h1>Accession Highlights</h1>
-      <ul>{accessionHighlights.hits.hits.map(h => h._source)
+    return <div className="explore-section" style={{top: '12em', padding: '0 2.5em'}}>
+      <h2>Accession Highlights</h2>
+      <div className="grid_wrapper">{accessionHighlights.hits.hits.map(h => h._source)
         .map(highlight => {
-        return <li>
-          <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
-            <h3>{highlight.title}</h3>
-            {highlight.image == 'valid' && <ArtworkImage art={highlight} />}
-          </Link>
-          <Markdown>{highlight.accessionHighlightText}</Markdown>
-        </li>
-      })}</ul>
+        return <div className="single_highlight">
+        <div className="highlight_image">
+          <div className="highlight_content">
+            <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
+              {highlight.image == 'valid' && <ArtworkImage art={highlight} />}
+            </Link>
+          </div>
+        </div>
+        <div className="objects-focus">
+          <_Artwork.Title art={highlight} />
+          <_Artwork.Creator art={highlight} />
+          <_Artwork.Tombstone art={highlight} />
+        </div>
+      </div>
+      })}</div>
     </div>
   },
 
   render() {
-    return <div>
+    return <div className="new_mia_header">
     {false && <Search
         facet={'recent:true'}
         {...this.props}
@@ -51,11 +58,9 @@ var RecentAccessions = React.createClass({
 
       {this.accessionHighlightsGrid()}
 
-      <Peek facet="recent" q="true" quiltProps={{maxRowHeight: 400}} offset={10}/>
       <Helmet title="New to Mia - Acquisition Highlights" />
     </div>
   }
 })
 
 module.exports = RecentAccessions
-
