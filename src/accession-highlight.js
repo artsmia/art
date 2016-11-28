@@ -25,7 +25,8 @@ var AccessionHighlight = React.createClass({
     return <div>
       <Artwork {...this.props} accessionHighlightView={true}>
         <ArtworkPreview art={art} showDuplicateDetails={true}>
-          <div className="description" itemProp="description">
+          <div className="description" itemProp="description" style={{'borderTop':'4px solid #232323', 'borderBottom':'4px solid #232323', 'padding':'4px 0', 'margin':'10px 0'}}>
+            <h2>Accession Highlight Overview</h2>
             <Markdown>{art.accessionHighlightText}</Markdown>
           </div>
         </ArtworkPreview>
