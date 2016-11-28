@@ -31,31 +31,25 @@ var RecentAccessions = React.createClass({
       <div className="grid_wrapper">{accessionHighlights.hits.hits.map(h => h._source)
         .map(highlight => {
         return <div className="single_highlight">
-        <div className="highlight_image">
-          <div className="highlight_content">
-            <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
-              <ArtworkImage art={highlight} />
-            </Link>
-          </div>
+          <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
+            <div className="highlight_image">
+              <div className="highlight_content">
+                <ArtworkImage art={highlight} />
+              </div>
+            </div>
+            <div className="objects-focus">
+              <_Artwork.Title art={highlight} />
+              <_Artwork.Creator art={highlight} />
+              <_Artwork.Tombstone art={highlight} />
+            </div>
+          </Link>
         </div>
-        <div className="objects-focus">
-          <_Artwork.Title art={highlight} />
-          <_Artwork.Creator art={highlight} />
-          <_Artwork.Tombstone art={highlight} />
-        </div>
-      </div>
       })}</div>
     </div>
   },
 
   render() {
     return <div className="new_mia_header">
-    {false && <Search
-        facet={'recent:true'}
-        {...this.props}
-        hideInput={true}
-        hideResults={true} />}
-
       {this.accessionHighlightsGrid()}
 
       <Helmet title="New to Mia - Acquisition Highlights" />
