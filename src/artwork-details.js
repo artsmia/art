@@ -187,7 +187,9 @@ var ArtworkDetails = React.createClass({
       ['accession_highlight', (art) => {
         if(!art.accessionHighlight) return []
         return [
-          `HIGHLIGHT! - accessioned ${art.accessionDate}`,
+          <Link to="accessionHighlight" params={{id: art.id, slug: _Artwork.slug(art)}}>
+            {art.accessionDate}
+          </Link>,
           <Markdown>{art.accessionHighlightText}</Markdown>
         ]
       }],
