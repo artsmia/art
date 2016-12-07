@@ -64,7 +64,9 @@ var Artwork = React.createClass({
       ignoreStyle={true} />
 
     var aspectRatio = art.image_width/art.image_height
-    var mapHeight = Math.max(40, Math.min(65, 1/aspectRatio*80))
+    var mapHeight = art.image == "valid" ?
+      Math.max(40, Math.min(65, 1/aspectRatio*80)) :
+      20
 
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
       !this.state.fullscreenImage
@@ -80,7 +82,7 @@ var Artwork = React.createClass({
       {this.state.zoomLoaded || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
         {image}
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
-      </div>}
+      </div> || <NoImagePlaceholder />}
       {this.imageStatus()}
       {smallViewport && exploreIcon}
     </div>
@@ -275,5 +277,25 @@ Artwork.contextTypes = {
   universal: React.PropTypes.bool,
 }
 
-module.exports = Artwork
+var noImageStyle = {
+  wrapper: {
+    "position": 'absolute',
+    "top": '50%',
+    "left": '50%',
+    "transform": 'translate(-50%, -50%)',
+    "WebkitTransform": 'translate(-50%, -50%)',
+    "width": '77%',
+    "textAlign": 'center',
+  },
+  pattern: {
+  }
+}
+var NoImagePlaceholder = React.createClass({
+  render() {
+    return <div style={noImageStyle.wrapper}>
+      <div className="noImage invalid"><p>No Image Available</p></div>
+    </div>
+  }
+})
 
+module.exports = Artwork
