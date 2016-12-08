@@ -78,8 +78,11 @@ var Artwork = React.createClass({
       {width: '100%', display: 'inline-block', height: mapHeight+'vh'} :
       stickyMapStyle
 
+    var {zoomLoaded} = this.state
+    var zoomLoadedSuccessfully = zoomLoaded && zoomLoaded !== 'error'
+
     var map = <div ref='map' id='map' style={mapStyle}>
-      {this.state.zoomLoaded || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
+      {zoomLoadedSuccessfully || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
         {image}
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
       </div> || <NoImagePlaceholder />}
@@ -166,7 +169,11 @@ var Artwork = React.createClass({
     rest(`//tiles.dx.artsmia.org/${this.state.id}.json`)
     .then(
       response => JSON.parse(response.entity),
-      rejected => Promise.reject(new Error(`can't load tiles for ${art.id}`))
+      rejected => {
+        // TODO: log this somewhere
+        this.setState({zoomLoaded: 'error'})
+        return Promise.reject(new Error(`can't load tiles for ${art.id}`))
+      }
     )
     .then((data) => {
       this.map = L.map(this.refs.map.getDOMNode(), {
@@ -244,10 +251,12 @@ var Artwork = React.createClass({
       —Nope! We're loading ${humanizeNumber(this.getPixelDifference(400))} more pixels right now.
       It can take a few seconds.)`
     var showLoadingMessage = zoomLoading && zoomLoaded === false && !this.context.universal
+    var showErrorMessage = zoomLoaded === 'error'
     var smallViewport = window && window.innerWidth <= 500
 
     return art.image === 'valid' && <span className="imageStatus">
       {showLoadingMessage && loadingZoomMessage}
+      {showErrorMessage && <p>Error loading high resolution image. <a href="mailto:collectionsdata+images@artsmia.org">Report this problem</a>.</p>}
       {art.restricted === 1 && !smallViewport && "Because of © restrictions, we can only show you a small image of this artwork." + copyrightAndOnViewMessage}
     </span>
   },

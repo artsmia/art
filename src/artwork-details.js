@@ -183,11 +183,15 @@ var ArtworkDetails = React.createClass({
         return [portfolioName, <Peek facet="portfolio" q={portfolioName} />]
       }],
       ['curator_approved', art => {
-        var message = art.curator_approved ?
+        var dataMessage = art.curator_approved ?
           `This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.` :
           `This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.`
 
-        return [<Markdown>{message}</Markdown>]
+        var imageMessage = `Does something look wrong with this image? <a href="mailto:collectionsdata+images@artsmia.org">Let us know</a>`
+
+        return [<Markdown>
+          {dataMessage + '\n\n' + imageMessage}
+        </Markdown>]
       }],
     ]
   },
