@@ -26,9 +26,7 @@ var RecentAccessions = React.createClass({
   accessionHighlightsGrid() {
     var {accessionHighlights, recent} = this.props.data
 
-    return <div className="explore-section">
-      <h2>Accession Highlights</h2>
-      <div className="grid_wrapper">{accessionHighlights.hits.hits.map(h => h._source)
+    return <div className="grid_wrapper">{accessionHighlights.hits.hits.map(h => h._source)
         .map(highlight => {
         return <div className="single_highlight">
           <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
@@ -40,13 +38,22 @@ var RecentAccessions = React.createClass({
           </Link>
         </div>
       })}</div>
-    </div>
   },
 
   render() {
     return <div className="new-to-mia">
-      {this.accessionHighlightsGrid()}
+      <div className="explore-section">
+        <h2>Accession Highlights</h2>
+        {this.accessionHighlightsGrid()}
 
+        <h2 style={{paddingTop: '3em'}}>All Recent Accessions</h2>
+        <Peek
+          facet='recent'
+          q='true'
+          quiltProps={{maxRowHeight: 600}}
+          shuffleQuilt={true}
+          />
+      </div>
       <Helmet title="New to Mia - Acquisition Highlights" />
     </div>
   }
