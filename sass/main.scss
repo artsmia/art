@@ -352,6 +352,7 @@ header{
 
 .search-wrap {
   z-index: 4;
+  background: transparent !important;
 }
 .search-wrap div:first-child {
     margin:0 auto;
@@ -1577,8 +1578,8 @@ img.loaded {
 @media (min-width: 840px) {
   #more p img {
     position: absolute;
-    top: 100px;
-    left: 75%;
+    top: 18vw;
+    left: 80vw;
   }
 }
 @media (max-width: 839px) {
@@ -1591,6 +1592,10 @@ img.loaded {
 #more h2 {
   padding-left: 0px;
   font-size: 1.25em;
+}
+
+#more .labelHelper a {
+  cursor: pointer;
 }
 
 .agg-wrap, .search-wrap, .landingPageBody, .departmentPage,

@@ -41,7 +41,7 @@ var More = React.createClass({
       <div id="more" className="welcome mdl-grid">
         <div className="mdl-cell mdl-cell--9-col">
           <p>There's more to explore. Use your digital device to visit more.artsmia.org and enjoy additional multimedia content wherever you see this symbol.</p>
-          <p style={{position: 'relative'}}>To find more, search for an artwork by <TombstoneTooltip>title</TombstoneTooltip>, <TombstoneTooltip>artist</TombstoneTooltip>, or <TombstoneTooltip>accession number</TombstoneTooltip>.</p>
+          <p class="labelHelper" style={{position: 'relative'}}>To find more, search for an artwork by <TombstoneTooltip>title</TombstoneTooltip>, <TombstoneTooltip>artist</TombstoneTooltip>, or <TombstoneTooltip>accession number</TombstoneTooltip>.</p>
           <p><img src="/images/more-icon.svg" style={{maxWidth: '11em'}} /></p>
 
           <div>
@@ -140,7 +140,7 @@ var TombstoneTooltip = React.createClass({
       onMouseOver={this.toggleExpanded.bind(this, true)}
       onMouseOut={this.toggleExpanded.bind(this, false)}
       onClick={this.toggleExpanded}>
-      {this.props.children}
+      <a onclick="return false">{this.props.children}</a>
       {expanded && <div style={styles}>
         <RandomArtworkTombstone fieldToHighlight={fieldToHighlight} />
       </div>}
