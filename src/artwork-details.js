@@ -11,6 +11,7 @@ var Peek = require('./peek')
 var dimensionSvg = require('./endpoints').dimensionSvg
 var rightsDescriptions = require('./rights-types.js')
 var feedbackSender = require('./email-data-sender')
+var _Artwork = require('./_artwork')
 
 var ArtworkDetails = React.createClass({
   build(field, fn) {
@@ -187,10 +188,13 @@ var ArtworkDetails = React.createClass({
       ['accession_highlight', (art) => {
         if(!art.accessionHighlight) return []
         return [
-          <Link to="accessionHighlight" params={{id: art.id, slug: _Artwork.slug(art)}}>
-            {art.accessionDate}
-          </Link>,
-          <Markdown>{art.accessionHighlightText}</Markdown>
+          <p>
+            <Link to="accessionHighlight" params={{id: art.id, slug: _Artwork.slug(art)}}>
+              This was one of Mia's top highlights in {art.accessionDate.split('-')[0]}.<br/>
+            </Link>
+            <Link to="recent">See the rest!</Link>
+          </p>,
+          <Markdown>{art.accessionHighlightText + '\n\n---'}</Markdown>
         ]
       }],
       ['curator_approved', art => {

@@ -22,7 +22,7 @@ var AccessionHighlight = React.createClass({
   render() {
     var {artwork: art} = this.props.data
     var accDate = new Date(art.accessionDate)
-    var accDateString = `${accDate.toLocaleString('en-us', {month: "long"}).split(' ')[0]} ${accDate.getFullYear()}`
+    var accDateString = `${accDate.getFullYear()}`
 
     return <div>
       <Artwork {...this.props} accessionHighlightView={true}>

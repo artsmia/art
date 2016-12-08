@@ -26,7 +26,7 @@ var RecentAccessions = React.createClass({
   accessionHighlightsGrid() {
     var {accessionHighlights, recent} = this.props.data
 
-    return <div className="explore-section" style={{top: '12em', padding: '0 2.5em'}}>
+    return <div className="explore-section">
       <h2>Accession Highlights</h2>
       <div className="grid_wrapper">{accessionHighlights.hits.hits.map(h => h._source)
         .map(highlight => {
@@ -37,11 +37,6 @@ var RecentAccessions = React.createClass({
                 <ArtworkImage art={highlight} />
               </div>
             </div>
-            <div className="objects-focus">
-              <_Artwork.Title art={highlight} />
-              <_Artwork.Creator art={highlight} />
-              <_Artwork.Tombstone art={highlight} />
-            </div>
           </Link>
         </div>
       })}</div>
@@ -49,7 +44,7 @@ var RecentAccessions = React.createClass({
   },
 
   render() {
-    return <div className="new_mia_header">
+    return <div className="new-to-mia">
       {this.accessionHighlightsGrid()}
 
       <Helmet title="New to Mia - Acquisition Highlights" />
