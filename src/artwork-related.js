@@ -2,6 +2,7 @@ var React = require('react')
 var rest = require('rest')
 var cx = require('classnames')
 var {Link} = require('react-router')
+var ga = require('react-ga')
 
 var Markdown = require('./markdown')
 var imageCDN = require('./image-cdn')
@@ -53,14 +54,27 @@ var ArtworkRelatedContent = React.createClass({
   },
 
   build(json) {
-    return <div key={json.link || json.title}>
-      {(this.templates[json.type] || this.templates.default)(json, this.props.id, this.props.highlights)}
+    if(!json.id) json.id = this.props.id
+    var trackRelatedClick = this.trackRelatedContentInteraction.bind(this, json)
+    return <div onClick={trackRelatedClick} key={json.link || json.title}>
+      {(this.templates[json.type] || this.templates.default).bind(this)(json, this.props.id, this.props.highlights, trackRelatedClick)}
     </div>
   },
 
+  trackRelatedContentInteraction(json) {
+    // track clicks on related content via more.artsmia.org fort objects on G311 and 355
+    if(window.location.hostname == "more.artsmia.org" && ['G311', 'G355'].indexOf(this.props.art.room) > -1) {
+      ga.event({
+        category: 'more.artsmia.org related content',
+        action: 'clicked',
+        label: `${json.id} - ${json.type} - ${json.link}`,
+      })
+    }
+  },
+
   templates: {
-    audio: (json) => <div className="audioClip">
-      <audio style={{maxWidth: '100%'}} src={json.link} controls></audio>
+    audio: (json, id, _, track) => <div className="audioClip">
+      <audio style={{maxWidth: '100%'}} src={json.link} controls onplay={track}></audio>
       <a href={json.link}>Audio Clip<br/><sub>Listen.</sub></a>
     </div>,
     newsflash: (json) => <div className="newsflash" style={{backgroundImage: `url(http://newsflash.dx.artsmia.org${json.image})`}}>
