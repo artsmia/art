@@ -105,6 +105,9 @@ module.exports = GalleryDecorator
 
 var NotOnViewGalleryDecorator = React.createClass({
   render() {
-    return <p>Very few of the artworks at Mia can be "on view" at any point in time.</p>
+    var message = 'Very few of the artworks at Mia can be "on view" at any point in time.\n\n' +
+    "The museum's [Print and Photograph Study Rooms](http://new.artsmia.org/visit/study-rooms/) offer individuals and groups the opportunity to examine off-view artworks (including woodcuts, engravings, etchings, lithographs, screenprints, drawings, watercolors, artist’s books, photography, and new media) upon appointment."
+
+    return <Markdown>{message}</Markdown>
   }
 })
