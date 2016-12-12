@@ -19,7 +19,11 @@ var ArtworkRelatedContent = React.createClass({
 
     var links = Object.keys(art).filter(key => key.match('related:'))
     .reduce((relateds, key) => {
-      relateds.push(JSON.parse(art[key]))
+      var linkOrListOfLinks = (typeof art[key] == 'string') ? JSON.parse(art[key]) : art[key]
+      Array.isArray(linkOrListOfLinks) ?
+          relateds = relateds.concat(linkOrListOfLinks) :
+          relateds.push(linkOrListOfLinks)
+
       return relateds
     }, [])
 
