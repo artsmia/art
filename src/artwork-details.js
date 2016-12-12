@@ -170,13 +170,13 @@ var ArtworkDetails = React.createClass({
         return [<Markdown>{art.exhibition_history}</Markdown>]
       }],
       ['see_also', (art, raw) => {
-        var also = raw.see_also.filter(id => id !== "" && id !== raw.id)
-        return also.length > 0 ?
+        var also = raw.see_also && raw.see_also.filter(id => id !== "" && id !== raw.id)
+        return also && also.length > 0 ?
           [`${also.length} other artwork${also.length > 1 ? 's' : ''}`, <Peek facet="see_also" q={raw.id} />] :
           []
       }],
       ['portfolio', (art, raw) => {
-        if(raw.portfolio == 'From ') return []
+        if(!raw.portfolio || raw.portfolio == 'From ') return []
         var portfolioName = raw.portfolio
         .replace('From From', 'From') // some have double 'from'
 
