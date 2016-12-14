@@ -51,9 +51,9 @@ var Exhibition = React.createClass({
         {...this.props}
         disableHover={true} // TODO: fix :hover going to the search results page
       >
-        <div style={{textAlign: 'center'}}>
+        <div style={{margin: '0.5em 3em 2em', maxWidth: '37em'}}>
           <h2>{exhibition.exhibition_title}</h2>
-          <p>{exhibition.display_date}</p>
+          <p style={{margin: '-1em 0 0.5em 0'}}>{exhibition.display_date}</p>
           <Markdown>{exhibition.exhibition_description}</Markdown>
         </div>
         <hr />

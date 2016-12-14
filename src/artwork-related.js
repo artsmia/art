@@ -30,7 +30,7 @@ var ArtworkRelatedContent = React.createClass({
     var explore = links.filter(link => link.type !== "exhibition")
     var exhibitions = links.filter(link => link.type == "exhibition")
     // only show exhibitions tagged `rotation`
-    var significantExhibitions = exhibitions.filter(ex => ex.rotation == "true")
+    var significantExhibitions = exhibitions.filter(ex => ex.rotation)
 
     var meat = <div className="explore">
       {explore.map(this.build)}
