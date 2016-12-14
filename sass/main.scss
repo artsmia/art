@@ -1479,7 +1479,7 @@ button  {
     display:flex;
 }
 
-.invalid{
+.invalid, .loading.error{
     background:url(../images/no-image-bg.png) repeat top left;
     background-color: white;
     flex-grow:1;
@@ -1547,10 +1547,16 @@ img.image {
 img.loading {
   border: 1px solid white;
   box-sizing: border-box;
-  background-color: #232323;
+  background-color: #232323 !important;
+  color: transparent;
 }
 img.loaded {
 	opacity: 1 !important;
+}
+img.error, img.loaded.error {
+  opacity: 0.3 !important;
+  background-color: #232323 !important;
+  color: transparent;
 }
 
 .dimension-view {

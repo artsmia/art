@@ -13,6 +13,8 @@ const Image = React.createClass({
     var classes = cx('image', {
       loading: !this.state.loaded,
       loaded: this.state.loaded,
+      error: this.state.error,
+      invalid: this.state.error,
     })
 
     var loadingStyle = {
@@ -56,9 +58,13 @@ const Image = React.createClass({
 
   // if the image doesn't load, it's probably because it's not on the CDN
   // yet. Fall back and load it from the API
+  // If it also won't load from there, we've got problems
   handleError(event) {
-    console.info(event.target.src)
-    this.setState({skipCDN: true})
+    if(!this.state.skipCDN) {
+      this.setState({skipCDN: true})
+    } else { // problems! the image isn't working on the CDN or via the api.
+      this.setState({loaded: true, error: true})
+    }
   },
 
   getInitialState() {
