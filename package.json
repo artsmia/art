@@ -44,7 +44,7 @@
     "linear-partitioning": "^0.3.1",
     "marked": "^0.3.3",
     "material-ui": "^0.10.1",
-    "museum-tile-layer": "kjell/museumTileLayer#gh-pages",
+    "museum-tile-layer": "artsmia/museumTileLayer#gh-pages",
     "react": "^0.13.0",
     "react-click-to-select": "^1.0.0",
     "react-cookie": "^0.3.4",

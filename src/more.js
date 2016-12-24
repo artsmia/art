@@ -24,7 +24,9 @@ var More = React.createClass({
 
   render() {
     let smallViewport = window && window.innerWidth < 600
-    let quiltProps = {maxRows: 2, maxWorks: 7}
+    let quiltProps = smallViewport ? 
+      {maxRows: 1, maxWorks: 5} :
+      {maxRows: 2, maxWorks: 9}
 
     return <div>
       <Search
@@ -40,24 +42,27 @@ var More = React.createClass({
 
       <div id="more" className="welcome mdl-grid">
         <div className="mdl-cell mdl-cell--9-col">
-          <p>There's more to explore. Use your digital device to visit more.artsmia.org and enjoy additional multimedia content wherever you see this symbol.</p>
+          <p>
+            {smallViewport && <img src="/images/more-icon.svg" style={{maxWidth: '7em', padding: '2em 1em 0.25em 1em', float: 'right'}} />}
+            There's more to explore. Use your digital device to visit more.artsmia.org and enjoy additional multimedia content wherever you see this symbol.
+          </p>
           <p class="labelHelper" style={{position: 'relative'}}>To find more, search for an artwork by <TombstoneTooltip>title</TombstoneTooltip>, <TombstoneTooltip>artist</TombstoneTooltip>, or <TombstoneTooltip>accession number</TombstoneTooltip>.</p>
-          <p><img src="/images/more-icon.svg" style={{maxWidth: '11em'}} /></p>
+          {smallViewport || <p><img src="/images/more-icon.svg" style={{maxWidth: '11em'}} /></p>}
 
           <div>
             <h2>Personalize your Mia experience with new ways to explore art.</h2>
 
             <h3>Journeys</h3>
             <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="https://itunes.apple.com/us/app/mia-journeys/id1058993004">Download the app free (iOS).</a></p>
-            <ExpandableNewArtsmiaContentBlock page="/journeys/" />
+            <ExpandableNewArtsmiaContentBlock page="journeys" />
 
             <h3>Overheard</h3>
             <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="https://itunes.apple.com/us/app/overheard-mia/id1116319582">Download it free (iOS)</a>.</p>
-            <ExpandableNewArtsmiaContentBlock page="/art-tech-award/overheard/" />
+            <ExpandableNewArtsmiaContentBlock page="overheard" />
 
             <h3>ArtStories</h3>
             <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="http://artstories.artsmia.org">ArtStories</a>.</p>
-            <ExpandableNewArtsmiaContentBlock page="/artstories/" />
+            <ExpandableNewArtsmiaContentBlock page="artstories" />
           </div>
         </div>
       </div>
@@ -92,7 +97,7 @@ var ExpandableNewArtsmiaContentBlock = React.createClass({
   },
 
   loadExternalContent() {
-    return rest('http://new.artsmia.org'+this.props.page+'?json=1')
+    return rest('http://new.artsmia.org/wp-json/wp/v2/pages?slug='+this.props.page)
     .then((r) => JSON.parse(r.entity))
     .then(json => this.setState({loaded: true, json: json}))
   },
@@ -101,9 +106,8 @@ var ExpandableNewArtsmiaContentBlock = React.createClass({
     var {loaded, expanded, json} = this.state
     var toggleButton = <a href="#" onClick={this.toggle}>{expanded ? 'Less' : 'More'} Info</a>
 
-    var field = this.props.field || 'modules_1_content_0_text'
     var content = loaded && <div><Markdown>
-      {json.page.custom_fields[field][0]}
+      {json[0].acf.modules[1].content[0].text}
     </Markdown><hr /></div>
 
     return <div>
