@@ -84,6 +84,7 @@ const ImageQuilt = React.createClass({
           onClick={this.clicked.bind(this, art)}
           onMouseEnter={this.hovered.bind(this, art, true)}
           onMouseLeave={this.hovered.bind(this, art, false)}
+          onImageInvalidation={this.forceUpdate.bind(this)}
           key={_art.id}
           lazyLoad={this.props.lazyLoad}
           />

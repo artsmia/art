@@ -66,6 +66,8 @@ const Image = React.createClass({
       this.setState({skipCDN: true})
     } else { // problems! the image isn't working on the CDN or via the api.
       this.setState({loaded: true, error: true})
+      this.props.art.image = 'invalid' 
+      this.props.onImageInvalidation && this.props.onImageInvalidation()
     }
   },
 
