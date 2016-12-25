@@ -23,6 +23,7 @@ var Peek = React.createClass({
     var {q, facet} = props
     var results = this.state && this.state.results || {}
     var open = this.state ? this.state.open : !!q
+    if(q && q.props && q.props.children) q = q.props.children.replace(/<\/?em>/g, '')
     if(q && q.match(/:/) && !facet) {
       [facet, ...qs] = q.split(/:/)
       var q = qs.join(':')
@@ -46,6 +47,7 @@ var Peek = React.createClass({
 
   render() {
     var {results, facetedQ, startedOpen} = this.state
+    if(!facetedQ) return <span />
     var {child, microdata} = this.props
     var result = results && results[facetedQ]
     var Tag = this.props.tag
@@ -132,6 +134,7 @@ var Peek = React.createClass({
     var q = q || (this.state ? this.state.query : "")
     var facet = facet || this.state && this.state.facet
     if(facet == 'artist') q = q.replace(/([^;]+:)/g, '').trim()
+    if(q == null) return false
     return facet ? `${facet}:"${encodeURIComponent(q.replace(/"/g, '').replace('\r\n', ' '))}"` : q
   },
 
