@@ -3,6 +3,7 @@ var cx = require('classnames')
 var LazyLoad = require('react-lazy-load')
 
 var imageCDN = require('./image-cdn')
+var {getFacetAndValue} = require('./artwork/creator')
 
 const Image = React.createClass({
   render() {
@@ -28,6 +29,7 @@ const Image = React.createClass({
       onLoad={this.handleImageLoad}
       onError={this.handleError}
       className={classes}
+      title={`${art.title}, ${getFacetAndValue(art)[1]}`}
       alt={art.description}
       {...other} />
 

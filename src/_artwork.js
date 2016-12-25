@@ -3,11 +3,16 @@ var {Link} = require('react-router')
 var toSlug = require('speakingurl')
 var classnames = require('classnames')
 
+var Creator = require('./artwork/creator.js')
 var ArtworkImage = require('./artwork-image')
 var Peek = require('./peek')
 var imageCDN = require('./image-cdn')
 var highlighter = require('./highlighter')
 var Markdown = require('./markdown')
+
+//
+// TODO: move these into separate components at `src/artwork/`?
+// 
 
 var ConditionalLinkWrapper = React.createClass({
   render() {
@@ -329,37 +334,6 @@ var Figure = React.createClass({
 })
 Figure.contextTypes = {
   universal: React.PropTypes.bool,
-}
-
-var Creator = React.createClass({
-  render() {
-    var Wrapper = this.props.wrapper || "h5"
-    var [facet, value, highlightedValue] = Creator.getFacetAndValue(this.props.art, this.props.highlights)
-    var creatorPeek = (facet == 'artist' || facet == 'culture')
-      && <Peek microdata={true} facet={facet} {...{highlightedValue}}>{value}</Peek>
-      || facet == 'country'
-      && <span>Unknown artist, <Peek microdata={true} facet="country" tag="span" showIcon={this.props.showIcon} {...{highlightedValue}}>{value}</Peek></span>
-
-    return <Wrapper itemProp="creator" itemScope itemType="http://schema.org/Person">
-      {this.props.peek ? creatorPeek : (highlightedValue ? <Markdown>{highlightedValue}</Markdown> : value)}
-    </Wrapper>
-  },
-
-  getDefaultProps() {
-    return {peek: true}
-  },
-})
-Creator.getFacetAndValue = (art, highlights) => {
-  var {artist, culture, country} = art
-  var highlight = highlighter.bind(null, art, highlights)
-
-  return !(artist == '' || artist.match(/^unknown/i)) &&
-    ['artist', art.artist.replace(/^([^;]+):/, ''), highlight('artist').replace(/^([^;]+):/, '')]
-  || !!culture
-    && ['culture', art.culture.replace(/ culture/i, ''), highlight('culture').replace(/ culture/i, '')]
-  || !!country
-    && ['country', art.country, highlight('country')]
-  || [undefined, undefined]
 }
 
 var slug = (art) => {

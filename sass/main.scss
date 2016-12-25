@@ -1148,7 +1148,8 @@ hr{margin:0;}
   font-family:$MiaGroteskLight;
 }
 
-.peek.open .peek a{
+.peek.open .quilt-wrap + a,
+.peek.open span + a {
     padding:0 0 10px 10px;
     display:inline-block;
     margin-top:10px;
@@ -1503,6 +1504,9 @@ button  {
     font-family: $MiaGroteskBold;
     display:table-cell;
     vertical-align: middle;
+}
+a .invalid p {
+  color: #232323 !important;
 }
 
 .mdl-cell {

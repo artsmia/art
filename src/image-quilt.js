@@ -230,9 +230,13 @@ var QuiltPatch = React.createClass({
       <p><strong>{art.title_short}</strong></p>
     </span>
 
-    return this.context.universal ?
-      <Link to="artwork" params={{id: art.id}}>{patch}</Link> :
-      patch
+    return <Link onClick={this.clickOrDontClick} style={style} to="artwork" params={{id: art.id}}>{patch}</Link>
+  },
+
+  // halt the click event if javascript is loaded
+  // clicking triggers the right-hand preview, not the `<a>`
+  clickOrDontClick(event) {
+    if(!this.context.universal) event.preventDefault()
   },
 
   getDefaultProps() {
