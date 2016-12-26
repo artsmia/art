@@ -28,11 +28,15 @@ var SearchResults = React.createClass({
     var focus = window.clickedArtwork || this.props.hits[0]
     setTimeout(() => window.clickedArtwork = null)
     var smallViewport = window && window.innerWidth <= 500
+
+    var {view, preview: showPreview} = this.props.query
+    var initialView = view && view == 'list' ? ResultsList : ResultsGrid
     var defaultView = (smallViewport || this.context.universal) ? ResultsList : ResultsGrid
+    var showPreview = showPreview == "false" ? false : true
 
     return {
-      focusedResult: focus && focus,
-      view: defaultView,
+      focusedResult: showPreview && focus && focus,
+      view: initialView || defaultView,
       smallViewport,
     }
   },
