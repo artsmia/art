@@ -128,7 +128,9 @@ var Aggregations = React.createClass({
     var {search, query, params} = this.props
     // var newParams = {terms: `${search.query}`}
     var newFilters = ''
-    var [querySort, querySortDirection] = query.sort.split('-')
+    var [querySort, querySortDirection] = query && query.sort ?
+      query.sort.split('-') :
+      [undefined, undefined]
     var currentSortIsDescending = querySortDirection === 'desc'
     var sortIsActive = query && (querySort === newSort || newSort == 'relevance' && !querySort)
     var humanName = humanizeSnakeCase(newSort.replace(/\..*$/, ''))
