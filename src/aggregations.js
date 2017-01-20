@@ -122,26 +122,38 @@ var Aggregations = React.createClass({
     'Gist': {},
   },
 
-  linkToCurrentSearchWithSort(sort) {
+  linkToCurrentSearchWithSort(newSort) {
     var humanizeSnakeCase = (s) => `_${s}`
       .replace(/_(.?)/g, (_, x) => ` ${x.toUpperCase()}`).trim()
     var {search, query, params} = this.props
     // var newParams = {terms: `${search.query}`}
     var newFilters = ''
-    var sortIsActive = query && (query.sort === sort || sort == 'relevance' && !query.sort)
-    var humanName = humanizeSnakeCase(sort.replace(/\..*$/, ''))
+    var [querySort, querySortDirection] = query.sort.split('-')
+    var currentSortIsDescending = querySortDirection === 'desc'
+    var sortIsActive = query && (querySort === newSort || newSort == 'relevance' && !querySort)
+    var humanName = humanizeSnakeCase(newSort.replace(/\..*$/, ''))
     var newQuery = {
       ...query,
-      sort
+      sort: newSort,
     }
-    if(sort === 'relevance') delete newQuery.sort
+    if(newSort === 'relevance') delete newQuery.sort
 
-    return sortIsActive ?
+    const sortLink = sortIsActive ?
       humanName :
       <Link
         to={!params.splat ? 'searchResults' : 'filteredSearchResults'}
         query={newQuery}
         params={params}>{humanName}</Link>
+
+    const complementarySortLink = <Link
+        to={!params.splat ? 'searchResults' : 'filteredSearchResults'}
+        query={{...newQuery, sort: currentSortIsDescending ? newSort : `${newSort}-desc`}}
+        title={`Sort in ${currentSortIsDescending ? 'ascending' : 'descending'} order`}
+        params={params}>{currentSortIsDescending ? '↑' : '↓'}</Link>
+
+    return sortIsActive && newSort !== 'relevance' ? 
+      <span>{sortLink}     {complementarySortLink}</span> :
+      sortLink
   },
 
   sortBox(style) {
