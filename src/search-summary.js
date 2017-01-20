@@ -35,6 +35,10 @@ const SearchSummary = React.createClass({
       .filter(string => !!string && string !== '*')
       .join(', ')
 
+    var {sort} = this.props.query
+    var humanizeSnakeCase = (s) => `_${s}`
+      .replace(/_(.?)/g, (_, x) => ` ${x.toUpperCase()}`).trim()
+
     return (
       <div className='agg-wrap'>
         <div className="toolbar mdl-grid">
@@ -44,6 +48,7 @@ const SearchSummary = React.createClass({
           {showingAll || <span>of {search.hits.total} {' '}</span>}
           results matching <code>{pretty.query}</code>
           {search.filters && <span> and <code>{decodeURIComponent(pretty.filters)}</code></span>}
+          {sort && <span> sorted by {humanizeSnakeCase(sort.replace(/(-|\.).*/, ''))}</span>}
           {showingAll || this.props.showMoreLink}
         </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
         </div>
