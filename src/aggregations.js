@@ -14,19 +14,21 @@ var Aggregations = React.createClass({
   },
 
   render() {
-    const search = this.props.search
+    const {search, query} = this.props
     const {aggs, showAdder} = this.state
     const customFilters = this.customFilters
     const toggleAgg = (agg) => this.toggleAggregation.bind(this, agg)
     const toggleMoreAggs = this.toggleMoreAggs
+    const defListStyle = {display: 'inline-block', margin: '0', verticalAlign: 'top'} // , opacity: showAgg ? 1 : 0.5
 
     return (
       <div id="aggs" >
         <div style={{width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap', paddingBottom: '10px', paddingLeft: '10px'}}>
+        {this.sortBox(defListStyle)}
         {aggs.map(function(agg) {
           const aggIsActive = search.filters && search.filters.match(new RegExp(agg.name, 'i'))
           const showAgg = agg.open || aggIsActive
-          if(showAgg) return (<dl key={agg.name} id={agg.name} style={{display: 'inline-block', margin: '0', verticalAlign: 'top', opacity: showAgg ? 1 : 0.5}}>
+          if(showAgg) return (<dl key={agg.name} id={agg.name} style={defListStyle}>
             <dt style={{fontWeight: aggIsActive && 'bold'}} onClick={toggleAgg(agg)}>{agg.displayName}</dt>
             {(agg.open || aggIsActive) && agg.buckets.slice(0, 5).map(function(bucket) {
               const filterString = customFilters[agg.name] ? customFilters[agg.name][bucket.key] || bucket.key : agg.name.toLowerCase()+':"'+bucket.key+'"'
@@ -39,7 +41,7 @@ var Aggregations = React.createClass({
 
               if(bucket.key) return (
                 <dd key={agg.name+bucket.key} style={{margin: '0', fontWeight: bucketIsActive && 'bold', textDecoration: bucketIsActive && 'underline'}}><span className='objectTotal'>
-                  {<Link to={newFilters == '' ? 'searchResults' : 'filteredSearchResults'} params={{terms: `${search.query}`, splat: newFilters}}>
+                  {<Link to={newFilters == '' ? 'searchResults' : 'filteredSearchResults'} query={query} params={{terms: `${search.query}`, splat: newFilters}}>
                       {bucketText} <span className="numbers">{bucket.doc_count}</span>
                   </Link>}</span>
                 </dd>
@@ -118,6 +120,39 @@ var Aggregations = React.createClass({
       'Unavailable': 'image:invalid',
     },
     'Gist': {},
+  },
+
+  linkToCurrentSearchWithSort(sort) {
+    var humanizeSnakeCase = (s) => `_${s}`
+      .replace(/_(.?)/g, (_, x) => ` ${x.toUpperCase()}`).trim()
+    var {search, query, params} = this.props
+    // var newParams = {terms: `${search.query}`}
+    var newFilters = ''
+    var sortIsActive = query && (query.sort === sort || sort == 'relevance' && !query.sort)
+    var humanName = humanizeSnakeCase(sort.replace(/\..*$/, ''))
+    var newQuery = {
+      ...query,
+      sort
+    }
+    if(sort === 'relevance') delete newQuery.sort
+
+    return sortIsActive ?
+      humanName :
+      <Link
+        to={!params.splat ? 'searchResults' : 'filteredSearchResults'}
+        query={newQuery}
+        params={params}>{humanName}</Link>
+  },
+
+  sortBox(style) {
+    var sorts = ['relevance', 'department.raw', 'accession_number.sort', 'title.raw', 'artist.raw']
+
+    return <dl style={style}>
+      <dt>Sort by…</dt>
+      {sorts.map(sort_key => {
+        return <dd>{this.linkToCurrentSearchWithSort(sort_key)}</dd>
+      })}
+    </dl>
   },
 })
 

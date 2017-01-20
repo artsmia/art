@@ -15,9 +15,11 @@ var SearchResults = React.createClass({
     fetchData: {
       searchResults: (params, query) => {
         var size = query && query.size || 100
+        var sort = query && query.sort
         const filters = params.splat
         const properlyCodedFilters = encodeURIComponent(decodeURIComponent(filters)) // yuck
         let searchUrl = `${SEARCH}/${decodeURIComponent(params.terms)}?size=${size}`
+        if(sort) searchUrl += `&sort=${sort}`
         if(filters) searchUrl += `&filters=${properlyCodedFilters}`
         return rest(searchUrl).then((r) => JSON.parse(r.entity))
       }
@@ -45,6 +47,7 @@ var SearchResults = React.createClass({
     return this.props.data.searchResults != nextProps.data.searchResults ||
       this.props.hits != nextProps.hits ||
       this.props.completions !== nextProps.completions ||
+      this.props.query.sort !== nextProps.query.sort ||
       this.state !== nextState
   },
 
@@ -70,7 +73,7 @@ var SearchResults = React.createClass({
     var showMoreLink = search &&
       <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
              params={{terms: search.query, splat: search.filters}}
-             query={{size: nextPage}}
+             query={{size: nextPage, ...this.props.query}}
              onClick={this.triggerLoad.bind(this, nextPage)}
             >load {loadThisManyMore} more</Link>)
       </span>
@@ -85,6 +88,7 @@ var SearchResults = React.createClass({
       toggleAggs: this.props.toggleAggs,
       showMoreLink,
       maxResults: this.maxResults,
+      query: this.props.query,
       ...this.props.summaryProps
     }
 

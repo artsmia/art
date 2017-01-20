@@ -17,6 +17,7 @@ var SearchResultsGrid = React.createClass({
   componentWillReceiveProps(nextProps) {
     var searchChanged = this.props.search.query != nextProps.search.query
       || this.props.search.filters != nextProps.search.filters
+      || this.props.hits.slice(0, 10) !== nextProps.hits.slice(0, 10)
 
     if(searchChanged) {
       this.cachedQuilts = []
