@@ -67,6 +67,7 @@ var Artwork = React.createClass({
     var mapHeight = art.image == "valid" ?
       Math.max(40, Math.min(65, 1/aspectRatio*80)) :
       20
+    if(smallViewport && this.state.show3d) mapHeight = 50
 
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
       !this.state.fullscreenImage
@@ -82,21 +83,25 @@ var Artwork = React.createClass({
     var zoomLoadedSuccessfully = zoomLoaded && zoomLoaded !== 'error'
 
     var map = <div ref='map' id='map' style={mapStyle}>
+      {this.state.has3d && <SketchfabEmbed model={this.state.has3d} show={this.state.show3d} />}
       {zoomLoadedSuccessfully || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
         {image}
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
-      </div> || <NoImagePlaceholder />}
+      </div> || <NoImagePlaceholder art={art} />}
       {this.imageStatus()}
       {smallViewport && exploreIcon}
     </div>
 
     var info = <div className='info'>
       <ArtworkPreview art={art} showLink={false} showDuplicateDetails={true} />
+      {this.state.has3d && <div className="images">
+        <p onClick={this.toggle3d}>{this.state.show3d ? 'show zoomable image' : 'show 3D model'}</p> 
+      </div>}
       <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
       <ArtworkRelatedContent id={id} art={art} />
       <div>
         <h5 className='details-title'>Details</h5>
-        <ArtworkDetails art={art} />
+        <ArtworkDetails art={art} show3d={this.state.show3d} />
       </div>
     </div>
 
@@ -138,20 +143,33 @@ var Artwork = React.createClass({
     </div>
   },
 
+  toggle3d() {
+    var nextShow3d = !this.state.show3d
+    this.setState({show3d: nextShow3d})
+    if(!nextShow3d) {
+      if(!this.state.zoomLoaded) this.loadZoom()
+    }
+    if(nextShow3d && this.state.zoomLoaded) {
+    }
+  },
+
   getInitialState() {
     var art = this.props.data.artwork
     art.id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
 
+    var has3Dmodel = art["related:3dmodels"] && art["related:3dmodels"][0]
     return {
       art: art,
       id: art.id,
       fullscreenImage: false,
+      has3d: has3Dmodel,
+      show3d: has3Dmodel,
     }
   },
 
   componentDidMount() {
     var art = this.state.art
-    if(art.image === 'valid' && art.restricted != 1 && !this.isLoan()) this.loadZoom()
+    if(art.image === 'valid' && art.restricted != 1 && !this.isLoan() && !this.state.show3d) this.loadZoom()
     var smallViewport = window && window.innerWidth <= 500
     // push the viewport down past the header to maximize image/text on the page
     // scrolling back up reveals the menu
@@ -301,8 +319,26 @@ var noImageStyle = {
 }
 var NoImagePlaceholder = React.createClass({
   render() {
-    return <div style={noImageStyle.wrapper}>
-      <div className="noImage invalid"><p>No Image Available</p></div>
+    var {art} = this.props
+    var model = art["related:3dmodels"] && art["related:3dmodels"][0]
+    return model ? <SketchfabEmbed model={model} /> :
+      <div style={noImageStyle.wrapper}>
+        <div className="noImage invalid"><p>No Image Available</p></div>
+      </div>
+  }
+})
+
+var SketchfabEmbed = React.createClass({
+  render() {
+    var showHideStyle = {}
+    if(!this.props.show) showHideStyle.visibility = 'hidden'
+    return <div className="sketchfab-embed-wrapper" style={showHideStyle}>
+      <iframe
+        src={`${this.props.model.link}/embed?autostart=1&preload=1&ui_infos=0`}
+        frameborder="0"
+        allowvr
+        allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"
+        onmousewheel=""></iframe>
     </div>
   }
 })
