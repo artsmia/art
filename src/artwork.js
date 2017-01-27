@@ -67,7 +67,7 @@ var Artwork = React.createClass({
     var mapHeight = art.image == "valid" ?
       Math.max(40, Math.min(65, 1/aspectRatio*80)) :
       20
-    if(smallViewport && this.state.show3d) mapHeight = 50
+    if(smallViewport && this.state.show3d) mapHeight = 67
 
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
       !this.state.fullscreenImage
