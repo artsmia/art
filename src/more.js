@@ -61,7 +61,7 @@ var More = React.createClass({
             <ExpandableNewArtsmiaContentBlock page="overheard" />
 
             <h3>ArtStories</h3>
-            <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="http://artstories.artsmia.org">ArtStories</a>.</p>
+            <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="https://artstories.artsmia.org">ArtStories</a>.</p>
             <ExpandableNewArtsmiaContentBlock page="artstories" />
           </div>
         </div>
@@ -97,7 +97,7 @@ var ExpandableNewArtsmiaContentBlock = React.createClass({
   },
 
   loadExternalContent() {
-    return rest('http://new.artsmia.org/wp-json/wp/v2/pages?slug='+this.props.page)
+    return rest('https://new.artsmia.org/wp-json/wp/v2/pages?slug='+this.props.page)
     .then((r) => JSON.parse(r.entity))
     .then(json => this.setState({loaded: true, json: json}))
   },

@@ -54,11 +54,11 @@ var Curator = React.createClass({
       <h5><Markdown>{curator.title}</Markdown></h5>
       <div className="curatorContent">
         <div className="curatorPic">
-          <img src={`http://collections.artsmia.org/_info/curator-portraits/${curator.slug}.jpg`} alt={`portrait of ${curator.name}`} />
+          <img src={`https://collections.artsmia.org/_info/curator-portraits/${curator.slug}.jpg`} alt={`portrait of ${curator.name}`} />
         </div>
         <Markdown alreadyRendered={true}>{curator.output}</Markdown>
       </div>
-      {curator.cv && <p><a href={`http://collections.artsmia.org/_info/cv/${curator.cv}`}>Curriculum Vitae</a></p>}
+      {curator.cv && <p><a href={`https://collections.artsmia.org/_info/cv/${curator.cv}`}>Curriculum Vitae</a></p>}
     </div>
   </div>
   }

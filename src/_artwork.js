@@ -179,7 +179,7 @@ var testCloudfrontImage = (art, callback) => {
 
   var i = document.createElement('img')
   i.onload = () => callback(cdnUrl)
-  i.onerror = () => callback(`http://api.artsmia.org/images/${art.id}/${art.restricted ? '400/medium.jpg' : '800/large.jpg'}`)
+  i.onerror = () => callback(`https://api.artsmia.org/images/${art.id}/${art.restricted ? '400/medium.jpg' : '800/large.jpg'}`)
   i.src = cdnUrl
 }
 
@@ -258,7 +258,7 @@ var LinkBar = React.createClass({
   },
 
   getUrl() {
-    return 'http://collections.artsmia.org'+this.context.router.getCurrentPath()
+    return 'https://collections.artsmia.org'+this.context.router.getCurrentPath()
   },
 
   handleShare() {
@@ -279,10 +279,10 @@ var LinkBar = React.createClass({
         <img src="https://simpleicons.org/icons/email.svg" />
       </a></div>
       <div className="social"><a title="Share on Facebook" href={facebookURL} target="_blank">
-        <img src="http://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/facebook.svg" />
+        <img src="https://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/facebook.svg" />
       </a></div>
       <div className="social"><a title="Share on Twitter" href={twitterURL} target="_blank">
-        <img src="http://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/twitter.svg" />
+        <img src="https://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/twitter.svg" />
       </a></div>
     </div>
   },
@@ -321,7 +321,7 @@ var Figure = React.createClass({
     var classes = classnames(className, {validImage: art.image === 'valid' && art.image_width > 0})
 
     return <figure {...figureProps} className={classes}
-      itemScope itemType="http://schema.org/VisualArtwork">
+      itemScope itemType="https://schema.org/VisualArtwork">
       <link itemProp="url" href={`/art/${id}`} />
       <ConditionalLinkWrapper art={art} link={link}>
         <ArtworkImage art={art} id={id} lazyLoad={false} className="artwork-image" />

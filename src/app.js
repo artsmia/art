@@ -92,7 +92,7 @@ var App = React.createClass({
     if(this.props.universal) return <a href="/">{logo}</a>
 
     return showMenu ?
-      <a href="http://new.artsmia.org" title="Back to artsmia.org">{logo}</a> :
+      <a href="https://new.artsmia.org" title="Back to artsmia.org">{logo}</a> :
       <a href="#" title="Show menu" onClick={this.toggleMenu}>{logo}</a>
   },
 })

@@ -5,19 +5,19 @@ var  {Link} = require('react-router')
 
 var GlobalNavigation =  React.createClass({
   mainnav: [
-    {navItem:'Exhibitions', link:'http://new.artsmia.org/exhibitions'},
-    {navItem: 'Collection', link:'https://collections.artsmia.org/'},
-    {navItem: 'Visit', link:'http://new.artsmia.org/visit/'},
-    {navItem: 'Discover', link:'http://new.artsmia.org/discover/'},
-    {navItem: 'Shop', link:'http://new.artsmia.org/shop/'},
-    {navItem: 'Join', link:'http://new.artsmia.org/join-and-invest/'},
-    {navItem: 'About', link:'http://new.artsmia.org/about/'}
+    {navItem:'Exhibitions', link:'https://new.artsmia.org/exhibitions'},
+    {navItem: 'Collection', link:'httpss://collections.artsmia.org/'},
+    {navItem: 'Visit', link:'https://new.artsmia.org/visit/'},
+    {navItem: 'Discover', link:'https://new.artsmia.org/discover/'},
+    {navItem: 'Shop', link:'https://new.artsmia.org/shop/'},
+    {navItem: 'Join', link:'https://new.artsmia.org/join-and-invest/'},
+    {navItem: 'About', link:'https://new.artsmia.org/about/'}
 
   ],
   quicknav: [
-    {navItem: 'tickets', link:'http://artsmia.org/donate'},
-    {navItem: 'calendar', link:'http://new.artsmia.org/visit/calendar/'},
-    {navItem: 'donate', link:'http://artsmia.org/donate'}
+    {navItem: 'tickets', link:'https://artsmia.org/donate'},
+    {navItem: 'calendar', link:'https://new.artsmia.org/visit/calendar/'},
+    {navItem: 'donate', link:'https://artsmia.org/donate'}
   ],
   render() {
 

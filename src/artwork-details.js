@@ -118,7 +118,7 @@ var ArtworkDetails = React.createClass({
         <div>
           <p>{rightsDescriptions[raw.rights]}</p>
           <Peek facet="rights" q={raw.rights} />
-          <p><a href="http://new.artsmia.org/visit/policies-guidelines/#websiteimageaccess&use">Mia's Image Access & Use Policy</a></p>
+          <p><a href="https://new.artsmia.org/visit/policies-guidelines/#websiteimageaccess&use">Mia's Image Access & Use Policy</a></p>
         </div>
         ]
       }],
@@ -161,7 +161,7 @@ var ArtworkDetails = React.createClass({
       ['wikipedia', (art) => {
         return ['Cite this information', <div>
           <ClickToSelect>
-            <code name="Mia">&#123;&#123;cite web |title={art.title} |url=http://collections.artsmia.org/art/{art.id} |author={art.artist} |year={art.dated} |accessdate={(new Date).toUTCString().split(' ').slice(1, 4).join(' ')} |publisher=Minneapolis Institute of Art&#125;&#125;</code>
+            <code name="Mia">&#123;&#123;cite web |title={art.title} |url=https://collections.artsmia.org/art/{art.id} |author={art.artist} |year={art.dated} |accessdate={(new Date).toUTCString().split(' ').slice(1, 4).join(' ')} |publisher=Minneapolis Institute of Art&#125;&#125;</code>
           </ClickToSelect>
         </div>]
       }],

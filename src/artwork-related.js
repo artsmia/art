@@ -81,7 +81,7 @@ var ArtworkRelatedContent = React.createClass({
       <audio style={{maxWidth: '100%'}} src={json.link} controls onplay={track}></audio>
       <a href={json.link}>Audio Clip<br/><sub>Listen.</sub></a>
     </div>,
-    newsflash: (json) => <div className="newsflash" style={{backgroundImage: `url(http://newsflash.dx.artsmia.org${json.image})`}}>
+    newsflash: (json) => <div className="newsflash" style={{backgroundImage: `url(https://newsflash.dx.artsmia.org${json.image})`}}>
       <div className="overlay">
       <a href={json.link}>{json.title}<br/><sub>Read more.</sub></a>
       <i className="material-icons">launch</i>

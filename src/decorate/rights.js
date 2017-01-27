@@ -10,7 +10,7 @@ var RightsDecorator = React.createClass({
 
     return <div className="decorator">
       <h3>{rightsType}</h3>
-      <p>{rightsDesc} <a href="http://new.artsmia.org/visit/policies-guidelines/#websiteimageaccess&use">Mia's Image Access & Use Policy</a></p>
+      <p>{rightsDesc} <a href="https://new.artsmia.org/visit/policies-guidelines/#websiteimageaccess&use">Mia's Image Access & Use Policy</a></p>
     </div>
   },
 })

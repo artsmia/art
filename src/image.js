@@ -46,7 +46,7 @@ const Image = React.createClass({
     var {id} = this.props.art
 
     return this.state.skipCDN ?
-      `http://api.artsmia.org/images/${id}/400/medium.jpg` :
+      `https://api.artsmia.org/images/${id}/400/medium.jpg` :
       imageCDN(id)
   },
 

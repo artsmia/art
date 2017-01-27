@@ -57,7 +57,7 @@ var Artwork = React.createClass({
       _Artwork.Creator.getFacetAndValue(art)[1]
     ].filter(e => e).join(', ')
     var imageUrl = imageCDN(id)
-    var canonicalURL = `http://collections.artsmia.org/art/${art.id}/${art.slug}`
+    var canonicalURL = `https://collections.artsmia.org/art/${art.id}/${art.slug}`
 
     var image = <Image art={art}
       style={{width: 400, height: 400, maxWidth: '100%'}}
@@ -188,7 +188,7 @@ var Artwork = React.createClass({
         pseudoFullscreen: true,
       }).addTo(this.map)
 
-      this.tiles = L.museumTileLayer('http://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
+      this.tiles = L.museumTileLayer('https://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
         attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
         id: this.state.id,
         width: data.width,

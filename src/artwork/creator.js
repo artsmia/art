@@ -13,7 +13,7 @@ var Creator = React.createClass({
       || facet == 'country'
       && <span>Unknown artist, <Peek microdata={true} facet="country" tag="span" showIcon={this.props.showIcon} {...{highlightedValue}}>{value}</Peek></span>
 
-    return <Wrapper itemProp="creator" itemScope itemType="http://schema.org/Person">
+    return <Wrapper itemProp="creator" itemScope itemType="https://schema.org/Person">
       {this.props.peek ? creatorPeek : (highlightedValue ? <Markdown>{highlightedValue}</Markdown> : value)}
     </Wrapper>
   },

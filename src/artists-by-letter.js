@@ -8,7 +8,7 @@ var ArtistsByLetter = React.createClass({
 
   statics: { 
     fetchData: (params) => {
-      return rest('http://cdn.dx.artsmia.org/artists.json').then((r) => {
+      return rest('https://cdn.dx.artsmia.org/artists.json').then((r) => {
         return JSON.parse(r.entity).aggregations.artist.buckets
       })
     }

@@ -589,7 +589,7 @@ header{
 }
 
 @function cdnImageUrl($id) {
-  @return "http://" + $id%7 + ".api.artsmia.org/" + $id + ".jpg";
+  @return "https://" + $id%7 + ".api.artsmia.org/" + $id + ".jpg";
 }
 
 .departmentListItem.africa {

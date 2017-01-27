@@ -35,7 +35,7 @@ var Curators = React.createClass({
         return <div className="mdl-cell curatorBio" key={curator.slug}>
           <Link to="curator" params={{slug:curator.slug}}>
             <div className="curatorPic">
-              <img src={`http://collections.artsmia.org/_info/curator-portraits/${curator.slug}.jpg`} alt={`portrait of ${curator.name}`} />
+              <img src={`https://collections.artsmia.org/_info/curator-portraits/${curator.slug}.jpg`} alt={`portrait of ${curator.name}`} />
             </div>
             <div className="curator-intro">
               <h4>{curator.name}</h4>

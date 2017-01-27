@@ -9,7 +9,7 @@ var Map = React.createClass({
   render() {
     var {number, prevLink, nextLink, ...extraProps} = this.props
     var thumbnail = <img
-        src={`http://artsmia.github.io/map/galleries/${number}.png`}
+        src={`https://artsmia.github.io/map/galleries/${number}.png`}
         onClick={this.handleClick}
         />
     var floor = this.state.floor

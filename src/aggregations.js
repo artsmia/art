@@ -159,7 +159,7 @@ var Aggregations = React.createClass({
   },
 
   sortBox(style) {
-    var sorts = ['relevance', 'department.raw', 'accession_number.sort', 'title.raw', 'artist.raw']
+    var sorts = ['relevance', 'department.raw', 'accession_number.sort', 'title.raw', 'artist.raw', 'classification']
 
     return <dl style={style}>
       <dt>Sort by…</dt>
