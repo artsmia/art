@@ -32,7 +32,7 @@ const SearchSummary = React.createClass({
       filters: searchLanguageMap(search.filters),
     }
     pretty['searchString'] = [pretty.query, pretty.filters]
-      .filter(string => !!string && string !== '*')
+      .filter(string => !!string && string !== '*' && string !== 'undefined')
       .join(', ')
 
     var {sort} = this.props.query

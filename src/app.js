@@ -16,8 +16,8 @@ var App = React.createClass({
           {this.globalToolBar()}
         </header>}
         <Helmet
-          title="Art!"
-          titleTemplate="%s ˆ Mia"
+          title="Collection | Minneapolis Institute of Art"
+          titleTemplate="%s | Mia"
           />
         <RouteHandler
           {...this.props}
