@@ -341,7 +341,8 @@ var slug = (art) => {
   var string = [art.title.replace(/<[^ ]+?>/g, ''), creator && creator.split(';')[0]]
     .filter(e => e)
     .join(' ')
-    .replace(/\(.*\)/, '')
+    .replace(/’|'/g, '')
+    .replace(/^(.+)\(.*\)/, '$1')
     .replace('ō', 'o')
   return toSlug(string)
 }
