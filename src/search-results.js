@@ -18,7 +18,7 @@ var SearchResults = React.createClass({
         var sort = query && query.sort
         const filters = params.splat
         const properlyCodedFilters = encodeURIComponent(decodeURIComponent(filters)) // yuck
-        let searchUrl = `${SEARCH}/${decodeURIComponent(params.terms)}?size=${size}`
+        let searchUrl = `${SEARCH}/${params.terms}?size=${size}`
         if(sort) searchUrl += `&sort=${sort}`
         if(filters) searchUrl += `&filters=${properlyCodedFilters}`
         return rest(searchUrl).then((r) => JSON.parse(r.entity))

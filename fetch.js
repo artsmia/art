@@ -25,7 +25,9 @@ function fetchComponentData(state, initialData) {
     if(typeof fetchData == 'function') {
       promises[route.name] = fetchData(state.params, state.query)
     } else if(typeof fetchData == 'object') {
-      Object.entries(fetchData).map(([name, _fetchData]) => promises[name] = _fetchData(state.params, state.query))
+      Object.entries(fetchData).map(([name, _fetchData]) => {
+        promises[name] = _fetchData(state.params, state.query)
+      })
     }
 
     return promises
