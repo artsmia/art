@@ -9,6 +9,7 @@ var Markdown = require('./markdown')
 var Peek = require('./peek')
 var dimensionSvg = require('./endpoints').dimensionSvg
 var rightsDescriptions = require('./rights-types.js')
+var feedbackSender = require('./email-data-sender')
 
 var ArtworkDetails = React.createClass({
   build(field, fn) {
@@ -183,11 +184,15 @@ var ArtworkDetails = React.createClass({
         return [portfolioName, <Peek facet="portfolio" q={portfolioName} />]
       }],
       ['curator_approved', art => {
-        var dataMessage = art.curator_approved ?
-          `This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.` :
-          `This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email <a href="mailto:collectionsdata@artsmia.org">collectionsdata@artsmia.org</a>.`
+        var currentUrl = window.location && window.location.href.split('/').slice(0, 5).join('/')
+        var dataSender = feedbackSender(undefined, undefined, 'Collections data feedbackl', currentUrl)
+        var imageSender = feedbackSender('collectionsdata+images@artsmia.org', 'Let us know', 'Collections image feedbackl', currentUrl)
 
-        var imageMessage = `Does something look wrong with this image? <a href="mailto:collectionsdata+images@artsmia.org">Let us know</a>`
+        var dataMessage = art.curator_approved ?
+          `This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.` :
+          `This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.`
+
+        var imageMessage = `Does something look wrong with this image? ${imageSender}`
 
         return [<Markdown>
           {dataMessage + '\n\n' + imageMessage}
