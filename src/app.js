@@ -8,6 +8,7 @@ var GlobalNavigation = require('./navigation')
 var App = React.createClass({
   render() {
     var logo = this.makeLogo()
+    var canonicalURL = "https://collections.artsmia.org"+this.props.path
 
     return (
       <div className={this.props.universal && 'universal'}>
@@ -18,6 +19,13 @@ var App = React.createClass({
         <Helmet
           title="Collection | Minneapolis Institute of Art"
           titleTemplate="%s | Mia"
+          link={[
+            {"rel": "canonical", "href": canonicalURL},
+          ]}
+          meta={[
+            {property: "robots", content: this.noIndex() ? 'follow,noindex' : 'all'},
+            {property: "og:url", content: canonicalURL},
+          ]}
           />
         <RouteHandler
           {...this.props}
@@ -94,6 +102,10 @@ var App = React.createClass({
     return showMenu ?
       <a href="https://new.artsmia.org" title="Back to artsmia.org">{logo}</a> :
       <a href="#" title="Show menu" onClick={this.toggleMenu}>{logo}</a>
+  },
+
+  noIndex() {
+    return process.env.NODE_ENV !== 'production'
   },
 })
 App.childContextTypes = {universal: React.PropTypes.bool}

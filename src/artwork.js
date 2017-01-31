@@ -128,16 +128,12 @@ var Artwork = React.createClass({
       <Helmet
         title={pageTitle}
         meta={[
-          {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
+          {property: "og:title", content: pageTitle + ' | Minneapolis Institute of Art'},
           {property: "og:description", content: art.text},
           {property: "og:image", content: imageUrl},
-          {property: "og:url", content: canonicalURL},
           {property: "twitter:card", content: "summary_large_image"},
           {property: "twitter:site", content: "@artsmia"},
-          {property: "robots", content: this.isLoan() ? 'noindex' : 'all'},
-        ]}
-        link={[
-          {"rel": "canonical", "href": canonicalURL},
+          {property: "robots", content: this.noIndex() ? 'follow,noindex' : 'all'},
         ]}
         />
     </div>
@@ -297,6 +293,13 @@ var Artwork = React.createClass({
 
   isLoan() {
     return this.state.art.accession_number.match(/^L/i)
+  },
+
+  // different from the noIndex set at `App` - this factors in object status 
+  noIndex() {
+    return this.isLoan()
+      || this.state.art.public_access == '0'
+      || process.env.NODE_ENV !== 'production'
   },
 })
 Artwork.contextTypes = {
