@@ -185,8 +185,8 @@ var ArtworkDetails = React.createClass({
       }],
       ['curator_approved', art => {
         var currentUrl = window.location && window.location.href.split('/').slice(0, 5).join('/')
-        var dataSender = feedbackSender(undefined, undefined, 'Collections data feedbackl', currentUrl)
-        var imageSender = feedbackSender('collectionsdata+images@artsmia.org', 'Let us know', 'Collections image feedbackl', currentUrl)
+        var dataSender = feedbackSender(undefined, undefined, 'Collections data feedback', currentUrl)
+        var imageSender = feedbackSender('collectionsdata+images@artsmia.org', 'Let us know', 'Collections image feedback', currentUrl)
 
         var dataMessage = art.curator_approved ?
           `This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.` :
