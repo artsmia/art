@@ -8,6 +8,8 @@ var trackAnalytics = process.env.NODE_ENV == 'production'
 
 if(trackAnalytics) ga.initialize(process.env.GA_TRACKING_ID)
 
+window.history && history.replaceState({}, '', window.location.href.replace(/\/(.*)\/$/, '/$1'))
+
 Router.run(routes, Router.HistoryLocation, (Handler, state) => {
   if(trackAnalytics) ga.pageview(state.pathname)
 

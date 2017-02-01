@@ -36,16 +36,18 @@ var html = ({title, meta, link}, data, body) => index
   .replace('<!--BODY-->', body);
 
 app.use((req, res, next) => {
+  var actingUrl = req.url.replace(/\/(.*)\/$/, '/$1')
+
   var router = Router.create({
     routes,
-    location: req.url,
+    location: actingUrl,
     onAbort: ({to, params, query}) => {
       var url = to && router.makePath(to, params, query) || '/'
       res.redirect(301, url)
     },
   })
 
-  if(!router.match(req.url)) return next()
+  if(!router.match(actingUrl)) return next()
 
   router.run((Handler, state) => {
     // ga.pageview(state.pathname)
