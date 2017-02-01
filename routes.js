@@ -19,6 +19,7 @@ var Gallery = require('./src/gallery')
 var Map = require('./src/map-page')
 var More = require('./src/more')
 var Exhibition = require('./src/exhibition')
+var Artist = require('./src/artist')
 
 var routes = (
   <Route handler={App} path="/">
@@ -35,6 +36,8 @@ var routes = (
     <Route name="curators" path="/curators" handler={Curators} />
     <Route name="explore" path="/explore" handler={Explore} />
     <Route name="artistsByName" path="/search/artists/:letter" handler={ArtistsByLetter} />
+    <Route name="artist" path="/people/:id" handler={Artist} />
+    <Route name="artistSlug" path="/people/:id/:slug" handler={Artist} />
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
     <Route name="page" path="/info/:name" handler={Page} />
     <Route name="info" path="/info" handler={Info} />

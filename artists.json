@@ -1,0 +1,2202 @@
+[
+  {
+    "id": 69,
+    "name": "Harry Callahan",
+    "viaf": "http://viaf.org/viaf/2550158",
+    "isni": "0000  0001  1020  059X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 73,
+    "name": "Sheila Hicks",
+    "viaf": "http://viaf.org/viaf/62789785",
+    "isni": "0000  0000  8388  2790",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 108,
+    "name": "Will M. Agar",
+    "viaf": "http://viaf.org/viaf/36473250",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 134,
+    "name": "Robert Adelman",
+    "viaf": "http://viaf.org/viaf/96600925",
+    "isni": "0000  0000  8402  7913",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 189,
+    "name": "Adobe Gallery",
+    "viaf": "http://viaf.org/viaf/149012901",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 199,
+    "name": "The Herbert F. Johnson Museum of Art",
+    "viaf": "http://viaf.org/viaf/124833956",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 219,
+    "name": "Frank Gaard",
+    "viaf": "http://viaf.org/viaf/162591979",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 243,
+    "name": "Utagawa Hiroshige",
+    "viaf": "http://viaf.org/viaf/19678928",
+    "isni": "0000  0001  2021  9980",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 258,
+    "name": "Frank Lloyd Wright",
+    "viaf": "http://viaf.org/viaf/27148716",
+    "isni": "0000  0001  2100  0710",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 278,
+    "name": "El Greco (Domenikos Theotokopoulos)",
+    "viaf": "http://viaf.org/viaf/100215785",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 285,
+    "name": "Henri de Toulouse-Lautrec",
+    "viaf": "http://viaf.org/viaf/32003649",
+    "isni": "0000  0001  2126  6391",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 303,
+    "name": "Rembrandt Peale",
+    "viaf": "http://viaf.org/viaf/27334932",
+    "isni": "0000  0001  1611  4561",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 316,
+    "name": "Rembrandt Harmensz. van Rijn",
+    "viaf": "http://viaf.org/viaf/27334932",
+    "isni": "0000  0001  2136  3802",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 322,
+    "name": "Master of the Legend of Saint Lucy",
+    "viaf": "http://viaf.org/viaf/78711926",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 345,
+    "name": "George Morrison",
+    "viaf": "http://viaf.org/viaf/55003475",
+    "isni": "0000  0000  6683  0139",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 374,
+    "name": "Henri Matisse",
+    "viaf": "http://viaf.org/viaf/42630086",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 408,
+    "name": "Max Beckmann",
+    "viaf": "http://viaf.org/viaf/46775885",
+    "isni": "0000  0001  0857  1682",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 409,
+    "name": "Katsushika Hokusai",
+    "viaf": "http://viaf.org/viaf/69033717",
+    "isni": "0000  0001  2138  1517",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 425,
+    "name": "Pierre Bonnard",
+    "viaf": "http://viaf.org/viaf/66499977",
+    "isni": "0000  0001  0910  3856",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 428,
+    "name": "Henry Moore",
+    "viaf": "http://viaf.org/viaf/32000652",
+    "isni": "0000  0001  1023  655X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 439,
+    "name": "Constantin Brancusi",
+    "viaf": "http://viaf.org/viaf/71387926",
+    "isni": "0000  0001  0783  4751",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 443,
+    "name": "Pablo Picasso",
+    "viaf": "http://viaf.org/viaf/15873",
+    "isni": "0000  0000  7725  1116",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 465,
+    "name": "Nicolas Poussin",
+    "viaf": "http://viaf.org/viaf/24606800",
+    "isni": "0000  0001  2099  9120",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 469,
+    "name": "Philip Guston",
+    "viaf": "http://viaf.org/viaf/12316990",
+    "isni": "0000  0001  1437  9590",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 470,
+    "name": "Francis Bacon",
+    "viaf": "http://viaf.org/viaf/14789843",
+    "isni": "0000  0001  2095  6358",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 477,
+    "name": "Alessandro Algardi",
+    "viaf": "http://viaf.org/viaf/76326555",
+    "isni": "0000  0003  6943  4694",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 572,
+    "name": "Giovanni Battista Piranesi",
+    "viaf": "http://viaf.org/viaf/2546239",
+    "isni": "0000  0001  2117  9992",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 576,
+    "name": "Roy Lichtenstein",
+    "viaf": "http://viaf.org/viaf/66470256",
+    "isni": "0000  0001  2137  1757",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 650,
+    "name": "Frank Stella",
+    "viaf": "http://viaf.org/viaf/95807455",
+    "isni": "0000  0001  2144  3757",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 657,
+    "name": "Chuck Close",
+    "viaf": "http://viaf.org/viaf/114935366",
+    "isni": "0000  0000  8183  3282",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 675,
+    "name": "Ansel Adams",
+    "viaf": "http://viaf.org/viaf/61625857",
+    "isni": "0000  0001  2135  7568",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 678,
+    "name": "William Gray Purcell",
+    "viaf": "http://viaf.org/viaf/6280217",
+    "isni": "0000  0000  6703  4396",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 679,
+    "name": "George Grant Elmslie",
+    "viaf": "http://viaf.org/viaf/33344168",
+    "isni": "0000  0000  6705  5445",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 704,
+    "name": "Sol LeWitt",
+    "viaf": "http://viaf.org/viaf/84632546",
+    "isni": "0000  0001  1450  059X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 711,
+    "name": "Berenice Abbott",
+    "viaf": "http://viaf.org/viaf/44309674",
+    "isni": "0000  0001  1491  0142",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 763,
+    "name": "Cy Twombly",
+    "viaf": "http://viaf.org/viaf/49234268",
+    "isni": "0000  0003  6858  6856",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 772,
+    "name": "Charles Biederman",
+    "viaf": "http://viaf.org/viaf/91258812",
+    "isni": "0000  0000  7843  5814",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 792,
+    "name": "Francis Frith",
+    "viaf": "http://viaf.org/viaf/44310985",
+    "isni": "0000  0000  6641  571X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 820,
+    "name": "Robert Mangold",
+    "viaf": "http://viaf.org/viaf/114092404",
+    "isni": "0000  0000  8411  2843",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 822,
+    "name": "Jerry Ott",
+    "viaf": "http://viaf.org/viaf/96420460",
+    "isni": "0000  0000  7895  9378",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 857,
+    "name": "Robert Indiana",
+    "viaf": "http://viaf.org/viaf/17498463",
+    "isni": "0000  0001  2021  766X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 888,
+    "name": "Robert Adamson",
+    "viaf": "http://viaf.org/viaf/100182255",
+    "isni": "0000  0001  0928  5573",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 946,
+    "name": "Robert  Adams",
+    "viaf": "http://viaf.org/viaf/95913825",
+    "isni": "0000  0001  1885  3480",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 976,
+    "name": "Laure Albin-Guillot",
+    "viaf": "http://viaf.org/viaf/2631151",
+    "isni": "0000  0001  0854  6938",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1059,
+    "name": "Salvador Dali",
+    "viaf": "http://viaf.org/viaf/64004109",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1094,
+    "name": "James Van Der Zee",
+    "viaf": "http://viaf.org/viaf/27288838",
+    "isni": "0000  0000  6657  1798",
+    "wikidata": "Q3161458",
+    "ulan": null
+  },
+  {
+    "id": 1140,
+    "name": "Louis Comfort Tiffany",
+    "viaf": "http://viaf.org/viaf/2479289",
+    "isni": "0000  0000  8081  5955",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1142,
+    "name": "Alvar Aalto",
+    "viaf": "http://viaf.org/viaf/71410602",
+    "isni": "0000  0001  0913  6025",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1163,
+    "name": "Gordon Parks",
+    "viaf": "http://viaf.org/viaf/112248361",
+    "isni": "0000  0001  2284  2071 ",
+    "wikidata": "Q447568",
+    "ulan": "500019962‏"
+  },
+  {
+    "id": 1165,
+    "name": "Jean-Antoine Lepine",
+    "viaf": "http://viaf.org/viaf/62346817",
+    "isni": "0000  0000  2949  6880",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1176,
+    "name": "Carl Robert Pope, Jr.",
+    "viaf": null,
+    "isni": null,
+    "wikidata": "Q18685227",
+    "ulan": null
+  },
+  {
+    "id": 1194,
+    "name": "Bob Thompson",
+    "viaf": "http://viaf.org/viaf/62403469",
+    "isni": "0000  0000  8247  295X",
+    "wikidata": "Q4934184",
+    "ulan": "500080773‏"
+  },
+  {
+    "id": 1296,
+    "name": "Dorothea Lange",
+    "viaf": "http://viaf.org/viaf/77594538",
+    "isni": "0000  0001  0802  0207",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1298,
+    "name": "Clementine Hunter",
+    "viaf": "http://viaf.org/viaf/96519292",
+    "isni": "0000  0000  7896  0627",
+    "wikidata": "Q2978902",
+    "ulan": "500111625‏"
+  },
+  {
+    "id": 1321,
+    "name": "Romare Howard Bearden",
+    "viaf": "http://viaf.org/viaf/52490063",
+    "isni": "0000  0001  1570  5589",
+    "wikidata": "Q1291679",
+    "ulan": "500007871‏"
+  },
+  {
+    "id": 1352,
+    "name": "Lucien Aigner",
+    "viaf": "http://viaf.org/viaf/40442430",
+    "isni": "0000  0000  7834  6600",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1356,
+    "name": "Wendell Castle",
+    "viaf": "http://viaf.org/viaf/113448866",
+    "isni": "0000  0000  8181  3257",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1368,
+    "name": "Gene Davis",
+    "viaf": "http://viaf.org/viaf/91317421",
+    "isni": "0000  0001  1451  7535",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1411,
+    "name": "Donald Judd",
+    "viaf": "http://viaf.org/viaf/34478944",
+    "isni": "0000  0000  8113  086X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1424,
+    "name": "Zheng Xie",
+    "viaf": "http://viaf.org/viaf/51797489",
+    "isni": "0000  0000  8130  3353",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1584,
+    "name": "Claude Gellée (called Le Lorrain)",
+    "viaf": "http://viaf.org/viaf/54156251",
+    "isni": "0000  0001  2133  426X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1586,
+    "name": "Gwendolyn Knight",
+    "viaf": "http://viaf.org/viaf/43941703",
+    "isni": "0000  0000  4116  589X",
+    "wikidata": "Q1557848",
+    "ulan": "500123536‏"
+  },
+  {
+    "id": 1640,
+    "name": "Magdalena Abakanowicz",
+    "viaf": "http://viaf.org/viaf/96291179",
+    "isni": "0000  0001  0927  6079",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1667,
+    "name": "Marianna Alcaforado",
+    "viaf": "http://viaf.org/viaf/64000733",
+    "isni": "0000  0001  0908  4608",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1688,
+    "name": "Kara Walker",
+    "viaf": "http://viaf.org/viaf/77127744",
+    "isni": "0000  0000  7843  4440",
+    "wikidata": "Q444277",
+    "ulan": "500123536‏"
+  },
+  {
+    "id": 1724,
+    "name": "Tiffany Studios",
+    "viaf": "http://viaf.org/viaf/149754401",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1727,
+    "name": "Utagawa Hiroshige III",
+    "viaf": "http://viaf.org/viaf/138288055",
+    "isni": "0000  0001  2221  1405",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 1742,
+    "name": "Beauford Delaney",
+    "viaf": "http://viaf.org/viaf/35290063",
+    "isni": "0000  0000  2474  462X",
+    "wikidata": "Q2893161",
+    "ulan": "500062429‏"
+  },
+  {
+    "id": 1980,
+    "name": "Jules Auguste Habert-Dys",
+    "viaf": "http://viaf.org/viaf/292721688",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2018,
+    "name": "Lucas Huygensz van Leyden",
+    "viaf": "http://viaf.org/viaf/95809141",
+    "isni": "0000  0003  5543  7835",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2032,
+    "name": "Heinrich Aldegrever",
+    "viaf": "http://viaf.org/viaf/95693757",
+    "isni": "0000  0001  1850  6366",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2062,
+    "name": "James McNeill Whistler",
+    "viaf": "http://viaf.org/viaf/46804212",
+    "isni": "0000  0001  0895  7868",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2148,
+    "name": "Susan Rothenberg",
+    "viaf": "http://viaf.org/viaf/95833918",
+    "isni": "0000  0000  8168  3149",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2151,
+    "name": "Sam Gilliam",
+    "viaf": "http://viaf.org/viaf/95763938",
+    "isni": "0000  0000  7861  4863",
+    "wikidata": "Q2216478",
+    "ulan": "500013570‏"
+  },
+  {
+    "id": 2152,
+    "name": "Nicholas Africano",
+    "viaf": "http://viaf.org/viaf/28458128",
+    "isni": "0000  0001  1612  4073",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2160,
+    "name": "Benny Andrews",
+    "viaf": "http://viaf.org/viaf/15570587",
+    "isni": "0000  0000  6675  3102 ",
+    "wikidata": "Q4889934",
+    "ulan": "500111179‏"
+  },
+  {
+    "id": 2184,
+    "name": "Elizabeth Catlett",
+    "viaf": "http://viaf.org/viaf/53104162",
+    "isni": "0000  0001  1472  7129",
+    "wikidata": "Q290331",
+    "ulan": "500011840‏"
+  },
+  {
+    "id": 2223,
+    "name": "Carrie Mae Weems",
+    "viaf": "http://viaf.org/viaf/18030043",
+    "isni": "0000  0001  0875  8287 ",
+    "wikidata": "Q5046268",
+    "ulan": "500329422"
+  },
+  {
+    "id": 2274,
+    "name": "Francisco José de Goya y Lucientes",
+    "viaf": "http://viaf.org/viaf/54343141",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2379,
+    "name": "Joseph Coteau",
+    "viaf": "http://viaf.org/viaf/95846778",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2396,
+    "name": "William Blake",
+    "viaf": "http://viaf.org/viaf/54144439",
+    "isni": "0000  0001  2096  135X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2503,
+    "name": "Raphael Lamar West",
+    "viaf": "http://viaf.org/viaf/55387158",
+    "isni": "0000  0000  6631  4214",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2549,
+    "name": "Tériade",
+    "viaf": "http://viaf.org/viaf/142087467",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2556,
+    "name": "Karel Allard",
+    "viaf": "http://viaf.org/viaf/79202206",
+    "isni": "0000  0000  8159  2837",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 2651,
+    "name": "Edgar Degas",
+    "viaf": "http://viaf.org/viaf/41863744",
+    "isni": "0000  0001  2129  7200",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 3051,
+    "name": "Man Ray (Emmanuel Rudnitsky)",
+    "viaf": "http://viaf.org/viaf/7396101",
+    "isni": "0000  0001  2098  8958",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 3058,
+    "name": "Vincent van Gogh",
+    "viaf": "http://viaf.org/viaf/9854560",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 3060,
+    "name": "Ad Reinhardt",
+    "viaf": "http://viaf.org/viaf/51699576",
+    "isni": "0000  0000  8129  758X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 3183,
+    "name": "Juan C. Abel",
+    "viaf": "http://viaf.org/viaf/73215708",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 3229,
+    "name": "Prescott Adamson",
+    "viaf": "http://viaf.org/viaf/95957198",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 3326,
+    "name": "Roy DeCarava",
+    "viaf": "http://viaf.org/viaf/463070",
+    "isni": "0000  0000  8349  6240",
+    "wikidata": "Q2475981",
+    "ulan": "500095793"
+  },
+  {
+    "id": 3601,
+    "name": "Eero Aarnio",
+    "viaf": "http://viaf.org/viaf/154683629",
+    "isni": "0000  0001  0350  3189",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 3713,
+    "name": "Martin Puryear",
+    "viaf": "http://viaf.org/viaf/95741692",
+    "isni": "0000  0000  7823  289X",
+    "wikidata": "Q6776418",
+    "ulan": "500009936"
+  },
+  {
+    "id": 3776,
+    "name": "Ross Bleckner",
+    "viaf": "http://viaf.org/viaf/96561119",
+    "isni": "0000  0000  8168  5777",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 3878,
+    "name": "Renée Stout",
+    "viaf": "http://viaf.org/viaf/79417192",
+    "isni": "0000  0000  8274  1451",
+    "wikidata": "Q7313016",
+    "ulan": "500196042‏"
+  },
+  {
+    "id": 4201,
+    "name": "Ernest Dewey Albinson",
+    "viaf": "http://viaf.org/viaf/6953985",
+    "isni": "0000  0000  5227  2105",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 4211,
+    "name": "Thomas Agnew and Sons, Ltd.",
+    "viaf": "http://viaf.org/viaf/123733622",
+    "isni": "0000  0001  2115  3506",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 4318,
+    "name": "Henry Bannarn",
+    "viaf": "http://viaf.org/viaf/263186378",
+    "isni": "0000  0003  8205  213X",
+    "wikidata": "Q5717754",
+    "ulan": "500034459"
+  },
+  {
+    "id": 4986,
+    "name": "Rudolph Ackermann",
+    "viaf": "http://viaf.org/viaf/39646578",
+    "isni": "0000  0001  2307  852X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 4993,
+    "name": "John Koch",
+    "viaf": "http://viaf.org/viaf/55391649",
+    "isni": "0000  0000  7868  5223",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 5390,
+    "name": "Myer Abel",
+    "viaf": "http://viaf.org/viaf/46715223",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 5508,
+    "name": "Peter Alexander",
+    "viaf": "http://viaf.org/viaf/45638489",
+    "isni": "0000  0000  7865  4144",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 5511,
+    "name": "Douglas Ohlson",
+    "viaf": "http://viaf.org/viaf/44103856",
+    "isni": "0000  0001  1471  3915",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 5998,
+    "name": "Suzanne Hellmuth",
+    "viaf": "http://viaf.org/viaf/96364181",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 6012,
+    "name": "Armin B. Allen",
+    "viaf": "http://viaf.org/viaf/241790432",
+    "isni": "0000  0003  8577  9692",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 6404,
+    "name": "Nicolas-Bernard Lépicié",
+    "viaf": "http://viaf.org/viaf/17498158",
+    "isni": "0000  0000  6660  7308",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 7483,
+    "name": "Lorna Simpson",
+    "viaf": "http://viaf.org/viaf/61820399",
+    "isni": "0000  0000  8141  4723",
+    "wikidata": "Q6681389",
+    "ulan": "500088695‏"
+  },
+  {
+    "id": 7653,
+    "name": "Sir William Neville Abdy, 2nd Bart.",
+    "viaf": "http://viaf.org/viaf/238094845",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 8019,
+    "name": "Basil Alkazzi",
+    "viaf": "http://viaf.org/viaf/45138997",
+    "isni": "0000  0000  8378  7400",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 8312,
+    "name": "Ralph Rapson",
+    "viaf": "http://viaf.org/viaf/79214409",
+    "isni": "0000  0001  1449  218X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 8422,
+    "name": "Jean Aicard",
+    "viaf": "http://viaf.org/viaf/41835648",
+    "isni": "0000  0001  0890  9137",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 8522,
+    "name": "Alfred Leslie",
+    "viaf": "http://viaf.org/viaf/114270448",
+    "isni": "0000  0000  8182  4116",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 8552,
+    "name": "Cherubino Alberti",
+    "viaf": "http://viaf.org/viaf/99664529",
+    "isni": "0000  0001  2144  9796",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 8990,
+    "name": "Ivan Le Lorraine Albright",
+    "viaf": "http://viaf.org/viaf/3282335",
+    "isni": "0000  0000  8083  2237",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 9075,
+    "name": "Alice Adam, Ltd.",
+    "viaf": "http://viaf.org/viaf/128650922",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 9120,
+    "name": "Jan Muller",
+    "viaf": "http://viaf.org/viaf/7652023",
+    "isni": "0000  0000  8087  1789",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 9140,
+    "name": "Sylvia Plimack Mangold",
+    "viaf": "http://viaf.org/viaf/88757439",
+    "isni": "0000  0000  8162  5459",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 9589,
+    "name": "Georgius Agricola",
+    "viaf": "http://viaf.org/viaf/100164815",
+    "isni": "0000  0001  0928  524X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 9604,
+    "name": "Edward Gorey",
+    "viaf": "http://viaf.org/viaf/105372100",
+    "isni": "0000  0001  1032  0049",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 9835,
+    "name": "Vincent D. Smith",
+    "viaf": "http://viaf.org/viaf/3389073",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 9958,
+    "name": "Jacob Lawrence",
+    "viaf": "http://viaf.org/viaf/42644829",
+    "isni": "0000  0001  1490  9192 ",
+    "wikidata": "Q355566",
+    "ulan": "500027690‏"
+  },
+  {
+    "id": 10121,
+    "name": "Friedrich Adler",
+    "viaf": "http://viaf.org/viaf/42641908",
+    "isni": "0000  0000  6676  9817",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 10605,
+    "name": "Anni Albers",
+    "viaf": "http://viaf.org/viaf/32178846",
+    "isni": "0000  0000  8111  6048",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 10683,
+    "name": "Raphaël Drouart",
+    "viaf": "http://viaf.org/viaf/46895938",
+    "isni": "0000  0000  8379  6171",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 10749,
+    "name": "Glenn Ligon",
+    "viaf": "http://viaf.org/viaf/20490523",
+    "isni": "0000  0000  7373  0574",
+    "wikidata": "Q5568956",
+    "ulan": null
+  },
+  {
+    "id": 10878,
+    "name": "John Biggers",
+    "viaf": "http://viaf.org/viaf/79159258",
+    "isni": "0000  0000  8396  9239",
+    "wikidata": "Q15516987",
+    "ulan": "500015058‏"
+  },
+  {
+    "id": 10879,
+    "name": "Lois Mailou Jones",
+    "viaf": "http://viaf.org/viaf/95897605",
+    "isni": "0000  0001  1827  8121",
+    "wikidata": "Q2978902",
+    "ulan": "500034910"
+  },
+  {
+    "id": 10902,
+    "name": "Charles White",
+    "viaf": "http://viaf.org/viaf/18090428",
+    "isni": "0000  0001  1932  680X",
+    "wikidata": "Q5083521",
+    "ulan": "500115749‏"
+  },
+  {
+    "id": 10984,
+    "name": "Minneapolis Institute of Art",
+    "viaf": "http://viaf.org/viaf/157703898",
+    "isni": "0000  0004  0434  3270",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 11027,
+    "name": "Albrecht Dürer",
+    "viaf": "http://viaf.org/viaf/54146999",
+    "isni": "0000  0001  2096  1368",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 11131,
+    "name": "Siah Armajani",
+    "viaf": "http://viaf.org/viaf/115179481",
+    "isni": "0000  0000  8412  1926",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 11897,
+    "name": "Norman Ackroyd",
+    "viaf": "http://viaf.org/viaf/11261791",
+    "isni": "0000  0000  7885  9051",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 12130,
+    "name": "Anton Albers",
+    "viaf": "http://viaf.org/viaf/57833865",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 12150,
+    "name": "Jean-Claude Richard, Abbé de Saint-Non",
+    "viaf": "http://viaf.org/viaf/59217922",
+    "isni": "0000  0001  2135  0593",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 12176,
+    "name": "Victor Adam",
+    "viaf": "http://viaf.org/viaf/4986476",
+    "isni": "0000  0001  0864  7149",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 12747,
+    "name": "American Swedish Institute",
+    "viaf": "http://viaf.org/viaf/150373402",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 12844,
+    "name": "Kinji Akagawa",
+    "viaf": "http://viaf.org/viaf/95784823",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 12894,
+    "name": "Pierre Michel Alix",
+    "viaf": "http://viaf.org/viaf/296104905",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 12902,
+    "name": "Richard Hunt",
+    "viaf": "http://viaf.org/viaf/92763638",
+    "isni": "0000  0000  7861  437X ",
+    "wikidata": "Q7326615",
+    "ulan": "500124131‏"
+  },
+  {
+    "id": 13118,
+    "name": "Ivor Abrahams",
+    "viaf": "http://viaf.org/viaf/135179",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 13192,
+    "name": "Arman (Arman Fernandez)",
+    "viaf": "http://viaf.org/viaf/111915345",
+    "isni": "0000  0001  2147  9768",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 13203,
+    "name": "Constantyn à Renesse",
+    "viaf": "http://viaf.org/viaf/5804042",
+    "isni": "0000  0000  7100  8940",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 13276,
+    "name": "Pierre Alechinsky",
+    "viaf": "http://viaf.org/viaf/95854378",
+    "isni": "0000  0001  2283  2076",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 13525,
+    "name": "Ackerman & Co.",
+    "viaf": "http://viaf.org/viaf/127891247",
+    "isni": "0000  0001  2170  1496",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 13751,
+    "name": "Knoll, New York, New York",
+    "viaf": "http://viaf.org/viaf/172186391",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 14087,
+    "name": "Betye Saar",
+    "viaf": "http://viaf.org/viaf/114921470",
+    "isni": "0000  0000  8319  8083",
+    "wikidata": "Q2900288",
+    "ulan": "500110489‏"
+  },
+  {
+    "id": 14128,
+    "name": "Dante Alighieri",
+    "viaf": "http://viaf.org/viaf/97105654",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 14188,
+    "name": "Sigmund Abeles",
+    "viaf": "http://viaf.org/viaf/95986022",
+    "isni": "0000  0000  7861  5321",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 14189,
+    "name": "Keith Achepohl",
+    "viaf": "http://viaf.org/viaf/77454230",
+    "isni": "0000  0000  7875  1497",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 14613,
+    "name": "Utagawa Hiroshige II",
+    "viaf": "http://viaf.org/viaf/24873709",
+    "isni": "0000  0000  8103  9740",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 15281,
+    "name": "Josef Albers",
+    "viaf": "http://viaf.org/viaf/12347231",
+    "isni": "0000  0000  7357  1729",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 15586,
+    "name": "Louise Abbéma",
+    "viaf": "http://viaf.org/viaf/27114053",
+    "isni": "0000  0000  8366  5278",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 15592,
+    "name": "James Akin",
+    "viaf": "http://viaf.org/viaf/63891382",
+    "isni": "0000  0000  8452  8435",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 15594,
+    "name": "Eugene Michel Joseph Abot",
+    "viaf": "http://viaf.org/viaf/7651674",
+    "isni": "0000  0000  6656  4416",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 15695,
+    "name": "Yinka Shonibare",
+    "viaf": "http://viaf.org/viaf/84135698",
+    "isni": "0000  0000  7842  3581",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 15777,
+    "name": "Leonardo da Vinci",
+    "viaf": "http://viaf.org/viaf/24604287",
+    "isni": "0000  0001  2124  423X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 15780,
+    "name": "Mariotto Albertinelli",
+    "viaf": "http://viaf.org/viaf/62605466",
+    "isni": "0000  0000  6683  6098",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 15938,
+    "name": "John White Alexander",
+    "viaf": "http://viaf.org/viaf/19954934",
+    "isni": "0000  0000  6660  8781",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 16381,
+    "name": "Edwin A. Abbey",
+    "viaf": "http://viaf.org/viaf/17070286",
+    "isni": "0000  0001  1041  3122",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 16382,
+    "name": "Draeger Frères, Paris, France",
+    "viaf": "http://viaf.org/viaf/151026387",
+    "isni": "0000  0001  0945  2896",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 16559,
+    "name": "Bartholomaeus Spanger",
+    "viaf": "http://viaf.org/viaf/74650107",
+    "isni": "0000  0000  6631  6850",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 16930,
+    "name": "Ary Scheffer",
+    "viaf": "http://viaf.org/viaf/2478799",
+    "isni": "0000  0001  0854  617X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 17466,
+    "name": "Anne Allen",
+    "viaf": "http://viaf.org/viaf/235409649",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 17676,
+    "name": "Eleazer Albin",
+    "viaf": "http://viaf.org/viaf/347904",
+    "isni": "0000  0001  1850  9209",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 17692,
+    "name": "Ulisse Aldrovandus",
+    "viaf": "http://viaf.org/viaf/100190422",
+    "isni": "0000  0001  1862  6480",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 18092,
+    "name": "Areogun of Osi",
+    "viaf": "http://viaf.org/viaf/267057674",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 18442,
+    "name": "Jacques-Laurent Agasse",
+    "viaf": "http://viaf.org/viaf/62339687",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 18500,
+    "name": "Henry Thomas Alken",
+    "viaf": "http://viaf.org/viaf/13252705",
+    "isni": "0000  0001  1560  4024",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 19188,
+    "name": "Edmond Vairel",
+    "viaf": "http://viaf.org/viaf/287507300",
+    "isni": "0000  0003  9325  4757",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 19313,
+    "name": "Arsène Alexandre",
+    "viaf": "http://viaf.org/viaf/142432",
+    "isni": "0000  0001  1019  779X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 19574,
+    "name": "Edward F. Albee",
+    "viaf": "http://viaf.org/viaf/49220724",
+    "isni": "0000  0001  2131  7785",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 20273,
+    "name": "Wayne Albee",
+    "viaf": "http://viaf.org/viaf/33762072",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 21965,
+    "name": "Julie Mehretu",
+    "viaf": "http://viaf.org/viaf/96585050",
+    "isni": "0000  0001  1000  1259 ",
+    "wikidata": "Q447568",
+    "ulan": "500122539‏"
+  },
+  {
+    "id": 22023,
+    "name": "Marianne Strengell",
+    "viaf": "http://viaf.org/viaf/41784149",
+    "isni": "0000  0000  7865  3002",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22078,
+    "name": "Margarete Schütte-Lihotzky",
+    "viaf": "http://viaf.org/viaf/54944116",
+    "isni": "0000  0001  0903  1661",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22157,
+    "name": "Akiyama Yō",
+    "viaf": "http://viaf.org/viaf/51569944",
+    "isni": "0000  0000  8231  8215",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22485,
+    "name": "Cardinal Ippolito Aldobrandini",
+    "viaf": "http://viaf.org/viaf/100212973",
+    "isni": "0000  0001  2096  7241",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22533,
+    "name": "Hans Ledwinka",
+    "viaf": "http://viaf.org/viaf/62347639",
+    "isni": "0000  0000  5539  4183",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22565,
+    "name": "Robert Adam",
+    "viaf": "http://viaf.org/viaf/59122607",
+    "isni": "0000  0000  8343  949X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22589,
+    "name": "Hans Accola",
+    "viaf": "http://viaf.org/viaf/24188388",
+    "isni": "0000  0000  4318  9254",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22590,
+    "name": "Ta-Coumba Aiken",
+    "viaf": "http://viaf.org/viaf/95885621",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22637,
+    "name": "Ruth Duckworth",
+    "viaf": "http://viaf.org/viaf/5733095",
+    "isni": "0000  0000  7859  230X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22662,
+    "name": "Alexander Roslin",
+    "viaf": "http://viaf.org/viaf/76584639",
+    "isni": "0000  0001  2282  1043",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22832,
+    "name": "Carl F. Aagaard",
+    "viaf": "http://viaf.org/viaf/95758109",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 22900,
+    "name": "Jim Alinder",
+    "viaf": "http://viaf.org/viaf/96421102",
+    "isni": "0000  0000  7818  8825",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23046,
+    "name": "Thomas Struth",
+    "viaf": "http://viaf.org/viaf/46855433",
+    "isni": "0000  0003  7392  8355",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23181,
+    "name": "Anne Allen",
+    "viaf": "http://viaf.org/viaf/235409649",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23220,
+    "name": "Hákon Adalsteinsson",
+    "viaf": "http://viaf.org/viaf/61455468",
+    "isni": "0000  0001  1876  8761",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23265,
+    "name": "Nara Yoshitomo",
+    "viaf": "http://viaf.org/viaf/116439660",
+    "isni": "0000  0001  2321  6160",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23376,
+    "name": "Jules Adler",
+    "viaf": "http://viaf.org/viaf/12317116",
+    "isni": "0000  0000  6640  9571",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23379,
+    "name": "George Charles Aid",
+    "viaf": "http://viaf.org/viaf/71663503",
+    "isni": "0000  0000  6663  9385",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23417,
+    "name": "Sandra Alcosser",
+    "viaf": "http://viaf.org/viaf/3909667",
+    "isni": "0000  0000  3466  3671",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23483,
+    "name": "Robert Ingersoll Aitken",
+    "viaf": "http://viaf.org/viaf/51610047",
+    "isni": "0000  0000  6706  9388",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23488,
+    "name": "Thomas Demand",
+    "viaf": "http://viaf.org/viaf/22355343",
+    "isni": "0000  0001  2123  9334",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23490,
+    "name": "Christian Boltanski",
+    "viaf": "http://viaf.org/viaf/78769830",
+    "isni": "0000  0001  2140  7852",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23536,
+    "name": "Dr. Stephen Addiss",
+    "viaf": "http://viaf.org/viaf/109510098",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23790,
+    "name": "Fred Wilson",
+    "viaf": "http://viaf.org/viaf/25407732",
+    "isni": "0000  0001  2124  8935 ",
+    "wikidata": "Q5496574",
+    "ulan": "500231677‏"
+  },
+  {
+    "id": 23878,
+    "name": "President John Quincy Adams",
+    "viaf": "http://viaf.org/viaf/36980021",
+    "isni": "0000  0001  2128  2017",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 23986,
+    "name": "Yaacov Agam (Yaakov Gipstein)",
+    "viaf": "http://viaf.org/viaf/5137281",
+    "isni": "0000  0001  2020  1959",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24192,
+    "name": "Doug Aitken",
+    "viaf": "http://viaf.org/viaf/96533961",
+    "isni": "0000  0000  7838  7971",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24209,
+    "name": "Yamada Tetsuya",
+    "viaf": "http://viaf.org/viaf/4876414",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24227,
+    "name": "Francesco Allegrini",
+    "viaf": "http://viaf.org/viaf/96537650",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24253,
+    "name": "Kehinde Wiley",
+    "viaf": "http://viaf.org/viaf/3570570",
+    "isni": "0000  0000  7872  5731",
+    "wikidata": "Q329092",
+    "ulan": "500126014‏"
+  },
+  {
+    "id": 24293,
+    "name": "Sedrick Huckaby",
+    "viaf": "http://viaf.org/viaf/28147121675626390794",
+    "isni": null,
+    "wikidata": "Q22249830",
+    "ulan": null
+  },
+  {
+    "id": 24378,
+    "name": "Willie Cole",
+    "viaf": "http://viaf.org/viaf/55341650",
+    "isni": " 0000  0000  7880  6013",
+    "wikidata": "Q8021437",
+    "ulan": "500334448‏"
+  },
+  {
+    "id": 24379,
+    "name": "Alexander and Bonin, New York",
+    "viaf": "http://viaf.org/viaf/134157297",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24425,
+    "name": "Charles Gaines",
+    "viaf": "http://viaf.org/viaf/39321071",
+    "isni": "0000  0001  1490  4121 ",
+    "wikidata": "Q18098196",
+    "ulan": "500062753"
+  },
+  {
+    "id": 24528,
+    "name": "Mequitta Ahuja",
+    "viaf": "http://viaf.org/viaf/169761606",
+    "isni": "0000  0001  1858  9886",
+    "wikidata": "Q3306173",
+    "ulan": null
+  },
+  {
+    "id": 24616,
+    "name": "Giulio Aleni",
+    "viaf": "http://viaf.org/viaf/5738396",
+    "isni": "0000  0001  1589  3380",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24625,
+    "name": "H. Adlard",
+    "viaf": "http://viaf.org/viaf/293533851",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24646,
+    "name": "Giovanni Antonio Sogliani",
+    "viaf": "http://viaf.org/viaf/13162797",
+    "isni": "0000  0001  1743  9245",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24649,
+    "name": "Johann Friedrich Baer",
+    "viaf": "http://viaf.org/viaf/1079366",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24653,
+    "name": "Kusama Yayoi",
+    "viaf": "http://viaf.org/viaf/22415110",
+    "isni": "0000  0001  1885  9487",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24662,
+    "name": "Mona Hatoum",
+    "viaf": "http://viaf.org/viaf/95885576",
+    "isni": "0000  0001  1478  0608",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24667,
+    "name": "Jennifer Steinkamp",
+    "viaf": "http://viaf.org/viaf/42736500",
+    "isni": "0000  0000  7826  2239",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24677,
+    "name": "Ai Weiwei",
+    "viaf": "http://viaf.org/viaf/96607499",
+    "isni": "0000  0004  3981  3578",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24738,
+    "name": "Ghada Amer",
+    "viaf": "http://viaf.org/viaf/62383318",
+    "isni": "0000  0000  7838  5167",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24757,
+    "name": "Petah Coyne",
+    "viaf": "http://viaf.org/viaf/96534265",
+    "isni": "0000  0000  8007  7876",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24780,
+    "name": "Swoon",
+    "viaf": "http://viaf.org/viaf/51455301",
+    "isni": "0000  0000  7890  5230",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24796,
+    "name": "Nick Cave",
+    "viaf": "http://viaf.org/viaf/261941653",
+    "isni": "0000  0004  1832  5831",
+    "wikidata": "Q24218",
+    "ulan": "500294218‏"
+  },
+  {
+    "id": 24911,
+    "name": "Pieter Hugo",
+    "viaf": "http://viaf.org/viaf/29316148",
+    "isni": "0000  0000  7826  0954",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24933,
+    "name": "Georges Paul Leroux",
+    "viaf": "http://viaf.org/viaf/47862523",
+    "isni": "0000  0000  8380  3095",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 24983,
+    "name": "James Welling",
+    "viaf": "http://viaf.org/viaf/77119954",
+    "isni": "0000  0000  7861  0600",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 25543,
+    "name": "Denijs Calvaert",
+    "viaf": "http://viaf.org/viaf/88841468",
+    "isni": "0000  0000  8345  1931",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 25579,
+    "name": "Peter Shire",
+    "viaf": "http://viaf.org/viaf/193313333",
+    "isni": "0000  0003  8531  4027",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 25762,
+    "name": "Mathilde Ade",
+    "viaf": "http://viaf.org/viaf/74653386",
+    "isni": "0000  0000  1063  8551",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 25764,
+    "name": "Attila Aiglon-Sassy",
+    "viaf": "http://viaf.org/viaf/96669045",
+    "isni": "0000  0001  1078  6869",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 25835,
+    "name": "Art  Alanis",
+    "viaf": "http://viaf.org/viaf/310579515",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 25926,
+    "name": "Emily Allchurch",
+    "viaf": "http://viaf.org/viaf/96796279",
+    "isni": "0000  0000  8284  2762",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 25983,
+    "name": "Abe Anjin",
+    "viaf": "http://viaf.org/viaf/117342910",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26209,
+    "name": "Vik Muniz",
+    "viaf": "http://viaf.org/viaf/79155194",
+    "isni": "0000  0003  7396  2860",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26219,
+    "name": "Aaron Curry",
+    "viaf": "http://viaf.org/viaf/40559159",
+    "isni": "0000  0000  7992  0352",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26220,
+    "name": "Richard Hawkins",
+    "viaf": "http://viaf.org/viaf/61045934",
+    "isni": "0000  0000  7877  9852",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26250,
+    "name": "Leonardo Alenza y Nieto",
+    "viaf": "http://viaf.org/viaf/22414817",
+    "isni": "0000  0000  6638  8248",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26265,
+    "name": "Antonio Acquaroni",
+    "viaf": "http://viaf.org/viaf/287023212",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26355,
+    "name": "Chantal Joffe",
+    "viaf": "http://viaf.org/viaf/56323651",
+    "isni": "0000  0001  0800  4784",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26606,
+    "name": "Francisco Albani",
+    "viaf": "http://viaf.org/viaf/69070806",
+    "isni": "0000  0000  8344  4563",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26697,
+    "name": "Do Ho Suh",
+    "viaf": "http://viaf.org/viaf/96543858",
+    "isni": "0000  0000  7866  908X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26845,
+    "name": "Ajiki Hiro",
+    "viaf": "http://viaf.org/viaf/260206870",
+    "isni": "0000  0003  8101  4481",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 26855,
+    "name": "Mark Dion",
+    "viaf": "http://viaf.org/viaf/118096497",
+    "isni": "0000  0001  0788  2876",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 27114,
+    "name": "Dawn Ades",
+    "viaf": "http://viaf.org/viaf/24596760",
+    "isni": "0000  0001  2277  497X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 27187,
+    "name": "William C. Agee",
+    "viaf": "http://viaf.org/viaf/68941640",
+    "isni": "0000  0001  0911  8767",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 27858,
+    "name": "Akisato Ritō",
+    "viaf": "http://viaf.org/viaf/18705533",
+    "isni": "0000  0000  5555  8360",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 27873,
+    "name": "Suezan Aikins",
+    "viaf": "http://viaf.org/viaf/104999042",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 27908,
+    "name": "Akiyama Gyokuzan",
+    "viaf": "http://viaf.org/viaf/40813917",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 28239,
+    "name": "William Edmondson",
+    "viaf": "http://viaf.org/viaf/204758441",
+    "isni": "0000  0003  5818  4466",
+    "wikidata": "Q3568587",
+    "ulan": "500098070‏"
+  },
+  {
+    "id": 28467,
+    "name": "Laylah Ali",
+    "viaf": "http://viaf.org/viaf/12244289",
+    "isni": "0000  0000  7870  2070",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 29206,
+    "name": "Ḥāfiẓ-i Abrū",
+    "viaf": "http://viaf.org/viaf/22865925",
+    "isni": "0000  0000  8102  1946",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 29307,
+    "name": "Jill Ahlberg Yohe",
+    "viaf": "http://viaf.org/viaf/296444474",
+    "isni": "0000  0001  2541  6617",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 29544,
+    "name": "Clinton Adams",
+    "viaf": "http://viaf.org/viaf/14839827",
+    "isni": "0000  0000  8359  035X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 29907,
+    "name": "Akiyama Terukazu",
+    "viaf": "http://viaf.org/viaf/164698924",
+    "isni": "0000  0001  1576  073X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 29908,
+    "name": "Akiyama Ken",
+    "viaf": "http://viaf.org/viaf/18561930",
+    "isni": "0000  0000  8430  4503",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 30027,
+    "name": "Aizawa Masahiko",
+    "viaf": "http://viaf.org/viaf/257817429",
+    "isni": "0000  0003  7916  3269",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 30088,
+    "name": "Akazawa Eiji",
+    "viaf": "http://viaf.org/viaf/43143033",
+    "isni": "0000  0000  2127  9152",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 30436,
+    "name": "Hubert H. Humprehy Jr",
+    "viaf": "http://viaf.org/viaf/27881465",
+    "isni": "0000  0001  1023  276X",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 30477,
+    "name": "Philip II, King of Spain and Portugal",
+    "viaf": "http://viaf.org/viaf/88973996",
+    "isni": "0000  0001  0837  7767",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 30478,
+    "name": "Charles IX, King of France",
+    "viaf": "http://viaf.org/viaf/88890900",
+    "isni": "0000  0001  2142  8995",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 30479,
+    "name": "Cardinal Alessandro Farnese II",
+    "viaf": "http://viaf.org/viaf/57408901",
+    "isni": "0000  0001  2134  5460",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31371,
+    "name": "Jérôme Richard",
+    "viaf": "http://viaf.org/viaf/39383419",
+    "isni": "0000  0001  2308  0064",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31392,
+    "name": "Kerry James Marshall",
+    "viaf": "http://viaf.org/viaf/96542899",
+    "isni": "0000  0000  7848  5491",
+    "wikidata": "Q832432",
+    "ulan": "500116210"
+  },
+  {
+    "id": 31615,
+    "name": "Andrej Dugin",
+    "viaf": "http://viaf.org/viaf/59162843",
+    "isni": "0000  0001  1571  7344",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31616,
+    "name": "Andrés Audiffred",
+    "viaf": "http://viaf.org/viaf/310565024",
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31624,
+    "name": "Charles Altamont Doyle",
+    "viaf": "http://viaf.org/viaf/16047677",
+    "isni": "0000  0000  2428  5574",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31625,
+    "name": "Chet Zar",
+    "viaf": "http://viaf.org/viaf/63842792",
+    "isni": "0000  0000  4721  4701",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31639,
+    "name": "Eyvind Earle",
+    "viaf": "http://viaf.org/viaf/73072425",
+    "isni": "0000  0000  7891  0152",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31640,
+    "name": "Francisco Ruiz Velasco",
+    "viaf": "http://viaf.org/viaf/24125357",
+    "isni": "0000  0000  4314  0354",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31651,
+    "name": "Jacek Yerka",
+    "viaf": "http://viaf.org/viaf/26946811",
+    "isni": "0000  0000  5274  6059",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31652,
+    "name": "James Cameron",
+    "viaf": "http://viaf.org/viaf/106079065",
+    "isni": "0000  0001  2146  3344",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31658,
+    "name": "Jim Woodring",
+    "viaf": "http://viaf.org/viaf/54293117",
+    "isni": "0000  0000  8133  1266",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31660,
+    "name": "John Lounsbery",
+    "viaf": "http://viaf.org/viaf/7080146",
+    "isni": "0000  0000  5410  0171",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31663,
+    "name": "Kay Nielsen",
+    "viaf": "http://viaf.org/viaf/74707030",
+    "isni": "0000  0000  8155  4187",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31668,
+    "name": "Marc Davis",
+    "viaf": "http://viaf.org/viaf/50876934",
+    "isni": "0000  0000  7731  9600",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31670,
+    "name": "Mark Teague",
+    "viaf": "http://viaf.org/viaf/51834116",
+    "isni": "0000  0000  6307  5772",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": 31698,
+    "name": "Zdzisław Beksiński",
+    "viaf": "http://viaf.org/viaf/49234439",
+    "isni": "0000  0000  7140  9672",
+    "wikidata": null,
+    "ulan": null
+  },
+  {
+    "id": null,
+    "name": null,
+    "viaf": null,
+    "isni": null,
+    "wikidata": null,
+    "ulan": null
+  }
+]
