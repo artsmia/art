@@ -14,14 +14,15 @@ var MapPage = React.createClass({
 
     var minHeight = this.props.hideList ? '15rem' : '1rem'
 
-    return <div>
-      <div style={{backgroundColor: 'rgba(35, 35, 35, 0.8)', paddingBottom: '3em', width: '100%', overflow: 'scroll'}}>
+    return <div style={{position: 'relative'}}>
+      <div ref="mapWrap" style={{backgroundColor: 'rgba(35, 35, 35, 0.8)', paddingBottom: '3em', width: '100%', overflow: 'scroll'}}>
         <Map
           startOpen={true}
           floor={3}
           style={{maxWidth: '60em', margin: '0 auto'}}
           onHover={this.handleGalleryHover}
           onMouseLeave={this.focusLost}
+          onSvgLoad={this.handleSvgLoad}
         />
 
         {this.props.children && this.props.children}
@@ -71,6 +72,10 @@ var MapPage = React.createClass({
 
   focusLost() {
     clearTimeout(this.debouncedPeek)
+  },
+
+  handleSvgLoad() {
+    React.findDOMNode(this.refs.mapWrap).scrollLeft = 171
   }
 })
 

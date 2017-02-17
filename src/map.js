@@ -103,6 +103,8 @@ var Map = React.createClass({
     var activeText = Array.from(allTexts)
     .filter(t => t.textContent == this.props.number)
     this.highlightGallery(activeText && activeText[0])
+
+    this.props.onSvgLoad && this.props.onSvgLoad()
   },
 
   changeGallery(nextGallery) {
@@ -168,6 +170,9 @@ var FloorControls = React.createClass({
       margin: '-7em 2em 0 0',
       position: 'relative',
       zIndex: '10',
+      // position: 'fixed',
+      // right: '0',
+      // bottom: '1em',
     }
 
     return <div style={controlStyle}>
