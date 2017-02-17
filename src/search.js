@@ -74,6 +74,8 @@ var Search = React.createClass({
       pointerEvents: 'none',
       display: hideInput ? 'none' : 'inherit',
       padding: this.props.bumpSearchBox ? '0.5em' : '0',
+      position: 'relative', 
+      zIndex: 4,
     }
 
     var searchOverQuiltStyles = {
@@ -89,7 +91,7 @@ var Search = React.createClass({
         {showQuilt && <ImageQuilt {...quiltProps} /> || <span style={{display: 'block', minHeight: '3.5rem'}} />}
         <div className='search-wrap'
           style={showQuilt && !this.props.bumpSearchBox ? searchOverQuiltStyles : searchStyles}>
-          <div>{simpleSearchBox}</div>
+          <div style={{opacity: this.props.hideHeader ? '1' : '0.95'}}>{simpleSearchBox}</div>
         </div>
       </div>
     )

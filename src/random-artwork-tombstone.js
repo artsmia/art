@@ -35,7 +35,10 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    rest(`${SEARCH}/random/art`)
+    var id = this.props.initialId
+
+    var searchUrl = id ? `${SEARCH}/id/${id}` : `${SEARCH}/random/art`
+    rest(searchUrl)
     .then(data => this.setState({art: JSON.parse(data.entity)}))
   },
 })

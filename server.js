@@ -51,7 +51,6 @@ app.use((req, res, next) => {
 
   router.run((Handler, state) => {
     // ga.pageview(state.pathname)
-
     fetchComponentData(state).then(data => {
       var body = React.renderToString(<Handler {...state} data={data} universal={true} />)
       res.send(html(Helmet.rewind(), data, body))

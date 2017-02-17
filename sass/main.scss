@@ -357,7 +357,9 @@ header{
 .search-wrap div:first-child {
     margin:0 auto;
     color:$primary;
-    opacity: 0.95;
+}
+.search-wrap > div:first-child {
+  opacity: 0.95;
 }
 .search-wrap .mdl-textfield {
   min-width: 100px;
@@ -371,7 +373,7 @@ header{
     -webkit-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     min-width: 19em; // initial width, overridden in JS according to search term length
-    max-width: 99vw;
+    max-width: 96vw;
 }
 
 .search-input {
@@ -1609,7 +1611,7 @@ img.error, img.loaded.error {
 }
 
 .agg-wrap, .search-wrap, .landingPageBody, .departmentPage,
-.explore-section, .pageText, #map-and-gallery-list {
+.explore-section, .pageText, #map-and-gallery-list, #more {
   position: relative;
   z-index: 3;
   background: white;

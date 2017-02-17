@@ -22,6 +22,12 @@ var More = React.createClass({
     }
   },
 
+  componentDidMount() {
+    var smallViewport = window && window.innerWidth <= 500
+    if(smallViewport && window.scrollX == 0) setTimeout(() => window.scrollTo(0, document.querySelector('.quilt-wrap').clientHeight), 0)
+    window.enteredViaMore = true
+  },
+
   render() {
     let smallViewport = window && window.innerWidth < 600
     let quiltProps = smallViewport ? 
@@ -38,32 +44,20 @@ var More = React.createClass({
         suggestStyle={{margin: "1em 3em"}}
         bumpSearchBox={smallViewport}
         shuffleQuilt={true}
+        hideHeader={true}
         {...this.props} />
 
       <div id="more" className="welcome mdl-grid">
         <div className="mdl-cell mdl-cell--9-col">
-          <p>
+          <h1>
             {smallViewport && <img src="/images/more-icon.svg" style={{maxWidth: '7em', padding: '2em 1em 0.25em 1em', float: 'right'}} />}
-            There's more to explore. Use your digital device to visit more.artsmia.org and enjoy additional multimedia content wherever you see this symbol.
-          </p>
-          <p class="labelHelper" style={{position: 'relative'}}>To find more, search for an artwork by <TombstoneTooltip>title</TombstoneTooltip>, <TombstoneTooltip>artist</TombstoneTooltip>, or <TombstoneTooltip>accession number</TombstoneTooltip>.</p>
+            Search to explore audio guides, ArtStories, and more
+          </h1>
+          <p class="labelHelper"><TombstoneIdeograph /></p>
           {smallViewport || <p><img src="/images/more-icon.svg" style={{maxWidth: '11em'}} /></p>}
 
-          <div>
-            <h2>Personalize your Mia experience with new ways to explore art.</h2>
-
-            <h3>Journeys</h3>
-            <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="https://itunes.apple.com/us/app/mia-journeys/id1058993004">Download the app free (iOS).</a></p>
-            <ExpandableNewArtsmiaContentBlock page="journeys" />
-
-            <h3>Overheard</h3>
-            <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="https://itunes.apple.com/us/app/overheard-mia/id1116319582">Download it free (iOS)</a>.</p>
-            <ExpandableNewArtsmiaContentBlock page="overheard" />
-
-            <h3>ArtStories</h3>
-            <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="https://artstories.artsmia.org">ArtStories</a>.</p>
-            <ExpandableNewArtsmiaContentBlock page="artstories" />
-          </div>
+          <hr />
+          <p><Link to="explore">More ways to explore the collection</Link></p>
         </div>
       </div>
 
@@ -80,63 +74,21 @@ var More = React.createClass({
 
 module.exports = More
 
-var ExpandableNewArtsmiaContentBlock = React.createClass({
-  // statics: {
-  //   fetchData: (params, query) => {
-  //   }
-  // },
-  getInitialState() {
-    return {
-      expanded: false,
-      loaded: false,
-    }
-  },
+var tombstoneStyles = {
+  position: 'absolute',
+  background: 'white',
+  zIndex: 1000,
+  width: '90vw',
+  padding: '1em',
+  border: '1px solid black',
+  marginTop: '1em',
+}
 
-  componentWillMount() {
-    this.loadExternalContent()
-  },
-
-  loadExternalContent() {
-    return rest('https://new.artsmia.org/wp-json/wp/v2/pages?slug='+this.props.page)
-    .then((r) => JSON.parse(r.entity))
-    .then(json => this.setState({loaded: true, json: json}))
-  },
-
-  render() {
-    var {loaded, expanded, json} = this.state
-    var toggleButton = <a href="#" onClick={this.toggle}>{expanded ? 'Less' : 'More'} Info</a>
-
-    var content = loaded && <div><Markdown>
-      {json[0].acf.modules[1].content[0].text}
-    </Markdown><hr /></div>
-
-    return <div>
-      <p>{toggleButton}</p>
-      {loaded && expanded && content}
-    </div>
-  },
-
-  toggle(event) {
-    this.setState({expanded: !this.state.expanded})
-    event.preventDefault()
-    return false
-  },
-})
 
 var RandomArtworkTombstone = require('./random-artwork-tombstone')
 var TombstoneTooltip = React.createClass({
   render() {
     var {expanded, timeClicked} = this.state
-
-    var styles = {
-      position: 'absolute',
-      background: 'white',
-      zIndex: 1000,
-      width: '90vw',
-      padding: '1em',
-      border: '1px solid black',
-      marginTop: '1em',
-    }
 
     var fieldToHighlight = this.props.children
 
@@ -145,7 +97,7 @@ var TombstoneTooltip = React.createClass({
       onMouseOut={this.toggleExpanded.bind(this, false)}
       onClick={this.toggleExpanded}>
       <a onclick="return false">{this.props.children}</a>
-      {expanded && <div style={styles}>
+      {expanded && <div style={tombstoneStyles}>
         <RandomArtworkTombstone fieldToHighlight={fieldToHighlight} />
       </div>}
     </span>
@@ -153,7 +105,7 @@ var TombstoneTooltip = React.createClass({
 
   getInitialState() {
     return {
-      expanded: false,
+      expanded: this.props.startOpen,
     }
   },
 
@@ -161,5 +113,37 @@ var TombstoneTooltip = React.createClass({
     this.setState({
       expanded: value || !this.state.expanded,
     })
+  },
+})
+
+// http://stackoverflow.com/a/23619085
+function intersperse(arr, sep) {
+  if (arr.length === 0) {
+    return [];
+  }
+
+  return arr.slice(1).reduce(function(xs, x, i) {
+    return xs.concat([sep, x]);
+  }, [arr[0]]);
+}
+
+var TombstoneIdeograph = React.createClass({
+  getInitialState() {
+    return {fieldToHighlight: 'accession number'}
+  },
+
+  render() {
+    var {fieldToHighlight} = this.state
+    var fieldHighlighters = ['title', 'artist', 'accession number'].map(fieldName => {
+      return <a key={fieldName} onclick="return false" onClick={this.changeHighlight.bind(this, fieldName)}>{fieldName}</a>
+    })
+    return <div>
+      <p>To find more, search for an artwork by <span>{intersperse(fieldHighlighters, ', ')}</span>.</p>
+      <RandomArtworkTombstone initialId="529" fieldToHighlight={fieldToHighlight} />
+    </div>
+  },
+
+  changeHighlight(field) {
+    this.setState({fieldToHighlight: field})
   },
 })
