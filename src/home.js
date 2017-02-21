@@ -18,14 +18,17 @@ var Home = React.createClass({
         let searchUrl = `${SEARCH}/highlight:true`
         return rest(searchUrl).then((r) => JSON.parse(r.entity))
       }
-    }
+    },
   },
 
   render() {
-    let smallViewport = window && window.innerWidth < 600
+    let {smallViewport} = this.context
+    let width = window && window.innerWidth
     let quiltProps = smallViewport ?
       {maxRows: 2, maxWorks: 7} :
       {maxRows: 3, maxWorks: 30}
+
+    if(width > 500 && width < 800) quiltProps.maxRows = 1
 
     return <div>
       <Search
@@ -49,6 +52,9 @@ var Home = React.createClass({
     </div>
   },
 })
+Home.contextTypes = {
+  smallViewport: React.PropTypes.bool,
+}
 
 module.exports = Home
 

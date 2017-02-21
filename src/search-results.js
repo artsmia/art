@@ -29,7 +29,7 @@ var SearchResults = React.createClass({
   getInitialState() {
     var focus = window.clickedArtwork || this.props.hits[0]
     setTimeout(() => window.clickedArtwork = null)
-    var smallViewport = window && window.innerWidth <= 500
+    var {smallViewport} = this.context
 
     var {view, preview: showPreview} = this.props.query
     var initialView = (view && view == 'list' || smallViewport || this.context.universal) ?
@@ -40,7 +40,6 @@ var SearchResults = React.createClass({
     return {
       focusedResult: showPreview && focus && focus,
       view: initialView,
-      smallViewport,
     }
   },
 
@@ -68,6 +67,7 @@ var SearchResults = React.createClass({
     var search = this.props.data.searchResults
     var {focusedResult} = this.state
     var leftColumnWidth = '35%'
+    var {smallViewport} = this.context
     var unloadedResults = search.hits.total - this.props.hits.length
     var loadThisManyMore = Math.min(200, unloadedResults)
     var nextPage = Math.min(this.maxResults, this.props.hits.length+loadThisManyMore)
@@ -112,14 +112,14 @@ var SearchResults = React.createClass({
         search={search}
         hits={this.props.hits}
         postSearch={this.postSearch(summaryProps, this.state.postSearchOffset)}
-        smallViewport={this.state.smallViewport}
+        smallViewport={this.context.smallViewport}
         showRelated={showFocusRelatedContent}
         />
     </div>
   },
 
   focusResult(hit, nextView = false) {
-    var {smallViewport} = this.state
+    var {smallViewport} = this.context
 
     if(smallViewport && nextView) {
       this.transitionTo('artwork', {id: hit._id})
@@ -183,6 +183,7 @@ SearchResults.childContextTypes = {onHeightChange: React.PropTypes.func}
 SearchResults.contextTypes = {
   router: React.PropTypes.func,
   universal: React.PropTypes.bool,
+  smallViewport: React.PropTypes.bool,
 }
 
 module.exports = SearchResults

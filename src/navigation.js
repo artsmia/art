@@ -21,8 +21,8 @@ var GlobalNavigation =  React.createClass({
   ],
   render() {
 
+    var {smallViewport} = this.context
     var smallViewport = window && window.innerWidth <= 780
-
 
       if(smallViewport){
         return (
@@ -81,5 +81,8 @@ var GlobalNavigation =  React.createClass({
     this.props.closeNav && this.props.closeNav()
   }
 })
+GlobalNavigation.contextTypes = {
+  smallViewport: React.PropTypes.bool,
+}
 
 module.exports = GlobalNavigation

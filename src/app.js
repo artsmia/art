@@ -1,6 +1,7 @@
 var React = require('react')
 var {RouteHandler, Link} = require('react-router')
 var Helmet = require('react-helmet')
+var debounce = require('debounce')
 
 var LiveSearch = require('./live-search')
 var GlobalNavigation = require('./navigation')
@@ -36,6 +37,23 @@ var App = React.createClass({
     )
   },
 
+  componentDidMount() {
+    this.debouncedResize = debounce(this.handleResize, 500),
+    window.addEventListener('resize', this.debouncedResize)
+  },
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.debouncedResize)
+    this.debouncedResize = undefined
+  },
+  handleResize: function(e) {
+    if(!this.isMounted()) return
+    this.setState({smallViewport: this.isSmallViewport()})
+  },
+
+  isSmallViewport() {
+    return window && window.innerWidth <= 600
+  },
+
   toggleHeader() {
     this.setState({hideHeader: !this.state.hideHeader})
   },
@@ -43,7 +61,7 @@ var App = React.createClass({
   getChildContext() {
     return {
       universal: this.props.universal,
-      smallViewport: window && window.innerWidth <= 500,
+      smallViewport: this.state.smallViewport,
     }
   },
 
@@ -88,7 +106,8 @@ var App = React.createClass({
 
   getInitialState() {
     return {
-      showSearch: false
+      showSearch: false,
+      smallViewport: this.isSmallViewport(),
     }
   },
 

@@ -23,13 +23,13 @@ var More = React.createClass({
   },
 
   componentDidMount() {
-    var smallViewport = window && window.innerWidth <= 500
+    var {smallViewport} = this.context
     if(smallViewport && window.scrollX == 0) setTimeout(() => window.scrollTo(0, document.querySelector('.quilt-wrap').clientHeight), 0)
     window.enteredViaMore = true
   },
 
   render() {
-    let smallViewport = window && window.innerWidth < 600
+    let {smallViewport} = this.context
     let quiltProps = smallViewport ? 
       {maxRows: 1, maxWorks: 5} :
       {maxRows: 2, maxWorks: 9}
@@ -71,6 +71,9 @@ var More = React.createClass({
     </div>
   },
 })
+More.contextTypes = {
+  smallViewport: React.PropTypes.bool,
+}
 
 module.exports = More
 
