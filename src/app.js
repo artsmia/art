@@ -43,6 +43,7 @@ var App = React.createClass({
   getChildContext() {
     return {
       universal: this.props.universal,
+      smallViewport: window && window.innerWidth <= 500,
     }
   },
 
@@ -108,6 +109,9 @@ var App = React.createClass({
     return process.env.NODE_ENV !== 'production'
   },
 })
-App.childContextTypes = {universal: React.PropTypes.bool}
+App.childContextTypes = {
+  universal: React.PropTypes.bool,
+  smallViewport: React.PropTypes.bool,
+}
 
 module.exports = App

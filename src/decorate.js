@@ -30,7 +30,7 @@ var Decorate = React.createClass({
 
   getInitialState() {
     return {
-      showDecorators: true,
+      showDecorators: !this.context.smallViewport,
     }
   },
 
@@ -47,6 +47,9 @@ var Decorate = React.createClass({
     if(query !== nextQuery || filters !== nextFilters) this.setState({showDecorators: true})
   },
 })
+Decorate.contextTypes = {
+  smallViewport: React.PropTypes.bool,
+}
 
 module.exports = Decorate
 
