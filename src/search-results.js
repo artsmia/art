@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var Router = require('react-router')
 var {Link} = require('react-router')
 var rest = require('rest')
@@ -144,7 +145,7 @@ var SearchResults = React.createClass({
   postSearch({hits, search, showMoreLink}, postSearchOffset) {
     var showingAll = hits.length == search.hits.total || hits.length >= this.maxResults
 
-    var style = {
+    const style = {
       marginTop: '1em',
       padding: '1em',
       borderTop: '1em solid #232323',
@@ -161,7 +162,7 @@ var SearchResults = React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
-    var domNode = this.refs.postSearch && React.findDOMNode(this.refs.postSearch)
+    var domNode = this.refs.postSearch && ReactDOM.findDOMNode(this.refs.postSearch)
     var offset = domNode.getBoundingClientRect().top
     if(domNode && offset != prevState.postSearchOffset) {
       this.setState({postSearchOffset: offset || 0})

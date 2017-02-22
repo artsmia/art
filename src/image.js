@@ -1,6 +1,6 @@
 var React = require('react')
 var cx = require('classnames')
-var LazyLoad = require('react-lazy-load')
+var LazyLoad = require('react-lazy-load').default
 
 var imageCDN = require('./image-cdn')
 var {getFacetAndValue} = require('./artwork/creator')

@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom/server')
 var Router = require('react-router')
 var Helmet = require('react-helmet')
 var express = require('express')
@@ -52,7 +53,7 @@ app.use((req, res, next) => {
   router.run((Handler, state) => {
     // ga.pageview(state.pathname)
     fetchComponentData(state).then(data => {
-      var body = React.renderToString(<Handler {...state} data={data} universal={true} />)
+      var body = ReactDOM.renderToString(<Handler {...state} data={data} universal={true} />)
       res.send(html(Helmet.rewind(), data, body))
     })
   })

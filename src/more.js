@@ -3,7 +3,7 @@ var Router = require('react-router')
 var {Link} = Router
 
 var toSlug = require('speakingurl')
-var LazyLoad = require('react-lazy-load')
+var LazyLoad = require('react-lazy-load').default
 
 var SEARCH = require('./endpoints').search
 var rest = require('rest')

@@ -3,7 +3,7 @@ var Router = require('react-router')
 var {Link} = Router
 
 var toSlug = require('speakingurl')
-var LazyLoad = require('react-lazy-load')
+var LazyLoad = require('react-lazy-load').default
 
 var SEARCH = require('./endpoints').search
 var rest = require('rest')
@@ -75,22 +75,22 @@ var HomeDepartmentsAndPages = React.createClass({
   render() {
     return <div className="landingPageBody">
       <div className="mdl-grid">
-      <ul className="info">
-        <li className="mdl-cell mdl-cell--4-col">
-          <Link to='searchResults' params={{terms: 'highlight:true'}}>
-            Highlights
-          </Link>
-        </li>
-        <li className="mdl-cell mdl-cell--4-col">
-          <Link to="searchResults" params={{terms: 'recent:true'}}>
-            New to Mia
-          </Link>
-        </li>
-        <li className="mdl-cell mdl-cell--4-col">
-          <Link to='explore'>
-            Explore
-          </Link>
-        </li>
+        <ul className="info">
+          <li className="mdl-cell mdl-cell--4-col">
+            <Link to='searchResults' params={{terms: 'highlight:true'}}>
+              Highlights
+            </Link>
+          </li>
+          <li className="mdl-cell mdl-cell--4-col">
+            <Link to="searchResults" params={{terms: 'recent:true'}}>
+              New to Mia
+            </Link>
+          </li>
+          <li className="mdl-cell mdl-cell--4-col">
+            <Link to='explore'>
+              Explore
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="welcome mdl-grid">
@@ -99,7 +99,7 @@ var HomeDepartmentsAndPages = React.createClass({
       </div>
       </div>
       <div className="departmentList mdl-grid">
-      <h2>Departments</h2>
+        <h2>Departments</h2>
         {this.departments.map((dept) => {
           var name = index => findDepartment(dept)[index]
           return <Link to='department' key={name(1)} params={{dept: name(2)}} className="departmentLink mdl-cell mdl-cell--3-col">
@@ -118,7 +118,7 @@ var HomeDepartmentsAndPages = React.createClass({
             </li>
           })}
         </ul>
+      </div>
     </div>
-  </div>
   },
 })

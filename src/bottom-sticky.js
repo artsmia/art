@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var Sticky = require('react-sticky')
 
 // A fixed box that's 'synthetically' scrolled along with the rest of the
@@ -58,7 +59,7 @@ var BottomSticky = React.createClass({
   },
 
   getSizeAndScroll() {
-    var domNode = React.findDOMNode(this)
+    var domNode = ReactDOM.findDOMNode(this)
 
     var state = {
       height: domNode.clientHeight,

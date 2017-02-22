@@ -79,7 +79,7 @@ var MapPage = React.createClass({
   }
 })
 
-var LazyLoad = require('react-lazy-load')
+var LazyLoad = require('react-lazy-load').default
 
 var GalleryPeek = React.createClass({
   render() {

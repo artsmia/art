@@ -205,7 +205,7 @@ var Artwork = React.createClass({
       }
     )
     .then((data) => {
-      this.map = L.map(this.refs.map.getDOMNode(), {
+      this.map = L.map(this.refs.map, {
         crs: L.CRS.Simple,
         zoomControl: false,
       })

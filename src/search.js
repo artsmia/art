@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var Router = require('react-router')
 var { NotFoundRoute, Navigation, State, Link, Route, RouteHandler, DefaultRoute, Redirect } = Router
 var rest = require('rest')
@@ -46,8 +47,9 @@ var Search = React.createClass({
     }, this.props.quiltProps || {})
 
     const idealSearchBoxWidth = Math.max(17, this.state.terms && this.state.terms.length*1.1 || 0)
-    const nakedSimpleSearchBox = <div className='search-wrapper' style={{width: idealSearchBoxWidth + 'em'}}>
-      <form action=''><input className='search-input' type="search"
+    const formProps = this.context.universal ? {action: "/search/", method: "get"} : {action: ''}
+    const simpleSearchBox = <div className='search-wrapper' style={{width: idealSearchBoxWidth + 'em'}}>
+      <form {...formProps}><input className='search-input' type="search"
         placeholder="search"
         value={searchLanguageMap(this.state.terms)}
         onKeyDown={this.keyDown}
@@ -60,10 +62,6 @@ var Search = React.createClass({
         list="searchCompletions"
         /></form>
     </div>
-
-    const simpleSearchBox = this.context.universal ?
-      <form action="/search/" method="get">{nakedSimpleSearchBox}</form> :
-      nakedSimpleSearchBox
 
     const hideInput = this.props.hideInput && !this.state.activateSearch
     var searchStyles = {
@@ -224,7 +222,7 @@ var Search = React.createClass({
   },
 
   activateSearch() {
-    var node = React.findDOMNode(this.refs.searchInput)
+    var node = ReactDOM.findDOMNode(this.refs.searchInput)
     if(node) {
       node.focus()
       node.value && node.setSelectionRange(0, node.value.length)

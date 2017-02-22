@@ -44,7 +44,8 @@ var SearchResultsGrid = React.createClass({
     var dividedQuilts = quilts.map((quilt, index) => {
       var start = index*50
       var end = (index+1)*50
-      return <div id={`range:${start}-${end}`}>
+      var _key = `range:${start}-${end}`
+      return <div id={_key} key={_key}>
         {quilt}
       </div>
     })

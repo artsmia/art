@@ -1,6 +1,7 @@
 var React = require('react')
 var {Link} = require('react-router')
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin
+var PureRenderMixin = require('react-addons-pure-render-mixin')
+var ReactDOM = require('react-dom')
 var debounce = require('debounce')
 var cookie = require('react-cookie')
 
@@ -28,7 +29,7 @@ const ImageQuilt = React.createClass({
 
   handleResize: function(e) {
     if(!this.isMounted()) return
-    this.setState({width: React.findDOMNode(this).clientWidth})
+    this.setState({width: ReactDOM.findDOMNode(this).clientWidth})
   },
   componentDidMount: function() {
     this.handleResize()

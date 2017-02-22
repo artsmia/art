@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var Router = require('react-router')
 var cx = require('classnames')
 var Isvg = require('react-inlinesvg')
@@ -99,7 +100,7 @@ var Map = React.createClass({
   },
 
   handleSvgLoad(event) {
-    var allTexts = React.findDOMNode(this).querySelectorAll('svg text')
+    var allTexts = ReactDOM.findDOMNode(this).querySelectorAll('svg text')
     var activeText = Array.from(allTexts)
     .filter(t => t.textContent == this.props.number)
     this.highlightGallery(activeText && activeText[0])

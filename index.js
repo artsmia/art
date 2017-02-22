@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var Router = require('react-router')
 var fetchComponentData = require('./fetch')
 var ga = require('react-ga')
@@ -17,7 +18,7 @@ Router.run(routes, Router.HistoryLocation, (Handler, state) => {
   window.__DATA__ = null
 
   fetchComponentData(state, rehydratedData).then(data => {
-    React.render(<Handler {...state} data={data} />, document.body)
+    ReactDOM.render(<Handler {...state} data={data} />, document.querySelector('#app'))
   })
 });
 

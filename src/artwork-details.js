@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var {Link} = require('react-router')
 var capitalize = require('capitalize')
 var Isvg = require('react-inlinesvg')
@@ -249,7 +250,7 @@ var ArtworkDetails = React.createClass({
   dimensionSvgLoaded() {
     if(this.state.heightAdjusted) return
     this.setState({heightAdjusted: true})
-    var domNode = React.findDOMNode(this)
+    var domNode = ReactDOM.findDOMNode(this)
     this.context.onHeightChange && this.context.onHeightChange(domNode.parentElement.parentElement.parentElement.parentElement.clientHeight)
   },
 })
