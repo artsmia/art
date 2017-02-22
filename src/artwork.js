@@ -71,9 +71,11 @@ var Artwork = React.createClass({
 
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
       !this.state.fullscreenImage
-    var exploreIcon = showMoreIcon && <a href="#explore" style={{position: 'absolute', zIndex: '10000', right: '7px', bottom: '0px'}}>
-      <img src="/images/more-icon.svg" style={{width: '3em'}}/>
-    </a>
+    var exploreIcon = showMoreIcon &&
+      <a href="#" onClick={this.toggleInfoAndRelatedContent} style={{position: 'absolute', zIndex: '10000', right: '7px', bottom: '0px', color: '#232323'}}>
+        {!this.state.smallViewportShowInfoOrRelatedContent ? <img src="/images/more-icon.svg" style={{width: '3em'}}/> : <i className="control material-icons">info</i>}
+      </a>
+    var relatedContent = <div className="info"><ArtworkRelatedContent id={id} art={art} /></div>
 
     var mapStyle = smallViewport ?
       {width: '100%', display: 'inline-block', height: mapHeight+'vh'} :
@@ -89,7 +91,7 @@ var Artwork = React.createClass({
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
       </div> || <NoImagePlaceholder art={art} />}
       {this.imageStatus()}
-      {smallViewport && exploreIcon}
+      {smallViewport && showMoreIcon && exploreIcon}
     </div>
 
     var info = <div className='info'>
@@ -98,7 +100,7 @@ var Artwork = React.createClass({
         <p onClick={this.toggle3d}>{this.state.show3d ? 'show zoomable image' : 'show 3D model'}</p> 
       </div>}
       <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
-      <ArtworkRelatedContent id={id} art={art} />
+      {smallViewport || relatedContent}
       <div>
         <h5 className='details-title'>Details</h5>
         <ArtworkDetails art={art} show3d={this.state.show3d} />
@@ -109,7 +111,7 @@ var Artwork = React.createClass({
     if(smallViewport) {
       content = <div>
         {map}
-        {info}
+        {!this.state.smallViewportShowInfoOrRelatedContent ? info : relatedContent}
       </div>
     } else {
       content = <div>
@@ -160,6 +162,7 @@ var Artwork = React.createClass({
       fullscreenImage: false,
       has3d: has3Dmodel,
       show3d: has3Dmodel,
+      smallViewportShowInfoOrRelatedContent: window && window.enteredViaMore,
     }
   },
 
@@ -312,6 +315,11 @@ var Artwork = React.createClass({
     return this.isLoan()
       || this.state.art.public_access == '0'
       || process.env.NODE_ENV !== 'production'
+  },
+
+  toggleInfoAndRelatedContent(event) {
+    this.setState({smallViewportShowInfoOrRelatedContent: !this.state.smallViewportShowInfoOrRelatedContent})
+    event.preventDefault()
   },
 })
 Artwork.contextTypes = {
