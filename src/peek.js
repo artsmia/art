@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var Router = require('react-router')
 var { Link } = Router
 var rest = require('rest')
@@ -119,7 +120,7 @@ var Peek = React.createClass({
   },
 
   handleResize() {
-    this.setState({maxWidth: React.findDOMNode(this).clientWidth})
+    this.setState({maxWidth: ReactDOM.findDOMNode(this).clientWidth})
   },
   componentDidMount: function() {
     if(this.state.open) this.fetchResults()

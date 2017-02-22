@@ -1,5 +1,5 @@
 var React = require('react')
-let LazyLoad = require('react-lazy-load')
+let LazyLoad = require('react-lazy-load').default
 
 var Markdown = require('./markdown')
 var Image = require('./image')

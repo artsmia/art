@@ -101,7 +101,7 @@ var App = React.createClass({
 
     return showMenu ?
       <a href="https://new.artsmia.org" title="Back to artsmia.org">{logo}</a> :
-      <a href="#" title="Show menu" onClick={this.toggleMenu}>{logo}</a>
+      <a href="/" onClick={this.toggleMenu}>{logo}</a>
   },
 
   noIndex() {

@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var {Link} = require('react-router')
 var toSlug = require('speakingurl')
 var classnames = require('classnames')
@@ -163,7 +164,7 @@ var CopyableLabel = React.createClass({
 
   componentDidMount() {
     // auto-select the text instead of requiring a click
-    var domNode = this.refs.click && React.findDOMNode(this.refs.click)
+    var domNode = this.refs.click && ReactDOM.findDOMNode(this.refs.click)
     if(domNode) domNode.click()
   },
 })
