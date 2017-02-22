@@ -60,18 +60,26 @@ var ArtworkRelatedContent = React.createClass({
   build(json) {
     if(!json.id) json.id = this.props.id
     var trackRelatedClick = this.trackRelatedContentInteraction.bind(this, json)
+    var template = this.templates[json.type] || this.templates.default
+
     return <div onClick={trackRelatedClick} key={json.link || json.title}>
-      {(this.templates[json.type] || this.templates.default).bind(this)(json, this.props.id, this.props.highlights, trackRelatedClick)}
+      {template.bind(this)(json, this.props.id, this.props.highlights, trackRelatedClick)}
     </div>
   },
 
-  trackRelatedContentInteraction(json) {
+  trackRelatedContentInteraction(json, event) {
     // track clicks on related content via more.artsmia.org fort objects on G311 and 355
-    if(window.location.hostname == "more.artsmia.org" && ['G311', 'G355'].indexOf(this.props.art.room) > -1) {
-      ga.event({
-        category: 'more.artsmia.org related content',
+    var debug = false
+    if((debug || window.location.hostname == "more.artsmia.org") && ['G311', 'G355'].indexOf(this.props.art.room) > -1) {
+      event.preventDefault()
+
+      ga.outboundLink({
+        category: 'more.artsmia.org related content click',
         action: 'clicked',
-        label: `${json.id} - ${json.type} - ${json.link}`,
+        label: json.type,
+        value: `${json.id} - ${json.link}`,
+      }, function() {
+        window.location = json.link
       })
     }
   },
