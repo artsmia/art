@@ -71,11 +71,12 @@ var Artwork = React.createClass({
 
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
       !this.state.fullscreenImage
+    var toggleRelated = this.state.smallViewportShowInfoOrRelatedContent
     var exploreIcon = showMoreIcon &&
       <a href="#" onClick={this.toggleInfoAndRelatedContent} style={{position: 'absolute', zIndex: '10000', right: '7px', bottom: '0px', color: '#232323'}}>
-        {!this.state.smallViewportShowInfoOrRelatedContent ? <img src="/images/more-icon.svg" style={{width: '3em'}}/> : <i className="control material-icons">info</i>}
+        {!toggleRelated ? <img src="/images/more-icon.svg" style={{width: '3em'}}/> : <i className="control material-icons">info</i>}
       </a>
-    var relatedContent = <div className="info"><ArtworkRelatedContent id={id} art={art} /></div>
+    var relatedContent = <ArtworkRelatedContent id={id} art={art} />
 
     var mapStyle = smallViewport ?
       {width: '100%', display: 'inline-block', height: mapHeight+'vh'} :
@@ -107,11 +108,23 @@ var Artwork = React.createClass({
       </div>
     </div>
 
+    var smallViewportWithTabbedInfoAndRelated = <div>
+      <div style={{display: !!toggleRelated ? 'none' : 'block'}}>{info}</div>
+      <div style={{display: !toggleRelated ? 'none' : 'block'}}><div className='info'>{relatedContent}</div></div>
+    </div>
+    // TODO: should the related content be in both the info and more-specific view?
+    // react can't gradt an <audio> tag while playing, so showing it in both places makes the playback weird.
+    // code below in case this needs to be revisited
+    // {(smallViewport && toggleRelated) || relatedContent} <- goes into info div
+    // var smallViewportWithTabbedInfoAndRelated = !toggleRelated ? 
+    //   info :
+    //   <div className="info">{relatedContent}</div>
+
     var content
     if(smallViewport) {
       content = <div>
         {map}
-        {!this.state.smallViewportShowInfoOrRelatedContent ? info : relatedContent}
+        {smallViewportWithTabbedInfoAndRelated}
       </div>
     } else {
       content = <div>
