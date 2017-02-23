@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var Router = require('react-router')
 var {Link} = Router
 var debounce = require('debounce')
@@ -75,7 +76,7 @@ var MapPage = React.createClass({
   },
 
   handleSvgLoad() {
-    React.findDOMNode(this.refs.mapWrap).scrollLeft = 171
+    ReactDOM.findDOMNode(this.refs.mapWrap).scrollLeft = 171
   }
 })
 

@@ -21,5 +21,4 @@ var Markdown = React.createClass({
   },
 })
 
-
 module.exports = Markdown

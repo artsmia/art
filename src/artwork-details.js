@@ -4,7 +4,7 @@ var {Link} = require('react-router')
 var capitalize = require('capitalize')
 var Isvg = require('react-inlinesvg')
 var cx = require('classnames')
-var ClickToSelect = require('react-click-to-select')
+var ClickToSelect = require('@mapbox/react-click-to-select')
 
 var Markdown = require('./markdown')
 var Peek = require('./peek')

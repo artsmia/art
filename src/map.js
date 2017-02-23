@@ -25,10 +25,8 @@ var Map = React.createClass({
           src={`/map/svgs/${floor}.svg`}
           key={floor}
           onLoad={this.handleSvgLoad}
-          preloader={React.createClass({render: () => thumbnail})}
-        >
-          {thumbnail}
-        </Isvg>
+          preloader={(props) => thumbnail}
+        >{thumbnail}</Isvg>
       </div>
       <FloorControls
         map={this}

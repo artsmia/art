@@ -28,7 +28,7 @@ var Home = React.createClass({
       {maxRows: 2, maxWorks: 7} :
       {maxRows: 3, maxWorks: 30}
 
-    if(width > 500 && width < 800) quiltProps.maxRows = 1
+    if(window && window.ondeviceorientation && width > 500 && width < 800) quiltProps.maxRows = 1
 
     return <div>
       <Search

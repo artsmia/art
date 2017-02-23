@@ -28,7 +28,7 @@ app.get('/search/', (req, res, next) => {
 var html = ({title, meta, link}, data, body) => index
   .replace('<!--HEAD-->',
            [
-             `<title>${title}</title>`,
+             `${title}`,
              meta,
              link,
              `<script>window.__DATA__ = ${JSON.stringify(data)};</script>`

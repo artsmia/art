@@ -70,7 +70,7 @@ var Tombstone = React.createClass({
   }
 })
 
-var ClickToSelect = require('react-click-to-select')
+var ClickToSelect = require('@mapbox/react-click-to-select')
 
 var CopyableLabel = React.createClass({
   render() {
