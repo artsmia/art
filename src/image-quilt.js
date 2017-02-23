@@ -13,7 +13,7 @@ const ImageQuilt = React.createClass({
   mixins: [PureRenderMixin],
 
   getInitialState() {
-    const artworks = this.props.artworks.slice(0, this.props.maxWorks)
+    const artworks = this.props.artworks
     const maybeShuffledArtworks = this.props.shuffle ?
       artworks.sort(() => .5 - Math.random()) :
       artworks
@@ -43,6 +43,7 @@ const ImageQuilt = React.createClass({
     if(this.hideDarkenedQuilt()) return this.emptyQuiltToggleControl()
 
     const artworks = this.props.artworks.slice(0, this.props.maxWorks)
+    const shuffledArtworks = this.state.shuffledArtworks && this.state.shuffledArtworks.slice(0, this.props.maxWorks)
     const _art = artworks.map((art) => {
       var s = art._source
       if(s.image == 'invalid' || (s.image_width == 0 && s.image_height == 0) || s.rights == 'Permission Denied') {
@@ -65,7 +66,7 @@ const ImageQuilt = React.createClass({
     var rowHeight = this.props.rowHeight || 200
     var numRows = Math.min(this.props.maxRows, Math.max(Math.floor(summedAspectRatio*rowHeight/this.state.width), 1))
 
-    var rows = this.getPartition(this.state.shuffledArtworks || artworks, numRows)
+    var rows = this.getPartition(shuffledArtworks || artworks, numRows)
 
     const images = rows.map((row, index) => {
       var rowSummedAspectRatio = row.reduce((sum, art) => {return sum+art._source.aspect_ratio}, 0)
@@ -138,7 +139,8 @@ const ImageQuilt = React.createClass({
     }
 
     var rows = partitionBy(artworks, (art) => art._source.aspect_ratio*100, numRows)
-    this.cachedPartitions[memoKey] = rows
+    // Don't cache quilt partitions when server rendering, potential memory waterfall
+    if(!this.context.universal) this.cachedPartitions[memoKey] = rows
     return rows
   },
 
