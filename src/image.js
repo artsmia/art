@@ -35,7 +35,7 @@ const Image = React.createClass({
 
     if(art.rights == 'Permission Denied') return <span />
 
-    var image = !lazyLoad ? nakedImage : <LazyLoad wrapper="span" style={{display: 'inline'}} width={width} height={`${height}`}>
+    var image = !lazyLoad ? nakedImage : <LazyLoad wrapper="span" style={{display: 'inline'}} width={width} height={`${height}`} className={classes}>
       {nakedImage}
     </LazyLoad>
 

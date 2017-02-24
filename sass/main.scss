@@ -1546,23 +1546,25 @@ $easeInSine     : cubic-bezier(0.470, 0.000, 0.745, 0.715);
 $easeOutSine    : cubic-bezier(0.390, 0.575, 0.565, 1.000);
 $easeInOutSine  : cubic-bezier(0.445, 0.050, 0.550, 0.950);
 
-img.image {
-	opacity: 0.3;
-	transition: opacity, background-color 1s $easeInSine;
-}
-img.loading {
-  border: 1px solid white;
-  box-sizing: border-box;
-  background-color: #232323 !important;
-  color: transparent;
-}
-img.loaded {
-	opacity: 1 !important;
-}
-img.error, img.loaded.error {
-  opacity: 0.3 !important;
-  background-color: #232323 !important;
-  color: transparent;
+img, .LazyLoad {
+  &.image {
+    opacity: 0.3;
+    transition: opacity, background-color 1s $easeInSine;
+  }
+  &.loading {
+    border: 1px solid white;
+    box-sizing: border-box;
+    background-color: #232323 !important;
+    color: transparent;
+  }
+  &.loaded {
+    opacity: 1 !important;
+  }
+  &.error, &.loaded.error {
+    opacity: 0.3 !important;
+    background-color: #232323 !important;
+    color: transparent;
+  }
 }
 
 .dimension-view {
