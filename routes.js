@@ -22,6 +22,7 @@ var Exhibition = require('./src/exhibition')
 var Artist = require('./src/artist')
 var RecentAccessions = require('./src/recent')
 var AccessionHighlight = require('./src/accession-highlight')
+var Survey = require('./src/survey')
 
 var routes = (
   <Route handler={App} path="/">
@@ -51,6 +52,7 @@ var routes = (
     <Route name="exhibition" path="/exhibitions/:id" handler={Exhibition} />
     <Route name="exhibitionSlug" path="exhibitions/:id/:slug" handler={Exhibition} />
     <Route name="recent" path="/new" handler={RecentAccessions} />
+    <Route name="survey" path="survey" handler={Survey} />
   </Route>
 );
 
