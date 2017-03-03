@@ -143,6 +143,7 @@ var Search = React.createClass({
     if(this.props.activateInput) {
       this.activateSearch()
     }
+    window.lastSearchedTerms = this.state.terms
   },
 
   throttledSearch(event) {
@@ -150,6 +151,7 @@ var Search = React.createClass({
     this.setState({terms: terms})
     this.debouncedSearch && this.debouncedSearch(terms)
     this.debouncedAutocomplete(terms)
+    window.lastSearchedTerms = terms
   },
 
   search() {

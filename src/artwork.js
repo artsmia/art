@@ -98,7 +98,7 @@ var Artwork = React.createClass({
     var info = <div className='info'>
       <ArtworkPreview art={art} showLink={false} showDuplicateDetails={true} />
       {this.state.has3d && <div className="images">
-        <p onClick={this.toggle3d}>{this.state.show3d ? 'show zoomable image' : 'show 3D model'}</p> 
+        <p onClick={this.toggle3d}>{this.state.show3d ? 'show high-res image' : 'show 3D model'}</p> 
       </div>}
       <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
       {smallViewport || relatedContent}
@@ -169,12 +169,16 @@ var Artwork = React.createClass({
     art.id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
 
     var has3Dmodel = art["related:3dmodels"] && art["related:3dmodels"][0]
+    var navigatedFrom3dModelSearch = window &&
+      window.lastSearchedTerms && 
+      window.lastSearchedTerms.indexOf('related:3dmodels') >= 0
+
     return {
       art: art,
       id: art.id,
       fullscreenImage: false,
       has3d: has3Dmodel,
-      show3d: has3Dmodel,
+      show3d: navigatedFrom3dModelSearch,
       smallViewportShowInfoOrRelatedContent: window && window.enteredViaMore,
     }
   },
