@@ -215,12 +215,20 @@ var QuiltPatch = React.createClass({
       verticalAlign: 'top',
       overflow: 'hidden',
       width: width,
-      height: width/art.aspect_ratio
+      height: width/art.aspect_ratio,
+    }
+
+    var imgStyle = {
+      ...style,
+      left: "50%",
+      top: "50%",
+      transform: "translateY(-50%) translateX(-50%)",
+      position: "absolute",
     }
 
     var image = <Image
       art={art}
-      style={style}
+      style={imgStyle}
       {...other}
     />
 
@@ -234,7 +242,11 @@ var QuiltPatch = React.createClass({
       <p><strong>{art.title_short}</strong></p>
     </span>
 
-    return <Link onClick={this.clickOrDontClick} style={style} to="artwork" params={{id: art.id}}>{patch}</Link>
+    return <Link
+      onClick={this.clickOrDontClick}
+      style={{...style, position: 'relative'}}
+      to="artwork"
+      params={{id: art.id}}>{patch}</Link>
   },
 
   // halt the click event if javascript is loaded

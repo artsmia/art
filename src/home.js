@@ -3,7 +3,6 @@ var Router = require('react-router')
 var {Link} = Router
 
 var toSlug = require('speakingurl')
-var LazyLoad = require('react-lazy-load').default
 
 var SEARCH = require('./endpoints').search
 var rest = require('rest')
@@ -103,7 +102,7 @@ var HomeDepartmentsAndPages = React.createClass({
         {this.departments.map((dept) => {
           var name = index => findDepartment(dept)[index]
           return <Link to='department' key={name(1)} params={{dept: name(2)}} className="departmentLink mdl-cell mdl-cell--3-col">
-            <LazyLoad height="150px"><div className={[name(1), "departmentListItem"].join(' ')}></div></LazyLoad>
+            <div className={[name(1), "departmentListItem"].join(' ')}></div>
             <h2>{dept}</h2>
           </Link>
           }

@@ -77,6 +77,15 @@ header{
     background: #222;
 }
 
+.quilt-wrap a:hover {
+  overflow: visible !important;
+  z-index: 100;
+  
+  img {
+    overflow: visible !important;
+  }
+}
+
 .logo-container{
     background-image: url("../images/MIA_LOGO_MARK.svg");
     background-repeat: no-repeat;
