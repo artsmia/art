@@ -48,7 +48,7 @@ const ImageQuilt = React.createClass({
       var s = art._source
       if(s.image == 'invalid' || (s.image_width == 0 && s.image_height == 0) || s.rights == 'Permission Denied') {
         s.image = 'invalid'
-        var splitOn = /,|;|:|\]/;
+        var splitOn = /;|:|\]/;
         ([s.title_short, s.artist_short] = [s.title.split(splitOn)[0], s.artist.split(splitOn)[0]])
         var text = s.title_short
         s.text_length = text.length
