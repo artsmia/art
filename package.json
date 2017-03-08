@@ -50,6 +50,7 @@
     "linear-partitioning": "^0.3.1",
     "marked": "^0.3.3",
     "museum-tile-layer": "artsmia/museumTileLayer#gh-pages",
+    "ramda": "^0.23.0",
     "react": "^0.14.8",
     "react-addons-pure-render-mixin": "^0.14.8",
     "react-cookie": "^0.3.4",

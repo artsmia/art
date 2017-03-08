@@ -3,6 +3,7 @@ var Router = require('react-router')
 var {Link} = Router
 var Helmet = require('react-helmet')
 var rest = require('rest')
+var R = require('ramda')
 
 var Search = require('./search')
 var SEARCH = require('./endpoints').search
@@ -18,26 +19,35 @@ var RecentAccessions = React.createClass({
     fetchData: {
       searchResults: (params, query) => rest(`${SEARCH}/recent:true`)
       .then(r => JSON.parse(r.entity)),
-      accessionHighlights: (params, query) => rest(`${SEARCH}/accessionHighlight:true`)
+      accessionHighlights: (params, query) => rest(`${SEARCH}/accessionHighlight:true?sort=accessionDate-desc`)
       .then(r => JSON.parse(r.entity)),
     }
   },
 
   accessionHighlightsGrid() {
     var {accessionHighlights, recent} = this.props.data
+    var groupedByDate = R.groupBy(
+      h => h.accessionDate,
+      accessionHighlights.hits.hits.map(h => h._source)
+    ) // {<date>: [<highlights>], …}
 
-    return <div className="grid_wrapper">{accessionHighlights.hits.hits.map(h => h._source)
-        .map(highlight => {
-        return <div className="single_highlight">
-          <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
-            <div className="highlight_image">
-              <div className="highlight_content">
-                <ArtworkImage art={highlight} />
-              </div>
+    return <div>
+      {Object.keys(groupedByDate).map(accessionDate => {
+        var highlights = groupedByDate[accessionDate]
+        return <div className="grid_wrapper" key={accessionDate}>
+          <h3>{accessionDate.split('-').slice(0, 2).reverse().join('/')}</h3>
+          {highlights.map(highlight => {
+            return <div className="single_highlight">
+              <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
+                <div className="highlight_image">
+                  <div className="highlight_content"><ArtworkImage art={highlight} /></div>
+                </div>
+              </Link>
             </div>
-          </Link>
+          })}
         </div>
-      })}</div>
+      })}
+    </div>
   },
 
   render() {
