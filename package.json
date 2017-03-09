@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "babel": "^6.23.0",
+    "babel-core": "^6.23.1",
     "babel-plugin-react-transform": "^2.0.2",
     "babelify": "^7.3.0",
     "browserify": "^8.1.0",
