@@ -72,6 +72,16 @@ var HomeDepartmentsAndPages = React.createClass({
   pages: ['Purcell-Cutts House', 'Provenance Research', 'Deaccessions', 'Conservation'],
 
   render() {
+    // Hide the new accessions highlight page from production deploy
+    // temporarily
+    const newToMiaLinkProps = process.env.NODE_ENV !== 'production' ?
+      {
+        to: "/new",
+      } : {
+        to: "searchResults",
+        params: {terms: 'recent:true'},
+      }
+
     return <div className="landingPageBody">
       <div className="mdl-grid">
         <ul className="info">
@@ -81,7 +91,7 @@ var HomeDepartmentsAndPages = React.createClass({
             </Link>
           </li>
           <li className="mdl-cell mdl-cell--4-col">
-            <Link to="/new">
+            <Link {...newToMiaLinkProps}>
               New to Mia
             </Link>
           </li>
