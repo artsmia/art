@@ -31,6 +31,9 @@ var RecentAccessions = React.createClass({
       accessionHighlights.hits.hits.map(h => h._source)
     ) // {<date>: [<highlights>], …}
 
+    var customImageFunction = (id) =>
+      `https://collections.artsmia.org/_info/accession_highlights/${id}.jpg`
+
     return <div>
       {Object.keys(groupedByDate).map(accessionDate => {
         var highlights = groupedByDate[accessionDate]
@@ -40,7 +43,13 @@ var RecentAccessions = React.createClass({
             return <div className="single_highlight">
               <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
                 <div className="highlight_image">
-                  <div className="highlight_content"><ArtworkImage art={highlight} /></div>
+                  <div className="highlight_content">
+                    <ArtworkImage
+                      art={highlight}
+                      style={{width: 400, height: 400}}
+                      lazyLoad={false}
+                      customImage={customImageFunction} />
+                  </div>
                 </div>
               </Link>
             </div>

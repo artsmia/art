@@ -7,7 +7,7 @@ var {getFacetAndValue} = require('./artwork/creator')
 
 const Image = React.createClass({
   render() {
-    var {art, style, lazyLoad, ignoreStyle, ...other} = this.props
+    var {art, style, lazyLoad, ignoreStyle, customImage, ...other} = this.props
     var {id} = art
     var {width, height} = style
 
@@ -43,11 +43,13 @@ const Image = React.createClass({
   },
 
   imageURL() {
+    var {customImage} = this.props
     var {id} = this.props.art
 
+    // TODO: cascase from customImage -> S3 -> api.artsmia.org?
     return this.state.skipCDN ?
       `https://api.artsmia.org/images/${id}/400/medium.jpg` :
-      imageCDN(id)
+      customImage ? customImage(id) : imageCDN(id)
   },
 
   componentWillReceiveProps(nextProps) {
