@@ -816,7 +816,7 @@ a.departmentLink h2{
   height: 100vh !important;
   z-index: 9 !important;
 }
-@import "node_modules/leaflet-fullscreen/dist/leaflet.fullscreen.css";
+@import "../node_modules/leaflet-fullscreen/dist/leaflet.fullscreen.css";
 .artwork.smallviewport #map {
   top: 0;
   z-index: 2;
