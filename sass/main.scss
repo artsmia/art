@@ -363,6 +363,11 @@ header{
   z-index: 4;
   background: transparent !important;
 }
+@media screen and (max-width: 768px) {
+  #morePage .search-wrap {
+    background: #232323 !important;
+  }
+}
 .search-wrap div:first-child {
     margin:0 auto;
     color:$primary;
@@ -1670,16 +1675,25 @@ img, .LazyLoad {
 }
 
 @media (min-width: 840px) {
-  #more p img {
-    position: absolute;
-    top: 18vw;
-    left: 80vw;
+  #more img {
+    display: block;
+    max-width: 17em;
+  }
+  #more {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
   }
 }
 @media (max-width: 839px) {
-  #more p img {
-    display: block;
-    margin: 0 auto;
+  #more {
+    min-height: 100vh;
+  }
+
+  #more img {
+    max-width: 7em;
+    padding: 1em 1em 0.25em 1em;
+    float: right;
   }
 }
 
@@ -1690,6 +1704,14 @@ img, .LazyLoad {
 
 #more .labelHelper a {
   cursor: pointer;
+}
+
+#more .tombstoneHelper {
+  margin: 1em 0;
+  padding: 0.5em;
+  border: 1px solid #232323;
+  border-radius: 3px;
+  background-color: #eee;
 }
 
 .agg-wrap, .search-wrap, .landingPageBody, .departmentPage,

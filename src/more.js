@@ -24,7 +24,8 @@ var More = React.createClass({
 
   componentDidMount() {
     var {smallViewport} = this.context
-    if(smallViewport && window.scrollX == 0) setTimeout(() => window.scrollTo(0, document.querySelector('.quilt-wrap').clientHeight), 0)
+    var quiltWrap = document.querySelector('.quilt-wrap') 
+    if(quiltWrap && smallViewport && window.scrollX == 0) setTimeout(() => window.scrollTo(0, quiltWrap.clientHeight), 0)
     window.enteredViaMore = true
   },
 
@@ -34,7 +35,7 @@ var More = React.createClass({
       {maxRows: 1, maxWorks: 5} :
       {maxRows: 2, maxWorks: 9}
 
-    return <div>
+    return <div id="morePage">
       <Search
         hideResults={true}
         activateInput={true}
@@ -50,24 +51,23 @@ var More = React.createClass({
       <div id="more" className="welcome mdl-grid">
         <div className="mdl-cell mdl-cell--9-col">
           <h1>
-            {smallViewport && <img src="/images/more-icon.svg" style={{maxWidth: '7em', padding: '2em 1em 0.25em 1em', float: 'right'}} />}
             Search to explore audio guides, ArtStories, and more
           </h1>
-          <p class="labelHelper"><TombstoneIdeograph /></p>
-          {smallViewport || <p><img src="/images/more-icon.svg" style={{maxWidth: '11em'}} /></p>}
+          <img src="/images/more-icon.svg" />
+          <p className="labelHelper"><TombstoneIdeograph /></p>
 
           <hr />
           <p><Link to="explore">More ways to explore the collection</Link></p>
         </div>
       </div>
 
-      <div id="map">
+      {smallViewport || <div id="map">
         <MapPage hideList={true}>
           <Link to="map" style={{textAlign: 'center', float: 'right', paddingRight: '1em'}}>
             All galleries
           </Link>
         </MapPage>
-      </div>
+      </div>}
     </div>
   },
 })

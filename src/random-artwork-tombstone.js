@@ -17,12 +17,13 @@ module.exports = React.createClass({
 
     // and check on mobile = does touch work?
     var rawTitle = <Artwork.Title art={art} link={false} />
-    var rawArtist = <Artwork.Creator art={art} />
+    var rawArtist = <Artwork.Creator art={art} peek={false} />
 
-    return art && <div key={fieldToHighlight}>
+    return art && <div className="tombstoneHelper" key={fieldToHighlight}>
       {highlight(rawTitle, fieldToHighlight == 'title')}
       {highlight(rawArtist, fieldToHighlight == 'artist')}
       <Artwork.Tombstone art={art}
+        showPeeks={false}
         highlightAccessionNumber={fieldToHighlight == 'accession number'}
         highlighter={highlight} />
     </div>

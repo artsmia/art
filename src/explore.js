@@ -15,7 +15,7 @@ var Explore = React.createClass({
   render() {
     return <div>
       <a href="/art/8747" className="explore-header"></a>
-      <div className="explore-section" style={{padding: '0 2.5em'}}>
+      <div className="explore-section" style={{padding: '0 2.5vmax'}}>
         {this.searches.map(({term, blurb}, index) => {
           var [facet, ...terms] = term.split(':')
           return <section>

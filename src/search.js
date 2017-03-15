@@ -32,7 +32,9 @@ var Search = React.createClass({
   render() {
     const results = this.state.results
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
-    const darkenQuilt = this.props.path && this.props.path.match(/\/search/)
+    const {universal, smallViewport} = this.context
+    const path = this.props.path
+    const darkenQuilt = this.props.path && path.match(/\/search/) || path.match('more') && smallViewport
     const headerArtworks = ImageQuilt.getImagedResults(hits)
     const showQuilt = !darkenQuilt && headerArtworks
     var quiltProps = Object.assign({
@@ -41,13 +43,13 @@ var Search = React.createClass({
       artworks: headerArtworks,
       onClick: this.updateFromQuilt,
       disableHover: this.props.hideResults || this.props.disableHover,
-      lazyLoad: !this.context.universal,
+      lazyLoad: universal,
       darken: darkenQuilt,
       shuffle: this.props.shuffleQuilt,
     }, this.props.quiltProps || {})
 
     const idealSearchBoxWidth = Math.max(17, this.state.terms && this.state.terms.length*1.1 || 0)
-    const formProps = this.context.universal ? {action: "/search/", method: "get"} : {action: ''}
+    const formProps = universal ? {action: "/search/", method: "get"} : {action: ''}
     const simpleSearchBox = <div className='search-wrapper' style={{width: idealSearchBoxWidth + 'em'}}>
       <form {...formProps}><input className='search-input' type="search"
         placeholder="search"
@@ -86,7 +88,7 @@ var Search = React.createClass({
 
     const searchBox = (
       <div className='quilt-search-wrap' style={showQuilt && {position: 'relative', width: '100%', overflow: 'hidden'} || {}}>
-        {showQuilt && <ImageQuilt {...quiltProps} /> || <span style={{display: 'block', minHeight: '3.5rem'}} />}
+        {showQuilt && <ImageQuilt {...quiltProps} /> || <span className='quilt-wrap dark' style={{display: 'block', minHeight: '3.5rem'}} />}
         <div className='search-wrap'
           style={showQuilt && !this.props.bumpSearchBox ? searchOverQuiltStyles : searchStyles}>
           <div style={{opacity: this.props.hideHeader ? '1' : '0.95'}}>{simpleSearchBox}</div>
@@ -234,6 +236,7 @@ var Search = React.createClass({
 Search.contextTypes = {
   router: React.PropTypes.func,
   universal: React.PropTypes.bool,
+  smallViewport: React.PropTypes.bool,
 }
 
 module.exports = Search
