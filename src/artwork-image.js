@@ -16,6 +16,7 @@ var ArtworkImage = React.createClass({
 
     var image = <Image art={art}
       style={style}
+      ignoreStyle={true}
       itemProp="image"
       alt={art.description}
       customImage={customImage}
