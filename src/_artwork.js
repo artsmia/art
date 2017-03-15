@@ -71,10 +71,16 @@ var Tombstone = React.createClass({
     </div>
   },
 
+  getDefaultProps() {
+    return {
+      showPeeks: true
+    }
+  },
+
   handleDoubleClick() {
     // show a copy-able tombstone/label in different formats
     this.setState({showLabels: !this.state.showLabels})
-  }
+  },
 })
 
 var ClickToSelect = require('@mapbox/react-click-to-select')

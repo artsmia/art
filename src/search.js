@@ -34,7 +34,7 @@ var Search = React.createClass({
     const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
     const {universal, smallViewport} = this.context
     const path = this.props.path
-    const darkenQuilt = this.props.path && path.match(/\/search/) || path.match('more') && smallViewport
+    const darkenQuilt = this.props.path && (path.match(/\/search/) || path.match('more') && window && window.innerWidth <= 736)
     const headerArtworks = ImageQuilt.getImagedResults(hits)
     const showQuilt = !darkenQuilt && headerArtworks
     var quiltProps = Object.assign({

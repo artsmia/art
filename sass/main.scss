@@ -363,7 +363,7 @@ header{
   z-index: 4;
   background: transparent !important;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
   #morePage .search-wrap {
     background: #232323 !important;
   }
@@ -1674,7 +1674,7 @@ img, .LazyLoad {
   margin-bottom: 1em;
 }
 
-@media (min-width: 840px) {
+@media (min-width: 767px) {
   #more img {
     display: block;
     max-width: 17em;
@@ -1685,7 +1685,7 @@ img, .LazyLoad {
     transform: translate(-50%);
   }
 }
-@media (max-width: 839px) {
+@media (max-width: 767px) {
   #more {
     min-height: 100vh;
   }
