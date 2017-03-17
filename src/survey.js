@@ -3,8 +3,16 @@ var ReactDOM = require('react-dom')
 var Router = require('react-router')
 var rest = require('rest')
 
+var restDefaultInterceptor = require('rest/interceptor/defaultRequest')
+var restWithCorsCookies = rest.wrap(restDefaultInterceptor, {
+  mixin: {
+    withCredentials: true
+  }
+})
+
 var RandomArtwork = require('./random-artwork')
 var ArtworkPreview = require('./artwork-preview')
+var SEARCH = require('./endpoints').search
 
 // Example:
 //
@@ -23,14 +31,20 @@ var VotingBooth = React.createClass({
     var linkStyle = {margin: '1em', display: 'inline-block'}
     return <div>
       <ArtworkPreview {...this.props} showPeeks={false}>
-        <a href="#" style={linkStyle} onClick={this.vote.bind(this, 1)}>&uarr; I like this</a>
-        <a href="#" style={linkStyle} onClick={this.vote.bind(this, -1)}>&darr; I don't like this</a>
+        <a href="#" style={linkStyle} onClick={this.vote.bind(this, 'like')}>&uarr; I like this</a>
+        <a href="#" style={linkStyle} onClick={this.vote.bind(this, 'dislike')}>&darr; I don't like this</a>
+        <a href="#" style={linkStyle} onClick={this.next}>skip</a>
       </ArtworkPreview>
     </div>
   },
 
   vote(direction) {
-    console.info('voting', direction)
+    var {id} = this.props.art
+    restWithCorsCookies(`${SEARCH}/survey/art/${id}/${direction}`)
+      .then(this.next)
+  },
+
+  next() {
     this.props.changeArtwork()
   },
 })
@@ -43,6 +57,10 @@ var Survey = React.createClass({
       <VoteForRandomArtworkCard />
     </div>
   },
+
+  componentDidMount() {
+    restWithCorsCookies(`${SEARCH}/survey/getUser`)
+  }
 })
 
 module.exports = Survey
