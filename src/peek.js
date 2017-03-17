@@ -47,11 +47,13 @@ var Peek = React.createClass({
   },
 
   render() {
+    var Tag = this.props.tag
+    if(!this.props.showPeeks) return <Tag>{this.props.children}</Tag>
+
     var {results, facetedQ, startedOpen} = this.state
     if(!facetedQ) return <span />
     var {child, microdata} = this.props
     var result = results && results[facetedQ]
-    var Tag = this.props.tag
     var {showIcon} = this.props
     var icon = <i className="material-icons">{'expand_'+(this.state.open ? 'less' : 'more')}</i>
     var linkProps = this.props.linkProps || this.props.filtered ? {
@@ -190,6 +192,7 @@ var Peek = React.createClass({
       tag: "div",
       showIcon: true,
       showSingleResult: false,
+      showPeeks: true,
     }
   },
 

@@ -53,20 +53,14 @@ var Tombstone = React.createClass({
       this.props.highlighter(art.accession_number, highlightAccessionNumber) :
       art.accession_number
 
-    var medium = showPeeks ?
-      <Peek facet="medium" tag="span" highlightedValue={highlight('medium')}>{art.medium}</Peek> :
-      art.medium
-    var creditline = showPeeks ?
-      <Peek facet="creditline" tag="span" highlightedValue={highlight('creditline')}>{art.creditline}</Peek> :
-      art.creditline
-
     return <div onDoubleClick={this.handleDoubleClick}>
       <p className="tombstone">
-        {medium} &nbsp; {accessionNumber}
+        <Peek facet="medium" tag="span" highlightedValue={highlight('medium')} showPeeks={this.props.showPeeks}>{art.medium}</Peek> :
       </p>
       {this.state.showLabels && <CopyableLabel art={art} onClose={this.handleDoubleClick} />}
       <p className="gifted">
-        {creditline}
+        <Peek facet="creditline" tag="span" highlightedValue={highlight('creditline')} showPeeks={this.props.showPeeks}>{art.creditline}</Peek> :
+          &nbsp; {accessionNumber}
       </p>
     </div>
   },

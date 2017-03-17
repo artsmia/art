@@ -22,7 +22,7 @@ var VotingBooth = React.createClass({
   render() {
     var linkStyle = {margin: '1em', display: 'inline-block'}
     return <div>
-      <ArtworkPreview {...this.props}>
+      <ArtworkPreview {...this.props} showPeeks={false}>
         <a href="#" style={linkStyle} onClick={this.vote.bind(this, 1)}>&uarr; I like this</a>
         <a href="#" style={linkStyle} onClick={this.vote.bind(this, -1)}>&darr; I don't like this</a>
       </ArtworkPreview>
