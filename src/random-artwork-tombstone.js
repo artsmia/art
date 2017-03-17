@@ -3,13 +3,13 @@ var Router = require('react-router')
 var {Link} = Router
 var rest = require('rest')
 
+var RandomArtworkContainer = require('./random-artwork')
 var Artwork = require('./_artwork')
-var ArtworkPreview = require('./artwork-preview')
 var SEARCH = require('./endpoints').search
 
-module.exports = React.createClass({
+var TombstoneExample = React.createClass({
   render() {
-    var {art} = this.state
+    var {art} = this.props
     var {fieldToHighlight} = this.props
     var highlight = (children, highlight) => highlight ? <span style={{color: 'red', fontWeight: 'bold', borderBottom: '1px solid black !important'}}>
       {children}
@@ -28,18 +28,8 @@ module.exports = React.createClass({
         highlighter={highlight} />
     </div>
   },
-
-  getInitialState() {
-    return {
-      art: null,
-    }
-  },
-
-  componentDidMount() {
-    var id = this.props.initialId
-
-    var searchUrl = id ? `${SEARCH}/id/${id}` : `${SEARCH}/random/art`
-    rest(searchUrl)
-    .then(data => this.setState({art: JSON.parse(data.entity)}))
-  },
 })
+
+var RandomTombstoneExample = RandomArtworkContainer(TombstoneExample)
+
+module.exports = RandomTombstoneExample

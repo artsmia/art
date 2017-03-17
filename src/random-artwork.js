@@ -20,7 +20,6 @@ var RandomArtworkContainer = (ComposedComponent, searchQuery) => React.createCla
   setArtwork(id) {
     var searchUrl = id ? `${SEARCH}/id/${id}` : `${SEARCH}/random/art`
     if(!id && searchQuery) searchUrl += `?q=${searchQuery}`
-    console.info(searchUrl)
     rest(searchUrl)
     .then(data => this.setState({art: JSON.parse(data.entity)}))
   },
