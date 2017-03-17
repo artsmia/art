@@ -3,16 +3,10 @@ var ReactDOM = require('react-dom')
 var Router = require('react-router')
 var rest = require('rest')
 
-var restDefaultInterceptor = require('rest/interceptor/defaultRequest')
-var restWithCorsCookies = rest.wrap(restDefaultInterceptor, {
-  mixin: {
-    withCredentials: true
-  }
-})
-
 var RandomArtwork = require('./random-artwork')
 var ArtworkPreview = require('./artwork-preview')
 var SEARCH = require('./endpoints').search
+var restWithCorsCookies = require('./rest-with-cookies')
 
 // Example:
 //
