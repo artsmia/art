@@ -20,6 +20,7 @@ var ArtworkImage = React.createClass({
       itemProp="image"
       alt={art.description}
       customImage={customImage}
+      key={id}
       lazyLoad={this.props.lazyLoad} />
 
     var showImage = !!customImage || art.image == 'valid' && art.image_width > 0 && art.rights !== 'Permission Denied'

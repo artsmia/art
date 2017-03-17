@@ -26,6 +26,7 @@ const Image = React.createClass({
       key={id}
       style={ignoreStyle ? {maxWidth: '100%', maxHeight: '67vh'} : style}
       src={this.imageURL()}
+      key={this.imageURL()}
       onLoad={this.handleImageLoad}
       onError={this.handleError}
       className={classes}
