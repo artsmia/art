@@ -15,6 +15,7 @@ var Image = require('./image')
 var imageCDN = require('./image-cdn')
 var SEARCH = require('./endpoints').search
 var ArtworkRelatedContent = require('./artwork-related')
+var restWithCookies = require('./rest-with-cookies')
 
 var Sticky = require('react-sticky')
 
@@ -134,6 +135,9 @@ var Artwork = React.createClass({
         {this.state.has3d && <div className="images">
           <p onClick={this.toggle3d}>{this.state.show3d ? 'show high-res image' : 'show 3D model'}</p> 
         </div>}
+        <div className="like">
+          <p onClick={this.likeArtwork}>{this.state.artworkIsLiked ? '♥' : '♡ Like this artwork'}</p>
+        </div>
         <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
         {smallViewport || relatedContent}
         <div>
@@ -362,6 +366,13 @@ var Artwork = React.createClass({
   toggleInfoAndRelatedContent(event) {
     this.setState({smallViewportShowInfoOrRelatedContent: !this.state.smallViewportShowInfoOrRelatedContent})
     event.preventDefault()
+  },
+
+  likeArtwork() {
+    var {id} = this.state.art
+
+    restWithCookies(`${SEARCH}/survey/art/${id}/like`)
+      .then(() => this.setState({artworkIsLiked: true}))
   },
 })
 Artwork.contextTypes = {
