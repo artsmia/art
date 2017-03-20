@@ -1,3 +1,4 @@
+require('babel-polyfill')
 var resolveHash = require('when/keys').all
 
 function fetchComponentData(state, initialData) {
