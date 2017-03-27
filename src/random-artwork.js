@@ -30,7 +30,7 @@ var RandomArtworkContainer = (ComposedComponent, searchQuery) => React.createCla
 
   render() {
     return this.state.art ?
-      <ComposedComponent art={this.state.art} changeArtwork={this.changeArtwork} /> :
+      <ComposedComponent art={this.state.art} changeArtwork={this.changeArtwork} {...this.props} /> :
       <span />
   },
 })
