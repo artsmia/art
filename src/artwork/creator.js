@@ -19,7 +19,7 @@ var Creator = React.createClass({
   },
 
   getDefaultProps() {
-    return {peek: true}
+    return {peek: true, showPeeks: true}
   },
 })
 Creator.getFacetAndValue = (art, highlights) => {
