@@ -73,10 +73,11 @@ var SearchResults = React.createClass({
     var unloadedResults = search.hits.total - this.props.hits.length
     var loadThisManyMore = Math.min(200, unloadedResults)
     var nextPage = Math.min(this.maxResults, this.props.hits.length+loadThisManyMore)
+    var nextPageQuery = {...this.props.query, size: nextPage}
     var showMoreLink = search &&
       <span>.&nbsp;(<Link to={search.filters ? 'filteredSearchResults' : 'searchResults'}
              params={{terms: search.query, splat: search.filters}}
-             query={{size: nextPage, ...this.props.query}}
+             query={nextPageQuery}
              onClick={this.triggerLoad.bind(this, nextPage)}
             >load {loadThisManyMore} more</Link>)
       </span>
