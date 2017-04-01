@@ -138,7 +138,17 @@ var TombstoneIdeograph = React.createClass({
   render() {
     var {fieldToHighlight} = this.state
     var fieldHighlighters = ['title', 'artist', 'accession number'].map(fieldName => {
-      return <a key={fieldName} onclick="return false" onClick={this.changeHighlight.bind(this, fieldName)}>{fieldName}</a>
+      var isHighlighted = fieldToHighlight == fieldName
+      var style = {color: isHighlighted ? 'red' : '#222'}
+
+      return <a
+        key={fieldName}
+        style={style}
+        onclick="return false"
+        onClick={this.changeHighlight.bind(this, fieldName)}
+      >
+        {fieldName}
+      </a>
     })
     return <div>
       <p>To find more, search for an artwork by <span>{intersperse(fieldHighlighters, ', ')}</span>.</p>
