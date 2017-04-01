@@ -223,6 +223,7 @@ var QuiltPatch = React.createClass({
       left: "50%",
       top: "50%",
       transform: "translateY(-50%) translateX(-50%)",
+      WebkitTransform: "translateY(-50%) translateX(-50%)",
       position: "absolute",
     }
 
