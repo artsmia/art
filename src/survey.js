@@ -29,7 +29,7 @@ var VotingBooth = React.createClass({
       <a href="#" style={linkStyle} onClick={this.next}>&rarr; skip</a>
     </div>
 
-    return <div>
+    return <div style={this.props.style}>
       {votingActions}
       <ArtworkPreview {...this.props} showPeeks={false}>
         {votingActions}
@@ -49,7 +49,10 @@ var VotingBooth = React.createClass({
   },
 })
 
-var VoteForRandomArtworkCard = RandomArtwork(VotingBooth, 'room:G3* image:valid public_access:1')
+var VoteForRandomArtworkCard = RandomArtwork(VotingBooth, {
+  searchQuery: 'room:G3* image:valid public_access:1',
+  preloadNext: true,
+})
 
 var Survey = React.createClass({
   render() {
