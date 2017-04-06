@@ -57,7 +57,12 @@ var VoteForRandomArtworkCard = RandomArtwork(VotingBooth, {
 var Survey = React.createClass({
   render() {
     var thanksMessage = <div>
-      <p>Thanks for helping to the museum make connections between individual preferences and diverse artworks. You can keep at it, but we’ve gotten enough data from you to substantially influence our algorithm.</p>
+      <p>
+        Thanks for helping Mia visitors make new connections to diverse artworks.
+        <a href="#" onClick={this.incrementProgress}>Feel free to keep at it</a>
+        , but you’ve succeeded in giving us enough data to influence our algorithm.
+      </p>
+
       <a href="#" onClick={this.incrementProgress}>Keep going</a>
     </div>
     var sessionProgress = this.state.sessionProgress
