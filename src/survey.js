@@ -22,12 +22,17 @@ var restWithCorsCookies = require('./rest-with-cookies')
 
 var VotingBooth = React.createClass({
   render() {
-    var linkStyle = {margin: '1em', display: 'inline-block'}
+    var linkStyle = {margin: '0.25em', display: 'inline-block'}
+    var votingActions = <div style={{margin: '1em'}}>
+      <a href="#" style={linkStyle} onClick={this.vote.bind(this, 'like')}>&uarr; I like this</a>
+      <a href="#" style={linkStyle} onClick={this.vote.bind(this, 'dislike')}>&darr; I don't like this</a>
+      <a href="#" style={linkStyle} onClick={this.next}>&rarr; skip</a>
+    </div>
+
     return <div>
+      {votingActions}
       <ArtworkPreview {...this.props} showPeeks={false}>
-        <a href="#" style={linkStyle} onClick={this.vote.bind(this, 'like')}>&uarr; I like this</a>
-        <a href="#" style={linkStyle} onClick={this.vote.bind(this, 'dislike')}>&darr; I don't like this</a>
-        <a href="#" style={linkStyle} onClick={this.next}>skip</a>
+        {votingActions}
       </ArtworkPreview>
     </div>
   },
