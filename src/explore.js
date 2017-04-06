@@ -38,7 +38,6 @@ var Explore = React.createClass({
 
           <h3>Journeys</h3>
           <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="https://itunes.apple.com/us/app/mia-journeys/id1058993004">Download the app free (iOS).</a></p>
-          <ExpandableNewArtsmiaContentBlock page="journeys" />
 
           <h3>Overheard</h3>
           <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="https://itunes.apple.com/us/app/overheard-mia/id1116319582">Download it free (iOS)</a>.</p>
@@ -46,7 +45,6 @@ var Explore = React.createClass({
 
           <h3>ArtStories</h3>
           <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="https://artstories.artsmia.org">ArtStories</a>.</p>
-          <ExpandableNewArtsmiaContentBlock page="artstories" />
         </div>
       <Helmet title="Explore the art" />
     </div></div>
