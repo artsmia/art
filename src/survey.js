@@ -40,6 +40,7 @@ var VotingBooth = React.createClass({
   vote(direction) {
     var {id} = this.props.art
     restWithCorsCookies(`${SEARCH}/survey/art/${id}/${direction}`)
+      .then(this.props.incrementProgress)
       .then(this.next)
   },
 
@@ -52,14 +53,34 @@ var VoteForRandomArtworkCard = RandomArtwork(VotingBooth, 'room:G3* image:valid 
 
 var Survey = React.createClass({
   render() {
-    return <div style={{margin: '3em'}}>
-      <VoteForRandomArtworkCard />
+    var thanksMessage = <div>
+      <p>Thanks for helping to the museum make connections between individual preferences and diverse artworks. You can keep at it, but we’ve gotten enough data from you to substantially influence our algorithm.</p>
+      <a href="#" onClick={this.incrementProgress}>Keep going</a>
+    </div>
+    var sessionProgress = this.state.sessionProgress
+
+    return <div style={{margin: '1em'}}>
+      {sessionProgress == 11 ?
+        thanksMessage :
+        <VoteForRandomArtworkCard incrementProgress={this.incrementProgress} />
+      }
     </div>
   },
 
   componentDidMount() {
     restWithCorsCookies(`${SEARCH}/survey/getUser`)
-  }
+    this.props.toggleAppHeader()
+  },
+
+  getInitialState() {
+    return {
+      sessionProgress: 0 // number of votes this session
+    }
+  },
+
+  incrementProgress() {
+    this.setState({sessionProgress: this.state.sessionProgress+1})
+  },
 })
 
 module.exports = Survey
