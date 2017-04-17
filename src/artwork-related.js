@@ -69,25 +69,26 @@ var ArtworkRelatedContent = React.createClass({
 
   trackRelatedContentInteraction(json, event) {
     // track clicks on related content via more.artsmia.org fort objects on G311 and 355
-    var debug = false
-    if((debug || window.location.hostname == "more.artsmia.org") && ['G311', 'G355'].indexOf(this.props.art.room) > -1) {
+    if(['G311', 'G355'].indexOf(this.props.art.room) > -1) {
       event.preventDefault()
 
+      // note: outbound link tracking only accepts 'label'
       ga.outboundLink({
         category: 'more.artsmia.org related content click',
         action: 'clicked',
         label: json.type,
         value: `${json.id} - ${json.link}`,
       }, function() {
-        window.location = json.link
+        // window.location = json.link
+        json.type == 'audio' || window.open(json.link, '_blank')
       })
     }
   },
 
   templates: {
     audio: (json, id, _, track) => <div className="audioClip">
-      <audio style={{maxWidth: '100%'}} src={json.link.replace('http:', 'https:')} controls onplay={track}></audio>
-      <a href={json.link}>Audio Clip<br/><sub>Listen.</sub></a>
+      <audio style={{maxWidth: '100%'}} src={json.link.replace('http:', 'https:')} controls onPlay={track}></audio>
+      <span>Audio Clip<br/><sub>Listen.</sub></span>
     </div>,
     newsflash: (json) => <div className="newsflash" style={{backgroundImage: `url(https://newsflash.dx.artsmia.org${json.image})`}}>
       <div className="overlay">
