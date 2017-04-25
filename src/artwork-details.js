@@ -197,6 +197,17 @@ var ArtworkDetails = React.createClass({
           <Markdown>{art.accessionHighlightText + '\n\n---'}</Markdown>
         ]
       }],
+      ['metadata', (art) => {
+        const message = `Click here to see the machine readable JSON data that underpins this page.`
+        return [
+          <Markdown>{message}</Markdown>,
+          <div>
+            <p><a href={`https://search.artsmia.org/id/${art.id}`}>Or access it though our search API</a></p>
+            <Markdown>{`If you're interested in this, you might also want to check out our [Open Access](/info/open-access) page.`}</Markdown>
+            <pre><ClickToSelect><code>{JSON.stringify(art, null, 2)}</code></ClickToSelect></pre>
+          </div>,
+        ]
+      }],
       ['curator_approved', art => {
         var currentUrl = window.location && window.location.href.split('/').slice(0, 5).join('/')
         var dataSender = feedbackSender(undefined, undefined, 'Collections data feedback', currentUrl)
