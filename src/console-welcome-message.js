@@ -8,9 +8,10 @@ module.exports = () => {
     line-height: 3em;
   `
 
-  console.log(
-    `%cminneapolis institute of art\n%c“Inspiring wonder through the power of art.”\n\nhttps://collections.artsmia.org/info/open-access\nhttps://github.com/artsmia/art`,
-    whiteTextOnBlackWithPadding,
-    ''
-  )
+  window.console &&
+    console.log(
+      `%cminneapolis institute of art\n%c“Inspiring wonder through the power of art.”\n\nhttps://collections.artsmia.org/info/open-access\nhttps://github.com/artsmia/art`,
+      whiteTextOnBlackWithPadding,
+      ''
+    )
 }
