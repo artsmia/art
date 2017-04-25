@@ -35,7 +35,7 @@ var Search = React.createClass({
     const {universal, smallViewport} = this.context
     const path = this.props.path
     const darkenQuilt = this.props.path && (path.match(/\/search/) || path.match('more') && window && window.innerWidth <= 736)
-    const headerArtworks = ImageQuilt.getImagedResults(hits)
+    const headerArtworks = ImageQuilt.getImagedResults(this.state.hits || hits)
     const showQuilt = !darkenQuilt && headerArtworks
     var quiltProps = Object.assign({
       maxRows: this.state.showAggs ? 1 : 2,
@@ -50,22 +50,29 @@ var Search = React.createClass({
 
     const idealSearchBoxWidth = Math.max(17, this.state.terms && this.state.terms.length*1.1 || 0)
     const formProps = universal ? {action: "/search/", method: "get"} : {action: ''}
-    const simpleSearchBox = <div className='search-wrapper' style={{width: idealSearchBoxWidth + 'em'}}>
-      <form {...formProps}><input className='search-input' type="search"
-        placeholder="search"
-        value={searchLanguageMap(this.state.terms)}
-        onKeyDown={this.keyDown}
-        onChange={this.throttledSearch}
-        onFocus={({target}) => target && target.select()}
-        style={{width: '100%', pointerEvents: 'all'}}
-        name="q"
-        ref="searchInput"
-        autoComplete="off"
-        list="searchCompletions"
-        /></form>
-    </div>
+    const simpleSearchBox = (
+      <div className="search-wrapper" style={{ width: idealSearchBoxWidth + 'em' }}>
+        <form {...formProps}>
+          <input
+            className="search-input"
+            type="search"
+            placeholder="search"
+            value={searchLanguageMap(this.state.terms)}
+            onKeyDown={this.keyDown}
+            onChange={this.throttledSearch}
+            onFocus={({ target }) => target && target.select()}
+            style={{ width: '100%', pointerEvents: 'all' }}
+            name="q"
+            ref="searchInput"
+            autoComplete="off"
+            list="searchCompletions"
+          />
+        </form>
+      </div>
+    )
 
     const hideInput = this.props.hideInput && !this.state.activateSearch
+
     var searchStyles = {
       left: 0,
       right: 0,
@@ -129,7 +136,7 @@ var Search = React.createClass({
     var isDesktop = typeof window.orientation === 'undefined'
 
     this.debouncedSearch = (delay || isDesktop) ?
-      debounce(update, this.props.delay || 3000) :
+      debounce(update, delay || 3000) :
       undefined
     this.debouncedAutocomplete = debounce(this.autocomplete, 300)
   },
@@ -146,6 +153,12 @@ var Search = React.createClass({
       this.activateSearch()
     }
     window.lastSearchedTerms = this.state.terms
+
+    if(!this.props.triggerOnInactivity) return
+
+    this.inactivityTimer = window.setTimeout(() => {
+      this.state.searchAnimationCancelled || this.setState({ enableAnimation: true })
+    }, 5000)
   },
 
   throttledSearch(event) {
@@ -157,6 +170,7 @@ var Search = React.createClass({
   },
 
   search() {
+    this.cancelAnimation()
     var terms = this.normalizeTerms(this.state.terms)
     var {facet, searchAll} = this.props
     if(terms === '') return
@@ -171,6 +185,8 @@ var Search = React.createClass({
     if(event.key == 'Enter') {
       this.search()
       event.preventDefault()
+    } else {
+      this.cancelAnimation()
     }
   },
 
@@ -185,11 +201,17 @@ var Search = React.createClass({
     this.setState({results, hits: results && results.hits && results.hits.hits || []})
   },
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     var {activateSearch} = this.props
     if(activateSearch && activateSearch !== this.state.activateSearch) {
       this.activateSearch()
       this.setState({activateSearch: activateSearch})
+    }
+
+    if(prevState.enableAnimation !== this.state.enableAnimation) {
+      this.state.enableAnimation
+        ? this.beginToAnimateSearchInput()
+        : this.cancelAnimation()
     }
   },
 
@@ -232,6 +254,78 @@ var Search = React.createClass({
       node.value && node.setSelectionRange(0, node.value.length)
     }
   },
+
+  beginToAnimateSearchInput() {
+    if(!this.state.enableAnimation) return this.cancelAnimation()
+
+    const loop = (wait) => {
+      this.animateSearchInput()
+      setTimeout(loop, 7000)
+    }
+
+    this.searchAnimationTimer = setTimeout(loop.bind(1000), 0)
+  },
+
+  cancelAnimation() {
+    clearInterval(this.searchAnimationTimer)
+    this.setState({searchAnimationCancelled: true})
+  },
+
+  animateSearchInput() {
+    if(!this.state.enableAnimation) return this.cancelAnimation()
+    if(document.hidden) return
+
+    var searchWords = [
+      'portrait',
+      'horses',
+      'rights:"Public Domain"',
+      'mountains',
+      'monet',
+      'sea',
+      'arch',
+      'Buddha',
+      'silver',
+      'vase'
+    ]
+
+    var currentWord = this.refs.searchInput.value
+    var currentIndex = searchWords.indexOf(currentWord)
+    var nextWord = currentWord
+      ? searchWords[(currentIndex + 1) % searchWords.length]
+      : searchWords[0]
+
+    this.typeLetters(nextWord)
+  },
+
+  updateQuilt(terms) {
+    terms = terms || this.refs.searchInput.value
+
+    !!terms &&
+      SearchResults.fetchData.searchResults({terms}, {size: 30})
+      .then(results => {
+        const hits = results && results.hits && results.hits.hits || []
+        this.setState({hits})
+      })
+  },
+
+  typeLetters(word) {
+    const _input = this.refs.searchInput
+    // _input.select()
+    // _input.value = ''
+
+    word.split('').map((letter, index, letters) => {
+      // const initialValue = index == 0 ? '' : _input.value
+      if(index == 0) return _input.value = letter
+      // let delay = Math.random()*100+50
+      let delay = 150
+
+      setTimeout(() => _input.value = _input.value + letter, delay*index)
+      if (index+1 == letters.length)
+        setTimeout(() => {
+          setTimeout(this.updateQuilt.bind(this, word), 200)
+        }, 150*(index+1))
+    })
+  }
 })
 Search.contextTypes = {
   router: React.PropTypes.func,
