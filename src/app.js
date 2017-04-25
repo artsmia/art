@@ -6,6 +6,7 @@ var {pathSatisfies} = require('ramda')
 
 var LiveSearch = require('./live-search')
 var GlobalNavigation = require('./navigation')
+var consoleWelcomeMessage = require('./console-welcome-message')
 
 var App = React.createClass({
   render() {
@@ -41,6 +42,7 @@ var App = React.createClass({
   componentDidMount() {
     this.debouncedResize = debounce(this.handleResize, 500),
     window.addEventListener('resize', this.debouncedResize)
+    consoleWelcomeMessage()
   },
   componentWillUnmount() {
     window.removeEventListener('resize', this.debouncedResize)
