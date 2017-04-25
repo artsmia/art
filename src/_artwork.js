@@ -179,9 +179,10 @@ var CopyableLabel = React.createClass({
 // check if an image exists on our cloudfront distribution,
 // and if not, fall back to loading it from the API
 var testCloudfrontImage = (art, callback) => {
-  var cdnUrl = imageCDN(art.id, art.restricted ? 400 : 800)
+  var cdnUrl = imageCDN(art.id, art.restricted ? 800 : 'full')
 
   if(typeof document == 'undefined') {
+    // we're currently server-rendered
     return cdnUrl
   }
 
