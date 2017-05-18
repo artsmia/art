@@ -6,6 +6,7 @@ var Department = require('./department')
 var Search = require('./search')
 var Artwork = require('./artwork')
 var ExpandableNewArtsmiaContentBlock = require('./expandable-new-artsmia-content-block')
+var Markdown = require('./markdown')
 
 var Explore = React.createClass({
   statics: {
@@ -13,6 +14,13 @@ var Explore = React.createClass({
   },
 
   render() {
+    const appThumbStyle = {
+      maxWidth: '5em',
+      marginRight: '1em',
+      float: 'left',
+    }
+
+    const clearHr = <hr style={{visibility: 'hidden', clear: 'both'}} />
     return <div>
       <a href="/art/8747" className="explore-header"></a>
       <div className="explore-section" style={{padding: '0 2.5vmax'}}>
@@ -20,7 +28,7 @@ var Explore = React.createClass({
           var [facet, ...terms] = term.split(':')
           return <section>
             <h2>Explore <span style={{fontFamily: '"MiaGrotesk-Light",sans-serif'}}>{terms[1]}</span></h2>
-            <p>{blurb}</p>
+            <p><Markdown>{blurb}</Markdown></p>
             <Peek
               offset={index*5}
               facet={facet}
@@ -29,22 +37,33 @@ var Explore = React.createClass({
               directLinkTo={terms[1]}
               shuffleQuilt={true}
               />
-            <hr style={{visibility: 'hidden'}} />
+            {clearHr}
           </section>
         })}
 
         <div>
           <h2>Personalize Mia with new ways to explore art.</h2>
 
-          <h3>Journeys</h3>
-          <p>Use this new app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="https://itunes.apple.com/us/app/mia-journeys/id1058993004">Download the app free (iOS).</a></p>
+          <div>
+            <img
+              src="http://a2.mzstatic.com/us/r30/Purple30/v4/81/fe/1d/81fe1d69-d2dd-ef9d-a78c-44ba8b30f5fd/screen696x696.jpeg" 
+              style={appThumbStyle}
+            />
+            <h3>Journeys</h3>
+            <p>Use this app to create a personalized journey through the museum or follow the suggestions of others. Either way, we’ll map it out for you. <a href="https://itunes.apple.com/us/app/mia-journeys/id1058993004">Download the app free (iOS).</a></p>
+            {clearHr}
+          </div>
 
-          <h3>Overheard</h3>
-          <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful new audio app. <a href="https://itunes.apple.com/us/app/overheard-mia/id1116319582">Download it free (iOS)</a>.</p>
-          <ExpandableNewArtsmiaContentBlock page="overheard" />
-
-          <h3>ArtStories</h3>
-          <p>In-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer: <a href="https://artstories.artsmia.org">ArtStories</a>.</p>
+          <div>
+            <img
+              src="http://a2.mzstatic.com/us/r30/Purple30/v4/9f/29/53/9f295387-66e0-ff76-d38f-04a33422faa5/screen696x696.jpeg"
+              style={appThumbStyle}
+            />
+            <h3>Overheard</h3>
+            <p>Eavesdrop on the conversations of fictional fellow visitors as they wander the galleries, using this playful audio app. <a href="https://itunes.apple.com/us/app/overheard-mia/id1116319582">Download it free (iOS)</a>.</p>
+            <ExpandableNewArtsmiaContentBlock page="overheard" />
+            {clearHr}
+          </div>
         </div>
       <Helmet title="Explore the art" />
     </div></div>
@@ -52,10 +71,10 @@ var Explore = React.createClass({
 
 
   searches: [
-    {term:'_exists_:related:artstories', blurb:'ArtStories are digital explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories—available on your computer, phone, or tablet.'},
-    {term:'_exists_:related:newsflashes', blurb:'Thought-provoking and a little cheeky, Newsflash updates connect current events to the art in the museum. Look for new updates taped to the gallery walls, or find old ones online.'},
-    {term:'_exists_:related:audio-stops', blurb:'Audio Stops are mini-podcasts that present many of Mia’s highlights and favorite artworks through sound and stories. Connect in the galleries or at home.'},
-    {term:'_exists_:related:stories', blurb:'Mia Stories is the museum beyond the walls, outside the frame, at the lively intersection of life and art. From behind-the-scenes buzz to inspiring connections with current events, it’s the museum in conversation.'},
+    {term:'_exists_:related:artstories', blurb:'[ArtStories](https://artstories.artsmia.org/) are in-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer.'},
+    {term:'_exists_:related:newsflashes', blurb: '[NewsFlashes](https://new.artsmia.org/trending-now/) connect current events and the art in the Mia collections. You’ll also find them throughout the museum, in print form, hanging beside the art they reference.'},
+    {term:'_exists_:related:audio-stops', blurb:'Audio Stops are mini-podcasts that present many of Mia’s highlights and favorite artworks through sound and stories. Listen in the galleries or at home.'},
+    {term:'_exists_:related:stories', blurb:'[Mia Stories](https://new.artsmia.org/stories/): the museum beyond the walls, outside the frame, at the lively intersection of life and art. From behind-the-scenes buzz to inspiring connections with current events, it’s the museum in conversation.'},
   ],
 })
 
