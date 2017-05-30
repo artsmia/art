@@ -221,78 +221,98 @@ var LinkBar = React.createClass({
   },
 
   render() {
-    var {art} = this.props
+    var { art } = this.props
 
     var actions = Object.keys(this.props.actions)
-    .map(key => {
-      this.props.actions[key].key = key
-      return this.props.actions[key]
-    }, [])
-    .filter(action => action.enabled)
-    // don't show 'download' for art with an invalid image
-    .filter(action => !(action.key == 'download' && art.image == 'invalid'))
+      .map(key => {
+        this.props.actions[key].key = key
+        return this.props.actions[key]
+      }, [])
+      .filter(action => action.enabled)
+      // don't show 'download' for art with an invalid image
+      .filter(action => !(action.key == 'download' && art.image == 'invalid'))
 
-    return <div>
-      <div className="link-bar">
-        {actions
-        .map(action => {
-          var key = action.key
-          var handler = eval(`_this.handle${key[0].toUpperCase() + key.substr(1)}`) // TODO alert alert warning warning (shouldn't have to reference _this, sketchy code)
+    return (
+      <div>
+        <div className="link-bar">
+          {actions.map(action => {
+            var key = action.key
+            var handler = eval(
+              `_this.handle${key[0].toUpperCase() + key.substr(1)}`
+            ) // TODO alert alert warning warning (shouldn't have to reference _this, sketchy code)
 
-          var options = {
-            key: key,
-            className: "material-icons",
-            onClick: handler,
-          }
-          if(key == 'download') {
-            options.download = ''
-            if(this.state.resolvedImageDownloadUrl) {
-              options.href = this.state.resolvedImageDownloadUrl
-            } else {
-              testCloudfrontImage(art, url => { this.setState({resolvedImageDownloadUrl: url})})
+            var options = {
+              key: key,
+              className: 'material-icons',
+              onClick: handler,
             }
-          }
-          var content = action.icon || action.key
+            if (key == 'download') {
+              options.download = ''
+              if (this.state.resolvedImageDownloadUrl) {
+                options.href = this.state.resolvedImageDownloadUrl
+              } else {
+                testCloudfrontImage(art, url => {
+                  this.setState({ resolvedImageDownloadUrl: url })
+                })
+              }
+            }
+            var content = action.icon || action.key
 
-          return (key == 'download') ?
-            <a {...options}>{content}</a> :
-            <i {...options}>{content}</i>
-        })}
+            return key == 'download'
+              ? <a {...options}>{content}</a>
+              : <i {...options}>{content}</i>
+          })}
+        </div>
+        {this.state.showShare && this.showShare()}
+        <div className="clear" />
+        <div className="back-button">
+          {this.props.link &&
+            <Link to="artwork" params={{ id: art.id }}>
+              View Details <i className="material-icons">arrow_forward</i>
+            </Link>}
+        </div>
       </div>
-      {this.state.showShare && this.showShare()}
-      <div className="clear"></div>
-      <div className="back-button">{this.props.link && <Link to="artwork" params={{id: art.id}}>View Details <i className="material-icons">arrow_forward</i></Link>}</div>
-    </div>
+    )
   },
 
   getUrl() {
-    return 'https://collections.artsmia.org'+this.context.router.getCurrentPath()
+    return (
+      'https://collections.artsmia.org' + this.context.router.getCurrentPath()
+    )
   },
 
   handleShare() {
-    var {art} = this.props
+    var { art } = this.props
 
-    this.setState({showShare: !this.state.showShare})
+    this.setState({ showShare: !this.state.showShare })
   },
 
   showShare() {
-    var {art} = this.props
+    var { art } = this.props
 
     var facebookURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURI(this.getUrl())}`
     var twitterURL = `https://twitter.com/intent/tweet?url=${encodeURI(this.getUrl())}`
     var emailURL = `mailto:?subject=${art.title}&body=${encodeURI(this.getUrl())}`
 
-    return <div className="share">
-      <div className="social"><a title="Share via email" href={emailURL} target="_blank">
-        <img src="https://simpleicons.org/icons/email.svg" />
-      </a></div>
-      <div className="social"><a title="Share on Facebook" href={facebookURL} target="_blank">
-        <img src="https://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/facebook.svg" />
-      </a></div>
-      <div className="social"><a title="Share on Twitter" href={twitterURL} target="_blank">
-        <img src="https://cdn.rawgit.com/danleech/simple-icons/gh-pages/icons/twitter.svg" />
-      </a></div>
-    </div>
+    return (
+      <div className="share">
+        <div className="social">
+          <a title="Share via email" href={emailURL} target="_blank">
+            <span className="material-icons" style={{color: '#232323'}}>email</span>
+          </a>
+        </div>
+        <div className="social">
+          <a title="Share on Facebook" href={facebookURL} target="_blank">
+            <img src="https://cdn.rawgit.com/danleech/simple-icons/develop/icons/facebook.svg" />
+          </a>
+        </div>
+        <div className="social">
+          <a title="Share on Twitter" href={twitterURL} target="_blank">
+            <img src="https://cdn.rawgit.com/danleech/simple-icons/develop/icons/twitter.svg" />
+          </a>
+        </div>
+      </div>
+    )
   },
 
   handlePrint() {
