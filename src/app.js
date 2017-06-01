@@ -2,6 +2,7 @@ var React = require('react')
 var {RouteHandler, Link} = require('react-router')
 var Helmet = require('react-helmet')
 var debounce = require('debounce')
+var {pathSatisfies} = require('ramda')
 
 var LiveSearch = require('./live-search')
 var GlobalNavigation = require('./navigation')
@@ -105,6 +106,9 @@ var App = React.createClass({
   },
 
   getInitialState() {
+    var hasMoreInQueryParams = pathSatisfies(search => search && search.indexOf('more=') > 0)
+    window.enteredViaMore = hasMoreInQueryParams(['window', 'location', 'search'], window)
+
     return {
       showSearch: false,
       smallViewport: this.isSmallViewport(),
