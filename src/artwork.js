@@ -105,9 +105,21 @@ var Artwork = React.createClass({
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
       !this.state.fullscreenImage
     var toggleRelated = this.state.smallViewportShowInfoOrRelatedContent
+    var infoRelatedToggleStyles = {
+      position: 'absolute',
+      zIndex: '10000',
+      right: '7px',
+      bottom: '7px',
+      color: '#232323',
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      borderRadius: '1em',
+      lineHeight: '0.8em',
+    }
     var exploreIcon = showMoreIcon &&
-      <a href="#" onClick={this.toggleInfoAndRelatedContent} style={{position: 'absolute', zIndex: '10000', right: '7px', bottom: '0px', color: '#232323'}}>
-        {!toggleRelated ? <img src="/images/more-icon.svg" style={{width: '3em'}}/> : <i className="control material-icons">info</i>}
+      <a href="#" onClick={this.toggleInfoAndRelatedContent} style={infoRelatedToggleStyles}>
+        {!toggleRelated ?
+          <img src="/images/more-icon.svg" style={{width: '3em', paddingTop: 7}}/> :
+          <i className="control material-icons">info</i>}
       </a>
     var relatedContent = <ArtworkRelatedContent id={id} art={art} />
 
