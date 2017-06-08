@@ -112,6 +112,7 @@ var App = React.createClass({
     return {
       showSearch: false,
       smallViewport: this.isSmallViewport(),
+      enteredViaMore: window.enteredViaMore,
     }
   },
 

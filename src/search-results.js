@@ -22,7 +22,7 @@ var SearchResults = React.createClass({
         let searchUrl = `${SEARCH}/${params.terms}?size=${size}`
         if(sort) searchUrl += `&sort=${sort}`
         if(filters) searchUrl += `&filters=${properlyCodedFilters}`
-        if(window && window.enteredViaMore || query.more) searchUrl += `&tag=more`
+        if(window && window.enteredViaMore || query && query.more) searchUrl += `&tag=more`
         return rest(searchUrl).then((r) => JSON.parse(r.entity))
       }
     }

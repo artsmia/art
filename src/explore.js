@@ -72,7 +72,7 @@ var Explore = React.createClass({
 
   searches: [
     {term:'_exists_:related:artstories', blurb:'[ArtStories](https://artstories.artsmia.org/) are in-depth multimedia explorations of Mia’s highlights and hidden gems—from intriguing details to secret backstories. Available on iPads in the galleries, and optimized for your smartphone or home computer.'},
-    {term:'_exists_:related:newsflashes', blurb: '[NewsFlashes](https://new.artsmia.org/trending-now/) connect current events and the art in the Mia collections. You’ll also find them throughout the museum, in print form, hanging beside the art they reference.'},
+    {term:'_exists_:related:newsflashes', blurb: '[NewsFlashes](https://new.artsmia.org/trending-now/) connect current events and art in Mia\'s collection. You’ll also find them throughout the museum, in print form, hanging beside the art they reference.'},
     {term:'_exists_:related:audio-stops', blurb:'Audio Stops are mini-podcasts that present many of Mia’s highlights and favorite artworks through sound and stories. Listen in the galleries or at home.'},
     {term:'_exists_:related:stories', blurb:'[Mia Stories](https://new.artsmia.org/stories/): the museum beyond the walls, outside the frame, at the lively intersection of life and art. From behind-the-scenes buzz to inspiring connections with current events, it’s the museum in conversation.'},
   ],
