@@ -5,6 +5,7 @@ var {Link} = Router
 var Artwork = require('./artwork')
 var ArtworkPreview = require('./artwork-preview')
 var Markdown = require('./markdown')
+var ArtworkPageMetadata = require('./artwork/page-metadata')
 
 var AccessionHighlight = React.createClass({
   mixins: Artwork.mixins,
@@ -36,7 +37,7 @@ var AccessionHighlight = React.createClass({
         <div className="back-button"><Link to="artworkSlug" params={{id: art.id, slug: art.slug}}>view details <i className="material-icons">arrow_forward</i></Link></div>
 
       </Artwork>
-      {Artwork.pageMetadata(art, 'Accession Highlight: ')}
+      <ArtworkPageMetadata art={art} prependTitle={'Accession Highlight: '} />
     </div>
   }
 })

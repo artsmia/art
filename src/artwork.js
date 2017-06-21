@@ -15,6 +15,7 @@ var Image = require('./image')
 var imageCDN = require('./image-cdn')
 var SEARCH = require('./endpoints').search
 var ArtworkRelatedContent = require('./artwork-related')
+var ArtworkPageMetadata = require('./artwork/page-metadata')
 
 var Sticky = require('react-sticky')
 
@@ -50,31 +51,6 @@ var Artwork = React.createClass({
         if(err) transition.redirect('artworkSlug', params)
       })
       .then(callback)
-    },
-
-    pageMetadata(art, prependTitle='') {
-      var pageTitle = prependTitle + [
-        art.title.replace(/<[^ ]+?>/g, '"'),
-        _Artwork.Creator.getFacetAndValue(art)[1]
-      ].filter(e => e).join(', ')
-      var imageUrl = imageCDN(art.id)
-      var canonicalURL = `http://collections.artsmia.org/art/${art.id}/${art.slug}`
-
-      return <Helmet
-      title={pageTitle}
-      meta={[
-        {property: "og:title", content: pageTitle + ' ^ Minneapolis Institute of Art'},
-        {property: "og:description", content: art.text},
-        {property: "og:image", content: imageUrl},
-        {property: "og:url", content: canonicalURL},
-        {property: "twitter:card", content: "summary_large_image"},
-        {property: "twitter:site", content: "@artsmia"},
-        {property: "robots", content: art.accession_number.match(/^L/i) ? 'noindex' : 'all'},
-      ]}
-      link={[
-        {"rel": "canonical", "href": canonicalURL},
-      ]}
-      />
     },
   },
 
@@ -187,7 +163,7 @@ var Artwork = React.createClass({
 
     return <div className={cx('artwork', {smallviewport: smallViewport})}>
       {content}
-      {Artwork.pageMetadata(art)}
+      <ArtworkPageMetadata art={art} noIndex={this.noIndex()} />
     </div>
   },
 
