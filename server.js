@@ -25,16 +25,21 @@ app.get('/search/', (req, res, next) => {
   next()
 })
 
-var html = ({title, meta, link}, data, body) => index
-  .replace('<!--HEAD-->',
-           [
-             `${title}`,
-             meta,
-             link,
-             `<script>window.__DATA__ = ${JSON.stringify(data)};</script>`
-           ]
-    .filter(e => e).join('  \n'))
-  .replace('<!--BODY-->', body);
+var html = ({ title, meta, link }, data, body) => {
+  const renderedHead = [
+    `${title}`,
+    meta,
+    link,
+    `<script>window.__DATA__ = ${JSON.stringify(data)};</script>`,
+  ]
+    .filter(e => e)
+    .join('  \n')
+    .replace(/ data-react-helmet="true"/g, '')
+
+  return index
+    .replace('<!--HEAD-->', renderedHead)
+    .replace('<!--BODY-->', body)
+}
 
 app.use((req, res, next) => {
   var actingUrl = req.url.replace(/\/(.*)\/$/, '/$1')
