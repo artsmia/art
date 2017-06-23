@@ -63,6 +63,7 @@ var App = React.createClass({
     return {
       universal: this.props.universal,
       smallViewport: this.state.smallViewport,
+      clientIp: this.props.clientIp,
     }
   },
 
@@ -136,6 +137,7 @@ var App = React.createClass({
 App.childContextTypes = {
   universal: React.PropTypes.bool,
   smallViewport: React.PropTypes.bool,
+  clientIp: React.PropTypes.string,
 }
 
 module.exports = App

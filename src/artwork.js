@@ -36,19 +36,28 @@ var Artwork = React.createClass({
 
     checkRoute: (params, callback) => {
       var existingArt = window.__DATA__ && window.__DATA__.artwork
+
       return Artwork.fetchData.artwork(params, existingArt).then(art => {
         window.__DATA__ = {artwork: art}
         if(art.slug !== params.slug) {
           params.slug = art.slug
           return callback('mismatched slug', art)
         }
+
+        if((isLoan(art) || notPublicAccess(art)) && !window.privilegedClientIP) {
+          return callback('permission denied', art)
+        }
+
         callback(false, art)
       })
     },
 
     willTransitionTo: function (transition, params, query, callback) {
       Artwork.checkRoute(params, (err) => {
-        if(err) transition.redirect('artworkSlug', params)
+        switch(err) {
+          case 'mismatched slug': transition.redirect('artworkSlug', params)
+          case 'permission denied': transition.redirect('home', {...params, status: 403})
+        }
       })
       .then(callback)
     },
@@ -163,7 +172,7 @@ var Artwork = React.createClass({
 
     return <div className={cx('artwork', {smallviewport: smallViewport})}>
       {content}
-      <ArtworkPageMetadata art={art} noIndex={this.noIndex()} />
+      <ArtworkPageMetadata art={art} noIndex={this.notPublicAccess()} />
     </div>
   },
 
@@ -340,10 +349,9 @@ var Artwork = React.createClass({
     return this.state.art.accession_number.match(/^L/i)
   },
 
-  // different from the noIndex set at `App` - this factors in object status 
-  noIndex() {
-    return this.isLoan()
-      || this.state.art.public_access == '0'
+  notPublicAccess() {
+    return isLoan(this.state.art)
+      || notPublicAccess(this.state.art)
       || process.env.NODE_ENV !== 'production'
   },
 
@@ -356,6 +364,7 @@ Artwork.contextTypes = {
   router: React.PropTypes.func,
   universal: React.PropTypes.bool,
   smallViewport: React.PropTypes.bool,
+  clientIp: React.PropTypes.string,
 }
 
 var noImageStyle = {
@@ -398,3 +407,10 @@ var SketchfabEmbed = React.createClass({
 })
 
 module.exports = Artwork
+
+function isLoan(art) {
+  return !!art.accession_number.match(/^L/i)
+}
+function notPublicAccess(art) {
+  return art.public_access === '0'
+}

@@ -13,6 +13,7 @@ var routes = require('./routes')
 var app = express()
 var serveStatic = require('serve-static')
 app.locals.settings['x-powered-by'] = false
+app.enable('trust proxy')
 
 if(typeof window === "undefined") GLOBAL.window = GLOBAL
 
@@ -43,13 +44,16 @@ var html = ({ title, meta, link }, data, body) => {
 
 app.use((req, res, next) => {
   var actingUrl = req.url.replace(/\/(.*)\/$/, '/$1')
+  var privilegedClientIP = process.env.PRIVILEGED_IP_LIST.split(' ').indexOf(req.ip) > -1
+  window.privilegedClientIP = privilegedClientIP // FIXME how to pass this other than as a global?
 
   var router = Router.create({
     routes,
     location: actingUrl,
     onAbort: ({to, params, query}) => {
       var url = to && router.makePath(to, params, query) || '/'
-      res.redirect(301, url)
+      if(params.status == 403) return res.sendStatus(403)
+      res.redirect(params.status || 301, url)
     },
   })
 
@@ -58,7 +62,7 @@ app.use((req, res, next) => {
   router.run((Handler, state) => {
     // ga.pageview(state.pathname)
     fetchComponentData(state).then(data => {
-      var body = ReactDOM.renderToString(<Handler {...state} data={data} universal={true} />)
+      var body = ReactDOM.renderToString(<Handler {...state} data={data} universal={true} clientIp={req.ip} />)
       res.send(html(Helmet.rewind(), data, body))
     })
   })
