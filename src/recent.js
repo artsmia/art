@@ -27,7 +27,10 @@ var RecentAccessions = React.createClass({
   accessionHighlightsGrid() {
     var {accessionHighlights, recent} = this.props.data
     var groupedByDate = R.groupBy(
-      h => h.accessionDate.split('-')[0],
+      h => {
+        const date = h.accessionDate.split('-')[0]
+        return date == 2107 ? 2017 : date
+      },
       accessionHighlights.hits.hits.map(h => h._source)
     ) // {<date>: [<highlights>], …}
 
@@ -39,7 +42,7 @@ var RecentAccessions = React.createClass({
         var highlights = groupedByDate[accessionDate]
         return <div className="grid_wrapper" key={accessionDate}>
           <h3>{accessionDate.split('-').slice(0, 2).reverse().join('/')}</h3>
-          {highlights.map(highlight => {
+          {highlights.filter(highlight => highlight.image === 'valid').map(highlight => {
             return <div className="single_highlight">
               <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
                 <div className="highlight_image">
