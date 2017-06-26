@@ -13,6 +13,7 @@ window.history && history.replaceState({}, '', window.location.href.replace(/\/(
 
 Router.run(routes, Router.HistoryLocation, (Handler, state) => {
   if(trackAnalytics) ga.pageview(state.pathname)
+  window.privilegedClientIP = true
 
   var rehydratedData = window.__DATA__
   window.__DATA__ = null
