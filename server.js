@@ -44,7 +44,8 @@ var html = ({ title, meta, link }, data, body) => {
 
 app.use((req, res, next) => {
   var actingUrl = req.url.replace(/\/(.*)\/$/, '/$1')
-  var privilegedClientIP = process.env.PRIVILEGED_IP_LIST.split(' ').indexOf(req.ip) > -1
+  const internalIPs = process.env.PRIVILEGED_IP_LIST
+  var privilegedClientIP = internalIPs.split(' ').indexOf(req.ip) > -1
   window.privilegedClientIP = privilegedClientIP // FIXME how to pass this other than as a global?
 
   var router = Router.create({
@@ -52,8 +53,8 @@ app.use((req, res, next) => {
     location: actingUrl,
     onAbort: ({to, params, query}) => {
       var url = to && router.makePath(to, params, query) || '/'
-      if(params.status == 403) return res.sendStatus(403)
-      res.redirect(params.status || 301, url)
+      if(params && params.status == 403) return res.sendStatus(403)
+      res.redirect(params && params.status || 301, url)
     },
   })
 

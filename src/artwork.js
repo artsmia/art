@@ -234,7 +234,7 @@ var Artwork = React.createClass({
     var art = this.state.art
     this.setState({zoomLoaded: false, zoomLoading: true})
 
-    rest(`//tiles.dx.artsmia.org/${this.state.id}.json`)
+    rest(`https://tiles.dx.artsmia.org/${this.state.id}.json`)
     .then(
       response => JSON.parse(response.entity),
       rejected => {

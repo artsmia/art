@@ -26,7 +26,13 @@ var Exhibition = React.createClass({
       searchResults: (params, query) => {
         return Exhibition.fetchData.exhibition(params).then(exhibition => {
           var searchUrl = `${SEARCH}/ids/${exhibition.objects.join(',')}`
-          return rest(searchUrl).then((r) => JSON.parse(r.entity))
+          return rest(searchUrl)
+          .then((r) => JSON.parse(r.entity))
+          .then((json) => {
+            const publicAccessArtworks = json.hits.hits.filter(({_source: s}) => s.public_access == "1")
+            const publicAccessResults = {hits: {total: publicAccessArtworks.length, hits: publicAccessArtworks}}
+            return publicAccessResults
+          })
         })
       },
     },
