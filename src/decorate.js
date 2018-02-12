@@ -8,6 +8,8 @@ var GalleryDecorator = require('./decorate/gallery')
 var HighlightsDecorator = require('./decorate/highlights')
 var RecentDecorator = require('./decorate/recent')
 var RightsDecorator = require('./decorate/rights')
+var AudioDecorator = require('./decorate/audio')
+var NumberDecorator = require('./decorate/number')
 
 var Decorate = React.createClass({
   render() {
@@ -65,7 +67,16 @@ var DecorationFinder = (search, filters, props) => {
     "highlight:": () => <HighlightsDecorator key="highlight" />,
     "recent:": () => <RecentDecorator key="recent" />,
     "rights:": (term) => <RightsDecorator term={term} params={params} key={term} />,
+    ".*": (term) =>
+        props.hits.filter(hit => hit._source['related:audio-stops']).length > 0 // [1]
+        && <AudioDecorator term={term} params={params} key={term + '-audio'} {...props} />,
+    // "^[0-9\.,a-zA-Z]+$": (term) => <NumberDecorator term={term} params={params} key={term + '-number'} {...props} />,
   }
+
+  // [1] Here we 'gate' a decorator with certain conditions - it will only show when 
+  // there are hits with audio stops.
+  // TODO it would be nice if the decorator itself could define the conditions
+  // under which is should display
 
   let m = Object.keys(Decor).reduce((matches, d) => {
     var _m = terms.filter(term => term.match(new RegExp(d, 'i')))
@@ -74,6 +85,8 @@ var DecorationFinder = (search, filters, props) => {
   }, {})
 
   return Object.keys(m).map(key => {
-    return Decor[key](m[key])
-  })
+    const decorators = Decor[key](m[key])
+
+    return decorators
+  }).filter(component => component)
 }

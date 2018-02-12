@@ -93,6 +93,9 @@ var SearchResults = React.createClass({
       showMoreLink,
       maxResults: this.maxResults,
       query: this.props.query,
+      forceSearchUpdate: (nextFocusResult) => {
+        this.focusResult(nextFocusResult)
+      },
       ...this.props.summaryProps
     }
 
