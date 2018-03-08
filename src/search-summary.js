@@ -1,5 +1,6 @@
 var React = require('react')
 var Helmet = require('react-helmet')
+var { Link } = require('react-router')
 
 var Decorate = require('./decorate')
 var Aggregations = require('./aggregations')
@@ -47,7 +48,15 @@ const SearchSummary = React.createClass({
           showing {hits.length} {' '}
           {showingAll || <span>of {search.hits.total} {' '}</span>}
           results matching <code>{pretty.query}</code>
-          {search.filters && <span> and <code>{decodeURIComponent(pretty.filters)}</code></span>}
+          {search.filters && <span>
+            {' '}and <code>{decodeURIComponent(pretty.filters)}</code>
+            (<Link to='searchResults'
+              query={search.query}
+              params={{terms: `${search.query}`, splat: ''}}
+            >
+             clear filters
+            </Link>)
+          </span>}
           {sort && <span> sorted by {humanizeSnakeCase(sort.replace(/(-|\.).*/, ''))}</span>}
           {showingAll || this.props.showMoreLink}
         </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>

@@ -36,6 +36,7 @@ var Explore = React.createClass({
               quiltProps={{maxRowHeight: 600}}
               directLinkTo={terms[1]}
               shuffleQuilt={true}
+              filtered={true}
               />
             {clearHr}
           </section>

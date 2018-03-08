@@ -164,7 +164,13 @@ var Search = React.createClass({
     var filters = this.props.params && this.props.params.splat
     if(filters && filters.match(/deaccessioned:.?true.?/)) facet = filters
     this.props.onSearch && this.props.onSearch(terms)
-    this.transitionTo(facet && !searchAll ? 'filteredSearchResults' : 'searchResults', {terms: terms, splat: facet})
+
+    this.transitionTo(
+      filters && !searchAll ? 'filteredSearchResults' : 'searchResults', {
+        terms: terms,
+        splat: filters
+      }
+    )
   },
 
   keyDown(event) {
