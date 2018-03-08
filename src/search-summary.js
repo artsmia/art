@@ -18,7 +18,7 @@ const SearchSummary = React.createClass({
     // 1. there's more than 1 result
     // 2. there are filters applied that could be reducing the results to 0
     const toggleAggs = (hits && hits.length > 1 || search.filters && search.filters.length > 0) && <span className="filter-button">
-      <a onClick={this.toggleAggs} style={{cursor: 'pointer'}}>{showAggs ? 'hide filters' : 'filter search'}</a>
+      <a onClick={this.toggleAggs} style={{cursor: 'pointer'}}>{showAggs ? 'hide' : 'advanced'}</a>
     </span>
 
     const showingAll = hits.length == search.hits.total || hits.length >= this.props.maxResults
@@ -50,7 +50,7 @@ const SearchSummary = React.createClass({
           results matching <code>{pretty.query}</code>
           {search.filters && <span>
             {' '}and <code>{decodeURIComponent(pretty.filters)}</code>
-            (<Link to='searchResults'
+            {' '}(<Link to='searchResults'
               query={search.query}
               params={{terms: `${search.query}`, splat: ''}}
             >
