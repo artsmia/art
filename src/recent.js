@@ -26,12 +26,15 @@ var RecentAccessions = React.createClass({
 
   accessionHighlightsGrid() {
     var {accessionHighlights, recent} = this.props.data
+    const artworks = accessionHighlights.hits.hits
+      .map(h => h._source)
+      .filter(art => [127658, 126980, 126982, 126983, 126984, 127053, 127055].indexOf(parseInt(art.id)) == -1)
     var groupedByDate = R.groupBy(
       h => {
         const date = h.accessionDate.split('-')[0]
         return date == 2107 ? 2017 : date
       },
-      accessionHighlights.hits.hits.map(h => h._source)
+      artworks
     ) // {<date>: [<highlights>], …}
 
     var customImageFunction = (id) =>
@@ -40,6 +43,8 @@ var RecentAccessions = React.createClass({
     return <div>
       {Object.keys(groupedByDate).reverse().map(accessionDate => {
         var highlights = groupedByDate[accessionDate]
+        const aspectRatio = parseInt(accessionDate) > 2016 ? {width: 400, height: 300} : {width: 400, height: 400}
+        console.info(accessionDate, aspectRatio)
         return <div className="grid_wrapper" key={accessionDate}>
           <h3>{accessionDate.split('-').slice(0, 2).reverse().join('/')}</h3>
           {highlights.filter(highlight => highlight.image === 'valid').map(highlight => {
@@ -50,7 +55,7 @@ var RecentAccessions = React.createClass({
                     <ArtworkImage
                       art={highlight}
                       ignoreStyle={false}
-                      style={{width: 400, height: 400}}
+                      style={aspectRatio}
                       lazyLoad={false}
                       customImage={customImageFunction} />
                   </div>
