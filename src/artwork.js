@@ -98,13 +98,28 @@ var Artwork = React.createClass({
       color: '#232323',
       backgroundColor: 'rgba(255, 255, 255, 0.7)',
       borderRadius: '1em',
-      lineHeight: '0.8em',
+      lineHeight: '0.3em',
+      padding: '0.3em',
+    }
+    var exploreStyle = {
+      display: 'block',
+      transform: 'translateY(-13px)',
+      paddingLeft: '2em',
+      // TODO - use a background image to center this better?
+      // but it's hard because one thing we want to use is a font icon
+      // and the other is an svg…
+      // backgroundImage: 'url(/images/more.svg)',
+      // backgroundPosition: 'left center',
+      // backgroundRepeat: 'none',
     }
     var exploreIcon = showMoreIcon &&
       <a href="#" onClick={this.toggleInfoAndRelatedContent} style={infoRelatedToggleStyles}>
         {!toggleRelated ?
-          <img src="/images/more-icon.svg" style={{width: '3em', paddingTop: 7}}/> :
+          <img src="/images/more.svg" style={{width: '1.7em'}}/> :
           <i className="control material-icons">info</i>}
+        <span style={exploreStyle}>
+          {!toggleRelated ? 'Explore' : 'Info'}
+        </span>
       </a>
     var relatedContent = <ArtworkRelatedContent id={id} art={art} />
 

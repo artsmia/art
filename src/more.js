@@ -53,7 +53,7 @@ var More = React.createClass({
           <h1>
             Search to explore audio guides, ArtStories, and more
           </h1>
-          <img src="/images/more-icon.svg" />
+          <img src="/images/more.svg" />
           <p className="labelHelper"><TombstoneIdeograph /></p>
 
           <hr />
