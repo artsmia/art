@@ -3,6 +3,7 @@ var rest = require('rest')
 var cx = require('classnames')
 var {Link} = require('react-router')
 var ga = require('react-ga')
+var R = require('ramda')
 
 var Markdown = require('./markdown')
 var imageCDN = require('./image-cdn')
@@ -32,8 +33,18 @@ var ArtworkRelatedContent = React.createClass({
     // only show exhibitions tagged `rotation`
     var significantExhibitions = exhibitions.filter(ex => ex.rotation)
 
+    var sortedExploreContent = R.sortBy(({type}) => ({
+      audio: 17,
+      video: 13,
+      artstory: 9,
+      'mia-story': 5,
+      newsflash: 1,
+    }[type]), explore).reverse()
+
+    console.info('sorting', {sortedExploreContent, types: sortedExploreContent.map(c => c.type)})
+
     var meat = <div className="explore">
-      {explore.map(this.build)}
+      {sortedExploreContent.map(this.build)}
     </div>
     var exhibition_wrap = <div className="exhibition_item">
       {significantExhibitions.map(this.build)}
@@ -60,6 +71,7 @@ var ArtworkRelatedContent = React.createClass({
   build(json) {
     if(!json.id) json.id = this.props.id
     var trackRelatedClick = this.trackRelatedContentInteraction.bind(this, json)
+    if(json.link.match('vimeo.com')) json.type = 'video'
     var template = this.templates[json.type] || this.templates.default
 
     return <div onClick={trackRelatedClick} key={json.link || json.title}>
@@ -155,6 +167,11 @@ var ArtworkRelatedContent = React.createClass({
           <i className="material-icons">launch</i>
         </div>
       </div>
+    },
+    "video": (json, id) => {
+      var iframe = <iframe src={`https://player.vimeo.com/video/${json.link.match(/\d+/)[0]}`} frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+      return iframe
     }
   },
 })
