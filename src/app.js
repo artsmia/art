@@ -54,7 +54,8 @@ var App = React.createClass({
   },
 
   isSmallViewport() {
-    return window && window.innerWidth <= 600
+    var {userAgent} = this.props
+    return userAgent && userAgent.match(/iphone|android/i) || window && window.innerWidth <= 600
   },
 
   toggleHeader() {
