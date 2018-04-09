@@ -9,7 +9,7 @@ var ClickToSelect = require('@mapbox/react-click-to-select')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
 var dimensionSvg = require('./endpoints').dimensionSvg
-var rightsDescriptions = require('./rights-types.js')
+var {legacy: rightsDescriptions, rightsStatements} = require('./rights-types.js')
 var feedbackSender = require('./email-data-sender')
 var _Artwork = require('./_artwork')
 
