@@ -41,8 +41,6 @@ var ArtworkRelatedContent = React.createClass({
       newsflash: 1,
     }[type]), explore).reverse()
 
-    console.info('sorting', {sortedExploreContent, types: sortedExploreContent.map(c => c.type)})
-
     var meat = <div className="explore">
       {sortedExploreContent.map(this.build)}
     </div>
