@@ -4,4 +4,3 @@ function imageUrlForId(id, size=400) {
 }
 
 module.exports = imageUrlForId
-

@@ -44,13 +44,13 @@ const Image = React.createClass({
   },
 
   imageURL() {
-    var {customImage} = this.props
+    var {customImage, size, showLink} = this.props
     var {id} = this.props.art
 
-    // TODO: cascase from customImage -> S3 -> api.artsmia.org?
+    // TODO: cascade from customImage -> S3 -> api.artsmia.org?
     return this.state.skipCDN ?
       `https://api.artsmia.org/images/${id}/400/medium.jpg` :
-      customImage ? customImage(id) : imageCDN(id)
+      customImage ? customImage(id) : imageCDN(id, size || showLink ? undefined : 800)
   },
 
   componentWillReceiveProps(nextProps) {

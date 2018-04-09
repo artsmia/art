@@ -77,15 +77,13 @@ var Artwork = React.createClass({
     var imageUrl = imageCDN(id)
     var canonicalURL = `https://collections.artsmia.org/art/${art.id}/${art.slug}`
 
-    var image = <Image art={art}
-      style={{width: 400, height: 400, maxWidth: '100%'}}
-      ignoreStyle={true} />
-
     var aspectRatio = art.image_width/art.image_height
     var mapHeight = art.image == "valid" ?
       Math.max(40, Math.min(65, 1/aspectRatio*80)) :
       20
     if(smallViewport && this.state.show3d) mapHeight = 67
+
+    var image = <Image art={art} style={{maxWidth: '95%', maxHeight: mapHeight-5+'vh'}} />
 
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
       !this.state.fullscreenImage
@@ -210,6 +208,8 @@ var Artwork = React.createClass({
       window.lastSearchedTerms && 
       window.lastSearchedTerms.indexOf('related:3dmodels') >= 0
 
+    const showBiggie = art.restricted === 0 || !(art.rights == "Copyright Protected" || art.rights == "Needs Permission")
+
     return {
       art: art,
       id: art.id,
@@ -217,12 +217,13 @@ var Artwork = React.createClass({
       has3d: has3Dmodel,
       show3d: navigatedFrom3dModelSearch,
       smallViewportShowInfoOrRelatedContent: window && window.enteredViaMore,
+      showBiggie,
     }
   },
 
   componentDidMount() {
     var art = this.state.art
-    if(art.image === 'valid' && art.restricted != 1 && !this.isLoan() && !this.state.show3d) this.loadZoom()
+    if(art.image === 'valid' && this.state.showBiggie && !this.isLoan() && !this.state.show3d) this.loadZoom()
     var {smallViewport} = this.context
     // push the viewport down past the header to maximize image/text on the page
     // scrolling back up reveals the menu
@@ -263,8 +264,9 @@ var Artwork = React.createClass({
         crs: L.CRS.Simple,
         zoomControl: false,
       })
+      window._map = this.map
       this.map.attributionControl.setPrefix('')
-      this.map.setView([art.image_width/2, art.image_height/2], 0)
+      this.map.setView([0, 0], 0)
       if(!L.Browser.touch) new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
       new L.Control.Fullscreen({
         position: 'topright',
@@ -279,6 +281,7 @@ var Artwork = React.createClass({
         tileSize: data.tileSize || 256,
       })
       this.tiles.addTo(this.map)
+      this.map.setZoom(this.tiles.options.minZoom)
 
       // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})
@@ -331,16 +334,19 @@ var Artwork = React.createClass({
     var copyrightAndOnViewMessage = art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
     var loadingZoomMessage =  `
       (—Is that the best image you've got!!?
-      —Nope! We're loading ${humanizeNumber(this.getPixelDifference(400))} more pixels right now.
+      —Nope! We're loading ${humanizeNumber(this.getPixelDifference(800))} more pixels right now.
       It can take a few seconds.)`
     var showLoadingMessage = zoomLoading && zoomLoaded === false && !this.context.universal
     var showErrorMessage = zoomLoaded === 'error'
     var {smallViewport} = this.context
 
+    const showCopyrightNotice = !this.state.showBiggie
+    console.info({showCopyrightNotice, restricted: art.restricted, rights: art.rights})
+
     return art.image === 'valid' && <span className="imageStatus">
       {showLoadingMessage && loadingZoomMessage}
       {showErrorMessage && <p>Error loading high resolution image. <a href="mailto:collectionsdata+images@artsmia.org">Report this problem</a>.</p>}
-      {art.restricted === 1 && !smallViewport && "Because of © restrictions, we can only show you a small image of this artwork." + copyrightAndOnViewMessage}
+      {showCopyrightNotice && !smallViewport && "Because of © restrictions, we can only show you a small image of this artwork." + copyrightAndOnViewMessage}
     </span>
   },
 
@@ -354,9 +360,9 @@ var Artwork = React.createClass({
   },
 
   // how many more pixels are in the full sized image than the given thumbnail?
-  getPixelDifference(size=400) {
+  getPixelDifference(size=800) {
     return Math.floor(
-      this.calculateImagePixelSize() - this.calculateImagePixelSize(400)
+      this.calculateImagePixelSize() - this.calculateImagePixelSize(800)
     )
   },
 

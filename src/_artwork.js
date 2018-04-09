@@ -179,7 +179,8 @@ var CopyableLabel = React.createClass({
 // check if an image exists on our cloudfront distribution,
 // and if not, fall back to loading it from the API
 var testCloudfrontImage = (art, callback) => {
-  var cdnUrl = imageCDN(art.id, art.restricted ? 800 : 'full')
+  var downloadFullRes = art.rights === 'Public Domain'
+  var cdnUrl = imageCDN(art.id, !downloadFullRes ? 800 : 'full')
 
   if(typeof document == 'undefined') {
     // we're currently server-rendered
@@ -254,7 +255,7 @@ var LinkBar = React.createClass({
               } else {
                 testCloudfrontImage(art, url => {
                   this.setState({ resolvedImageDownloadUrl: url })
-                })
+                }, this.props.downloadFullRes)
               }
             }
             var content = action.icon || action.key
