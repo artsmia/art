@@ -893,6 +893,19 @@ a.departmentLink h2{
 }
 .detail-row.expandable {
   cursor: pointer;
+
+  dt {
+    &:after {
+      content: "\2295";
+      position: relative;
+      left: 0.25em;
+    }
+  }
+  &.expanded dt {
+    &:after {
+      content: "";
+    }
+  }
 }
 .detail-title{
     padding:5px 0;

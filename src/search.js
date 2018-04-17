@@ -107,9 +107,12 @@ var Search = React.createClass({
       style={this.props.suggestStyle}
       />
 
+    var {embed} = this.props.query
+    var hideSearch = embed
+
     return (
       <div id="search">
-        {searchBox}
+        {!!hideSearch || searchBox}
         {this.props.children}
         {this.props.hideResults && suggestions || <div>
           <SearchResults {...this.props}
