@@ -96,6 +96,7 @@ var SearchResults = React.createClass({
       forceSearchUpdate: (nextFocusResult) => {
         this.focusResult(nextFocusResult)
       },
+      embed: this.props.embed,
       ...this.props.summaryProps
     }
 

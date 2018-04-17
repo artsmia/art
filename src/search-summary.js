@@ -44,7 +44,7 @@ const SearchSummary = React.createClass({
       <div className='agg-wrap'>
         <div className="toolbar mdl-grid">
         {this.props.children}
-        <div className={toolbarClasses}><h2 onClick={this.toggleContent}>
+        {pretty.query && <div className={toolbarClasses}><h2 onClick={this.toggleContent}>
           showing {hits.length} {' '}
           {showingAll || <span>of {search.hits.total} {' '}</span>}
           results matching <code>{pretty.query}</code>
@@ -59,7 +59,8 @@ const SearchSummary = React.createClass({
           </span>}
           {sort && <span> sorted by {humanizeSnakeCase(sort.replace(/(-|\.).*/, ''))}</span>}
           {showingAll || this.props.showMoreLink}
-        </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
+        </h2></div>}
+        {!this.props.embed && <div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>}
         </div>
 
         {showAggs && <Aggregations search={search} {...this.props} />}

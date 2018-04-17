@@ -120,6 +120,7 @@ var Search = React.createClass({
             {...aggsProps}
             suggestions={suggestions}
             minHeight={this.state.minHeight}
+            embed={embed}
           />
         </div>}
       </div>
