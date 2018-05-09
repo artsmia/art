@@ -44,10 +44,10 @@ const SearchSummary = React.createClass({
       <div className='agg-wrap'>
         <div className="toolbar mdl-grid">
         {this.props.children}
-        {pretty.query && <div className={toolbarClasses}><h2 onClick={this.toggleContent}>
+        <div className={toolbarClasses}><h2 onClick={this.toggleContent}>
           showing {hits.length} {' '}
           {showingAll || <span>of {search.hits.total} {' '}</span>}
-          results matching <code>{pretty.query}</code>
+          results {pretty.query && <span>matching <code>{pretty.query}</code></span>}
           {search.filters && <span>
             {' '}and <code>{decodeURIComponent(pretty.filters)}</code>
             {' '}(<Link to='searchResults'
@@ -59,7 +59,7 @@ const SearchSummary = React.createClass({
           </span>}
           {sort && <span> sorted by {humanizeSnakeCase(sort.replace(/(-|\.).*/, ''))}</span>}
           {showingAll || this.props.showMoreLink}
-        </h2></div>}
+        </h2></div>
         {!this.props.embed && <div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>}
         </div>
 

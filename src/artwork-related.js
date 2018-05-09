@@ -95,22 +95,26 @@ var ArtworkRelatedContent = React.createClass({
     }
   },
 
+  // TODO rebuild these as list items with an image on the left and info on the right
+  // * How to get images for mia stories - they aren't included in the wp download
+  //   Make an api call for each? yuck
+  // * disable adopt a painting until it returns as Art Champions?
+  // * filter out old newsflashes
   templates: {
     audio: (json, id, _, track) => <div className="audioClip">
       <audio style={{maxWidth: '100%'}} src={json.link.replace('http:', 'https:')} controls onPlay={track}></audio>
-      <span>Audio Clip</span>
     </div>,
-    newsflash: (json) => <div className="newsflash" style={{backgroundImage: `url(https://newsflash.dx.artsmia.org${json.image})`}}>
-      <div className="overlay">
-      <a href={json.link}>{json.title}<br/><sub>Read more.</sub></a>
-      <i className="material-icons">launch</i>
-      </div>
+    newsflash: (json) => <div className="newsflash" style={{backgroundImage1: `url(https://newsflash.dx.artsmia.org${json.image})`}}>
+      <a href={json.link}>
+        {json.title}
+        <img src={`https://newsflash.dx.artsmia.org${json.image}`} />
+      </a>
     </div>,
-    artstory: (json, id, highlight) => <div className={cx("artstory", {"block-highlight": highlight && highlight["related:artstories"]})} style={{backgroundImage: `url(${imageCDN(id)})`, ...artstoryStampStyle}}>
-      <div className="overlay">
-        <a href={json.link}>ArtStories<br/><sub>Zoom in.</sub></a>
-        <i className="material-icons">launch</i>
-      </div>
+    artstory: (json, id, highlight) => <div className={cx("artstory", {"block-highlight": highlight && highlight["related:artstories"]})}>
+      <a href={json.link}>
+        <p>ArtStories<br/><sub>Zoom in.</sub></p>
+        <img src={imageCDN(id)} style={{maxWidth: '13em'}} />
+      </a>
     </div>,
     "adopt-a-painting": (json, id, highlights) => {
       var highlight = highlights && highlights["related:adopt-a-painting"]
@@ -136,12 +140,15 @@ var ArtworkRelatedContent = React.createClass({
     },
     default: (json, id, highlights) => {
       var miaStoryMatches = highlights && highlights['related:stories'] && highlights['related:stories'].filter(h => { var h = JSON.parse(h); return json.title == h.title.replace(/<\/?em>/g, '') })
-      var defaultStyle = {backgroundColor: "rgb(35,35,35)"}
+      var defaultStyle = {}
 
       return <div className="explore-content" style={defaultStyle}>
-        <div className={cx("overlay", {"block-highlight": miaStoryMatches && miaStoryMatches.length > 0})}>
-          <a href={json.link}>{json.title}<br/><sub>Explore more.</sub></a>
-          <i className="material-icons">launch</i>
+        <div className={cx({"block-highlight": miaStoryMatches && miaStoryMatches.length > 0})}>
+          <a href={json.link}>
+            <p>
+              {json.title}<br/><sub>Explore more.</sub>
+            </p>
+          </a>
         </div>
       </div>
     },
@@ -154,13 +161,12 @@ var ArtworkRelatedContent = React.createClass({
     },
     "3d": (json, id) => {
       var style = {
-        backgroundColor: "rgb(35,35,35)",
+        backgroundColor: "",
         backgroundImage: `url(${json.thumb})`,
-        ...artstoryStampStyle
       }
 
       return <div className="explore-content 3d" style={style}>
-        <div className="overlay">
+        <div className="">
           <a href={json.link}><br/>👓<sub>Explore in 3D</sub></a>
           <i className="material-icons">launch</i>
         </div>
