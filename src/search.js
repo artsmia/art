@@ -107,7 +107,7 @@ var Search = React.createClass({
       style={this.props.suggestStyle}
       />
 
-    var {embed} = this.props.query
+    var {embed} = this.props.query || {}
     var hideSearch = embed
 
     return (

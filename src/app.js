@@ -91,7 +91,8 @@ var App = React.createClass({
     </div>
   },
 
-  toggleSearch(event, {forceClose}={false}) {
+  toggleSearch(event, args) {
+    var {forceClose} = event || {}
     var {data} = this.props
     this.setState(
       data && data.searchResults && !forceClose ?

@@ -69,7 +69,7 @@ var ArtworkRelatedContent = React.createClass({
   build(json) {
     if(!json.id) json.id = this.props.id
     var trackRelatedClick = this.trackRelatedContentInteraction.bind(this, json)
-    if(json.link.match('vimeo.com')) json.type = 'video'
+    if(json.link && json.link.match('vimeo.com')) json.type = 'video'
     var template = this.templates[json.type] || this.templates.default
 
     return <div onClick={trackRelatedClick} key={json.link || json.title}>
