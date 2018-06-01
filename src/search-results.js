@@ -9,6 +9,31 @@ var SearchSummary = require('./search-summary')
 var ResultsList = require('./search-results/list')
 var ResultsGrid = require('./search-results/grid')
 
+function omitResultsById(...ids) {
+  return (json) => {
+    return {
+      ...json,
+      hits: {
+        ...json.hits,
+        hits: json.hits.hits.filter(hit => !ids.find(id => id === parseInt(hit._id))),
+      },
+    }
+  }
+}
+function reshapeResultsJson(json) {
+  // For this query there are two photographs that are included because of `2013`
+  // being included in their title, that really don't belong and are a thorn in
+  // the side of one of our curators.
+  //
+  // Manually remove ids 126303 and 126745 from a search where the query starts with
+  // 2013.29
+  if(json.query.match(/^2013.29/)) {
+    return omitResultsById(126303, 126745)(json)
+  }
+
+  return json
+}
+
 var SearchResults = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
@@ -23,7 +48,7 @@ var SearchResults = React.createClass({
         if(sort) searchUrl += `&sort=${sort}`
         if(filters) searchUrl += `&filters=${properlyCodedFilters}`
         if(window && window.enteredViaMore || query && query.more) searchUrl += `&tag=more`
-        return rest(searchUrl).then((r) => JSON.parse(r.entity))
+        return rest(searchUrl).then((r) => reshapeResultsJson(JSON.parse(r.entity)))
       }
     }
   },
