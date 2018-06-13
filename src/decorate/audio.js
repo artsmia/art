@@ -25,6 +25,11 @@ var AudioDecorator = React.createClass({
       hit => hit._source['related:audio-stops'][0].number === term
     )
 
+    const isAudioNumberSearchTerm = term.match(/\d{1,3}/)
+    const matchingAudioWithoutArtworkConnection =
+      isAudioNumberSearchTerm &&
+      `http://audio-tours.s3.amazonaws.com/p${term}.mp3`
+
     const otherHitsWithAudio = hitsWithAudio.filter(
       hit => hit !== matchingAudioStop
     )
@@ -40,6 +45,7 @@ var AudioDecorator = React.createClass({
           <AudioStopLifter
             hit={matchingAudioStop}
             hitsWithAudio={otherHitsWithAudio}
+            directAudioLink={matchingAudioWithoutArtworkConnection}
             forceSearchUpdate={this.props.forceSearchUpdate}
           />
         )}
@@ -69,8 +75,20 @@ const AudioStopLifter = React.createClass({
   },
 
   render() {
-    const { hit, hitsWithAudio } = this.props
-    const { showPlaylist, playNextId } = this.state
+    const { hit, hitsWithAudio, directAudioLink } = this.props
+    const { showPlaylist, playNextId, errorLoadingAudioFile } = this.state
+
+    if (!hit && directAudioLink && !errorLoadingAudioFile) {
+      return (
+        <audio
+          src={directAudioLink}
+          controls
+          onError={() => {
+            this.setState({ errorLoadingAudioFile: true })
+          }}
+        />
+      )
+    }
 
     if (!hit && hitsWithAudio.length === 0) return <span />
 
