@@ -976,9 +976,7 @@ h5.details-title {
   background: $primary;
   position: fixed
 }
-.explore{
-  display: flex;
-  flex-direction: column;
+.explore {
 }
 .explore {
   .newsflash, .artstory, .explore-content {
@@ -987,9 +985,8 @@ h5.details-title {
       display:flex;
       max-width: 100%;
 
-      font-size:1.1em;
       color: #232323;
-      font-family: $MiaGroteskBold, sans-serif;
+      font-family: $MiaGroteskRegular, sans-serif;
     }
 
     img {

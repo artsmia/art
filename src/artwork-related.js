@@ -41,8 +41,20 @@ var ArtworkRelatedContent = React.createClass({
       newsflash: 1,
     }[type]), explore).reverse()
 
+
+    var groupedByTypeSortedContent = R.groupBy(({type}) => type, sortedExploreContent)
+    var groupedRelatedContents = R.mapObjIndexed((relateds, type) => {
+      const humanTypeName = type.replace(/-/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})
+      const showType = ['audio', 'video', 'artstory', '3d'].indexOf(type) < 0
+
+      return <div>
+        {showType && <h2>{humanTypeName}</h2>}
+        {relateds.map(this.build)}
+      </div>
+    }, groupedByTypeSortedContent)
+
     var meat = <div className="explore">
-      {sortedExploreContent.map(this.build)}
+      {R.values(groupedRelatedContents)}
     </div>
     var exhibition_wrap = <div className="exhibition_item">
       {significantExhibitions.map(this.build)}
@@ -145,9 +157,7 @@ var ArtworkRelatedContent = React.createClass({
       return <div className="explore-content" style={defaultStyle}>
         <div className={cx({"block-highlight": miaStoryMatches && miaStoryMatches.length > 0})}>
           <a href={json.link}>
-            <p>
-              {json.title}<br/><sub>Explore more.</sub>
-            </p>
+            <p>{json.title}</p>
           </a>
         </div>
       </div>
@@ -160,16 +170,11 @@ var ArtworkRelatedContent = React.createClass({
       </ul>
     },
     "3d": (json, id) => {
-      var style = {
-        backgroundColor: "",
-        backgroundImage: `url(${json.thumb})`,
-      }
-
-      return <div className="explore-content 3d" style={style}>
-        <div className="">
-          <a href={json.link}><br/>👓<sub>Explore in 3D</sub></a>
-          <i className="material-icons">launch</i>
-        </div>
+      return <div className="explore-content 3d">
+        <a href={json.link}>
+          <p>View in 3D 👓</p>
+          <img src={json.thumb} />
+        </a>
       </div>
     },
     "video": (json, id) => {
