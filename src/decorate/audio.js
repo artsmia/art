@@ -4,8 +4,12 @@
  *
  * TODO
  * show controls and audio info overall play/pause, number of stops in playlist?
- * next/prev?
- * play a "that's all" speech synthesis at the end of the playlist?
+ * show progress while audio plays?
+ * restart, skip back/forward 15 seconds?
+ * better distinguish playing card from paused cards in playlist view
+ * bug with autoPlay and announcing titles - it doesn't happen until card #3 (should kick inon card #2)
+ * maintain audio playing when decorator window closes? … what about on page navigation?
+ * linear gradient behind the play/pause icons to ensure visibility?
  */
 
 var React = require('react')
@@ -191,16 +195,49 @@ const AudioCard = React.createClass({
     const fav = getFacetAndValue(art)
     const artCreator = fav && fav[1] ? fav[1].split(';')[0] : ''
 
+    const isPaused = this.audio ? this.audio.paused : true
+
+    const pausedIconSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14.5c-3.59 0-6.5-2.91-6.5-6.5s2.91-6.5 6.5-6.5 6.5 2.91 6.5 6.5-2.91 6.5-6.5 6.5zm-2-10l6 3.5-6 3.5z"/></svg>`
+    const playIconSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14.5c-3.59 0-6.5-2.91-6.5-6.5s2.91-6.5 6.5-6.5 6.5 2.91 6.5 6.5-2.91 6.5-6.5 6.5zm-3-9.5h2v6h-2zm4 0h2v6h-2z"/></svg>`
+    const maskSvg = !!isPaused ? pausedIconSvg : playIconSvg
+
+    const playIconMask = (
+      <div
+        style={{
+          WebkitMaskImage: `url('${maskSvg}')`,
+          display: 'inline-block',
+          width: '30%',
+          height: '30%',
+          content: "''",
+          color: '#666',
+          maskRepeat: 'no-repeat',
+          WebkitMaskRepeat: 'no-repeat',
+          maskSize: 'contain',
+          WebkitMaskSize: 'contain',
+          backgroundColor: '#eee',
+          padding: '0 5px 0 0',
+          opacity: '0.9',
+          position: 'absolute',
+          bottom: '5%',
+          left: '2%',
+          pointerEvents: 'none',
+        }}
+      />
+    )
+
     return (
       <div>
         <figure className="audioClip" style={{ maxWidth: '71%' }}>
-          <Image
-            art={art}
-            style={{ maxWidth, maxHeight }}
-            onClick={this.playPause}
-            // onMouseEnter={() => this.setState({ imageHovered: true })}
-            // onMouseLeave={() => this.setState({ imageHovered: false })}
-          />
+          <div style={{ position: 'relative' }}>
+            <Image
+              art={art}
+              style={{ maxWidth, maxHeight }}
+              onClick={this.playPause}
+              // onMouseEnter={() => this.setState({ imageHovered: true })}
+              // onMouseLeave={() => this.setState({ imageHovered: false })}
+            />
+            {playIconMask}
+          </div>
           <figcaption>
             <p>
               <strong>{art.title}</strong>, <em>{artCreator}</em> #{
@@ -211,8 +248,8 @@ const AudioCard = React.createClass({
           <audio
             style={{
               maxWidth: '100%',
-              visibility:
-                this.audio && this.audio.paused ? 'hidden' : 'visible',
+              visibility: this.audio && isPaused ? 'hidden' : 'visible',
+              visibility: 'hidden',
             }}
             src={audio.link.replace('http:', 'https:')}
             controls
@@ -259,6 +296,11 @@ const AudioCard = React.createClass({
       return
     }
 
+    if (!this.props.autoPlay) {
+      audio.play()
+      return
+    }
+
     // if just starting, speak the artwork title over the audio stop
     // and then reset to play audio from beginning
     const prevVolume = audio.volume
@@ -285,9 +327,10 @@ const AudioCard = React.createClass({
     delayAudioStopWhileSpeaking()
   },
 
-  playPause() {
+  playPause(evt) {
     const { audio } = this
     audio && audio.paused ? audio.play() : audio.pause()
+    this.setState(prevState => prevState)
   },
 
   speakAudioIntroduction() {
