@@ -1197,10 +1197,10 @@ button.material-icons {
     -o-transition: all 150ms linear;
     transition: all 150ms linear;
 }
-.landingPageBody .info li a:hover, .departmentLink:hover h2{
+.landingPageBody .info li a:hover, .departmentLink:hover h2, .departmentLink.isActive h2 {
     background-color:$primary;
     color:white;
-    padding-left:10px;
+    padding: 0 10px;
 }
 .landingPageBody .info li:last-child a{padding-right:0;}
 
