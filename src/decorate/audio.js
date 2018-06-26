@@ -26,13 +26,27 @@ var AudioDecorator = React.createClass({
       hits && hits.filter(hit => hit._source['related:audio-stops'])
 
     const matchingAudioStop = hitsWithAudio.find(
-      hit => hit._source['related:audio-stops'][0].number === term
+      hit => {
+        const hitAudioNumber = hit._source['related:audio-stops'][0].number 
+        console.info('matchingAudioStop', {term, hitAudioNumber}, hitAudioNumber === term, hitAudioNumber === `0{term}`)
+        return hitAudioNumber === term || hitAudioNumber === `0{term}`
+      }
     )
 
     const isAudioNumberSearchTerm = term.match(/\d{1,3}/)
+    const zeroPadTerm = parseInt(term).toLocaleString('en-US', {minimumIntegerDigits: 3, useGrouping:false})
     const matchingAudioWithoutArtworkConnection =
       isAudioNumberSearchTerm &&
-      `http://audio-tours.s3.amazonaws.com/p${term}.mp3`
+      `http://audio-tours.s3.amazonaws.com/p${zeroPadTerm}.mp3`
+
+    // TODOoooo - 1 and two digit audio numbers aren't caught by ES
+    // when "97" is searched for, the results from ES don't include the artwork
+    // with audio number "097", so it can't be lifted up into the audio bar.
+    // zero-padding the term allows the audio interface to show without the artwork
+    // info, which is better than nothing.
+    //
+    // IDEA - could searches foor single and two digit numbers be modified when going
+    // into ES to `originalTerm | <0+originalTerm>`?
 
     const otherHitsWithAudio = hitsWithAudio.filter(
       hit => hit !== matchingAudioStop
