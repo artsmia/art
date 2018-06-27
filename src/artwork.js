@@ -159,6 +159,11 @@ var Artwork = React.createClass({
         </div>
       </div>}
       <ClosedBanner />
+
+      <a href={`default_target?image=https://iiif.dx.artsmia.org/${this.state.id}.jpg/info.json`}>
+        <img src="iiif-dragndrop-100px.png" alt="IIIF Drag-n-drop" /> IIIF!
+      </a>
+
     </div>
 
     var smallViewportWithTabbedInfoAndRelated = <div>
@@ -259,13 +264,17 @@ var Artwork = React.createClass({
   },
 
   loadZoom() {
-    var L = require('museum-tile-layer')
+    var L = require('leaflet')
+    var Liiif = require('leaflet-iiif')
     var fullscreen = require('leaflet-fullscreen')
     
     var art = this.state.art
     this.setState({zoomLoaded: false, zoomLoading: true})
 
-    rest(`https://tiles.dx.artsmia.org/${this.state.id}.json`)
+    const id = this.state.id
+    const iiifUrl = `https://iiif.dx.artsmia.org/${this.state.id}.jpg/info.json`
+
+    rest(iiifUrl)
     .then(
       response => JSON.parse(response.entity),
       rejected => {
@@ -278,26 +287,36 @@ var Artwork = React.createClass({
       this.map = L.map(this.refs.map, {
         crs: L.CRS.Simple,
         zoomControl: false,
+        zoomSnap: 0,
       })
       window._map = this.map
       this.map.attributionControl.setPrefix('')
-      this.map.setView([0, 0], 0)
       if(!L.Browser.touch) new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
       new L.Control.Fullscreen({
         position: 'topright',
         pseudoFullscreen: true,
       }).addTo(this.map)
 
-      this.tiles = L.museumTileLayer('https://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png', {
+      this.tiles = L.tileLayer.iiif(iiifUrl, {
         attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
-        id: this.state.id,
-        width: data.width,
-        height: data.height,
-        tileSize: data.tileSize || 256,
+        fitBounds: true,
+        setMaxBounds: true,
+        id: id,
       })
+
+      this.map.setView([0, 0], 0)
+
       this.tiles.addTo(this.map)
-      this.map.setZoom(this.tiles.options.minZoom)
+
       window._tiles = this.tiles
+      // this.map.setZoom(this.tiles.options.minZoom)
+      this.tiles.on('load', (event) => {
+        if(this.map.getMinZoom() > 0) return
+        // don't let the zoomed image get tiny
+        const minZoom = this.map.getZoom() - 0.3
+        console.info('set minZoom', minZoom)
+        this.map.setMinZoom(minZoom)
+      })
 
       // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})
@@ -377,7 +396,6 @@ var Artwork = React.createClass({
   resizeMap() {
     if(this.map && this.tiles) {
       this.map.invalidateSize()
-      this.tiles.fitBoundsExactly()
     }
   },
 
