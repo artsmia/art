@@ -131,8 +131,9 @@ module.exports = Decorate
 
 var DecorationFinder = (search, filters, props) => {
   let {params} = props
-  let terms = search.match(/\w+.+|"(?:\\"|[^"])+"/g) || search.split(' ')
+  let terms = search ? search.match(/\w+.+|"(?:\\"|[^"])+"/g) || search.split(' ') : false
   if(filters) terms = terms.concat(filters.split('" ').map(f => f.trim()))
+  if(!terms) return [] // search by ids `search/ids` doesn't have any terms
 
   var Decor = {
     "department:": (term) => <DepartmentDecorator department={term} params={params} key={term} />,
