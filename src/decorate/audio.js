@@ -25,16 +25,16 @@ var AudioDecorator = React.createClass({
     const hitsWithAudio =
       hits && hits.filter(hit => hit._source['related:audio-stops'])
 
-    const matchingAudioStop = hitsWithAudio.find(
-      hit => {
-        const hitAudioNumber = hit._source['related:audio-stops'][0].number 
-        console.info('matchingAudioStop', {term, hitAudioNumber}, hitAudioNumber === term, hitAudioNumber === `0{term}`)
-        return hitAudioNumber === term || hitAudioNumber === `0{term}`
-      }
-    )
+    const matchingAudioStop = hitsWithAudio.find(hit => {
+      const hitAudioNumber = hit._source['related:audio-stops'][0].number
+      return hitAudioNumber === term || hitAudioNumber === `0{term}`
+    })
 
     const isAudioNumberSearchTerm = term.match(/\d{1,3}/)
-    const zeroPadTerm = parseInt(term).toLocaleString('en-US', {minimumIntegerDigits: 3, useGrouping:false})
+    const zeroPadTerm = parseInt(term).toLocaleString('en-US', {
+      minimumIntegerDigits: 3,
+      useGrouping: false,
+    })
     const matchingAudioWithoutArtworkConnection =
       isAudioNumberSearchTerm &&
       `http://audio-tours.s3.amazonaws.com/p${zeroPadTerm}.mp3`
@@ -218,25 +218,31 @@ const AudioCard = React.createClass({
     const playIconMask = (
       <div
         style={{
-          WebkitMaskImage: `url('${maskSvg}')`,
-          display: 'inline-block',
-          width: '30%',
-          height: '30%',
-          content: "''",
-          color: '#666',
-          maskRepeat: 'no-repeat',
-          WebkitMaskRepeat: 'no-repeat',
-          maskSize: 'contain',
-          WebkitMaskSize: 'contain',
-          backgroundColor: '#eee',
-          padding: '0 5px 0 0',
-          opacity: '0.9',
-          position: 'absolute',
-          bottom: '5%',
-          left: '2%',
-          pointerEvents: 'none',
+          WebkitFilter: 'drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.75))',
         }}
-      />
+      >
+        <div
+          style={{
+            WebkitMaskImage: `url('${maskSvg}')`,
+            display: 'inline-block',
+            width: '30%',
+            height: '30%',
+            content: "''",
+            color: '#666',
+            maskRepeat: 'no-repeat',
+            WebkitMaskRepeat: 'no-repeat',
+            maskSize: 'contain',
+            WebkitMaskSize: 'contain',
+            backgroundColor: '#eee',
+            padding: '0 5px 0 0',
+            opacity: '0.9',
+            position: 'absolute',
+            bottom: '5%',
+            left: '2%',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
     )
 
     return (
