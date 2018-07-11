@@ -291,7 +291,8 @@ var Artwork = React.createClass({
       })
       window._map = this.map
       this.map.attributionControl.setPrefix('')
-      if(!L.Browser.touch) new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
+      const showZoomControlsIfDesktop = !L.Browser.touch || window.innerWidth > 780
+      if(showZoomControlsIfDesktop) new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
       new L.Control.Fullscreen({
         position: 'topright',
         pseudoFullscreen: true,
@@ -301,7 +302,10 @@ var Artwork = React.createClass({
         attribution: art.image_copyright ? decodeURIComponent(art.image_copyright) : '',
         fitBounds: true,
         setMaxBounds: true,
+        tileSize: 512,
         id: id,
+        fudgeTileSize: 0.3,
+        iiifImageData: data,
       })
 
       this.map.setView([0, 0], 0)
@@ -316,6 +320,8 @@ var Artwork = React.createClass({
         const minZoom = this.map.getZoom() - 0.3
         console.info('set minZoom', minZoom)
         this.map.setMinZoom(minZoom)
+        // TODO - reset minZoom when window is resized
+        // …and when fullscreen changes?
       })
 
       // this.tiles.fillContainer()
