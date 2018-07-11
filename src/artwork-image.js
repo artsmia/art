@@ -3,6 +3,7 @@ let LazyLoad = require('react-lazy-load').default
 
 var Markdown = require('./markdown')
 var Image = require('./image')
+var rightsDescriptions = require('./rights-types.js')
 
 var ArtworkImage = React.createClass({
   render() {
@@ -23,7 +24,8 @@ var ArtworkImage = React.createClass({
       key={id}
       lazyLoad={this.props.lazyLoad} />
 
-    var showImage = !!customImage || art.image == 'valid' && art.image_width > 0 && art.rights !== 'Permission Denied'
+    var rights = rightsDescriptions.getRights(art)
+    var showImage = !!customImage || art.image == 'valid' && art.image_width > 0 && rights !== 'Permission Denied'
 
     return showImage && (
       <div className='artwork-image' style={{minHeight: '173px'}}>

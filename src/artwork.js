@@ -16,6 +16,7 @@ var imageCDN = require('./image-cdn')
 var SEARCH = require('./endpoints').search
 var ArtworkRelatedContent = require('./artwork-related')
 var ArtworkPageMetadata = require('./artwork/page-metadata')
+var rightsDescriptions = require('./rights-types.js')
 
 var Sticky = require('react-sticky')
 
@@ -128,9 +129,10 @@ var Artwork = React.createClass({
     var {zoomLoaded} = this.state
     var zoomLoadedSuccessfully = zoomLoaded && zoomLoaded !== 'error'
 
+    var rights = rightsDescriptions.getRights(art)
     var map = <div ref='map' id='map' style={mapStyle}>
       {this.state.has3d && <SketchfabEmbed model={this.state.has3d} show={this.state.show3d} />}
-      {zoomLoadedSuccessfully || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
+      {zoomLoadedSuccessfully || (art.image == 'valid' && rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
         {image}
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
       </div> || <NoImagePlaceholder art={art} />}
@@ -208,7 +210,9 @@ var Artwork = React.createClass({
       window.lastSearchedTerms && 
       window.lastSearchedTerms.indexOf('related:3dmodels') >= 0
 
-    const showBiggie = art.restricted === 0 || !(art.rights == "Copyright Protected" || art.rights == "Needs Permission")
+    
+    var rights = rightsDescriptions.getRights(art)
+    const showBiggie = art.restricted === 0 || !(rights == "Copyright Protected" || rights == "Needs Permission")
 
     return {
       art: art,
@@ -246,7 +250,7 @@ var Artwork = React.createClass({
   loadZoom() {
     var L = require('museum-tile-layer')
     var fullscreen = require('leaflet-fullscreen')
-
+    
     var art = this.state.art
     this.setState({zoomLoaded: false, zoomLoading: true})
 
@@ -341,7 +345,6 @@ var Artwork = React.createClass({
     var {smallViewport} = this.context
 
     const showCopyrightNotice = !this.state.showBiggie
-    console.info({showCopyrightNotice, restricted: art.restricted, rights: art.rights})
 
     return art.image === 'valid' && <span className="imageStatus">
       {showLoadingMessage && loadingZoomMessage}

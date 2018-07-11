@@ -4,6 +4,7 @@ var LazyLoad = require('react-lazy-load').default
 
 var imageCDN = require('./image-cdn')
 var {getFacetAndValue} = require('./artwork/creator')
+var rightsDescriptions = require('./rights-types.js')
 
 const Image = React.createClass({
   render() {
@@ -34,7 +35,8 @@ const Image = React.createClass({
       alt={art.description}
       {...other} />
 
-    if(art.rights == 'Permission Denied') return <span />
+    var rights = rightsDescriptions.getRights(art)
+    if(rights == 'Permission Denied') return <span />
 
     var image = !lazyLoad ? nakedImage : <LazyLoad wrapper="span" style={{display: 'inline'}} width={width} height={`${height}`} className={classes}>
       {nakedImage}

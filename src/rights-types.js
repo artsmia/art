@@ -7,5 +7,13 @@ module.exports = {
   "Orphaned Work": "Artwork may be subject to copyright protection under the terms of current US copyright law. Mia has been unable to identify the creator and/or rights holder. The statement “Copyright of the artist, artist’s estate, or assignees” should accompany image.",
   "Public Domain": "Artwork is in the public domain. Images are available for any use.",
   "Permission Denied": "Artwork is copyright protected. Mia has contacted the rights holder and the rights holder denied Mia any use rights.",
+  // This is a kludge because this used to use the field `rights` but now
+  // needs to use `rights_type`. Some artworks only have `rights`, some have both.
+  //
+  // TODO reindex all of ES to remove `rights` and  populate `rights_type`
+  getRights: function(art) {
+    art.rights_type = art.rights_type || art.rights
+    art.rights = false
+    return art.rights_type
+  },
 }
-

@@ -113,14 +113,15 @@ var ArtworkDetails = React.createClass({
       ['century', (art, raw) => [art.style, <Peek facet="style" q={raw.style} />]],
       ['provenance'],
       ['rights', (art, raw) => {
-        return [(art.image_copyright || art.rights) && <div>
+        var rights = rightsDescriptions.getRights(art)
+        return [(art.image_copyright || rights) && <div>
           {art.image_copyright && decodeURIComponent(art.image_copyright)}
-          {art.image_copyright && art.rights && <br/>}
-          {art.rights && <span>{art.rights}</span>}
+          {art.image_copyright && rights && <br/>}
+          {rights && <span>{rights}</span>}
         </div>,
         <div>
-          <p>{rightsDescriptions[raw.rights]}</p>
-          <Peek facet="rights" q={raw.rights} />
+          <p>{rightsDescriptions[rights]}</p>
+          <Peek facet="rights" q={rights} />
           <p><a href="https://new.artsmia.org/visit/policies-guidelines/#websiteimageaccess&use">Mia's Image Access & Use Policy</a></p>
         </div>
         ]

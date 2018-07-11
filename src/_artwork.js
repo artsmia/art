@@ -10,6 +10,7 @@ var Peek = require('./peek')
 var imageCDN = require('./image-cdn')
 var highlighter = require('./highlighter')
 var Markdown = require('./markdown')
+var rightsDescriptions = require('./rights-types.js')
 
 //
 // TODO: move these into separate components at `src/artwork/`?
@@ -179,7 +180,8 @@ var CopyableLabel = React.createClass({
 // check if an image exists on our cloudfront distribution,
 // and if not, fall back to loading it from the API
 var testCloudfrontImage = (art, callback) => {
-  var downloadFullRes = art.rights === 'Public Domain'
+  var rights = rightsDescriptions.getRights(art)
+  var downloadFullRes = art.rights_type === 'Public Domain'
   var cdnUrl = imageCDN(art.id, !downloadFullRes ? 800 : 'full')
 
   if(typeof document == 'undefined') {
