@@ -23,6 +23,7 @@ var Exhibition = require('./src/exhibition')
 var Artist = require('./src/artist')
 var RecentAccessions = require('./src/recent')
 var AccessionHighlight = require('./src/accession-highlight')
+var ArtChampionPage = require('./src/art-champion')
 var Survey = require('./src/survey')
 
 var routes = (
@@ -31,6 +32,7 @@ var routes = (
     <Route name="artwork" path="art/:id" handler={Artwork} />
     <Route name="artworkSlug" path="art/:id/:slug" handler={Artwork} />
     <Route name="accessionHighlight" path="art/:id/:slug/accessionHighlight" handler={AccessionHighlight} />
+    <Route name="artChampion" path="art/:id/:slug/art-champion" handler={ArtChampionPage} />
     <Route name="search" path="/search/" handler={Search}>
       <Route name="searchResults" path=":terms" handler={SearchResults}>
         <Route name="filteredSearchResults" path="filters/*" handler={SearchResults} />
