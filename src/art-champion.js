@@ -40,7 +40,7 @@ var ArtChampionPage = React.createClass({
         <div className="back-button"><Link to="artworkSlug" params={{id: art.id, slug: art.slug}}>view details <i className="material-icons">arrow_forward</i></Link></div>
 
       </Artwork>
-      <ArtworkPageMetadata art={art} prependTitle={'Accession Highlight: '} />
+      <ArtworkPageMetadata art={art} prependTitle={'Art Champions: '} />
     </div>
   }
 })
