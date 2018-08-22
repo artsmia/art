@@ -1,4 +1,2 @@
 require('babel-core/register')
-require('./server')
-
-
+require('./server.js')

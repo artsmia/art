@@ -1,5 +1,6 @@
 var React = require('react')
 var Helmet = require('react-helmet')
+var { Link } = require('react-router')
 
 var Decorate = require('./decorate')
 var Aggregations = require('./aggregations')
@@ -17,7 +18,7 @@ const SearchSummary = React.createClass({
     // 1. there's more than 1 result
     // 2. there are filters applied that could be reducing the results to 0
     const toggleAggs = (hits && hits.length > 1 || search.filters && search.filters.length > 0) && <span className="filter-button">
-      <a onClick={this.toggleAggs} style={{cursor: 'pointer'}}>{showAggs ? 'hide filters' : 'filter search'}</a>
+      <a onClick={this.toggleAggs} style={{cursor: 'pointer'}}>{showAggs ? 'hide' : 'advanced'}</a>
     </span>
 
     const showingAll = hits.length == search.hits.total || hits.length >= this.props.maxResults
@@ -46,15 +47,28 @@ const SearchSummary = React.createClass({
         <div className={toolbarClasses}><h2 onClick={this.toggleContent}>
           showing {hits.length} {' '}
           {showingAll || <span>of {search.hits.total} {' '}</span>}
-          results matching <code>{pretty.query}</code>
-          {search.filters && <span> and <code>{decodeURIComponent(pretty.filters)}</code></span>}
+          results {pretty.query && <span>matching <code>{pretty.query}</code></span>}
+          {search.filters && <span>
+            {' '}and <code>{decodeURIComponent(pretty.filters)}</code>
+            {' '}(<Link to='searchResults'
+              query={search.query}
+              params={{terms: `${search.query}`, splat: ''}}
+            >
+             clear filters
+            </Link>)
+          </span>}
           {sort && <span> sorted by {humanizeSnakeCase(sort.replace(/(-|\.).*/, ''))}</span>}
           {showingAll || this.props.showMoreLink}
-        </h2></div><div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
+        </h2></div>
+        {!this.props.embed && <div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>}
         </div>
 
         {showAggs && <Aggregations search={search} {...this.props} />}
-        <Decorate search={search} params={this.props.params} {...this.props} />
+        <Decorate
+          search={search}
+          params={this.props.params}
+          {...this.props}
+        />
         <Helmet
           title={`🔎 ${pretty.searchString}`}
           meta={[

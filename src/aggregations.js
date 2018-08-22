@@ -1,3 +1,8 @@
+/**
+ * TODO
+ * add different types of related content to Aggregations?
+ *
+ */
 var React = require('react')
 var { Link } = require('react-router')
 

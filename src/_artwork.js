@@ -10,6 +10,7 @@ var Peek = require('./peek')
 var imageCDN = require('./image-cdn')
 var highlighter = require('./highlighter')
 var Markdown = require('./markdown')
+var rightsDescriptions = require('./rights-types.js')
 
 //
 // TODO: move these into separate components at `src/artwork/`?
@@ -51,7 +52,7 @@ var Tombstone = React.createClass({
 
     var accessionNumber = this.props.highlighter ?
       this.props.highlighter(art.accession_number, highlightAccessionNumber) :
-      art.accession_number
+      highlightAccessionNumber ? highlight('accession_number') : art.accession_number
 
     return <div onDoubleClick={this.handleDoubleClick}>
       <p className="tombstone">
@@ -60,7 +61,7 @@ var Tombstone = React.createClass({
       {this.state.showLabels && <CopyableLabel art={art} onClose={this.handleDoubleClick} />}
       <p className="gifted">
         <Peek facet="creditline" tag="span" highlightedValue={highlight('creditline')} showPeeks={this.props.showPeeks}>{art.creditline}</Peek>
-          &nbsp; {accessionNumber}
+          &nbsp; <Markdown tag="span">{accessionNumber}</Markdown>
       </p>
     </div>
   },
@@ -179,7 +180,9 @@ var CopyableLabel = React.createClass({
 // check if an image exists on our cloudfront distribution,
 // and if not, fall back to loading it from the API
 var testCloudfrontImage = (art, callback) => {
-  var cdnUrl = imageCDN(art.id, art.restricted ? 800 : 'full')
+  var rights = rightsDescriptions.getRights(art)
+  var downloadFullRes = art.rights_type === 'Public Domain'
+  var cdnUrl = imageCDN(art.id, !downloadFullRes ? 800 : 'full')
 
   if(typeof document == 'undefined') {
     // we're currently server-rendered
@@ -254,7 +257,7 @@ var LinkBar = React.createClass({
               } else {
                 testCloudfrontImage(art, url => {
                   this.setState({ resolvedImageDownloadUrl: url })
-                })
+                }, this.props.downloadFullRes)
               }
             }
             var content = action.icon || action.key

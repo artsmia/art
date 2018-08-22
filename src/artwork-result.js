@@ -28,7 +28,7 @@ var ArtworkResult = React.createClass({
           {title}
           <Artwork.Creator art={art} wrapper="h2" peek={false} highlights={this.props.highlights} />
           <div>{art.room === 'Not on View' ? art.room : <strong><Markdown>{roomHighlight}</Markdown></strong>}</div>
-          {showMore && <Link to="artwork" params={{id: art.id, hash: 'explore'}}><img src="/images/more-icon.svg" style={{width: '3em'}}/></Link>}
+          {showMore && <Link to="artwork" params={{id: art.id, hash: 'explore'}}><img src="/images/more.svg" style={{width: '1.3em', marginTop: '0.3em'}}/></Link>}
         </div>
       </Artwork.Figure>
     )

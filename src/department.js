@@ -10,6 +10,7 @@ var Peek = require('./peek')
 var DepartmentDecorator = require('./decorate/department')
 var findDepartment = require('./department-slug')
 var endpoint = require('./endpoints').info
+var Departments = require('./departments').component
 
 var Department = React.createClass({
   mixins: [Router.State],
@@ -38,10 +39,11 @@ var Department = React.createClass({
         hideInput={true}
         hideResults={true} />
       <div className="departmentPage">
-        <DepartmentDecorator department={deptName} params={this.props.params} departmentInfo={this.props.data.departments} />
+        <DepartmentDecorator key={deptName} department={deptName} params={this.props.params} departmentInfo={this.props.data.departments} />
       </div>
       <Peek facet="department" q={deptName} quiltProps={{maxRowHeight: 400}} offset={10}/>
       <Helmet title={deptName} />
+      <Departments compact={true} active={deptName} />
     </div>
   }
 })

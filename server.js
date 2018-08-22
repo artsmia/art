@@ -63,7 +63,8 @@ app.use((req, res, next) => {
   router.run((Handler, state) => {
     // ga.pageview(state.pathname)
     fetchComponentData(state).then(data => {
-      var body = ReactDOM.renderToString(<Handler {...state} data={data} universal={true} clientIp={req.ip} privilegedClientIP={privilegedClientIP} />)
+      var handler = <Handler {...state} data={data} universal={true} clientIp={req.ip} privilegedClientIP={privilegedClientIP} userAgent={req.headers['user-agent']} />
+      var body = ReactDOM.renderToString(handler)
       res.send(html(Helmet.rewind(), data, body))
     })
   })

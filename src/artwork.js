@@ -16,6 +16,7 @@ var imageCDN = require('./image-cdn')
 var SEARCH = require('./endpoints').search
 var ArtworkRelatedContent = require('./artwork-related')
 var ArtworkPageMetadata = require('./artwork/page-metadata')
+var rightsDescriptions = require('./rights-types.js')
 
 var Sticky = require('react-sticky')
 
@@ -77,15 +78,13 @@ var Artwork = React.createClass({
     var imageUrl = imageCDN(id)
     var canonicalURL = `https://collections.artsmia.org/art/${art.id}/${art.slug}`
 
-    var image = <Image art={art}
-      style={{width: 400, height: 400, maxWidth: '100%'}}
-      ignoreStyle={true} />
-
     var aspectRatio = art.image_width/art.image_height
     var mapHeight = art.image == "valid" ?
       Math.max(40, Math.min(65, 1/aspectRatio*80)) :
       20
     if(smallViewport && this.state.show3d) mapHeight = 67
+
+    var image = <Image art={art} style={{maxWidth: '95%', maxHeight: mapHeight-5+'vh'}} />
 
     var showMoreIcon = Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0 &&
       !this.state.fullscreenImage
@@ -98,13 +97,28 @@ var Artwork = React.createClass({
       color: '#232323',
       backgroundColor: 'rgba(255, 255, 255, 0.7)',
       borderRadius: '1em',
-      lineHeight: '0.8em',
+      lineHeight: '0.3em',
+      padding: '0.3em',
+    }
+    var exploreStyle = {
+      display: 'block',
+      transform: 'translateY(-13px)',
+      paddingLeft: '2em',
+      // TODO - use a background image to center this better?
+      // but it's hard because one thing we want to use is a font icon
+      // and the other is an svg…
+      // backgroundImage: 'url(/images/more.svg)',
+      // backgroundPosition: 'left center',
+      // backgroundRepeat: 'none',
     }
     var exploreIcon = showMoreIcon &&
       <a href="#" onClick={this.toggleInfoAndRelatedContent} style={infoRelatedToggleStyles}>
         {!toggleRelated ?
-          <img src="/images/more-icon.svg" style={{width: '3em', paddingTop: 7}}/> :
+          <img src="/images/more.svg" style={{width: '1.7em'}}/> :
           <i className="control material-icons">info</i>}
+        <span style={exploreStyle}>
+          {!toggleRelated ? 'Explore' : 'Info'}
+        </span>
       </a>
     var relatedContent = <ArtworkRelatedContent id={id} art={art} />
 
@@ -115,9 +129,10 @@ var Artwork = React.createClass({
     var {zoomLoaded} = this.state
     var zoomLoadedSuccessfully = zoomLoaded && zoomLoaded !== 'error'
 
+    var rights = rightsDescriptions.getRights(art)
     var map = <div ref='map' id='map' style={mapStyle}>
       {this.state.has3d && <SketchfabEmbed model={this.state.has3d} show={this.state.show3d} />}
-      {zoomLoadedSuccessfully || (art.image == 'valid' && art.rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
+      {zoomLoadedSuccessfully || (art.image == 'valid' && rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
         {image}
         {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
       </div> || <NoImagePlaceholder art={art} />}
@@ -195,6 +210,10 @@ var Artwork = React.createClass({
       window.lastSearchedTerms && 
       window.lastSearchedTerms.indexOf('related:3dmodels') >= 0
 
+    
+    var rights = rightsDescriptions.getRights(art)
+    const showBiggie = art.restricted === 0 || !(rights == "Copyright Protected" || rights == "Needs Permission")
+
     return {
       art: art,
       id: art.id,
@@ -202,12 +221,13 @@ var Artwork = React.createClass({
       has3d: has3Dmodel,
       show3d: navigatedFrom3dModelSearch,
       smallViewportShowInfoOrRelatedContent: window && window.enteredViaMore,
+      showBiggie,
     }
   },
 
   componentDidMount() {
     var art = this.state.art
-    if(art.image === 'valid' && art.restricted != 1 && !this.isLoan() && !this.state.show3d) this.loadZoom()
+    if(art.image === 'valid' && this.state.showBiggie && !this.isLoan() && !this.state.show3d) this.loadZoom()
     var {smallViewport} = this.context
     // push the viewport down past the header to maximize image/text on the page
     // scrolling back up reveals the menu
@@ -230,7 +250,7 @@ var Artwork = React.createClass({
   loadZoom() {
     var L = require('museum-tile-layer')
     var fullscreen = require('leaflet-fullscreen')
-
+    
     var art = this.state.art
     this.setState({zoomLoaded: false, zoomLoading: true})
 
@@ -248,8 +268,9 @@ var Artwork = React.createClass({
         crs: L.CRS.Simple,
         zoomControl: false,
       })
+      window._map = this.map
       this.map.attributionControl.setPrefix('')
-      this.map.setView([art.image_width/2, art.image_height/2], 0)
+      this.map.setView([0, 0], 0)
       if(!L.Browser.touch) new L.Control.Zoom({ position: 'topright' }).addTo(this.map)
       new L.Control.Fullscreen({
         position: 'topright',
@@ -264,6 +285,7 @@ var Artwork = React.createClass({
         tileSize: data.tileSize || 256,
       })
       this.tiles.addTo(this.map)
+      this.map.setZoom(this.tiles.options.minZoom)
 
       // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})
@@ -316,16 +338,18 @@ var Artwork = React.createClass({
     var copyrightAndOnViewMessage = art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
     var loadingZoomMessage =  `
       (—Is that the best image you've got!!?
-      —Nope! We're loading ${humanizeNumber(this.getPixelDifference(400))} more pixels right now.
+      —Nope! We're loading ${humanizeNumber(this.getPixelDifference(800))} more pixels right now.
       It can take a few seconds.)`
     var showLoadingMessage = zoomLoading && zoomLoaded === false && !this.context.universal
     var showErrorMessage = zoomLoaded === 'error'
     var {smallViewport} = this.context
 
+    const showCopyrightNotice = !this.state.showBiggie
+
     return art.image === 'valid' && <span className="imageStatus">
       {showLoadingMessage && loadingZoomMessage}
       {showErrorMessage && <p>Error loading high resolution image. <a href="mailto:collectionsdata+images@artsmia.org">Report this problem</a>.</p>}
-      {art.restricted === 1 && !smallViewport && "Because of © restrictions, we can only show you a small image of this artwork." + copyrightAndOnViewMessage}
+      {showCopyrightNotice && !smallViewport && "Because of © restrictions, we can only show you a small image of this artwork." + copyrightAndOnViewMessage}
     </span>
   },
 
@@ -339,9 +363,9 @@ var Artwork = React.createClass({
   },
 
   // how many more pixels are in the full sized image than the given thumbnail?
-  getPixelDifference(size=400) {
+  getPixelDifference(size=800) {
     return Math.floor(
-      this.calculateImagePixelSize() - this.calculateImagePixelSize(400)
+      this.calculateImagePixelSize() - this.calculateImagePixelSize(800)
     )
   },
 

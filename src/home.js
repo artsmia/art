@@ -7,8 +7,8 @@ var toSlug = require('speakingurl')
 var SEARCH = require('./endpoints').search
 var rest = require('rest')
 var Search = require('./search')
-var findDepartment = require('./department-slug')
 var MapPage = require('./map-page')
+var Departments = require('./departments').component
 
 var Home = React.createClass({
   statics: {
@@ -58,17 +58,6 @@ Home.contextTypes = {
 module.exports = Home
 
 var HomeDepartmentsAndPages = React.createClass({
-  departments: [
-    "Art of Africa and the Americas",
-    "Chinese, South and Southeast Asian Art",
-    "Contemporary Art",
-    "Decorative Arts, Textiles and Sculpture",
-    "Japanese and Korean Art",
-    "Paintings",
-    "Photography and New Media",
-    "Prints and Drawings",
-  ],
-
   pages: ['Purcell-Cutts House', 'Provenance Research', 'Deaccessions', 'Conservation'],
 
   render() {
@@ -97,17 +86,7 @@ var HomeDepartmentsAndPages = React.createClass({
         <p>It is our mission to enrich the community by collecting, preserving, and making accessible outstanding works of art from the world’s diverse cultures. With over 89,000 artworks, Mia’s collection includes art from six continents, spanning about 20,000 years.  Here you will find world-famous artworks that embody the highest levels of artistic achievement and speak to the enduring power of human creativity to shape our world. </p>
       </div>
       </div>
-      <div className="departmentList mdl-grid">
-        <h2>Departments</h2>
-        {this.departments.map((dept) => {
-          var name = index => findDepartment(dept)[index]
-          return <Link to='department' key={name(1)} params={{dept: name(2)}} className="departmentLink mdl-cell mdl-cell--3-col">
-            <div className={[name(1), "departmentListItem"].join(' ')}></div>
-            <h2>{dept}</h2>
-          </Link>
-          }
-        )}
-      </div>
+      <Departments compact={true} />
 
       <div className="mdl-grid">
         <ul className="info">

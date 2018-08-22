@@ -107,9 +107,12 @@ var Search = React.createClass({
       style={this.props.suggestStyle}
       />
 
+    var {embed} = this.props.query || {}
+    var hideSearch = embed
+
     return (
       <div id="search">
-        {searchBox}
+        {!!hideSearch || searchBox}
         {this.props.children}
         {this.props.hideResults && suggestions || <div>
           <SearchResults {...this.props}
@@ -117,6 +120,7 @@ var Search = React.createClass({
             {...aggsProps}
             suggestions={suggestions}
             minHeight={this.state.minHeight}
+            embed={embed}
           />
         </div>}
       </div>
@@ -164,7 +168,13 @@ var Search = React.createClass({
     var filters = this.props.params && this.props.params.splat
     if(filters && filters.match(/deaccessioned:.?true.?/)) facet = filters
     this.props.onSearch && this.props.onSearch(terms)
-    this.transitionTo(facet && !searchAll ? 'filteredSearchResults' : 'searchResults', {terms: terms, splat: facet})
+
+    this.transitionTo(
+      filters && !searchAll ? 'filteredSearchResults' : 'searchResults', {
+        terms: terms,
+        splat: filters
+      }
+    )
   },
 
   keyDown(event) {

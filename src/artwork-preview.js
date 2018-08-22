@@ -41,7 +41,7 @@ var ArtworkPreview = React.createClass({
           {art.accession_number.match(/^L/i) && <LoanBanner art={art} />}
           <Artwork.Title art={art} link={showLink} {...this.props} />
           <Artwork.Creator art={art} {...this.props} />
-          <Artwork.Tombstone art={art} {...this.props} />
+          <Artwork.Tombstone art={art} {...this.props} highlightAccessionNumber={true} />
           <h6><Peek showPeeks={this.props.showPeeks} facet="room" highlightedValue={highlight('room')}>{art.room}</Peek></h6>
           {this.props.children || <div>
             <div className="description" itemProp="description">

@@ -657,7 +657,7 @@ header{
   background-image: url(cdnImageUrl(12134));
 }
 .departmentListItem.contemporary {
-  background-image: url(cdnImageUrl(1721));
+  background-image: url(cdnImageUrl(1704));
 }
 .departmentListItem.dats {
   background-image: url(cdnImageUrl(8024));
@@ -893,6 +893,19 @@ a.departmentLink h2{
 }
 .detail-row.expandable {
   cursor: pointer;
+
+  dt {
+    &:after {
+      content: "\2295";
+      position: relative;
+      left: 0.25em;
+    }
+  }
+  &.expanded dt {
+    &:after {
+      content: "";
+    }
+  }
 }
 .detail-title{
     padding:5px 0;
@@ -963,18 +976,27 @@ h5.details-title {
   background: $primary;
   position: fixed
 }
-.explore{
-  display: inline-block;
+.explore {
 }
 .explore {
   .newsflash, .artstory, .explore-content {
     a {
-      font-size:1.1em;
-      color: #ffffff;
-      font-family: $MiaGroteskBold, sans-serif;
-      position: absolute;
-      bottom:10px;
-      left: 10px;
+      flex: 1;
+      display:flex;
+      max-width: 100%;
+
+      color: #232323;
+      font-family: $MiaGroteskRegular, sans-serif;
+    }
+
+    img {
+      align-self: start;
+      order: -1;
+      flex: 1;
+      flex-grow:0;
+      flex-shrink:0;
+      width: 30%;
+      margin-right: 0.5em
     }
   }
 }
@@ -1020,7 +1042,6 @@ h5.details-title {
 }
 .explore a sub{
   font-size:1.1em;
-  color: #ffffff;
   font-family: $MiaGroteskLight, sans-serif;
 }
 .audioClip a, .audioClip a sub {
@@ -1034,13 +1055,7 @@ h5.details-title {
 }
 .newsflash, .artstory, .explore-content {
   display: inline-block;
-  width: 175px;
-  height: 175px;
-  float: left;
   margin:20px 10px 0 0;
-  background-size: cover;
-  position: relative;
-  background-color: rgb(35,35,35);
 }
 .audioClip{
   display: inline-block;
@@ -1184,10 +1199,10 @@ button.material-icons {
     -o-transition: all 150ms linear;
     transition: all 150ms linear;
 }
-.landingPageBody .info li a:hover, .departmentLink:hover h2{
+.landingPageBody .info li a:hover, .departmentLink:hover h2, .departmentLink.isActive h2 {
     background-color:$primary;
     color:white;
-    padding-left:10px;
+    padding: 0 10px;
 }
 .landingPageBody .info li:last-child a{padding-right:0;}
 
