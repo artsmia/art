@@ -27,7 +27,7 @@ var Curators = React.createClass({
     <div className="mdl-grid curatorsPage" id="curators">
       <h2>Curators</h2>
       {Object.keys(curators)
-      .filter(name => ['kaywin-feldman', 'matthew-welch'].indexOf(name) == -1)
+      .filter(name => ['kaywin-feldman', 'matthew-welch', 'yasufumi-nakamori'].indexOf(name) == -1)
       .map(name => {
         var curator = curators[name]
         if(!curator || !curator.slug) return

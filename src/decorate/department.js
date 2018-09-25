@@ -64,6 +64,7 @@ var DepartmentDecorator = React.createClass({
     .map(name => this.props.departmentInfo.curators[name])
     .filter(exists => !!exists)
     .filter(({emeritus}) => !emeritus)
+    .filter(curator => !curator.name.match(/yasufumi/i))
 
     return curators.length > 0 && <div id="curators">
       <h3>Curators</h3>

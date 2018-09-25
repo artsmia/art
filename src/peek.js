@@ -197,7 +197,9 @@ var Peek = React.createClass({
   },
 
   dispatchEvent() {
-    window.dispatchEvent(new CustomEvent('peek'))
+    try {
+      window.dispatchEvent(new CustomEvent('peek'))
+    } catch(e) {}
   },
 })
 Peek.contextTypes = {
