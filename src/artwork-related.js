@@ -45,7 +45,7 @@ var ArtworkRelatedContent = React.createClass({
     var groupedByTypeSortedContent = R.groupBy(({type}) => type, sortedExploreContent)
     var groupedRelatedContents = R.mapObjIndexed((relateds, type) => {
       const humanTypeName = type.replace(/-/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})
-      const showType = ['audio', 'video', 'artstory', '3d'].indexOf(type) < 0
+      const showType = true || ['audio', 'video', 'artstory', '3d'].indexOf(type) < 0
 
       return <div>
         {showType && <h2>{humanTypeName}</h2>}
