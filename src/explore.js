@@ -55,6 +55,7 @@ var Explore = React.createClass({
     {title: 'Mia Stories', term:'_exists_:related:stories', blurb:'[Mia Stories](https://new.artsmia.org/stories/): the museum beyond the walls, outside the frame, at the lively intersection of life and art. From behind-the-scenes buzz to inspiring connections with current events, it’s the museum in conversation.'},
     {title: 'Newsflashes', term:'_exists_:related:newsflashes', blurb: '[NewsFlashes](https://new.artsmia.org/trending-now/) connect current events and art in Mia\'s collection. You’ll also find them throughout the museum, in print form, hanging beside the art they reference.'},
     {title: '3D Models', term:'_exists_:related:3dmodels', blurb: "Mia does extensive photographic documentation of it's art, including building 3D models."},
+    {title: 'Verbal Descriptions of Art', term:'_exists_:related:visual-descriptions', blurb: "Detailed, verbal descriptions of artwork for people who are blind or have low vision."},
   ],
 
   personalize() {

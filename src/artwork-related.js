@@ -114,6 +114,7 @@ var ArtworkRelatedContent = React.createClass({
   // * filter out old newsflashes
   templates: {
     audio: (json, id, _, track) => <div className="audioClip">
+      {json.title} {json.number ? `(#${json.number})` : ''}
       <audio style={{maxWidth: '100%'}} src={json.link.replace('http:', 'https:')} controls onPlay={track}></audio>
     </div>,
     newsflash: (json) => <div className="newsflash" style={{backgroundImage1: `url(https://newsflash.dx.artsmia.org${json.image})`}}>
