@@ -182,12 +182,23 @@ var SearchResults = React.createClass({
       minHeight: Math.max(50, this.state.minHeight - postSearchOffset)
     }
 
+    const {searchResults} = this.props.data
+    const csvTerms = [searchResults.query, searchResults.filter].filter(s => s).join(' ')
+    const csvUrl = `https://search.artsmia.org/${csvTerms}?format=csv`
+    const showCsvLink = true
+
     return <div ref="postSearch" style={style}>
-      showing {hits.length} {' '}
-      {showingAll || <span>of {search.hits.total} {' '}</span>}
-      results matching <code>{search.query}</code>
-      {search.filters && <span> and <code>{search.filters}</code></span>}
-      {showingAll || showMoreLink}
+      <p>
+        showing {hits.length} {' '}
+        {showingAll || <span>of {search.hits.total} {' '}</span>}
+        results matching <code>{search.query}</code>
+        {search.filters && <span> and <code>{search.filters}</code></span>}
+        {showingAll || showMoreLink}
+      </p>
+
+      {showCsvLink && <p>
+        <a href={csvUrl}>Download results as CSV</a>
+      </p>}
     </div>
   },
 
