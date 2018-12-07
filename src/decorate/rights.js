@@ -3,24 +3,24 @@ var React = require('react')
 var {
   findByName,
   legacy: rightsDescriptions,
-  rightsStatements
+  rightsStatements,
+  RightsStatementIcon,
 } = require('../rights-types.js')
 
 var RightsDecorator = React.createClass({
   render() {
-    var rightsType = this.props.term[0].match(/rights:"?([^"]*)"?/)[1]
-    var rightsDesc = rightsDescriptions[rightsType]
-    if(!rightsDesc) return <span />
-
-    const rightsStatement = findByName(rightsType)
-    console.info('rights decorator', {rightsType, rightsStatement})
+    var rightsType = this.props.term[0].match(/rights_type:"?([^"]*)"?/)[1]
+    var rightsStatement = findByName(rightsType)
+    if(!rightsStatement) return <span />
 
     return <div className="decorator">
-      <h3>{rightsType}</h3>
-      <p>{rightsDesc} <a href="https://new.artsmia.org/visit/policies-guidelines/#websiteimageaccess&use">Mia's Image Access & Use Policy</a></p>
-      <details><summary>Forthcoming RightsStatement: {rightsStatement.label}</summary>
-      {rightsStatement.definition}
-      </details>
+      <p>
+        <a href={rightsStatement.id}>
+          <RightsStatementIcon statement={rightsStatement} />
+          {rightsStatement.label}
+        </a>
+      </p>
+      {rightsStatement.definition.replace('This Item is', 'These Items are').replace('this Item', 'these Items')}
     </div>
   },
 })

@@ -1,6 +1,8 @@
 /** @format
  */
 
+var React = require('react')
+
 // CC PDM or CC0 isn't a rightsstatement. Here we sling it in with the rightsstatements, how does that work?
 const publicDomainMark = {
   id: 'https://creativecommons.org/publicdomain/mark/1.0/',
@@ -10,7 +12,19 @@ const publicDomainMark = {
 }
 
 const rightsstatements = [
-  ...require('rightsstatements'),
+  ...require('rightsstatements').map(rs => {
+    rs.definition = rs.definition
+      .replace('The copyright and related rights status of this Item has not been evaluated', 'The copyright and related rights status of this Item has not been evaluated by the Minneapolis Institute of Art (Mia)')
+      .replace('Please refer to the organization that has made the Item available for more information.', 'Please contact us for more information.')
+      .replace(/The organization that has made the Item available/i, 'Minneapolis Institute of Art (Mia)') // TODO link 'contact us' to collectionsdata@artsmia.org
+      .replace('the organization was', 'we were')
+
+    if(rs.definition.match(/The organization/)) {
+      console.info(rs.label, rs.definition, rs.identifier)
+      // debugger
+    }
+    return rs
+  }),
   publicDomainMark,
 ]
 
@@ -23,7 +37,6 @@ const miaLegacyRightsTypes = {
   "Orphaned Work": "Artwork may be subject to copyright protection under the terms of current US copyright law. Mia has been unable to identify the creator and/or rights holder. The statement “Copyright of the artist, artist’s estate, or assignees” should accompany image.",
   "Public Domain": "Artwork is in the public domain. Images are available for any use.",
   "Permission Denied": "Artwork is copyright protected. Mia has contacted the rights holder and the rights holder denied Mia any use rights.",
-  getRights,
 }
 
 const legacyToStandardizedStmt = {
@@ -45,7 +58,6 @@ const _rightsStatements = Object.keys(miaLegacyRightsTypes).map(legacyName => {
   const rightsStmt = rightsstatements.find(stmt => stmt.label === legacyToStand)
   if(!rightsStmt && legacyName !== 'getRights') {
     console.info({legacyName, legacyToStand, rightsStmt})
-    debugger
   }
 
   return {
@@ -66,15 +78,57 @@ const getRights = function(art) {
   return art.rights_type
 }
 
+// Due to limitations in our TMS database, we don't exactly map rights statements correctly.
+// This is a map that corrects our shortened statements (…due to a character limit on the field in SQL…)
+// to the full Rights Statement label
+const miaRightsLabelToRightsStatementID = {
+  "In Copyright–Educational Use": "InC-EDU",
+  "In Copyright–Non-Commercial Use": "InC-NC",
+  "In Copyright–Rights-holder(s) Unlocatable": "InC-RUU",
+  "No Copyright–United States": "NoC-US",
+  "No Copyright—Contractual Restrictions": "NoC-CR",
+}
+
+// TODO map Mia used named to proper rights statements labels
+// this would have been 10x easier if we'd just used the short hand identifier,
+// but probably wouldn't read well in TMS
+
+function RightsStatementIcon({statement, color, style, ...props}) {
+  if(!statement) return <span />
+
+  var shortId = statement.identifier.split('-')[0]
+  var iconURL = statement.identifier === 'CC-PDM' ? 
+    `https://upload.wikimedia.org/wikipedia/commons/a/af/Cc-public_domain_mark.svg`
+    : `https://rightsstatements.org/files/icons/${shortId}.Icon-Only.${color || 'white'}.svg`
+  var fullIconURL = statement.identifier === 'CC-PDM' ? 
+    `https://upload.wikimedia.org/wikipedia/commons/a/af/Cc-public_domain_mark.svg`
+    : `https://rightsstatements.org/files/buttons/${statement.identifier}.${color || 'white'}.svg`
+
+  return <img
+    src={fullIconURL}
+    style={{paddingRight: '0.43em', display: 'inline', height: '1em', ...style}}
+    alt={`${statement.label} Rights Statement icon`}
+    alt=""
+    {...props}
+  />
+}
+
+
 module.exports = {
   legacy: {
     ...miaLegacyRightsTypes,
     getRights,
   },
   rightsStatements: {
-    ..._rightsStatements,
+    ...rightsstatements,
     getRights,
   },
-  findByName: name => _rightsStatements.find(st => st.label === name || st.legacyName === name),
+  findByName: name => {
+    const mappedRightsID = miaRightsLabelToRightsStatementID[name]
+    const rights = rightsstatements.find(st => st.label === name || st.legacyName === name || st.identifier === mappedRightsID)
+
+    return rights
+  },
   getRights,
+  RightsStatementIcon,
 }

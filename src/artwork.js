@@ -212,7 +212,12 @@ var Artwork = React.createClass({
 
     
     var rights = rightsDescriptions.getRights(art)
-    const showBiggie = art.restricted === 0 || !(rights == "Copyright Protected" || rights == "Needs Permission")
+    const showBiggie = art.restricted === 0 
+      || ['Copyright Protected', 'Needs Permission', 'In Copyright',
+        "In Copyright - Rights-holder(s) Unlocatable or Unidentifiable",
+        "In Copyright–Rights-holder(s) Unlocatable",
+        "Copyright Not Evaluated"
+      ].indexOf(rights) < 0
 
     return {
       art: art,

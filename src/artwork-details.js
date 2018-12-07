@@ -9,7 +9,12 @@ var ClickToSelect = require('@mapbox/react-click-to-select')
 var Markdown = require('./markdown')
 var Peek = require('./peek')
 var dimensionSvg = require('./endpoints').dimensionSvg
-var {legacy: rightsDescriptions, rightsStatements} = require('./rights-types.js')
+var {
+  legacy: rightsDescriptions,
+  rightsStatements,
+  findByName: findRightsByName,
+  RightsStatementIcon,
+} = require('./rights-types.js')
 var feedbackSender = require('./email-data-sender')
 var _Artwork = require('./_artwork')
 
@@ -114,15 +119,27 @@ var ArtworkDetails = React.createClass({
       ['provenance'],
       ['rights', (art, raw) => {
         var rights = rightsDescriptions.getRights(art)
+        var rs = findRightsByName(rights)
+
         return [(art.image_copyright || rights) && <div>
           {art.image_copyright && decodeURIComponent(art.image_copyright)}
           {art.image_copyright && rights && <br/>}
-          {rights && <span>{rights}</span>}
+          {rights && <span>{rs ? rs.label : rights}</span>}
         </div>,
         <div>
-          <p>{rightsDescriptions[rights]}</p>
-          <Peek facet="rights" q={rights} />
-          <p><a href="https://new.artsmia.org/visit/policies-guidelines/#websiteimageaccess&use">Mia's Image Access & Use Policy</a></p>
+          {rs && <p>
+            {rs.definition}
+            <br />
+            <a href={rs.id} title="See more information by visiting righststatments.org">
+              <RightsStatementIcon 
+                statement={rs} 
+                color="dark" 
+                alt=""
+              /> {rs.label} ({rs.identifier})
+            </a>
+          </p>}
+          <Peek facet="rights_type" q={rights} />
+          <p><a href="https://new.artsmia.org/copyright-and-image-access/">Mia's Copyright and Image Access & Use Policies</a></p>
         </div>
         ]
       }],

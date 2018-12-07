@@ -144,7 +144,7 @@ var DecorationFinder = (search, filters, props) => {
     "Not on View": (gallery) => <GalleryDecorator notOnView={true} key={gallery} />,
     "highlight:": () => <HighlightsDecorator key="highlight" />,
     "recent:": () => <RecentDecorator key="recent" />,
-    "rights:": (term) => <RightsDecorator term={term} params={params} key={term} />,
+    "rights_type:": (term) => <RightsDecorator term={term} params={params} key={term} />,
     // "^[0-9\.\*,\-a-zA-Z]+$": (term) => <NumberDecorator term={term} params={params} key={term + '-number'} {...props} />,
   }
 
