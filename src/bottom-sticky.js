@@ -8,9 +8,15 @@ var Sticky = require('react-sticky')
 var BottomSticky = React.createClass({
   render() {
     var {stickyStyle, ...other} = this.props
-    var {style} = this.state
+    var {style, isSticky} = this.state
 
-    return <Sticky stickyStyle={style} {...other} onStickyStateChange={this.stickyChanged}>
+    const _style = !isSticky ? stickyStyle : style
+
+    return <Sticky
+      stickyStyle={_style}
+      {...other}
+      onStickyStateChange={this.stickyChanged}
+    >
       {this.props.children}
     </Sticky>
   },
