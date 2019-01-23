@@ -11,21 +11,23 @@ var RecentDecorator = require('./decorate/recent')
 var RightsDecorator = require('./decorate/rights')
 var AudioDecorator = require('./decorate/audio')
 var NumberDecorator = require('./decorate/number')
+var ArtistDecorator = require('./decorate/artist')
 
 var Decorate = React.createClass({
   render() {
     var {query, filters} = this.props.search
     if(!query && !filters) return <span />
-    var decorations = DecorationFinder(query, filters, this.props)
-    var {showDecorators, showByName} = this.state
+    var decorations = DecorationFinder(query, filters, this.props, this.removeDecorator)
+    var {showDecorators, showByName, removedDecorators} = this.state
 
     const decTabControls = <span style={{color: 'white'}}>
       {decorations.map(d => {
         const decoratorName = d.type.displayName 
         const shortName = decoratorName.replace('Decorator', '')
         const activeOrNotStyle = showByName[decoratorName] ? {border: '1px solid gold'} : {}
+        const isRemoved = removedDecorators[decoratorName]
 
-        return <button onClick={this.toggleDecoration} style={activeOrNotStyle}>
+        return isRemoved ? <span /> : <button onClick={this.toggleDecoration} style={activeOrNotStyle}>
           {shortName}
         </button>}
       )}
@@ -41,7 +43,11 @@ var Decorate = React.createClass({
         {showDecorators ? 'close' : 'info'}
       </i>
 
-    return decorations.length > 0 && <div
+    const allHidden = decorations && removedDecorators &&
+      JSON.stringify(decorations.map(d => d.type.displayName)) == JSON.stringify(Object.keys(removedDecorators))
+    console.info({showByName, decsToShow, allHidden})
+
+    return decorations.length > 0 && !allHidden && <div
       className={cx('decorator-wrap', {closed: !showDecorators})}
       onClick={!showDecorators && this.toggleDecoration}
     >
@@ -56,7 +62,7 @@ var Decorate = React.createClass({
 
   getInitialState() {
     var {query, filters} = this.props.search
-    var decorations = DecorationFinder(query, filters, this.props)
+    var decorations = DecorationFinder(query, filters, this.props, this.removeDecorator.bind(this))
 
     let audioDecoratorMatches
     // Always show audio decorator.
@@ -120,7 +126,22 @@ var Decorate = React.createClass({
     var nextQuery = nextProps.search.query
     var nextFilters = nextProps.search.filters
 
-    if(query !== nextQuery || filters !== nextFilters) this.setState({showDecorators: true})
+    if(query !== nextQuery || filters !== nextFilters) {
+      this.setState({showDecorators: true, removedDecorators: {}})
+    }
+  },
+
+  // Provide this to subcomponent decorators so each decorator can
+  // remove itself from the list e.g. when making an API call
+  // and finding no results
+  removeDecorator(decoratorName) {
+    console.info('removeDecorator', {decoratorName})
+
+    this.setState({
+      showByName: {...this.state.showByName, [decoratorName]: false},
+      removedDecorators: {...this.state.removedDecorators, [decoratorName]: true},
+      showDecorators: false,
+    })
   },
 })
 Decorate.contextTypes = {
@@ -129,13 +150,14 @@ Decorate.contextTypes = {
 
 module.exports = Decorate
 
-var DecorationFinder = (search, filters, props) => {
+var DecorationFinder = (search, filters, props, removeFn) => {
   let {params} = props
   let terms = search ? search.match(/\w+.+|"(?:\\"|[^"])+"/g) || search.split(' ') : false
   if(filters) terms = terms.concat(filters.split('" ').map(f => f.trim()))
   if(!terms) return [] // search by ids `search/ids` doesn't have any terms
 
   var Decor = {
+    "artist:": (term) => <ArtistDecorator artist={term} params={params} key={term} remove={removeFn} />,
     "department:": (term) => <DepartmentDecorator department={term} params={params} key={term} />,
     ".*": (term) =>
         props.hits.filter(hit => hit._source['related:audio-stops']).length > 0 // [1]
