@@ -298,6 +298,42 @@ var Artwork = React.createClass({
         this.setState({fullscreenImage: !this.state.fullscreenImage})
         this.props.toggleAppHeader()
       })
+
+      var interval = 400
+      setTimeout(function() {
+        // if not tile images have been loaded, force a zoom in and then a zoom out.
+        // This tricks leaflet to load the tiles? I'm not sure why but it probably has
+        // to do with a fractional zoom bug that I don't want to get into right now…
+        var tileContainer = _map._mapPane.querySelector('.leaflet-tile-container')
+        var tileElems = tileContainer.childElementCount 
+        console.info('map tiles loaded', {tileElems, tileContainer})
+
+        if(tileElems <= 1) {
+          console.info('zooming out then back in', {max: _map.getMaxZoom()})
+          _map.setZoom(_map.getMaxZoom())
+          setTimeout(function() {
+            _map.setZoom(_tiles.options.minZoom+0.5)
+            setTimeout(function() {
+              _map.setZoom(_tiles.options.minZoom+0.4)
+              setTimeout(function() {
+                _map.setZoom(_tiles.options.minZoom+0.3)
+                setTimeout(function() {
+                  _map.setZoom(_tiles.options.minZoom+0.2)
+                  setTimeout(function() {
+                    _map.setZoom(_tiles.options.minZoom+0.1)
+                    setTimeout(function() {
+                      _map.setZoom(_tiles.options.minZoom)
+                    }, interval)
+                  }, interval)
+                }, interval)
+              }, interval)
+            }, interval)
+          }, interval)
+        } else {
+          console.info('not simulating zoom in/out?')
+        }
+      }, 1000)
+
       var zoomCount, zoomInCount, zoomOutCount, prevZoom, nowZoom;
       var zoomCount = zoomInCount = zoomOutCount = 0;
       var prevZoom = nowZoom = this.map.getZoom();
