@@ -6,7 +6,7 @@ const ArtistPage = require('../artist')
 
 var ArtistDecorator =  React.createClass({
   componentWillMount() {
-    const artistName = decodeURIComponent(this.props.artist[0].split(':')[1])
+    const artistName = decodeURIComponent(this.props.artist[0].replace(/.*: ?/, ''))
       .replace('+', ' ').replace(/"/g, '')
     console.info('ArtistDecorator', {artistName, key: this.props.key})
     const fetchArtist = ArtistPage.fetchData.artist
