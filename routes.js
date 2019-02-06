@@ -24,6 +24,7 @@ var Artist = require('./src/artist')
 var RecentAccessions = require('./src/recent')
 var AccessionHighlight = require('./src/accession-highlight')
 var ArtChampionPage = require('./src/art-champion')
+var PeopleById = require('./src/people-by-id')
 var Survey = require('./src/survey')
 
 var routes = (
@@ -47,6 +48,7 @@ var routes = (
     <Route name="artist" path="/people/:id" handler={Artist} />
     <Route name="artistSlug" path="/people/:id/:slug" handler={Artist} />
     <Route name="objectsById" path="/search/ids/:ids" handler={ObjectsById} />
+    <Route name="peopleById" path="/search/people/:ids" handler={PeopleById} />
     <Route name="page" path="/info/:name" handler={Page} />
     <Route name="info" path="/info" handler={Info} />
     <Route name="gallery" path="/galleries/:gallery" handler={Gallery} />

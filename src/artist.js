@@ -51,7 +51,7 @@ var Person = React.createClass({
     var {artistDescription} = artist.wikidata || {}
 
     return <div>
-      <div style={{background: '#232323', height: '7em', width: '100%'}} />
+      {!this.props.hideHeader && <div style={{background: '#232323', height: '7em', width: '100%'}} />}
       {false && <Search
         facet={`artist:"${artist.name}"`}
         {...this.props}
@@ -75,7 +75,7 @@ var Person = React.createClass({
       </div>
 
       <hr style={{visibility: 'hidden', clear: 'both'}} />
-      <Peek facet="artist" q={artist.name} quiltProps={{maxRowHeight: 400}} showSingleResult={true} />
+      <Peek facet="artist" q={artist.name} quiltProps={{maxRowHeight: 100}} showSingleResult={true} />
       <Helmet title={artist.name} />
     </div>
   },
