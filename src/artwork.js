@@ -291,6 +291,7 @@ var Artwork = React.createClass({
       })
       this.tiles.addTo(this.map)
       this.map.setZoom(this.tiles.options.minZoom)
+      window._tiles = this.tiles
 
       // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})

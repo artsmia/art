@@ -75,7 +75,7 @@ var Person = React.createClass({
       </div>
 
       <hr style={{visibility: 'hidden', clear: 'both'}} />
-      <Peek facet="artist" q={artist.name} quiltProps={{maxRowHeight: 100}} showSingleResult={true} />
+      <Peek facet="artist" q={artist.name} quiltProps={{maxRowHeight: 100}} showSingleResult={true} style={{position: 'absolute', bottom: 0, width: '100vw'}} />
       <Helmet title={artist.name} />
     </div>
   },
