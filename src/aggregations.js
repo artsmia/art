@@ -36,7 +36,8 @@ var Aggregations = React.createClass({
           if(showAgg) return (<dl key={agg.name} id={agg.name} style={defListStyle}>
             <dt style={{fontWeight: aggIsActive && 'bold'}} onClick={toggleAgg(agg)}>{agg.displayName}</dt>
             {(agg.open || aggIsActive) && agg.buckets.slice(0, 5).map(function(bucket) {
-              const filterString = customFilters[agg.name] ? customFilters[agg.name][bucket.key] || bucket.key : agg.name.toLowerCase()+':"'+bucket.key+'"'
+              let filterString = customFilters[agg.name] ? customFilters[agg.name][bucket.key] || bucket.key : agg.name.toLowerCase()+':"'+bucket.key+'"'
+              if(agg.name === 'Rights') filterString = 'rights_type:"'+bucket.key+'"'
               const filterRegex = new RegExp(decodeURIComponent(filterString).replace(/([\[\]\?])/, '\\$1'), 'i')
               const bucketIsActive = search.filters && search.filters.match(filterRegex)
               const newFilters = bucketIsActive ?
