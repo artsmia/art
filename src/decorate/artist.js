@@ -29,13 +29,11 @@ var ArtistDecorator =  React.createClass({
     const {thumbnail, link, extract} = artist.wikipedia || {}
     const {artistDescription} = artist.wikidata || {}
 
-    return <div style={{maxWidth: '47em', margin: '0 auto'}} key={this.props.terms}>
+    return <div style={{maxWidth: '47em', margin: '0 auto', color: 'white'}} key={this.props.terms}>
       {thumbnail && <img src={thumbnail} style={{float: 'right', margin: '0 0 1em 1em', maxHeight: 200}} alt={`image of ${artist.name} from wikipedia`}/>}
-      <h2 style={{color: "#232323"}}>{artist.name}</h2>
-      {extract ? <p>
-        {extract}
-      </p> : artistDescription && <p>
-        {artistDescription}
+      <h2 style={{color: "white"}}>{artist.name}</h2>
+      {extract || artistDescription && <p style={{color: 'white'}}>
+        {extract || artistDescription}
       </p>}
       <p><a href={`/people/${artist.id}`}>More info &rarr;</a></p>
     </div>

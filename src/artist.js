@@ -16,7 +16,10 @@ var Person = React.createClass({
     fetchData: {
       artist: (params, existingData) => {
         return rest(`${searchEndpoint}/people/${params.id}`)
-          .then(({entity}) => JSON.parse(entity))
+          .then(({entity}) => {
+            if(params.id === 'Wellington Lee') return null
+            return JSON.parse(entity)
+          })
       },
       searchResults: (params, query) => {
         return false
@@ -75,7 +78,7 @@ var Person = React.createClass({
       </div>
 
       <hr style={{visibility: 'hidden', clear: 'both'}} />
-      <Peek facet="artist" q={artist.name} quiltProps={{maxRowHeight: 100}} showSingleResult={true} style={{position: 'absolute', bottom: 0, width: '100vw'}} />
+      <Peek facet="artist" q={artist.name} quiltProps={{maxRowHeight: 100}} showSingleResult={true} />
       <Helmet title={artist.name} />
     </div>
   },
