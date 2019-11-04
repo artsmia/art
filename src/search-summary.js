@@ -59,7 +59,9 @@ const SearchSummary = React.createClass({
           </span>}
           {sort && <span> sorted by {humanizeSnakeCase(sort.replace(/(-|\.).*/, ''))}</span>}
           {showingAll || this.props.showMoreLink}
-        </h2></div>
+          {this.props.embed && <span> (<a href="#" onClick={this.props.handleCancelEmbed}>show search</a>)</span>}
+        </h2>
+      </div>
         {!this.props.embed && <div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>}
         </div>
 

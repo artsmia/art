@@ -122,6 +122,7 @@ var SearchResults = React.createClass({
         this.focusResult(nextFocusResult)
       },
       embed: this.props.embed,
+      handleCancelEmbed: this.props.handleCancelEmbed,
       ...this.props.summaryProps
     }
 

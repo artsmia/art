@@ -108,7 +108,7 @@ var Search = React.createClass({
       />
 
     var {embed} = this.props.query || {}
-    var hideSearch = embed
+    var hideSearch = embed && !this.state.cancelEmbed
 
     return (
       <div id="search">
@@ -120,7 +120,8 @@ var Search = React.createClass({
             {...aggsProps}
             suggestions={suggestions}
             minHeight={this.state.minHeight}
-            embed={embed}
+            embed={hideSearch}
+            handleCancelEmbed={() => this.setState({cancelEmbed: true})}
           />
         </div>}
       </div>
