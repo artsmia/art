@@ -50,7 +50,7 @@ var VotingBooth = React.createClass({
 })
 
 var VoteForRandomArtworkCard = RandomArtwork(VotingBooth, {
-  searchQuery: 'room:G3* image:valid public_access:1',
+  searchQuery: 'room:G* image:valid public_access:1',
   preloadNext: true,
 })
 
@@ -59,6 +59,8 @@ var Survey = React.createClass({
     var thanksMessage = <div>
       <p>
         Thanks for helping Mia visitors make new connections to diverse artworks.
+      </p>
+      <p>
         <a href="#" onClick={this.incrementProgress}>Feel free to keep at it</a>
         , but you’ve succeeded in giving us enough data to influence our algorithm.
       </p>
