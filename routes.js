@@ -58,6 +58,7 @@ var routes = (
     <Route name="exhibition" path="/exhibitions/:id" handler={Exhibition} />
     <Route name="exhibitionSlug" path="exhibitions/:id/:slug" handler={Exhibition} />
     <Route name="recent" path="/new" handler={RecentAccessions} />
+    <Route name="surveys" path="surveys/:surveyId" handler={Survey} />
     <Route name="survey" path="survey" handler={Survey} />
   </Route>
 );

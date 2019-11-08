@@ -54,7 +54,7 @@ var VoteForRandomArtworkCard = RandomArtwork(VotingBooth, {
   preloadNext: true,
 })
 
-var Survey = React.createClass({
+var ArtworkSurvey = React.createClass({
   render() {
     var thanksMessage = <div>
       <p>
@@ -67,6 +67,7 @@ var Survey = React.createClass({
 
       <a href="#" onClick={this.incrementProgress}>Keep going</a>
     </div>
+
     var sessionProgress = this.state.sessionProgress
 
     return <div style={{margin: '1em'}}>
@@ -91,6 +92,109 @@ var Survey = React.createClass({
   incrementProgress() {
     this.setState({sessionProgress: this.state.sessionProgress+1})
   },
+})
+
+var VisitorQuiz = React.createClass({
+  componentDidMount() {
+    this.props.toggleAppHeader()
+    restWithCorsCookies(`${SEARCH}/survey/getUser`)
+  },
+
+  getInitialState() {
+    return {
+      questions: [
+        {
+          q: "What are you here to look for? I am…",
+          id: 'porpoise',
+          answers: [
+            "Preparing for a visit and want to see what you have [visit prep/logistics]",
+            "Looking for detailed information on specific artworks in Mia’s collection [targeted research]",
+            "Browsing to find out more about an artist, type of art, or area of the collection [general interest, related content]",
+            "Browsing for enjoyment and inspiration [open-ended exploration]"
+          ],
+        },
+        {
+          q: "I am on a...",
+          id: 'device',
+          answers: [
+            "Mobile device",
+            "laptop/desktop",
+            "Other",
+          ],
+        },
+        {
+          q: "I got here from…",
+          id: 'source',
+          answers: [
+            "Mia’s homepage",
+            "A post from social media (e.g. Facebook, Twitter, Instagram, etc)",
+            "A Google search",
+          ]
+        }
+      ],
+    }
+  },
+
+  render() {
+    return <section style={{padding: '1em'}}>
+      {this.buildQuizTree()}
+    </section>
+  },
+
+  stringQuiz() {
+    return this.state.questions.map(q => `${q.q}\n${q.answers.map(a => `* ${a}`).join("\n")}`)
+      .join("\n\n")
+  },
+
+  buildQuizTree() {
+    return this.state.questions.map(q => {
+      return <div style={{display: 'block'}}>
+        <p style={{fontWeight: 'bold'}}>{q.q}</p>
+        {q.answers.map(a => {
+          return <label style={{display: 'block'}}>
+            <input type='radio' name={q.id} onChange={this.selectionMade}/>
+            {a}
+          </label>
+        })}
+      </div>
+    })
+  },
+
+  selectionMade(event) {
+    this.setState({
+      answers: {
+        ...this.state.answers || {},
+        [event.target.name]: event.target.labels[0].textContent,
+      }
+    })
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.answers !== prevState.answers) {
+      const {answers} = this.state
+      console.info('post new answers', {answers, prev: prevState.answers})
+
+      restWithCorsCookies(`${SEARCH}/survey/redesign?data=${JSON.stringify(answers)}`).then((result) => {
+        console.info('rested', {entity: result.entity, result})
+      })
+    }
+  },
+})
+
+/** TODO
+ *
+ * paramaterize survey rendering so we can have different surveys!
+ */
+var Survey = React.createClass({
+  render() {
+    const { surveyId } = this.props.params
+
+    if(surveyId && surveyId == '2019-visitor-quiz') {
+      return <VisitorQuiz {...this.props} />
+    }
+
+    return <ArtworkSurvey {...this.props} />
+  }
 })
 
 module.exports = Survey
