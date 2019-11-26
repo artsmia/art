@@ -94,41 +94,41 @@ var ArtworkSurvey = React.createClass({
   },
 })
 
-var VisitorQuiz = React.createClass({
+var VisitorSurvey = React.createClass({
   componentDidMount() {
-    this.props.toggleAppHeader()
     restWithCorsCookies(`${SEARCH}/survey/getUser`)
+    this.props.toggleAppHeader()
   },
 
   getInitialState() {
     return {
+      accepted: false,
       questions: [
         {
           q: "What are you here to look for? I am…",
           id: 'porpoise',
           answers: [
-            "Preparing for a visit and want to see what you have [visit prep/logistics]",
-            "Looking for detailed information on specific artworks in Mia’s collection [targeted research]",
-            "Browsing to find out more about an artist, type of art, or area of the collection [general interest, related content]",
-            "Browsing for enjoyment and inspiration [open-ended exploration]"
+            "preparing for a visit.",
+            "looking for detailed information on a specific artwork at Mia.",
+            "looking for more information about an artist or type of art.",
+            "just exploring because I like art."
           ],
         },
         {
           q: "I am on a...",
           id: 'device',
           answers: [
-            "Mobile device",
-            "laptop/desktop",
-            "Other",
+            "mobile device or tablet.",
+            "laptop/desktop computer.",
           ],
         },
         {
           q: "I got here from…",
           id: 'source',
           answers: [
-            "Mia’s homepage",
-            "A post from social media (e.g. Facebook, Twitter, Instagram, etc)",
-            "A Google search",
+            "Mia’s homepage.",
+            "a post from social media.",
+            "a search engine.",
           ]
         }
       ],
@@ -136,8 +136,14 @@ var VisitorQuiz = React.createClass({
   },
 
   render() {
+    const interactivePopup = true
+
     return <section style={{padding: '1em'}}>
-      {this.buildQuizTree()}
+      {this.state.completed
+        ? this.surveyThanks()
+        : this.state.accepted 
+          ? this.buildQuizTree()
+          : this.surveyWelcome()}
     </section>
   },
 
@@ -146,18 +152,73 @@ var VisitorQuiz = React.createClass({
       .join("\n\n")
   },
 
+  surveyWelcome() {
+    const buttonStyle = {
+      backgroundColor: '#232323',
+      padding: '1em',
+      fontSize: '1em',
+    }
+
+    return <section>
+      <h2><strong>Hi</strong>, we're glad you are here.</h2>
+      <hr />
+      <p>Would you mind answering three quick questions to help us improve your experience?</p>
+
+      <p style={{marginTop: '1em'}}><button onClick={() => this.setState({accepted: true})} style={buttonStyle}>Yes</button></p>
+      <p><a onClick={this.cancelSurvey}>No thanks.</a></p>
+    </section>
+  },
+
+  cancelSurvey() {
+    window.parent.postMessage('cancel', '*')
+    // TODO post to the server and write a 'survey complete/cancelled cookie
+  },
+
+  completeSurvey(delay=0) {
+    console.info('completeSurvey')
+    this.setState({completed: true})
+    setTimeout(() => window.parent.postMessage('complete', '*'), delay)
+    // TODO post to the server and write a 'survey complete/cancelled cookie
+  },
+
+  surveyThanks() {
+    const buttonStyle = {
+      backgroundColor: '#232323',
+      padding: '1em',
+      fontSize: '1em',
+    }
+
+    return <section>
+      <h2>Thank you</h2>
+      <hr />
+      <p>Your candid feedback will help us improve how people experience our website.</p>
+
+      <p><button onClick={this.completeSurvey} style={buttonStyle}>Close</button></p>
+    </section>
+  },
+
   buildQuizTree() {
-    return this.state.questions.map(q => {
-      return <div style={{display: 'block'}}>
-        <p style={{fontWeight: 'bold'}}>{q.q}</p>
-        {q.answers.map(a => {
-          return <label style={{display: 'block'}}>
-            <input type='radio' name={q.id} onChange={this.selectionMade}/>
-            {a}
-          </label>
-        })}
-      </div>
-    })
+    const buttonStyle = {
+      backgroundColor: '#232323',
+      padding: '1em',
+      fontSize: '1em',
+    } // ugh
+
+    return <div>
+      {this.state.questions.map(q => {
+        return <div style={{display: 'block', marginBottom: '1em'}}>
+          <p style={{fontWeight: 'bold'}}>{q.q}</p>
+          {q.answers.map(a => {
+            return <label style={{display: 'block'}}>
+              <input type='radio' name={q.id} onChange={this.selectionMade}/>
+              {a}
+            </label>
+          })}
+        </div>
+      })}
+
+      <button style={buttonStyle} onClick={() => this.completeSurvey(9000)}>Submit</button>
+    </div>
   },
 
   selectionMade(event) {
@@ -172,10 +233,10 @@ var VisitorQuiz = React.createClass({
   componentDidUpdate(prevProps, prevState) {
     if (this.state.answers !== prevState.answers) {
       const {answers} = this.state
-      console.info('post new answers', {answers, prev: prevState.answers})
+      // console.info('post new answers', {answers, prev: prevState.answers})
 
       restWithCorsCookies(`${SEARCH}/survey/redesign?data=${JSON.stringify(answers)}`).then((result) => {
-        console.info('rested', {entity: result.entity, result})
+        // console.info('answers posted', {entity: result.entity, result})
       })
     }
   },
@@ -189,8 +250,8 @@ var Survey = React.createClass({
   render() {
     const { surveyId } = this.props.params
 
-    if(surveyId && surveyId == '2019-visitor-quiz') {
-      return <VisitorQuiz {...this.props} />
+    if(surveyId && surveyId == '2019-visitor-quiz' || surveyId === '2019-survey') {
+      return <VisitorSurvey {...this.props} />
     }
 
     return <ArtworkSurvey {...this.props} />
