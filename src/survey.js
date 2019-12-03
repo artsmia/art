@@ -96,13 +96,32 @@ var ArtworkSurvey = React.createClass({
 
 var VisitorSurvey = React.createClass({
   componentDidMount() {
-    restWithCorsCookies(`${SEARCH}/survey/getUser`)
-    this.props.toggleAppHeader()
+    this.refs.startButton && this.refs.startButton.focus()
+    try { this.props.toggleAppHeader() } catch(e) { }
+
+    window.serverRendered || restWithCorsCookies(`${SEARCH}/survey/getUserData`).then(result => {
+      const info = JSON.parse(result.entity)
+      const {completed, rejected, accepted, ...answers} = info.data || {}
+      const hidePopup = completed || rejected
+
+      console.info('VS cDM', {hidePopup})
+
+      if(hidePopup) {
+        this.setState({hidePopup})
+      } else {
+        this.setState({answers, completed, rejected, accepted, hidePopup})
+        this.openSurvey()
+
+        if(accepted && !completed) {
+          window.parent.postMessage('expand', '*')
+          this.props.expand && this.props.expand()
+        }
+      }
+    })
   },
 
   getInitialState() {
     return {
-      accepted: false,
       questions: [
         {
           q: "What are you here to look for? I am…",
@@ -136,7 +155,8 @@ var VisitorSurvey = React.createClass({
   },
 
   render() {
-    const interactivePopup = true
+    const {completed, accepted, hidePopup, answers} = this.state
+    if(!answers) return null
 
     return <section style={{padding: '1em'}}>
       {this.state.completed
@@ -153,71 +173,85 @@ var VisitorSurvey = React.createClass({
   },
 
   surveyWelcome() {
-    const buttonStyle = {
-      backgroundColor: '#232323',
-      padding: '1em',
-      fontSize: '1em',
-    }
-
     return <section>
       <h2><strong>Hi</strong>, we're glad you are here.</h2>
       <hr />
-      <p>Would you mind answering three quick questions to help us improve your experience?</p>
+      <p style={{marginTop: '1em'}}>Would you like to answer three quick questions to help us improve your experience?</p>
 
-      <p style={{marginTop: '1em'}}><button onClick={() => this.setState({accepted: true})} style={buttonStyle}>Yes</button></p>
-      <p><a onClick={this.cancelSurvey}>No thanks.</a></p>
+      <p style={{marginTop: '1em'}}><button tabIndex="0" onClick={this.beginSurvey} style={this.buttonStyle()} ref="startButton">Yes</button></p>
+      <p><a tabIndex="0" onClick={this.cancelSurvey}>No thanks.</a></p>
     </section>
   },
 
+  beginSurvey() {
+    this.setState({accepted: new Date()})
+    window.parent.postMessage('expand', '*')
+    this.props.expand && this.props.expand()
+  },
+
+  openSurvey() {
+    window.parent.postMessage('open', '*')
+    this.props.onOpen && this.props.onOpen()
+  },
+
   cancelSurvey() {
+    this.setState({rejected: new Date()})
+    setTimeout(() => {
     window.parent.postMessage('cancel', '*')
-    // TODO post to the server and write a 'survey complete/cancelled cookie
+    this.props.onClose && this.props.onClose()
+    }, 500)
   },
 
   completeSurvey(delay=0) {
-    console.info('completeSurvey')
-    this.setState({completed: true})
-    setTimeout(() => window.parent.postMessage('complete', '*'), delay)
+    setTimeout(() => {
+      window.parent.postMessage('complete', '*')
+      this.props.onClose && this.props.onClose()
+    }, delay)
+
+    window.parent.postMessage('contract', '*')
+    this.props.contract && this.props.contract()
+    this.setState({completed: new Date()})
     // TODO post to the server and write a 'survey complete/cancelled cookie
   },
 
-  surveyThanks() {
-    const buttonStyle = {
+  buttonStyle() {
+    return {
       backgroundColor: '#232323',
-      padding: '1em',
+      padding: '0.5em 1em',
       fontSize: '1em',
+      marginTop: '1em',
     }
+  },
 
+  surveyThanks() {
     return <section>
       <h2>Thank you</h2>
       <hr />
-      <p>Your candid feedback will help us improve how people experience our website.</p>
+      <p style={{marginTop: '1em'}}>Your candid feedback will help us improve how people experience our website.</p>
 
-      <p><button onClick={this.completeSurvey} style={buttonStyle}>Close</button></p>
+      <p><button onClick={this.completeSurvey} style={this.buttonStyle()}>Close</button></p>
     </section>
   },
 
   buildQuizTree() {
-    const buttonStyle = {
-      backgroundColor: '#232323',
-      padding: '1em',
-      fontSize: '1em',
-    } // ugh
+    const {answers} = this.state || {}
 
     return <div>
       {this.state.questions.map(q => {
         return <div style={{display: 'block', marginBottom: '1em'}}>
           <p style={{fontWeight: 'bold'}}>{q.q}</p>
           {q.answers.map(a => {
+            const isChosen = !!answers && a === answers[q.id]
+
             return <label style={{display: 'block'}}>
-              <input type='radio' name={q.id} onChange={this.selectionMade}/>
+              <input type='radio' name={q.id} onChange={this.selectionMade} tabIndex="0" checked={isChosen} />
               {a}
             </label>
           })}
         </div>
       })}
 
-      <button style={buttonStyle} onClick={() => this.completeSurvey(9000)}>Submit</button>
+      <button style={this.buttonStyle()} onClick={() => this.completeSurvey(9000)}>Submit</button>
     </div>
   },
 
@@ -231,12 +265,19 @@ var VisitorSurvey = React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.answers !== prevState.answers) {
-      const {answers} = this.state
-      // console.info('post new answers', {answers, prev: prevState.answers})
+    const {answers, accepted, completed, rejected} = this.state
 
-      restWithCorsCookies(`${SEARCH}/survey/redesign?data=${JSON.stringify(answers)}`).then((result) => {
-        // console.info('answers posted', {entity: result.entity, result})
+    if (answers !== prevState.answers || accepted !== prevState.accepted || completed !== prevState.completed || rejected !== prevState.rejected) {
+      const data = {
+        ...answers,
+        accepted,
+        completed,
+        rejected,
+      }
+
+      console.info('posting', data)
+      restWithCorsCookies(`${SEARCH}/survey/redesign?data=${JSON.stringify(data)}`).then((result) => {
+        console.info('posting data', data)
       })
     }
   },

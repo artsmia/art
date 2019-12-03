@@ -15,7 +15,10 @@ var serveStatic = require('serve-static')
 app.locals.settings['x-powered-by'] = false
 app.enable('trust proxy')
 
-if(typeof window === "undefined") GLOBAL.window = GLOBAL
+if(typeof window === "undefined") {
+  GLOBAL.window = GLOBAL
+  GLOBAL.window.serverRendered = true
+}
 
 // ga.initialize(process.env.GA_TRACKING_ID)
 

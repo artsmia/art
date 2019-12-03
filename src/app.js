@@ -7,6 +7,23 @@ var {pathSatisfies} = require('ramda')
 var LiveSearch = require('./live-search')
 var GlobalNavigation = require('./navigation')
 var consoleWelcomeMessage = require('./console-welcome-message')
+var Survey = require('./survey')
+
+var surveyStyle = {
+  opacity: 0,
+  zIndex: -1,
+  position: 'fixed',
+  bottom: '1em',
+  right: '1em',
+  width: 444,
+  maxWidth: '93%',
+  maxHeight: '257px',
+  height: '456px',
+  backgroundColor: 'white',
+  transition: 'max-height 0.15s ease-out, opacity 0.15s ease-out',
+  border: '1px solid black',
+  overflow: 'scroll',
+}
 
 var App = React.createClass({
   render() {
@@ -15,6 +32,12 @@ var App = React.createClass({
 
     return (
       <div className={this.props.universal && 'universal'}>
+        <style type="text/css">{`
+          *:focus {
+            outline: 1px dotted #212121;
+            outline: -webkit-focus-ring-color auto 5px;
+          }
+        `}</style>
         {this.state.hideHeader || <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
           {logo}
           {this.globalToolBar()}
@@ -35,6 +58,24 @@ var App = React.createClass({
           activateSearch={this.state.activateSearch}
           toggleAppHeader={this.toggleHeader}
           />
+
+        {this.state.disableSurveyPopup || <div style={{
+              ...surveyStyle,
+              ...(this.state.surveySize === 'big' ? {maxHeight: '456px'} : {}),
+              ...(this.state.showSurveyPopup ? {opacity: 1, zIndex: 99999999} : {}),
+            }}
+            role="dialog"
+            ariaLabelledby="Site visitor survey"
+            ariaModal="true"
+          >
+            <Survey
+              params={{surveyId: '2019-survey'}}
+              onOpen={() => this.setState({showSurveyPopup: true})}
+              onClose={() => this.setState({showSurveyPopup: false, disableSurveyPopup: true})}
+              expand={() => this.setState({surveySize: 'big'}) }
+              contract={() => this.setState({surveySize: 'small'})}
+            />
+        </div>}
       </div>
     )
   },
@@ -114,10 +155,15 @@ var App = React.createClass({
     var hasMoreInQueryParams = pathSatisfies(search => search && search.indexOf('more=') > 0)
     window.enteredViaMore = hasMoreInQueryParams(['window', 'location', 'search'], window)
 
+    const disableSurveyPopup = !!this.props.path.match('surveys')
+    const showSurveyPopup = false // don't show until survey fetches data and knows if this user has already completed or rejected the survey
+
     return {
       showSearch: false,
       smallViewport: this.isSmallViewport(),
       enteredViaMore: window.enteredViaMore,
+      showSurveyPopup,
+      disableSurveyPopup,
     }
   },
 
