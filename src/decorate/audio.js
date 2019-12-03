@@ -223,6 +223,7 @@ const AudioCard = React.createClass({
       >
         <div
           style={{
+            maskImage: `url('${maskSvg}')`,
             WebkitMaskImage: `url('${maskSvg}')`,
             display: 'inline-block',
             width: '30%',
@@ -240,6 +241,7 @@ const AudioCard = React.createClass({
             bottom: '5%',
             left: '2%',
             pointerEvents: 'none',
+            minHeight: 51,
           }}
         />
       </div>
