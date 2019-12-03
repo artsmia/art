@@ -288,6 +288,26 @@ var LinkBar = React.createClass({
   handleShare() {
     var { art } = this.props
 
+    // Attempt to use the native share API, if that fails open the
+    // custom built email/facebook/twitter URL-based sharer
+    if (navigator.share) {
+      const shareInfo = {
+        title: art.title,
+        text: art.text || art.description,
+        url: this.getUrl(),
+      }
+
+      return navigator.share(shareInfo)
+        .then(() => {
+          // TODO add success/complete animation maybe?
+          console.info('Successful share')
+        })
+        .catch((error) => {
+          console.error('Error sharing', error)
+          this.setState({ showShare: !this.state.showShare })
+        })
+    }
+
     this.setState({ showShare: !this.state.showShare })
   },
 
