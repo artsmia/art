@@ -173,13 +173,13 @@ var VisitorSurvey = React.createClass({
   },
 
   surveyWelcome() {
-    return <section>
+    return <section style={{margin: '0.5em'}}>
       <h2><strong>Hi</strong>, we're glad you are here.</h2>
       <hr />
-      <p style={{marginTop: '1em'}}>Would you like to answer three quick questions to help us improve your experience?</p>
+      <p style={{marginTop: '1em'}}>Would you be able to answer three quick questions to help us improve your experience?</p>
 
       <p style={{marginTop: '1em'}}><button tabIndex="0" onClick={this.beginSurvey} style={this.buttonStyle()} ref="startButton">Yes</button></p>
-      <p><a tabIndex="0" onClick={this.cancelSurvey}>No thanks.</a></p>
+      <p style={{marginTop: '0.5em'}}><a tabIndex="0" onClick={this.cancelSurvey}>No thanks.</a></p>
     </section>
   },
 
@@ -211,7 +211,6 @@ var VisitorSurvey = React.createClass({
     window.parent.postMessage('contract', '*')
     this.props.contract && this.props.contract()
     this.setState({completed: new Date()})
-    // TODO post to the server and write a 'survey complete/cancelled cookie
   },
 
   buttonStyle() {
@@ -234,7 +233,8 @@ var VisitorSurvey = React.createClass({
   },
 
   buildQuizTree() {
-    const {answers} = this.state || {}
+    const {answers} = this.state
+    const disableSubmit = answers && Object.values(answers).length < 3
 
     return <div>
       {this.state.questions.map(q => {
@@ -251,7 +251,13 @@ var VisitorSurvey = React.createClass({
         </div>
       })}
 
-      <button style={this.buttonStyle()} onClick={() => this.completeSurvey(9000)}>Submit</button>
+    {!disableSubmit ? <button
+        style={this.buttonStyle()}
+        onClick={() => this.completeSurvey(9000)}
+        disabled={disableSubmit}
+      >
+        Submit
+      </button> : false}
     </div>
   },
 
