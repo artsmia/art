@@ -158,7 +158,7 @@ var VisitorSurvey = React.createClass({
     const {completed, accepted, hidePopup, answers} = this.state
     if(!answers) return null
 
-    return <section style={{padding: '1em'}}>
+    return <section style={{padding: '1em 2.5em 0 2.5em'}}>
       {this.state.completed
         ? this.surveyThanks()
         : this.state.accepted 
@@ -213,12 +213,14 @@ var VisitorSurvey = React.createClass({
     this.setState({completed: new Date()})
   },
 
-  buttonStyle() {
+  buttonStyle(disabled=false) {
     return {
       backgroundColor: '#232323',
-      padding: '0.5em 1em',
+      padding: '0.75em 1em 0.5em 1em',
       fontSize: '1em',
       marginTop: '1em',
+      borderRadius: 13,
+      ...(disabled ? {opacity: '0.3'} : {}),
     }
   },
 
@@ -251,13 +253,13 @@ var VisitorSurvey = React.createClass({
         </div>
       })}
 
-    {!disableSubmit ? <button
-        style={this.buttonStyle()}
-        onClick={() => this.completeSurvey(9000)}
-        disabled={disableSubmit}
-      >
-        Submit
-      </button> : false}
+    <button
+      style={this.buttonStyle(disableSubmit)}
+      onClick={() => this.completeSurvey(9000)}
+      disabled={disableSubmit}
+    >
+      Submit
+    </button>
     </div>
   },
 
