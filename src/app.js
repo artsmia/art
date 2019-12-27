@@ -7,15 +7,19 @@ var {pathSatisfies} = require('ramda')
 var LiveSearch = require('./live-search')
 var GlobalNavigation = require('./navigation')
 var consoleWelcomeMessage = require('./console-welcome-message')
+var SkipToMainContentLink = require('./skip-to-main-content-link');
+
 
 var App = React.createClass({
   render() {
     var logo = this.makeLogo()
-    var canonicalURL = "https://collections.artsmia.org"+this.props.path
+    var  path = this.props.path
+    var canonicalURL = "https://collections.artsmia.org" + path
 
     return (
       <div className={this.props.universal && 'universal'}>
-        {this.state.hideHeader || <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
+        <SkipToMainContentLink path={path} />
+        {this.state.hideHeader || <header style={{ zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1 }}>
           {logo}
           {this.globalToolBar()}
         </header>}
@@ -131,7 +135,7 @@ var App = React.createClass({
 
     return showMenu ?
       <a href="https://new.artsmia.org" title="Back to artsmia.org">{logo}</a> :
-      <a href="/" onClick={this.toggleMenu}>{logo}</a>
+      <a href="/" onClick={this.toggleMenu} aria-label="Show Menu" title="Show Menu">{logo}</a>
   },
 
   noIndex() {
