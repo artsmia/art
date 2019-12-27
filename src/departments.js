@@ -41,7 +41,7 @@ var Departments = React.createClass({
 
     return (
       <div className="departmentList mdl-grid" id="departments">
-        <h2 style={this.props.style}>Departments</h2>
+        <h2 style={this.props.style} role="heading" aria-level={1}>Departments</h2>
         {this.departments.map(dept => {
           var name = index => findDepartment(dept)[index]
           var isActive = active === dept
@@ -52,7 +52,7 @@ var Departments = React.createClass({
               key={name(1)}
               params={{ dept: name(2) }}
               className={`departmentLink mdl-cell mdl-cell--3-col ${isActive &&
-                'isActive'}`}
+              'isActive'}`}
             >
               <div className={[name(1), 'departmentListItem'].join(' ')} />
               <h2 style={this.props.style}>{dept}</h2>
