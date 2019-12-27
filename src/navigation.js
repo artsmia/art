@@ -26,7 +26,7 @@ var GlobalNavigation =  React.createClass({
 
       if(smallViewport){
         return (
-          <div className='mobile-nav nav_bar' onClick={this.closeNav}>
+          <nav role="navigation" className='mobile-nav nav_bar' onClick={this.closeNav}>
 
             <div className="global_nav">
               <ul className="nav_list">
@@ -48,7 +48,7 @@ var GlobalNavigation =  React.createClass({
                 })}
               </ul>
             </div>
-          </div>
+          </nav>
         )
       } else {
         return (
