@@ -44,6 +44,28 @@ a:hover {
   font-weight: 500;
 }
 
+a.skip-main {
+  left:-999px;
+  position: fixed;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  z-index:-999;
+}
+a.skip-main:focus, a.skip-main:active {
+  background-color: white;
+  position:fixed;
+  left: 50%;
+  top: 5px;
+  width: 200px;
+  height: 23px;
+  margin: 10px -100px;
+  padding:5px;
+  text-align:center;
+  z-index:999;
+}
+
 #search {
       /*margin: 8px;*/
     }
@@ -80,10 +102,17 @@ header{
 .quilt-wrap a:hover {
   overflow: visible !important;
   // z-index: 100;
-  
+
   img {
     overflow: visible !important;
   }
+}
+
+// The regular focus style with the dotted red outline doesn't look very good on the quilt images. A white solid border
+// seems to be more visible and doesn't clash as much with the images.
+.quilt-wrap a:focus {
+  outline: 0;
+  border: 2px solid white;
 }
 
 .logo-container{

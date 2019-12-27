@@ -1,4 +1,10 @@
-/* reset & clearfix */
+/* reset & clearfix
+
+Modifications have been to Eric Meyer's Reset:
+
+1. Outline resets have been removed. This is more consistent with artsmia.org website and encourages better accessibility
+
+*/
 
 .clearfix:after {
 	visibility: hidden;
@@ -25,7 +31,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	outline: 0;
 	font-size: 100%;
 	vertical-align: baseline;
 	background: transparent;
@@ -39,10 +44,7 @@ ol, ul {
 blockquote, q {
 	quotes: none;
 }
-/* remember to define focus styles! */
-:focus {
-	outline: 0;
-}
+
 /* remember to highlight inserts somehow! */
 ins {
 	text-decoration: none;

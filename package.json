@@ -9,6 +9,8 @@
     "watch": "watchify index.js -p livereactload -o bundle.js -dv",
     "watchServer": "node-supervisor --watch server.js,src server.babel.js",
     "serve": "PORT=1314 node server.babel.js",
+    "build-css": "sass ./sass/main.scss ./css/main.css",
+    "build-css:watch": "sass --watch ./sass/main.scss ./css/main.css",
     "build": "NODE_ENV=production browserify index.js | uglifyjs -c -m | sed 's|http://localhost:4680|https://search.artsmia.org|'> bundle.js"
   },
   "author": "",
@@ -37,6 +39,7 @@
     "watchify": "^3.9.0"
   },
   "dependencies": {
+    "sass": "^1.24.0",
     "@mapbox/react-click-to-select": "^1.1.1",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
