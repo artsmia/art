@@ -7,6 +7,11 @@ To start the server locally, you (1) need passing familiarity with
 (3) `npm start` should start the webserver and begin to update the
 javascript bundle.
 
+## Building SCSS/CSS
+
+To build the css files run `npm run build-css` or alternatively `npm run build-css:watch` to have it watch for changes
+and rebuild. 
+
 # Companion code
 
 It pulls information from many different places:
