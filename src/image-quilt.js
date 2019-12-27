@@ -9,6 +9,8 @@ var linearPartition = require('linear-partitioning')
 var ArtworkImage = require('./artwork-image')
 var Image = require('./image')
 
+const ENTER_KEY_CODE = 13;
+
 const ImageQuilt = React.createClass({
   mixins: [PureRenderMixin],
 
@@ -38,7 +40,6 @@ const ImageQuilt = React.createClass({
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.handleResize)
   },
-
   render() {
     if(this.hideDarkenedQuilt()) return this.emptyQuiltToggleControl()
 
@@ -89,7 +90,7 @@ const ImageQuilt = React.createClass({
           onImageInvalidation={this.forceUpdate.bind(this)}
           key={_art.id}
           lazyLoad={this.props.lazyLoad}
-          />
+        />
       })
 
       // centered doesn't work on the first row because the search box is in the way
@@ -207,7 +208,7 @@ module.exports = ImageQuilt
 
 var QuiltPatch = React.createClass({
   render() {
-    var {art, width, ...other} = this.props
+    var {art, width, onClick, ...other} = this.props
     var id = art.id
 
     var style = {
@@ -228,6 +229,7 @@ var QuiltPatch = React.createClass({
     }
 
     var image = <Image
+      onClick={onClick}
       art={art}
       style={imgStyle}
       {...other}
@@ -243,7 +245,14 @@ var QuiltPatch = React.createClass({
       <p><strong>{art.title_short}</strong></p>
     </span>
 
+    const handleKeyDown = function(event){
+      if(event.keyCode === ENTER_KEY_CODE){
+        onClick()
+      }
+    };
+
     return <Link
+      onKeyDown={handleKeyDown}
       onClick={this.clickOrDontClick}
       style={{...style, position: 'relative'}}
       to="artwork"
@@ -255,6 +264,7 @@ var QuiltPatch = React.createClass({
   clickOrDontClick(event) {
     if(!this.context.universal) event.preventDefault()
   },
+
 
   getDefaultProps() {
     return {
