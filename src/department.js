@@ -38,12 +38,17 @@ var Department = React.createClass({
         {...this.props}
         hideInput={true}
         hideResults={true} />
-      <div className="departmentPage">
-        <DepartmentDecorator key={deptName} department={deptName} params={this.props.params} departmentInfo={this.props.data.departments} />
-      </div>
-      <Peek facet="department" q={deptName} quiltProps={{maxRowHeight: 400}} offset={10}/>
-      <Helmet title={deptName} />
-      <Departments compact={true} active={deptName} />
+      <main role="main" className="departmentPage" id="main">
+        <DepartmentDecorator
+          key={deptName}
+          department={deptName}
+          params={this.props.params}
+          departmentInfo={this.props.data.departments}
+        />
+        <Peek facet="department" q={deptName} quiltProps={{ maxRowHeight: 400 }} offset={10} />
+        <Helmet title={deptName} />
+        <Departments compact={true} active={deptName} />
+      </main>
     </div>
   }
 })
