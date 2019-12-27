@@ -61,7 +61,7 @@ var HomeDepartmentsAndPages = React.createClass({
   pages: ['Purcell-Cutts House', 'Provenance Research', 'Deaccessions', 'Conservation'],
 
   render() {
-    return <div className="landingPageBody">
+    return <main role="main" id="main" className="landingPageBody">
       <div className="mdl-grid">
         <ul className="info">
           <li className="mdl-cell mdl-cell--4-col">
@@ -97,6 +97,6 @@ var HomeDepartmentsAndPages = React.createClass({
           })}
         </ul>
       </div>
-    </div>
+    </main>
   },
 })
