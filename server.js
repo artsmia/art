@@ -44,7 +44,7 @@ var html = ({ title, meta, link }, data, body) => {
 
 app.use((req, res, next) => {
   var actingUrl = req.url.replace(/\/(.*)\/$/, '/$1')
-  const internalIPs = process.env.PRIVILEGED_IP_LIST
+  const internalIPs = process.env.PRIVILEGED_IP_LIST || '';
   var privilegedClientIP = internalIPs.split(' ').indexOf(req.ip) > -1
   window.privilegedClientIP = privilegedClientIP // FIXME how to pass this other than as a global?
 
