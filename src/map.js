@@ -10,6 +10,8 @@ var Map = React.createClass({
   render() {
     var {number, prevLink, nextLink, ...extraProps} = this.props
     var thumbnail = <img
+        // TODO: Update to pass in an appropriate description of the image instead of just the number
+        alt={`Image number ${number} from MIA gallery`}
         src={`https://artsmia.github.io/map/galleries/${number}.png`}
         onClick={this.handleClick}
         />
