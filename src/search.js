@@ -11,7 +11,6 @@ var SearchResults = require('./search-results')
 var Suggest = require('./suggest')
 var searchLanguageMap = require('./search-language')
 
-
 var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
@@ -51,7 +50,14 @@ var Search = React.createClass({
     const idealSearchBoxWidth = Math.max(17, this.state.terms && this.state.terms.length*1.1 || 0)
     const formProps = universal ? {action: "/search/", method: "get"} : {action: ''}
     const simpleSearchBox = <div className='search-wrapper' style={{width: idealSearchBoxWidth + 'em'}}>
-      <form {...formProps}><input className='search-input' type="search"
+      <form {...formProps} role="search">
+
+        <label htmlFor='search-input' className="visuallyhidden">Search</label>
+        <input
+        aria-label="Search"
+        id='search-input'
+        className='search-input'
+        type="search"
         placeholder="search"
         value={searchLanguageMap(this.state.terms)}
         onKeyDown={this.keyDown}
@@ -62,7 +68,8 @@ var Search = React.createClass({
         ref="searchInput"
         autoComplete="off"
         list="searchCompletions"
-        /></form>
+        />
+      </form>
     </div>
 
     const hideInput = this.props.hideInput && !this.state.activateSearch
@@ -74,7 +81,7 @@ var Search = React.createClass({
       pointerEvents: 'none',
       display: hideInput ? 'none' : 'inherit',
       padding: this.props.bumpSearchBox ? '0.5em' : '0',
-      position: 'relative', 
+      position: 'relative',
       zIndex: 4,
     }
 
@@ -111,7 +118,7 @@ var Search = React.createClass({
     var hideSearch = embed
 
     return (
-      <div id="search">
+      <div id="search" role="search">
         {!!hideSearch || searchBox}
         {this.props.children}
         {this.props.hideResults && suggestions || <div>
