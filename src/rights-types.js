@@ -25,7 +25,7 @@ const rightsstatements = [
       .replace(/The organization that has made the Item available/i, 'Minneapolis Institute of Art (Mia)') // TODO link 'contact us' to collectionsdata@artsmia.org
       .replace('the organization was', 'we were')
 
-    if (rs.definition.match(/The organization/)) {
+    if(rs.definition.match(/The organization/)) {
       console.info(rs.label, rs.definition, rs.identifier)
       // debugger
     }
@@ -62,8 +62,8 @@ const _rightsStatements = Object.keys(miaLegacyRightsTypes).map(legacyName => {
 
   const legacyToStand = legacyToStandardizedStmt[legacyName]
   const rightsStmt = rightsstatements.find(stmt => stmt.label === legacyToStand)
-  if (!rightsStmt && legacyName !== 'getRights') {
-    console.info({ legacyName, legacyToStand, rightsStmt })
+  if(!rightsStmt && legacyName !== 'getRights') {
+    console.info({legacyName, legacyToStand, rightsStmt})
   }
 
   return {
@@ -78,11 +78,11 @@ const _rightsStatements = Object.keys(miaLegacyRightsTypes).map(legacyName => {
 // needs to use `rights_type`. Some artworks only have `rights`, some have both.
 //
 // TODO reindex all of ES to remove `rights` and  populate `rights_type`
-const getRights = function (art) {
+const getRights = function(art) {
   art.rights_type = art.rights_type || art.rights
   art.rights = false
   return art.rights_type
-};
+}
 
 // Due to limitations in our TMS database, we don't exactly map rights statements correctly.
 // This is a map that corrects our shortened statements (…due to a character limit on the field in SQL…)
@@ -99,8 +99,8 @@ const miaRightsLabelToRightsStatementID = {
 // this would have been 10x easier if we'd just used the short hand identifier,
 // but probably wouldn't read well in TMS
 
-function RightsStatementIcon({ statement, color, style, ...props }) {
-  if (!statement) return <span />
+function RightsStatementIcon({statement, color, style, ...props}) {
+  if(!statement) return <span />
 
   var shortId = statement.identifier.split('-')[0]
   var iconURL = statement.identifier === 'CC-PDM' ?
@@ -112,7 +112,7 @@ function RightsStatementIcon({ statement, color, style, ...props }) {
 
   return <img
     src={fullIconURL}
-    style={{ paddingRight: '0.43em', display: 'inline', height: '1em', ...style }}
+    style={{paddingRight: '0.43em', display: 'inline', height: '1em', ...style}}
     alt={`${statement.label} Rights Statement icon`}
     alt=""
     {...props}
