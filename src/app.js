@@ -155,7 +155,7 @@ var App = React.createClass({
     var hasMoreInQueryParams = pathSatisfies(search => search && search.indexOf('more=') > 0)
     window.enteredViaMore = hasMoreInQueryParams(['window', 'location', 'search'], window)
 
-    const disableSurveyPopup = !!this.props.path.match('surveys')
+    const disableSurveyPopup = true
     const showSurveyPopup = false // don't show until survey fetches data and knows if this user has already completed or rejected the survey
 
     return {
