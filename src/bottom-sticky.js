@@ -7,24 +7,31 @@ var Sticky = require('react-sticky')
 // screen.
 var BottomSticky = React.createClass({
   render() {
-    var {stickyStyle, ...other} = this.props
-    var {style, isSticky} = this.state
+    var {stickyStyle, baseStyle, children, ...other} = this.props
+    var {
+      style,
+      isSticky,
+    } = this.state
 
-    const _style = !isSticky ? stickyStyle : style
+    const _style = baseStyle
+    const _stickyStyle = {...baseStyle, ...stickyStyle}
 
     return <Sticky
-      stickyStyle={_style}
+      style={_style}
+      stickyStyle={_stickyStyle}
       {...other}
       onStickyStateChange={this.stickyChanged}
     >
-      {this.props.children}
+      <div style={{position: 'relative', ...(isSticky ? style : {})}}>
+        {children}
+      </div>
     </Sticky>
   },
 
   stickyChanged(isSticky) {
     this.setState({
       isSticky: isSticky,
-      style: !isSticky ? this.props.stickyStyle : this.state.style,
+      style: {top: 0},
       initialScrollY: 0,
     })
 
@@ -33,7 +40,7 @@ var BottomSticky = React.createClass({
 
   getInitialState() {
     return {
-      style: this.props.stickyStyle,
+      style: {top: 0},
     }
   },
 
@@ -67,10 +74,13 @@ var BottomSticky = React.createClass({
   getSizeAndScroll() {
     var domNode = ReactDOM.findDOMNode(this)
 
+    // debugger
+
     var state = {
-      height: domNode.clientHeight,
+      height: domNode.scrollHeight,
       initialScrollY: this.state.isSticky && window.scrollY,
     }
+
     this.setState(state)
   },
 
@@ -80,13 +90,23 @@ var BottomSticky = React.createClass({
 
   adjustScroll() {
     var {style, initialScrollY, height, isSticky} = this.state
-    var currentScrollY = window.scrollY
-    var amountToScroll = height - window.innerHeight + 200
-    var scrollAdjustment = Math.max(0, Math.min(amountToScroll, currentScrollY - initialScrollY))
+    if(!isSticky) return
 
-    var top = scrollAdjustment+scrollAdjustment/amountToScroll*16
-    style.top = top === 0 ? top : -top
-    this.setState({style: style})
+    var currentScrollY = window.scrollY
+    var deltaScrollY = initialScrollY - currentScrollY
+    var amountToScroll = height - window.innerHeight + 200
+    var scrollFudge = 1.1 // make the scrolling a bit smoother?
+
+    var scrollAdjustment = Math.max(
+      0,
+      Math.min(amountToScroll, -deltaScrollY/scrollFudge)
+    )
+
+    style.top = -scrollAdjustment
+
+    this.setState({
+      style: style,
+    })
   },
 
   refresh(delay=300, adjustScroll=false) {
