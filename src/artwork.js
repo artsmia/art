@@ -147,7 +147,11 @@ var Artwork = React.createClass({
         {this.state.has3d && <div className="images">
           <p onClick={this.toggle3d}>{this.state.show3d ? 'show high-res image' : 'show 3D model'}</p> 
         </div>}
-        <div className="back-button"><a href="#" onClick={() => history.go(-1)}><i className="material-icons">arrow_back</i> back</a></div>
+        <div className="back-button">
+          {window.history && history.length > 1 ? <a href="#" onClick={() => history.go(-1)}>
+            <i className="material-icons">arrow_back</i> back
+          </a> : <Link to="/"><i className="material-icons">arrow_back</i> home</Link>}
+        </div>
         {smallViewport || relatedContent}
         <div>
           <h5 className='details-title'>Details</h5>

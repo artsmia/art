@@ -288,6 +288,8 @@ var LinkBar = React.createClass({
   handleShare() {
     var { art } = this.props
 
+    if(!this.isMounted()) return
+
     // Attempt to use the native share API, if that fails open the
     // custom built email/facebook/twitter URL-based sharer
     if (navigator.share) {
