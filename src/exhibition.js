@@ -29,7 +29,7 @@ var Exhibition = React.createClass({
           return rest(searchUrl)
           .then((r) => JSON.parse(r.entity))
           .then((json) => {
-            const publicAccessArtworks = json.hits.hits.filter(({_source: s}) => s.public_access == "1")
+            const publicAccessArtworks = json.hits.hits.filter(({_source: s}) => s && s.public_access == "1")
             const publicAccessResults = {hits: {total: publicAccessArtworks.length, hits: publicAccessArtworks}}
             return publicAccessResults
           })
