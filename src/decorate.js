@@ -174,8 +174,8 @@ var DecorationFinder = (search, filters, props, removeFn) => {
   // cancel this assumption when there's a `facet: ed` query that ISNT `artist:`
   const firstArtist = hits && hits.length > 0 && hits[0]._source.artist
   const nonArtistFacetedTerm = terms.find(t => t.match(':') && !t.match(/artist:/i))
-  const artistRegexpName = hits[1]._source.artist.replace('?', '')
-  const hitsFeatureSingleArtist = hits.length > 0 && (
+  const artistRegexpName = hits && hits[1] && hits[1]._source.artist.replace('?', '')
+  const hitsFeatureSingleArtist = artistRegexpName && hits.length > 0 && (
       hits.length == 1 ||
       // are the first and second artists the same, and not an empty string which
       // breaks the regex comparison?
