@@ -9,6 +9,7 @@ var rest = require('rest')
 var Search = require('./search')
 var MapPage = require('./map-page')
 var Departments = require('./departments').component
+var ClosedBanner = require('./museum-closed-banner')
 
 var Home = React.createClass({
   statics: {

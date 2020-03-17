@@ -17,6 +17,7 @@ var SEARCH = require('./endpoints').search
 var ArtworkRelatedContent = require('./artwork-related')
 var ArtworkPageMetadata = require('./artwork/page-metadata')
 var rightsDescriptions = require('./rights-types.js')
+var ClosedBanner = require('./museum-closed-banner')
 
 var Sticky = require('react-sticky')
 
@@ -153,6 +154,7 @@ var Artwork = React.createClass({
           <ArtworkDetails art={art} show3d={this.state.show3d} />
         </div>
       </div>}
+      <ClosedBanner />
     </div>
 
     var smallViewportWithTabbedInfoAndRelated = <div>

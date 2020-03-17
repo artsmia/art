@@ -10,7 +10,7 @@ var ImageQuilt = require('./image-quilt')
 var SearchResults = require('./search-results')
 var Suggest = require('./suggest')
 var searchLanguageMap = require('./search-language')
-
+var ClosedBanner = require('./museum-closed-banner')
 
 var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -124,6 +124,7 @@ var Search = React.createClass({
             handleCancelEmbed={() => this.setState({cancelEmbed: true})}
           />
         </div>}
+      {this.props.hideResults && <ClosedBanner />}
       </div>
     )
   },
