@@ -184,8 +184,9 @@ var SearchResults = React.createClass({
     }
 
     const {searchResults} = this.props.data
-    const csvTerms = [searchResults.query, searchResults.filter].filter(s => s).join(' ')
-    const csvUrl = `https://search.artsmia.org/${csvTerms}?format=csv`
+    const csvTerms = searchResults.csvQuery
+      || [searchResults.query, searchResults.filter].filter(s => s).join(' ')
+    const csvUrl = `${SEARCH}/${csvTerms}?format=csv`
     const showCsvLink = true
 
     return <div ref="postSearch" style={style}>

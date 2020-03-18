@@ -21,9 +21,12 @@ var ObjectsById = React.createClass({
           return hasData
         })
 
+        const ids = existingHits.map(hit => hit._id)
+
         // and reshape the ES payload to look the same, but exclude them
         return {
           ...json,
+          csvQuery: `ids/${ids.join(',')}`,
           hits: {
             ...json.hits,
             total: existingHits ? existingHits.length : 0,
