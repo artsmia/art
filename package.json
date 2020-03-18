@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run watch & npm run serve",
     "watch": "watchify index.js -p livereactload -o bundle.js -dv",
-    "watchServer": "node-supervisor --watch server.js,src server.babel.js",
+    "watchServer": "node-supervisor -n error --watch server.js,src server.babel.js",
     "serve": "PORT=1314 node server.babel.js",
     "build": "NODE_ENV=production browserify index.js | uglifyjs -c -m | sed 's|http://localhost:4680|https://search.artsmia.org|'> bundle.js"
   },
