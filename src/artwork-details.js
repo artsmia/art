@@ -220,7 +220,10 @@ var ArtworkDetails = React.createClass({
         return [
           <Markdown>{message}</Markdown>,
           <div>
-            <p><a href={`https://search.artsmia.org/id/${art.id}`}>Or access it though our search API</a></p>
+            <p>
+              <a href={`https://search.artsmia.org/id/${art.id}`}>Access metadata though our search API</a> /{' '}
+              <a href={`https://search.artsmia.org/ids/${art.id}?format=csv`}>Download as CSV</a>
+            </p>
             <Markdown>{`If you're interested in this, you might also want to check out our [Open Access](/info/open-access) page.`}</Markdown>
             <pre><ClickToSelect><code>{JSON.stringify(art, null, 2)}</code></ClickToSelect></pre>
           </div>,
