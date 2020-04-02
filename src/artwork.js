@@ -160,9 +160,9 @@ var Artwork = React.createClass({
       </div>}
       <ClosedBanner />
 
-      <a href={`default_target?image=https://iiif.dx.artsmia.org/${this.state.id}.jpg/info.json`}>
+      {false && <a href={`default_target?image=https://iiif.dx.artsmia.org/${this.state.id}.jpg/info.json`}>
         <img src="iiif-dragndrop-100px.png" alt="IIIF Drag-n-drop" /> IIIF!
-      </a>
+      </a>}
 
     </div>
 
@@ -332,7 +332,7 @@ var Artwork = React.createClass({
       })
 
       var interval = 400
-      setTimeout(function() {
+      false && setTimeout(function() {
         // if not tile images have been loaded, force a zoom in and then a zoom out.
         // This tricks leaflet to load the tiles? I'm not sure why but it probably has
         // to do with a fractional zoom bug that I don't want to get into right now…
