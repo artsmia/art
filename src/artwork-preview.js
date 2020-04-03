@@ -42,7 +42,11 @@ var ArtworkPreview = React.createClass({
           <Artwork.Title art={art} link={showLink} {...this.props} />
           <Artwork.Creator art={art} {...this.props} />
           <Artwork.Tombstone art={art} {...this.props} highlightAccessionNumber={true} />
-          <h6><Peek showPeeks={this.props.showPeeks} facet="room" highlightedValue={highlight('room')}>{art.room}</Peek></h6>
+          <h6>
+            <Peek showPeeks={this.props.showPeeks} facet="room" highlightedValue={highlight('room')} controlValue={art.room}>
+              {art.room === 'Not on View' ? art.room : `On View in Gallery ${art.room.replace('G', '')}`}
+            </Peek>
+          </h6>
           {this.props.children || <div>
             <div className="description" itemProp="description">
               <Markdown>{highlight('text')}</Markdown>

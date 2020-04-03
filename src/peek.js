@@ -29,7 +29,7 @@ var Peek = React.createClass({
       [facet, ...qs] = q.split(/:/)
       var q = qs.join(':')
     }
-    if(!q) q = props.children
+    if(!q) q = props.controlValue || props.children
 
     return {
       facet,
@@ -63,7 +63,9 @@ var Peek = React.createClass({
       to: "searchResults",
       params: {terms: this.state.facetedQ || this.state.q}
     }
-    var text = this.props.highlightedValue ? <Markdown tag="span">{this.props.highlightedValue}</Markdown> : this.props.children
+    var text = this.props.highlightedValue !== this.props.controlValue
+      ? <Markdown tag="span">{this.props.highlightedValue}</Markdown>
+      : this.props.children
     var peekText = this.context.universal ?
       <Link itemProp={microdata ? "url" : ''} {...linkProps}>{text}</Link> :
       text
