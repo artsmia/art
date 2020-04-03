@@ -51,7 +51,7 @@ var SearchResultsGrid = React.createClass({
     })
     var more = this.props.postSearch
 
-    var stuff = <div>
+    var stuff = <div style={{minHeight: '150vh'}}>
       {dividedQuilts}
       {more}
     </div>
