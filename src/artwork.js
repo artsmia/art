@@ -143,14 +143,14 @@ var Artwork = React.createClass({
 
     var info = <div className='info'>
       {this.props.children || <div>
-        <ArtworkPreview art={art} showLink={false} showDuplicateDetails={true} />
+        <ArtworkPreview art={art} showLink={this.props.showLink} showDuplicateDetails={true} />
         {this.state.has3d && <div className="images">
           <p onClick={this.toggle3d}>{this.state.show3d ? 'show high-res image' : 'show 3D model'}</p> 
         </div>}
         <div className="back-button">
-          {window.history && history.length > 1 ? <a href="#" onClick={() => history.go(-1)}>
+          {this.props.showLinkComponent || (window.history && history.length > 1 ? <a href="#" onClick={() => history.go(-1)}>
             <i className="material-icons">arrow_back</i> back
-          </a> : <Link to="/"><i className="material-icons">arrow_back</i> home</Link>}
+          </a> : <Link to="/"><i className="material-icons">arrow_back</i> home</Link>)}
         </div>
         {smallViewport || relatedContent}
         <div>

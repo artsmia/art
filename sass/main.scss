@@ -536,13 +536,18 @@ header{
   transition: all 1s ease;
   opacity: .7;
 }
-.back-button a {
+.back-button {
+  a, button {
     display: inline-block;
     color: #ffffff;
     text-decoration: none;
     font-size: 1.2em;
     padding: 5px 10px;
     line-height: 1.5em;
+    font-style: normal;
+    text-align: left;
+    font-family: MiaGrotesk-Light;
+  }
 }
 .back-button a i {
     position: relative;

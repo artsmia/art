@@ -26,10 +26,12 @@ var AccessionHighlight = require('./src/accession-highlight')
 var ArtChampionPage = require('./src/art-champion')
 var PeopleById = require('./src/people-by-id')
 var Survey = require('./src/survey')
+var RandomArtwork = require('./src/pages/random')
 
 var routes = (
   <Route handler={App} path="/">
     <DefaultRoute name="home" handler={Home}/>
+    <Route name="randomArtwork" path="art/random" handler={RandomArtwork} />
     <Route name="artwork" path="art/:id" handler={Artwork} />
     <Route name="artworkSlug" path="art/:id/:slug" handler={Artwork} />
     <Route name="accessionHighlight" path="art/:id/:slug/accessionHighlight" handler={AccessionHighlight} />
