@@ -78,6 +78,12 @@ var Peek = React.createClass({
 
     var style = this.props.style || {}
 
+    var rider = this.props.controlValue && this.props.controlValue !== 'Not on View' && <div>
+      <img src={`https://artsmia.github.io/map/galleries/${this.props.controlValue.replace('G', '')}.png`}
+        style={{maxWidth: "100%"}}
+      />
+    </div>
+
     return <Tag onClick={debounce(this.onClick, 200)} className={classnames("peek", {startedOpen: startedOpen, startedClosed: !startedOpen, open:this.state.open})} style={{cursor: 'pointer', ...style}}>
       {this.props.children && <i>
         <span itemProp={microdata ? "name" : ''}>{peekText}</span>
@@ -88,6 +94,7 @@ var Peek = React.createClass({
         <Link {...linkProps} style={{width: '100%'}}>
           {result && result.hits && result.hits.total || 'search'} results for {searchExplanation}
           <span style={{float: 'right', marginRight: '10px'}} className="more-results-link">View more results</span>
+          {rider}
         </Link>
       </div>}
       {this.state.open && this.getQs().map((q) => <Peek facet={this.state.facet} q={q} key={q} />)}
