@@ -25,12 +25,20 @@ var Exhibition = React.createClass({
 
       searchResults: (params, query) => {
         return Exhibition.fetchData.exhibition(params).then(exhibition => {
-          var searchUrl = `${SEARCH}/ids/${exhibition.objects.join(',')}`
+          const {objects, exhibition_id: id} = exhibition
+          var searchUrl = `${SEARCH}/ids/${objects.join(',')}`
           return rest(searchUrl)
           .then((r) => JSON.parse(r.entity))
           .then((json) => {
-            const publicAccessArtworks = json.hits.hits.filter(({_source: s}) => s && s.public_access == "1")
-            const publicAccessResults = {hits: {total: publicAccessArtworks.length, hits: publicAccessArtworks}}
+            // Publish artworks mainly based on `public_access: 1`, but whitelist
+            // specific exhibitions to show all works, regardless of public_access status
+            const loanExhibitionWhitelist = [2802, 2778]
+            const exhibitionWhitelisted = loanExhibitionWhitelist.indexOf(id) > -1
+            const publishableArtworks = exhibitionWhitelisted
+              ? json.hits.hits
+              : json.hits.hits.filter(({_source: s}) => s && s.public_access == "1")
+
+            const publicAccessResults = {hits: {total: publishableArtworks.length, hits: publishableArtworks}}
             return publicAccessResults
           })
         })
