@@ -845,6 +845,38 @@ a.departmentLink h2{
   padding: 0 20%;
 }
 
+#map #staticImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 5s 5s;
+  z-index: 1;
+
+  &.zoomLoaded {
+    opacity: 0;
+    z-index: -1;
+  }
+}
+
+#map {
+  .leaflet-map-pane, .leaflet-control-container {
+    opacity: 0;
+  }
+  .leaflet-control-container {
+    transition: opacity 1s;
+  }
+}
+#map.zoomLoaded {
+  .leaflet-map-pane, .leaflet-control-container {
+    opacity: 1;
+  }
+}
+
 .artwork .info {
   position: absolute;
   width: 35%;
@@ -854,6 +886,7 @@ a.departmentLink h2{
   right: 0;
   overflow-y:scroll;
   min-height: 100vh;
+  z-index: 401; // leaflet sets `.leaflet-map-pane` z-index: 400
 }
 .artwork .info p{
   width:100%;

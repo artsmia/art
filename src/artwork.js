@@ -127,15 +127,15 @@ var Artwork = React.createClass({
       {width: '100%', display: 'inline-block', height: mapHeight+'vh'} :
       stickyMapStyle
 
-    var {zoomLoaded} = this.state
-    var zoomLoadedSuccessfully = zoomLoaded && zoomLoaded !== 'error'
+    var {zoomLoaded, zoomLoadComplete} = this.state
+    var zoomLoadedSuccessfully = zoomLoaded && zoomLoaded !== 'error' && zoomLoadComplete
 
     var rights = rightsDescriptions.getRights(art)
-    var map = <div ref='map' id='map' style={mapStyle}>
+    var map = <div ref='map' id='map' style={mapStyle} className={zoomLoadedSuccessfully && 'zoomLoaded'}>
       {this.state.has3d && <SketchfabEmbed model={this.state.has3d} show={this.state.show3d} />}
-      {zoomLoadedSuccessfully || (art.image == 'valid' && rights !== 'Permission Denied') && <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center'}}>
+      {(art.image == 'valid' && rights !== 'Permission Denied') && <div id="staticImage" className={zoomLoadedSuccessfully && 'zoomLoaded'}>
         {image}
-        {art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>}
+        {zoomLoaded || (art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>)}
       </div> || <NoImagePlaceholder art={art} />}
       {this.imageStatus()}
       {smallViewport && showMoreIcon && exploreIcon}
@@ -272,7 +272,10 @@ var Artwork = React.createClass({
     this.setState({zoomLoaded: false, zoomLoading: true})
 
     const id = this.state.id
+    const iiif0Url = `https://tiles.dx.artsmia.org/iiif/${this.state.id}`
     const iiifUrl = `https://iiif.dx.artsmia.org/${this.state.id}.jpg/info.json`
+
+    rest(iiif0Url)
 
     rest(iiifUrl)
     .then(
@@ -313,8 +316,8 @@ var Artwork = React.createClass({
       this.tiles.addTo(this.map)
 
       window._tiles = this.tiles
-      // this.map.setZoom(this.tiles.options.minZoom)
       this.tiles.on('load', (event) => {
+        this.setState({zoomLoadComplete: true})
         if(this.map.getMinZoom() > 0) return
         // don't let the zoomed image get tiny
         const minZoom = this.map.getZoom() - 0.3
@@ -324,8 +327,8 @@ var Artwork = React.createClass({
         // …and when fullscreen changes?
       })
 
-      // this.tiles.fillContainer()
       this.setState({zoomLoading: false, zoomLoaded: true})
+
       this.map.on('fullscreenchange', () => {
         this.setState({fullscreenImage: !this.state.fullscreenImage})
         this.props.toggleAppHeader()
@@ -406,7 +409,7 @@ var Artwork = React.createClass({
   },
 
   imageStatus() {
-    var {art, zoomLoaded, zoomLoading} = this.state
+    var {art, zoomLoaded, zoomLoadComplete, zoomLoading} = this.state
     var copyrightAndOnViewMessage = art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
     var loadingZoomMessage =  `
       (—Is that the best image you've got!!?
