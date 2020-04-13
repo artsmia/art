@@ -16,7 +16,7 @@ var FocusedResult = React.createClass({
       baseStyle={{position: 'relative', top: 0, left: leftSpacing, right: 0, width: '60%'}}
       stickyStyle={{position: 'fixed'}}
     >
-      <ArtworkPreview art={art} highlights={highlights} onlyShowHighlightDetails={true} key={art.id} />
+      <ArtworkPreview art={art} highlights={highlights} showLink={true} onlyShowHighlightDetails={true} key={art.id} />
       <span className="closePreview" style={{position: 'absolute', right: '1em', marginTop: '1em', cursor: 'pointer'}} onClick={this.close}>
         <i className="material-icons">clear</i>
       </span>

@@ -11,7 +11,6 @@ var ArtworkDetails = require('./artwork-details')
 var ArtworkPreview = React.createClass({
   getDefaultProps() {
     return {
-      showLink: true,
     }
   },
 
