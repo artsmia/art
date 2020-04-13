@@ -101,7 +101,7 @@ var LoanBanner = React.createClass({
     return <div>
       <strong>LOAN</strong>
       <p>
-        This artwork was "loaned" to the museum by the owner. It was never owned by Mia. Loans are a common way to share art between museums.
+        This artwork is not part of Mia's collection. Its owner has temporarily loaned it to the museum to display.
       </p>
     </div>
   },
