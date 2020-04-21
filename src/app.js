@@ -38,7 +38,7 @@ var App = React.createClass({
             outline: -webkit-focus-ring-color auto 5px;
           }
         `}</style>
-        {this.state.hideHeader || <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 5 : 1}}>
+        {this.state.hideHeader || <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 444 : 1}}>
           {logo}
           {this.globalToolBar()}
         </header>}

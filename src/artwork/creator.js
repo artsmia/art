@@ -27,9 +27,9 @@ Creator.getFacetAndValue = (art, highlights) => {
   var highlight = highlighter.bind(null, art, highlights)
 
   return !(artist == '' || artist && artist.match(/^unknown/i)) &&
-    ['artist', (art.artist || '').replace(/^([^;]+):/, ''), highlight('artist').replace(/^([^;]+):/, '')]
+    ['artist', (art.artist || '').replace(/^([^;]+):/, ''), (highlight('artist') || '').replace(/^([^;]+):/, '')]
   || !!culture
-    && ['culture', art.culture.replace(/ culture/i, ''), highlight('culture').replace(/ culture/i, '')]
+    && ['culture', art.culture.replace(/ culture/i, ''), (highlight('culture') || '').replace(/ culture/i, '')]
   || !!country
     && ['country', art.country, highlight('country')]
   || [undefined, undefined]

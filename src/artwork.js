@@ -55,6 +55,9 @@ var Artwork = React.createClass({
     },
 
     willTransitionTo: function (transition, params, query, callback) {
+      if(params.id === 'leaflet-src.js.map')
+        return transition.redirect('home', {...params, status: 404})
+
       Artwork.checkRoute(params, (err) => {
         switch(err) {
           case 'mismatched slug': transition.redirect('artworkSlug', params)
@@ -131,7 +134,7 @@ var Artwork = React.createClass({
     var zoomLoadedSuccessfully = zoomLoaded && zoomLoaded !== 'error' && zoomLoadComplete
 
     var rights = rightsDescriptions.getRights(art)
-    var map = <div ref='map' id='map' style={mapStyle} className={zoomLoadedSuccessfully && 'zoomLoaded'}>
+    var map = <div ref='map' id='map' style={mapStyle} className={['leaflet-container', zoomLoadedSuccessfully && 'zoomLoaded'].join(' ')}>
       {this.state.has3d && <SketchfabEmbed model={this.state.has3d} show={this.state.show3d} />}
       {(art.image == 'valid' && rights !== 'Permission Denied') && <div id="staticImage" className={zoomLoadedSuccessfully && 'zoomLoaded'}>
         {image}
