@@ -7,10 +7,11 @@ var RandomArtwork = require('../random-artwork')
 var ArtworkPreview = require('../artwork-preview')
 var Artwork = require('../artwork')
 var SEARCH = require('../endpoints').search
+var ArtworkPageMetadata = require('../artwork/page-metadata')
 
 // module.exports = RandomArtwork(ArtworkPreview, 'image:valid public_access:1')
 var RandomArtworkPage = React.createClass({
-  mixins: [Router.State],
+  mixins: [Router.State, Router.Navigation],
   statics: {
     fetchData: {
       artwork: (params, existingData) => {
@@ -18,21 +19,43 @@ var RandomArtworkPage = React.createClass({
 
         const q = params.q || existingData.q || 'image:valid%20public_access:1'
         return rest(`${SEARCH}/random/art?q=${q}`)
-        .then(r => {console.info('random fetch', r); return r;})
         .then((r) => JSON.parse(r.entity))
       },
     },
   },
 
-  render() {
-    const reloadButton = <button onClick={() => window.location.reload()} title="Show the next random artwork">&#x21bb; Show another</button>
+  getInitialState() {
+    return { history: [this.props.data.artwork.id] }
+  },
 
-    return <Artwork
-      data={this.props.data}
-      art={this.props.data.artwork}
-      showLink={true}
-      showLinkComponent={reloadButton}
-    />
+  render() {
+    const {data, data: {artwork: art}} = this.props
+    const reloadButton = <button onClick={this.nextRandom} title="Show the next random artwork">&#x21bb; Next random</button>
+
+    return <div>
+      <Artwork
+        data={data}
+        art={art}
+        showLink={true}
+        showLinkComponent={reloadButton}
+        {...this.props}
+      />
+      <ArtworkPageMetadata art={art} prependTitle={'Random Artwork: '} />
+    </div>
+  },
+
+  nextRandom() {
+    const {history} = this.state || {}
+    const historyParam = history && history.length > 0
+      ? `${[...history].reverse().slice(0, 5).join(',')}` // 5 most recently visited random artworks - don't let ?history=… get too long
+      : ''
+    this.setState({history: history.concat(this.props.data.artwork.id)})
+    const query = {
+      ...this.getQuery(),
+      history: historyParam,
+    }
+
+    this.transitionTo(`/art/random`, {}, query)
   },
 })
 
@@ -42,8 +65,9 @@ module.exports = RandomArtworkPage
 
 /* TODO
  *
- * pass a search query via the URL through to the random search
- * choose between redirecting to the artwork page or staying on `/art/random`
+ * [x] pass a search query via the URL through to the random search
  * show a grid of 3-6 random artworks on desktop, single on mobile?
  * add a big 'refresh' button/link/keyboard shortcut
+ * allow revisiting previous 'randoms' via `history`
+ *
  */

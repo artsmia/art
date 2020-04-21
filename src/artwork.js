@@ -241,9 +241,27 @@ var Artwork = React.createClass({
     }
   },
 
+  shouldComponentUpdate(prevProps, prevState) {
+    return true
+  },
+
   componentDidMount() {
+    this.initView()
+  },
+
+  initView() {
     var art = this.state.art
-    if(art.image === 'valid' && this.state.showBiggie && !this.isLoan() && !this.state.show3d) this.loadZoom()
+    this.setState({zoomLoaded: false, zoomLoadComplete: false, zoomLoadedSuccessfully: false})
+
+    if(art.image === 'valid' && this.state.showBiggie && !this.isLoan() && !this.state.show3d) {
+      this.loadZoom({reset: true})
+    } else {
+      this.map.off()
+      this.map.remove()
+      this.map = undefined
+      this.tiles = undefined
+    }
+    
     var {smallViewport} = this.context
     // push the viewport down past the header to maximize image/text on the page
     // scrolling back up reveals the menu
@@ -255,21 +273,30 @@ var Artwork = React.createClass({
     if(this.context.smallViewport != this.state.lastSmallViewportSetting) {
       this.setState({lastSmallViewportSetting: this.context.smallViewport})
       if(this.map && this.tiles) {
-        this.map.off()
-        this.map.remove()
-        this.map = undefined
-        this.loadZoom()
+        this.loadZoom({reset: true})
       }
+    }
+
+    if(this.state.id !== this.props.data.artwork.id) {
+      this.setState(this.getInitialState())
+      setTimeout(this.initView, 1000)
     }
   },
 
-  loadZoom() {
+  loadZoom(options = {reset: false}) {
     var L = require('leaflet')
     var Liiif = require('leaflet-iiif')
     var fullscreen = require('leaflet-fullscreen')
     
     var art = this.state.art
     this.setState({zoomLoaded: false, zoomLoading: true})
+
+    if(options && options.reset && this.map) {
+      this.map.off()
+      this.map.remove()
+      this.map = undefined
+      this.tiles = undefined
+    }
 
     const id = this.state.id
     const iiif0Url = `https://tiles.dx.artsmia.org/iiif/${this.state.id}`
