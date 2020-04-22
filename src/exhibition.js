@@ -38,8 +38,13 @@ var Exhibition = React.createClass({
               ? json.hits.hits
               : json.hits.hits.filter(({_source: s}) => s && s.public_access == "1")
 
+            const ids = publishableArtworks.map(hit => hit._id)
+
             const publicAccessResults = {hits: {total: publishableArtworks.length, hits: publishableArtworks}}
-            return publicAccessResults
+            return {
+              ...publicAccessResults,
+              csvQuery: `ids/${ids.join(',')}`,
+            }
           })
         })
       },
