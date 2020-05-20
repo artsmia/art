@@ -138,7 +138,7 @@ var Artwork = React.createClass({
       {this.state.has3d && <SketchfabEmbed model={this.state.has3d} show={this.state.show3d} />}
       {(art.image == 'valid' && rights !== 'Permission Denied') && <div id="staticImage" className={zoomLoadedSuccessfully && 'zoomLoaded'}>
         {image}
-        {zoomLoaded || (art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>)}
+        {!!zoomLoaded || (art.image_copyright && <p style={{fontSize: '0.8em'}}>{decodeURIComponent(art.image_copyright)}</p>)}
       </div> || <NoImagePlaceholder art={art} />}
       {this.imageStatus()}
       {smallViewport && showMoreIcon && exploreIcon}

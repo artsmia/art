@@ -186,14 +186,42 @@ var ArtworkDetails = React.createClass({
           </ClickToSelect>
         </div>]
       }],
+      ['IIIF', (art) => {
+        if(art.rights_type !== 'Public Domain') return []
+
+        const manifestLink = `https://iiif.dx.artsmia.org/${art.id}.jpg/manifest.json`
+        const uvLink = `https://universalviewer.io/uv.html?manifest=${manifestLink}`
+        const miradorLink = `https://projectmirador.org/embed/?iiif-content=${manifestLink}`
+
+        return ['Share this image with IIIF', <div>
+          <p><a href="https://iiif.io/"><abbr title="international image interoperability framework">IIIF</abbr></a> provides a way for images to be shared in a standard way.</p>
+          <p>This artworks has a &ldquo;<a href={manifestLink}>Manifest</a>&rdquo; that encodes information about it and that can be linked into a wide range of IIIF-enabled systems.</p>
+          <p>(Such as <a href={uvLink}>Universal Viewer</a> or <a href={miradorLink}>Mirador</a>.)</p>
+        </div>]
+      }],
       ['exhibition_history', (art) => {
         if(!art.exhibition_history) return []
         return [<Markdown>{art.exhibition_history}</Markdown>]
       }],
       ['see_also', (art, raw) => {
         var also = raw.see_also && raw.see_also.filter(id => id !== "" && id !== raw.id)
+
+        if(!also) return []
+
+        var alsoString = `${also.length} other artwork${also.length > 1 ? 's' : ''}`
+        var alsoLink = <a href={`/search/ids/${raw.see_also.join(',')}`}>{alsoString}</a>
+
+        console.info('artwork details see_also', {
+          also,
+          alsoString,
+          rawSeeA: raw.see_also,
+        })
+
         return also && also.length > 0 ?
-          [`${also.length} other artwork${also.length > 1 ? 's' : ''}`, <Peek facet="see_also" q={raw.id} />] :
+          [
+            alsoLink, 
+            <Peek facet="see_also" q={raw.id} />
+          ] :
           []
       }],
       ['portfolio', (art, raw) => {
