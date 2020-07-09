@@ -5,7 +5,6 @@ var { Link } = require('react-router')
 var Decorate = require('./decorate')
 var Aggregations = require('./aggregations')
 var searchLanguageMap = require('./search-language')
-var ClosedBanner = require('./museum-closed-banner')
 
 const SearchSummary = React.createClass({
   render() {
@@ -72,7 +71,7 @@ const SearchSummary = React.createClass({
           params={this.props.params}
           {...this.props}
         />
-        <ClosedBanner />
+        {false && <ClosedBanner />}
         <Helmet
           title={`🔎 ${pretty.searchString}`}
           meta={[

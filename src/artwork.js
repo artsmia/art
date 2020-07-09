@@ -161,7 +161,7 @@ var Artwork = React.createClass({
           <ArtworkDetails art={art} show3d={this.state.show3d} />
         </div>
       </div>}
-      <ClosedBanner />
+      {false && <ClosedBanner />}
 
       {false && <a href={`default_target?image=https://iiif.dx.artsmia.org/${this.state.id}.jpg/info.json`}>
         <img src="iiif-dragndrop-100px.png" alt="IIIF Drag-n-drop" /> IIIF!

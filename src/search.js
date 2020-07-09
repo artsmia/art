@@ -124,7 +124,7 @@ var Search = React.createClass({
             handleCancelEmbed={() => this.setState({cancelEmbed: true})}
           />
         </div>}
-      {this.props.hideResults && <ClosedBanner />}
+      {false && this.props.hideResults && <ClosedBanner />}
       </div>
     )
   },
