@@ -1,4 +1,5 @@
 var React = require('react')
+var {isInternetArchivedPage} = require('../util/archived-page-handler.js')
 
 var coverPageStyle = {
   textAlign: 'center',
@@ -17,10 +18,11 @@ var NotFound = React.createClass({
     willTransitionTo: function (transition, params, query, callback) {
       var redirectUrl = params && isInternetArchivedPage(params.splat)
 
-      if(redirectUrl) {
-        console.info('re-route for IA archived page', {
-          redirectUrl,
-        })
+      if(false && redirectUrl) {
+        // `transition` happens at the server level and results
+        // in a 301 redirect, which doesn't fix the problem with this site
+        // archived on archive.org
+        // Time for a better idea!
         transition.redirect(redirectUrl)
       }
 
@@ -29,12 +31,5 @@ var NotFound = React.createClass({
   }
 })
 
-function isInternetArchivedPage(url) {
-  var internetArchiveUrlRegex = new RegExp("/?web/[0-9]+/http://collections.artsmia.org(.*)")
-  var isInternetArchivedPage = url && url.match(internetArchiveUrlRegex)
-  var pageUrl = isInternetArchivedPage && isInternetArchivedPage[1]
-
-  return pageUrl
-}
 
 module.exports = NotFound

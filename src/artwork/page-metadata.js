@@ -37,7 +37,11 @@ module.exports = ({art, noIndex, prependTitle}) => {
           content: noIndex ? 'noindex, nofollow' : 'all',
         },
       ]}
-      link={[{ rel: 'canonical', href: canonicalURL }]}
+      link={[
+        { rel: 'canonical', href: canonicalURL },
+        { rel: 'prefetch', href: `https://search.artsmia.org/id/${art.id}` },
+        { rel: 'prefetch', href: `https://iiif.dx.artsmia.org/${art.id}.jpg/info.json` },
+      ]}
     />
   )
 }
