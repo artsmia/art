@@ -45,6 +45,8 @@ var html = ({ title, meta, link }, data, body) => {
     .replace('<!--BODY-->', body)
 }
 
+app.use(serveStatic('.'))
+
 app.use((req, res, next) => {
   var actingUrl = req.url.replace(/\/(.*)\/$/, '/$1')
   const internalIPs = process.env.PRIVILEGED_IP_LIST
@@ -72,8 +74,6 @@ app.use((req, res, next) => {
     })
   })
 })
-
-app.use(serveStatic('.'))
 
 var port = process.env.PORT || 3413
 app.listen(port, () => console.info('👌 ', port))

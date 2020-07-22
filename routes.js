@@ -1,6 +1,6 @@
 var React = require('react')
 var Router = require('react-router')
-var {Route, Redirect, DefaultRoute} = Router
+var {Route, Redirect, DefaultRoute, NotFoundRoute} = Router
 
 var App = require('./src/app')
 var Home = require('./src/home')
@@ -27,10 +27,11 @@ var ArtChampionPage = require('./src/art-champion')
 var PeopleById = require('./src/people-by-id')
 var Survey = require('./src/survey')
 var RandomArtwork = require('./src/pages/random')
+var NotFound = require('./src/pages/not-found')
 
 var routes = (
   <Route handler={App} path="/">
-    <DefaultRoute name="home" handler={Home}/>
+    <DefaultRoute name="home" handler={Home} />
     <Route name="randomArtwork" path="art/random" handler={RandomArtwork} />
     <Route name="artwork" path="art/:id" handler={Artwork} />
     <Route name="artworkSlug" path="art/:id/:slug" handler={Artwork} />
@@ -62,6 +63,7 @@ var routes = (
     <Route name="recent" path="/new" handler={RecentAccessions} />
     <Route name="surveys" path="surveys/:surveyId" handler={Survey} />
     <Route name="survey" path="survey" handler={Survey} />
+    <NotFoundRoute handler={NotFound} />
   </Route>
 );
 
