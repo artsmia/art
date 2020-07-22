@@ -219,7 +219,10 @@ var LinkBar = React.createClass({
   },
 
   getInitialState() {
+    const showDownload = this.props.art.rights_type !== 'Permission Denied'
+      || this.props.art.image === 'invalid'
     return {
+      showDownload,
       showShare: false,
     }
   },
@@ -234,7 +237,7 @@ var LinkBar = React.createClass({
       }, [])
       .filter(action => action.enabled)
       // don't show 'download' for art with an invalid image
-      .filter(action => !(action.key == 'download' && art.image == 'invalid'))
+      .filter(action => !(action.key == 'download' && (art.image == 'invalid' || art.rights_type === 'Permission Denied')))
 
     return (
       <div>

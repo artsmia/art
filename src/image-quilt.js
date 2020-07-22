@@ -46,7 +46,7 @@ const ImageQuilt = React.createClass({
     const shuffledArtworks = this.state.shuffledArtworks && this.state.shuffledArtworks.slice(0, this.props.maxWorks)
     const _art = artworks.map((art) => {
       var s = art._source
-      if(s.image == 'invalid' || (s.image_width == 0 && s.image_height == 0) || s.rights == 'Permission Denied') {
+      if(s.image == 'invalid' || (s.image_width == 0 && s.image_height == 0) || s.rights_type == 'Permission Denied') {
         s.image = 'invalid'
         var splitOn = /;|:|\]/;
         ([s.title_short, s.artist_short] = [s.title.split(splitOn)[0], s.artist.split(splitOn)[0]])

@@ -230,7 +230,8 @@ var Artwork = React.createClass({
       || ['Copyright Protected', 'Needs Permission', 'In Copyright',
         "In Copyright - Rights-holder(s) Unlocatable or Unidentifiable",
         "In Copyright–Rights-holder(s) Unlocatable",
-        "Copyright Not Evaluated"
+        "Copyright Not Evaluated",
+        "Permission Denied"
       ].indexOf(rights) < 0
 
     return {
