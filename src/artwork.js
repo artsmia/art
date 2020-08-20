@@ -144,6 +144,7 @@ var Artwork = React.createClass({
       {smallViewport && showMoreIcon && exploreIcon}
     </div>
 
+    var showCropUI = this.state.showBiggie
     var info = <div className='info'>
       {this.props.children || <div>
         <ArtworkPreview art={art} showLink={this.props.showLink} showDuplicateDetails={true} />
@@ -162,6 +163,15 @@ var Artwork = React.createClass({
         </div>
       </div>}
       {false && <ClosedBanner />}
+
+      {showCropUI && <div style={{marginTop: '1em'}}>
+        <IIIFCropper
+          captureViewRegion={this.captureViewRegion}
+          updateRegion={(newUrl) => this.setState({iiifRegion: newUrl})}
+          currentRegion={this.state.iiifRegion}
+          art={art}
+        />
+      </div>}
 
       {false && <a href={`?manifest=https://iiif.dx.artsmia.org/${this.state.id}.jpg/manifest.json`}>
         <img src="iiif-dragndrop-100px.png" alt="IIIF Drag-n-drop" /> IIIF!
@@ -438,6 +448,35 @@ var Artwork = React.createClass({
     }
   },
 
+  /**
+   * convert the currently viewed area of the zoomable image to an IIIF deriv
+   * thankya https://bl.ocks.org/mejackreed/6936585f435b60aa9451ae2bc1c199f2
+   */
+  captureViewRegion() {
+    if(!this.map) return
+
+    let map = this.map
+    let iiifLayer = this.tiles
+    let bounds = map.getBounds()
+    let fractionalZoom = map.getZoom()
+    let zoom = Math.ceil(fractionalZoom) // should this be floor, or round?
+    let min = map.project(bounds.getSouthWest(), zoom)
+    let max = map.project(bounds.getNorthEast(), zoom)
+    let imageSize = iiifLayer._imageSizes[zoom]
+    let xRatio = iiifLayer.x / imageSize.x
+    let yRatio = iiifLayer.y / imageSize.y
+    let region = [
+      Math.max(0, Math.floor(min.x * xRatio)),
+      Math.max(0, Math.floor(max.y * yRatio)),
+      Math.floor((max.x - min.x) * xRatio),
+      Math.floor((min.y - max.y) * yRatio)
+    ]
+    let baseUrl = 'https://iiif.dx.artsmia.org'
+    let url = baseUrl + '/' + this.state.id + '.jpg/' + region.join(',') + '/800,/0/default.jpg'
+
+    this.setState({iiifRegion: url})
+  },
+
   imageStatus() {
     var {art, zoomLoaded, zoomLoadComplete, zoomLoading} = this.state
     var copyrightAndOnViewMessage = art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
@@ -543,3 +582,80 @@ function isLoan(art) {
 function notPublicAccess(art) {
   return art.public_access === '0'
 }
+
+var IIIFCropper = React.createClass({
+  getInitialState(props) {
+    return {
+        isLoading: true,
+        squareSmartCrop: `https://iiif.dx.artsmia.org/${this.props.art.id}.jpg/-1,-1,800,800/full/0/default.jpg`,
+        cropSize: 800,
+      }
+  },
+
+  render() {
+    const { art, captureViewRegion, updateRegion, currentRegion } = this.props
+    const { isLoading, squareSmartCrop, cropSize } = this.state
+    const isSquare = currentRegion === squareSmartCrop
+    const getCropFromZoomer = () => {
+      this.setState({cropSize: 800})
+      captureViewRegion()
+    }
+    const setSquareSmartCrop = () => updateRegion(squareSmartCrop)
+
+    const buttonStyles = {
+      color: 'white',
+      background: '#232323',
+      opacity: isLoading ? 0.3 : 1,
+    }
+
+    const imgStyle = {
+      maxWidth: '100%',
+      maxHeight: '300px',
+      opacity: isLoading ? 0.3 : 1,
+    }
+
+    const rawIIIFUrl = (currentRegion || squareSmartCrop)
+    const iiifComponents = rawIIIFUrl.match(/.org\/(?<id>[0-9]+).jpg\/(?<region>[^/]+)\/(?<size>[^/]+)\/0\/default.jpg/)
+    const iiifSize = iiifComponents.groups.size
+    const iiifUrl = rawIIIFUrl.replace(iiifSize, cropSize === 'full' ? cropSize : `${cropSize},`)
+
+    return <div>
+      <button onClick={getCropFromZoomer} disabled={isLoading} style={buttonStyles}>
+        📷 Save detail
+      </button> {' '}
+      {isSquare || <button onClick={setSquareSmartCrop} style={buttonStyles}>
+        ✂️  Crop Square
+      </button>}
+      {iiifUrl && <details open={Boolean(currentRegion)}>
+        <summary>Show Detail</summary>
+        <figure style={{margin: 0}}>
+          <a href={iiifUrl} target="_blank">
+            <img
+              src={iiifUrl}
+              style={imgStyle}
+              onLoad={() => this.setState({isLoading: false})}
+            />
+          </a>
+          <figcaption>
+            {isLoading || <p>
+              {[400, 800, 1200, 'full'].map(size => {
+                const sizeText = isNaN(size) ? 'full size' : `${size}px`
+                return cropSize === size
+                  ? <span style={{padding: '0px 7px'}}>{sizeText}</span>
+                  : <button onClick={() => this.setState({cropSize: size, isLoading: true})} style={buttonStyles}>{sizeText}</button>
+              })}
+            </p>}
+            <p>Zoom in on the left to the detail you'd like to save. Click 'Save detail' and wait until the image updates. Right click the image to 'save image as' or copy link, or click the image to open in a new tab.</p>
+          </figcaption>
+        </figure>
+      </details>}
+    </div>
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    if (this.props.currentRegion !== nextProps.currentRegion) {
+      console.info('IIIFCropper box changed')
+      this.setState({isLoading: true})
+    }
+  }
+})
