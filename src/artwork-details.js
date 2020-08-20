@@ -187,7 +187,7 @@ var ArtworkDetails = React.createClass({
         </div>]
       }],
       ['IIIF', (art) => {
-        if(art.rights_type !== 'Public Domain') return []
+        if(true || art.rights_type !== 'Public Domain') return []
 
         const manifestLink = `https://iiif.dx.artsmia.org/${art.id}.jpg/manifest.json`
         const uvLink = `https://universalviewer.io/uv.html?manifest=${manifestLink}`

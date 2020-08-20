@@ -163,10 +163,9 @@ var Artwork = React.createClass({
       </div>}
       {false && <ClosedBanner />}
 
-      {false && <a href={`default_target?image=https://iiif.dx.artsmia.org/${this.state.id}.jpg/info.json`}>
+      {false && <a href={`?manifest=https://iiif.dx.artsmia.org/${this.state.id}.jpg/manifest.json`}>
         <img src="iiif-dragndrop-100px.png" alt="IIIF Drag-n-drop" /> IIIF!
       </a>}
-
     </div>
 
     var smallViewportWithTabbedInfoAndRelated = <div>

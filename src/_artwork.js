@@ -179,6 +179,8 @@ var CopyableLabel = React.createClass({
 
 // check if an image exists on our cloudfront distribution,
 // and if not, fall back to loading it from the API
+// TODO - this actually loads the full image, which is unneccessary and slows down the page.
+// Somehow just do a HEAD request?
 var testCloudfrontImage = (art, callback) => {
   var rights = rightsDescriptions.getRights(art)
   var downloadFullRes = art.rights_type === 'Public Domain'
