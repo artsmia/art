@@ -23,11 +23,14 @@ const Image = React.createClass({
       ...style,
     }
 
+    var url = this.imageURL()
+    if(art.image_url) ignoreStyle = true
+
     var nakedImage = <img
       key={id}
-      style={ignoreStyle ? {maxWidth: '100%', maxHeight: '67vh'} : style}
-      src={this.imageURL()}
-      key={this.imageURL()}
+      style={ignoreStyle ? {maxWidth: '100%', maxHeight: '69vh'} : style}
+      src={url}
+      key={url}
       onLoad={this.handleImageLoad}
       onError={this.handleError}
       className={classes}
@@ -47,7 +50,9 @@ const Image = React.createClass({
 
   imageURL() {
     var {customImage, size, showLink} = this.props
-    var {id} = this.props.art
+    var {id, image_url} = this.props.art
+
+    if(image_url) return image_url
 
     // TODO: cascade from customImage -> S3 -> api.artsmia.org?
     return this.state.skipCDN ?

@@ -16,7 +16,9 @@ var ArtworkPreview = React.createClass({
 
   render() {
     var {art, style, showLink, highlights} = this.props
-    var id = art.id.replace('http://api.artsmia.org/objects/', '')
+    var id = isNaN(art.id) 
+      ? art.id.replace('http://api.artsmia.org/objects/', '')
+      : art.id
     var highlight = highlighter.bind(null, art, highlights)
 
     var showHighlights = highlights && <div className='artwork-detail' style={{marginTop: '1em'}}>

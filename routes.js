@@ -28,6 +28,7 @@ var PeopleById = require('./src/people-by-id')
 var Survey = require('./src/survey')
 var RandomArtwork = require('./src/pages/random')
 var NotFound = require('./src/pages/not-found')
+var PseudoArtwork = require('./src/pseudo-artwork.js')
 
 var routes = (
   <Route handler={App} path="/">
@@ -37,6 +38,8 @@ var routes = (
     <Route name="artworkSlug" path="art/:id/:slug" handler={Artwork} />
     <Route name="accessionHighlight" path="art/:id/:slug/accessionHighlight" handler={AccessionHighlight} />
     <Route name="artChampion" path="art/:id/:slug/art-champion" handler={ArtChampionPage} />
+    <Route name="sandboxArtwork" path="sandbox/:id" handler={PseudoArtwork} />
+    <Route name="sandboxArtworkSlug" path="sandbox/:id/:slug" handler={PseudoArtwork} />
     <Route name="search" path="/search/" handler={Search}>
       <Route name="searchResults" path=":terms" handler={SearchResults}>
         <Route name="filteredSearchResults" path="filters/*" handler={SearchResults} />

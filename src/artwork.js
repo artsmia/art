@@ -79,11 +79,12 @@ var Artwork = React.createClass({
       art.title.replace(/<[^ ]+?>/g, '"'),
       _Artwork.Creator.getFacetAndValue(art)[1]
     ].filter(e => e).join(', ')
-    var imageUrl = imageCDN(id)
+
+    var imageUrl = art.image_url || imageCDN(id)
     var canonicalURL = `https://collections.artsmia.org/art/${art.id}/${art.slug}`
 
     var aspectRatio = art.image_width/art.image_height
-    var mapHeight = art.image == "valid" ?
+    var mapHeight = aspectRatio && art.image == "valid" ?
       Math.max(40, Math.min(65, 1/aspectRatio*80)) :
       20
     if(smallViewport && this.state.show3d) mapHeight = 67
@@ -227,7 +228,9 @@ var Artwork = React.createClass({
 
   getInitialState() {
     var art = this.props.data.artwork
-    art.id = this.props.id || art.id.replace('http://api.artsmia.org/objects/', '')
+    art.id = this.props.id || (isNaN(art.id)
+      ? art.id.replace('http://api.artsmia.org/objects/', '')
+      : art.id)
 
     var has3Dmodel = art["related:3dmodels"] && art["related:3dmodels"][0]
     var navigatedFrom3dModelSearch = window &&
@@ -512,7 +515,7 @@ var Artwork = React.createClass({
 
   imageStatus() {
     var {art, zoomLoaded, zoomLoadComplete, zoomLoading} = this.state
-    var copyrightAndOnViewMessage = art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
+    var copyrightAndOnViewMessage = art.room && art.room[0] == 'G' ? " (You'll have to come see it in person.)" : ''
     var loadingZoomMessage =  `
       (—Is that the best image you've got!!?
       —Nope! We're loading ${humanizeNumber(this.getPixelDifference(800))} more pixels right now.
