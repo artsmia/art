@@ -38,6 +38,7 @@ var ArtworkRelatedContent = React.createClass({
       video: 13,
       artstory: 9,
       'mia-story': 5,
+      inspiredByMia: 2,
       newsflash: 1,
     }[type]), explore).reverse()
 
@@ -45,7 +46,7 @@ var ArtworkRelatedContent = React.createClass({
     var groupedByTypeSortedContent = R.groupBy(({type}) => type, sortedExploreContent)
     var groupedRelatedContents = R.mapObjIndexed((relateds, type) => {
       const humanTypeName = type.replace(/-/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})
-      const showType = true || ['audio', 'video', 'artstory', '3d'].indexOf(type) < 0
+      const showType = true || ['audio', 'video', 'artstory', '3d', 'inspiredByMia'].indexOf(type) < 0
 
       return <div>
         {showType && <h2>{humanTypeName}</h2>}
@@ -182,6 +183,14 @@ var ArtworkRelatedContent = React.createClass({
       var iframe = <iframe src={`https://player.vimeo.com/video/${json.link.match(/\d+/)[0]}`} frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
       return iframe
+    },
+    "Inspired By Mia": (json, id) => {
+      console.info('inspired', {json, id})
+
+      return <div>
+        <img src={json.image} style={{maxWidth: '87%'}} /><br/>
+        <Link to="sandboxArtwork" params={{id: json.wpid}}>{json.title} by {json.artist}</Link>
+      </div>
     }
   },
 })
