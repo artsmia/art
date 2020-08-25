@@ -167,8 +167,9 @@ var Artwork = React.createClass({
       {showCropUI && <div style={{marginTop: '1em'}}>
         <IIIFCropper
           captureViewRegion={this.captureViewRegion}
-          updateRegion={(newUrl) => this.setState({iiifRegion: newUrl})}
+          updateRegion={(args) => this.setState(args)}
           currentRegion={this.state.iiifRegion}
+          cropSquare={this.state.cropSquare}
           art={art}
         />
       </div>}
@@ -455,22 +456,54 @@ var Artwork = React.createClass({
   captureViewRegion() {
     if(!this.map) return
 
+    let { cropSquare } = this.state
+
     let map = this.map
     let iiifLayer = this.tiles
     let bounds = map.getBounds()
     let fractionalZoom = map.getZoom()
-    let zoom = Math.ceil(fractionalZoom) // should this be floor, or round?
+    let zoom = Math.floor(fractionalZoom) // should this be floor, or round?
     let min = map.project(bounds.getSouthWest(), zoom)
     let max = map.project(bounds.getNorthEast(), zoom)
     let imageSize = iiifLayer._imageSizes[zoom]
     let xRatio = iiifLayer.x / imageSize.x
     let yRatio = iiifLayer.y / imageSize.y
-    let region = [
-      Math.max(0, Math.floor(min.x * xRatio)),
-      Math.max(0, Math.floor(max.y * yRatio)),
-      Math.floor((max.x - min.x) * xRatio),
-      Math.floor((min.y - max.y) * yRatio)
-    ]
+
+    let x0 = Math.max(0, Math.floor(min.x * xRatio))
+    let y0 = Math.max(0, Math.floor(max.y * yRatio))
+    let w = Math.floor((max.x - min.x) * xRatio)
+    let h = Math.floor((min.y - max.y) * yRatio)
+    /**
+     * when `cropSquare` is set, adapt the rectangular region to be square
+     * Set `w` and `h` to the same value by taking `Math.min`
+     * Then compute half the difference between width and height (`whDelta`),
+     * and depending on the aspect ratio of the image, adjust x0 or y0
+     * by whDelta so the cropped region is centered the same as the browser.
+     */
+    let whDelta = Math.round((w - h) / 2)
+    let adjustedX0 = w > h ? x0 + whDelta : x0
+    let adjustedY0 = h >= w ? y0 - whDelta : y0
+    let whMin = Math.min(w, h)
+    let region = !cropSquare
+      ? [ x0, y0, w, h ]
+      : [
+        adjustedX0,
+        adjustedY0,
+        whMin,
+        whMin,
+      ]
+
+    if(cropSquare) {
+      // Indicate where the square crop is coming from with a polygon overlay
+      // that's removed after a second or two
+      let detailHighlightLayer = L.rectangle([
+        L.point(adjustedX0, adjustedY0), // top left
+        L.point(adjustedX0+whMin, adjustedY0+whMin), // bottom right
+      ].map(point => map.unproject(point, zoom)))
+      setTimeout(() => detailHighlightLayer.addTo(map), 31)
+      setTimeout(() => detailHighlightLayer.remove(), 3579)
+    }
+
     let baseUrl = 'https://iiif.dx.artsmia.org'
     let url = baseUrl + '/' + this.state.id + '.jpg/' + region.join(',') + '/800,/0/default.jpg'
 
@@ -593,14 +626,14 @@ var IIIFCropper = React.createClass({
   },
 
   render() {
-    const { art, captureViewRegion, updateRegion, currentRegion } = this.props
+    const { art, captureViewRegion, updateRegion, currentRegion, cropSquare } = this.props
     const { isLoading, squareSmartCrop, cropSize } = this.state
     const isSquare = currentRegion === squareSmartCrop
     const getCropFromZoomer = () => {
       this.setState({cropSize: 800})
       captureViewRegion()
     }
-    const setSquareSmartCrop = () => updateRegion(squareSmartCrop)
+    const setSquareSmartCrop = () => updateRegion({iiifRegion: squareSmartCrop, cropSquare: true})
 
     const buttonStyles = {
       color: 'white',
@@ -619,12 +652,14 @@ var IIIFCropper = React.createClass({
     const iiifSize = iiifComponents.groups.size
     const iiifUrl = rawIIIFUrl.replace(iiifSize, cropSize === 'full' ? cropSize : `${cropSize},`)
 
+    console.info('IIIFCropper render', {cropSquare})
+
     return <div>
       <button onClick={getCropFromZoomer} disabled={isLoading} style={buttonStyles}>
         📷 Save detail
       </button> {' '}
-      {isSquare || <button onClick={setSquareSmartCrop} style={buttonStyles}>
-        ✂️  Crop Square
+      {(!currentRegion || isSquare) || <button onClick={setSquareSmartCrop} style={buttonStyles}>
+        ✂️  Smart Crop
       </button>}
       {iiifUrl && <details open={Boolean(currentRegion)}>
         <summary>Show Detail</summary>
@@ -634,17 +669,26 @@ var IIIFCropper = React.createClass({
               src={iiifUrl}
               style={imgStyle}
               onLoad={() => this.setState({isLoading: false})}
+              onError={() => this.setState({isLoading: false, error: true})}
             />
           </a>
           <figcaption>
-            {isLoading || <p>
-              {[400, 800, 1200, 'full'].map(size => {
+            {isLoading || <div>
+              <p>{[400, 800, 1200, 'full'].map(size => {
                 const sizeText = isNaN(size) ? 'full size' : `${size}px`
                 return cropSize === size
-                  ? <span style={{padding: '0px 7px'}}>{sizeText}</span>
-                  : <button onClick={() => this.setState({cropSize: size, isLoading: true})} style={buttonStyles}>{sizeText}</button>
-              })}
-            </p>}
+                  ? <span key={size} style={{padding: '0px 7px'}}>{sizeText}</span>
+                  : <button key={size} onClick={() => this.setState({cropSize: size, isLoading: true})} style={buttonStyles}>{sizeText}</button>
+              })}</p>
+              <label style={{display: 'block'}}>
+                <input
+                  type="checkbox"
+                  value={Boolean(cropSquare)}
+                  checked={Boolean(cropSquare)}
+                  onClick={() => updateRegion({cropSquare: !cropSquare})}
+                /> square
+              </label>
+            </div>}
             <p>Zoom in on the left to the detail you'd like to save. Click 'Save detail' and wait until the image updates. Right click the image to 'save image as' or copy link, or click the image to open in a new tab.</p>
           </figcaption>
         </figure>
