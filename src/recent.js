@@ -39,6 +39,8 @@ var RecentAccessions = React.createClass({
 
     var customImageFunction = (id) =>
       `https://collections.artsmia.org/_info/accession_highlights/${id}.jpg`
+    var customImageFunctionIIIF = (id) =>
+      `https://iiif.dx.artsmia.org//${id}.jpg/-1,-1,800,800/800,/0/default.jpg`
 
     return <div>
       {Object.keys(groupedByDate).reverse().map(accessionDate => {
@@ -57,7 +59,7 @@ var RecentAccessions = React.createClass({
                       ignoreStyle={false}
                       style={aspectRatio}
                       lazyLoad={false}
-                      customImage={customImageFunction} />
+                      customImage={customImageFunctionIIIF} />
                   </div>
                 </div>
               </Link>
