@@ -40,6 +40,7 @@ var ArtworkPreview = React.createClass({
         <div className="art-details preview-header">
           {art.deaccessioned == 'true' && <DeaccessionedBanner art={art} />}
           {art.accession_number.match(/^L/i) && <LoanBanner art={art} />}
+          {art.object_name === 'Inspired By Mia' && <InspiredByMiaBanner art={art} />}
           <Artwork.Title art={art} link={showLink} {...this.props} />
           <Artwork.Creator art={art} {...this.props} />
           <Artwork.Tombstone art={art} {...this.props} highlightAccessionNumber={true} />
@@ -104,6 +105,19 @@ var LoanBanner = React.createClass({
       <strong>LOAN</strong>
       <p>
         This artwork is not part of Mia's collection. Its owner has temporarily loaned it to the museum to display.
+      </p>
+    </div>
+  },
+})
+
+var InspiredByMiaBanner = React.createClass({
+  render() {
+    var {art} = this.props
+
+    return <div>
+      <p>
+        <strong>Inspired By Mia</strong>:
+        This artwork is not part of Mia's collection, but was inspired by it. Our collection is here for you in person and online. An art museum has walls, but inspiration is limitless. <Link to='searchResults' params={{terms: `_exists_:"related:inspiredByMia"`}}>See all &rarr;</Link>
       </p>
     </div>
   },

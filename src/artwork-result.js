@@ -21,9 +21,10 @@ var ArtworkResult = React.createClass({
 
     var roomHighlight = highlighter(art, this.props.highlights, 'room')
     var showMore = this.props.showMore && Object.keys(art).filter(key => key.match(/related:/) && !key.match(/related:exhibitions/)).length > 0
+    var customImage = this.props.customImage
 
     return (
-      <Artwork.Figure art={art} className='artwork-result'>
+      <Artwork.Figure art={art} className='artwork-result' customImage={customImage}>
         <div className="artwork-summary">
           {title}
           <Artwork.Creator art={art} wrapper="h2" peek={false} highlights={this.props.highlights} />

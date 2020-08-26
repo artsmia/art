@@ -27,6 +27,9 @@ var SearchResultsGrid = React.createClass({
   render() {
     var {hits, leftColumnWidth, focusedResult, smallViewport, focusHandler, ...focusedProps} = this.props
     var targetHeight = hits.length < 20 ? 250 : 150
+
+    const customImageFn = this.props.customImage
+
     var quilts = splitArray(hits, 50).map((chunkedHits, index) => {
       var chunkedQuilt = this.cachedQuilts[index] || <ImageQuilt
         artworks={chunkedHits}
@@ -35,6 +38,7 @@ var SearchResultsGrid = React.createClass({
         maxRowHeight={500}
         onClick={this.clickResult}
         key={index}
+        customImageFn={customImageFn}
         disableHover={true} />
 
       if(chunkedHits.length >= 50) this.cachedQuilts[index] = chunkedQuilt

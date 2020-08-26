@@ -88,6 +88,7 @@ const ImageQuilt = React.createClass({
           onMouseLeave={this.hovered.bind(this, art, false)}
           onImageInvalidation={this.forceUpdate.bind(this)}
           key={_art.id}
+          customImageFn={this.props.customImageFn}
           lazyLoad={this.props.lazyLoad}
           />
       })
@@ -207,7 +208,7 @@ module.exports = ImageQuilt
 
 var QuiltPatch = React.createClass({
   render() {
-    var {art, width, ...other} = this.props
+    var {art, width, customImageFn, ...other} = this.props
     var id = art.id
 
     var style = {
@@ -230,6 +231,7 @@ var QuiltPatch = React.createClass({
     var image = <Image
       art={art}
       style={imgStyle}
+      customImage={customImageFn}
       {...other}
     />
 

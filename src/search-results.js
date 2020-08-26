@@ -58,15 +58,19 @@ var SearchResults = React.createClass({
     setTimeout(() => window.clickedArtwork = null)
     var {smallViewport} = this.context
 
+    var isInspiredByMia = this.props.params.terms === '_exists_:"related:inspiredByMia"'
+
     var {view, preview: showPreview} = this.props.query
     var initialView = (view && view == 'list' || smallViewport || this.context.universal) ?
       ResultsList :
       ResultsGrid
-    var showPreview = showPreview == "false" ? false : true
+
+    var showPreview = (showPreview == "false" || isInspiredByMia) ? false : true
 
     return {
       focusedResult: showPreview && focus && focus,
       view: initialView,
+      isInspiredByMia,
     }
   },
 
@@ -129,6 +133,15 @@ var SearchResults = React.createClass({
     var {terms, splat} = this.props.params
     var showFocusRelatedContent = [terms, splat].join(' ').match(/related/)
 
+    var { isInspiredByMia } = this.state
+    const customImageFn = isInspiredByMia
+      ? function(id) {
+        const art = this.props.hits.find(({_id}) => id === _id)._source
+        const inspired = art['related:inspiredByMia'][0]
+        return inspired.image
+      }
+      : undefined
+
     return <div>
       <SearchSummary {...summaryProps}>
         <SearchResultViewToggle
@@ -147,6 +160,7 @@ var SearchResults = React.createClass({
         postSearch={this.postSearch(summaryProps, this.state.postSearchOffset)}
         smallViewport={this.context.smallViewport}
         showRelated={showFocusRelatedContent}
+        customImage={customImageFn && customImageFn.bind(this)}
         />
     </div>
   },

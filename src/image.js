@@ -26,9 +26,14 @@ const Image = React.createClass({
     var url = this.imageURL()
     if(art.image_url) ignoreStyle = true
 
+    const _style = {
+      ...(ignoreStyle ? {maxWidth: '100%', maxHeight: '69vh'} : style),
+      objectFit: 'cover',
+    }
+
     var nakedImage = <img
       key={id}
-      style={ignoreStyle ? {maxWidth: '100%', maxHeight: '69vh'} : style}
+      style={_style}
       src={url}
       key={url}
       onLoad={this.handleImageLoad}
@@ -56,7 +61,7 @@ const Image = React.createClass({
 
     // TODO: cascade from customImage -> S3 -> api.artsmia.org?
     return this.state.skipCDN ?
-      `https://api.artsmia.org/images/${id}/400/medium.jpg` :
+      `https://iiif.dx.artsmia.org/${id}.jpg/full/400,/0/default.jpg` :
       customImage ? customImage(id) : imageCDN(id, size || showLink ? undefined : 800)
   },
 

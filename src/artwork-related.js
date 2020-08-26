@@ -185,11 +185,11 @@ var ArtworkRelatedContent = React.createClass({
       return iframe
     },
     "Inspired By Mia": (json, id) => {
-      console.info('inspired', {json, id})
-
       return <div>
-        <img src={json.image} style={{maxWidth: '87%'}} /><br/>
-        <Link to="sandboxArtwork" params={{id: json.wpid}}>{json.title} by {json.artist}</Link>
+        <Link to="sandboxArtwork" params={{id: json.wpid}}>
+          <img src={json.image} style={{maxWidth: '13em'}} /><br/>
+          {json.title} by {json.artist}
+        </Link>
       </div>
     }
   },
