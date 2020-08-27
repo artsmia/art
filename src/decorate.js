@@ -119,12 +119,14 @@ var Decorate = React.createClass({
       artistDecoratorMatches =
         artistDecoratorMatches || decName === 'ArtistDecorator'
       infoDecoratorMatches = infoDecoratorMatches || decName === 'InfoDecorator'
-      pseudoDecoratorMatches =
-        pseudoDecoratorMatches || decName === 'InspiredByMiaDecorator'
+      // uncomment this to re-enable the InspiredBy decorator opening automatically by default
+      // pseudoDecoratorMatches =
+      //  pseudoDecoratorMatches || decName === 'InspiredByMiaDecorator'
 
       map[decName] =
         decName === 'InfoDecorator' ||
-        decName === 'InspiredByMiaDecorator' ||
+        (decName === 'InspiredByMiaDecorator' &&
+          (query && query.match(/_exists_:"related:inspiredByMia"/) || filters && filters.match(/_exists_:"related:inspiredByMia"/)))
         decName === 'ArtistDecorator' ||
         (decName === 'AudioDecorator' && !!query.match(/^\d+$/))
 

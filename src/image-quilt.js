@@ -24,6 +24,8 @@ const ImageQuilt = React.createClass({
       width: window.innerWidth || this.context.universal && 1000,
       alwaysShow: cookie.load('freeTheQuilt'),
       shuffledArtworks: this.props.shuffle ? maybeShuffledArtworks : undefined,
+      maxRows: this.props.maxRows,
+      maxWorks: this.props.maxWorks,
     }
   },
 
@@ -42,7 +44,7 @@ const ImageQuilt = React.createClass({
   render() {
     if(this.hideDarkenedQuilt()) return this.emptyQuiltToggleControl()
 
-    const artworks = this.props.artworks.slice(0, this.props.maxWorks)
+    const artworks = this.props.artworks.slice(0, this.state.maxWorks)
     const shuffledArtworks = this.state.shuffledArtworks && this.state.shuffledArtworks.slice(0, this.props.maxWorks)
     const _art = artworks.map((art) => {
       var s = art._source
@@ -59,19 +61,41 @@ const ImageQuilt = React.createClass({
       return s
     })
 
-    _art.map((art) => art.aspect_ratio = art.image_width/art.image_height)
+    const { isInspiredByMia } = this.props
+    const hPadding = this.props.isInspiredByMia ? '10px' : '0'
+    const vPadding = this.props.isInspiredByMia ? '2em' : 0
+    const hPaddingInt = Number(hPadding.replace(/[^0-9]/g, ''))
+
+    isInspiredByMia
+      ? _art.map((art) => art.aspect_ratio = (art.image_width+Number(hPaddingInt)*2)/art.image_height)
+      : _art.map((art) => art.aspect_ratio = (art.image_width/art.image_height))
     const summedAspectRatio = _art.reduce((sum, art) => {return sum+art.aspect_ratio}, 0)
     // Fit the images into `maxRows` or however many rows it would take to show each
-    // approx 200px tall
-    var rowHeight = this.props.rowHeight || 200
+    // approx `rowHeight`px tall
+    var rowHeight = !isInspiredByMia
+      ? this.props.rowHeight || 200
+      : 234 // bigger images for 'inspired by mia'
     var numRows = Math.min(this.props.maxRows, Math.max(Math.floor(summedAspectRatio*rowHeight/this.state.width), 1))
 
     var rows = this.getPartition(shuffledArtworks || artworks, numRows)
+
+    console.info('ImageQuilt', {
+      summedAspectRatio, rowHeight, numRows, rows,
+      hPadding, hPaddingInt,
+      vPadding,
+      isInspiredByMia,
+    })
 
     const images = rows.map((row, index) => {
       var rowSummedAspectRatio = row.reduce((sum, art) => {return sum+art._source.aspect_ratio}, 0)
       var rowAspectRatio = rowSummedAspectRatio/row.length
       var unadjustedHeight = this.state.width/rowSummedAspectRatio
+
+      false && console.info('ImageQuilt row', {
+        rowSummedAspectRatio,
+        rowAspectRatio,
+        unadjustedHeight,
+      })
 
       var images = row.map((art) => {
         var _art = art._source
@@ -80,6 +104,10 @@ const ImageQuilt = React.createClass({
         const height = width/_art.aspect_ratio
         const maxRowHeight = this.props.maxRowHeight || 200
         const widthAdjustedToClipTallRows = unadjustedHeight > maxRowHeight ? width/(unadjustedHeight/maxRowHeight) : width
+
+        false && console.info('ImageQuilt row image', {
+          widthAdjustedToClipTallRows,
+        })
 
         return <QuiltPatch art={_art}
           width={widthAdjustedToClipTallRows}
@@ -90,7 +118,8 @@ const ImageQuilt = React.createClass({
           key={_art.id}
           customImageFn={this.props.customImageFn}
           lazyLoad={this.props.lazyLoad}
-          />
+          hPadding={hPadding}
+        />
       })
 
       // centered doesn't work on the first row because the search box is in the way
@@ -101,6 +130,7 @@ const ImageQuilt = React.createClass({
         display: 'flex',
         justifyContent: justify,
         whiteSpace: 'nowrap',
+        padding: `0 0 ${vPadding} 0`,
       }
 
       return <div className='quilt-row-wrap'
@@ -118,6 +148,23 @@ const ImageQuilt = React.createClass({
     return (
       <div className='quilt-wrap' onMouseLeave={this.hovered.bind(this, null, false)} style={quiltStyle}>
         {images}
+        <div id="quilt-controls" style={{float: 'right', display: 'none'}}>
+          {this.state.maxWorks < this.props.artworks.length && <a onClick={this.enlarge.bind(this, 1, 10)}>more thumbnails</a>}
+          {this.state.maxWorks > 0 && <a onClick={this.enlarge.bind(this, -1, -10)}> / fewer</a>}
+          <br/>
+          <a onClick={this.enlarge.bind(this, 1, 0)}>bigger</a>
+          <a onClick={this.enlarge.bind(this, -1, 0)}> / smaller</a>
+          <br/>
+          {this.state.morphDelta > 0 || <a onClick={this.morph.bind(this, 1)}>grow!</a>}
+          {this.state.morphDelta < 0 || <a onClick={this.morph.bind(this, -1)}> / shrink!</a>}
+          {this.state.morphDelta != 0 && <a onClick={this.resetMorph}> / stop!</a>}
+          <br/>
+          {(this.props.maxRows == this.state.maxRows && this.props.maxWorks == this.state.maxWorks) ||
+            <a onClick={this.reset}>
+              reset
+            </a>
+          }
+        </div>
       </div>
     )
   },
@@ -195,6 +242,40 @@ const ImageQuilt = React.createClass({
     cookie.save('freeTheQuilt', true)
     this.setState({alwaysShow: true})
   },
+
+  enlarge(rows=1, works=10) {
+    this.setState({
+      maxRows: this.state.maxRows+rows,
+      maxWorks: this.state.maxWorks+works,
+    })
+  },
+  reset() {
+    console.info('resetting quilt', this.props)
+    if(this.state.morphInterval) clearInterval(this.state.morphInterval)
+    this.setState({
+      maxRows: this.props.maxRows,
+      maxWorks: this.props.maxWorks,
+    })
+  },
+  morph(delta=1) {
+    const morph = () => {
+      console.info('morphing', this.state.maxWorks, this.props.artworks.length)
+      if(this.state.maxWorks > this.props.artworks.length || this.state.maxRows <= 0) {
+        clearInterval(this.state.morphInterval)
+        this.setState({morphDelta: 0, morphInterval: false})
+      }
+      this.enlarge(delta, delta*5)
+    }
+    this.enlarge(delta, delta*5)
+    this.setState({
+      morphDelta: delta,
+      morphInterval: setInterval(morph, 3000)
+    })
+  },
+  resetMorph() {
+    this.setState({morphDelta: 0})
+    clearInterval(this.state.morphInterval)
+  },
 })
 ImageQuilt.contextTypes = {
   router: React.PropTypes.func,
@@ -208,7 +289,7 @@ module.exports = ImageQuilt
 
 var QuiltPatch = React.createClass({
   render() {
-    var {art, width, customImageFn, ...other} = this.props
+    var {art, width, customImageFn, hPadding, ...other} = this.props
     var id = art.id
 
     var style = {
@@ -217,6 +298,7 @@ var QuiltPatch = React.createClass({
       overflow: 'hidden',
       width: width,
       height: width/art.aspect_ratio,
+      margin: `0 ${hPadding}`,
     }
 
     var imgStyle = {
@@ -227,6 +309,8 @@ var QuiltPatch = React.createClass({
       WebkitTransform: "translateY(-50%) translateX(-50%)",
       position: "absolute",
     }
+
+    false && console.info('QuiltPatch', {hPadding, imgStyle})
 
     var image = <Image
       art={art}
@@ -254,6 +338,7 @@ var QuiltPatch = React.createClass({
 
   // halt the click event if javascript is loaded
   // clicking triggers the right-hand preview, not the `<a>`
+  // TODO make this work with command click tho
   clickOrDontClick(event) {
     if(!this.context.universal) event.preventDefault()
   },

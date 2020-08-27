@@ -58,7 +58,7 @@ var SearchResults = React.createClass({
     setTimeout(() => window.clickedArtwork = null)
     var {smallViewport} = this.context
 
-    var isInspiredByMia = this.props.params.terms === '_exists_:"related:inspiredByMia"'
+    var isInspiredByMia = this.isInspiredByMia()
 
     var {view, preview: showPreview} = this.props.query
     var initialView = (view && view == 'list' || smallViewport || this.context.universal) ?
@@ -74,6 +74,14 @@ var SearchResults = React.createClass({
     }
   },
 
+  isInspiredByMia() {
+    var search = this.props.data.searchResults
+    var { query, filters } = search
+    var inspiredFragment = '_exists_:"related:inspiredByMia"'
+
+    return query && query.match(inspiredFragment) || filters && filters.match(inspiredFragment)
+  },
+
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.data.searchResults != nextProps.data.searchResults ||
       this.props.hits != nextProps.hits ||
@@ -83,7 +91,11 @@ var SearchResults = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    var focused = window.clickedArtwork || this.state && this.state.focusedResult || nextProps.hits[0]
+    var { showPreview } = this.state
+    var focused =
+      window.clickedArtwork
+      || this.state && this.state.focusedResult
+      || showPreview && nextProps.hits[0]
     this.focusResult(focused)
     if(window.clickedArtwork) window.clickedArtwork = null
   },
@@ -127,6 +139,7 @@ var SearchResults = React.createClass({
       },
       embed: this.props.embed,
       handleCancelEmbed: this.props.handleCancelEmbed,
+      isInspiredByMia: this.state.isInspiredByMia,
       ...this.props.summaryProps
     }
 
@@ -137,10 +150,16 @@ var SearchResults = React.createClass({
     const customImageFn = isInspiredByMia
       ? function(id) {
         const art = this.props.hits.find(({_id}) => id === _id)._source
-        const inspired = art['related:inspiredByMia'][0]
-        return inspired.image
+        const inspired = art['related:inspiredByMia']
+        return inspired && inspired[0].image
       }
       : undefined
+
+    console.info('search-results render', {
+      isInspiredByMia,
+      view: this.state.view.displayName,
+      props: this.props,
+    })
 
     return <div>
       <SearchSummary {...summaryProps}>
@@ -161,7 +180,8 @@ var SearchResults = React.createClass({
         smallViewport={this.context.smallViewport}
         showRelated={showFocusRelatedContent}
         customImage={customImageFn && customImageFn.bind(this)}
-        />
+        isInspiredByMia={isInspiredByMia}
+      />
     </div>
   },
 
@@ -226,6 +246,13 @@ var SearchResults = React.createClass({
     }
 
     if(this.props.query.size == this.state.loadingMore) this.setState({loadingMore: false})
+
+    if(this.props.params.terms !== prevProps.params.terms || this.props.params.splat !== prevProps.params.splat) {
+      this.setState({
+        isInspiredByMia: this.isInspiredByMia(),
+        focusedResult: null,
+      })
+    }
   },
 
   onHeightChange(newHeight) {

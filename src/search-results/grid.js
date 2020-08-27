@@ -25,13 +25,20 @@ var SearchResultsGrid = React.createClass({
   },
 
   render() {
-    var {hits, leftColumnWidth, focusedResult, smallViewport, focusHandler, ...focusedProps} = this.props
+    var {
+      hits, leftColumnWidth, focusedResult,
+      smallViewport, focusHandler, isInspiredByMia,
+      ...focusedProps
+    } = this.props
     var targetHeight = hits.length < 20 ? 250 : 150
 
     const customImageFn = this.props.customImage
 
+    const useQuiltCache = !isInspiredByMia
+    console.info('grid render', {isInspiredByMia, useQuiltCache})
+
     var quilts = splitArray(hits, 50).map((chunkedHits, index) => {
-      var chunkedQuilt = this.cachedQuilts[index] || <ImageQuilt
+      var chunkedQuilt = useQuiltCache && this.cachedQuilts[index] || <ImageQuilt
         artworks={chunkedHits}
         maxRows={1000}
         rowHeight={targetHeight}
@@ -39,7 +46,9 @@ var SearchResultsGrid = React.createClass({
         onClick={this.clickResult}
         key={index}
         customImageFn={customImageFn}
-        disableHover={true} />
+        isInspiredByMia={isInspiredByMia}
+        disableHover={true}
+      />
 
       if(chunkedHits.length >= 50) this.cachedQuilts[index] = chunkedQuilt
       return chunkedQuilt

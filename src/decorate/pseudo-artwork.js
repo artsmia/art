@@ -8,11 +8,12 @@ var InspiredByMiaDecorator = React.createClass({
     // TODO dedupe logic for 'lifting' artworks with Audio decorator
     const term = this.props.term[0]
     const hits = this.props.hits
+    const {isInspiredByMia} = this.props
 
     const hitsWithInspired =
       hits && hits.filter((hit) => hit._source['related:inspiredByMia'])
 
-    const showHitsWithInspired =
+    const showHitsWithInspired = !isInspiredByMia &&
       hitsWithInspired && hitsWithInspired.length < 51
 
     // END TODO
@@ -28,8 +29,9 @@ var InspiredByMiaDecorator = React.createClass({
           An art museum has walls, but inspiration is limitless.{' '}
           {!showHitsWithInspired || (
             <Link
-              to="searchResults"
-              params={{ terms: `_exists_:"related:inspiredByMia"` }}
+              to="filteredSearchResults"
+              params={{ terms: '*', splat: `_exists_:"related:inspiredByMia"` }}
+              query={{embed: 1}}
             >
               See all &rarr;
             </Link>

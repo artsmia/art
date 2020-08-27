@@ -117,7 +117,7 @@ var InspiredByMiaBanner = React.createClass({
     return <div>
       <p>
         <strong>Inspired By Mia</strong>:
-        This artwork is not part of Mia's collection, but was inspired by it. Our collection is here for you in person and online. An art museum has walls, but inspiration is limitless. <Link to='searchResults' params={{terms: `_exists_:"related:inspiredByMia"`}}>See all &rarr;</Link>
+        This artwork is not part of Mia's collection, but was inspired by it. Our collection is here for you in person and online. An art museum has walls, but inspiration is limitless. <Link to='filteredSearchResults' params={{terms: '*', splat: `_exists_:"related:inspiredByMia"`}} query={{embed: 1}}>See all &rarr;</Link>
       </p>
     </div>
   },

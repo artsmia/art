@@ -375,7 +375,7 @@ LinkBar.contextTypes = {
 
 var Figure = React.createClass({
   render() {
-    var {art, link, className, customImageFn, ...figureProps} = this.props
+    var {art, link, className, customImage, ...figureProps} = this.props
     var id = art.id
     var classes = classnames(className, {validImage: art.image === 'valid' && art.image_width > 0})
 
@@ -383,7 +383,7 @@ var Figure = React.createClass({
       itemScope itemType="https://schema.org/VisualArtwork">
       <link itemProp="url" href={`/art/${id}`} />
       <ConditionalLinkWrapper art={art} link={link}>
-        <ArtworkImage art={art} id={id} lazyLoad={false} className="artwork-image" customImage={customImageFn} />
+        <ArtworkImage art={art} id={id} lazyLoad={false} className="artwork-image" customImage={customImage} />
       </ConditionalLinkWrapper>
       <figcaption>
         {this.props.children}
