@@ -23,9 +23,9 @@ var AudioDecorator = React.createClass({
     const hits = this.props.hits
 
     const hitsWithAudio =
-      hits && hits.filter(hit => hit._source['related:audio-stops'])
+      hits && hits.filter((hit) => hit._source['related:audio-stops'])
 
-    const matchingAudioStop = hitsWithAudio.find(hit => {
+    const matchingAudioStop = hitsWithAudio.find((hit) => {
       const hitAudioNumber = hit._source['related:audio-stops'][0].number
       return hitAudioNumber === term || hitAudioNumber === `0{term}`
     })
@@ -49,7 +49,7 @@ var AudioDecorator = React.createClass({
     // into ES to `originalTerm | <0+originalTerm>`?
 
     const otherHitsWithAudio = hitsWithAudio.filter(
-      hit => hit !== matchingAudioStop
+      (hit) => hit !== matchingAudioStop
     )
 
     if (!hits || (!matchingAudioStop && !otherHitsWithAudio)) return <span />
@@ -110,7 +110,7 @@ const AudioStopLifter = React.createClass({
 
     if (!hit && hitsWithAudio.length === 0) return <span />
 
-    const playlist = [hit, ...hitsWithAudio].filter(id => id)
+    const playlist = [hit, ...hitsWithAudio].filter((id) => id)
 
     const audioCardProps = {
       handlePlayStart: this.handlePlayStart,
@@ -167,8 +167,8 @@ const AudioStopLifter = React.createClass({
 
   handlePlayEnd(endedStopArt) {
     const { hit, hitsWithAudio } = this.props
-    const playlist = [hit, ...hitsWithAudio].filter(id => id)
-    const endedIndex = playlist.findIndex(t => endedStopArt.id === t._id)
+    const playlist = [hit, ...hitsWithAudio].filter((id) => id)
+    const endedIndex = playlist.findIndex((t) => endedStopArt.id === t._id)
     const nextTrack = playlist[endedIndex + 1]
 
     this.setState({
@@ -262,9 +262,8 @@ const AudioCard = React.createClass({
           </div>
           <figcaption>
             <p>
-              <strong>{art.title}</strong>, <em>{artCreator}</em> #{
-                audio.number
-              }
+              <strong>{art.title}</strong>, <em>{artCreator}</em> #
+              {audio.number}
             </p>
           </figcaption>
           <audio
@@ -284,7 +283,7 @@ const AudioCard = React.createClass({
               )
               handlePlayEnd(art)
             }}
-            ref={audio => {
+            ref={(audio) => {
               this.audio = audio
             }}
           />
@@ -352,7 +351,7 @@ const AudioCard = React.createClass({
   playPause(evt) {
     const { audio } = this
     audio && audio.paused ? audio.play() : audio.pause()
-    this.setState(prevState => prevState)
+    this.setState((prevState) => prevState)
   },
 
   speakAudioIntroduction() {

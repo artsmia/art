@@ -30,7 +30,6 @@ Router.HistoryLocation.getCurrentPath = function getCurrentPath() {
 
 Router.run(routes, Router.HistoryLocation, (Handler, state) => {
   if(trackAnalytics) Fathom.trackPageview()
-  debugger
   window.privilegedClientIP = true
 
   var rehydratedData = window.__DATA__
