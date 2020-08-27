@@ -14,6 +14,7 @@ var AudioDecorator = require('./decorate/audio')
 var NumberDecorator = require('./decorate/number')
 var ArtistDecorator = require('./decorate/artist')
 var InfoDecorator = require('./decorate/info')
+var InspiredByMiaDecorator = require('./decorate/pseudo-artwork')
 
 var Decorate = React.createClass({
   render() {
@@ -35,7 +36,10 @@ var Decorate = React.createClass({
       <span style={{ color: 'white' }}>
         {decorations.map((d) => {
           const decoratorName = d && d.type.displayName
-          const shortName = decoratorName.replace('Decorator', '')
+          const humanName = decoratorName
+            .replace('Decorator', '')
+            .replace(/([A-Z])/g, (word) => ' ' + word.toUpperCase())
+            .trim()
           const activeOrNotStyle = showByName[decoratorName]
             ? { border: '1px solid gold' }
             : {}
@@ -45,7 +49,7 @@ var Decorate = React.createClass({
             <span />
           ) : (
             <button onClick={this.toggleDecoration} style={activeOrNotStyle}>
-              {shortName}
+              {humanName}
             </button>
           )
         })}
@@ -104,6 +108,7 @@ var Decorate = React.createClass({
     let audioDecoratorMatches
     let artistDecoratorMatches
     let infoDecoratorMatches
+    let pseudoDecoratorMatches
     // Always show audio decorator.
     // Otherwise, show the first decorator matched when viewed on a desktop,
     // and collapse bar by default when on mobile to conserve space.
@@ -114,9 +119,12 @@ var Decorate = React.createClass({
       artistDecoratorMatches =
         artistDecoratorMatches || decName === 'ArtistDecorator'
       infoDecoratorMatches = infoDecoratorMatches || decName === 'InfoDecorator'
+      pseudoDecoratorMatches =
+        pseudoDecoratorMatches || decName === 'InspiredByMiaDecorator'
 
       map[decName] =
         decName === 'InfoDecorator' ||
+        decName === 'InspiredByMiaDecorator' ||
         decName === 'ArtistDecorator' ||
         (decName === 'AudioDecorator' && !!query.match(/^\d+$/))
 
@@ -282,15 +290,43 @@ var DecorationFinder = (search, filters, props, removeFn) => {
     'black lives matter': (term) => (
       <InfoDecorator term={term} params={params} key={term} />
     ),
-    '.*': (term) =>
-      hits.filter((hit) => hit._source['related:audio-stops']).length > 0 && ( // [1]
-        <AudioDecorator
-          term={term}
-          params={params}
-          key={term + '-audio'}
-          {...props}
-        />
-      ),
+    '.*': (term) => {
+      // TODO how to handle multiple decorators keyed by one `term` match?
+      // Artist is above, and there are two I want to trigger from this block…
+      // …Should be a way to have one block
+      // in this array enable more than a single decorator?
+      // return multiple and `concat`/`flat` them?
+      let decorators = []
+
+      const hitsHaveInspiredContent =
+        hits.filter((hit) => hit._source['related:inspiredByMia']).length > 0
+      if (hitsHaveInspiredContent) {
+        decorators.push(
+          <InspiredByMiaDecorator
+            term={term}
+            params={params}
+            key={term + '-inspired'}
+            {...props}
+          />
+        )
+      }
+
+      const hitsHaveAudioContent =
+        hits.filter((hit) => hit._source['related:audio-stops']).length > 0
+      if (hitsHaveAudioContent) {
+        // [1]
+        decorators.push(
+          <AudioDecorator
+            term={term}
+            params={params}
+            key={term + '-audio'}
+            {...props}
+          />
+        )
+      }
+
+      return decorators
+    },
     // "^[0-9\.\*,\-a-zA-Z]+$": (term) => <NumberDecorator term={term} params={params} key={term + '-number'} {...props} />,
   }
 
@@ -314,5 +350,6 @@ var DecorationFinder = (search, filters, props, removeFn) => {
 
       return decorators
     })
+    .flat()
     .filter((component) => component)
 }

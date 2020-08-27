@@ -11,6 +11,7 @@ var searchLanguageMap = (queryText) => {
     '_exists_:"related:stories"': "artworks with related Mia Stories",
     '_exists_:"related:adopt-a-painting"': "Adopt-a-Painting",
     '_exists_:"related:visual-descriptions"': "has Verbal Description of Artwork",
+    '_exists_:"related:inspiredByMia"': 'Inspired By Mia',
     'room:G*': 'On View',
     'room:"Not on View"': 'Not on View',
     'image:valid': "Image Available",
