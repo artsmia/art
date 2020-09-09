@@ -146,8 +146,19 @@ var Artwork = React.createClass({
     </div>
 
     var showCropUI = this.state.showBiggie
+    var detailCropper = showCropUI && <div style={{marginTop: '1em'}}>
+      <IIIFCropper
+        captureViewRegion={this.captureViewRegion}
+        updateRegion={(args) => this.setState(args)}
+        currentRegion={this.state.iiifRegion}
+        cropSquare={this.state.cropSquare}
+        art={art}
+      />
+    </div>
+
     var info = <div className='info'>
       {this.props.children || <div>
+        {smallViewport && <div style={{margin: '-2em 0 1em 0'}}>{detailCropper}</div>}
         <ArtworkPreview art={art} showLink={this.props.showLink} showDuplicateDetails={true} />
         {this.state.has3d && <div className="images">
           <p onClick={this.toggle3d}>{this.state.show3d ? 'show high-res image' : 'show 3D model'}</p> 
@@ -165,15 +176,7 @@ var Artwork = React.createClass({
       </div>}
       {false && <ClosedBanner />}
 
-      {showCropUI && <div style={{marginTop: '1em'}}>
-        <IIIFCropper
-          captureViewRegion={this.captureViewRegion}
-          updateRegion={(args) => this.setState(args)}
-          currentRegion={this.state.iiifRegion}
-          cropSquare={this.state.cropSquare}
-          art={art}
-        />
-      </div>}
+      {smallViewport || detailCropper}
 
       {false && <a href={`?manifest=https://iiif.dx.artsmia.org/${this.state.id}.jpg/manifest.json`}>
         <img src="iiif-dragndrop-100px.png" alt="IIIF Drag-n-drop" /> IIIF!
@@ -658,14 +661,15 @@ var IIIFCropper = React.createClass({
     console.info('IIIFCropper render', {cropSquare})
 
     return <div>
-      <button onClick={getCropFromZoomer} disabled={isLoading} style={buttonStyles}>
-        📷 Save detail
-      </button> {' '}
-      {(!currentRegion || isSquare) || <button onClick={setSquareSmartCrop} style={buttonStyles}>
-        ✂️  Smart Crop
-      </button>}
       {iiifUrl && <details open={Boolean(currentRegion)}>
-        <summary>Show Detail</summary>
+        <summary>
+          <button onClick={getCropFromZoomer} disabled={isLoading} style={buttonStyles}>
+            📷 Save detail
+          </button> {' '}
+          {(!currentRegion || isSquare) || <button onClick={setSquareSmartCrop} style={buttonStyles}>
+            ✂️  Smart Crop
+          </button>}
+        </summary>
         <figure style={{margin: 0}}>
           <a href={iiifUrl} target="_blank">
             <img
