@@ -140,9 +140,10 @@ var Search = React.createClass({
     this.debouncedAutocomplete = debounce(this.autocomplete, 300)
   },
 
-  autocomplete(terms) {
-    if(terms == '') return
-    rest(`${SEARCH}/autofill/${decodeURIComponent(terms)}`)
+  autocomplete(rawTerms) {
+    if(rawTerms == '') return
+    const terms = decodeURIComponent(rawTerms.replace(/\/|%2F/g, ' '))
+    rest(`${SEARCH}/autofill/${terms}`)
     .then((r) => JSON.parse(r.entity) )
     .then(completions => this.setState({completions}))
   },
@@ -163,7 +164,8 @@ var Search = React.createClass({
   },
 
   search() {
-    var terms = this.normalizeTerms(this.state.terms)
+    var rawTerms = this.normalizeTerms(this.state.terms)
+    var terms = encodeURIComponent(rawTerms)
     var {facet, searchAll} = this.props
     if(terms === '') return
 
@@ -173,8 +175,8 @@ var Search = React.createClass({
 
     this.transitionTo(
       filters && !searchAll ? 'filteredSearchResults' : 'searchResults', {
-        terms: terms,
-        splat: filters
+        terms,
+        splat: filters,
       }
     )
   },
@@ -194,7 +196,11 @@ var Search = React.createClass({
       this.setState({terms: nextTerms})
     }
     const results = nextProps.results || nextProps.data && nextProps.data.searchResults
-    this.setState({results, hits: results && results.hits && results.hits.hits || []})
+
+    this.setState({
+      results,
+      hits: results && results.hits && results.hits.hits || []
+    })
   },
 
   componentDidUpdate(prevProps) {

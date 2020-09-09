@@ -43,8 +43,9 @@ var SearchResults = React.createClass({
         var size = query && query.size || 100
         var sort = query && query.sort
         const filters = params.splat
+        const properlyCodedTerms = params.terms.replace(/\/|%2F/g, ' ') // no forward slashes in search `/`
         const properlyCodedFilters = encodeURIComponent(decodeURIComponent(filters)) // yuck
-        let searchUrl = `${SEARCH}/${params.terms}?size=${size}`
+        let searchUrl = `${SEARCH}/${properlyCodedTerms}?size=${size}`
         if(sort) searchUrl += `&sort=${sort}`
         if(filters) searchUrl += `&filters=${properlyCodedFilters}`
         if(window && window.enteredViaMore || query && query.more) searchUrl += `&tag=more`
