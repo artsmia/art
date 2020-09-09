@@ -3,6 +3,7 @@ var {RouteHandler, Link} = require('react-router')
 var Helmet = require('react-helmet')
 var debounce = require('debounce')
 var {pathSatisfies} = require('ramda')
+var cx = require('classnames')
 
 var LiveSearch = require('./live-search')
 var GlobalNavigation = require('./navigation')
@@ -25,20 +26,28 @@ var surveyStyle = {
   overflow: 'scroll',
 }
 
+const isDev = process.env.NODE_ENV !== 'production'
+
 var App = React.createClass({
   render() {
     var logo = this.makeLogo()
     var canonicalURL = "https://collections.artsmia.org"+this.props.path
+    var classes = cx({
+      universal: this.props.universal,
+      isDev,
+      smallViewport: this.isSmallViewport(),
+    })
+    var showMenuOrSearch = this.state.showMenu || this.state.showSearch
 
     return (
-      <div className={this.props.universal && 'universal'}>
+      <div className={classes}>
         <style type="text/css">{`
           *:focus {
             outline: 1px dotted #212121;
             outline: -webkit-focus-ring-color auto 5px;
           }
         `}</style>
-        {this.state.hideHeader || <header style={{zIndex: this.state.showMenu || this.state.showSearch ? 444 : 1}}>
+        {this.state.hideHeader || <header style={{zIndex: showMenuOrSearch ? 444 : 1}} className={cx({open: showMenuOrSearch})}>
           {logo}
           {this.globalToolBar()}
         </header>}

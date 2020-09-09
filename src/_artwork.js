@@ -16,6 +16,13 @@ var rightsDescriptions = require('./rights-types.js')
 // TODO: move these into separate components at `src/artwork/`?
 // 
 
+// Regex to split the title out into two parts:
+// 1. the 'main' part - anything leading up to one of the special characters below,
+// and 2. the rest.
+// This allows the site to show the title with the main part bold and the rest normal,
+// and also cuts down on the length of the artwork slug.
+var titleSegmentDelimiter = /([^\(\)\[\],:;]+|with)/
+
 var ConditionalLinkWrapper = React.createClass({
   render() {
     var {art, link} = this.props
@@ -29,7 +36,11 @@ var ConditionalLinkWrapper = React.createClass({
 var Title = React.createClass({
   render() {
     var {art, link, highlights} = this.props
-    var title = <Markdown tag="span">{highlighter(art, highlights, "title")}</Markdown>
+    var _title = highlighter(art, highlights, "title")
+    var segmentedTitle = _title
+        .replace(titleSegmentDelimiter, (segment) => `<strong>${segment}</strong>`)
+
+    var title = <Markdown tag="span">{segmentedTitle}</Markdown>
     var title = <h1 itemProp="name">{title}, <span className="dated">{art.dated}</span></h1>
 
     return <ConditionalLinkWrapper {...this.props}>
@@ -397,7 +408,10 @@ Figure.contextTypes = {
 
 var slug = (art) => {
   var creator = Creator.getFacetAndValue(art)[1]
-  var string = [art.title.replace(/<[^ ]+?>/g, ''), creator && creator.split(';')[0]]
+  var string = [
+    art.title.replace(/<[^ ]+?>/g, '').match(titleSegmentDelimiter)[1],
+    creator && creator.split(';')[0]
+  ]
     .filter(e => e)
     .join(' ')
     .replace(/’|'/g, '')
