@@ -596,16 +596,8 @@ header{
 	left: 0;
 	bottom: 0;
 	right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
 }
-.highlight_content img {
-  height: 100%;
-  max-width: none !important;
-  display: block;
-}
+
 /* ===== LANDING PAGE STYLES ===== */
 .landingPageBody, .departmentPage, .curatorProfile {
   display: inline-block;

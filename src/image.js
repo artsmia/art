@@ -59,10 +59,31 @@ const Image = React.createClass({
 
     if(image_url) return image_url
 
+    // This watches out for the image to fail ONCE, then swaps in 
+    // the 400px IIIF thumbnail
     // TODO: cascade from customImage -> S3 -> api.artsmia.org?
-    return this.state.skipCDN ?
+    const binaryFailImageUrl = this.state.skipCDN ?
       `https://iiif.dx.artsmia.org/${id}.jpg/full/400,/0/default.jpg` :
       customImage ? customImage(id) : imageCDN(id, size || showLink ? undefined : 800)
+
+    // do this by tracking when a URL fails to load in this.state.failedLoads `[]`
+    // (variable might need a re-name)
+    // and checking that state against the image to be loaded here.
+    // Options:
+    // customImage by function
+    // S3 thumbnail
+    // IIIF thumbnail
+    // non-existent image that will trigger the `error` state
+    const imageCandidates = [
+      customImage ? customImage(id) : null,
+      imageCDN(id, size || showLink ? undefined : 800),
+      // `https://iiif.dx.artsmia.org/${id}.jpg/-1,-1,800,800/800,/0/default.jpg`,
+      `https://iiif.dx.artsmia.org/${id}.jpg/full/800,/0/default.jpg`,
+      'http://0.api.artsmia.org/null.jpg'
+    ].filter(url => url)
+    const firstUnFailedImageUrl = imageCandidates.find(url => (this.state.failedLoads || []).indexOf(url) < 0)
+
+    return firstUnFailedImageUrl
   },
 
   componentWillReceiveProps(nextProps) {
@@ -77,9 +98,14 @@ const Image = React.createClass({
   // yet. Fall back and load it from the API
   // If it also won't load from there, we've got problems
   handleError(event) {
-    if(!this.state.skipCDN) {
-      this.setState({skipCDN: true})
-    } else { // problems! the image isn't working on the CDN or via the api.
+    const { src } = event.target
+    const failedSoFar = this.state.failedLoads || []
+    const failedLoads = [...failedSoFar, src]
+
+    this.setState({failedLoads})
+
+    // problems! the image isn't working
+    if(src === 'http://0.api.artsmia.org/null.jpg') {
       this.setState({loaded: true, error: true})
       this.props.art.image = 'invalid' 
       this.props.onImageInvalidation && this.props.onImageInvalidation()
