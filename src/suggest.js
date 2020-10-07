@@ -5,6 +5,7 @@ var Suggest = React.createClass({
   render() {
     var {search} = this.props
     var suggestions = Array.from(this.getSuggestions())
+    .map(terms => terms.replace(/^Painter: /, '')) // remove `Painter: `. TODO expand to other constituent roles?
     .slice(0, 5)
 
     if(suggestions.length == 0) return <span className="noSuggestions"></span>

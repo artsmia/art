@@ -165,7 +165,7 @@ var Search = React.createClass({
 
   search() {
     var rawTerms = this.normalizeTerms(this.state.terms)
-    var terms = encodeURIComponent(rawTerms)
+    var terms = encodeURIComponent(rawTerms).replace(/%3A/g, ':')
     var {facet, searchAll} = this.props
     if(terms === '') return
 
