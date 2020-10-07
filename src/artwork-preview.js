@@ -36,7 +36,7 @@ var ArtworkPreview = React.createClass({
     </Link> : ''
 
     return (
-      <Artwork.Figure art={art} className='objects-focus' style={style} link={showLink}>
+      <Artwork.Figure art={art} className='objects-focus' style={style} link={showLink} ignoreImageStyle={true}>
         <div className="art-details preview-header">
           {art.deaccessioned == 'true' && <DeaccessionedBanner art={art} />}
           {art.accession_number.match(/^L/i) && <LoanBanner art={art} />}
