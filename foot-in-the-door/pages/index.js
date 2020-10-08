@@ -2,8 +2,6 @@
 import Head from 'next/head'
 import Link from 'next/Link'
 
-import styles from '../styles/Home.module.css'
-
 function Home() {
   return (
     <div className="px-16 py-5 text-gray-900">
