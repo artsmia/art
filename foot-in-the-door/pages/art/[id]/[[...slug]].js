@@ -21,7 +21,7 @@ function Art(props) {
 
   return (
     <Layout>
-      <main className="flex align-start">
+      <main className="md:flex md:align-start">
         <img
           src={getImageSrc(artwork)}
           alt={description}
@@ -40,7 +40,7 @@ function Art(props) {
             <p>Keywords: {keywords}</p>
           </div>
 
-          <div className="border-t-2 self-end">
+          <div className="border-t-2 mt-4 self-end">
             <p>Share: [mail] [twitter] [facebook]</p>
             <p className="bg-gray-300 px-4 py-2 mt-4">
               Keep Mia open, free, and accessible to all virtually and in-person

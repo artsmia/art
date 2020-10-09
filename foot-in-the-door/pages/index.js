@@ -6,10 +6,14 @@ import Layout from '../components/Layout'
 function Home() {
   return (
     <Layout>
-      <main className="flex">
-        <div className="w-1/2">
-          <h1 className="text-5xl font-black">Foot in the Door 5</h1>
-          <h2 className="text-3xl font-light -mt-4">The Virtual Exhibition</h2>
+      <main className="md:flex">
+        <div className="md:w-1/2">
+          <h1 className="text-4xl md:text-5xl font-black">
+            Foot in the Door 5
+          </h1>
+          <h2 className="text-3xl md:text-3xl font-light -mt-4">
+            The Virtual Exhibition
+          </h2>
           <p className="py-2">
             Held once every 10 years, “Foot in the Door” is an open exhibition
             for all Minnesota artists. Now marking its fourth decade, this
