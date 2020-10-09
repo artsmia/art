@@ -1,7 +1,13 @@
 /** @format */
 import Layout from '../../../components/Layout'
+import LeftRightNav from '../../../components/LeftRightNav'
 import RoomGrid from '../../../components/RoomGrid'
-import { fetchById, getImageSrc, getSearchResults } from '../../../util'
+import {
+  classifications,
+  fetchById,
+  getImageSrc,
+  getSearchResults,
+} from '../../../util'
 
 function Art(props) {
   const {
@@ -59,6 +65,16 @@ function Art(props) {
         hits={classificationResults}
         perPage={30}
       />
+
+      <aside>
+        <LeftRightNav
+          classifications={classifications}
+          classification={artwork.classification}
+          className="flex justify-between mt-16"
+        >
+          <p className="bg-gray-200 p-4">Membership/Donate callout goes here</p>
+        </LeftRightNav>
+      </aside>
     </Layout>
   )
 }

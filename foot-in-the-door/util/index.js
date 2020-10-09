@@ -27,3 +27,14 @@ export async function fetchById(id) {
 
   return artwork
 }
+
+export const classifications = [
+  'Ceramics',
+  'Paintings',
+  'Photography',
+  'Drawings',
+  'Prints',
+  'Sculpture',
+  'Textiles',
+  'Mixed Media',
+]

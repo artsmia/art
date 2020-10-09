@@ -1,9 +1,8 @@
 /** @format */
-import Link from 'next/link'
-
 import Layout from '../../components/Layout'
+import LeftRightNav from '../../components/LeftRightNav'
 import RoomGrid from '../../components/RoomGrid'
-import { getSearchResults } from '../../util'
+import { classifications, getSearchResults } from '../../util'
 
 function Room(props) {
   const { classification, results } = props // slug
@@ -17,11 +16,6 @@ function Room(props) {
   //   return <div>Loading...</div>
   // }
 
-  const _cls = classifications.map((c) => c.toLowerCase())
-  const roomIndex = _cls.indexOf(classification)
-  const prevRoom = _cls[(roomIndex - 1) % _cls.length] || 'mixed media' // how does math work again?! wrapping around would be better than `undefined || const`
-  const nextRoom = _cls[(roomIndex + 1) % _cls.length]
-
   return (
     <Layout>
       <main>
@@ -29,20 +23,26 @@ function Room(props) {
           {classification}
         </h1>
         <p className="mt-4 text-center">…</p>
-        <nav className="flex justify-between mb-64">
-          <Link href={`/room/${prevRoom.replace(' ', '-')}`}>
-            <a className="uppercase">&larr; {prevRoom}</a>
-          </Link>
-          <Link href={`/room/${nextRoom.replace(' ', '-')}`}>
-            <a className="uppercase">{nextRoom} &rarr;</a>
-          </Link>
-        </nav>
+        <LeftRightNav
+          classifications={classifications}
+          classification={classification}
+        />
         <RoomGrid
           classification={classification}
           hits={hits}
           perPage={perPage}
+          className="mt-64"
         />
       </main>
+      <aside>
+        <LeftRightNav
+          classifications={classifications}
+          classification={classification}
+          className="flex justify-between mt-16"
+        >
+          <p className="bg-gray-200 p-4">Membership/Donate callout goes here</p>
+        </LeftRightNav>
+      </aside>
     </Layout>
   )
 }
@@ -64,17 +64,6 @@ export async function getStaticProps({ params }) {
     revalidate: 600,
   }
 }
-
-const classifications = [
-  'Ceramics',
-  'Paintings',
-  'Photography',
-  'Drawings',
-  'Prints',
-  'Sculpture',
-  'Textiles',
-  'Mixed Media',
-]
 
 export async function getStaticPaths() {
   const manifest = {
