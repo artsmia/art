@@ -43,14 +43,14 @@ function Art(props) {
             <p>{dimension}</p>
             <p>( color )</p>
             <p className="py-4">{description}</p>
-            <p>Keywords: {keywords}</p>
+            {keywords && <p>Keywords: {keywords}</p>}
           </div>
 
           <div className="border-t-2 mt-4 self-end">
             <p>Share: [mail] [twitter] [facebook]</p>
             <p className="bg-gray-300 px-4 py-2 mt-4">
               Keep Mia open, free, and accessible to all virtually and in-person
-              <a href="https://ticket.artsmia.org/">
+              <a href="https://ticket.artsmia.org/catalog/support-mia">
                 by becoming a member or donating
               </a>
               today. We are always grateful to our members.

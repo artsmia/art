@@ -41,6 +41,12 @@ function Home() {
           </div>
         </Link>
       </main>
+      <aside className="flex">
+        <div className="bg-gray-100 w-1/2 p-4 m-4">VIDEO placeholder</div>
+        <div className="bg-gray-100 w-1/2 p-4 m-4">
+          EVENT LISTING PLACEHOLDER
+        </div>
+      </aside>
     </Layout>
   )
 }
