@@ -1,11 +1,14 @@
 /** @format */
 
-export function getImageSrc(artworkData) {
+export function getImageSrc(artworkData, thumbnail = true) {
   const id = artworkData.id
   const imageFilename = artworkData.image
+  const thumb = 'tn_' + imageFilename.replace(/jpeg|png/i, 'jpg')
   const bucket = Math.ceil(Math.max(id - 1, 1) / 135)
 
-  return `/foot-in-the-door/images/fitd/${bucket}/${imageFilename}`
+  return `/foot-in-the-door/images/fitd/${bucket}/${
+    thumbnail ? thumb : imageFilename
+  }`
 }
 
 export async function getSearchResults(term) {
