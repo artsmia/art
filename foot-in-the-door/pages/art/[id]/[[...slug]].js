@@ -1,4 +1,7 @@
 /** @format */
+import { Fragment } from 'react'
+import Link from 'next/link'
+
 import Layout from '../../../components/Layout'
 import LeftRightNav from '../../../components/LeftRightNav'
 import RoomGrid from '../../../components/RoomGrid'
@@ -18,12 +21,17 @@ function Art(props) {
       medium,
       dated,
       description,
-      keywords,
+      keywords: keywordsString,
       dimension,
       classification,
     },
     classificationResults,
   } = props
+
+  const keywords = (keywordsString.replace(/\s\s+/, ' ').indexOf(',') > -1
+    ? keywordsString.split(/,\s?/g)
+    : keywordsString.split(' ')
+  ).filter((word) => !word.match(/^\s+$/))
 
   return (
     <Layout>
@@ -43,7 +51,19 @@ function Art(props) {
             <p>{dimension}</p>
             <p>( color )</p>
             <p className="py-4">{description}</p>
-            {keywords && <p>Keywords: {keywords}</p>}
+            {keywordsString && (
+              <p>
+                Keywords:{' '}
+                {keywords.map((word, index) => (
+                  <Fragment key={word}>
+                    <Link href={`/search/keywords:${word}`} key={word}>
+                      <a className="pl-1">{word}</a>
+                    </Link>
+                    {index === keywords.length - 1 ? '' : ','}
+                  </Fragment>
+                ))}
+              </p>
+            )}
           </div>
 
           <div className="border-t-2 mt-4 self-end">
