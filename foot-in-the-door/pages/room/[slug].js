@@ -8,7 +8,7 @@ function Room(props) {
   const { classification, results } = props // slug
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 
-  const perPage = 13 // how many items to show per page
+  const perPage = 33 // how many items to show per page
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running

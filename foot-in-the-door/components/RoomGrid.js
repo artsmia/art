@@ -16,11 +16,8 @@ function RoomGrid(props) {
           const { id, title, artist } = _hit._source
 
           return (
-            <figure className="group" key={id}>
-              <img
-                src={getImageSrc(_hit._source)}
-                className="flex-1 h-64 p-1"
-              />
+            <figure className="group flex-grow" key={id}>
+              <img src={getImageSrc(_hit._source)} className="h-64 p-1" />
               <figcaption className="hidden group-hover:block max-w-full">
                 <h2>{title}</h2>
                 <h3>{artist}</h3>
