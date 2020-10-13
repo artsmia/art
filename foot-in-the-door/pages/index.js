@@ -2,6 +2,7 @@
 import Link from 'next/link'
 
 import Layout from '../components/Layout'
+import SearchInput from '../components/SearchInput'
 
 function Home() {
   return (
@@ -29,11 +30,7 @@ function Home() {
             accommodate the huge number of participating artists and visitors.
           </p>
 
-          <input
-            type="search"
-            placeholder="Search for artist, medium, keyword, color, etc"
-            className="p-4 w-full"
-          />
+          <SearchInput />
         </div>
         <Link href="/room/ceramics">
           <div className="bg-gray-100 w-1/2 p-4 m-4">
