@@ -3,18 +3,19 @@
 export function getImageSrc(artworkData, thumbnail = true) {
   const id = artworkData.id
   const imageFilename = artworkData.image
-  const thumb = 'tn_' + imageFilename.replace(/jpeg|png/i, 'jpg')
+  const thumb = 'tn_' + imageFilename.replace(/jpeg|png|JPG/i, 'jpg')
   const bucket = Math.ceil(Math.max(id - 1, 1) / 135)
+  const image = `${bucket}/${imageFilename}`
 
-  return `/foot-in-the-door/images/fitd/${bucket}/${
-    thumbnail ? thumb : imageFilename
+  return `https://foot-in-the-door-2020.s3.amazonaws.com/800/${
+    thumbnail ? thumb : image
   }`
 }
 
 export async function getSearchResults(term) {
-  // const searchEndpoint = (term) => `http://localhost:4680/${term}`
+  // const searchEndpoint = (term) => `https://search.artsmia.org/${term}`
   const randomEndpoint = (term) =>
-    `http://localhost:4680/random/art?q=${term}&size=30`
+    `https://search.artsmia.org/random/art?q=${term}&size=30&fitd=1`
   const res = await fetch(randomEndpoint(term))
   const results = await res.json()
 
@@ -22,7 +23,7 @@ export async function getSearchResults(term) {
 }
 
 export async function fetchById(id) {
-  const res = await fetch(`http://localhost:4680/id/${id}`)
+  const res = await fetch(`https://search.artsmia.org/id/${id}?fitd=1`)
   const artwork = await res.json()
 
   return artwork
