@@ -17,14 +17,15 @@ function RoomGrid(props) {
 
           return (
             <figure className="group flex-grow" key={id}>
-              <img src={getImageSrc(_hit._source)} className="h-64 p-1" />
-              <figcaption className="hidden group-hover:block max-w-full">
-                <h2>{title}</h2>
-                <h3>{artist}</h3>
-                <Link href={`/art/${id}`}>
-                  <a>&rarr;</a>
-                </Link>
-              </figcaption>
+              <Link href={`/art/${id}`}>
+                <a>
+                  <img src={getImageSrc(_hit._source)} className="h-64 p-1" />
+                  <figcaption className="hidden group-hover:block max-w-full">
+                    <h2>{title}</h2>
+                    <h3>{artist}</h3>
+                  </figcaption>
+                </a>
+              </Link>
             </figure>
           )
         })}
