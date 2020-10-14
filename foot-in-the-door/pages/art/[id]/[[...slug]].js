@@ -69,7 +69,14 @@ function Art(props) {
 
           <div className="border-t-2 mt-4 self-end">
             <p>
-              <span className="pr-1" onClick={() => likeArtwork(artwork.id)}>
+              {/* TODO use a checkbox instead? */}
+              <span
+                className="pr-1"
+                onClick={() => likeArtwork(artwork.id)}
+                onKeyPress={() => likeArtwork(artwork.id)}
+                role="button"
+                tabIndex={0}
+              >
                 [like]
               </span>
               Share: [mail] [twitter] [facebook]

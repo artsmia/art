@@ -26,12 +26,13 @@ function NavBar() {
         <Link href="/">
           <a>
             <img
+              alt="Minneapolis Institute of Art Logo"
               src="https://styleguide.staging.artsmia.org/src/images/mia-wordmark.svg"
               className="h-6"
             />
           </a>
         </Link>
-        <a href="#">❮ Exit Exhibition</a>
+        <a href="/foot-in-the-door">❮ Exit Exhibition</a>
       </div>
     </nav>
   )

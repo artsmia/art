@@ -13,13 +13,17 @@ function RoomGrid(props) {
       </p>
       <div className="flex flex-wrap">
         {hits.slice(0, perPage).map((_hit) => {
-          const { id, title, artist } = _hit._source
+          const { id, title, artist, description } = _hit._source
 
           return (
             <figure className="group flex-grow" key={id}>
               <Link href={`/art/${id}`}>
                 <a>
-                  <img src={getImageSrc(_hit._source)} className="h-64 p-1" />
+                  <img
+                    src={getImageSrc(_hit._source)}
+                    className="h-64 p-1"
+                    alt={description}
+                  />
                   <figcaption className="hidden group-hover:block max-w-full">
                     <h2>{title}</h2>
                     <h3>{artist}</h3>
