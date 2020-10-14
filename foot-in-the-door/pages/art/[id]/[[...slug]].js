@@ -10,6 +10,7 @@ import {
   fetchById,
   getImageSrc,
   getSearchResults,
+  likeArtwork,
 } from '../../../util'
 
 function Art(props) {
@@ -67,7 +68,12 @@ function Art(props) {
           </div>
 
           <div className="border-t-2 mt-4 self-end">
-            <p>Share: [mail] [twitter] [facebook]</p>
+            <p>
+              <span className="pr-1" onClick={() => likeArtwork(artwork.id)}>
+                [like]
+              </span>
+              Share: [mail] [twitter] [facebook]
+            </p>
             <p className="bg-gray-300 px-4 py-2 mt-4">
               Keep Mia open, free, and accessible to all virtually and in-person
               <a href="https://ticket.artsmia.org/catalog/support-mia">
