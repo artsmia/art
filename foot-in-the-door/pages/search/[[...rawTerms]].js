@@ -28,10 +28,11 @@ function Search(props) {
 
 export default Search
 
-// TODO convert to getStaticProps + getStaticPaths
+// TODO convert to getStaticProps + getStaticPaths?
+// Doesn't really make sensee for search as much as it does for the predefined rooms
 export async function getServerSideProps({ params }) {
   const { rawTerms } = params
-  const searchResults = await getSearchResults(rawTerms)
+  const searchResults = await getSearchResults(rawTerms, { size: 55 })
 
   return {
     props: {

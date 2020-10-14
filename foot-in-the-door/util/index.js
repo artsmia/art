@@ -12,10 +12,11 @@ export function getImageSrc(artworkData, thumbnail = true) {
   }`
 }
 
-export async function getSearchResults(term) {
+export async function getSearchResults(term, options = {}) {
+  const { size } = options
   // const searchEndpoint = (term) => `https://search.artsmia.org/${term}`
   const randomEndpoint = (term) =>
-    `https://search.artsmia.org/random/art?q=${term}&size=30&fitd=1`
+    `https://search.artsmia.org/random/art?q=${term}&size=${size || 30}&fitd=1`
   const res = await fetch(randomEndpoint(term))
   const results = await res.json()
 
