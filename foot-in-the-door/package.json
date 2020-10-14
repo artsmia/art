@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:prettier": "prettier --check {pages,components,util}/**.js",
+    "lint:eslint": "eslint {pages,components,util}/**.js"
   },
   "dependencies": {
     "next": "9.5.4",
@@ -20,6 +23,7 @@
     "eslint": "^7.10.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.3",
+    "husky": "^4.3.0",
     "prettier": "^2.1.2"
   }
 }

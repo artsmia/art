@@ -16,5 +16,10 @@
       "specialLink": [ "hrefLeft", "hrefRight" ],
       "aspects": [ "invalidHref", "preferButton" ]
     }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
