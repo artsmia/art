@@ -96,6 +96,7 @@ function Art(props) {
         className="mt-6"
         classification={classification}
         hits={classificationResults}
+        focused={artwork}
         perPage={30}
       />
 

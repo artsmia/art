@@ -4,7 +4,13 @@ import Link from 'next/link'
 import { getImageSrc } from '../util'
 
 function RoomGrid(props) {
-  const { hits, perPage, classification, ...containerProps } = props
+  const { hits, focused, perPage, classification, ...containerProps } = props
+
+  const artworks = hits
+    // When there is a 'focused' artwork, remove it from the grid so it
+    // isn't shown both at the top of the page and in the 'see more' results.
+    .filter((art) => art !== focused)
+    .slice(0, perPage)
 
   return (
     <section {...containerProps}>
@@ -12,15 +18,18 @@ function RoomGrid(props) {
         Scroll to enter <strong>{classification}</strong> wing
       </p>
       <div className="flex flex-wrap">
-        {hits.slice(0, perPage).map((_hit) => {
-          const { id, title, artist, description } = _hit._source
+        {artworks.map((art) => {
+          const {
+            _source: source,
+            _source: { id, title, artist, description },
+          } = art
 
           return (
             <figure className="group flex-grow" key={id}>
               <Link href={`/art/${id}`}>
                 <a>
                   <img
-                    src={getImageSrc(_hit._source)}
+                    src={getImageSrc(source)}
                     className="h-64 p-1"
                     alt={description}
                   />
