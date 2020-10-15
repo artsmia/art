@@ -19,6 +19,13 @@ var ArtworkPreview = React.createClass({
     var id = isNaN(art.id) 
       ? art.id.replace('http://api.artsmia.org/objects/', '')
       : art.id
+
+    // Modify `text` of certain artworks to insert newlines
+    // that the API chomps out
+    var sideABRegex = /(SIDE [AB]:)/g
+    if(art.text && art.text.match(sideABRegex)) {
+      art.text = art.text.replace(sideABRegex, '\n\n$1')
+    }
     var highlight = highlighter.bind(null, art, highlights)
 
     var showHighlights = highlights && <div className='artwork-detail' style={{marginTop: '1em'}}>
