@@ -5,7 +5,7 @@ import SearchInput from '../../components/SearchInput'
 import { getSearchResults } from '../../util'
 
 function Search(props) {
-  const { searchResults: results, rawTerms } = props
+  const { size, searchResults: results, rawTerms } = props
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 
   return (
@@ -18,7 +18,7 @@ function Search(props) {
         <RoomGrid
           classification={`"${rawTerms}"`}
           hits={hits}
-          perPage={100}
+          perPage={size || 100}
           className="mt-32"
         />
       </main>
@@ -30,14 +30,21 @@ export default Search
 
 // TODO convert to getStaticProps + getStaticPaths?
 // Doesn't really make sensee for search as much as it does for the predefined rooms
-export async function getServerSideProps({ params }) {
-  const { rawTerms } = params
-  const searchResults = await getSearchResults(rawTerms, { size: 55 })
+export async function getServerSideProps(context) {
+  const {
+    params: { rawTerms },
+    query: { size },
+  } = context
+  const searchResults = await getSearchResults(rawTerms, {
+    size: size || 55,
+    useNormalSearch: true,
+  })
 
   return {
     props: {
       rawTerms,
       searchResults,
+      size: size || null,
     },
   }
 }
