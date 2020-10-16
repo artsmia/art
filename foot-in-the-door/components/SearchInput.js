@@ -20,10 +20,8 @@ function SearchInput(props) {
           const {
             target: { value: terms },
           } = event
-          console.info('search onKeyPress', { terms })
 
           if (event.key === 'Enter') {
-            console.info('search onEnter', { terms })
             router.push(`/search/${terms}`)
           }
         }}
