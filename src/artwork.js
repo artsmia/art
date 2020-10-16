@@ -151,7 +151,7 @@ var Artwork = React.createClass({
         captureViewRegion={this.captureViewRegion}
         updateRegion={(args) => this.setState(args)}
         currentRegion={this.state.iiifRegion}
-        cropSquare={this.state.cropSquare}
+        cropAspectRatio={this.state.cropAspectRatio}
         art={art}
       />
     </div>
@@ -462,7 +462,7 @@ var Artwork = React.createClass({
   captureViewRegion() {
     if(!this.map) return
 
-    let { cropSquare } = this.state
+    let { cropAspectRatio } = this.state
 
     let map = this.map
     let iiifLayer = this.tiles
@@ -480,31 +480,39 @@ var Artwork = React.createClass({
     let w = Math.floor((max.x - min.x) * xRatio)
     let h = Math.floor((min.y - max.y) * yRatio)
     /**
-     * when `cropSquare` is set, adapt the rectangular region to be square
-     * Set `w` and `h` to the same value by taking `Math.min`
-     * Then compute half the difference between width and height (`whDelta`),
-     * and depending on the aspect ratio of the image, adjust x0 or y0
-     * by whDelta so the cropped region is centered the same as the browser.
+     * To constrain the crop to a specific aspect ratio:
+     *
+     *  square = 1/1, and 3:2 (which is actually 2/3? Confuses me, but it's working)
+     *
+     * Adapt the rectangular region to be the desired aspect ratio by
+     * 'shaving' it down to fit. To get a taller region down to 3:2, 
+     * take the width as `3`, then remove a strip from the top and bottom
+     * so that the height ends up as `2`. This weighs the 3:2 crop to the center.
+     * TODO adding an option to weigh to the edge of the image might be nice
      */
-    let whDelta = Math.round((w - h) / 2)
+    let deltaFactor = (cropAspectRatio || 1)*2
+    let whDelta = Math.round((w - h) / deltaFactor)
     let adjustedX0 = w > h ? x0 + whDelta : x0
     let adjustedY0 = h >= w ? y0 - whDelta : y0
     let whMin = Math.min(w, h)
-    let region = !cropSquare
+    let adjustedW = whMin
+    let adjustedH = Math.round(whMin*cropAspectRatio)
+    let constrainToAspectRatio = Boolean(cropAspectRatio)
+    let region = !constrainToAspectRatio
       ? [ x0, y0, w, h ]
       : [
         adjustedX0,
         adjustedY0,
-        whMin,
-        whMin,
+        adjustedW,
+        adjustedH,
       ]
 
-    if(cropSquare) {
+    if(constrainToAspectRatio) {
       // Indicate where the square crop is coming from with a polygon overlay
       // that's removed after a second or two
       let detailHighlightLayer = L.rectangle([
         L.point(adjustedX0, adjustedY0), // top left
-        L.point(adjustedX0+whMin, adjustedY0+whMin), // bottom right
+        L.point(adjustedX0+adjustedW, adjustedY0+adjustedH), // bottom right
       ].map(point => map.unproject(point, zoom)))
       setTimeout(() => detailHighlightLayer.addTo(map), 31)
       setTimeout(() => detailHighlightLayer.remove(), 3579)
@@ -632,14 +640,14 @@ var IIIFCropper = React.createClass({
   },
 
   render() {
-    const { art, captureViewRegion, updateRegion, currentRegion, cropSquare } = this.props
+    const { art, captureViewRegion, updateRegion, currentRegion, cropAspectRatio } = this.props
     const { isLoading, squareSmartCrop, cropSize } = this.state
     const isSquare = currentRegion === squareSmartCrop
     const getCropFromZoomer = () => {
       this.setState({cropSize: 800})
       captureViewRegion()
     }
-    const setSquareSmartCrop = () => updateRegion({iiifRegion: squareSmartCrop, cropSquare: true})
+    const setSquareSmartCrop = () => updateRegion({iiifRegion: squareSmartCrop, cropAspectRatio: 1})
 
     const buttonStyles = {
       color: 'white',
@@ -657,8 +665,6 @@ var IIIFCropper = React.createClass({
     const iiifComponents = rawIIIFUrl.match(/.org\/(?<id>[0-9]+).jpg\/(?<region>[^/]+)\/(?<size>[^/]+)\/0\/default.jpg/)
     const iiifSize = iiifComponents.groups.size
     const iiifUrl = rawIIIFUrl.replace(iiifSize, cropSize === 'full' ? cropSize : `${cropSize},`)
-
-    console.info('IIIFCropper render', {cropSquare})
 
     return <div>
       {iiifUrl && <details open={Boolean(currentRegion)}>
@@ -689,11 +695,23 @@ var IIIFCropper = React.createClass({
               })}</p>
               <label style={{display: 'block'}}>
                 <input
-                  type="checkbox"
-                  value={Boolean(cropSquare)}
-                  checked={Boolean(cropSquare)}
-                  onClick={() => updateRegion({cropSquare: !cropSquare})}
+                  name="cropAspectRatio"
+                  type="radio"
+                  checked={cropAspectRatio !== 1 && cropAspectRatio !== 2/3}
+                  onClick={() => updateRegion({cropAspectRatio: null})}
+                /> no aspect ratio
+                <input
+                  name="cropAspectRatio"
+                  type="radio"
+                  checked={cropAspectRatio === 1}
+                  onClick={() => updateRegion({cropAspectRatio: 1})}
                 /> square
+                <input
+                  name="cropAspectRatio"
+                  type="radio"
+                  checked={cropAspectRatio === 2/3}
+                  onClick={() => updateRegion({cropAspectRatio: 2/3})}
+                /> 3:2
               </label>
             </div>}
             <p>Zoom in on the left to the detail you'd like to save. Click 'Save detail' and wait until the image updates. Right click the image to 'save image as' or copy link, or click the image to open in a new tab.</p>
@@ -705,7 +723,6 @@ var IIIFCropper = React.createClass({
 
   componentWillUpdate(nextProps, nextState) {
     if (this.props.currentRegion !== nextProps.currentRegion) {
-      console.info('IIIFCropper box changed')
       this.setState({isLoading: true})
     }
   }
