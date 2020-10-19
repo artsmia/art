@@ -78,11 +78,19 @@ function RoomGrid(props) {
 
 export default RoomGrid
 
-function chunkArray(items, size = 3) {
+export function chunkArray(items, size = 3) {
+  const increaseSizeForFinalChunks = true
   let chunks = [items.splice(0, size)]
+  let _size
 
   while (items.length) {
-    chunks.push(items.splice(0, size))
+    const isFinalRowOrTwo = items.length < size * 2
+    _size =
+      increaseSizeForFinalChunks && isFinalRowOrTwo
+        ? Math.max(2, size + 1)
+        : size
+
+    chunks.push(items.splice(0, _size))
   }
 
   return chunks
