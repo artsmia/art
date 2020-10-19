@@ -8,7 +8,7 @@ import {
   unstable_GridCell as GridCell,
 } from 'reakit/Grid'
 
-import { getImageSrc } from '../util'
+import { chunkArray, getImageSrc } from '../util'
 
 function RoomGrid(props) {
   const { hits, focused, perPage, classification, ...containerProps } = props
@@ -77,35 +77,6 @@ function RoomGrid(props) {
 }
 
 export default RoomGrid
-
-export function chunkArray(items, size = 3) {
-  const increaseSizeForFinalChunks = true
-  let chunks = [items.splice(0, size)]
-  let _size = size
-
-  while (items.length) {
-    const isPenultimateRow = items.length <= size * 2 && items.length > size
-    const isUltimateRow = items.length <= size
-    const isFinalRowOrTwo = isPenultimateRow || isUltimateRow
-
-    if (increaseSizeForFinalChunks && isFinalRowOrTwo) {
-      // const delta = items.length % size
-      _size = items.length % size === 0 ? size : size + 1
-
-      // if the last row will have > 3 items, don't adjust this row
-      if (isPenultimateRow && items.length - size > 3) _size = size
-
-      // don't leave a single item in the last row, go back to the default
-      // size.
-      const adjustedSizeLeavesOrphanRow = items.length % _size === 1
-      if (isFinalRowOrTwo && adjustedSizeLeavesOrphanRow) _size = size - 1
-    }
-
-    chunks.push(items.splice(0, Math.max(2, _size)))
-  }
-
-  return chunks
-}
 
 // https://usehooks.com/useWindowSize/
 function useWindowSize() {

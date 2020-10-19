@@ -1,5 +1,5 @@
 /** @format */
-import { chunkArray } from '../RoomGrid'
+import { chunkArray } from '../'
 
 function buildIndexedArray(size) {
   return new Array(size).fill('').map((_, index) => index + 1)
@@ -51,16 +51,18 @@ describe('chunkArray divides an array into even groups', () => {
       expect(a8by5).toContainEqual([6, 7, 8])
     })
 
-    test('34%5', () => {
-      // Should this balance into two chunks of 4?
-      // …instead of a 5 and a 3?
-      // search for "earth"
-      const a34by5 = chunkArray(buildIndexedArray(34), 5)
-      expect(a34by5).toContainEqual(buildIndexedArray(5))
-      expect(a34by5).toContainEqual([6, 7, 8, 9, 10])
+    test('14%5', () => {
+      const a14by5 = chunkArray(buildIndexedArray(14), 5)
+      expect(a14by5).toContainEqual(buildIndexedArray(5))
+      expect(a14by5).toContainEqual([6, 7, 8, 9, 10])
       // …
-      expect(a34by5).toContainEqual([26, 27, 28, 29, 30])
-      expect(a34by5).toContainEqual([31, 32, 33, 34])
+      expect(a14by5).toContainEqual([11, 12, 13, 14])
+    })
+
+    test('11%5', () => {
+      const a11by5 = chunkArray(buildIndexedArray(11), 5)
+      expect(a11by5).toContainEqual(buildIndexedArray(5))
+      expect(a11by5).toContainEqual([6, 7, 8, 9, 10, 11])
     })
   })
 })
