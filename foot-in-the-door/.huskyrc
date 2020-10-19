@@ -1,5 +1,6 @@
 {
   "hooks": {
-    "pre-commit": "npm run lint --silent && npm run test --silent"
+    "pre-commit": "npm run lint --silent && npm run test --silent",
+    "pre-push": "npm run lint --silent && npm run test --silent"
   }
 }
