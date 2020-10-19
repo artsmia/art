@@ -11,7 +11,7 @@ function Search(props) {
   return (
     <Layout>
       <main>
-        <h1 className="text-center text-5xl font-black capitalize">
+        <h1 className="text-center text-5xl font-black capitalize -mt-6">
           <SearchInput terms={rawTerms} />
         </h1>
 
@@ -19,7 +19,7 @@ function Search(props) {
           classification={`"${rawTerms}"`}
           hits={hits}
           perPage={size || 100}
-          className="mt-32"
+          className="mt-16"
         />
       </main>
     </Layout>
