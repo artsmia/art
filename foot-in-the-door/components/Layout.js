@@ -25,7 +25,7 @@ function Layout(props) {
       <aside
         className={cx(
           'inset-x-0 bottom-0 bg-gray-400 py-2 px-8 -mx-4',
-          stickyCTA && !ctaClosed ? 'sticky' : 'my-4'
+          stickyCTA && !ctaClosed ? 'sticky lg:static lg:my-4' : 'my-4'
         )}
       >
         <JoinCTA onClose={() => setCTAClosed(true)} isClosed={ctaClosed} />

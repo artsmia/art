@@ -66,7 +66,7 @@ export function JoinCTA({ isClosed, onClose }) {
         virtually and in-person.
         {closeButton}
       </p>
-      <div className="hidden lg:block uppercase tracking-wider font-semibold">
+      <div className="hidden xl:block uppercase tracking-wider font-semibold">
         <a
           href="https://ticket.artsmia.org/products/donate"
           className="p-2 mx-5 hidden xl:inline"
