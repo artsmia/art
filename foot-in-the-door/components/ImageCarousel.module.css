@@ -1,0 +1,15 @@
+.imageCarousel {
+  @apply flex overflow-x-scroll w-full p-4 m-4;
+
+  @screen md {
+    width: calc(50% + 4rem);
+    margin-right: -4rem;
+  }
+}
+
+/**
+ * TODO - why doesn't `group-hover:` work here?
+ * It's configured in tailwind.config.js
+.carouselItem {
+  @apply p-1 w-32 group-hover:w-full flex-shrink-0;
+}*/

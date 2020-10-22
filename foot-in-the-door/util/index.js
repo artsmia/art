@@ -21,6 +21,10 @@ export function getImageProps(artData) {
   }
 }
 
+// TODO port this to an API function?
+// Nevermind, getStaticProps isn't supposed to call local api routes…
+// so maybe api/imagesForCarousel should be moved here
+// maybe create an auxiliary search api route anyway?
 export async function getSearchResults(term, options = {}) {
   const {
     size, // how many results to fetch

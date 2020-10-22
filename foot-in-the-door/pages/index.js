@@ -1,13 +1,14 @@
 /** @format */
-import Link from 'next/link'
-
+import ImageCarousel from '../components/ImageCarousel'
 import Layout from '../components/Layout'
 import SearchInput from '../components/SearchInput'
 
-function Home() {
+import { getImages } from './api/imagesForCarousel'
+
+function Home(props) {
   return (
     <Layout>
-      <main className="md:flex">
+      <main className="md:flex items-center">
         <div className="md:w-1/2">
           <h1 className="text-4xl md:text-5xl font-black">
             Foot in the Door 5
@@ -32,11 +33,7 @@ function Home() {
 
           <SearchInput className="my-6" />
         </div>
-        <Link href="/room/ceramics">
-          <div className="bg-gray-100 w-1/2 p-4 m-4">
-            Image carousel goes here
-          </div>
-        </Link>
+        <ImageCarousel data={props.classificationLeadingImages} />
       </main>
       <aside className="flex">
         <div className="bg-gray-100 w-1/2 p-4 m-4">VIDEO placeholder</div>
@@ -49,3 +46,13 @@ function Home() {
 }
 
 export default Home
+
+export async function getStaticProps() {
+  const classificationLeadingImages = await getImages()
+
+  return {
+    props: {
+      classificationLeadingImages,
+    },
+  }
+}
