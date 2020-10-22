@@ -1,9 +1,11 @@
 .imageCarousel {
-  @apply flex overflow-x-scroll w-full p-4 m-4;
+  @apply flex overflow-x-scroll my-4;
+  @apply -mx-4 pl-4;
 
   @screen md {
-    width: calc(50% + theme('spacing.4'));
-    @apply -mr-4;
+    width: calc(50% + theme('spacing.16'));
+    @apply mx-0;
+    margin-right: -4rem;
   }
 }
 
