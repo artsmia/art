@@ -1,6 +1,8 @@
 /** @format */
 import { Fragment } from 'react'
 import Link from 'next/link'
+import { HiHeart, HiMail } from '@meronex/icons/hi'
+import { SiTwitter, SiFacebook } from '@meronex/icons/si'
 
 import Layout from '../../../components/Layout'
 import LeftRightNav from '../../../components/LeftRightNav'
@@ -42,7 +44,7 @@ function Art(props) {
           alt={description}
           className="w-2/3 px-4"
         />
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between border-t-2 border-black w-1/3">
           <div>
             <h1 className="text-2xl font-black capitalize">{title}</h1>
             <h2 className="text-xl font-bold">
@@ -68,7 +70,7 @@ function Art(props) {
           </div>
 
           <div className="border-t-2 mt-4 self-end">
-            <p>
+            <p className="flex items-center">
               {/* TODO use a checkbox instead? */}
               <span
                 className="pr-1"
@@ -77,16 +79,17 @@ function Art(props) {
                 role="button"
                 tabIndex={0}
               >
-                [like]
+                <HiHeart />
               </span>
-              Share: [mail] [twitter] [facebook]
+              Share: <HiMail className="mx-1" /> <SiTwitter className="mx-1" />{' '}
+              <SiFacebook className="mx-1" />
             </p>
             <p className="bg-gray-300 px-4 py-2 mt-4">
-              Keep Mia open, free, and accessible to all virtually and in-person
               <a href="https://ticket.artsmia.org/catalog/support-mia">
-                by becoming a member or donating
+                Keep Mia open, free, and accessible to all virtually and
+                in-person by becoming a member or donating today. We are always
+                grateful to our members.
               </a>
-              today. We are always grateful to our members.
             </p>
           </div>
         </div>
