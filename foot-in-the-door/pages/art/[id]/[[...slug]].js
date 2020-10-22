@@ -42,9 +42,9 @@ function Art(props) {
         <img
           src={getImageSrc(artwork)}
           alt={description}
-          className="w-2/3 px-4"
+          className="md:w-2/3 px-4"
         />
-        <div className="flex flex-col justify-between border-t-2 border-black w-1/3">
+        <div className="flex flex-col justify-between border-t-2 border-black md:w-1/3">
           <div>
             <h1 className="text-2xl font-black capitalize">{title}</h1>
             <h2 className="text-xl font-bold">
