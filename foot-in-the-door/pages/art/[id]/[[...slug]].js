@@ -53,7 +53,7 @@ function Art(props) {
             <p>{medium}</p>
             <p>{dimension}</p>
             <p>( color )</p>
-            <p className="py-4">{description}</p>
+            <p className="py-4 hidden">{description}</p>
             {keywordsString && (
               <p>
                 Keywords:{' '}
