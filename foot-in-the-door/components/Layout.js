@@ -7,7 +7,7 @@ import NavBar, { JoinCTA } from '../components/NavBar'
 
 function Layout(props) {
   const { stickyCTA } = props
-  const [ctaClosed, setCTAClosed] = useState(false)
+  const [ctaClosed, setCTAClosed] = useState(!stickyCTA)
 
   return (
     <div className="p-4 md:px-16 md:py-5 text-gray-900">
