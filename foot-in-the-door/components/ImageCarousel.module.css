@@ -2,8 +2,8 @@
   @apply flex overflow-x-scroll w-full p-4 m-4;
 
   @screen md {
-    width: calc(50% + 4rem);
-    margin-right: -4rem;
+    width: calc(50% + theme('spacing.4'));
+    @apply -mr-4;
   }
 }
 

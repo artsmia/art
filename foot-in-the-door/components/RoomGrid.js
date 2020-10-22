@@ -38,7 +38,7 @@ function RoomGrid(props) {
       <Grid {...grid} aria-label="Search Results" className="flex flex-wrap">
         {chunkArray(artworks, gridCols).map((row, rowIndex) => {
           return (
-            <GridRow {...grid} key={rowIndex} className="flex min-h-64 my-4">
+            <GridRow {...grid} key={rowIndex} className="flex min-h-64 my-2">
               {row.map((art) => {
                 const {
                   _source: source,
@@ -52,19 +52,21 @@ function RoomGrid(props) {
                     {...grid}
                     key={id}
                     as="figure"
-                    className="group flex-grow"
+                    className="group flex flex-grow relative mx-2"
                   >
                     <Link href={`/art/${id}`}>
-                      <a className="relative">
+                      <a>
                         <img
-                          className="h-auto w-full p-1"
+                          className="h-auto w-full"
                           loading={imageLoadStrategy}
                           {...getImageProps(source)}
                           alt={description}
                         />
-                        <figcaption className="hidden group-hover:block max-w-full">
-                          <h2>{title}</h2>
-                          <h3>{artist}</h3>
+                        <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
+                          <div className="text-white opacity-100 py-6 px-4">
+                            <h2 className="font-extrabold">{title}</h2>
+                            <h3 className="font-light">{artist}</h3>
+                          </div>
                         </figcaption>
                       </a>
                     </Link>
