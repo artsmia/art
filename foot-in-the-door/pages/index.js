@@ -30,7 +30,7 @@ function Home() {
             accommodate the huge number of participating artists and visitors.
           </p>
 
-          <SearchInput />
+          <SearchInput className="my-6" />
         </div>
         <Link href="/room/ceramics">
           <div className="bg-gray-100 w-1/2 p-4 m-4">

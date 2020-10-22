@@ -15,6 +15,7 @@ module.exports = {
   },
   variants: {
     display: ['responsive', 'hover', 'focus', 'group-hover', 'group-focus'],
+    borderColor: ['focus-within'],
   },
   plugins: [],
 }
