@@ -7,6 +7,7 @@ import {
   DialogDisclosure,
   DialogBackdrop,
 } from 'reakit/Dialog'
+import { useRouter } from 'next/router'
 
 import { classifications } from '../util'
 import SearchInput from './SearchInput'
@@ -16,20 +17,41 @@ function NavBar() {
   // const toggleSearchDrawer = () => setSearchOpen(!searchOpen)
   const expandedNavDialog = useDialogState()
   const { visible: searchOpen } = expandedNavDialog
+  const router = useRouter()
+  const logo = (
+    <img
+      alt="Minneapolis Institute of Art Logo"
+      src="https://styleguide.staging.artsmia.org/src/images/mia-wordmark.svg"
+      className="h-6"
+    />
+  )
+  const homeLink =
+    router.route === '/' ? (
+      <a href="https://artsmia.org">{logo}</a>
+    ) : (
+      <Link href="/">
+        <a>{logo}</a>
+      </Link>
+    )
+
+  const backLink =
+    router.route === '/' ? (
+      <a href="https://new.artsmia.org/exhibitions/">❮ Exit Exhibition</a>
+    ) : (
+      <>
+        <Link href="/">
+          <a>
+            ❮<span>Foot in the Door</span> Exhibition Home
+          </a>
+        </Link>
+      </>
+    )
 
   return (
     <nav className="flex flex-row items-start justify-between">
       <div className="w-4/5">
-        <Link href="/">
-          <a>
-            <img
-              alt="Minneapolis Institute of Art Logo"
-              src="https://styleguide.staging.artsmia.org/src/images/mia-wordmark.svg"
-              className="h-6"
-            />
-          </a>
-        </Link>
-        <a href="/foot-in-the-door">❮ Exit Exhibition</a>
+        {homeLink}
+        {backLink}
       </div>
       <div>
         <DialogDisclosure {...expandedNavDialog} className="w-1/5">
