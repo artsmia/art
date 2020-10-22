@@ -9,9 +9,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'accent-1': '#333',
+        black: '#232323',
       },
     },
+    height: {
+     'screen-3/4': '75%',
+     'screen-4/5': '80%',
+    }
   },
   variants: {
     display: ['responsive', 'hover', 'focus', 'group-hover', 'group-focus'],

@@ -3,18 +3,20 @@ import { useRouter } from 'next/router'
 
 import { HiSearch } from '@meronex/icons/hi'
 
+import { cx } from '../util'
+
 function SearchInput(props) {
-  const { terms, className } = props
+  const { terms, className, dark } = props
   const router = useRouter()
 
   return (
     <>
       <label
         htmlFor="search"
-        className={[
+        className={cx(
           'flex relative p-1 w-full border-b-2 items-center focus-within:border-teal-500 group',
-          className,
-        ].join(' ')}
+          className
+        )}
       >
         <span className="sr-only w-0">Search</span>
         <div className="z-10 left-4 absolute" aria-hidden="true">
@@ -26,7 +28,7 @@ function SearchInput(props) {
           name="q"
           defaultValue={terms}
           placeholder="Search for artist, keyword, color, etc"
-          className="w-full p-1 pl-10"
+          className={cx('w-full p-1 pl-10', dark ? 'bg-black text-white' : '')}
           onKeyPress={(event) => {
             const {
               target: { value: terms },

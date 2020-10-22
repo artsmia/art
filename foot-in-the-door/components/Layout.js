@@ -1,9 +1,14 @@
 /** @format */
+import { useState } from 'react'
 import Head from 'next/head'
 
-import NavBar from '../components/NavBar'
+import { cx } from '../util'
+import NavBar, { JoinCTA } from '../components/NavBar'
 
 function Layout(props) {
+  const { stickyCTA } = props
+  const [ctaClosed, setCTAClosed] = useState(false)
+
   return (
     <div className="p-4 md:px-16 md:py-5 text-gray-900">
       <Head>
@@ -16,6 +21,15 @@ function Layout(props) {
       </header>
 
       {props.children}
+
+      <aside
+        className={cx(
+          'inset-x-0 bottom-0 bg-gray-400 py-2 px-8 -mx-4',
+          stickyCTA && !ctaClosed ? 'sticky' : 'my-4'
+        )}
+      >
+        <JoinCTA onClose={() => setCTAClosed(true)} isClosed={ctaClosed} />
+      </aside>
 
       <footer className="border-t-2 flex justify-between mt-4">
         <div>

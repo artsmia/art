@@ -7,7 +7,7 @@ import { getImages } from './api/imagesForCarousel'
 
 function Home(props) {
   return (
-    <Layout>
+    <Layout stickyCTA={true}>
       <main className="md:flex items-center">
         <div className="md:w-1/2">
           <h1 className="text-4xl md:text-5xl font-black">

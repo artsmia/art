@@ -114,3 +114,7 @@ export function chunkArray(items, options = {}) {
 
   return chunks
 }
+
+export function cx(...classnames) {
+  return classnames.filter((cx) => !!cx).join(' ')
+}
