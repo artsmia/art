@@ -12,6 +12,15 @@ export function getImageSrc(artworkData, thumbnail = true) {
   }`
 }
 
+export function getImageProps(artData) {
+  return {
+    src: getImageSrc(artData),
+    alt: artData.description,
+    width: artData.image_width,
+    height: artData.image_height,
+  }
+}
+
 export async function getSearchResults(term, options = {}) {
   const {
     size, // how many results to fetch

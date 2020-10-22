@@ -8,7 +8,7 @@ import {
   unstable_GridCell as GridCell,
 } from 'reakit/Grid'
 
-import { chunkArray, getImageSrc } from '../util'
+import { chunkArray, getImageProps } from '../util'
 
 function RoomGrid(props) {
   const { hits, focused, perPage, classification, ...containerProps } = props
@@ -45,6 +45,8 @@ function RoomGrid(props) {
                   _source: { id, title, artist, description },
                 } = art
 
+                const imageLoadStrategy = rowIndex < 2 ? 'eager' : 'lazy'
+
                 return (
                   <GridCell
                     {...grid}
@@ -55,8 +57,9 @@ function RoomGrid(props) {
                     <Link href={`/art/${id}`}>
                       <a className="relative">
                         <img
-                          src={getImageSrc(source)}
                           className="h-auto w-full p-1"
+                          loading={imageLoadStrategy}
+                          {...getImageProps(source)}
                           alt={description}
                         />
                         <figcaption className="hidden group-hover:block max-w-full">
