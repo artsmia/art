@@ -16,7 +16,10 @@
       "components": [ "Link" ],
       "specialLink": [ "hrefLeft", "hrefRight" ],
       "aspects": [ "invalidHref", "preferButton" ]
-    }]
+    }],
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "no-alert": "warn"
   },
   "settings": {
     "react": {

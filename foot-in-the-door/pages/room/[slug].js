@@ -52,7 +52,6 @@ export default Room
 export async function getStaticProps({ params }) {
   const { slug } = params
   const classification = slug.replace('-', ' ')
-  console.info('getStaticProps', { classification, slug, params })
   const results = await getSearchResults(`classification:${slug}`)
 
   return {
@@ -75,6 +74,5 @@ export async function getStaticPaths() {
     fallback: false,
   }
 
-  console.info('getStaticPaths', JSON.stringify(manifest, null, 2))
   return manifest
 }
