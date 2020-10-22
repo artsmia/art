@@ -1,5 +1,5 @@
 /** @format */
-import { chunkArray } from '../'
+import { chunkArray } from '..'
 
 function buildIndexedArray(size) {
   return new Array(size).fill('').map((_, index) => index + 1)
@@ -47,16 +47,16 @@ describe('chunkArray divides an array into even groups', () => {
       // Should this balance into two chunks of 4?
       // …instead of a 5 and a 3?
       const a8by5 = chunkArray(buildIndexedArray(8), 5)
-      expect(a8by5).toContainEqual(buildIndexedArray(5))
-      expect(a8by5).toContainEqual([6, 7, 8])
+      expect(a8by5).toContainEqual(buildIndexedArray(4))
+      expect(a8by5).toContainEqual([5, 6, 7, 8])
     })
 
     test('14%5', () => {
       const a14by5 = chunkArray(buildIndexedArray(14), 5)
       expect(a14by5).toContainEqual(buildIndexedArray(5))
-      expect(a14by5).toContainEqual([6, 7, 8, 9, 10])
+      expect(a14by5).toContainEqual([6, 7, 8, 9])
       // …
-      expect(a14by5).toContainEqual([11, 12, 13, 14])
+      expect(a14by5).toContainEqual([10, 11, 12, 13, 14])
     })
 
     test('11%5', () => {

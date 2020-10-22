@@ -62,27 +62,38 @@ export async function likeArtwork(id) {
   return text
 }
 
-export function chunkArray(items, size = 3) {
-  const increaseSizeForFinalChunks = true
-  let chunks = [items.splice(0, size)]
+/**
+ * "chunk" an array (`items`) into sub-arrays of `size`.
+ *
+ *     [1, 2, 3, 4, 5] % 2 => [[1, 2], [3, 4], [5]]
+ *
+ * Optionally, attempt to 'balance' the array. Generally this means not leaving 1
+ * or 2 entries in the last sub-array, so modifying the size of preceding rows
+ * to accomodate. Ideally there could be the same amount of items in each row, but
+ * when that doesn't happen the last few rows should have a comparable amount of items.
+ *
+ * Whenever possible, both the first and the last row should have the same number of items.
+ */
+export function chunkArray(items, options = {}) {
+  const size = Number(options) ? options : options.size || 3
+  const fuzzyBalance = options.balance || true
+
+  let chunks = []
   let _size = size
 
   while (items.length) {
-    const isPenultimateRow = items.length <= size * 2 && items.length > size
-    const isUltimateRow = items.length <= size
-    const isFinalRowOrTwo = isPenultimateRow || isUltimateRow
+    const initialRowIndex = items.length / size
+    const isFinalRowOrTwo = initialRowIndex <= 2
 
-    if (increaseSizeForFinalChunks && isFinalRowOrTwo) {
-      // const delta = items.length % size
-      _size = items.length % size === 0 ? size : size + 1
-
-      // if the last row will have > 3 items, don't adjust this row
-      if (isPenultimateRow && items.length - size > 3) _size = size
-
-      // don't leave a single item in the last row, go back to the default
-      // size.
-      const adjustedSizeLeavesOrphanRow = items.length % _size === 1
-      if (isFinalRowOrTwo && adjustedSizeLeavesOrphanRow) _size = size - 1
+    if (fuzzyBalance && isFinalRowOrTwo) {
+      _size = size
+      // if the remaining two rows would balance evenly each with `size-1`
+      if (items.length / 2 === size - 1) _size = size - 1
+      // if there are `size*2 - 1` items left, remove one from this row so the last
+      // row has the requested amount of items
+      if (items.length === size * 2 - 1) _size = size - 1
+      // if we have `size` + 1 items left, increase size by 1 to fit them all in one row
+      if (items.length <= size + 1) _size = size + 1
     }
 
     chunks.push(items.splice(0, Math.max(2, _size)))
