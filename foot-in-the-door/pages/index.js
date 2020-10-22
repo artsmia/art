@@ -1,4 +1,6 @@
 /** @format */
+import Link from 'next/link'
+
 import ImageCarousel from '../components/ImageCarousel'
 import Layout from '../components/Layout'
 import SearchInput from '../components/SearchInput'
@@ -10,10 +12,10 @@ function Home(props) {
     <Layout stickyCTA={true}>
       <main className="md:flex items-center">
         <div className="md:w-1/2">
-          <h1 className="text-4xl md:text-5xl font-black">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black">
             Foot in the Door 5
           </h1>
-          <h2 className="text-3xl md:text-3xl font-light -mt-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-light -mt-4">
             The Virtual Exhibition
           </h2>
           <p className="py-2">
@@ -35,10 +37,28 @@ function Home(props) {
         </div>
         <ImageCarousel data={props.classificationLeadingImages} />
       </main>
-      <aside className="flex">
-        <div className="bg-gray-100 w-1/2 p-4 m-4">VIDEO placeholder</div>
-        <div className="bg-gray-100 w-1/2 p-4 m-4">
-          EVENT LISTING PLACEHOLDER
+      <aside className="md:flex pb-6">
+        <div id="video" className="bg-pink-200 p-3 md:w-1/2 md:mx-2">
+          VIDEO placeholder
+        </div>
+        <div id="related-events" className="md:w-1/2 md:mx-2">
+          <h3 className="font-black text-2xl">Exhibition Events</h3>
+          <Link href="https://new.artsmia.org/event/virtual-family-day-foot-in-the-door">
+            <a className="block bg-gray-300 my-4 p-2 px-4 text-lg">
+              <h3 className="font-black">
+                Virtual Family Day: Foot in the Door
+              </h3>
+              <p>Sunday, November 8, 2020</p>
+              <p>10:00 am</p>
+            </a>
+          </Link>
+          <Link href="https://new.artsmia.org/event/virtual-open-mic-foot-in-the-door">
+            <a className="block bg-gray-300 my-4 p-2 px-4 text-lg">
+              <h3 className="font-black">Virtual Open Mic: Foot in the Door</h3>
+              <p>Saturday, November 21, 2020</p>
+              <p>12:00 pm to 1:30 pm</p>
+            </a>
+          </Link>
         </div>
       </aside>
     </Layout>
