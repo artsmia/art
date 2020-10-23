@@ -108,9 +108,7 @@ function Art(props) {
           classifications={classifications}
           classification={artwork.classification}
           className="flex justify-between mt-16"
-        >
-          <p className="bg-gray-200 p-4">Membership/Donate callout goes here</p>
-        </LeftRightNav>
+        ></LeftRightNav>
       </aside>
     </Layout>
   )

@@ -3,9 +3,10 @@ import Layout from '../../components/Layout'
 import LeftRightNav from '../../components/LeftRightNav'
 import RoomGrid from '../../components/RoomGrid'
 import { classifications, getSearchResults } from '../../util'
+import { getImages } from '../api/imagesForCarousel'
 
 function Room(props) {
-  const { classification, results } = props // slug
+  const { classification, results, imagesForCarousel } = props // slug
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 
   const perPage = 33 // how many items to show per page
@@ -22,10 +23,11 @@ function Room(props) {
         <h1 className="text-center text-5xl font-black capitalize">
           {classification}
         </h1>
-        <p className="mt-4 text-center">…</p>
         <LeftRightNav
           classifications={classifications}
           classification={classification}
+          showAllAndStretch={true}
+          imagesForCarousel={props.imagesForCarousel}
         />
         <RoomGrid
           classification={classification}
@@ -39,9 +41,7 @@ function Room(props) {
           classifications={classifications}
           classification={classification}
           className="flex justify-between mt-16"
-        >
-          <p className="bg-gray-200 p-4">Membership/Donate callout goes here</p>
-        </LeftRightNav>
+        ></LeftRightNav>
       </aside>
     </Layout>
   )
@@ -53,12 +53,14 @@ export async function getStaticProps({ params }) {
   const { slug } = params
   const classification = slug.replace('-', ' ')
   const results = await getSearchResults(`classification:${slug}`)
+  const imagesForCarousel = await getImages(4)
 
   return {
     props: {
       results,
       classification,
       slug,
+      imagesForCarousel,
     },
     revalidate: 600,
   }
