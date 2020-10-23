@@ -9,6 +9,7 @@ import LeftRightNav from '../../../components/LeftRightNav'
 import RoomGrid from '../../../components/RoomGrid'
 import {
   classifications,
+  cx,
   fetchById,
   getImageSrc,
   getSearchResults,
@@ -27,6 +28,8 @@ function Art(props) {
       keywords: keywordsString,
       dimension,
       classification,
+      image_width,
+      image_height,
     },
     classificationResults,
   } = props
@@ -36,15 +39,24 @@ function Art(props) {
     : keywordsString.split(' ')
   ).filter((word) => !word.match(/^\s+$/))
 
+  const aspectRatio = image_width / image_height
+  const leftWidth = aspectRatio > 1 ? '1/2' : '2/3'
+  const rightWidth = aspectRatio > 1 ? '1/2' : '1/3'
+
   return (
     <Layout>
-      <main className="md:flex md:align-start">
+      <main className="md:flex md:align-start max-h-screen">
         <img
           src={getImageSrc(artwork)}
           alt={description}
-          className="md:w-2/3 px-4"
+          className={cx(
+            `md:w-${leftWidth}`,
+            'px-4 object-contain object-center'
+          )}
         />
-        <div className="flex flex-col justify-between border-t-2 border-black md:w-1/3">
+        <div
+          className={`flex flex-col justify-between border-t-2 border-black md:w-${rightWidth}`}
+        >
           <div>
             <h1 className="text-2xl font-black capitalize">{title}</h1>
             <h2 className="text-xl font-bold">
@@ -55,14 +67,14 @@ function Art(props) {
             <p>( color )</p>
             <p className="py-4 hidden">{description}</p>
             {keywordsString && (
-              <p>
+              <p className="whitespace-normal break-word">
                 Keywords:{' '}
                 {keywords.map((word, index) => (
                   <Fragment key={word}>
                     <Link href={`/search/keywords:${word}`} key={word}>
                       <a className="pl-1">{word}</a>
                     </Link>
-                    {index === keywords.length - 1 ? '' : ','}
+                    {index === keywords.length - 1 ? '' : ','}{' '}
                   </Fragment>
                 ))}
               </p>
