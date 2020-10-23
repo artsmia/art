@@ -1,5 +1,4 @@
 /** @format */
-import React from 'react'
 import Link from 'next/link'
 
 import { cx, getImageProps, useWindowSize } from '../util'
@@ -20,19 +19,21 @@ function LRNav(props) {
   const nextRoom = _cls[(roomIndex + 1) % _cls.length]
 
   const { width } = useWindowSize()
-  const showFullNav = width > 838
+  const showFullNav = showAllAndStretch && width > 838
 
-  const roomLinks =
-    showFullNav && showAllAndStretch
-      ? _cls.filter((room) => room !== classification)
-      : [prevRoom, nextRoom]
+  const roomLinks = showFullNav
+    ? _cls.filter((room) => room !== classification)
+    : [prevRoom, nextRoom]
 
   return (
     <nav
       {...containerProps}
       className={cx(
         props.className,
-        `flex overflow-x-hidden overflow-y-visible w-screen -ml-8 md:-ml-16 mx-4`,
+        `flex `,
+        showFullNav
+          ? `overflow-x-hidden overflow-y-visible w-screen -ml-8 md:-ml-16 mx-4`
+          : '',
         showFullNav ? `justify-center` : 'justify-between'
       )}
     >
@@ -46,42 +47,38 @@ function LRNav(props) {
           ? `${room} &rsaquo;`
           : room
 
-        const link = (
-          <Link href={`/room/${room.replace(' ', '-')}`}>
+        return (
+          <Link key={room} href={`/room/${room.replace(' ', '-')}`}>
             <a
-              dangerouslySetInnerHTML={{ __html: roomText }}
               className={cx(
                 'uppercase px-1',
                 showFullNav && isFirstRoom
                   ? 'pr-10 ml-4'
                   : showFullNav && isLastRoom
                   ? 'pl-10 mr-4'
-                  : ''
+                  : '',
+                showFullNav || 'flex'
               )}
-            />
+            >
+              {isFirstRoom && (
+                <PeekImages
+                  room={room}
+                  imagesForCarousel={imagesForCarousel}
+                  className="-ml-20 left-0"
+                  showFullNav={showFullNav}
+                />
+              )}
+              <span dangerouslySetInnerHTML={{ __html: roomText }} />
+              {isLastRoom && (
+                <PeekImages
+                  room={room}
+                  imagesForCarousel={imagesForCarousel}
+                  className="-mr-24 right-0"
+                  showFullNav={showFullNav}
+                />
+              )}
+            </a>
           </Link>
-        )
-
-        return (
-          <React.Fragment key={room}>
-            {isFirstRoom && (
-              <PeekImages
-                room={room}
-                imagesForCarousel={imagesForCarousel}
-                className="-ml-20 left-0"
-                showFullNav={showFullNav}
-              />
-            )}
-            {link}
-            {isLastRoom && (
-              <PeekImages
-                room={room}
-                imagesForCarousel={imagesForCarousel}
-                className="-mr-20 right-0"
-                showFullNav={showFullNav}
-              />
-            )}
-          </React.Fragment>
         )
       })}
     </nav>
@@ -103,23 +100,21 @@ function PeekImages(props) {
   ).slice(0, size)
 
   return (
-    <Link href={`/room/${room.replace(' ', '-')}`}>
-      <a
-        className={cx(
-          className,
-          'h-screen overflow-y-visible overflow-x-hidden',
-          showFullNav ? 'absolute -mt-32' : '-mt-12'
-        )}
-      >
-        {artworks.map((art) => (
-          <img
-            key={art._id}
-            {...getImageProps(art._source)}
-            alt={art._source.description}
-            className="mb-1 w-32 h-auto"
-          />
-        ))}
-      </a>
-    </Link>
+    <div
+      className={cx(
+        className,
+        showFullNav ? 'h-screen overflow-y-visible overflow-x-hidden' : '',
+        showFullNav ? 'absolute -mt-32' : '-mt-12'
+      )}
+    >
+      {artworks.map((art) => (
+        <img
+          key={art._id}
+          {...getImageProps(art._source)}
+          alt={art._source.description}
+          className="mb-1 w-32 h-auto"
+        />
+      ))}
+    </div>
   )
 }

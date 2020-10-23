@@ -27,7 +27,8 @@ function Room(props) {
           classifications={classifications}
           classification={classification}
           showAllAndStretch={true}
-          imagesForCarousel={props.imagesForCarousel}
+          imagesForCarousel={imagesForCarousel}
+          className="mt-16 -mb-16 md:my-0"
         />
         <RoomGrid
           classification={classification}
