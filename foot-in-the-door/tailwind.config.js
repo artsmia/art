@@ -19,6 +19,12 @@ module.exports = {
         'screen-3/4': '75%',
         'screen-4/5': '80%',
       },
+      maxWidth: {
+        12: '3rem',
+      },
+      transitionProperty: {
+        width: 'width, max-width',
+      },
     },
   },
   variants: {

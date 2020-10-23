@@ -9,64 +9,48 @@ import {
 } from 'reakit/Dialog'
 import { useRouter } from 'next/router'
 
-import { classifications } from '../util'
-import SearchInput from './SearchInput'
+import { classifications, useWindowSize } from '../util'
+import SearchInput, { ExpandableSearchInput } from './SearchInput'
 
 function NavBar() {
   // const [searchOpen, setSearchOpen] = useState(false)
   // const toggleSearchDrawer = () => setSearchOpen(!searchOpen)
   const expandedNavDialog = useDialogState()
-  const { visible: searchOpen } = expandedNavDialog
-  const router = useRouter()
-  const logo = (
-    <img
-      alt="Minneapolis Institute of Art Logo"
-      src="https://styleguide.staging.artsmia.org/src/images/mia-wordmark.svg"
-      className="h-6"
-    />
-  )
-  const homeLink =
-    router.route === '/' ? (
-      <a href="https://artsmia.org">{logo}</a>
-    ) : (
-      <Link href="/">
-        <a>{logo}</a>
-      </Link>
-    )
-
-  const backLink =
-    router.route === '/' ? (
-      <a href="https://new.artsmia.org/exhibitions/">❮ Exit Exhibition</a>
-    ) : (
-      <>
-        <Link href="/">
-          <a>
-            ❮<span>Foot in the Door</span> Exhibition Home
-          </a>
-        </Link>
-      </>
-    )
+  const { visible: searchDialogOpen } = expandedNavDialog
+  const { route } = useRouter()
+  const { width } = useWindowSize()
+  const useDialogSearch = width < 769 // tailwind md:
+  const isSearchPage = /search/.test(route)
 
   return (
     <nav className="flex flex-row items-start justify-between">
       <div className="w-4/5">
-        {homeLink}
-        {backLink}
+        <HomeLink route={route} />
+        <BackLink route={route} />
       </div>
-      <div>
-        <DialogDisclosure {...expandedNavDialog} className="w-1/5">
-          {searchOpen ? <HiX size="2rem" /> : <HiSearch size="2rem" />}
-        </DialogDisclosure>
-        <DialogBackdrop {...expandedNavDialog}>
-          <Dialog
-            {...expandedNavDialog}
-            aria-label="Search and Navigation"
-            className="opacity-100"
-          >
-            <SmallScreenNav />
-          </Dialog>
-        </DialogBackdrop>
-      </div>
+      {isSearchPage ||
+        (useDialogSearch ? (
+          <div>
+            <DialogDisclosure {...expandedNavDialog} className="w-1/5">
+              {searchDialogOpen ? (
+                <HiX size="2rem" />
+              ) : (
+                <HiSearch size="2rem" />
+              )}
+            </DialogDisclosure>
+            <DialogBackdrop {...expandedNavDialog}>
+              <Dialog
+                {...expandedNavDialog}
+                aria-label="Search and Navigation"
+                className="opacity-100"
+              >
+                <SmallScreenNav />
+              </Dialog>
+            </DialogBackdrop>
+          </div>
+        ) : (
+          <ExpandableSearchInput className="ml-10" />
+        ))}
     </nav>
   )
 }
@@ -74,19 +58,20 @@ function NavBar() {
 export default NavBar
 
 export function JoinCTA({ isClosed, onClose }) {
-  const closeButton = isClosed || (
-    <button onClick={onClose} onKeyPress={onClose}>
-      <HiX />
-    </button>
-  )
+  const closeProps = { onClick: onClose, onKeyPress: onClose }
+  const linkAction = { onClick: (e) => e.stopPropagation() }
 
   return (
-    <div className="md:flex md:flex-row md:justify-between">
+    <div className="md:flex md:flex-row md:justify-between" {...closeProps}>
       <p className="">
-        <a href="https://ticket.artsmia.org/catalog/support-mia">Support Mia</a>{' '}
+        <a
+          href="https://ticket.artsmia.org/catalog/support-mia"
+          {...linkAction}
+        >
+          Support Mia
+        </a>{' '}
         by becoming a member today. Contributions keep us free and accessible,
-        virtually and in-person.
-        {closeButton}
+        virtually and in-person. {isClosed || <HiX />}
       </p>
       <div className="hidden xl:block uppercase tracking-wider font-semibold">
         <a
@@ -123,5 +108,42 @@ function SmallScreenNav() {
         ))}
       </ul>
     </nav>
+  )
+}
+
+function Logo() {
+  return (
+    <img
+      alt="Minneapolis Institute of Art Logo"
+      src="https://styleguide.staging.artsmia.org/src/images/mia-wordmark.svg"
+      className="h-6"
+    />
+  )
+}
+function HomeLink({ route }) {
+  return route === '/' ? (
+    <a href="https://artsmia.org">
+      <Logo />
+    </a>
+  ) : (
+    <Link href="/">
+      <a>
+        <Logo />
+      </a>
+    </Link>
+  )
+}
+
+function BackLink({ route }) {
+  return route === '/' ? (
+    <a href="https://new.artsmia.org/exhibitions/">❮ Exit Exhibition</a>
+  ) : (
+    <>
+      <Link href="/">
+        <a>
+          ❮<span>Foot in the Door</span> Exhibition Home
+        </a>
+      </Link>
+    </>
   )
 }

@@ -1,6 +1,7 @@
 /** @format */
 import { useState } from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { cx } from '../util'
 import NavBar, { JoinCTA } from '../components/NavBar'
