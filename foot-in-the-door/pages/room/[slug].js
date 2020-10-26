@@ -6,7 +6,9 @@ import { classifications, getSearchResults } from '../../util'
 import { getImages } from '../api/imagesForCarousel'
 
 function Room(props) {
-  const { classification, results, imagesForCarousel } = props // slug
+  const { classification: _classification, results, imagesForCarousel } = props // slug
+  const classification =
+    _classification === '*' ? 'Foot in the Door' : _classification
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 
   const perPage = 33 // how many items to show per page
@@ -52,7 +54,8 @@ export default Room
 
 export async function getStaticProps({ params }) {
   const { slug } = params
-  const classification = slug.replace('-', ' ')
+  let classification = slug.replace('-', ' ')
+  if (classification === 'all') classification = '*'
   const results = await getSearchResults(`classification:${slug}`)
   const imagesForCarousel = await getImages(4)
 
@@ -69,8 +72,9 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const manifest = {
-    paths: classifications.map((classification) => {
-      const slug = classification.toLowerCase().replace(' ', '-')
+    paths: classifications.concat('*').map((classification) => {
+      let slug = classification.toLowerCase().replace(' ', '-')
+      if (slug === '*') slug = 'all'
 
       return { params: { classification, slug } }
     }),

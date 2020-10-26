@@ -102,6 +102,7 @@ export function JoinCTAPhrase({ linkAction }) {
 }
 
 function SmallScreenNav() {
+  const linkClasses = 'py-8 no-underline text-lg'
   return (
     <nav className="fixed inset-x-0 bottom-0 z-30 h-screen-4/5 bg-black text-white p-3">
       <SearchInput dark={true} className="mt-4" />
@@ -112,12 +113,23 @@ function SmallScreenNav() {
         {classifications.map((c) => (
           <li key={c}>
             <Link href={`/room/${c.toLowerCase()}`}>
-              <a className="py-8 no-underline text-lg">{c}</a>
+              <a className={linkClasses}>{c}</a>
             </Link>
           </li>
         ))}
+        <li className="mt-8">
+          <ViewAllLink className={cx(linkClasses, 'font-bold uppercase')} />
+        </li>
       </ul>
     </nav>
+  )
+}
+
+export function ViewAllLink({ children, className }) {
+  return (
+    <Link href="/room/all">
+      <a className={className}>{children || 'View All'}</a>
+    </Link>
   )
 }
 

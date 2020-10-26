@@ -1,5 +1,6 @@
 /** @format */
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import {
   unstable_useGridState as useGridState,
   unstable_Grid as Grid,
@@ -8,6 +9,7 @@ import {
 } from 'reakit/Grid'
 
 import { chunkArray, cx, getImageProps, useWindowSize } from '../util'
+import { ViewAllLink } from './NavBar'
 
 function RoomGrid(props) {
   const { hits, focused, perPage, classification, ...containerProps } = props
@@ -29,8 +31,15 @@ function RoomGrid(props) {
     ? Math.min(5, Math.max(2, Math.floor(windowWidth / 234)))
     : 2
 
+  const { asPath: page } = useRouter()
+
   return (
     <section {...containerProps}>
+      {page !== '/room/all' && (
+        <ViewAllLink className="block text-center no-underline uppercase font-light">
+          View All Groups
+        </ViewAllLink>
+      )}
       <p className="uppercase text-center mb-8 font-hairline">
         Scroll to enter <strong>{classification}</strong>
       </p>
