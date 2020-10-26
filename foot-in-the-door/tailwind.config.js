@@ -14,10 +14,21 @@ module.exports = {
     extend: {
       colors: {
         black: '#232323',
+        gray: {
+          100: '#D3D3D3',
+          200: '#F1F1F1',
+          300: '#E1E1E1',
+          400: '#6F6F6F',
+          500: '#FAFAFA',
+          700: '#757575',
+          800: '#161616',
+          900: '#1F1F1F',
+        },
       },
       height: {
         'screen-3/4': '75%',
         'screen-4/5': '80%',
+        96: '24rem',
       },
       maxWidth: {
         12: '3rem',

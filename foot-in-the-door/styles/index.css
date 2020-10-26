@@ -1,16 +1,15 @@
-
-/* Write your own custom base styles here */
-
 /* Start purging... */
 @tailwind base;
 @tailwind components;
-/* Stop purging. */
-
-/* Write your own custom component styles here */
-
-/* Start purging... */
 @tailwind utilities;
 /* Stop purging. */
 
-/* Your own custom utilities */
+@layer base {
+  a {
+    @apply underline;
 
+    h1, h2, h3, h4, h5, h6 {
+      @apply no-underline;
+    }
+  }
+}
