@@ -121,7 +121,9 @@ function Logo() {
   )
 }
 function HomeLink({ route }) {
-  return route === '/' ? (
+  const alwaysLinkToArtsmiaHome = true || route === '/'
+
+  return alwaysLinkToArtsmiaHome ? (
     <a href="https://artsmia.org">
       <Logo />
     </a>
@@ -136,11 +138,16 @@ function HomeLink({ route }) {
 
 function BackLink({ route }) {
   return route === '/' ? (
-    <a href="https://new.artsmia.org/exhibitions/">❮ Exit Exhibition</a>
+    <a
+      href="https://new.artsmia.org/exhibitions/"
+      className="font-light no-underline"
+    >
+      ❮ Exit Exhibition
+    </a>
   ) : (
     <>
       <Link href="/">
-        <a>
+        <a className="no-underline font-light">
           ❮<span>Foot in the Door</span> Exhibition Home
         </a>
       </Link>

@@ -26,21 +26,21 @@ function ImageCarousel(props) {
         return (
           <li key={art.id} className="p-1 w-48 focus:w-auto flex-shrink-0">
             <Link href={`/room/${classif.toLowerCase()}`}>
-              <a>
-                <div className="group relative">
+              <a className="no-underline">
+                <div className="group relative mx-1">
                   <img
                     {...getImageProps(art)}
                     alt={art.description}
                     loading={carouselIndex > 3 && 'lazy'}
-                    className="border-black border-b-4 h-48 md:h-64 w-auto self-stretch object-cover"
+                    className="border-black border-b-4 h-64 md:h-96 w-auto self-stretch object-cover"
                   />
                   <div className="flex absolute inset-0 items-end">
-                    <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100">
+                    <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100 text-xs font-light">
                       View Room &rsaquo;
                     </p>
                   </div>
                 </div>
-                <strong>{classif}</strong>
+                <strong className="font-extrabold text-2xl">{classif}</strong>
               </a>
             </Link>
           </li>
