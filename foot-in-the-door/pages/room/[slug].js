@@ -35,12 +35,20 @@ function Room(props) {
    */
   async function loadMore() {
     const currentPage = additionalPages.length
-    const moreArtworks = await getSearchResults(`classification:${slug}`, {
-      from: currentPage + 1,
+    const from = currentPage * perPage
+    const results = await getSearchResults(`classification:${slug}`, {
+      size: perPage,
+      from,
+      useNormalSearch: true,
     })
+
+    const moreArtworks = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 
     setAddlPages(additionalPages.concat([moreArtworks]))
   }
+
+  const lastPage = additionalPages[additionalPages.length - 1]
+  let finishedPaginating = lastPage && lastPage.length < perPage
 
   useEffect(() => {
     setAddlPages([])
@@ -71,24 +79,28 @@ function Room(props) {
           perPage={perPage}
           className="mt-48"
         />
-        {additionalPages.map((page, index) => (
-          <RoomGrid
-            key={`page-${index}`}
-            classification={classification}
-            hits={page}
-            perPage={perPage}
-            className=""
+        {additionalPages.map((page, index) => {
+          return (
+            <RoomGrid
+              key={`page-${index}`}
+              classification={classification}
+              hits={page}
+              perPage={perPage}
+              className=""
+            >
+              Page {index + 2}
+            </RoomGrid>
+          )
+        })}
+        {finishedPaginating || (
+          <button
+            onClick={loadMore}
+            onKeyPress={loadMore}
+            className="block p-4 mx-auto bg-gray-200 color-black w-64"
           >
-            Page {additionalPages.length}
-          </RoomGrid>
-        ))}
-        <button
-          onClick={loadMore}
-          onKeyPress={loadMore}
-          className="block p-4 mx-auto bg-gray-200 color-black w-64"
-        >
-          Show More
-        </button>
+            Show More
+          </button>
+        )}
       </main>
       <aside>
         <LeftRightNav
