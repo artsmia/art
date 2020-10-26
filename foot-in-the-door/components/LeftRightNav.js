@@ -31,8 +31,8 @@ function LRNav(props) {
       className={cx(
         props.className,
         `flex `,
-        showFullNav
-          ? `overflow-x-hidden overflow-y-visible w-screen -ml-8 md:-ml-16 mx-4`
+        showAllAndStretch
+          ? `overflow-x-hidden overflow-y-visible w-screen -ml-4 md:-ml-16 mx-4`
           : '',
         showFullNav ? `justify-center` : 'justify-between'
       )}
@@ -51,7 +51,7 @@ function LRNav(props) {
           <Link key={room} href={`/room/${room.replace(' ', '-')}`}>
             <a
               className={cx(
-                'uppercase px-1',
+                'capitalize px-1 no-underline font-light',
                 showFullNav && isFirstRoom
                   ? 'pr-10 ml-4'
                   : showFullNav && isLastRoom

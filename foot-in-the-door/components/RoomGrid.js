@@ -7,7 +7,7 @@ import {
   unstable_GridCell as GridCell,
 } from 'reakit/Grid'
 
-import { chunkArray, getImageProps, useWindowSize } from '../util'
+import { chunkArray, cx, getImageProps, useWindowSize } from '../util'
 
 function RoomGrid(props) {
   const { hits, focused, perPage, classification, ...containerProps } = props
@@ -32,7 +32,7 @@ function RoomGrid(props) {
   return (
     <section {...containerProps}>
       <p className="uppercase text-center mb-8 font-hairline">
-        Scroll to enter <strong>{classification}</strong> wing
+        Scroll to enter <strong>{classification}</strong>
       </p>
       <Grid {...grid} aria-label="Search Results" className="flex flex-wrap">
         {chunkArray(artworks, gridCols).map((row, rowIndex) => {
@@ -41,17 +41,29 @@ function RoomGrid(props) {
               {row.map((art) => {
                 const {
                   _source: source,
-                  _source: { id, title, artist, description },
+                  _source: {
+                    id,
+                    title,
+                    artist,
+                    description,
+                    image_width,
+                    image_height,
+                  },
                 } = art
 
                 const imageLoadStrategy = rowIndex < 2 ? 'eager' : 'lazy'
+                const imageAspectRatio = image_width / image_height
+                const landscapeImage = imageAspectRatio > 1
 
                 return (
                   <GridCell
                     {...grid}
                     key={id}
                     as="figure"
-                    className="group flex flex-grow relative mx-2"
+                    className={cx(
+                      'group flex relative mx-2',
+                      landscapeImage ? 'flex-grow' : 'flex-shrink'
+                    )}
                   >
                     <Link href={`/art/${id}`}>
                       <a>

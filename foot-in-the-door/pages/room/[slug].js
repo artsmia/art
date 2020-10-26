@@ -19,8 +19,8 @@ function Room(props) {
 
   return (
     <Layout>
-      <main>
-        <h1 className="text-center text-5xl font-black capitalize">
+      <main className="md:mt-24">
+        <h1 className="text-center text-5xl font-black capitalize mb-4">
           {classification}
         </h1>
         <LeftRightNav
@@ -34,7 +34,7 @@ function Room(props) {
           classification={classification}
           hits={hits}
           perPage={perPage}
-          className="mt-64"
+          className="mt-48"
         />
       </main>
       <aside>
