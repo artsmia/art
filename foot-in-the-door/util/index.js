@@ -30,8 +30,11 @@ export async function getSearchResults(term, options = {}) {
   const {
     size, // how many results to fetch
     useNormalSearch, // use a "normal" search or "random". Default: random
+    from: _from,
   } = options
-  const queryParams = `size=${size || 30}&fitd=1`
+
+  const from = _from || 0
+  const queryParams = `size=${size || 30}&from=${from}&fitd=1`
   const searchEndpoint = (term) =>
     `https://search.artsmia.org/${term}?${queryParams}`
   const randomEndpoint = (term) =>

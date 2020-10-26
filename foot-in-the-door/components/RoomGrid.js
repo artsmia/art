@@ -12,7 +12,14 @@ import { chunkArray, cx, getImageProps, useWindowSize } from '../util'
 import { ViewAllLink } from './NavBar'
 
 function RoomGrid(props) {
-  const { hits, focused, perPage, classification, ...containerProps } = props
+  const {
+    hits,
+    focused,
+    perPage,
+    classification,
+    children,
+    ...containerProps
+  } = props
 
   const grid = useGridState()
 
@@ -35,14 +42,18 @@ function RoomGrid(props) {
 
   return (
     <section {...containerProps}>
-      {page !== '/room/all' && (
-        <ViewAllLink className="block text-center no-underline uppercase font-light">
-          View All Groups
-        </ViewAllLink>
+      {children || (
+        <>
+          {page !== '/room/all' && (
+            <ViewAllLink className="block text-center no-underline uppercase font-light">
+              View All Groups
+            </ViewAllLink>
+          )}
+          <p className="uppercase text-center mb-8 font-hairline">
+            Scroll to enter <strong>{classification}</strong>
+          </p>
+        </>
       )}
-      <p className="uppercase text-center mb-8 font-hairline">
-        Scroll to enter <strong>{classification}</strong>
-      </p>
       <Grid {...grid} aria-label="Search Results" className="flex flex-wrap">
         {chunkArray(artworks, gridCols).map((row, rowIndex) => {
           return (

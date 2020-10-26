@@ -1,17 +1,50 @@
 /** @format */
+import { useEffect, useState } from 'react'
+
 import Layout from '../../components/Layout'
 import LeftRightNav from '../../components/LeftRightNav'
 import RoomGrid from '../../components/RoomGrid'
 import { classifications, getSearchResults } from '../../util'
 import { getImages } from '../api/imagesForCarousel'
+import { BecomeAMemberLink, JoinCTAPhrase } from '../../components/NavBar'
 
 function Room(props) {
-  const { classification: _classification, results, imagesForCarousel } = props // slug
+  const {
+    classification: _classification,
+    slug,
+    results,
+    imagesForCarousel,
+  } = props
   const classification =
     _classification === '*' ? 'Foot in the Door' : _classification
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 
   const perPage = 33 // how many items to show per page
+
+  const [additionalPages, setAddlPages] = useState([])
+
+  /** Show more button
+   * keep additional results in state, load more when asked
+   * and display each batch of `perPage` in its own `RoomGrid`
+   *
+   * TODO adjust routing to equal page number?
+   * and enable ServerSide rendering for pages?
+   * This would require not randomly shuffling thorugh artworks…
+   *
+   * Also, expand this functionality to /search?
+   */
+  async function loadMore() {
+    const currentPage = additionalPages.length
+    const moreArtworks = await getSearchResults(`classification:${slug}`, {
+      from: currentPage + 1,
+    })
+
+    setAddlPages(additionalPages.concat([moreArtworks]))
+  }
+
+  useEffect(() => {
+    setAddlPages([])
+  }, [classification])
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -38,6 +71,24 @@ function Room(props) {
           perPage={perPage}
           className="mt-48"
         />
+        {additionalPages.map((page, index) => (
+          <RoomGrid
+            key={`page-${index}`}
+            classification={classification}
+            hits={page}
+            perPage={perPage}
+            className=""
+          >
+            Page {additionalPages.length}
+          </RoomGrid>
+        ))}
+        <button
+          onClick={loadMore}
+          onKeyPress={loadMore}
+          className="block p-4 mx-auto bg-gray-200 color-black w-64"
+        >
+          Show More
+        </button>
       </main>
       <aside>
         <LeftRightNav
