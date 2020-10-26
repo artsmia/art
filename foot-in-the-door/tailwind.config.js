@@ -32,6 +32,8 @@ module.exports = {
       },
       maxWidth: {
         12: '3rem',
+        64: '16rem',
+        96: '24rem',
       },
       transitionProperty: {
         width: 'width, max-width',

@@ -44,7 +44,13 @@ function Room(props) {
           classifications={classifications}
           classification={classification}
           className="flex justify-between mt-16"
-        ></LeftRightNav>
+        >
+          <div className="p-8 bg-gray-200 mt-4 sm:max-w-96 sm:mx-auto sm:-mt-8">
+            <JoinCTAPhrase />
+            <br />
+            <BecomeAMemberLink className="mt-2 inline-block text-center w-auto mx-auto" />
+          </div>
+        </LeftRightNav>
       </aside>
     </Layout>
   )

@@ -9,7 +9,7 @@ import {
 } from 'reakit/Dialog'
 import { useRouter } from 'next/router'
 
-import { classifications, useWindowSize } from '../util'
+import { classifications, cx, useWindowSize } from '../util'
 import SearchInput, { ExpandableSearchInput } from './SearchInput'
 
 function NavBar() {
@@ -68,22 +68,13 @@ export function JoinCTA({ isClosed, onClose }) {
         {isClosed || <HiX className="inline ml-4 -mt-1" />}
       </p>
       <div className="hidden xl:block uppercase tracking-wider font-semibold">
-        <a
-          href="https://ticket.artsmia.org/products/donate"
-          className="p-2 mx-5 hidden xl:inline"
-        >
-          Donate
-        </a>
-        <a
-          href="https://ticket.artsmia.org/products/membership"
-          className="
-            p-2 px-4 bg-gray-900 text-white w-screen
-            absolute -ml-4 -mt-4 mb-6 text-center
+        <DonateLink />
+        <BecomeAMemberLink
+          className={`
+            absolute -ml-4 -mt-4 mb-6 text-center w-screen 
             md:w-auto md:-ml-0 md:-mb-0 md:text-left md:relative
-          "
-        >
-          Become a Member
-        </a>
+            `}
+        />
       </div>
     </div>
   )
@@ -174,5 +165,27 @@ function BackLink({ route }) {
         </a>
       </Link>
     </>
+  )
+}
+
+function DonateLink() {
+  return (
+    <a
+      href="https://ticket.artsmia.org/products/donate"
+      className="p-2 mx-5 hidden xl:inline"
+    >
+      Donate
+    </a>
+  )
+}
+
+export function BecomeAMemberLink({ className }) {
+  return (
+    <a
+      href="https://ticket.artsmia.org/products/membership"
+      className={cx(className, 'p-2 px-4 bg-black text-white no-underline')}
+    >
+      Become a Member
+    </a>
   )
 }

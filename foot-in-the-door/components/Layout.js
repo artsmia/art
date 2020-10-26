@@ -11,7 +11,7 @@ function Layout(props) {
   const [ctaClosed, setCTAClosed] = useState(!stickyCTA)
 
   return (
-    <div className="p-4 md:px-16 md:py-5 text-gray-900 lg:container lg:mx-auto">
+    <div className="p-4 md:px-16 md:py-5 text-gray-900">
       <Head>
         <title>Foot in the Door</title>
         <link rel="icon" href="/favicon.ico" />
