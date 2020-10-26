@@ -103,13 +103,17 @@ export function JoinCTAPhrase({ linkAction }) {
 
 function SmallScreenNav() {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-10 h-screen-4/5 bg-black text-white p-3">
-      <SearchInput dark={true} />
-      <h3 className="font-bold text-2xl">Browse by category</h3>
-      <ul className="">
+    <nav className="fixed inset-x-0 bottom-0 z-30 h-screen-4/5 bg-black text-white p-3">
+      <SearchInput dark={true} className="mt-4" />
+      <h3 className="font-bold text-2xl mt-8 tracking-wide ml-1">
+        Browse by category
+      </h3>
+      <ul className="mt-4 font-light ml-1">
         {classifications.map((c) => (
           <li key={c}>
-            <Link href={`/room/${c.toLowerCase()}`}>{c}</Link>
+            <Link href={`/room/${c.toLowerCase()}`}>
+              <a className="py-8 no-underline text-lg">{c}</a>
+            </Link>
           </li>
         ))}
       </ul>
