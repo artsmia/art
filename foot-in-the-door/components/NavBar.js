@@ -63,15 +63,9 @@ export function JoinCTA({ isClosed, onClose }) {
 
   return (
     <div className="md:flex md:flex-row md:justify-between" {...closeProps}>
-      <p className="">
-        <a
-          href="https://ticket.artsmia.org/catalog/support-mia"
-          {...linkAction}
-        >
-          Support Mia
-        </a>{' '}
-        by becoming a member today. Contributions keep us free and accessible,
-        virtually and in-person. {isClosed || <HiX />}
+      <p className="font-light">
+        <JoinCTAPhrase linkAction={linkAction} />{' '}
+        {isClosed || <HiX className="inline ml-4 -mt-1" />}
       </p>
       <div className="hidden xl:block uppercase tracking-wider font-semibold">
         <a
@@ -92,6 +86,18 @@ export function JoinCTA({ isClosed, onClose }) {
         </a>
       </div>
     </div>
+  )
+}
+
+export function JoinCTAPhrase({ linkAction }) {
+  return (
+    <>
+      <a href="https://ticket.artsmia.org/catalog/support-mia" {...linkAction}>
+        Support Mia
+      </a>{' '}
+      by becoming a member today. Contributions keep us free and accessible,
+      virtually and in-person.
+    </>
   )
 }
 

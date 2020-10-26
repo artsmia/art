@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { HiHeart, HiMail } from '@meronex/icons/hi'
 import { SiTwitter, SiFacebook } from '@meronex/icons/si'
 
+import { JoinCTAPhrase } from '../../../components/NavBar'
 import Layout from '../../../components/Layout'
 import LeftRightNav from '../../../components/LeftRightNav'
 import RoomGrid from '../../../components/RoomGrid'
@@ -55,20 +56,22 @@ function Art(props) {
           )}
         />
         <div
-          className={`flex flex-col justify-between border-t-2 border-black md:w-${rightWidth}`}
+          className={`flex flex-col justify-start border-t-2 border-black
+          md:w-${rightWidth} ml-2
+          `}
         >
-          <div>
+          <div className="font-light">
             <h1 className="text-2xl font-black capitalize">{title}</h1>
-            <h2 className="text-xl font-bold">
-              {artist}, <span className="text-base font-normal">{dated}</span>
+            <h2 className="text-lg font-bold">
+              {artist}, <span className="text-base font-light">{dated}</span>
             </h2>
             <p>{medium}</p>
             <p>{dimension}</p>
-            <p>( color )</p>
+            <p className="bg-pink-300">COLOR SEARCH</p>
             <p className="py-4 hidden">{description}</p>
             {keywordsString && (
               <p className="whitespace-normal break-word">
-                Keywords:{' '}
+                <strong>Keywords</strong>:{' '}
                 {keywords.map((word, index) => (
                   <Fragment key={word}>
                     <Link href={`/search/keywords:${word}`} key={word}>
@@ -81,7 +84,7 @@ function Art(props) {
             )}
           </div>
 
-          <div className="border-t-2 mt-4 self-end">
+          <div className="border-t-2 border-opacity-75 mt-4 self-end">
             <p className="flex items-center">
               {/* TODO use a checkbox instead? */}
               <span
@@ -96,12 +99,8 @@ function Art(props) {
               Share: <HiMail className="mx-1" /> <SiTwitter className="mx-1" />{' '}
               <SiFacebook className="mx-1" />
             </p>
-            <p className="bg-gray-300 px-4 py-2 mt-4">
-              <a href="https://ticket.artsmia.org/catalog/support-mia">
-                Keep Mia open, free, and accessible to all virtually and
-                in-person by becoming a member or donating today. We are always
-                grateful to our members.
-              </a>
+            <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
+              <JoinCTAPhrase />
             </p>
           </div>
         </div>
