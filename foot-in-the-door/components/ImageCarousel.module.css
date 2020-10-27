@@ -1,13 +1,23 @@
+/** @format */
+
 .imageCarousel {
   @apply flex overflow-x-scroll my-4;
-  @apply -mx-4 pl-4;
 
   @screen md {
     width: calc(50% + theme('spacing.16'));
     @apply mx-0;
     margin-right: -4rem;
   }
+
+  scrollbar-width: none;
+
+  & ::-webkit-scrollbar {
+    display: none;
+  }
 }
+/**
+ * https://stackoverflow.com/questions/3296644/hiding-the-scroll-bar-on-an-html-page
+ */
 
 /**
  * TODO - why doesn't `group-hover:` work here?

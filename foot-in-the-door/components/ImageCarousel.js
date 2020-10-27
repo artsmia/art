@@ -40,7 +40,7 @@ function ImageCarousel(props) {
                     </p>
                   </div>
                 </div>
-                <strong className="font-extrabold text-2xl">{classif}</strong>
+                <strong className="font-black text-2xl">{classif}</strong>
               </a>
             </Link>
           </li>

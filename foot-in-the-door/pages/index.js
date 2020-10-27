@@ -11,7 +11,7 @@ function Home(props) {
   return (
     <Layout stickyCTA={true} stickyFooter={true}>
       <main className="md:flex items-center mb-12">
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 mr-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
             Foot in the Door 5
           </h1>
