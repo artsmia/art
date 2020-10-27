@@ -18,6 +18,7 @@ function RoomGrid(props) {
     perPage,
     classification,
     children,
+    hideViewAll,
     ...containerProps
   } = props
 
@@ -44,11 +45,12 @@ function RoomGrid(props) {
     <section {...containerProps}>
       {children || (
         <>
-          {page !== '/room/all' && (
-            <ViewAllLink className="block text-center no-underline uppercase font-light">
-              View All Groups
-            </ViewAllLink>
-          )}
+          {hideViewAll ||
+            (page !== '/room/all' && (
+              <ViewAllLink className="block text-center no-underline uppercase font-light">
+                View All Groups
+              </ViewAllLink>
+            ))}
           <p className="uppercase text-center mb-8 font-hairline">
             Scroll to enter <strong>{classification}</strong>
           </p>
@@ -96,7 +98,9 @@ function RoomGrid(props) {
                         <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
                           <div className="text-white opacity-100 py-6 px-4">
                             <h2 className="font-extrabold">{title}</h2>
-                            <h3 className="font-light">{artist}</h3>
+                            <h3 className="font-light hidden sm:inline-block">
+                              {artist}
+                            </h3>
                           </div>
                         </figcaption>
                       </a>

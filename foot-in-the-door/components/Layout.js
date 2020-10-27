@@ -7,7 +7,7 @@ import { cx } from '../util'
 import NavBar, { JoinCTA } from '../components/NavBar'
 
 function Layout(props) {
-  const { stickyCTA, stickyFooter } = props
+  const { stickyCTA, stickyFooter, hideCTA } = props
   const [ctaClosed, setCTAClosed] = useState(!stickyCTA)
 
   return (
@@ -25,7 +25,8 @@ function Layout(props) {
         className={cx(
           `inset-x-0 top-0 bg-gray-300 py-2 px-8 md:px-16 -mx-4 -mt-3 mb-12
            md:-mx-16 w-screen`,
-          stickyCTA && !ctaClosed ? 'sticky z-20' : ''
+          stickyCTA && !ctaClosed ? 'sticky z-20' : '',
+          hideCTA ? 'hidden' : ''
         )}
       >
         <JoinCTA onClose={() => setCTAClosed(true)} isClosed={ctaClosed} />

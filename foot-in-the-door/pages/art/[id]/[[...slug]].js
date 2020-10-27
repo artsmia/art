@@ -45,7 +45,7 @@ function Art(props) {
   const rightWidth = aspectRatio > 1 ? '1/2' : '1/3'
 
   return (
-    <Layout>
+    <Layout hideCTA={true}>
       <main className="md:flex md:align-start max-h-screen">
         <img
           src={getImageSrc(artwork)}
@@ -107,11 +107,12 @@ function Art(props) {
       </main>
 
       <RoomGrid
-        className="mt-6"
+        className="mt-6 pt-24 sm:pt-0"
         classification={classification}
         hits={classificationResults}
         focused={artwork}
         perPage={30}
+        hideViewAll={true}
       />
 
       <aside>

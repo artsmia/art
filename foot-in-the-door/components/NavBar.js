@@ -24,14 +24,14 @@ function NavBar() {
 
   return (
     <nav className="flex flex-row items-start justify-between">
-      <div className="w-4/5">
+      <div className="w-48 sm:w-auto">
         <HomeLink route={route} />
         <BackLink route={route} />
       </div>
       {isSearchPage ||
         (useDialogSearch ? (
           <div>
-            <DialogDisclosure {...expandedNavDialog} className="w-1/5">
+            <DialogDisclosure {...expandedNavDialog} className="w-12">
               {searchDialogOpen ? (
                 <HiX size="2rem" />
               ) : (
@@ -161,7 +161,8 @@ function BackLink({ route }) {
     <>
       <Link href="/">
         <a className="no-underline font-light">
-          ❮<span>Foot in the Door</span> Exhibition Home
+          ❮<span>Foot in the Door</span>{' '}
+          <span className="hidden sm:inline">Exhibition</span> Home
         </a>
       </Link>
     </>
