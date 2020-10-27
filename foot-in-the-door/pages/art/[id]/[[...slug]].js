@@ -132,7 +132,11 @@ export default Art
 
 // TODO convert to getStaticProps + getStaticPaths
 export async function getServerSideProps({ params }) {
-  const hashids = new Hashids('foot in the door 2020')
+  const hashids = new Hashids(
+    'foot in the door 2020', // salt
+    3, // pad to this length
+    'abcdefghijklmnopqrstuvwxyz' // alphabet: only lowercase letters
+  )
 
   const { id } = params
   const numericID = Number(id) ? Number(id) : hashids.decode(id)
