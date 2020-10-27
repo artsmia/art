@@ -19,7 +19,7 @@ function LRNav(props) {
   const nextRoom = _cls[(roomIndex + 1) % _cls.length]
 
   const { width } = useWindowSize()
-  const showFullNav = showAllAndStretch && width > 838
+  const showFullNav = showAllAndStretch && width > 768
 
   const roomLinks = showFullNav
     ? _cls.filter((room) => room !== classification)
@@ -31,11 +31,11 @@ function LRNav(props) {
         {...containerProps}
         className={cx(
           props.className,
-          `flex `,
-          showAllAndStretch
-            ? `overflow-x-hidden overflow-y-visible w-screen -ml-4 md:-ml-16 mx-4`
-            : '',
-          showFullNav ? `justify-center` : 'justify-between'
+          `flex justify-between overflow-x-hidden`,
+          showAllAndStretch ? `mx-4` : '',
+          showFullNav ? `justify-center` : 'justify-between',
+          'w-screen -ml-4 md:-ml-16',
+          'pt-12 md:pt-40 -mt-8 md:-mt-24'
         )}
       >
         {roomLinks.map((room, index) => {
@@ -52,21 +52,22 @@ function LRNav(props) {
             <Link key={room} href={`/room/${room.replace(' ', '-')}`}>
               <a
                 className={cx(
-                  'px-1 no-underline font-light',
+                  'flex px-2 no-underline font-light group',
                   showFullNav && isFirstRoom
                     ? 'pr-10 ml-4'
                     : showFullNav && isLastRoom
                     ? 'pl-10 mr-4'
                     : '',
-                  showFullNav || 'flex',
-                  isFirstRoom || isLastRoom ? 'uppercase' : 'capitalize'
+                  isFirstRoom || isLastRoom
+                    ? 'uppercase hover:underline'
+                    : 'capitalize text-gray-300 hover:text-black'
                 )}
               >
                 {isFirstRoom && (
                   <PeekImages
                     room={room}
                     imagesForCarousel={imagesForCarousel}
-                    className="-ml-20 left-0"
+                    className="-ml-10 md:-ml-20 left-0 pr-2"
                     showFullNav={showFullNav}
                   />
                 )}
@@ -75,7 +76,7 @@ function LRNav(props) {
                   <PeekImages
                     room={room}
                     imagesForCarousel={imagesForCarousel}
-                    className="-mr-24 right-0"
+                    className="-mr-10 md:-mr-24 right-0 pl-2"
                     showFullNav={showFullNav}
                   />
                 )}
@@ -107,8 +108,8 @@ function PeekImages(props) {
     <div
       className={cx(
         className,
-        showFullNav ? 'h-screen overflow-y-visible overflow-x-hidden' : '',
-        showFullNav ? 'absolute -mt-32' : '-mt-12'
+        showFullNav ? '-mt-40' : '-mt-5 md:-mt-12',
+        'opacity-75 group-hover:opacity-100'
       )}
     >
       {artworks.map((art) => (
@@ -116,7 +117,7 @@ function PeekImages(props) {
           key={art._id}
           {...getImageProps(art._source)}
           alt={art._source.description}
-          className="mb-1 w-32 h-auto"
+          className="mb-1 w-16 md:w-32 h-auto"
         />
       ))}
     </div>

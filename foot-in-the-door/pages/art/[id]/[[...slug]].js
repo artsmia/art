@@ -123,7 +123,7 @@ function Art(props) {
         <LeftRightNav
           classifications={classifications}
           classification={artwork.classification}
-          className="flex justify-between mt-48"
+          className="flex justify-between pt-48"
           imagesForCarousel={imagesForCarousel}
         >
           <SupportCTA />

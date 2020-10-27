@@ -61,8 +61,8 @@ function Room(props) {
   // }
 
   return (
-    <Layout>
-      <main className="md:mt-24">
+    <Layout hideCTA={true}>
+      <main className="md:my-16 flex flex-col">
         <h1 className="text-center text-5xl font-black capitalize mb-4">
           {classification}
         </h1>
@@ -71,13 +71,13 @@ function Room(props) {
           classification={classification}
           showAllAndStretch={true}
           imagesForCarousel={imagesForCarousel}
-          className="mt-16 -mb-16 md:my-0"
+          className="order-first md:order-none"
         />
         <RoomGrid
           classification={classification}
           hits={hits}
           perPage={perPage}
-          className="mt-48"
+          className="mt-24"
         />
         {additionalPages.map((page, index) => {
           return (
@@ -106,7 +106,7 @@ function Room(props) {
         <LeftRightNav
           classifications={classifications}
           classification={classification}
-          className="flex justify-between mt-48"
+          className="flex justify-between pt-48"
           imagesForCarousel={imagesForCarousel}
         >
           <SupportCTA />
