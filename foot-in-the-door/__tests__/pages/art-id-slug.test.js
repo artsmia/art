@@ -1,5 +1,5 @@
 /** @format */
-import { getServerSideProps } from './[[...slug]]'
+import { getServerSideProps } from '../../pages/art/[id]/[[...slug]]'
 
 // TODO move these into a `mocks` file?
 // prettier-ignore
