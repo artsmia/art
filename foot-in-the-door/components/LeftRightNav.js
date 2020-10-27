@@ -25,8 +25,6 @@ function LRNav(props) {
     ? _cls.filter((room) => room !== classification)
     : [prevRoom, nextRoom]
 
-  console.info('LeftRightNav', { showFullNav, showAllAndStretch, width })
-
   return (
     <>
       <nav
