@@ -6,7 +6,7 @@ import { SiTwitter, SiFacebook } from '@meronex/icons/si'
 import Hashids from 'hashids/cjs'
 import makeSlug from 'slug'
 
-import { JoinCTAPhrase } from '../../../components/NavBar'
+import { JoinCTAPhrase, SupportCTA } from '../../../components/NavBar'
 import Layout from '../../../components/Layout'
 import LeftRightNav from '../../../components/LeftRightNav'
 import RoomGrid from '../../../components/RoomGrid'
@@ -18,6 +18,7 @@ import {
   getSearchResults,
   likeArtwork,
 } from '../../../util'
+import { getImages } from '../../api/imagesForCarousel'
 
 function Art(props) {
   const {
@@ -35,6 +36,7 @@ function Art(props) {
       image_height,
     },
     classificationResults,
+    imagesForCarousel,
   } = props
 
   const keywords = (keywordsString.replace(/\s\s+/, ' ').indexOf(',') > -1
@@ -121,8 +123,11 @@ function Art(props) {
         <LeftRightNav
           classifications={classifications}
           classification={artwork.classification}
-          className="flex justify-between mt-16"
-        ></LeftRightNav>
+          className="flex justify-between mt-48"
+          imagesForCarousel={imagesForCarousel}
+        >
+          <SupportCTA />
+        </LeftRightNav>
       </aside>
     </Layout>
   )
@@ -159,11 +164,14 @@ export async function getServerSideProps({ params }) {
       },
     } // v9.5.4 https://github.com/vercel/next.js/pull/16642/files#diff-318f35e639c875557159a9297bd3415458e884208be91285a622f9484395aa83R28-R33
 
+  const imagesForCarousel = await getImages(4)
+
   return {
     props: {
       id: numericID,
       artwork,
       classificationResults,
+      imagesForCarousel,
     },
   }
 }

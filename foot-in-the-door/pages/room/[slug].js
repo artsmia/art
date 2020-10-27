@@ -6,7 +6,7 @@ import LeftRightNav from '../../components/LeftRightNav'
 import RoomGrid from '../../components/RoomGrid'
 import { classifications, getSearchResults } from '../../util'
 import { getImages } from '../api/imagesForCarousel'
-import { BecomeAMemberLink, JoinCTAPhrase } from '../../components/NavBar'
+import { SupportCTA } from '../../components/NavBar'
 
 function Room(props) {
   const {
@@ -96,7 +96,7 @@ function Room(props) {
           <button
             onClick={loadMore}
             onKeyPress={loadMore}
-            className="block p-4 mx-auto bg-gray-200 color-black w-64"
+            className="block mt-6 p-4 mx-auto bg-gray-200 color-black w-64"
           >
             Show More
           </button>
@@ -106,13 +106,10 @@ function Room(props) {
         <LeftRightNav
           classifications={classifications}
           classification={classification}
-          className="flex justify-between mt-16"
+          className="flex justify-between mt-48"
+          imagesForCarousel={imagesForCarousel}
         >
-          <div className="p-8 bg-gray-200 mt-4 sm:max-w-96 sm:mx-auto sm:-mt-8">
-            <JoinCTAPhrase />
-            <br />
-            <BecomeAMemberLink className="mt-2 inline-block text-center w-auto mx-auto" />
-          </div>
+          <SupportCTA />
         </LeftRightNav>
       </aside>
     </Layout>

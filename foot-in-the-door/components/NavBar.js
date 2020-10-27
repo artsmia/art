@@ -190,3 +190,13 @@ export function BecomeAMemberLink({ className }) {
     </a>
   )
 }
+
+export function SupportCTA() {
+  return (
+    <div className="p-8 bg-gray-200 mt-4 sm:max-w-96 sm:mx-auto sm:-mt-40 text-center">
+      <JoinCTAPhrase />
+      <br />
+      <BecomeAMemberLink className="mt-2 inline-block text-center w-auto mx-auto uppercase" />
+    </div>
+  )
+}

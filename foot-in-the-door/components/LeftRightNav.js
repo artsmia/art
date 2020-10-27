@@ -52,13 +52,14 @@ function LRNav(props) {
             <Link key={room} href={`/room/${room.replace(' ', '-')}`}>
               <a
                 className={cx(
-                  'capitalize px-1 no-underline font-light',
+                  'px-1 no-underline font-light',
                   showFullNav && isFirstRoom
                     ? 'pr-10 ml-4'
                     : showFullNav && isLastRoom
                     ? 'pl-10 mr-4'
                     : '',
-                  showFullNav || 'flex'
+                  showFullNav || 'flex',
+                  isFirstRoom || isLastRoom ? 'uppercase' : 'capitalize'
                 )}
               >
                 {isFirstRoom && (

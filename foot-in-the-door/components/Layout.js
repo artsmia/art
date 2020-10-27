@@ -38,7 +38,8 @@ function Layout(props) {
         className={cx(
           stickyFooter
             ? 'md:sticky md:bottom-0 md:bg-white md:w-screen md:-ml-16 md:px-16 md:z-10'
-            : ''
+            : '',
+          'mt-16'
         )}
       >
         <SponsorLockup />
