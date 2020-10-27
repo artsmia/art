@@ -99,8 +99,8 @@ function PeekImages(props) {
   const size = showFullNav ? 3 : 1
 
   let artworks = (
-    imagesForCarousel.find(
-      (arr) => arr[0]._source.classification.toLowerCase() === room
+    imagesForCarousel.find((arr) =>
+      arr[0]._source.classification.toLowerCase().match(room)
     ) || []
   ).slice(0, size)
 
