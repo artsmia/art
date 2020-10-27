@@ -13,12 +13,14 @@
   },
   "dependencies": {
     "@meronex/icons": "^4.0.0",
+    "hashids": "^2.2.1",
     "next": "9.5.4",
     "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-preset-env": "^6.7.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "reakit": "^1.2.5",
+    "slug": "^4.0.1",
     "tailwindcss": "^1.8.12"
   },
   "devDependencies": {

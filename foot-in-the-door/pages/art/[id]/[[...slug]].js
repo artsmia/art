@@ -3,6 +3,8 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { HiHeart, HiMail } from '@meronex/icons/hi'
 import { SiTwitter, SiFacebook } from '@meronex/icons/si'
+import Hashids from 'hashids/cjs'
+import makeSlug from 'slug'
 
 import { JoinCTAPhrase } from '../../../components/NavBar'
 import Layout from '../../../components/Layout'
@@ -130,18 +132,32 @@ export default Art
 
 // TODO convert to getStaticProps + getStaticPaths
 export async function getServerSideProps({ params }) {
-  const { id } = params
-  // TODO redirect `/[id]` to canonical `/[id]/[slug]`
+  const hashids = new Hashids('foot in the door 2020')
 
-  const artwork = await fetchById(id)
+  const { id } = params
+  const numericID = Number(id) ? Number(id) : hashids.decode(id)
+  const hashid = hashids.encode(numericID)
+
+  const artwork = await fetchById(numericID)
+  // console.info({ id, numericID, hashid, artwork })
   const classification = artwork.classification.toLowerCase().replace(' ', '-')
   const classificationResults = await getSearchResults(
     `classification:${classification}`
   )
 
+  const slug = makeSlug([artwork.title, artwork.artist].join(' '))
+  // Because slug is a `[[...slug]]` route it's in an array. Is this necessary?
+  if (id === numericID || !params.slug || slug !== params.slug[0])
+    return {
+      unstable_redirect: {
+        destination: `/exhibitions/2760/foot-in-the-door/art/${hashid}/${slug}`,
+        permanent: true,
+      },
+    } // v9.5.4 https://github.com/vercel/next.js/pull/16642/files#diff-318f35e639c875557159a9297bd3415458e884208be91285a622f9484395aa83R28-R33
+
   return {
     props: {
-      id,
+      id: numericID,
       artwork,
       classificationResults,
     },
