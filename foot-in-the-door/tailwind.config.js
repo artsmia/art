@@ -38,11 +38,16 @@ module.exports = {
       transitionProperty: {
         width: 'width, max-width',
       },
+      spacing: {
+        96: '24rem',
+        128: '32rem',
+      },
     },
   },
   variants: {
     display: ['responsive', 'hover', 'focus', 'group-hover', 'group-focus'],
+    opacity: ['hover', 'group-hover'],
     borderColor: ['focus-within'],
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 }

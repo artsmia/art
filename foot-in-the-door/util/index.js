@@ -65,13 +65,24 @@ export const classifications = [
   'Mixed Media',
 ]
 
+const isDev = false // TODO env var? Next magic var?
+const searchEndpoint = isDev
+  ? `http://localhost:4680`
+  : `https://search.artsmia.org`
 export async function likeArtwork(id) {
-  const isDev = false // TODO env var? Next magic var?
-  const searchEndpoint = isDev
-    ? `http://localhost:4680`
-    : `https://search.artsmia.org`
   const surveyEndpoint = `${searchEndpoint}/survey/art/fitd|${id}/like?subset=fitd`
   const res = await fetch(surveyEndpoint, {
+    credentials: 'include',
+  })
+  const text = await res.text()
+
+  return text
+}
+
+export async function updateSurvey(data) {
+  const surveyEndpoint = `${searchEndpoint}/survey/foot-in-the-door-visit?data=${data}`
+  const res = await fetch(surveyEndpoint, {
+    // method: data ? 'PUT' : 'GET',
     credentials: 'include',
   })
   const text = await res.text()

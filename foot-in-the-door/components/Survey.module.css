@@ -1,0 +1,22 @@
+/** @format */
+
+.survey {
+  @apply mt-6 mx-auto px-2;
+
+  & input {
+    @apply mr-1;
+  }
+
+  & input[type='textarea'] {
+    @apply border rounded p-1 w-64;
+  }
+}
+.questions {
+  @apply m-0 list-none;
+
+  scroll-snap-type: y mandatory;
+
+  & li {
+    scroll-snap-align: start;
+  }
+}
