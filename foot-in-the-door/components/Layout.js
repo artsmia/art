@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 import { cx } from '../util'
 import NavBar, { JoinCTA } from '../components/NavBar'
+import { ConditionalSurvey } from '../components/Survey'
 
 function Layout(props) {
   const { stickyCTA, stickyFooter, hideCTA } = props
@@ -43,6 +44,7 @@ function Layout(props) {
         )}
       >
         <SponsorLockup />
+        <ConditionalSurvey />
       </footer>
     </div>
   )

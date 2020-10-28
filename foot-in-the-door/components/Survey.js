@@ -1,5 +1,12 @@
 /** @format */
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import {
+  useDialogState,
+  Dialog,
+  DialogDisclosure,
+  DialogBackdrop,
+} from 'reakit/Dialog'
 
 import styles from './Survey.module.css'
 import { cx, updateSurvey } from '../util'
@@ -9,8 +16,14 @@ function Survey(props) {
   const givenAnswers = surveyData.data
   const [formIsValid, setFormIsValid] = useState(false)
   const formRef = useRef(null)
-  const { accepted, rejected } = givenAnswers || {}
-  const { isPopup } = props
+  const { accepted, rejected, completed } = givenAnswers || {}
+  const {
+    isPopup,
+    className,
+    toggleSurveyButton,
+    showSurvey,
+    hideSurvey,
+  } = props
 
   useEffect(() => {
     async function getInitialSurveyData() {
@@ -19,8 +32,16 @@ function Survey(props) {
         { credentials: 'include' }
       )
       const data = await response.json()
+      const { userId, answers } = data
+      const { completed, rejected } = answers || {}
 
       setSurveyData(data)
+
+      // IF the survey is not rejected or completed, call back to the
+      // popup manager to open?
+      if (userId && !(rejected || completed)) {
+        showSurvey && showSurvey()
+      }
     }
 
     getInitialSurveyData()
@@ -103,7 +124,7 @@ function Survey(props) {
    */
   useEffect(() => {
     async function saveSurveyData() {
-      await updateSurvey(JSON.stringify(givenAnswers))
+      await updateSurvey(JSON.stringify(givenAnswers), surveyData.userId)
     }
 
     const hasAnswers = givenAnswers && Object.keys(givenAnswers).length > 0
@@ -123,10 +144,27 @@ function Survey(props) {
   }
   function rejectSurvey() {
     updateAnswers({ rejected: new Date() })
+    hideSurvey && setTimeout(hideSurvey, 5000)
   }
-  if (isPopup && !(accepted || rejected)) {
+  function modifySurvey(timeout) {
+    updateAnswers({ completed: null })
+    clearTimeout(timeout)
+  }
+
+  const surveyStyles = cx('prose', className, styles.survey)
+
+  if (isPopup && !surveyData?.userId) {
+    return null
+  }
+
+  if (isPopup && !!rejected) {
+    hideSurvey && hideSurvey(true)
+    return null
+  }
+
+  if ((isPopup && !accepted) || !rejected) {
     return (
-      <aside className={cx(styles.survey, 'prose')}>
+      <aside className={surveyStyles}>
         <h2>Please take our 5 question survey</h2>
         <p>
           Would you be able to answer three quick questions to help us improve
@@ -139,8 +177,28 @@ function Survey(props) {
     )
   }
 
+  if (completed) {
+    const timeout = setTimeout(hideSurvey, 3000)
+    return (
+      <aside className={surveyStyles}>
+        <p>You&apos;ve completed the survey! Thanks.</p>
+        <button onClick={() => modifySurvey(timeout)}>
+          Go back and modify your answers
+        </button>
+        {isPopup ? (
+          <button onClick={hideSurvey}>Close</button>
+        ) : (
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+        )}
+      </aside>
+    )
+  }
+
   return (
-    <form id="survey" className={cx(styles.survey, 'prose')} ref={formRef}>
+    <form id="survey" className={surveyStyles} ref={formRef}>
+      {isPopup && false && toggleSurveyButton}
       <ol className={styles.questions}>
         {questions.map(({ q, answers, id, type, siblings, ...inputProps }) => {
           const answerGiven = (givenAnswers && givenAnswers[id]) || []
@@ -195,7 +253,7 @@ function Survey(props) {
       >
         Submit
       </button>
-      <button>Cancel</button>
+      {hideSurvey && <button onClick={hideSurvey}>Cancel</button>}
     </form>
   )
 }
@@ -264,3 +322,59 @@ Radio`.split('\n'),
     type: 'checkbox',
   },
 ]
+
+export function ConditionalSurvey(props) {
+  const [surveyDismissed, setSurveyDismissed] = useState(false)
+  const surveyDialog = useDialogState({ visible: props.visible })
+  const { visible: surveyDialogOpen } = surveyDialog
+  const toggleSurveyButton = (
+    <DialogDisclosure {...surveyDialog}>Show Visitor Survey</DialogDisclosure>
+  )
+  const hideSurvey = function (status) {
+    surveyDialog.hide()
+    // don't keep trying to re-open the survey after it's been  opened and
+    // closed once
+    setSurveyDismissed(true)
+    if (status === 'rejected') {
+      // TODO once there's a place for global state, save
+      // that the survey was rejected there
+    }
+  }
+
+  function queueOpenSurvey() {
+    const pagesVisited = typeof window !== 'undefined' && window.history.length
+    if (pagesVisited > 4 && !surveyDismissed) surveyDialog.show()
+  }
+
+  const survey = (
+    <Survey
+      isPopup={true}
+      toggleSurveyButton={toggleSurveyButton}
+      hideSurvey={hideSurvey}
+      showSurvey={queueOpenSurvey}
+      className="fixed right-0 bottom-0 bg-white p-10
+    w-screen md:w-auto max-h-screen overflow-scroll
+    shadow-2xl z-30"
+      {...props}
+    />
+  )
+
+  return (
+    <div className="">
+      {surveyDialogOpen ? (
+        <DialogBackdrop
+          {...surveyDialog}
+          className="fixed inset-0 transition-all duration-500"
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
+        >
+          <Dialog {...surveyDialog} aria-label="Visitor Survey">
+            {survey}
+          </Dialog>
+        </DialogBackdrop>
+      ) : (
+        <div className="hidden">{survey}</div>
+      )}
+      <p className="text-xs float-right pb-4">{toggleSurveyButton}</p>
+    </div>
+  )
+}

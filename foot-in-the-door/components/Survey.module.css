@@ -1,8 +1,6 @@
 /** @format */
 
 .survey {
-  @apply mt-6 mx-auto px-2;
-
   & input {
     @apply mr-1;
   }
@@ -18,7 +16,8 @@
   & button {
     @apply border bg-black text-white px-4 py-2 block;
   }
-  & button + button {
+  & button + button,
+  & button + a {
     @apply border-0 bg-white text-gray-300 mt-2 text-sm;
   }
 

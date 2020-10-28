@@ -79,8 +79,10 @@ export async function likeArtwork(id) {
   return text
 }
 
-export async function updateSurvey(data) {
-  const surveyEndpoint = `${searchEndpoint}/survey/foot-in-the-door-visit?data=${data}`
+export async function updateSurvey(data, userId) {
+  // is it a good idea to pass `userId` as an unsecured param?
+  // Could the data get mixed up by someone?
+  const surveyEndpoint = `${searchEndpoint}/survey/foot-in-the-door-visit?data=${data}&userId=${userId}`
   const res = await fetch(surveyEndpoint, {
     // method: data ? 'PUT' : 'GET',
     credentials: 'include',

@@ -3,10 +3,17 @@ import { useRouter } from 'next/router'
 
 import Survey from '../components/Survey'
 
-export default function SurveyPage() {
+function SurveyPage() {
   const {
     query: { simulatePopup },
   } = useRouter()
 
-  return <Survey isPopup={simulatePopup} />
+  return (
+    <Survey
+      isPopup={simulatePopup}
+      className={simulatePopup ? '' : 'mt-6 mx-auto px-2'}
+    />
+  )
 }
+
+export default SurveyPage
