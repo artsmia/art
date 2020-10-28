@@ -10,6 +10,21 @@
   & input[type='textarea'] {
     @apply border rounded p-1 w-64;
   }
+
+  & input:invalid:required {
+    /* @apply border-red-300; */
+  }
+
+  & button {
+    @apply border bg-black text-white px-4 py-2 block;
+  }
+  & button + button {
+    @apply border-0 bg-white text-gray-300 mt-2 text-sm;
+  }
+
+  & button[disabled] {
+    @apply opacity-50;
+  }
 }
 .questions {
   @apply m-0 list-none;

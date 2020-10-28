@@ -1,11 +1,16 @@
 /** @format */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import styles from './Survey.module.css'
-import { updateSurvey } from '../util'
+import { cx, updateSurvey } from '../util'
 
-function Survey() {
-  const [givenAnswers, setAnswers] = useState({})
+function Survey(props) {
+  const [surveyData, setSurveyData] = useState({})
+  const givenAnswers = surveyData.data
+  const [formIsValid, setFormIsValid] = useState(false)
+  const formRef = useRef(null)
+  const { accepted, rejected } = givenAnswers || {}
+  const { isPopup } = props
 
   useEffect(() => {
     async function getInitialSurveyData() {
@@ -15,7 +20,7 @@ function Survey() {
       )
       const data = await response.json()
 
-      setAnswers(data.data)
+      setSurveyData(data)
     }
 
     getInitialSurveyData()
@@ -55,6 +60,7 @@ function Survey() {
           : existingAnswers
       }
     } else {
+      // for single-value inputs, pass the value
       thisAnswer = value
     }
 
@@ -63,39 +69,89 @@ function Survey() {
       [name]: thisAnswer,
     }
 
-    setAnswers(nextAnswers)
+    updateAnswers(nextAnswers)
 
+    // For items with an `output` element as their sibling, update
+    // the output to reflect the input's current value
     const { nextElementSibling } = target
     if (nextElementSibling && nextElementSibling.type === 'output') {
       nextElementSibling.innerText = value
     }
   }
 
+  function updateAnswers(data) {
+    setSurveyData({
+      ...surveyData,
+      data: {
+        ...givenAnswers,
+        ...data,
+      },
+    })
+  }
+
+  /**
+   * update when answers are changed
+   *
+   * TODO
+   *
+   * sniff out incognito mode browsers or where cookies
+   * are disabled. Message that cookies are required and wait
+   * to show the survey
+   *
+   * debounce valid save calls
+   * move logic into `updateSurvey`?
+   */
   useEffect(() => {
     async function saveSurveyData() {
       await updateSurvey(JSON.stringify(givenAnswers))
     }
 
-    const hasAnswers = Object.keys(givenAnswers).length > 0
-    // TODO debounce this to 5 seconds?
+    const hasAnswers = givenAnswers && Object.keys(givenAnswers).length > 0
     if (hasAnswers) saveSurveyData()
+
+    // use html5's native form validity API to enable/disable submit button
+    setFormIsValid(formRef?.current?.checkValidity())
   }, [givenAnswers])
 
+  /** Show an intro screen if this is a popup,
+   * asking the visitor to accept or reject the survey.
+   * If accepted, move to the survey questions,
+   * if rejected, fade away.
+   */
+  function acceptSurvey() {
+    updateAnswers({ accepted: new Date() })
+  }
+  function rejectSurvey() {
+    updateAnswers({ rejected: new Date() })
+  }
+  if (isPopup && !(accepted || rejected)) {
+    return (
+      <aside className={cx(styles.survey, 'prose')}>
+        <h2>Please take our 5 question survey</h2>
+        <p>
+          Would you be able to answer three quick questions to help us improve
+          your experience?
+        </p>
+
+        <button onClick={acceptSurvey}>Ya, sure</button>
+        <button onClick={rejectSurvey}>No thanks</button>
+      </aside>
+    )
+  }
+
   return (
-    <form id="survey" className={[styles.survey, 'prose'].join(' ')}>
-      <h2>Please take our 5 question survey</h2>
+    <form id="survey" className={cx(styles.survey, 'prose')} ref={formRef}>
       <ol className={styles.questions}>
         {questions.map(({ q, answers, id, type, siblings, ...inputProps }) => {
+          const answerGiven = (givenAnswers && givenAnswers[id]) || []
           return (
             <li key={id} className="question">
               <h3>{q}</h3>
               {answers && answers.map ? (
                 answers.map((a) => {
                   const isChosen =
-                    Boolean(answers) &&
-                    givenAnswers &&
-                    (a === givenAnswers[id] ||
-                      (givenAnswers[id] || []).indexOf(a) > -1)
+                    Boolean(answerGiven) &&
+                    (a === answerGiven || (answerGiven || []).indexOf(a) > -1)
 
                   return (
                     <label key={a} className="block">
@@ -104,6 +160,7 @@ function Survey() {
                         name={id}
                         onChange={handleChange}
                         checked={isChosen}
+                        required={!answerGiven.length}
                       />
                       {a}
                     </label>
@@ -116,7 +173,8 @@ function Survey() {
                     name={id}
                     {...inputProps}
                     onChange={handleChange}
-                    defaultValue={givenAnswers[id]}
+                    defaultValue={answerGiven}
+                    required={!answerGiven.length}
                   />
                   {siblings}
                 </label>
@@ -125,6 +183,19 @@ function Survey() {
           )
         })}
       </ol>
+
+      {!formIsValid && (
+        <p className="">
+          Make sure you&rsquo;ve filled in all the questions above
+        </p>
+      )}
+      <button
+        disabled={!formIsValid}
+        onClick={() => updateAnswers({ completed: new Date() })}
+      >
+        Submit
+      </button>
+      <button>Cancel</button>
     </form>
   )
 }

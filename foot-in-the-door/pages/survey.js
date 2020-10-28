@@ -1,3 +1,12 @@
 /** @format */
+import { useRouter } from 'next/router'
 
-export { default } from '../components/Survey'
+import Survey from '../components/Survey'
+
+export default function SurveyPage() {
+  const {
+    query: { simulatePopup },
+  } = useRouter()
+
+  return <Survey isPopup={simulatePopup} />
+}
