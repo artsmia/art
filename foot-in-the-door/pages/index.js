@@ -7,6 +7,27 @@ import SearchInput from '../components/SearchInput'
 
 import { getImages } from './api/imagesForCarousel'
 
+const events = [
+  {
+    href: 'https://new.artsmia.org/event/virtual-family-day-foot-in-the-door',
+    title: 'Virtual Family Day: Foot in the Door',
+    date: 'Sunday, November 8, 2020',
+    time: '10:00 am',
+  },
+  {
+    href: 'https://new.artsmia.org/event/virtual-open-mic-foot-in-the-door',
+    title: 'Virtual Open Mic: Foot in the Door',
+    date: 'Sunday, November 21, 2020',
+    time: '12:00pm to 1:30 pm',
+  },
+  {
+    href: 'https://new.artsmia.org/event/virtual-open-studio-foot-in-the-door',
+    title: 'Virtual Open Studio: Foot in the Door',
+    date: 'Friday, December 18, 2020',
+    time: '1:00 pm to 2:00 pm',
+  },
+]
+
 function Home(props) {
   return (
     <Layout stickyCTA={true} stickyFooter={true}>
@@ -51,29 +72,25 @@ function Home(props) {
         />
       </main>
       <aside className="md:flex pb-6">
-        <div id="video" className="bg-pink-200 p-3 md:w-1/2 md:mx-2">
-          VIDEO placeholder
+        <div id="video" className="md:w-1/2 mr-12">
+          <div
+            style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}
+          >
+            <iframe
+              title="Foot in the Door 5 Artist: Ilene Krug Mojsilov"
+              src="https://player.vimeo.com/video/471541996?color=ffffff&byline=0"
+              frameBorder="0"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            ></iframe>
+          </div>
         </div>
-        <div id="related-events" className="md:w-1/2 md:mx-2 text-sm">
+        <div id="related-events" className="md:w-1/2 md:mx-2 text-sm md:pl-1">
           <h3 className="font-black text-2xl">Exhibition Events</h3>
-          <Link href="https://new.artsmia.org/event/virtual-family-day-foot-in-the-door">
-            <a className="block bg-gray-300 my-4 p-2 px-4 font-light no-underline">
-              <h3 className="font-black text-lg">
-                Virtual Family Day: Foot in the Door
-              </h3>
-              <p>Sunday, November 8, 2020</p>
-              <p>10:00 am</p>
-            </a>
-          </Link>
-          <Link href="https://new.artsmia.org/event/virtual-open-mic-foot-in-the-door">
-            <a className="block bg-gray-300 my-4 p-2 px-4 font-light no-underline">
-              <h3 className="font-black text-lg">
-                Virtual Open Mic: Foot in the Door
-              </h3>
-              <p>Saturday, November 21, 2020</p>
-              <p>12:00 pm to 1:30 pm</p>
-            </a>
-          </Link>
+          {events.map((event) => (
+            <EventBox key={event.title} {...event} />
+          ))}
         </div>
       </aside>
     </Layout>
@@ -90,4 +107,17 @@ export async function getStaticProps() {
       classificationLeadingImages,
     },
   }
+}
+
+function EventBox(props) {
+  const { href, title, date, time } = props
+  return (
+    <Link href={href}>
+      <a className="block bg-gray-300 my-4 p-2 px-4 font-light no-underline hover:bg-black hover:text-white">
+        <h3 className="font-black text-lg">{title}</h3>
+        <p>{date}</p>
+        <p>{time}</p>
+      </a>
+    </Link>
+  )
 }
