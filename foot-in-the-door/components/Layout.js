@@ -90,23 +90,23 @@ function SponsorLockup() {
 }
 
 const logos = {
-  delta: ['delta.svg', 'Delta Airlines', 'h-4 mt-4', 'https://delta.com'],
+  delta: ['delta.svg', 'Delta Airlines', 'h-4 mt-4', 'https://www.delta.com'],
   'mn-legacy': [
     'mn-legacy.svg',
     'Minnesota Legacy Amendment',
-    'h-24',
+    'h-24 pb-2',
     'https://www.legacy.mn.gov/',
   ],
   msab: [
     'msab.svg',
     'Minnesota State Arts Board',
-    'h-24',
+    'h-24 pb-2',
     'http://www.arts.state.mn.us/',
   ],
   target: [
     'target.svg',
     'Target Corporation',
-    'h-8 ml-8 mt-3',
+    'h-10 ml-8 mt-1',
     'https://target.com',
   ],
   'thomson-reuters': [

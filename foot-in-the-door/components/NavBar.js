@@ -67,14 +67,9 @@ export function JoinCTA({ isClosed, onClose }) {
         <JoinCTAPhrase linkAction={linkAction} />{' '}
         {isClosed || <HiX className="inline ml-4 -mt-1" />}
       </p>
-      <div className="hidden xl:block uppercase tracking-wider font-semibold">
+      <div className="hidden xl:block uppercase tracking-wider font-semibold text-sm">
         <DonateLink />
-        <BecomeAMemberLink
-          className={`
-            absolute -ml-4 -mt-4 mb-6 text-center w-screen 
-            md:w-auto md:-ml-0 md:-mb-0 md:text-left md:relative
-            `}
-        />
+        <BecomeAMemberLink />
       </div>
     </div>
   )
@@ -173,7 +168,7 @@ function DonateLink() {
   return (
     <a
       href="https://ticket.artsmia.org/products/donate"
-      className="p-2 mx-5 hidden xl:inline"
+      className="p-2 mx-5 hidden xl:inline no-underline"
     >
       Donate
     </a>
