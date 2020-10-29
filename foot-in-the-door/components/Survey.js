@@ -32,7 +32,7 @@ function Survey(props) {
         { credentials: 'include' }
       )
       const data = await response.json()
-      const { userId, answers } = data
+      const { userId, data: answers } = data
       const { completed, rejected } = answers || {}
 
       setSurveyData(data)
@@ -40,7 +40,7 @@ function Survey(props) {
       // IF the survey is not rejected or completed, call back to the
       // popup manager to open?
       if (userId && !(rejected || completed)) {
-        showSurvey && showSurvey()
+        isPopup && showSurvey && showSurvey()
       }
     }
 
@@ -162,7 +162,7 @@ function Survey(props) {
     return null
   }
 
-  if ((isPopup && !accepted) || !rejected) {
+  if (isPopup && !accepted && !rejected) {
     return (
       <aside className={surveyStyles}>
         <h2>Please take our 5 question survey</h2>
@@ -182,9 +182,7 @@ function Survey(props) {
     return (
       <aside className={surveyStyles}>
         <p>You&apos;ve completed the survey! Thanks.</p>
-        <button onClick={() => modifySurvey(timeout)}>
-          Go back and modify your answers
-        </button>
+        <button onClick={() => modifySurvey(timeout)}>Edit response</button>
         {isPopup ? (
           <button onClick={hideSurvey}>Close</button>
         ) : (
@@ -327,6 +325,9 @@ export function ConditionalSurvey(props) {
   const [surveyDismissed, setSurveyDismissed] = useState(false)
   const surveyDialog = useDialogState({ visible: props.visible })
   const { visible: surveyDialogOpen } = surveyDialog
+
+  if (surveyDismissed) return null
+
   const toggleSurveyButton = (
     <DialogDisclosure {...surveyDialog}>Show Visitor Survey</DialogDisclosure>
   )
