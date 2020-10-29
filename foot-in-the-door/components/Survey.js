@@ -165,13 +165,13 @@ function Survey(props) {
   if (isPopup && !accepted && !rejected) {
     return (
       <aside className={surveyStyles}>
-        <h2>Please take our 5 question survey</h2>
+        <h2>Visitor Experience Survey</h2>
         <p>
-          Would you be able to answer three quick questions to help us improve
+          Would you be able to answer six quick questions to help us improve
           your experience?
         </p>
 
-        <button onClick={acceptSurvey}>Ya, sure</button>
+        <button onClick={acceptSurvey}>Yes</button>
         <button onClick={rejectSurvey}>No thanks</button>
       </aside>
     )
@@ -309,8 +309,7 @@ Many times a year`.split('\n'),
     siblings: <output htmlFor="recommend" className="pl-2 -mt-1" />,
   },
   {
-    q:
-      'How did you hear about this virtual exhibition? (select all that apply)',
+    q: 'How did you hear about this virtual exhibition? Select all that apply',
     id: 'hear',
     answers: `Mia email
 Mia website
@@ -325,6 +324,21 @@ export function ConditionalSurvey(props) {
   const [surveyDismissed, setSurveyDismissed] = useState(false)
   const surveyDialog = useDialogState({ visible: props.visible })
   const { visible: surveyDialogOpen } = surveyDialog
+  const prevDialogOpen = useRef()
+
+  useEffect(
+    function () {
+      // dialog was just closed by escape or clicking on the Backdrop
+      // set `surveyDismissed`
+      if (prevDialogOpen?.current && !surveyDialogOpen) {
+        setSurveyDismissed(true)
+        // also reject so the dialog doesn't keep popping up?
+        // maybe set a 3 day expiration on any rejection?
+      }
+      prevDialogOpen.current = surveyDialogOpen
+    },
+    [surveyDialogOpen]
+  )
 
   if (surveyDismissed) return null
 
@@ -355,7 +369,7 @@ export function ConditionalSurvey(props) {
       showSurvey={queueOpenSurvey}
       className="fixed right-0 bottom-0 bg-white p-10
     w-screen md:w-auto max-h-screen overflow-scroll
-    shadow-2xl z-30"
+    shadow-2xl z-40"
       {...props}
     />
   )
@@ -365,7 +379,7 @@ export function ConditionalSurvey(props) {
       {surveyDialogOpen ? (
         <DialogBackdrop
           {...surveyDialog}
-          className="fixed inset-0 transition-all duration-500"
+          className="fixed inset-0 transition-all duration-500 z-40"
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
         >
           <Dialog {...surveyDialog} aria-label="Visitor Survey">
