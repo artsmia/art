@@ -32,9 +32,9 @@ var Exhibition = React.createClass({
           .then((json) => {
             // Publish artworks mainly based on `public_access: 1`, but whitelist
             // specific exhibitions to show all works, regardless of public_access status
-            const loanExhibitionWhitelist = [2802, 2778, 2851]
-            const exhibitionWhitelisted = loanExhibitionWhitelist.indexOf(id) > -1
-            const publishableArtworks = exhibitionWhitelisted
+            const loanExhibitionAllowlist = [2802, 2778, 2851, 2854]
+            const exhibitionAllowlisted = loanExhibitionAllowlist.indexOf(id) > -1
+            const publishableArtworks = exhibitionAllowlisted
               ? json.hits.hits
               : json.hits.hits.filter(({_source: s}) => s && s.public_access == "1")
 
