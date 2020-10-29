@@ -2,11 +2,11 @@
 import Link from 'next/link'
 
 import styles from './ImageCarousel.module.css'
-import { getImageProps } from '../util'
+import { cx, getImageProps } from '../util'
 
 function ImageCarousel(props) {
   const isCollapsed = props.isCollapsed || true
-  const data = props.data
+  const { className, data } = props
 
   const loading = (
     <Link href="/room/ceramics">
@@ -19,7 +19,7 @@ function ImageCarousel(props) {
   return !data ? (
     loading
   ) : (
-    <ul className={styles.imageCarousel}>
+    <ul className={cx(styles.imageCarousel, className)}>
       {data.map((art, carouselIndex) => {
         const { classification: cl } = art
         const classif = cl.replace(' (including Digital)', '')

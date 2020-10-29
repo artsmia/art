@@ -45,6 +45,10 @@ function Layout(props) {
       >
         <SponsorLockup />
         <ConditionalSurvey />
+        <p className="font-lignt text-xs text-center">
+          The concepts expressed in this show are those of the artists, not the
+          museum. Please direct inquiries to visit@artsmia.org.
+        </p>
       </footer>
     </div>
   )

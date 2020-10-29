@@ -10,7 +10,7 @@ import { getImages } from './api/imagesForCarousel'
 function Home(props) {
   return (
     <Layout stickyCTA={true} stickyFooter={true}>
-      <main className="md:flex items-center mb-12">
+      <main className="md:flex items-start mb-12">
         <div className="md:w-1/2 mr-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
             Foot in the Door 5
@@ -19,23 +19,36 @@ function Home(props) {
             The Virtual Exhibition
           </h2>
           <p className="py-4 font-light">
-            Held once every 10 years, “Foot in the Door” is an open exhibition
-            for all Minnesota artists. Now marking its fourth decade, this
-            exhibition celebrates the talent, diversity, and enthusiasm of
-            Minnesota’s visual artists. This is an important event for the arts
-            community and a great opportunity for artists to display their work
-            at Mia. The sole curatorial criteria? Each submission must fit
-            within one cubic foot.
+            Since 1980, “Foot in the Door” has been an open exhibition for
+            Minnesotan artists of all ages to present their work at the
+            Minneapolis Institute of Art. The exhibition occurs once every 10
+            years, and by now, generations of artists have participated in it.
+            The sole curatorial criteria? All submissions must measure at or
+            under 12 inches in height, width, and depth—literally inviting
+            artists to place “a foot” in the museum’s galleries.
           </p>
           <p className="py-4 font-light">
-            New this year, the exhibition is going virtual! In order to
-            prioritize safety, this exhibition will be completely digital to
-            accommodate the huge number of participating artists and visitors.
+            Serving as a snapshot of Minnesota’s creative scene, “Foot in the
+            Door 5” celebrates the talent, diversity, and enthusiasm of our
+            state’s visual artists. To prioritize safety for artists, visitors,
+            and staff alike, this celebration of our community’s creativity is
+            entirely virtual this year. Thanks to all artists who make this
+            exhibition possible, especially amid the coronavirus pandemic and
+            subsequent economic and personal impacts. You are proof that in
+            times of adversity, creativity still triumphs.
+          </p>
+          <p className="py-4 font-light">
+            Please note: Because this is an open-call exhibition, it might
+            contain artworks some viewers consider inappropriate or
+            objectionable. That’s democratic artistic expression in action.
           </p>
 
           <SearchInput className="my-6" />
         </div>
-        <ImageCarousel data={props.classificationLeadingImages} />
+        <ImageCarousel
+          data={props.classificationLeadingImages}
+          className="sticky top-0"
+        />
       </main>
       <aside className="md:flex pb-6">
         <div id="video" className="bg-pink-200 p-3 md:w-1/2 md:mx-2">
