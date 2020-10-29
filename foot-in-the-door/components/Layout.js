@@ -45,7 +45,7 @@ function Layout(props) {
       >
         <SponsorLockup />
         <ConditionalSurvey />
-        <p className="font-lignt text-xs text-center">
+        <p className="mt-2 font-lignt text-xs text-center">
           The concepts expressed in this show are those of the artists, not the
           museum. Please direct inquiries to visit@artsmia.org.
         </p>
@@ -60,16 +60,22 @@ function SponsorLockup() {
   return (
     <ol id="sponsor-lockup" className="md:flex flex-row">
       <div className="text-xs md:w-2/3 flex-shrink-0 lg:flex lg:border-t-2 lg:mt-4 border-black">
-        <li className="border-t-2 lg:border-t-0 mt-4 lg:mt-0 border-black">
+        <li className="border-t-2 lg:border-t-0 mt-4 lg:mt-0 border-black min-w-72">
           Lead Sponsors:
           <div className="flex flex-wrap content-between">
             <Logo name="thomson-reuters" />
             <Logo name="target" />
           </div>
         </li>
-        <li className="border-t-2 lg:border-t-0 mt-4 lg:mt-0 lg:pl-16 xl:pl-48 border-black">
-          Major Sponsor:
-          <Logo name="delta" />
+        <li className="border-t-2 lg:border-t-0 mt-4 lg:mt-0 lg:pl-4 xl:pl-32 border-black flex justify-start">
+          <p>
+            Major Sponsor:
+            <Logo name="delta" />
+          </p>
+          <p className="ml-12">
+            Media Sponsor:
+            <Logo name="startribune" />
+          </p>
         </li>
       </div>
       <li className="border-t-2 mt-4 border-black">
@@ -110,7 +116,7 @@ const logos = {
   target: [
     'target.svg',
     'Target Corporation',
-    'h-10 ml-8 mt-1',
+    'h-10 ml-6 mt-1',
     'https://target.com',
   ],
   'thomson-reuters': [
@@ -118,6 +124,12 @@ const logos = {
     'Thomson Reuters Corporation',
     'h-8 mt-3',
     'https://www.thomsonreuters.com/',
+  ],
+  startribune: [
+    'startribune.svg',
+    'StarTribune',
+    'h-5 mt-2',
+    'https://www.startribune.com',
   ],
 }
 
