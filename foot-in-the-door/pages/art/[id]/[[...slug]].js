@@ -1,6 +1,7 @@
 /** @format */
 import { Fragment } from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 import { HiHeart, HiMail } from '@meronex/icons/hi'
 import { SiTwitter, SiFacebook } from '@meronex/icons/si'
 import Hashids from 'hashids/cjs'
@@ -100,8 +101,7 @@ function Art(props) {
               >
                 <HiHeart />
               </span>
-              Share: <HiMail className="mx-1" /> <SiTwitter className="mx-1" />{' '}
-              <SiFacebook className="mx-1" />
+              <ShareLinks art={artwork} />
             </p>
             <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
               <JoinCTAPhrase />
@@ -119,7 +119,13 @@ function Art(props) {
         hideViewAll={true}
       />
 
-      <aside>
+      <Link href={`/room/${artwork.classification.toLowerCase()}`}>
+        <a className="px-4 py-4 font-light float-right uppercase">
+          {artwork.classification} &rsaquo;
+        </a>
+      </Link>
+
+      <aside className="mt-24">
         <LeftRightNav
           classifications={classifications}
           classification={artwork.classification}
@@ -185,4 +191,42 @@ export async function _getStaticPaths() {
     }),
     fallback: true,
   }
+}
+
+function ShareLinks(props) {
+  const { art } = props
+  const title = `${art.title} by ${art.artist}`
+  const shareMessage = `Visit this artwork in Mia’s Foot in the Door Exhibition`
+  // const shareUrl = `https://collections.artsmia.org/exhibitions/2760/foot-in-the-door/art/${art.id}`
+  // const shareUrl = `https://fitd.vercel.app/exhibitions/2760/foot-in-the-door/art/${art.id}`
+  const shareUrl = `https://fitd-kjell.lume1.vercel.app/exhibitions/2760/foot-in-the-door/art/${art.id}`
+  const emailLink = `mailto:?subject=${shareMessage}&body=${shareUrl}`
+  const twitterLink = `https://twitter.com/intent/tweet?url=${shareUrl}`
+  const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`
+  const imageSrc = getImageSrc(art)
+
+  return (
+    <>
+      <Head>
+        <title>{title} | Foot in the Door</title>
+        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content="" />
+        <meta property="og:image" content={imageSrc} />
+        <meta property="og:url" content={shareUrl} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:site" content="@artsmia" />
+      </Head>
+      Share:
+      <a href={emailLink}>
+        <HiMail className="mx-1" size="1.5rem" />
+      </a>{' '}
+      <a href={twitterLink} _target="blank">
+        <SiTwitter className="mx-1" size="1.5rem" />
+      </a>{' '}
+      <a href={facebookLink} _target="blank">
+        <SiFacebook className="mx-1" size="1.5rem" />
+      </a>
+    </>
+  )
 }
