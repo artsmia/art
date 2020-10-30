@@ -73,13 +73,13 @@ function Home(props) {
         />
       </main>
       <aside className="md:flex pb-6">
-        <div id="video" className="md:w-1/2 mr-12">
+        <div id="video" className="md:w-1/2 pb-8 md: pb-0 md:mr-12">
           <figure
             style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}
           >
             <iframe
               title="Foot in the Door 5 Artist: Ilene Krug Mojsilov"
-              src="https://player.vimeo.com/video/471541996?color=ffffff&byline=0&dnt=1&title=0&portrait=0"
+              src="https://player.vimeo.com/video/471541996?color=ffffff&byline=0&dnt=1&title=0&portrait=0&texttrack=en"
               frameBorder="0"
               allow="autoplay; fullscreen"
               allowFullScreen
