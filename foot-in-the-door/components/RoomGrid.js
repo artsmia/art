@@ -10,6 +10,7 @@ import {
 
 import { chunkArray, cx, getImageProps, useWindowSize } from '../util'
 import { ViewAllLink } from './NavBar'
+import LikeControl from './LikeControl'
 
 function RoomGrid(props) {
   const {
@@ -19,6 +20,7 @@ function RoomGrid(props) {
     classification,
     children,
     hideViewAll,
+    hideLikeControl,
     ...containerProps
   } = props
 
@@ -28,6 +30,7 @@ function RoomGrid(props) {
     // When there is a 'focused' artwork, remove it from the grid so it
     // isn't shown both at the top of the page and in the 'see more' results.
     .filter((art) => art !== focused)
+    .filter(({ _source: art }) => !!art)
     .slice(0, perPage)
 
   // Columns as a function of window width.
@@ -83,7 +86,7 @@ function RoomGrid(props) {
                     key={id}
                     as="figure"
                     className={cx(
-                      'group flex relative mx-2',
+                      'relative group flex relative mx-2',
                       landscapeImage ? 'flex-grow' : 'flex-shrink'
                     )}
                   >
@@ -102,6 +105,12 @@ function RoomGrid(props) {
                               {artist}
                             </h3>
                           </div>
+                          {hideLikeControl || (
+                            <LikeControl
+                              artwork={source}
+                              className="p-6 hidden md:inline"
+                            />
+                          )}
                         </figcaption>
                       </a>
                     </Link>

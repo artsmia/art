@@ -54,9 +54,9 @@ function LRNav(props) {
                 className={cx(
                   'flex px-2 no-underline font-light group',
                   showFullNav && isFirstRoom
-                    ? 'pr-10 ml-4'
+                    ? 'pr-4 lg:pr-10 ml-4'
                     : showFullNav && isLastRoom
-                    ? 'pl-10 mr-4'
+                    ? 'pl-4 lg:pl-10 mr-4'
                     : '',
                   isFirstRoom || isLastRoom
                     ? 'uppercase hover:underline'

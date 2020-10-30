@@ -2,7 +2,7 @@
 import { Fragment } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
-import { HiHeart, HiMail } from '@meronex/icons/hi'
+import { HiMail } from '@meronex/icons/hi'
 import { SiTwitter, SiFacebook } from '@meronex/icons/si'
 import Hashids from 'hashids/cjs'
 import makeSlug from 'slug'
@@ -16,10 +16,11 @@ import {
   cx,
   fetchById,
   getImageSrc,
+  getImageProps,
   getSearchResults,
-  likeArtwork,
 } from '../../../util'
 import { getImages } from '../../api/imagesForCarousel'
+import LikeControl from '../../../components/LikeControl'
 
 function Art(props) {
   const {
@@ -48,18 +49,21 @@ function Art(props) {
   const aspectRatio = image_width / image_height
   const leftWidth = aspectRatio > 1 ? '1/2' : '2/3'
   const rightWidth = aspectRatio > 1 ? '1/2' : '1/3'
+  const imageProps = getImageProps(artwork)
+  const { src } = imageProps
 
   return (
     <Layout hideCTA={true}>
-      <main className="md:flex md:align-start max-h-screen">
-        <img
-          src={getImageSrc(artwork)}
-          alt={description}
+      <main className="md:flex md:align-start min-h-screen-3/5">
+        <div
           className={cx(
-            `md:w-${leftWidth}`,
-            'px-4 object-contain object-center'
+            `relative md:w-${leftWidth}`,
+            'object-contain object-center max-h-screen mr-4',
           )}
-        />
+        >
+          <img {...imageProps} alt={description} key={artwork.id} />
+          <LikeControl artwork={artwork} showConfirmation={true} />
+        </div>
         <div
           className={`flex flex-col justify-start border-t-2 border-black
           md:w-${rightWidth} ml-2
@@ -109,7 +113,12 @@ function Art(props) {
         hideViewAll={true}
       />
 
-      <Link href={`/room/${artwork.classification.toLowerCase()}`}>
+      <Link
+        href={`/room/${artwork.classification
+          .replace(' (including Digital)', '')
+          .toLowerCase()
+          .replace(' ', '-')}`}
+      >
         <a className="px-4 py-4 font-light float-right uppercase">
           {artwork.classification} &rsaquo;
         </a>

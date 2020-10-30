@@ -70,6 +70,8 @@ const searchEndpoint = isDev
   ? `http://localhost:4680`
   : `https://search.artsmia.org`
 export async function likeArtwork(id) {
+  if (isNaN(id)) return // console.error('non-numeric artwork ID')
+
   const surveyEndpoint = `${searchEndpoint}/survey/art/fitd|${id}/like?subset=fitd`
   const res = await fetch(surveyEndpoint, {
     credentials: 'include',
@@ -77,6 +79,25 @@ export async function likeArtwork(id) {
   const text = await res.text()
 
   return text
+}
+
+export async function getUserLikes() {
+  const surveyEndpoint = `${searchEndpoint}/survey/favorites`
+  const res = await fetch(surveyEndpoint, {
+    credentials: 'include',
+  })
+  const { userId, likes } = await res.json()
+
+  const ids = likes.map((id) => id.replace('fitd|', '')).join(',')
+  if (ids.length === 0) return { userId, likes, artworkResults: null }
+  const res2 = await fetch(`http://search.artsmia.org/ids/${ids}?fitd=1`)
+  const artworkResults = await res2.json()
+
+  return {
+    userId,
+    likes,
+    artworkResults,
+  }
 }
 
 export async function updateSurvey(data, userId) {
