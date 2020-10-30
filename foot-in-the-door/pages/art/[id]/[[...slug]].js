@@ -21,6 +21,7 @@ import {
 } from '../../../util'
 import { getImages } from '../../api/imagesForCarousel'
 import LikeControl from '../../../components/LikeControl'
+import ImageWithBackground from '../../../components/ImageWithBackground'
 
 function Art(props) {
   const {
@@ -50,12 +51,13 @@ function Art(props) {
   const leftWidth = aspectRatio > 1 ? '1/2' : '2/3'
   const rightWidth = aspectRatio > 1 ? '1/2' : '1/3'
   const imageProps = getImageProps(artwork)
-  const { src } = imageProps
+  const { src: imageSrc } = imageProps
 
   return (
     <Layout hideCTA={true}>
       <main className="md:flex md:align-start min-h-screen-3/5">
-        <div
+        <ImageWithBackground
+          imageSrc={imageSrc}
           className={cx(
             `relative md:w-${leftWidth}`,
             'object-contain object-center max-h-screen mr-4',
@@ -63,7 +65,7 @@ function Art(props) {
         >
           <img {...imageProps} alt={description} key={artwork.id} />
           <LikeControl artwork={artwork} showConfirmation={true} />
-        </div>
+        </ImageWithBackground>
         <div
           className={`flex flex-col justify-start border-t-2 border-black
           md:w-${rightWidth} ml-2

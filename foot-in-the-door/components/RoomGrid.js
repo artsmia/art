@@ -11,6 +11,7 @@ import {
 import { chunkArray, cx, getImageProps, useWindowSize } from '../util'
 import { ViewAllLink } from './NavBar'
 import LikeControl from './LikeControl'
+import ImageWithBackground from './ImageWithBackground'
 
 function RoomGrid(props) {
   const {
@@ -80,6 +81,9 @@ function RoomGrid(props) {
                 const imageAspectRatio = image_width / image_height
                 const landscapeImage = imageAspectRatio > 1
 
+                const imageProps = getImageProps(source)
+                const { src: imageSrc } = imageProps
+
                 return (
                   <GridCell
                     {...grid}
@@ -91,11 +95,11 @@ function RoomGrid(props) {
                     )}
                   >
                     <Link href={`/art/${id}`}>
-                      <a>
+                      <ImageWithBackground as="a" imageSrc={imageSrc}>
                         <img
                           className="h-auto w-full"
                           loading={imageLoadStrategy}
-                          {...getImageProps(source)}
+                          {...imageProps}
                           alt={description}
                         />
                         <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
@@ -112,7 +116,7 @@ function RoomGrid(props) {
                             />
                           )}
                         </figcaption>
-                      </a>
+                      </ImageWithBackground>
                     </Link>
                   </GridCell>
                 )
