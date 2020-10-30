@@ -7,6 +7,7 @@ import {
   unstable_GridRow as GridRow,
   unstable_GridCell as GridCell,
 } from 'reakit/Grid'
+import { HiOutlineChevronDown } from '@meronex/icons/hi'
 
 import { chunkArray, cx, getImageProps, useWindowSize } from '../util'
 import { ViewAllLink } from './NavBar'
@@ -20,10 +21,12 @@ function RoomGrid(props) {
     perPage,
     classification,
     children,
-    hideViewAll,
+    // hideViewAll,
     hideLikeControl,
     ...containerProps
   } = props
+
+  const hideViewAll = true
 
   const grid = useGridState()
 
@@ -55,9 +58,10 @@ function RoomGrid(props) {
                 View All Groups
               </ViewAllLink>
             ))}
-          <p className="uppercase text-center mb-8 font-hairline">
+          <p className="uppercase text-center font-hairline">
             Scroll to enter <strong>{classification}</strong>
           </p>
+          <HiOutlineChevronDown className="mx-auto" aria-hidden="true" />
         </>
       )}
       <Grid {...grid} aria-label="Search Results" className="flex flex-wrap">

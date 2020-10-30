@@ -35,7 +35,7 @@ function LRNav(props) {
           showAllAndStretch ? `mx-4` : '',
           showFullNav ? `justify-center` : 'justify-between',
           'w-screen -ml-4 md:-ml-16',
-          'pt-12 md:pt-40 -mt-8 md:-mt-24'
+          'pt-12 md:pt-48 -mt-8 md:-mt-24'
         )}
       >
         {roomLinks.map((room, index) => {
@@ -108,7 +108,7 @@ function PeekImages(props) {
     <div
       className={cx(
         className,
-        showFullNav ? '-mt-40' : '-mt-5 md:-mt-12',
+        showFullNav ? '-mt-48' : '-mt-5 md:-mt-12',
         'opacity-75 group-hover:opacity-100'
       )}
     >

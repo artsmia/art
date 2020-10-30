@@ -67,7 +67,7 @@ function Room(props) {
   return (
     <Layout hideCTA={true}>
       <main className="md:my-16 flex flex-col">
-        <h1 className="text-center text-5xl font-black capitalize mb-4">
+        <h1 className="text-center text-5xl font-black capitalize md:-mb-20 md:mt-20">
           {classification}
         </h1>
         <LeftRightNav
@@ -100,7 +100,7 @@ function Room(props) {
           <button
             onClick={loadMore}
             onKeyPress={loadMore}
-            className="block mt-6 p-4 mx-auto bg-gray-200 color-black w-64"
+            className="block mt-6 p-4 mx-auto bg-gray-200 color-black w-64 hover:bg-gray-300"
           >
             Show More
           </button>
