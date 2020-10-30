@@ -1,12 +1,65 @@
 /** @format */
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 
 import styles from './ImageCarousel.module.css'
 import { cx, getImageProps } from '../util'
 
 function ImageCarousel(props) {
+  const [carouselIndex, setCarouselIndex] = useState(0)
   const isCollapsed = props.isCollapsed || true
   const { className, data } = props
+
+  const observerRef = useRef()
+  const carouselRef = useRef()
+  // why won't #map work here? React complains about hooks being called inconsistently
+  const itemRefs = data.reduce((refs) => refs.concat(useRef()), [])
+
+  useEffect(() => {
+    if (!carouselRef?.current) return
+    function ioCallback(entries) {
+      // entries have scrolled into- or out of- the container's bounds.
+      // find the container that just scrolled off, and re-set the index
+      // to the item next to that?
+      const scrolledPastEvent = entries.find((e) => e.intersectionRect.x <= 0)
+
+      if (scrolledPastEvent) {
+        const scrolledPastIndex = itemRefs.findIndex(
+          (ref) => ref.current === scrolledPastEvent.target
+        )
+        // Determine the direction of the current scroll based on `boundingClientRect`.
+        // If the rectancle in on the right side of the screeen (`x` > some threshold),
+        // the items are being scrolled to the left and visa verse.
+        const direction = scrolledPastEvent.boundingClientRect.x < 500 ? 1 : -2
+
+        setCarouselIndex(scrolledPastIndex + direction)
+      }
+    }
+
+    const observer = new IntersectionObserver(ioCallback, {
+      root: carouselRef.current,
+      threshold: 0,
+    })
+    observerRef.current = observer
+
+    itemRefs.map((ref) => observer.observe(ref.current))
+
+    return () => observer.disconnect()
+  }, [carouselRef])
+
+  function scrollToItem(index) {
+    // somehow disable intersection observer when scrolling manually?
+    // observerRef.current
+    const scrollToEl = carouselRef.current.querySelectorAll(`li`)[index]
+    scrollToEl?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'start',
+    })
+  }
+  useEffect(() => {
+    // scrollToItem(index)
+  }, [carouselIndex])
 
   const loading = (
     <Link href="/room/ceramics">
@@ -19,34 +72,59 @@ function ImageCarousel(props) {
   return !data ? (
     loading
   ) : (
-    <ul className={cx(styles.imageCarousel, className)}>
-      {data.map((art, carouselIndex) => {
-        const { classification: cl } = art
-        const classif = cl.replace(' (including Digital)', '')
-        return (
-          <li key={art.id} className="p-1 w-48 focus:w-auto flex-shrink-0">
-            <Link href={`/room/${classif.toLowerCase().replace(' ', '-')}`}>
-              <a className="no-underline">
-                <div className="group relative mx-1">
-                  <img
-                    {...getImageProps(art)}
-                    alt={art.description}
-                    loading={carouselIndex > 3 ? 'lazy' : undefined}
-                    className="border-black border-b-4 h-64 md:h-96 w-auto self-stretch object-cover"
-                  />
-                  <div className="flex absolute inset-0 items-end">
-                    <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100 text-xs font-light">
-                      View Room &rsaquo;
-                    </p>
+    <div className={cx(styles.imageCarousel, className)}>
+      <ul ref={carouselRef}>
+        {data.map((art, index) => {
+          const { classification: cl } = art
+          const classif = cl.replace(' (including Digital)', '')
+          return (
+            <li
+              key={art.id}
+              className="p-1 w-48 focus:w-auto flex-shrink-0"
+              ref={itemRefs[index]}
+            >
+              <Link href={`/room/${classif.toLowerCase().replace(' ', '-')}`}>
+                <a className="no-underline">
+                  <div className="group relative mx-1">
+                    <img
+                      {...getImageProps(art)}
+                      alt={art.description}
+                      loading={index > 3 ? 'lazy' : undefined}
+                      className="border-black border-b-4 h-64 md:h-96 w-auto self-stretch object-cover"
+                    />
+                    <div className="flex absolute inset-0 items-end">
+                      <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100 text-xs font-light">
+                        View Room &rsaquo;
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <strong className="font-black text-2xl">{classif}</strong>
-              </a>
-            </Link>
-          </li>
-        )
-      })}
-    </ul>
+                  <strong className="font-black text-2xl">{classif}</strong>
+                </a>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+      <p className="flex">
+        {data.map((art, index) => {
+          const currentIndex = index === carouselIndex
+          return (
+            <span
+              className={cx(
+                currentIndex ? 'bg-black w-12' : 'bg-gray-200',
+                'block w-8 h-3 mr-2'
+              )}
+              key={index}
+              onClick={() => scrollToItem(index)}
+              onKeyPress={() => scrollToItem(index)}
+              role="button"
+              tabIndex="0"
+              title={`Scroll to ${art.classification}`}
+            ></span>
+          )
+        })}
+      </p>
+    </div>
   )
 }
 

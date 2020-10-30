@@ -1,7 +1,9 @@
 /** @format */
 
 .imageCarousel {
-  @apply flex overflow-x-scroll my-4;
+  & ul {
+    @apply flex overflow-x-scroll my-4;
+  }
 
   @screen md {
     width: calc(50% + theme('spacing.16'));
