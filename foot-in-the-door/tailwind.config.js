@@ -20,6 +20,7 @@ module.exports = {
           300: '#E1E1E1',
           400: '#6F6F6F',
           500: '#FAFAFA',
+          600: '#939393',
           700: '#757575',
           800: '#161616',
           900: '#1F1F1F',
@@ -54,6 +55,7 @@ module.exports = {
   },
   variants: {
     display: ['responsive', 'hover', 'focus', 'group-hover', 'group-focus'],
+    visibility: ['responsive', 'hover', 'group-hover'],
     opacity: ['hover', 'group-hover'],
     borderColor: ['focus-within'],
   },
