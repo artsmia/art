@@ -9,7 +9,7 @@ function Search(props) {
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 
   return (
-    <Layout>
+    <Layout hideCTA={true}>
       <main>
         <h1 className="text-center text-5xl font-black capitalize -mt-6">
           <SearchInput terms={rawTerms} />
@@ -36,7 +36,7 @@ export async function getServerSideProps(context) {
     query: { size },
   } = context
   const searchResults = await getSearchResults(rawTerms, {
-    size: size || 55,
+    size: size || 321,
     useNormalSearch: true,
   })
 

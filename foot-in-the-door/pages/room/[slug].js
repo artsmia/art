@@ -36,11 +36,15 @@ function Room(props) {
   async function loadMore() {
     const currentPage = additionalPages.length
     const from = currentPage * perPage
-    const results = await getSearchResults(`classification:${slug}`, {
-      size: perPage,
-      from,
-      useNormalSearch: true,
-    })
+
+    const results = await getSearchResults(
+      `classification:${slug === 'all' ? '*' : slug}`,
+      {
+        size: perPage,
+        from,
+        useNormalSearch: true,
+      }
+    )
 
     const moreArtworks = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 

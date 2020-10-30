@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react'
 export function getImageSrc(artworkData, thumbnail = true) {
   const id = artworkData.id
   const imageFilename = artworkData.image
-  const thumb = 'tn_' + imageFilename.replace(/jpeg|png|JPG/i, 'jpg')
+  const thumb =
+    'tn_' +
+    imageFilename.replace(/jpeg|png|JPG|tiff?$/i, 'jpg').replace('+', '%2B')
   const bucket = Math.ceil(Math.max(id - 1, 1) / 135)
   const image = `${bucket}/${imageFilename}`
 
