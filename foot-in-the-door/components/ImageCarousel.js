@@ -25,13 +25,13 @@ function ImageCarousel(props) {
         const classif = cl.replace(' (including Digital)', '')
         return (
           <li key={art.id} className="p-1 w-48 focus:w-auto flex-shrink-0">
-            <Link href={`/room/${classif.toLowerCase()}`}>
+            <Link href={`/room/${classif.toLowerCase().replace(' ', '-')}`}>
               <a className="no-underline">
                 <div className="group relative mx-1">
                   <img
                     {...getImageProps(art)}
                     alt={art.description}
-                    loading={carouselIndex > 3 && 'lazy'}
+                    loading={carouselIndex > 3 ? 'lazy' : undefined}
                     className="border-black border-b-4 h-64 md:h-96 w-auto self-stretch object-cover"
                   />
                   <div className="flex absolute inset-0 items-end">
