@@ -1,6 +1,6 @@
 /** @format */
 import Link from 'next/link'
-import { HiSearch, HiX } from '@meronex/icons/hi'
+import { HiSearch, HiX, HiOutlineChevronLeft } from '@meronex/icons/hi'
 import {
   useDialogState,
   Dialog,
@@ -24,9 +24,12 @@ function NavBar() {
 
   return (
     <nav className="flex flex-row items-start justify-between">
-      <div className="w-48 sm:w-auto">
-        <HomeLink route={route} />
-        <BackLink route={route} />
+      <div className="w-48 sm:w-auto md:flex md:flex-grow md:justify-between md:flex-wrap">
+        <LogoLink route={route} className="mb-2" />
+        <div className="text-sm uppercase">
+          <ExhibitionHomeLink route={route} />
+          <ExitExhibitionLink route={route} />
+        </div>
       </div>
       {isSearchPage ||
         (useDialogSearch ? (
@@ -49,7 +52,7 @@ function NavBar() {
             </DialogBackdrop>
           </div>
         ) : (
-          <ExpandableSearchInput className="ml-10" />
+          <ExpandableSearchInput className="ml-10 -mt-2" />
         ))}
     </nav>
   )
@@ -58,18 +61,19 @@ function NavBar() {
 export default NavBar
 
 export function JoinCTA({ isClosed, onClose }) {
+  const showCloseButton = false
   const closeProps = { onClick: onClose, onKeyPress: onClose }
-  const linkAction = { onClick: (e) => e.stopPropagation() }
+  const stopPropagation = { onClick: (e) => e.stopPropagation() }
 
   return (
     <div className="md:flex md:flex-row md:justify-between" {...closeProps}>
       <p className="font-light">
-        <JoinCTAPhrase linkAction={linkAction} />{' '}
-        {isClosed || <HiX className="inline ml-4 -mt-1" />}
+        <JoinCTAPhrase linkAction={stopPropagation} />{' '}
+        {showCloseButton && (isClosed || <HiX className="inline ml-4 -mt-1" />)}
       </p>
       <div className="hidden xl:block uppercase tracking-wider font-semibold text-sm">
-        <DonateLink />
-        <BecomeAMemberLink />
+        <DonateLink onClick={stopPropagation} />
+        <BecomeAMemberLink onClick={stopPropagation} />
       </div>
     </div>
   )
@@ -128,39 +132,67 @@ function Logo() {
     />
   )
 }
-function HomeLink({ route }) {
+function LogoLink({ route, ...props }) {
   const alwaysLinkToArtsmiaHome = true || route === '/'
 
   return alwaysLinkToArtsmiaHome ? (
-    <a href="https://artsmia.org">
+    <a href="https://artsmia.org" {...props}>
       <Logo />
     </a>
   ) : (
     <Link href="/">
-      <a>
+      <a {...props}>
         <Logo />
       </a>
     </Link>
   )
 }
 
-function BackLink({ route }) {
-  return route === '/' ? (
+function ExhibitionHomeLink({ route, className }) {
+  const { width } = useWindowSize()
+  const chevronLeft = (
+    <HiOutlineChevronLeft
+      className="inline -mt-1 md:hidden"
+      aria-hidden="true"
+    />
+  )
+
+  const linkStyles = `font-light no-underline hover:underline md:text-gray-400`
+
+  return route === '/' && width < 768 ? (
     <a
       href="https://new.artsmia.org/exhibitions/"
-      className="font-light no-underline"
+      className={cx(className, linkStyles)}
     >
-      ❮ Exit Exhibition
+      {chevronLeft} Exit Exhibition
     </a>
   ) : (
     <>
       <Link href="/">
-        <a className="no-underline font-light">
-          ❮<span>Foot in the Door</span>{' '}
+        <a className={cx(className, linkStyles)}>
+          {chevronLeft}
+          <span className="sm:hidden">Foot in the Door</span>{' '}
           <span className="hidden sm:inline">Exhibition</span> Home
         </a>
       </Link>
     </>
+  )
+}
+
+function ExitExhibitionLink({ className, ...props }) {
+  return (
+    <a
+      href="https://new.artsmia.org/exhibitions"
+      className={cx(
+        'border no-underline font-bold p-2 ml-2 hidden md:inline',
+        'hover:bg-black hover:text-white',
+        className
+      )}
+      {...props}
+      title="Show All Exhibitions at Mia"
+    >
+      Exit Exhibition
+    </a>
   )
 }
 
@@ -188,7 +220,7 @@ export function BecomeAMemberLink({ className }) {
 
 export function SupportCTA() {
   return (
-    <div className="p-8 bg-gray-200 mt-4 sm:max-w-96 sm:mx-auto sm:-mt-40 text-center">
+    <div className="p-8 bg-gray-200 mt-4 sm:max-w-96 sm:mx-auto sm:-mt-40 text-center hover:bg-gray-300 group">
       <JoinCTAPhrase />
       <br />
       <BecomeAMemberLink className="mt-2 inline-block text-center w-auto mx-auto uppercase" />
