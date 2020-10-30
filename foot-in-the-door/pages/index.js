@@ -1,5 +1,6 @@
 /** @format */
 import Link from 'next/link'
+import Head from 'next/head'
 
 import ImageCarousel from '../components/ImageCarousel'
 import Layout from '../components/Layout'
@@ -96,6 +97,25 @@ function Home(props) {
           ))}
         </div>
       </aside>
+      <Head>
+        <title>Foot in the Door 5 | Mia</title>
+        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta property="og:title" content="Foor in the Door 5 | Mia" />
+        <meta
+          property="og:description"
+          content="Foot in the Door 5: The Virtual Exhibition – Minneapolis Institute of Art #FootInTheDoor @artsmia"
+        />
+        <meta
+          property="og:image"
+          content="https://images.artsmia.org/wp-content/uploads/2019/06/20081741/100504_mia338_Panorama2_titleless-985x800.jpg"
+        />
+        <meta
+          property="og:url"
+          content="https://collections.artmsia.org/exhibitions/2760/foot-in-the-door/"
+        />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:site" content="@artsmia" />
+      </Head>
     </Layout>
   )
 }

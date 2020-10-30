@@ -89,18 +89,8 @@ function Art(props) {
             )}
           </div>
 
-          <div className="border-t-2 border-opacity-75 mt-4 self-end">
+          <div className="border-t-2 border-opacity-75 mt-8 self-end">
             <p className="flex items-center">
-              {/* TODO use a checkbox instead? */}
-              <span
-                className="pr-1"
-                onClick={() => likeArtwork(artwork.id)}
-                onKeyPress={() => likeArtwork(artwork.id)}
-                role="button"
-                tabIndex={0}
-              >
-                <HiHeart />
-              </span>
               <ShareLinks art={artwork} />
             </p>
             <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
@@ -197,9 +187,10 @@ function ShareLinks(props) {
   const { art } = props
   const title = `${art.title} by ${art.artist}`
   const shareMessage = `Visit this artwork in Mia’s Foot in the Door Exhibition`
-  // const shareUrl = `https://collections.artsmia.org/exhibitions/2760/foot-in-the-door/art/${art.id}`
+  // const shareUrl = `https://fitd-kjell.lume1.vercel.app/exhibitions/2760/foot-in-the-door/art/${art.id}`
   // const shareUrl = `https://fitd.vercel.app/exhibitions/2760/foot-in-the-door/art/${art.id}`
-  const shareUrl = `https://fitd-kjell.lume1.vercel.app/exhibitions/2760/foot-in-the-door/art/${art.id}`
+  // TODO change `id` to `:hashid/:slug`? Or get URL from useRouter?
+  const shareUrl = `https://collections.artsmia.org/exhibitions/2760/foot-in-the-door/art/${art.id}`
   const emailLink = `mailto:?subject=${shareMessage}&body=${shareUrl}`
   const twitterLink = `https://twitter.com/intent/tweet?url=${shareUrl}`
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`
@@ -209,6 +200,11 @@ function ShareLinks(props) {
     <>
       <Head>
         <title>{title} | Foot in the Door</title>
+        <meta
+          name="Description"
+          content={`Artwork: ${title} | Foot in the Door at Mia`}
+          key="description"
+        />
         <meta name="twitter:card" content="summary_large_image"></meta>
         <meta property="og:title" content={title} />
         <meta property="og:description" content="" />
