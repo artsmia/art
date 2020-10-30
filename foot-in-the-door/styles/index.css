@@ -10,10 +10,57 @@
 
     h1, h2, h3, h4, h5, h6 {
       @apply no-underline;
+      font-family: 'Mia Black';
     }
   }
 
   input::placeholder, textarea::placeholder {
     @apply text-gray-400 font-light;
+  }
+
+  html {
+    font-family: "Mia", system-ui;
+    font-weight: 200;
+  }
+
+  @font-face {
+    font-family: "Mia";
+    src: url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Light.eot");
+    src: url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Light.eot?#iefix") format('embedded-opentype'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Light.woff") format('woff'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Light.ttf") format('truetype'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Light.svg") format('svg');
+    font-weight: 200;
+    font-display: optional;
+  }
+  @font-face {
+    font-family: "Mia";
+    src: url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Regular.eot");
+    src: url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Regular.eot?#iefix") format('embedded-opentype'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Regular.woff") format('woff'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Regular.ttf") format('truetype'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Regular.svg") format('svg');
+    font-weight: normal;
+    font-display: optional;
+  }
+  @font-face {
+    font-family: "Mia";
+    src: url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Bold.eot");
+    src: url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Bold.eot?#iefix") format('embedded-opentype'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Bold.woff") format('woff'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Bold.ttf") format('truetype'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Bold.svg") format('svg');
+    font-weight: bold;
+    font-display: optional;
+  }
+  @font-face {
+    font-family: "Mia";
+    src: url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Black.eot");
+    src: url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Black.eot?#iefix") format('embedded-opentype'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Black.woff") format('woff'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Black.ttf") format('truetype'),
+         url("https://mia-grotesk.s3.amazonaws.com/mia-tombstone/MiaTombstone-Black.svg") format('svg');
+    font-weight: 900;
+    font-display: optional;
   }
 }

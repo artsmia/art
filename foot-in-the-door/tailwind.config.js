@@ -25,22 +25,30 @@ module.exports = {
           900: '#1F1F1F',
         },
       },
-      height: {
-        'screen-3/4': '75%',
-        'screen-4/5': '80%',
-        96: '24rem',
+      minHeight: {
+        48: '12rem',
+        64: '16rem',
+      },
+      maxHeight: {
+        64: '16rem',
+        128: '32rem',
       },
       maxWidth: {
         12: '3rem',
         64: '16rem',
         96: '24rem',
+        '2/5': '40%',
       },
       transitionProperty: {
         width: 'width, max-width',
       },
       spacing: {
+        72: '18rem',
         96: '24rem',
         128: '32rem',
+        'screen-3/4': '75vh',
+        'screen-3/5': '60vh',
+        'screen-4/5': '80vh',
       },
     },
   },
