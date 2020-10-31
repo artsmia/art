@@ -159,16 +159,20 @@ export async function getServerSideProps({ params }) {
     `classification:${classification}`
   )
 
-  // TODO this redirect makes page loading a lot slower… do I want to keep it?
-  // const slug = makeSlug([artwork.title, artwork.artist].join(' '))
+  const slug = makeSlug([artwork.title, artwork.artist].join(' '))
   // Because slug is a `[[...slug]]` route it's in an array. Is this necessary?
-  //if (id === numericID || !params.slug || slug !== params.slug[0])
-  //  return {
-  //    unstable_redirect: {
-  //      destination: `/exhibitions/2760/foot-in-the-door/art/${hashid}/${slug}`,
-  //      permanent: true,
-  //    },
-  //  } // v9.5.4 https://github.com/vercel/next.js/pull/16642/files#diff-318f35e639c875557159a9297bd3415458e884208be91285a622f9484395aa83R28-R33
+  // TODO this redirect makes page loading a lot slower… Disable for now.
+  const enableCanonicalRedirect = false
+  if (
+    enableCanonicalRedirect &&
+    (id === numericID || !params.slug || slug !== params.slug[0])
+  )
+    return {
+      redirect: {
+        destination: `/exhibitions/2760/foot-in-the-door/art/${hashid}/${slug}`,
+        permanent: true,
+      },
+    }
 
   const imagesForCarousel = await getImages(4)
 
