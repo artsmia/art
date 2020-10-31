@@ -18,7 +18,7 @@
   }
   & button + button,
   & button + a {
-    @apply border-0 bg-white text-gray-300 mt-2 text-sm;
+    @apply border-0 bg-white text-gray-600 mt-2 text-sm px-1;
   }
 
   & button[disabled] {
