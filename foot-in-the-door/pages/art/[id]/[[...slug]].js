@@ -18,8 +18,8 @@ import {
   getImageSrc,
   getImageProps,
   getSearchResults,
+  getImages,
 } from '../../../util'
-import { getImages } from '../../api/imagesForCarousel'
 import LikeControl from '../../../components/LikeControl'
 import ImageWithBackground from '../../../components/ImageWithBackground'
 

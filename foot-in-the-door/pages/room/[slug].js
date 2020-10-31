@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import LeftRightNav from '../../components/LeftRightNav'
 import RoomGrid from '../../components/RoomGrid'
-import { classifications, getSearchResults } from '../../util'
-import { getImages } from '../api/imagesForCarousel'
+import { classifications, getSearchResults, getImages } from '../../util'
 import { SupportCTA } from '../../components/NavBar'
 
 function Room(props) {

@@ -6,7 +6,7 @@ import ImageCarousel from '../components/ImageCarousel'
 import Layout from '../components/Layout'
 import SearchInput from '../components/SearchInput'
 
-import { getImages } from './api/imagesForCarousel'
+import { getImages } from '../util'
 
 const events = [
   {
