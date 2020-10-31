@@ -120,7 +120,7 @@ function Home(props) {
         />
         <meta
           property="og:image"
-          content="https://images.artsmia.org/wp-content/uploads/2019/06/20081741/100504_mia338_Panorama2_titleless-985x800.jpg"
+          content="https://images.artsmia.org/wp-content/uploads/2020/10/31090903/tn_FitD5_web_1200x667-1200x667.jpg"
         />
         <meta
           property="og:url"
