@@ -48,8 +48,8 @@ function Art(props) {
   ).filter((word) => !word.match(/^\s+$/))
 
   const aspectRatio = image_width / image_height
-  const leftWidth = aspectRatio > 1 ? '1/2' : '2/3'
-  const rightWidth = aspectRatio > 1 ? '1/2' : '1/3'
+  const leftWidth = aspectRatio < 1 ? '1/2' : '2/3'
+  const rightWidth = aspectRatio < 1 ? '1/2' : '1/3'
   const imageProps = getImageProps(artwork)
   const { src: imageSrc } = imageProps
 
@@ -60,16 +60,14 @@ function Art(props) {
           imageSrc={imageSrc}
           className={cx(
             `relative md:w-${leftWidth}`,
-            'object-contain object-center max-h-screen mr-4',
+            'object-contain object-center max-h-screen mr-4'
           )}
         >
           <img {...imageProps} alt={description} key={artwork.id} />
           <LikeControl artwork={artwork} showConfirmation={true} />
         </ImageWithBackground>
         <div
-          className={`flex flex-col justify-start border-t-2 border-black
-          md:w-${rightWidth} ml-2
-          `}
+          className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} ml-2 `}
         >
           <div className="font-light">
             <h1 className="text-2xl font-black capitalize">{title}</h1>
@@ -78,10 +76,10 @@ function Art(props) {
             </h2>
             <p>{medium}</p>
             <p>{dimension}</p>
-            <p className="bg-pink-300">COLOR SEARCH</p>
+            <p className="bg-pink-300 hidden">COLOR SEARCH</p>
             <p className="py-4 hidden">{description}</p>
             {keywordsString && (
-              <p className="whitespace-normal break-word">
+              <p className="whitespace-normal break-word overflow-scroll">
                 <strong>Keywords</strong>:{' '}
                 {keywords.map((word, index) => (
                   <Fragment key={word}>
@@ -161,15 +159,16 @@ export async function getServerSideProps({ params }) {
     `classification:${classification}`
   )
 
-  const slug = makeSlug([artwork.title, artwork.artist].join(' '))
+  // TODO this redirect makes page loading a lot slower… do I want to keep it?
+  // const slug = makeSlug([artwork.title, artwork.artist].join(' '))
   // Because slug is a `[[...slug]]` route it's in an array. Is this necessary?
-  if (id === numericID || !params.slug || slug !== params.slug[0])
-    return {
-      unstable_redirect: {
-        destination: `/exhibitions/2760/foot-in-the-door/art/${hashid}/${slug}`,
-        permanent: true,
-      },
-    } // v9.5.4 https://github.com/vercel/next.js/pull/16642/files#diff-318f35e639c875557159a9297bd3415458e884208be91285a622f9484395aa83R28-R33
+  //if (id === numericID || !params.slug || slug !== params.slug[0])
+  //  return {
+  //    unstable_redirect: {
+  //      destination: `/exhibitions/2760/foot-in-the-door/art/${hashid}/${slug}`,
+  //      permanent: true,
+  //    },
+  //  } // v9.5.4 https://github.com/vercel/next.js/pull/16642/files#diff-318f35e639c875557159a9297bd3415458e884208be91285a622f9484395aa83R28-R33
 
   const imagesForCarousel = await getImages(4)
 

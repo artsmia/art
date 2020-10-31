@@ -64,10 +64,18 @@ function RoomGrid(props) {
           <HiOutlineChevronDown className="mx-auto" aria-hidden="true" />
         </>
       )}
-      <Grid {...grid} aria-label="Search Results" className="flex flex-wrap">
+      <Grid
+        {...grid}
+        aria-label="Search Results"
+        className="flex flex-wrap mt-8"
+      >
         {chunkArray(artworks, gridCols).map((row, rowIndex) => {
           return (
-            <GridRow {...grid} key={rowIndex} className="flex min-h-64 my-2">
+            <GridRow
+              {...grid}
+              key={rowIndex}
+              className="flex min-h-32 lg:min-h-48 max-h-96 my-2 block"
+            >
               {row.map((art) => {
                 const {
                   _source: source,
@@ -101,7 +109,7 @@ function RoomGrid(props) {
                     <Link href={`/art/${id}`}>
                       <ImageWithBackground as="a" imageSrc={imageSrc}>
                         <img
-                          className="h-auto w-full"
+                          className="h-auto w-full max-h-full"
                           loading={imageLoadStrategy}
                           {...imageProps}
                           alt={description}
