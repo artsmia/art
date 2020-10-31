@@ -105,24 +105,31 @@ function ImageCarousel(props) {
           )
         })}
       </ul>
-      <p className="flex">
-        {data.map((art, index) => {
-          const currentIndex = index === carouselIndex
-          return (
-            <span
-              className={cx(
-                currentIndex ? 'bg-black w-12' : 'bg-gray-200',
-                'block w-8 h-3 mr-2'
-              )}
-              key={index}
-              onClick={() => scrollToItem(index)}
-              onKeyPress={() => scrollToItem(index)}
-              role="button"
-              tabIndex="0"
-              title={`Scroll to ${art.classification}`}
-            ></span>
-          )
-        })}
+      <p className="flex flex-wrap justify-between">
+        <div className="flex">
+          {data.map((art, index) => {
+            const currentIndex = index === carouselIndex
+            return (
+              <span
+                className={cx(
+                  currentIndex ? 'bg-black w-12' : 'bg-gray-200',
+                  'block w-8 h-3 mr-2 mb-2 hover:bg-gray-400'
+                )}
+                key={index}
+                onClick={() => scrollToItem(index)}
+                onKeyPress={() => scrollToItem(index)}
+                role="button"
+                tabIndex="0"
+                title={`Scroll to ${art.classification}`}
+              ></span>
+            )
+          })}
+        </div>
+        <Link href="/room/all">
+          <a className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm">
+            View All Groups
+          </a>
+        </Link>
       </p>
     </div>
   )
