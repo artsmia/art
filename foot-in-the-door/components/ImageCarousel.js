@@ -32,7 +32,7 @@ function ImageCarousel(props) {
         // the items are being scrolled to the left and visa verse.
         const direction = scrolledPastEvent.boundingClientRect.x < 500 ? 1 : -2
 
-        setCarouselIndex(scrolledPastIndex + direction)
+        // setCarouselIndex(scrolledPastIndex + direction)
       }
     }
 
@@ -56,9 +56,10 @@ function ImageCarousel(props) {
       block: 'nearest',
       inline: 'start',
     })
+    setCarouselIndex(index)
   }
   useEffect(() => {
-    // scrollToItem(index)
+    scrollToItem(carouselIndex)
   }, [carouselIndex])
 
   const loading = (
