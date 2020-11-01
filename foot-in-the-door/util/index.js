@@ -9,10 +9,12 @@ export function getImageSrc(artworkData, thumbnail = true) {
     imageFilename.replace(/jpeg|png|JPG|tiff?$/i, 'jpg').replace('+', '%2B')
   const bucket = Math.ceil(Math.max(id - 1, 1) / 135)
   const image = `${bucket}/${imageFilename}`
+  const useCloudfront = true
+  const domain = useCloudfront
+    ? `https://d3dbbvm3mhv3af.cloudfront.net`
+    : `https://foot-in-the-door-2020.s3.amazonaws.com`
 
-  return `https://foot-in-the-door-2020.s3.amazonaws.com/800/${
-    thumbnail ? thumb : image
-  }`
+  return `${domain}/800/${thumbnail ? thumb : image}`
 }
 
 export function getImageProps(artData) {
