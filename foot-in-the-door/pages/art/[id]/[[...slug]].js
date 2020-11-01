@@ -127,6 +127,7 @@ function Art(props) {
             focused={artwork}
             perPage={30}
             hideViewAll={true}
+            label={`See more ${classification}`}
           />
 
           <Link

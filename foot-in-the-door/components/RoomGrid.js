@@ -20,8 +20,8 @@ function RoomGrid(props) {
     focused,
     perPage,
     classification,
+    label,
     children,
-    // hideViewAll,
     hideLikeControl,
     ...containerProps
   } = props
@@ -66,7 +66,7 @@ function RoomGrid(props) {
       )}
       <Grid
         {...grid}
-        aria-label="Search Results"
+        aria-label={label || 'Search Results'}
         className="flex flex-wrap mt-8"
       >
         {chunkArray(artworks, gridCols).map((row, rowIndex) => {

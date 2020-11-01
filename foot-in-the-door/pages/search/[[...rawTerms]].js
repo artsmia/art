@@ -20,6 +20,7 @@ function Search(props) {
           hits={hits}
           perPage={size || 100}
           className="mt-16"
+          label={`Search results for "${rawTerms}"`}
         />
       </main>
     </Layout>

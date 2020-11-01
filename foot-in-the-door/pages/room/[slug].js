@@ -81,6 +81,7 @@ function Room(props) {
           hits={hits}
           perPage={perPage}
           className="mt-24"
+          label={`Browse all ${classification}`}
         />
         {additionalPages.map((page, index) => {
           return (
