@@ -97,41 +97,42 @@ function RoomGrid(props) {
                 const { src: imageSrc } = imageProps
 
                 return (
-                  <GridCell
-                    {...grid}
-                    key={id}
-                    as="figure"
-                    className={cx(
-                      'relative group flex relative mx-2',
-                      landscapeImage ? 'flex-grow' : 'flex-shrink'
-                    )}
-                  >
-                    <Link href={`/art/${id}`} passHref>
-                      <ImageWithBackground as="a" imageSrc={imageSrc}>
-                        <img
-                          className="h-auto w-full max-h-full"
-                          loading={imageLoadStrategy}
-                          {...imageProps}
-                          alt={description}
-                        />
-                        <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
-                          <div className="text-white opacity-100 py-6 px-4">
-                            <h2 className="font-extrabold">{title}</h2>
-                            <h3 className="font-light hidden sm:inline-block">
-                              {artist}
-                            </h3>
-                          </div>
-                          {hideLikeControl || (
-                            <LikeControl
-                              artwork={source}
-                              className="p-6 hidden md:inline"
-                              hydrateLocal={true}
-                            />
-                          )}
-                        </figcaption>
-                      </ImageWithBackground>
-                    </Link>
-                  </GridCell>
+                  <Link href={`/art/${id}`} passHref key={id}>
+                    <GridCell
+                      {...grid}
+                      as="a"
+                      className={cx(
+                        'relative group flex relative mx-2',
+                        landscapeImage ? 'flex-grow' : 'flex-shrink'
+                      )}
+                    >
+                      <figure>
+                        <ImageWithBackground imageSrc={imageSrc}>
+                          <img
+                            className="h-auto w-full max-h-full"
+                            loading={imageLoadStrategy}
+                            {...imageProps}
+                            alt={description}
+                          />
+                          <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
+                            <div className="text-white opacity-100 py-6 px-4">
+                              <h2 className="font-extrabold">{title}</h2>
+                              <h3 className="font-light hidden sm:inline-block">
+                                {artist}
+                              </h3>
+                            </div>
+                            {hideLikeControl || (
+                              <LikeControl
+                                artwork={source}
+                                className="p-6 hidden md:inline"
+                                hydrateLocal={true}
+                              />
+                            )}
+                          </figcaption>
+                        </ImageWithBackground>
+                      </figure>
+                    </GridCell>
+                  </Link>
                 )
               })}
             </GridRow>
