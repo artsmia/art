@@ -28,9 +28,16 @@ function FavoriteList() {
     <Layout hideCTA={true}>
       <main>
         {hits ? (
-          <RoomGrid hits={hits.filter((art) => art)} hideLikeControl={true}>
-            <h2 className="text-2xl font-black">Your Favorite Works</h2>
-          </RoomGrid>
+          <section>
+            <RoomGrid hits={hits.filter((art) => art)} hideLikeControl={true}>
+              <h2 className="text-2xl font-black">Your Favorite Works</h2>
+              <p>
+                This list is saved in your browser, so it could be deleted if
+                you change browsers or close this window. Come back and visit
+                often to find new favorites!
+              </p>
+            </RoomGrid>
+          </section>
         ) : (
           <p>loading…</p>
         )}

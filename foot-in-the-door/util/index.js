@@ -80,6 +80,8 @@ export async function likeArtwork(id) {
   })
   const text = await res.text()
 
+  saveToLocalStorage({ likes: id })
+
   return text
 }
 
@@ -90,10 +92,25 @@ export async function getUserLikes() {
   })
   const { userId, likes } = await res.json()
 
-  const ids = likes.map((id) => id.replace('fitd|', '')).join(',')
+  const localData = JSON.parse(localStorage?.getItem('artsmia-fitd') || '{}')
+
+  const ids = [
+    ...new Set([
+      ...likes.map((id) => Number(id.replace('fitd|', ''))),
+      ...(localData.likes || []),
+    ]),
+  ]
+    .filter((item) => item)
+
+    .join(',')
+
   if (ids.length === 0) return { userId, likes, artworkResults: null }
-  const res2 = await fetch(`http://search.artsmia.org/ids/${ids}?fitd=1`)
-  const artworkResults = await res2.json()
+  const artworkData = await fetch(
+    `https://search.artsmia.org/ids/${ids}?fitd=1`
+  )
+  const artworkResults = await artworkData.json()
+
+  // also get likes from localstorage?
 
   return {
     userId,
@@ -112,7 +129,38 @@ export async function updateSurvey(data, userId) {
   })
   const text = await res.text()
 
+  saveToLocalStorage({ survey: JSON.parse(data), userId })
+
   return text
+}
+
+/** save survey response and artwork likes to localhost
+ * as well as off to the server
+ */
+function saveToLocalStorage(data, _userId) {
+  if (!localStorage) return
+
+  const beforeData = JSON.parse(localStorage.getItem('artsmia-fitd') || '{}')
+  const userId = _userId || beforeData.userId || data.userId
+
+  const nextLikes = (beforeData.likes || [])
+    .concat(data.likes)
+    .filter((like) => like)
+
+  const nextData = {
+    ...beforeData,
+    userId,
+    likes: nextLikes,
+    survey: {
+      ...beforeData.survey,
+      ...data.survey,
+    },
+  }
+
+  // console.info({ data, nextData })
+  // debugger
+
+  localStorage.setItem('artsmia-fitd', JSON.stringify(nextData))
 }
 
 /**
