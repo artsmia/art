@@ -106,7 +106,7 @@ function RoomGrid(props) {
                       landscapeImage ? 'flex-grow' : 'flex-shrink'
                     )}
                   >
-                    <Link href={`/art/${id}`}>
+                    <Link href={`/art/${id}`} passHref>
                       <ImageWithBackground as="a" imageSrc={imageSrc}>
                         <img
                           className="h-auto w-full max-h-full"
