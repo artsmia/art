@@ -1,5 +1,5 @@
 /** @format */
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import { HiMail } from '@meronex/icons/hi'
@@ -41,6 +41,16 @@ function Art(props) {
     classificationResults,
     imagesForCarousel,
   } = props
+
+  const [isFirstVisit, setFirstVisit] = useState(false)
+  let wasReferredFromOutsideFitd
+  useEffect(() => {
+    const { visitCount } = JSON.parse(
+      localStorage.getItem('artsmia-fitd') || '{}'
+    )
+
+    if (visitCount <= 1) setFirstVisit(true)
+  }, [])
 
   const keywords = (keywordsString.replace(/\s\s+/, ' ').indexOf(',') > -1
     ? keywordsString.split(/,\s?/g)
@@ -93,47 +103,55 @@ function Art(props) {
             )}
           </div>
 
-          <div className="border-t-2 border-opacity-75 mt-8 self-end">
+          <div className="border-t-2 border-opacity-75 mt-8 lg:mt-16">
             <p className="flex items-center">
               <ShareLinks art={artwork} />
             </p>
-            <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
-              <JoinCTAPhrase />
-            </p>
+            {isFirstVisit || (
+              <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
+                <JoinCTAPhrase />
+              </p>
+            )}
           </div>
         </div>
       </main>
 
-      <RoomGrid
-        className="mt-6 pt-24 sm:pt-0"
-        classification={classification}
-        hits={classificationResults}
-        focused={artwork}
-        perPage={30}
-        hideViewAll={true}
-      />
+      {isFirstVisit ? (
+        <FitDContextBlurb />
+      ) : (
+        <div>
+          <RoomGrid
+            className="mt-6 pt-24 sm:pt-0"
+            classification={classification}
+            hits={classificationResults}
+            focused={artwork}
+            perPage={30}
+            hideViewAll={true}
+          />
 
-      <Link
-        href={`/room/${artwork.classification
-          .replace(' (including Digital)', '')
-          .toLowerCase()
-          .replace(' ', '-')}`}
-      >
-        <a className="px-4 py-4 font-light float-right uppercase">
-          {artwork.classification} &rsaquo;
-        </a>
-      </Link>
+          <Link
+            href={`/room/${artwork.classification
+              .replace(' (including Digital)', '')
+              .toLowerCase()
+              .replace(' ', '-')}`}
+          >
+            <a className="px-4 py-4 font-light float-right uppercase">
+              {artwork.classification} &rsaquo;
+            </a>
+          </Link>
 
-      <aside className="mt-24">
-        <LeftRightNav
-          classifications={classifications}
-          classification={artwork.classification}
-          className="flex justify-between pt-48"
-          imagesForCarousel={imagesForCarousel}
-        >
-          <SupportCTA />
-        </LeftRightNav>
-      </aside>
+          <aside className="mt-24">
+            <LeftRightNav
+              classifications={classifications}
+              classification={artwork.classification}
+              className="flex justify-between pt-48"
+              imagesForCarousel={imagesForCarousel}
+            >
+              <SupportCTA />
+            </LeftRightNav>
+          </aside>
+        </div>
+      )}
     </Layout>
   )
 }
@@ -237,6 +255,29 @@ function ShareLinks(props) {
       <a href={facebookLink} _target="blank">
         <SiFacebook className="mx-1" size="1.5rem" />
       </a>
+    </>
+  )
+}
+
+function FitDContextBlurb() {
+  return (
+    <>
+      <aside className="bg-gray-300 p-4 px-4 mt-8 my-4">
+        <p>
+          “Foot in the Door 5” celebrates the talent, diversity, and enthusiasm
+          of our state’s visual artists. The exhibition occurs once every 10
+          years, and by now, generations of artists have participated in it. The
+          sole curatorial criteria? All submissions must measure at or under 12
+          inches in height, width, and depth—literally inviting artists to place
+          “a foot” in the museum’s galleries.
+        </p>
+      </aside>
+      <Link href="/">
+        <a className="block text-center uppercase hover:no-underline">
+          Enter <strong className="font-bold">Foot in the Door</strong>{' '}
+          Exhibition
+        </a>
+      </Link>
     </>
   )
 }

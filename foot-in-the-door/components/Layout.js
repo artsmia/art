@@ -1,5 +1,5 @@
 /** @format */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
@@ -10,6 +10,19 @@ import { ConditionalSurvey } from '../components/Survey'
 function Layout(props) {
   const { stickyCTA, stickyFooter, hideCTA } = props
   const [ctaClosed, setCTAClosed] = useState(!stickyCTA)
+
+  useEffect(() => {
+    if (!localStorage) return
+    try {
+      const data = JSON.parse(localStorage.getItem('artsmia-fitd') || '{}')
+      const nextData = {
+        ...data,
+        visitCount: (data.visitCount || 0) + 1,
+      }
+
+      localStorage.setItem('artsmia-fitd', JSON.stringify(nextData))
+    } catch (e) {}
+  }, [])
 
   return (
     <div className="p-4 md:px-16 md:py-5 text-gray-900">
@@ -55,6 +68,7 @@ function Layout(props) {
           museum. Please direct inquiries to visit@artsmia.org.
         </p>
       </footer>
+      <UserSurveillance />
     </div>
   )
 }
@@ -151,5 +165,23 @@ function Logo(props) {
         className={`mr-2 ${style}`}
       />
     </a>
+  )
+}
+
+function UserSurveillance() {
+  return (
+    <>
+      <script
+        src="https://moth.artsmia.org/script.js"
+        site="PXCWTLRI"
+        spa="auto"
+        defer
+      ></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-WWCWDGS');`,
+        }}
+      ></script>
+    </>
   )
 }
