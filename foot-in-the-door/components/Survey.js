@@ -13,6 +13,7 @@ import { cx, updateSurvey } from '../util'
 
 function Survey(props) {
   const [surveyData, setSurveyData] = useState({})
+  const [cookiesDisabled, setCookiesDisabled] = useState(false)
   const givenAnswers = surveyData.data
   const [formIsValid, setFormIsValid] = useState(false)
   const formRef = useRef(null)
@@ -34,6 +35,21 @@ function Survey(props) {
       const data = await response.json()
       const { userId, data: answers } = data
       const { completed, rejected } = answers || {}
+
+      /** if there's an existing stored userId, different from what
+       * was just returned in the API call, cookies are probably
+       * disabled. Flag that.
+       */
+      const localStorageData = JSON.parse(
+        localStorage?.getItem('artsmia-fitd') || '{}'
+      )
+      if (localStorageData.userId && userId !== localStorageData.userId) {
+        console.info('are cookies disabled?', {
+          localUser: localStorageData.userId,
+          userId,
+        })
+        setCookiesDisabled(true)
+      }
 
       setSurveyData(data)
 
@@ -157,7 +173,7 @@ function Survey(props) {
     return null
   }
 
-  if (isPopup && !!rejected) {
+  if (isPopup && (!!rejected || cookiesDisabled)) {
     hideSurvey && hideSurvey(true)
     return null
   }
