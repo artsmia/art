@@ -85,14 +85,17 @@ export async function likeArtwork(id) {
   return text
 }
 
-export async function getUserLikes() {
+export async function getUserLikes(options = {}) {
   const surveyEndpoint = `${searchEndpoint}/survey/favorites`
+  const { idsOnly, localOnly } = options
+
+  const localData = JSON.parse(localStorage?.getItem('artsmia-fitd') || '{}')
+  if (localOnly) return localData.likes || []
+
   const res = await fetch(surveyEndpoint, {
     credentials: 'include',
   })
   const { userId, likes } = await res.json()
-
-  const localData = JSON.parse(localStorage?.getItem('artsmia-fitd') || '{}')
 
   const ids = [
     ...new Set([
@@ -101,8 +104,9 @@ export async function getUserLikes() {
     ]),
   ]
     .filter((item) => item)
-
     .join(',')
+
+  if (idsOnly) return ids.split(',').map((id) => Number(id))
 
   if (ids.length === 0) return { userId, likes, artworkResults: null }
   const artworkData = await fetch(

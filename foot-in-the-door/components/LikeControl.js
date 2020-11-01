@@ -2,13 +2,26 @@
 import { useState, useEffect, Fragment } from 'react'
 import Link from 'next/link'
 import { HiHeart, HiOutlineHeart } from '@meronex/icons/hi'
-import { cx, likeArtwork } from '../util'
+import { cx, getUserLikes, likeArtwork } from '../util'
 
 function LikeControl(props) {
-  const { artwork, showConfirmation, className } = props
+  const { artwork, showConfirmation, className, hydrateLocal } = props
   const [artworkLiked, setArtworkLiked] = useState(false)
   useEffect(() => {
-    setArtworkLiked(false)
+    // only do this check on proper artwork pages
+    // doing it for every artwork in the grid would be way too many network
+    // requests. use global state?
+    if (!hydrateLocal && !showConfirmation) return
+    async function getLikesAndCheckIfThisIsLiked() {
+      const existingLikes = await getUserLikes({
+        idsOnly: true,
+        localOnly: hydrateLocal,
+      })
+
+      setArtworkLiked(existingLikes.indexOf(artwork.id) >= 0)
+    }
+
+    getLikesAndCheckIfThisIsLiked()
   }, [artwork])
 
   const heartProps = {

@@ -125,6 +125,7 @@ function RoomGrid(props) {
                             <LikeControl
                               artwork={source}
                               className="p-6 hidden md:inline"
+                              hydrateLocal={true}
                             />
                           )}
                         </figcaption>
