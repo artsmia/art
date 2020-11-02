@@ -113,7 +113,7 @@ function Home(props) {
       <Head>
         <title>Foot in the Door 5 | Mia</title>
         <meta name="twitter:card" content="summary_large_image"></meta>
-        <meta property="og:title" content="Foor in the Door 5 | Mia" />
+        <meta property="og:title" content="Foot in the Door 5 | Mia" />
         <meta
           property="og:description"
           content="Foot in the Door 5: The Virtual Exhibition – Minneapolis Institute of Art #FootInTheDoor @artsmia"
