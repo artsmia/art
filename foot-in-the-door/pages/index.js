@@ -86,7 +86,7 @@ function Home(props) {
             >
               <iframe
                 title="Foot in the Door 5 Artist: Ilene Krug Mojsilov"
-                src="https://player.vimeo.com/video/471541996?color=ffffff&byline=0&dnt=1&title=0&portrait=0&texttrack=en"
+                src="https://player.vimeo.com/video/471541996?color=ffffff&byline=0&title=0&portrait=0&texttrack=en"
                 frameBorder="0"
                 allow="autoplay; fullscreen"
                 allowFullScreen
