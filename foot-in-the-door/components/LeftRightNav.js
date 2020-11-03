@@ -117,7 +117,7 @@ function PeekImages(props) {
           key={art._id}
           {...getImageProps(art._source)}
           alt={art._source.description}
-          className="mb-1 w-16 md:w-32 h-auto"
+          className="mb-1 w-16 md:w-32 h-auto max-h-64"
         />
       ))}
     </div>

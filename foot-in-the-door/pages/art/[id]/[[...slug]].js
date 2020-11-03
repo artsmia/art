@@ -58,26 +58,29 @@ function Art(props) {
   ).filter((word) => !word.match(/^\s+$/))
 
   const aspectRatio = image_width / image_height
-  const leftWidth = aspectRatio < 1 ? '1/2' : '2/3'
-  const rightWidth = aspectRatio < 1 ? '1/2' : '1/3'
+  const isPortrait = aspectRatio <= 1
+  const leftWidth = isPortrait ? '1/2' : '2/3'
+  const rightWidth = isPortrait ? '1/2' : '1/3'
+  const imgMaxHeight = isPortrait ? '90vh' : 'auto'
+  const imgMaxWidth = isPortrait ? `${90 * aspectRatio}vh` : '100%'
   const imageProps = getImageProps(artwork)
   const { src: imageSrc } = imageProps
 
   return (
     <Layout hideCTA={true}>
-      <main className="md:flex md:align-start min-h-screen-3/5">
+      <main className="md:flex md:align-start off:min-h-screen-3/5 pt-2">
         <ImageWithBackground
           imageSrc={imageSrc}
           className={cx(
             `relative md:w-${leftWidth}`,
-            'object-contain object-center max-h-screen mr-4'
+            'object-contain object-center max-h-full md:mr-4'
           )}
         >
           <img {...imageProps} alt={description} key={artwork.id} />
           <LikeControl artwork={artwork} showConfirmation={true} />
         </ImageWithBackground>
         <div
-          className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} ml-2 `}
+          className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 `}
         >
           <div className="font-light">
             <h1 className="text-2xl font-black capitalize">{title}</h1>

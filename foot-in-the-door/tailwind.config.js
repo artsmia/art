@@ -29,10 +29,12 @@ module.exports = {
       minHeight: {
         48: '12rem',
         64: '16rem',
+        'screen-3/5': '60vh',
       },
       maxHeight: {
         64: '16rem',
         128: '32rem',
+        'screen-4/5': '80vh',
       },
       maxWidth: {
         12: '3rem',
