@@ -21,7 +21,9 @@ function Layout(props) {
       }
 
       localStorage.setItem('artsmia-fitd', JSON.stringify(nextData))
-    } catch (e) {}
+    } catch (e) {
+      // localStorage failure
+    }
   }, [])
 
   return (

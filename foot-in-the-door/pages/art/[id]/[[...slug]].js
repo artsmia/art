@@ -43,7 +43,6 @@ function Art(props) {
   } = props
 
   const [isFirstVisit, setFirstVisit] = useState(false)
-  let wasReferredFromOutsideFitd
   useEffect(() => {
     const { visitCount } = JSON.parse(
       localStorage.getItem('artsmia-fitd') || '{}'

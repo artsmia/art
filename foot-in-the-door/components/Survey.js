@@ -44,10 +44,6 @@ function Survey(props) {
         localStorage?.getItem('artsmia-fitd') || '{}'
       )
       if (localStorageData.userId && userId !== localStorageData.userId) {
-        console.info('are cookies disabled?', {
-          localUser: localStorageData.userId,
-          userId,
-        })
         setCookiesDisabled(true)
       }
 
