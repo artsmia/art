@@ -110,6 +110,13 @@ function Survey(props) {
     if (nextElementSibling && nextElementSibling.type === 'output') {
       nextElementSibling.innerText = value
     }
+
+    const nextQ = target.parentElement.parentElement.nextElementSibling
+    nextQ?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      // inline: 'start',
+    })
   }
 
   function updateAnswers(data) {
@@ -209,7 +216,7 @@ function Survey(props) {
   return (
     <form id="survey" className={surveyStyles} ref={formRef}>
       {isPopup && false && toggleSurveyButton}
-      <ol className={styles.questions}>
+      <ol className={cx(styles.questions, 'overflow-scroll')}>
         {questions.map(({ q, answers, id, type, siblings, ...inputProps }) => {
           const answerGiven = (givenAnswers && givenAnswers[id]) || []
           return (
@@ -316,7 +323,7 @@ Many times a year`.split('\n'),
     id: 'recommend',
     type: 'range',
     min: 0,
-    max: 7,
+    max: 10,
     step: 1,
     siblings: <output htmlFor="recommend" className="pl-2 -mt-1" />,
   },
@@ -379,22 +386,24 @@ export function ConditionalSurvey(props) {
       toggleSurveyButton={toggleSurveyButton}
       hideSurvey={hideSurvey}
       showSurvey={queueOpenSurvey}
-      className="fixed right-0 bottom-0 bg-white p-10
-    w-screen md:w-auto max-h-screen overflow-scroll
-    shadow-2xl z-40"
+      className="p-4 md:p-10 w-full overflow-scroll mb-32"
       {...props}
     />
   )
 
   return (
-    <div className="">
+    <div className="overflow-scroll">
       {surveyDialogOpen ? (
         <DialogBackdrop
           {...surveyDialog}
-          className="fixed inset-0 transition-all duration-500 z-40"
+          className="fixed inset-0 transition-all duration-500 z-40 w-screen h-screen"
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
         >
-          <Dialog {...surveyDialog} aria-label="Visitor Survey">
+          <Dialog
+            {...surveyDialog}
+            className="fixed w-screen h-screen overflow-scroll bg-white shadow-2xl z-40 w-screen md:max-w-screen-3/5 right-0 bottom-0"
+            aria-label="Visitor Survey"
+          >
             {survey}
           </Dialog>
         </DialogBackdrop>

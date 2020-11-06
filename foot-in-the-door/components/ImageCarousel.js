@@ -24,14 +24,13 @@ function ImageCarousel(props) {
       const scrolledPastEvent = entries.find((e) => e.intersectionRect.x <= 0)
 
       if (scrolledPastEvent) {
-        const scrolledPastIndex = itemRefs.findIndex(
-          (ref) => ref.current === scrolledPastEvent.target
-        )
+        // const scrolledPastIndex = itemRefs.findIndex(
+        //   (ref) => ref.current === scrolledPastEvent.target
+        // )
         // Determine the direction of the current scroll based on `boundingClientRect`.
         // If the rectancle in on the right side of the screeen (`x` > some threshold),
         // the items are being scrolled to the left and visa verse.
-        const direction = scrolledPastEvent.boundingClientRect.x < 500 ? 1 : -2
-
+        // const direction = scrolledPastEvent.boundingClientRect.x < 500 ? 1 : -2
         // setCarouselIndex(scrolledPastIndex + direction)
       }
     }
@@ -109,6 +108,7 @@ function ImageCarousel(props) {
       <p className="flex flex-wrap justify-between">
         <div className="flex">
           {data.map((art, index) => {
+            if (index % 2 === 0) return null
             const currentIndex = index === carouselIndex
             return (
               <span
