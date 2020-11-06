@@ -41,7 +41,7 @@ const videos = [
 ]
 
 function Home(props) {
-  const video = videos[0]
+  const video = videos[1]
   return (
     <Layout stickyCTA={true} stickyFooter={true}>
       <main className="md:flex items-start mb-12">
