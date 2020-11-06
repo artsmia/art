@@ -29,7 +29,19 @@ const events = [
   },
 ]
 
+const videos = [
+  {
+    vimeoId: 471541996,
+    caption: 'Foot in the Door 5 Artist Video: Ilene Krug Mojsilov',
+  },
+  {
+    vimeoId: 475231372,
+    caption: 'Foot in the Door 5 Artist: Alonzo Pantoja',
+  },
+]
+
 function Home(props) {
+  const video = videos[0]
   return (
     <Layout stickyCTA={true} stickyFooter={true}>
       <main className="md:flex items-start mb-12">
@@ -85,8 +97,8 @@ function Home(props) {
               }}
             >
               <iframe
-                title="Foot in the Door 5 Artist: Ilene Krug Mojsilov"
-                src="https://player.vimeo.com/video/471541996?color=ffffff&byline=0&title=0&portrait=0&texttrack=en"
+                title={video.caption}
+                src={`https://player.vimeo.com/video/${video.vimeoId}?color=ffffff&byline=0&title=0&portrait=0&texttrack=en`}
                 frameBorder="0"
                 allow="autoplay; fullscreen"
                 allowFullScreen
@@ -95,10 +107,10 @@ function Home(props) {
             </div>
             <figcaption className="text-sm invisible group-hover:visible bg-gray-200 p-1 px-2">
               <a
-                href="https://vimeo.com/471541996"
+                href={`https://vimeo.com/${video.vimeoId}`}
                 className="no-underline hover:underline"
               >
-                Foot in the Door 5 Artist Video: Ilene Krug Mojsilov
+                {video.caption}
               </a>
             </figcaption>
           </figure>
