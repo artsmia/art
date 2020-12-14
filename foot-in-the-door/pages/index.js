@@ -31,12 +31,32 @@ const events = [
 
 const videos = [
   {
+    vimeoId: 480895859,
+    caption: 'Foot in the Door 5 Artist: Eyenga Bokamba',
+  },
+  {
+    vimeoId: 480525373,
+    caption: 'Foot in the Door 5 Artist: Sammy Austin',
+  },
+  {
     vimeoId: 471541996,
     caption: 'Foot in the Door 5 Artist Video: Ilene Krug Mojsilov',
   },
   {
     vimeoId: 475231372,
     caption: 'Foot in the Door 5 Artist: Alonzo Pantoja',
+  },
+  {
+    vimeoId: 480470984,
+    caption: 'Foot in the Door 5 Artist: Tamara Aupaumut',
+  },
+  {
+    vimeoId: 479910635,
+    caption: 'Foot in the Door 5 Artist: Ken Wenzel',
+  },
+  {
+    vimeoId: 480895859,
+    caption: 'Foot in the Door 5 Artist: Eyenga Bokamba',
   },
 ]
 
