@@ -184,9 +184,16 @@ export async function getStaticProps() {
 
 function EventBox(props) {
   const { href, title, date, time } = props
+
+  const eventPassed = date.match(/November/)
+  const classes = [
+    'block bg-gray-300 my-4 p-2 px-4 font-light no-underline hover:bg-black hover:text-white',
+    eventPassed ? 'opacity-50' : '',
+  ].join(' ')
+
   return (
     <Link href={href}>
-      <a className="block bg-gray-300 my-4 p-2 px-4 font-light no-underline hover:bg-black hover:text-white">
+      <a className={classes}>
         <h3 className="font-black text-lg">{title}</h3>
         <p>{date}</p>
         <p>{time}</p>
