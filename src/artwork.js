@@ -174,7 +174,7 @@ var Artwork = React.createClass({
           <ArtworkDetails art={art} show3d={this.state.show3d} />
         </div>
       </div>}
-      {false && <ClosedBanner />}
+      <ClosedBanner />
 
       {smallViewport || detailCropper}
 
