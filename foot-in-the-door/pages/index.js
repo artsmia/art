@@ -31,15 +31,10 @@ const events = [
 
 const videos = [
   {
-    vimeoId: 471541996,
-    caption: 'Foot in the Door 5 Artist Video: Ilene Krug Mojsilov',
+    vimeoId: 480895859,
+    caption: 'Foot in the Door 5 Artist: Eyenga Bokamba',
   },
-  {
-    vimeoId: 475231372,
-    caption: 'Foot in the Door 5 Artist: Alonzo Pantoja',
-  },
-]
-
+ 
 function Home(props) {
   const video = videos[0]
   return (
@@ -114,6 +109,11 @@ function Home(props) {
               </a>
             </figcaption>
           </figure>
+          <Link href="/pages/video">
+            <a className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm">
+              View All Featured Artists
+            </a>
+          </Link>
         </div>
         <div id="related-events" className="md:w-1/2 md:mx-2 text-sm md:pl-1">
           <h3 className="font-black text-2xl">Exhibition Events</h3>

@@ -32,7 +32,7 @@
     "browserify": "^9.0.8",
     "express": "^4.13.3",
     "livereactload": "^3.2.0",
-    "prettier": "^2.1.1",
+    "prettier": "^2.2.1",
     "react-proxy": "^1.1.8",
     "react-transform-hmr": "^1.0.4",
     "uglify-js": "^2.3.6",
