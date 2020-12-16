@@ -85,12 +85,12 @@ function ImageCarousel(props) {
             >
               <Link href={`/room/${classif.toLowerCase().replace(' ', '-')}`}>
                 <a className="no-underline">
-                  <div className="group relative mx-1">
+                  <div className="group relative mx-1 overflow-hidden">
                     <img
                       {...getImageProps(art)}
                       alt={art.description}
                       loading={index > 3 ? 'lazy' : undefined}
-                      className="border-black border-b-4 h-64 md:h-96 w-auto self-stretch object-cover"
+                      className="border-black border-b-4 h-64 md:h-96 w-full self-stretch object-cover"
                     />
                     <div className="flex absolute inset-0 items-end">
                       <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100 text-xs font-light">
