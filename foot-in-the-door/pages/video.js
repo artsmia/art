@@ -40,24 +40,39 @@ const videos = [
     vimeoId: 478085063,
     caption: 'Foot in the Door 5 Artist: Paula Warn',
   },
+  {
+    vimeoId: 486926215,
+    caption: 'Foot in the Door 5 Artist: Steve Lang',
+  },
+  {
+    vimeoId: 486145748,
+    caption: 'Foot in the Door 5 Artist: Kate Brenner-Adam',
+  },
+  {
+    vimeoId: 485722162,
+    caption: 'Foot in the Door 5 Artist: Nancy Ariza',
+  },
+  {
+    vimeoId: 486174255,
+    caption: 'Foot in the Door 5 Artist: Rurik Hover',
+  },
 ]
 
-function video() {
+function Video() {
   return (
     <Layout>
       <main className="md:flex items-start mb-12">
         <div className="md:w-1/2 mr-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
-            Foot in the Door 5
+            Foot in the Door 5:
           </h1>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">
-            Artist Videos
+            Featured Artist Videos
           </h2>
           <p className="text-2xl font-light">
             What makes Foot in the Door 5: The Virtual Exhibition so unique?
           </p>
           <p className="text-2xl font-light">
-            {' '}
             The thousands of participating Minnesota artists! Get to know a few
             of them in these 1-minute videos. Each artist touches on their
             creative process and specific artwork featured in the exhibition.
@@ -68,7 +83,7 @@ function video() {
       <aside className="md:flex pb-6">
         <div id="video" className="md:w-1/2 pb-8 md: pb-0 md:mr-12">
           {videos.map((video) => (
-            <figure key={video.vimeoId} className="group mt-1"> 
+            <figure key={video.vimeoId} className="group mt-1">
               <div
                 style={{
                   position: 'relative',
@@ -98,26 +113,19 @@ function video() {
         </div>
       </aside>
       <Head>
-        <title>Foot in the Door 5 | Mia</title>
-        <meta name="twitter:card" content="summary_large_image"></meta>
-        <meta property="og:title" content="Foot in the Door 5 | Mia" />
+        <title>Foot in the Door 5: Featured Artist Videos | Mia</title>
+        <meta property="og:title" content="Foot in the Door 5: Featured Artist Videos | Mia" />
         <meta
           property="og:description"
-          content="Foot in the Door 5: The Virtual Exhibition – Minneapolis Institute of Art #FootInTheDoor @artsmia"
-        />
-        <meta
-          property="og:image"
-          content="https://images.artsmia.org/wp-content/uploads/2020/10/31090903/tn_FitD5_web_1200x667-1200x667.jpg"
+          content="Foot in the Door 5: Featured Artists Videos – Minneapolis Institute of Art #FootInTheDoor @artsmia"
         />
         <meta
           property="og:url"
-          content="https://collections.artmsia.org/exhibitions/2760/foot-in-the-door/"
+          content="https://collections.artmsia.org/exhibitions/2760/foot-in-the-door/video"
         />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:site" content="@artsmia" />
       </Head>
     </Layout>
   )
 }
 
-export default video
+export default Video

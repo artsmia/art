@@ -114,7 +114,7 @@ function Home(props) {
               </a>
             </figcaption>
           </figure>
-          <Link href="/pages/video">
+          <Link href="/video">
             <a className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm">
               View All Featured Artists
             </a>
@@ -128,7 +128,7 @@ function Home(props) {
         </div>
       </aside>
       <Head>
-        <title>Foot in the Door 5 | Mia</title>
+        <title>Foot in the Door 5 | Mia </title>
         <meta name="twitter:card" content="summary_large_image"></meta>
         <meta property="og:title" content="Foot in the Door 5 | Mia" />
         <meta
