@@ -31,10 +31,15 @@ const events = [
 
 const videos = [
   {
-    vimeoId: 480895859,
-    caption: 'Foot in the Door 5 Artist: Eyenga Bokamba',
+    vimeoId: 471541996,
+    caption: 'Foot in the Door 5 Artist Video: Ilene Krug Mojsilov',
   },
- 
+  {
+    vimeoId: 475231372,
+    caption: 'Foot in the Door 5 Artist: Alonzo Pantoja',
+  },
+]
+
 function Home(props) {
   const video = videos[0]
   return (

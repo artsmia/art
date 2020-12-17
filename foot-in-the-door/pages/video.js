@@ -54,7 +54,7 @@ function video() {
             Artist Videos
           </h2>
           <p className="text-2xl font-light">
-            What makes "Foot in the Door 5: The Virtual Exhibition" so unique?
+            What makes Foot in the Door 5: The Virtual Exhibition so unique?
           </p>
           <p className="text-2xl font-light">
             {' '}
@@ -68,12 +68,12 @@ function video() {
       <aside className="md:flex pb-6">
         <div id="video" className="md:w-1/2 pb-8 md: pb-0 md:mr-12">
           {videos.map((video) => (
-            <figure className="group mt-1">
+            <figure key={video.vimeoId} className="group mt-1"> 
               <div
                 style={{
                   position: 'relative',
                   padding: '56% 56% 6% 6%',
-                  height: 0,
+                  height: '0',
                 }}
               >
                 <iframe
