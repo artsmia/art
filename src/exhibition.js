@@ -35,7 +35,7 @@ var Exhibition = React.createClass({
             const loanExhibitionAllowlist = [2802, 2778, 2851, 2854, 2830, 2856]
             const exhibitionAllowlisted = loanExhibitionAllowlist.indexOf(id) > -1
             const publishableArtworks = exhibitionAllowlisted
-              ? json.hits.hits
+              ? json.hits.hits.filter(data => data.found) // some exhibitions list IDs not in ES?
               : json.hits.hits.filter(({_source: s}) => s && s.public_access == "1")
 
             const ids = publishableArtworks.map(hit => hit._id)
