@@ -1,5 +1,6 @@
 /** @format */
 
+import { useState } from 'react'
 import Head from 'next/head'
 import Layout from '../components/Layout'
 
@@ -59,14 +60,16 @@ const videos = [
 ]
 
 function Video() {
+  const [showAllVideos, setShowAllVideos] = useState(false)
+
   return (
     <Layout>
       <main className="md:flex items-start mb-12">
-        <div className="md:w-1/2 mr-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
+        <div className="md:w-1/2 mr-12 flex-1">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide inline-block">
             Foot in the Door 5:
           </h1>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light inline ml-2">
             Featured Artist Videos
           </h2>
           <p className="text-2xl font-light">
@@ -79,39 +82,27 @@ function Video() {
             Meet participating artists. New videos released each week.
           </p>
         </div>
-      </main>
-      <aside className="md:flex pb-6">
-        <div id="video" className="md:w-1/2 pb-8 md: pb-0 md:mr-12">
-          {videos.map((video) => (
-            <figure key={video.vimeoId} className="group mt-1">
-              <div
-                style={{
-                  position: 'relative',
-                  padding: '56% 56% 6% 6%',
-                  height: '0',
-                }}
-              >
-                <iframe
-                  title={video.caption}
-                  src={`https://player.vimeo.com/video/${video.vimeoId}?color=ffffff&byline=0&title=0&portrait=0&texttrack=en`}
-                  frameBorder="0"
-                  allow="autoplay; fullscreen"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                ></iframe>
-              </div>
-              <figcaption className="text-sm invisible group-hover:visible bg-gray-200 p-1 px-2">
-                <a
-                  href={`https://vimeo.com/${video.vimeoId}`}
-                  className="no-underline hover:underline"
-                >
-                  {video.caption}
-                </a>
-              </figcaption>
-            </figure>
+        <div className="flex flex-col">
+          {videos.slice(0, 2).map((video) => (
+            <VideoBox key={video.vimeoId} {...video} />
           ))}
         </div>
-      </aside>
+      </main>
+      <details>
+        <summary
+          className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm"
+          onClick={() => setShowAllVideos(!showAllVideos)}
+        >
+          {showAllVideos ? 'Hide Videos' : `Show all ${videos.length} Videos`}
+        </summary>
+        {showAllVideos && (
+          <div id="video" className="md:w-1/2 pb-8 md: pb-0 md:mr-12">
+            {videos.slice(2, videos.length).map((video) => (
+              <VideoBox key={video.vimeoId} {...video} />
+            ))}
+          </div>
+        )}
+      </details>
       <Head>
         <title>Foot in the Door 5: Featured Artist Videos | Mia</title>
         <meta property="og:title" content="Foot in the Door 5: Featured Artist Videos | Mia" />
@@ -125,6 +116,38 @@ function Video() {
         />
       </Head>
     </Layout>
+  )
+}
+
+function VideoBox(props) {
+  return (
+    <figure key={props.vimeoId} className="group mt-1 mb-4">
+      <div
+        style={{
+          position: 'relative',
+          paddingBottom: '56.25%',
+          height: '0',
+        }}
+      >
+        <iframe
+          loading="lazy"
+          title={props.caption}
+          src={`https://player.vimeo.com/video/${props.vimeoId}?color=ffffff&byline=0&title=0&portrait=0&texttrack=en`}
+          frameBorder="0"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full"
+        ></iframe>
+      </div>
+      <figcaption className="text-sm group-hover:visible bg-gray-200 p-1 px-2">
+        <a
+          href={`https://vimeo.com/${props.vimeoId}`}
+          className="no-underline hover:underline"
+        >
+          {props.caption}
+        </a>
+      </figcaption>
+    </figure>
   )
 }
 
