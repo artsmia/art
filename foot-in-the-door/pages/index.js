@@ -184,8 +184,8 @@ export async function getStaticProps() {
 
 function EventBox(props) {
   const { href, title, date, time } = props
+  const eventPassed = true // as of 12/18, all events are in the past
 
-  const eventPassed = date.match(/November/)
   const classes = [
     'block bg-gray-300 my-4 p-2 px-4 font-light no-underline hover:bg-black hover:text-white',
     eventPassed ? 'opacity-50' : '',
