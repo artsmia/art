@@ -134,6 +134,11 @@ function Home(props) {
               </a>
             </figcaption>
           </figure>
+          <Link href="/video">
+            <a className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm">
+              View All Featured Artists
+            </a>
+          </Link>
         </div>
         <div id="related-events" className="md:w-1/2 md:mx-2 text-sm md:pl-1">
           <h3 className="font-black text-2xl">Exhibition Events</h3>
@@ -143,7 +148,7 @@ function Home(props) {
         </div>
       </aside>
       <Head>
-        <title>Foot in the Door 5 | Mia</title>
+        <title>Foot in the Door 5 | Mia </title>
         <meta name="twitter:card" content="summary_large_image"></meta>
         <meta property="og:title" content="Foot in the Door 5 | Mia" />
         <meta
