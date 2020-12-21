@@ -24,7 +24,7 @@ const events = [
   {
     href: 'https://new.artsmia.org/event/virtual-open-studio-foot-in-the-door',
     title: 'Virtual Open Studio: Foot in the Door',
-    date: 'Friday, December 18, 2020',
+    date: 'Friday, January 8, 2021',
     time: '1:00 pm to 2:00 pm',
   },
 ]
@@ -184,7 +184,7 @@ export async function getStaticProps() {
 
 function EventBox(props) {
   const { href, title, date, time } = props
-  const eventPassed = true // as of 12/18, all events are in the past
+  const eventPassed = date.match(/2020/)
 
   const classes = [
     'block bg-gray-300 my-4 p-2 px-4 font-light no-underline hover:bg-black hover:text-white',
