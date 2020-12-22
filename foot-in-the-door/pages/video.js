@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Head from 'next/head'
 import Layout from '../components/Layout'
 
-const videos = [
+export const videos = [
   {
     vimeoId: 480895859,
     caption: 'Foot in the Door 5 Artist: Eyenga Bokamba',

@@ -8,6 +8,8 @@ import SearchInput from '../components/SearchInput'
 
 import { getImages } from '../util'
 
+import { videos } from './video'
+
 const events = [
   {
     href: 'https://new.artsmia.org/event/virtual-family-day-foot-in-the-door',
@@ -26,37 +28,6 @@ const events = [
     title: 'Virtual Open Studio: Foot in the Door',
     date: 'Friday, January 8, 2021',
     time: '1:00 pm to 2:00 pm',
-  },
-]
-
-const videos = [
-  {
-    vimeoId: 480895859,
-    caption: 'Foot in the Door 5 Artist: Eyenga Bokamba',
-  },
-  {
-    vimeoId: 480525373,
-    caption: 'Foot in the Door 5 Artist: Sammy Austin',
-  },
-  {
-    vimeoId: 471541996,
-    caption: 'Foot in the Door 5 Artist Video: Ilene Krug Mojsilov',
-  },
-  {
-    vimeoId: 475231372,
-    caption: 'Foot in the Door 5 Artist: Alonzo Pantoja',
-  },
-  {
-    vimeoId: 480470984,
-    caption: 'Foot in the Door 5 Artist: Tamara Aupaumut',
-  },
-  {
-    vimeoId: 479910635,
-    caption: 'Foot in the Door 5 Artist: Ken Wenzel',
-  },
-  {
-    vimeoId: 480895859,
-    caption: 'Foot in the Door 5 Artist: Eyenga Bokamba',
   },
 ]
 
