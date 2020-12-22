@@ -10,6 +10,10 @@ export const videos = [
     caption: 'Foot in the Door 5 Artist: Eyenga Bokamba',
   },
   {
+    vimeoId: 489885390,
+    caption: 'Foot in the Door 5 Artist: Azalea Wilburg',
+  },
+  {
     vimeoId: 480525373,
     caption: 'Foot in the Door 5 Artist: Sammy Austin',
   },
