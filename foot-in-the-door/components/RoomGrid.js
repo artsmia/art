@@ -46,7 +46,10 @@ function RoomGrid(props) {
     ? Math.min(5, Math.max(2, Math.floor(windowWidth / 234)))
     : 2
 
-  const { asPath: page } = useRouter()
+  const {
+    asPath: page,
+    query: { exhibitionId: exhId, exhibitionSlug: exhSlug },
+  } = useRouter()
 
   return (
     <section {...containerProps}>
@@ -98,7 +101,7 @@ function RoomGrid(props) {
 
                 return (
                   <Link
-                    href={`/exhibitions/2760/foot-in-the-door/art/${id}`}
+                    href={`/exhibitions/${exhId}/${exhSlug}/art/${id}`}
                     passHref
                     key={id}
                   >

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import ImageCarousel from 'components/ImageCarousel'
 import Layout from 'components/Layout'
 import SearchInput from 'components/SearchInput'
+import Text from 'components/Text'
 
 import { getImages, getMiaExhibitionData } from 'util/index'
 
@@ -79,10 +80,7 @@ function FitdHome(props) {
 
           <SearchInput className="my-6" />
         </div>
-        <ImageCarousel
-          data={props.classificationLeadingImages}
-          className="sticky top-0"
-        />
+        <ImageCarousel data={props.leadingImages} className="sticky top-0" />
       </main>
       <aside className="md:flex pb-6">
         <div id="video" className="md:w-1/2 pb-8 md: pb-0 md:mr-12">
@@ -154,13 +152,8 @@ function MiaExhibition(props) {
   const { exhibitionData } = props
   const showSearchAndCarousel = false
 
-  console.info('MiaExhibition', {
-    // exhibitionData,
-    // images: props.classificationLeadingImages,
-  })
-
   return (
-    <Layout>
+    <Layout hideCTA={true}>
       <main className="md:flex items-start mb-12">
         <div className="md:w-1/2 mr-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
@@ -169,18 +162,15 @@ function MiaExhibition(props) {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">
             Outside the Frame
           </h2>
-          {exhibitionData?.description?.split('\n\n').map((descP, index) => (
-            <p key={index} className="py-4 font-light">
-              {descP}
-            </p>
-          ))}
+          <Text>{exhibitionData?.description}</Text>
 
           {showSearchAndCarousel && <SearchInput className="my-6" />}
         </div>
-        {props.classificationLeadingImages && (
+        {props.leadingImages && (
           <ImageCarousel
-            data={props.classificationLeadingImages}
+            data={props.leadingImages}
             className="sticky top-0"
+            exhibitionData={exhibitionData}
           />
         )}
       </main>
@@ -210,25 +200,33 @@ export async function getStaticPaths() {
       '/exhibitions/2760/foot-in-the-door',
       '/exhibitions/2830/todd-webb-in-africa',
     ],
-    fallback: true,
+    fallback: false,
   }
 }
 
 export async function getStaticProps({ params }) {
-  const classificationLeadingImagesFITD = await getImages()
   const exhibitionData = await getMiaExhibitionData(params.exhibitionId, fs)
-  const imageIDs = exhibitionData.objects.slice(0, 7)
-  const imagesAPIRequest = await fetch(
-    `https://search.artsmia.org/ids/${imageIDs.join(',')}`
-  )
-  const imagesAPI = await imagesAPIRequest.json()
-  const classificationLeadingImages = imagesAPI.hits.hits.map(
-    (art) => art._source
-  )
+  const isFitD = Number(params.exhibitionId) === 2760
+  let leadingImages
+
+  // TODO de-dupe this
+  if (isFitD) {
+    leadingImages = await getImages()
+  } else {
+    const imageIDs = exhibitionData.subPanels.map((p) => p.artworkIds[0])
+    const imagesAPIRequest = await fetch(
+      `https://search.artsmia.org/ids/${imageIDs.join(',')}`
+    )
+    const imagesAPI = await imagesAPIRequest.json()
+    leadingImages = imagesAPI.hits.hits.map((art, index) => ({
+      ...art._source,
+      classification: exhibitionData.subPanels[index].Title,
+    }))
+  }
 
   return {
     props: {
-      classificationLeadingImages,
+      leadingImages,
       exhibitionData,
     },
   }

@@ -1,11 +1,18 @@
 /** @format */
+import fs from 'fs'
 import { useEffect, useState } from 'react'
 
 import Layout from 'components/Layout'
 import LeftRightNav from 'components/LeftRightNav'
 import RoomGrid from 'components/RoomGrid'
-import { classifications, getSearchResults, getImages } from 'util/index'
+import {
+  classifications as fitdClassifications,
+  getSearchResults,
+  getImages,
+  getMiaExhibitionData,
+} from 'util/index'
 import { SupportCTA } from 'components/NavBar'
+import Text from 'components/Text'
 
 function Room(props) {
   const {
@@ -57,6 +64,14 @@ function Room(props) {
     setAddlPages([])
   }, [classification])
 
+  const {
+    exhibitionData: { subPanels, subpanel },
+    isFitD,
+  } = props
+  const classifications = isFitD
+    ? fitdClassifications
+    : subPanels.map((p) => p.Title)
+
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   // if (router.isFallback) {
@@ -82,7 +97,9 @@ function Room(props) {
           perPage={perPage}
           className="mt-24"
           label={`Browse all ${classification}`}
-        />
+        >
+          <Text>{subpanel?.Text}</Text>
+        </RoomGrid>
         {additionalPages.map((page, index) => {
           return (
             <RoomGrid
@@ -123,18 +140,41 @@ function Room(props) {
 export default Room
 
 export async function getStaticProps({ params }) {
-  const { slug } = params
-  let classification = slug.replace('-', ' ')
+  const { exhibitionId, slug } = params
+  const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
+  let classification = slug.replace(/-/g, ' ')
+  const subpanel =
+    exhibitionData.subPanels.find(
+      (p) => p.Title.toLowerCase() === classification
+    ) || null
   if (classification === 'all') classification = '*'
-  const results = await getSearchResults(`classification:${slug}`)
-  const imagesForCarousel = await getImages(4)
+
+  const isFitD = Number(exhibitionId) === 2760
+
+  let results
+  let imagesForCarousel
+  if (isFitD) {
+    imagesForCarousel = await getImages(4)
+    results = await getSearchResults(`classification:${slug}`)
+  } else {
+    imagesForCarousel = await getImages(4, {
+      groups: exhibitionData.subPanels.map((panel) => ({
+        title: panel.Title,
+        ids: panel.artworkIds,
+      })),
+    })
+    results = await getSearchResults(null, { ids: subpanel.artworkIds })
+  }
 
   return {
     props: {
       results,
+      exhibitionData,
+      subpanel,
       classification,
       slug,
       imagesForCarousel,
+      isFitD,
     },
     revalidate: 600,
   }
@@ -146,8 +186,8 @@ export async function getStaticPaths() {
   const exhibitionSlug = 'foot-in-the-door'
 
   const manifest = {
-    paths: classifications.concat('*').map((classification) => {
-      let slug = classification.toLowerCase().replace(' ', '-')
+    paths: fitdClassifications.concat('*').map((classification) => {
+      let slug = classification.toLowerCase().replace(/\s/g, '-')
       if (slug === '*') slug = 'all'
 
       return { params: { exhibitionId, exhibitionSlug, classification, slug } }

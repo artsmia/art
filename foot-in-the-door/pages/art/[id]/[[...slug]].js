@@ -1,4 +1,5 @@
 /** @format */
+import fs from 'fs'
 import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
@@ -12,16 +13,18 @@ import Layout from 'components/Layout'
 import LeftRightNav from 'components/LeftRightNav'
 import RoomGrid from 'components/RoomGrid'
 import {
-  classifications,
+  classifications as fitdClassifications,
   cx,
   fetchById,
   getImageSrc,
   getImageProps,
   getSearchResults,
   getImages,
+  getMiaExhibitionData,
 } from 'util/index'
 import LikeControl from 'components/LikeControl'
 import ImageWithBackground from 'components/ImageWithBackground'
+import Text from 'components/Text'
 
 function Art(props) {
   const {
@@ -40,6 +43,7 @@ function Art(props) {
     },
     classificationResults,
     imagesForCarousel,
+    isFitD,
   } = props
 
   const [isFirstVisit, setFirstVisit] = useState(false)
@@ -51,10 +55,12 @@ function Art(props) {
     if (visitCount <= 1) setFirstVisit(true)
   }, [])
 
-  const keywords = (keywordsString.replace(/\s\s+/, ' ').indexOf(',') > -1
-    ? keywordsString.split(/,\s?/g)
-    : keywordsString.split(' ')
-  ).filter((word) => !word.match(/^\s+$/))
+  const keywords =
+    keywordsString &&
+    (keywordsString?.replace(/\s\s+/, ' ').indexOf(',') > -1
+      ? keywordsString.split(/,\s?/g)
+      : keywordsString.split(' ')
+    ).filter((word) => !word.match(/^\s+$/))
 
   const aspectRatio = image_width / image_height
   const isPortrait = aspectRatio <= 1
@@ -103,13 +109,14 @@ function Art(props) {
                 ))}
               </p>
             )}
+            <Text>{artwork?.text}</Text>
           </div>
 
           <div className="border-t-2 border-opacity-75 mt-8 lg:mt-16">
             <p className="flex items-center">
               <ShareLinks art={artwork} />
             </p>
-            {isFirstVisit || (
+            {!isFitD || isFirstVisit || (
               <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
                 <JoinCTAPhrase />
               </p>
@@ -118,8 +125,11 @@ function Art(props) {
         </div>
       </main>
 
-      {isFirstVisit ? (
-        <FitDContextBlurb />
+      {!isFitD || isFirstVisit ? (
+        <ExhibitionContextBlurb
+          isFitD={isFitD}
+          exhibitionData={props.exhibitionData}
+        />
       ) : (
         <div>
           <RoomGrid
@@ -145,7 +155,7 @@ function Art(props) {
 
           <aside className="mt-24">
             <LeftRightNav
-              classifications={classifications}
+              classifications={fitdClassifications}
               classification={artwork.classification}
               className="flex justify-between pt-48"
               imagesForCarousel={imagesForCarousel}
@@ -169,15 +179,28 @@ export async function getServerSideProps({ params }) {
     'abcdefghijklmnopqrstuvwxyz' // alphabet: only lowercase letters
   )
 
-  const { id } = params
+  const { id, exhibitionId } = params
+  const isFitD = Number(exhibitionId) === 2760
+  const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
+
   const numericID = Number(id) ? Number(id) : hashids.decode(id)
   const hashid = hashids.encode(numericID)
 
-  const artwork = await fetchById(numericID)
-  // console.info({ id, numericID, hashid, artwork })
-  const classification = artwork.classification.toLowerCase().replace(' ', '-')
+  let artwork = await fetchById(numericID, isFitD)
+  if (!isFitD && exhibitionData && exhibitionData.extra) {
+    const exhibitionEntryText = exhibitionData.extra.find(
+      (d) => d.UniqueID === numericID
+    )?.Text
+
+    artwork.text = exhibitionEntryText
+  }
+
+  const classification = artwork.classification
+    .toLowerCase()
+    .replace(/\s/g, '-')
   const classificationResults = await getSearchResults(
-    `classification:${classification}`
+    isFitD ? `classification:${classification}` : `artist:'Todd Webb'`,
+    { isFitD }
   )
 
   const slug = makeSlug([artwork.title, artwork.artist].join(' '))
@@ -200,9 +223,11 @@ export async function getServerSideProps({ params }) {
   return {
     props: {
       id: numericID,
+      isFitD,
       artwork,
       classificationResults,
       imagesForCarousel,
+      exhibitionData,
     },
   }
 }
@@ -262,6 +287,30 @@ function ShareLinks(props) {
   )
 }
 
+function ExhibitionContextBlurb(props) {
+  const { isFitD, exhibitionData } = props
+
+  console.info('ExhibitionContextBlurb', {
+    exhibitionData,
+  })
+
+  return isFitD ? (
+    FitDContextBlurb
+  ) : (
+    <>
+      <aside className="bg-gray-300 p-4 px-4 mt-8 my-4">
+        <p>{exhibitionData.description.split('\n\n')[0]}</p>
+      </aside>
+      <Link href="/exhibitions/2830/todd-webb-in-africa">
+        <a className="block text-center uppercase hover:no-underline">
+          Enter <strong className="font-bold">Todd Webb In Africa</strong>{' '}
+          Exhibition
+        </a>
+      </Link>
+    </>
+  )
+}
+
 function FitDContextBlurb() {
   return (
     <>
@@ -275,7 +324,7 @@ function FitDContextBlurb() {
           “a foot” in the museum’s galleries.
         </p>
       </aside>
-      <Link href="/">
+      <Link href="/exhibitions/2760/foot-in-the-door">
         <a className="block text-center uppercase hover:no-underline">
           Enter <strong className="font-bold">Foot in the Door</strong>{' '}
           Exhibition

@@ -43,24 +43,34 @@ export async function getSearchResults(term, options = {}) {
     size, // how many results to fetch
     useNormalSearch, // use a "normal" search or "random". Default: random
     from: _from,
+    ids,
+    isFitD = true,
   } = options
 
   const from = _from || 0
-  const queryParams = `size=${size || 30}&from=${from}&fitd=1`
+  const queryParams = `size=${size || 30}&from=${from}&fitd=${isFitD ? 1 : 0}`
   const searchEndpoint = (term) =>
     `https://search.artsmia.org/${term}?${queryParams}`
   const randomEndpoint = (term) =>
     `https://search.artsmia.org/random/art?q=${term}&${queryParams}`
+  const idEndpoint = (ids) => `https://search.artsmia.org/ids/${ids.join(',')}`
+
   const res = await fetch(
-    useNormalSearch ? searchEndpoint(term) : randomEndpoint(term)
+    useNormalSearch
+      ? searchEndpoint(term)
+      : ids
+      ? idEndpoint(ids.slice(0, size || 30))
+      : randomEndpoint(term)
   )
   const results = await res.json()
 
   return results
 }
 
-export async function fetchById(id) {
-  const res = await fetch(`https://search.artsmia.org/id/${id}?fitd=1`)
+export async function fetchById(id, isFitD = true) {
+  const res = await fetch(
+    `https://search.artsmia.org/id/${id}${isFitD ? '?fitd=1' : ''}`
+  )
   const artwork = await res.json()
 
   return artwork
@@ -181,15 +191,30 @@ function saveToLocalStorage(data, _userId) {
  * fetch one artwork from each `classification`
  * and return all as json
  */
-export async function getImages(size) {
-  const results = await Promise.all(
-    classifications.map(async function (c) {
-      const json = await getSearchResults(`classification:${c}`, {
-        size: size || 1,
+export async function getImages(size, options = {}) {
+  let results
+
+  if (options.groups) {
+    results = await Promise.all(
+      options.groups.map(async function ({ ids }) {
+        const json = await getSearchResults(null, {
+          ids: ids,
+          size: size || 1,
+        })
+        return json.hits.hits
+        // .map((item) => ({ ...item, classification: title }))
       })
-      return json
-    })
-  )
+    )
+  } else {
+    results = await Promise.all(
+      classifications.map(async function (c) {
+        const json = await getSearchResults(`classification:${c}`, {
+          size: size || 1,
+        })
+        return json
+      })
+    )
+  }
 
   return results
 }
@@ -282,13 +307,18 @@ export async function getMiaExhibitionData(exhId, fs) {
   //
   // fs should be imported here, instead of passed as an arg, but that fails to compile
   // why can't I `import fs` in this file?
-  //
-  // find the proper json file based on exhibition ID
-  const extraDataRaw = await fs.readFileSync(
-    'data/exhibitions/2830/todd-webb.json',
-    { encoding: 'utf-8' }
-  )
-  const extraData = JSON.parse(extraDataRaw)
+  let extraData
+  try {
+    const extraDataRaw = await fs.readFileSync(
+      `data/exhibitions/${exhId}.json`,
+      {
+        encoding: 'utf-8',
+      }
+    )
+    extraData = JSON.parse(extraDataRaw)
+  } catch (e) {
+    extraData = []
+  }
 
   const mainPanel =
     extraData.find(
@@ -297,9 +327,24 @@ export async function getMiaExhibitionData(exhId, fs) {
     ) ?? extraData[0]
   const extraDescription = mainPanel?.Text
 
+  const subPanels = extraData
+    .filter((d) => d['Record type'] === 'SubPanel')
+    .map((panel) => {
+      panel.artworkIds =
+        extraData
+          .filter((d) => d.ParentID === panel.UniqueID)
+          .map((art) => art.UniqueID) ?? null
+
+      // panel.nextPanel = extraData[extraData.indexOf(panel) + 2]
+      // panel.prevPanel = extraData[extraData.indexOf(panel) - 1]
+
+      return panel
+    })
+
   return {
     ...baseData,
-    description: baseData.description || extraDescription,
+    description: baseData.description || extraDescription || null,
     extra: extraData,
+    subPanels,
   }
 }

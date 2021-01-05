@@ -1,9 +1,12 @@
 /** @format */
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { cx, getImageProps, useWindowSize } from '../util'
 
 function LRNav(props) {
+  const router = useRouter()
+  const { exhibitionId: exhId, exhibitionSlug: exhSlug } = router.query
   const {
     classifications,
     classification,
@@ -48,13 +51,12 @@ function LRNav(props) {
             ? `${room} &rsaquo;`
             : room
 
+          const roomSlug = room.replace(/\s/g, '-')
+
           return (
             <Link
               key={room}
-              href={`/exhibitions/2760/foot-in-the-door/room/${room.replace(
-                ' ',
-                '-'
-              )}`}
+              href={`/exhibitions/${exhId}/${exhSlug}/room/${roomSlug}`}
             >
               <a
                 className={cx(

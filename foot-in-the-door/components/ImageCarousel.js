@@ -8,7 +8,7 @@ import { cx, getImageProps } from '../util'
 function ImageCarousel(props) {
   const [carouselIndex, setCarouselIndex] = useState(0)
   const isCollapsed = props.isCollapsed || true
-  const { className, data } = props
+  const { className, data, exhibitionData } = props
 
   const observerRef = useRef()
   const carouselRef = useRef()
@@ -61,8 +61,15 @@ function ImageCarousel(props) {
     scrollToItem(carouselIndex)
   }, [carouselIndex])
 
+  const {
+    exhibition_id: exhId = 2760,
+    exhibition_title: exhTitle,
+    firstRoom = 'ceramics',
+  } = exhibitionData
+  const exhSlug = exhTitle?.split(':')[0].replace(/\s/g, '-').toLowerCase()
+
   const loading = (
-    <Link href="/exhibitions/2760/foot-in-the-door/room/ceramics">
+    <Link href={`/exhibitions/${exhId}/${exhSlug}/room/${firstRoom}`}>
       <div className="bg-gray-100 w-100 md:w-1/2 p-4 m-4">
         {isCollapsed ? 'small' : 'big'} Image carousel goes here
       </div>
@@ -84,7 +91,7 @@ function ImageCarousel(props) {
               ref={itemRefs[index]}
             >
               <Link
-                href={`/exhibitions/2760/foot-in-the-door/room/${classif
+                href={`/exhibitions/${exhId}/${exhSlug}/room/${classif
                   .toLowerCase()
                   .replace(' ', '-')}`}
               >
