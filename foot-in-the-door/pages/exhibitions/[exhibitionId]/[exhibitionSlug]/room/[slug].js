@@ -1,11 +1,11 @@
 /** @format */
 import { useEffect, useState } from 'react'
 
-import Layout from '../../components/Layout'
-import LeftRightNav from '../../components/LeftRightNav'
-import RoomGrid from '../../components/RoomGrid'
-import { classifications, getSearchResults, getImages } from '../../util'
-import { SupportCTA } from '../../components/NavBar'
+import Layout from 'components/Layout'
+import LeftRightNav from 'components/LeftRightNav'
+import RoomGrid from 'components/RoomGrid'
+import { classifications, getSearchResults, getImages } from 'util/index'
+import { SupportCTA } from 'components/NavBar'
 
 function Room(props) {
   const {
@@ -141,12 +141,16 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
+  // TODO expand for multiple exhibitions
+  const exhibitionId = '2760'
+  const exhibitionSlug = 'foot-in-the-door'
+
   const manifest = {
     paths: classifications.concat('*').map((classification) => {
       let slug = classification.toLowerCase().replace(' ', '-')
       if (slug === '*') slug = 'all'
 
-      return { params: { classification, slug } }
+      return { params: { exhibitionId, exhibitionSlug, classification, slug } }
     }),
     fallback: false,
   }

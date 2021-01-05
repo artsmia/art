@@ -1,12 +1,14 @@
 /** @format */
+import fs from 'fs'
 import Link from 'next/link'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-import ImageCarousel from '../components/ImageCarousel'
-import Layout from '../components/Layout'
-import SearchInput from '../components/SearchInput'
+import ImageCarousel from 'components/ImageCarousel'
+import Layout from 'components/Layout'
+import SearchInput from 'components/SearchInput'
 
-import { getImages } from '../util'
+import { getImages, getMiaExhibitionData } from 'util/index'
 
 import { videos } from './video'
 
@@ -31,7 +33,14 @@ const events = [
   },
 ]
 
-function Home(props) {
+function ExhibitionHome(props) {
+  const router = useRouter()
+  const { exhibitionId: id } = router.query
+
+  return id === '2760' ? <FitdHome {...props} /> : <MiaExhibition {...props} />
+}
+
+function FitdHome(props) {
   const video = videos[1]
   return (
     <Layout stickyCTA={true} stickyFooter={true}>
@@ -105,7 +114,7 @@ function Home(props) {
               </a>
             </figcaption>
           </figure>
-          <Link href="/video">
+          <Link href="/exhibitions/2760/foot-in-the-door/video">
             <a className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm">
               View All Featured Artists
             </a>
@@ -141,14 +150,86 @@ function Home(props) {
   )
 }
 
-export default Home
+function MiaExhibition(props) {
+  const { exhibitionData } = props
+  const showSearchAndCarousel = false
 
-export async function getStaticProps() {
-  const classificationLeadingImages = await getImages()
+  console.info('MiaExhibition', {
+    // exhibitionData,
+    // images: props.classificationLeadingImages,
+  })
+
+  return (
+    <Layout>
+      <main className="md:flex items-start mb-12">
+        <div className="md:w-1/2 mr-12">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
+            Todd Webb In Africa
+          </h1>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">
+            Outside the Frame
+          </h2>
+          {exhibitionData?.description?.split('\n\n').map((descP, index) => (
+            <p key={index} className="py-4 font-light">
+              {descP}
+            </p>
+          ))}
+
+          {showSearchAndCarousel && <SearchInput className="my-6" />}
+        </div>
+        {props.classificationLeadingImages && (
+          <ImageCarousel
+            data={props.classificationLeadingImages}
+            className="sticky top-0"
+          />
+        )}
+      </main>
+      <aside className="md:flex pb-6">
+        <p>additional content?</p>
+        <p>ex: exhibition dates, table of contents?</p>
+      </aside>
+      <Head>
+        <title>Todd Webb in Africa | Mia </title>
+        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta property="og:title" content="Todd Webb In Africa | Mia" />
+        <meta property="og:description" content="Todd Webb in Africa" />
+        <meta property="og:image" content="TODO CHANGE" />
+        <meta property="og:url" content="TODO change" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:site" content="@artsmia" />
+      </Head>
+    </Layout>
+  )
+}
+
+export default ExhibitionHome
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      '/exhibitions/2760/foot-in-the-door',
+      '/exhibitions/2830/todd-webb-in-africa',
+    ],
+    fallback: true,
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const classificationLeadingImagesFITD = await getImages()
+  const exhibitionData = await getMiaExhibitionData(params.exhibitionId, fs)
+  const imageIDs = exhibitionData.objects.slice(0, 7)
+  const imagesAPIRequest = await fetch(
+    `https://search.artsmia.org/ids/${imageIDs.join(',')}`
+  )
+  const imagesAPI = await imagesAPIRequest.json()
+  const classificationLeadingImages = imagesAPI.hits.hits.map(
+    (art) => art._source
+  )
 
   return {
     props: {
       classificationLeadingImages,
+      exhibitionData,
     },
   }
 }

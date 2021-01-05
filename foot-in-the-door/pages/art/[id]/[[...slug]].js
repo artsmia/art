@@ -7,10 +7,10 @@ import { SiTwitter, SiFacebook } from '@meronex/icons/si'
 import Hashids from 'hashids/cjs'
 import makeSlug from 'slug'
 
-import { JoinCTAPhrase, SupportCTA } from '../../../components/NavBar'
-import Layout from '../../../components/Layout'
-import LeftRightNav from '../../../components/LeftRightNav'
-import RoomGrid from '../../../components/RoomGrid'
+import { JoinCTAPhrase, SupportCTA } from 'components/NavBar'
+import Layout from 'components/Layout'
+import LeftRightNav from 'components/LeftRightNav'
+import RoomGrid from 'components/RoomGrid'
 import {
   classifications,
   cx,
@@ -19,9 +19,9 @@ import {
   getImageProps,
   getSearchResults,
   getImages,
-} from '../../../util'
-import LikeControl from '../../../components/LikeControl'
-import ImageWithBackground from '../../../components/ImageWithBackground'
+} from 'util/index'
+import LikeControl from 'components/LikeControl'
+import ImageWithBackground from 'components/ImageWithBackground'
 
 function Art(props) {
   const {

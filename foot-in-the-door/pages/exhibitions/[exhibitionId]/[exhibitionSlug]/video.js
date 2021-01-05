@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Head from 'next/head'
-import Layout from '../components/Layout'
+import Layout from 'components/Layout'
 
 export const videos = [
   {
@@ -109,7 +109,10 @@ function Video() {
       </details>
       <Head>
         <title>Foot in the Door 5: Featured Artist Videos | Mia</title>
-        <meta property="og:title" content="Foot in the Door 5: Featured Artist Videos | Mia" />
+        <meta
+          property="og:title"
+          content="Foot in the Door 5: Featured Artist Videos | Mia"
+        />
         <meta
           property="og:description"
           content="Foot in the Door 5: Featured Artists Videos – Minneapolis Institute of Art #FootInTheDoor @artsmia"

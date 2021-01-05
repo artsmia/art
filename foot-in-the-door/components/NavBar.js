@@ -17,7 +17,8 @@ function NavBar() {
   // const toggleSearchDrawer = () => setSearchOpen(!searchOpen)
   const expandedNavDialog = useDialogState()
   const { visible: searchDialogOpen } = expandedNavDialog
-  const { route } = useRouter()
+  const router = useRouter()
+  const { route } = router
   const { width } = useWindowSize()
   const useDialogSearch = width < 769 // tailwind md:
   const isSearchPage = /search/.test(route)
@@ -27,7 +28,7 @@ function NavBar() {
       <div className="w-48 sm:w-auto md:flex md:flex-grow md:justify-between md:flex-wrap">
         <LogoLink route={route} className="mb-2" />
         <div className="text-sm uppercase">
-          <ExhibitionHomeLink route={route} />
+          <ExhibitionHomeLink route={route} router={router} />
           <ExitExhibitionLink route={route} />
         </div>
       </div>
@@ -148,8 +149,10 @@ function LogoLink({ route, ...props }) {
   )
 }
 
-function ExhibitionHomeLink({ route, className }) {
+function ExhibitionHomeLink({ route, router, className }) {
   const { width } = useWindowSize()
+  const { exhibitionId: id, exhibitionSlug: slug } = router.query
+  const exhibitionName = slug.replace(/-/g, ' ')
   const chevronLeft = (
     <HiOutlineChevronLeft
       className="inline -mt-1 md:hidden"
@@ -159,7 +162,10 @@ function ExhibitionHomeLink({ route, className }) {
 
   const linkStyles = `font-light no-underline hover:underline md:text-gray-400`
 
-  return route === '/' && width < 768 ? (
+  const atExhibitionHome =
+    route === '/exhibitions/[exhibitionId]/[exhibitionSlug]'
+
+  return atExhibitionHome && width < 768 ? (
     <a
       href="https://new.artsmia.org/exhibitions/"
       className={cx(className, linkStyles)}
@@ -168,10 +174,10 @@ function ExhibitionHomeLink({ route, className }) {
     </a>
   ) : (
     <>
-      <Link href="/">
+      <Link href={`/exhibitions/${id}/${slug}`}>
         <a className={cx(className, linkStyles)}>
           {chevronLeft}
-          <span className="sm:hidden">Foot in the Door</span>{' '}
+          <span className="sm:hidden">{exhibitionName}</span>{' '}
           <span className="hidden sm:inline">Exhibition</span> Home
         </a>
       </Link>

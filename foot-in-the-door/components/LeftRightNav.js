@@ -49,7 +49,13 @@ function LRNav(props) {
             : room
 
           return (
-            <Link key={room} href={`/room/${room.replace(' ', '-')}`}>
+            <Link
+              key={room}
+              href={`/exhibitions/2760/foot-in-the-door/room/${room.replace(
+                ' ',
+                '-'
+              )}`}
+            >
               <a
                 className={cx(
                   'flex px-2 no-underline font-light group',

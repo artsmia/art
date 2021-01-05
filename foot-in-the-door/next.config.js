@@ -1,5 +1,4 @@
 module.exports = {
-  basePath: '/exhibitions/2760/foot-in-the-door',
   // TODO these re-writes are causing routing problems?
   // I think they interfere with `basePath`?
   // leave them commented out for now

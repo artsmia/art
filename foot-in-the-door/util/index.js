@@ -2,19 +2,27 @@
 import { useState, useEffect } from 'react'
 
 export function getImageSrc(artworkData, thumbnail = true) {
-  const id = artworkData.id
-  const imageFilename = artworkData.image
-  const thumb =
-    'tn_' +
-    imageFilename.replace(/jpeg|png|JPG|tiff?$/i, 'jpg').replace('+', '%2B')
-  const bucket = Math.ceil(Math.max(id - 1, 1) / 135)
-  const image = `${bucket}/${imageFilename}`
-  const useCloudfront = true
-  const domain = useCloudfront
-    ? `https://d3dbbvm3mhv3af.cloudfront.net`
-    : `https://foot-in-the-door-2020.s3.amazonaws.com`
+  const { id, accession_number } = artworkData
+  const isFitD = accession_number.match(/FITD/)
 
-  return `${domain}/800/${thumbnail ? thumb : image}`
+  if (isFitD) {
+    const imageFilename = artworkData.image
+    const thumb =
+      'tn_' +
+      imageFilename.replace(/jpeg|png|JPG|tiff?$/i, 'jpg').replace('+', '%2B')
+    const bucket = Math.ceil(Math.max(id - 1, 1) / 135)
+    const image = `${bucket}/${imageFilename}`
+    const useCloudfront = true
+    const domain = useCloudfront
+      ? `https://d3dbbvm3mhv3af.cloudfront.net`
+      : `https://foot-in-the-door-2020.s3.amazonaws.com`
+
+    return `${domain}/800/${thumbnail ? thumb : image}`
+  } else {
+    return `https://${id % 7}.api.artsmia.org/${
+      thumbnail ? 400 : 800
+    }/${id}.jpg`
+  }
 }
 
 export function getImageProps(artData) {
@@ -260,4 +268,38 @@ export function useWindowSize() {
   }, []) // Empty array ensures that effect is only run on mount
 
   return windowSize
+}
+
+export async function getMiaExhibitionData(exhId, fs) {
+  const baseDataR = await fetch(
+    `http://cdn.dx.artsmia.org/exhibitions/${Math.floor(
+      exhId / 1000
+    )}/${exhId}.json`
+  )
+  const baseData = await baseDataR.json()
+
+  // TODO
+  //
+  // fs should be imported here, instead of passed as an arg, but that fails to compile
+  // why can't I `import fs` in this file?
+  //
+  // find the proper json file based on exhibition ID
+  const extraDataRaw = await fs.readFileSync(
+    'data/exhibitions/2830/todd-webb.json',
+    { encoding: 'utf-8' }
+  )
+  const extraData = JSON.parse(extraDataRaw)
+
+  const mainPanel =
+    extraData.find(
+      (data) =>
+        data['ID Type'] === 'ExhibitionId' && data.UniqueId === Number(exhId)
+    ) ?? extraData[0]
+  const extraDescription = mainPanel?.Text
+
+  return {
+    ...baseData,
+    description: baseData.description || extraDescription,
+    extra: extraData,
+  }
 }

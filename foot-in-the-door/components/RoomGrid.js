@@ -97,7 +97,11 @@ function RoomGrid(props) {
                 const { src: imageSrc } = imageProps
 
                 return (
-                  <Link href={`/art/${id}`} passHref key={id}>
+                  <Link
+                    href={`/exhibitions/2760/foot-in-the-door/art/${id}`}
+                    passHref
+                    key={id}
+                  >
                     <GridCell
                       {...grid}
                       as="a"

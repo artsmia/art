@@ -62,7 +62,7 @@ function ImageCarousel(props) {
   }, [carouselIndex])
 
   const loading = (
-    <Link href="/room/ceramics">
+    <Link href="/exhibitions/2760/foot-in-the-door/room/ceramics">
       <div className="bg-gray-100 w-100 md:w-1/2 p-4 m-4">
         {isCollapsed ? 'small' : 'big'} Image carousel goes here
       </div>
@@ -83,7 +83,11 @@ function ImageCarousel(props) {
               className="p-1 w-48 focus:w-auto flex-shrink-0"
               ref={itemRefs[index]}
             >
-              <Link href={`/room/${classif.toLowerCase().replace(' ', '-')}`}>
+              <Link
+                href={`/exhibitions/2760/foot-in-the-door/room/${classif
+                  .toLowerCase()
+                  .replace(' ', '-')}`}
+              >
                 <a className="no-underline">
                   <div className="group relative mx-1 overflow-hidden">
                     <img
@@ -126,7 +130,7 @@ function ImageCarousel(props) {
             )
           })}
         </div>
-        <Link href="/room/all">
+        <Link href="/exhibitions/2760/foot-in-the-door/room/all">
           <a className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm">
             View All Groups
           </a>
