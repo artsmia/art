@@ -3,21 +3,21 @@ import { useState, useEffect } from 'react'
 
 export function getImageSrc(artworkData, thumbnail = true) {
   const { id, accession_number } = artworkData
-  const isFitD = accession_number.match(/FITD/)
+  const isFitD = Boolean(accession_number.match(/FITD/))
 
   if (isFitD) {
     const imageFilename = artworkData.image
     const thumb =
       'tn_' +
       imageFilename.replace(/jpeg|png|JPG|tiff?$/i, 'jpg').replace('+', '%2B')
-    const bucket = Math.ceil(Math.max(id - 1, 1) / 135)
-    const image = `${bucket}/${imageFilename}`
+    // const bucket = Math.ceil(Math.max(id - 1, 1) / 135)
+    // const image = `${bucket}/${imageFilename}`
     const useCloudfront = true
     const domain = useCloudfront
       ? `https://d3dbbvm3mhv3af.cloudfront.net`
       : `https://foot-in-the-door-2020.s3.amazonaws.com`
 
-    return `${domain}/800/${thumbnail ? thumb : image}`
+    return `${domain}/800/${thumb}`
   } else {
     return `https://${id % 7}.api.artsmia.org/${
       thumbnail ? 400 : 800
@@ -25,9 +25,11 @@ export function getImageSrc(artworkData, thumbnail = true) {
   }
 }
 
-export function getImageProps(artData) {
+export function getImageProps(artData, options = {}) {
+  const { fullSize } = options
+
   return {
-    src: getImageSrc(artData),
+    src: getImageSrc(artData, !fullSize),
     alt: artData.description,
     width: artData.image_width,
     height: artData.image_height,
@@ -196,13 +198,16 @@ export async function getImages(size, options = {}) {
 
   if (options.groups) {
     results = await Promise.all(
-      options.groups.map(async function ({ ids }) {
+      options.groups.map(async function ({ ids, title }) {
         const json = await getSearchResults(null, {
           ids: ids,
           size: size || 1,
         })
-        return json.hits.hits
-        // .map((item) => ({ ...item, classification: title }))
+
+        return json.hits.hits.map((item) => ({
+          ...item,
+          __group: title,
+        }))
       })
     )
   } else {

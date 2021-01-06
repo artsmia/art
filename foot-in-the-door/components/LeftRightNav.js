@@ -106,10 +106,21 @@ function PeekImages(props) {
 
   const size = showFullNav ? 3 : 1
 
+  // TODO this is hard. How to expand the idea of a "group" beyond `classification`
+  // (which is what FITD uses) so it also works for Todd Webb, which groups based on
+  // which artworks are in what part of the exhibition via their exhibition data
+  //
+  // Solution 1: use two different 'grouping heuristics': one for FITD and one for
+  // everything else.
   let artworks = (
-    imagesForCarousel.find((arr) =>
-      arr[0]._source.classification.toLowerCase().match(room)
-    ) || []
+    imagesForCarousel.find(([firstItem]) => {
+      const groupingHeuristics = [
+        firstItem._source.classification.toLowerCase(),
+        firstItem.__group?.toLowerCase() ?? null,
+      ]
+
+      return groupingHeuristics.indexOf(room) > -1
+    }) || []
   ).slice(0, size)
 
   return (

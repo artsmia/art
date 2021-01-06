@@ -68,7 +68,7 @@ function Art(props) {
   const rightWidth = isPortrait ? '1/2' : '1/3'
   const imgMaxHeight = isPortrait ? '90vh' : 'auto'
   const imgMaxWidth = isPortrait ? `${90 * aspectRatio}vh` : '100%'
-  const imageProps = getImageProps(artwork)
+  const imageProps = getImageProps(artwork, { fullSize: true })
   const { src: imageSrc } = imageProps
 
   return (
@@ -289,10 +289,6 @@ function ShareLinks(props) {
 
 function ExhibitionContextBlurb(props) {
   const { isFitD, exhibitionData } = props
-
-  console.info('ExhibitionContextBlurb', {
-    exhibitionData,
-  })
 
   return isFitD ? (
     FitDContextBlurb

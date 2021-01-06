@@ -152,7 +152,7 @@ function LogoLink({ route, ...props }) {
 function ExhibitionHomeLink({ route, router, className }) {
   const { width } = useWindowSize()
   const { exhibitionId: id, exhibitionSlug: slug } = router.query
-  const exhibitionName = slug.replace(/-/g, ' ')
+  const exhibitionName = slug?.replace(/-/g, ' ')
   const chevronLeft = (
     <HiOutlineChevronLeft
       className="inline -mt-1 md:hidden"

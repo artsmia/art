@@ -65,8 +65,10 @@ function ImageCarousel(props) {
     exhibition_id: exhId = 2760,
     exhibition_title: exhTitle,
     firstRoom = 'ceramics',
-  } = exhibitionData
-  const exhSlug = exhTitle?.split(':')[0].replace(/\s/g, '-').toLowerCase()
+  } = exhibitionData || {}
+  const exhSlug =
+    exhTitle?.split(':')[0].replace(/\s/g, '-').toLowerCase() ??
+    'foot-in-the-door'
 
   const loading = (
     <Link href={`/exhibitions/${exhId}/${exhSlug}/room/${firstRoom}`}>
@@ -93,7 +95,7 @@ function ImageCarousel(props) {
               <Link
                 href={`/exhibitions/${exhId}/${exhSlug}/room/${classif
                   .toLowerCase()
-                  .replace(' ', '-')}`}
+                  .replace(/\s/g, '-')}`}
               >
                 <a className="no-underline">
                   <div className="group relative mx-1 overflow-hidden">

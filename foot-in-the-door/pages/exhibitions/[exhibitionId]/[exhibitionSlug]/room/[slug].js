@@ -65,7 +65,8 @@ function Room(props) {
   }, [classification])
 
   const {
-    exhibitionData: { subPanels, subpanel },
+    exhibitionData: { subPanels },
+    subpanel,
     isFitD,
   } = props
   const classifications = isFitD
@@ -141,15 +142,14 @@ export default Room
 
 export async function getStaticProps({ params }) {
   const { exhibitionId, slug } = params
-  const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
+  const isFitD = Number(exhibitionId) === 2760
   let classification = slug.replace(/-/g, ' ')
+  if (classification === 'all') classification = '*'
+  const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
   const subpanel =
     exhibitionData.subPanels.find(
       (p) => p.Title.toLowerCase() === classification
     ) || null
-  if (classification === 'all') classification = '*'
-
-  const isFitD = Number(exhibitionId) === 2760
 
   let results
   let imagesForCarousel
@@ -181,18 +181,40 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  // TODO expand for multiple exhibitions
-  const exhibitionId = '2760'
-  const exhibitionSlug = 'foot-in-the-door'
+  const exhibitions = [
+    {
+      id: '2760',
+      slug: 'foot-in-the-door',
+      rooms: fitdClassifications.concat('*'),
+    },
+    {
+      id: '2830',
+      slug: 'todd-webb-in-africa',
+      rooms: [
+        'Colonialism & Independence',
+        'Urbanization',
+        'Education',
+        'Trade & Transport',
+        'Built Environment',
+        'Industry & Economy',
+        'Impact On The Environment',
+        'Archival Materials',
+      ],
+    },
+  ]
 
   const manifest = {
-    paths: fitdClassifications.concat('*').map((classification) => {
-      let slug = classification.toLowerCase().replace(/\s/g, '-')
-      if (slug === '*') slug = 'all'
+    paths: exhibitions
+      .map(({ id: exhibitionId, slug: exhibitionSlug, rooms }) => {
+        return rooms.map((room) => {
+          let slug = room.toLowerCase().replace(/\s/g, '-')
+          if (slug === '*') slug = 'all'
 
-      return { params: { exhibitionId, exhibitionSlug, classification, slug } }
-    }),
-    fallback: false,
+          return { params: { exhibitionId, exhibitionSlug, room, slug } }
+        })
+      })
+      .flat(),
+    fallback: 'blocking',
   }
 
   return manifest
