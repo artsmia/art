@@ -11,6 +11,9 @@ function Layout(props) {
   const { stickyCTA, stickyFooter, hideCTA } = props
   const [ctaClosed, setCTAClosed] = useState(!stickyCTA)
 
+  const { query } = useRouter()
+  const isFitD = Number(query.exhibitionId) === 2760
+
   useEffect(() => {
     if (!localStorage) return
     try {
@@ -31,11 +34,13 @@ function Layout(props) {
       <Head>
         <title>Foot in the Door</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="Description"
-          content="Held once every 10 years, “Foot in the Door” is an open exhibition for all Minnesota artists. Now marking its fourth decade, this exhibition celebrates the talent, diversity, and enthusiasm of Minnesota’s visual artists. This is an important event for the arts community and a great opportunity for artists to display their work at Mia. The sole curatorial criteria? Each submission must fit within one cubic foot."
-          key="description"
-        />
+        {isFitD && (
+          <meta
+            name="Description"
+            content="Held once every 10 years, “Foot in the Door” is an open exhibition for all Minnesota artists. Now marking its fourth decade, this exhibition celebrates the talent, diversity, and enthusiasm of Minnesota’s visual artists. This is an important event for the arts community and a great opportunity for artists to display their work at Mia. The sole curatorial criteria? Each submission must fit within one cubic foot."
+            key="description"
+          />
+        )}
       </Head>
 
       <header className="mb-12">
@@ -63,12 +68,16 @@ function Layout(props) {
           'mt-16'
         )}
       >
-        <SponsorLockup />
-        {false && <ConditionalSurvey />}
-        <p className="mt-2 font-lignt text-xs text-center">
-          The concepts expressed in this show are those of the artists, not the
-          museum. Please direct inquiries to visit@artsmia.org.
-        </p>
+        {isFitD && (
+          <>
+            <SponsorLockup />
+            {false && <ConditionalSurvey />}
+            <p className="mt-2 font-lignt text-xs text-center">
+              The concepts expressed in this show are those of the artists, not
+              the museum. Please direct inquiries to visit@artsmia.org.
+            </p>
+          </>
+        )}
       </footer>
       <UserSurveillance />
     </div>
