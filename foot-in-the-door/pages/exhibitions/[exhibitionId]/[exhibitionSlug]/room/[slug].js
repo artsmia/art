@@ -14,6 +14,8 @@ import {
 import { SupportCTA } from 'components/NavBar'
 import Text from 'components/Text'
 
+const perPage = 33 // how many items to show per page
+
 function Room(props) {
   const {
     classification: _classification,
@@ -24,8 +26,6 @@ function Room(props) {
   const classification =
     _classification === '*' ? 'Foot in the Door' : _classification
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
-
-  const perPage = 33 // how many items to show per page
 
   const [additionalPages, setAddlPages] = useState([])
 
@@ -58,7 +58,8 @@ function Room(props) {
   }
 
   const lastPage = additionalPages[additionalPages.length - 1]
-  let finishedPaginating = lastPage && lastPage.length < perPage
+  let finishedPaginating =
+    hits.length < perPage || (lastPage && lastPage.length < perPage)
 
   useEffect(() => {
     setAddlPages([])
@@ -101,19 +102,20 @@ function Room(props) {
         >
           <Text>{subpanel?.Text}</Text>
         </RoomGrid>
-        {additionalPages.map((page, index) => {
-          return (
-            <RoomGrid
-              key={`page-${index}`}
-              classification={classification}
-              hits={page}
-              perPage={perPage}
-              className=""
-            >
-              Page {index + 2}
-            </RoomGrid>
-          )
-        })}
+        {additionalPages &&
+          additionalPages.map((page, index) => {
+            return (
+              <RoomGrid
+                key={`page-${index}`}
+                classification={classification}
+                hits={page}
+                perPage={perPage}
+                className=""
+              >
+                Page {index + 2}
+              </RoomGrid>
+            )
+          })}
         {finishedPaginating || (
           <button
             onClick={loadMore}
@@ -131,7 +133,7 @@ function Room(props) {
           className="flex justify-between pt-48"
           imagesForCarousel={imagesForCarousel}
         >
-          <SupportCTA />
+          {isFitD && <SupportCTA />}
         </LeftRightNav>
       </aside>
     </Layout>
@@ -155,7 +157,9 @@ export async function getStaticProps({ params }) {
   let imagesForCarousel
   if (isFitD) {
     imagesForCarousel = await getImages(4)
-    results = await getSearchResults(`classification:${slug}`)
+    results = await getSearchResults(`classification:${slug}`, {
+      size: perPage,
+    })
   } else {
     imagesForCarousel = await getImages(4, {
       groups: exhibitionData.subPanels.map((panel) => ({
