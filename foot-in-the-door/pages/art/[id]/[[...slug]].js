@@ -180,8 +180,7 @@ function Art(props) {
 
 export default Art
 
-// TODO convert to getStaticProps + getStaticPaths
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
   const hashids = new Hashids(
     'foot in the door 2020', // salt
     3, // pad to this length
@@ -258,10 +257,13 @@ export async function getServerSideProps({ params }) {
   }
 }
 
-export async function _getStaticPaths() {
+export async function getStaticPaths() {
   return {
-    paths: [1, 2, 3].map((id) => {
-      const slug = ''
+    paths: [],
+    fallback: 'blocking',
+  }
+}
+
 
       return { params: { artwork: [id, slug] } }
     }),
