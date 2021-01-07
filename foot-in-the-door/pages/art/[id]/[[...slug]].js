@@ -25,6 +25,7 @@ import {
 import LikeControl from 'components/LikeControl'
 import ImageWithBackground from 'components/ImageWithBackground'
 import Text from 'components/Text'
+import NestedLink from 'components/NestedLink'
 
 function Art(props) {
   const {
@@ -37,10 +38,10 @@ function Art(props) {
       description,
       keywords: keywordsString,
       dimension,
-      classification,
       image_width,
       image_height,
     },
+    classification,
     classificationResults,
     imagesForCarousel,
     isFitD,
@@ -81,7 +82,13 @@ function Art(props) {
             'object-contain object-center max-h-full md:mr-4'
           )}
         >
-          <img {...imageProps} alt={description} key={artwork.id} />
+          <img
+            {...imageProps}
+            alt={description}
+            key={artwork.id}
+            className="sticky top-2"
+            style={{ top: '0.5rem' }}
+          />
           <LikeControl artwork={artwork} showConfirmation={true} />
         </ImageWithBackground>
         <div
@@ -125,7 +132,7 @@ function Art(props) {
         </div>
       </main>
 
-      {!isFitD || isFirstVisit ? (
+      {isFirstVisit ? (
         <ExhibitionContextBlurb
           isFitD={isFitD}
           exhibitionData={props.exhibitionData}
@@ -142,27 +149,29 @@ function Art(props) {
             label={`See more ${classification}`}
           />
 
-          <Link
-            href={`/room/${artwork.classification
-              .replace(' (including Digital)', '')
+          <NestedLink
+            href={`/room/${classification
+              ?.replace(' (including Digital)', '')
               .toLowerCase()
-              .replace(' ', '-')}`}
+              .replace(/\s+/g, '-')}`}
           >
             <a className="px-4 py-4 font-light float-right uppercase">
-              {artwork.classification} &rsaquo;
+              {classification} &rsaquo;
             </a>
-          </Link>
+          </NestedLink>
 
-          <aside className="mt-24">
-            <LeftRightNav
-              classifications={fitdClassifications}
-              classification={artwork.classification}
-              className="flex justify-between pt-48"
-              imagesForCarousel={imagesForCarousel}
-            >
-              <SupportCTA />
-            </LeftRightNav>
-          </aside>
+          {isFitD && (
+            <aside className="mt-24">
+              <LeftRightNav
+                classifications={fitdClassifications}
+                classification={artwork.classification}
+                className="flex justify-between pt-48"
+                imagesForCarousel={imagesForCarousel}
+              >
+                <SupportCTA />
+              </LeftRightNav>
+            </aside>
+          )}
         </div>
       )}
     </Layout>
@@ -188,20 +197,36 @@ export async function getServerSideProps({ params }) {
 
   let artwork = await fetchById(numericID, isFitD)
   if (!isFitD && exhibitionData && exhibitionData.extra) {
-    const exhibitionEntryText = exhibitionData.extra.find(
+    const exhibitionEntryRow = exhibitionData.extra.find(
       (d) => d.UniqueID === numericID
-    )?.Text
+    )
+    const text = exhibitionEntryRow?.Text
+    const parentID = exhibitionEntryRow.ParentID
+    const parentPanel = exhibitionData.extra.find(
+      (d) => d.UniqueID === parentID
+    )
+    const siblingArtworkIds = exhibitionData.extra
+      .filter((d) => d.ParentID === parentID)
+      .map((d) => d.UniqueID)
 
-    artwork.text = exhibitionEntryText
+    artwork.text = text
+    artwork.__group = {
+      title: parentPanel?.Title,
+      siblingArtworkIds,
+    }
   }
 
-  const classification = artwork.classification
-    .toLowerCase()
-    .replace(/\s/g, '-')
-  const classificationResults = await getSearchResults(
-    isFitD ? `classification:${classification}` : `artist:'Todd Webb'`,
-    { isFitD }
-  )
+  // within the same panel
+  const classification = isFitD
+    ? artwork.classification.toLowerCase().replace(/\s/g, '-')
+    : artwork.__group.title
+  const criteria = isFitD
+    ? `classification:${classification}`
+    : `artist:'Todd Webb'`
+  const classificationResults = await getSearchResults(criteria, {
+    isFitD,
+    ids: isFitD ? null : artwork.__group.siblingArtworkIds,
+  })
 
   const slug = makeSlug([artwork.title, artwork.artist].join(' '))
   // Because slug is a `[[...slug]]` route it's in an array. Is this necessary?
@@ -225,6 +250,7 @@ export async function getServerSideProps({ params }) {
       id: numericID,
       isFitD,
       artwork,
+      classification,
       classificationResults,
       imagesForCarousel,
       exhibitionData,

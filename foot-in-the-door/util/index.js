@@ -64,7 +64,9 @@ export async function getSearchResults(term, options = {}) {
       ? idEndpoint(ids.slice(0, size || 30))
       : randomEndpoint(term)
   )
-  const results = await res.json()
+  let results = await res.json()
+
+  if (ids) results = results.hits.hits
 
   return results
 }
@@ -204,7 +206,7 @@ export async function getImages(size, options = {}) {
           size: size || 1,
         })
 
-        return json.hits.hits.map((item) => ({
+        return json.map((item) => ({
           ...item,
           __group: title,
         }))
