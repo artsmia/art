@@ -1,6 +1,6 @@
 /** @format */
 import { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
+import Link from 'components/NestedLink'
 
 import styles from './ImageCarousel.module.css'
 import { cx, getImageProps } from '../util'

@@ -14,7 +14,7 @@ import {
 import { SupportCTA } from 'components/NavBar'
 import Text from 'components/Text'
 
-const perPage = 33 // how many items to show per page
+const perPage = 33 // how many items to show per page.
 
 function Room(props) {
   const {
@@ -22,9 +22,9 @@ function Room(props) {
     slug,
     results,
     imagesForCarousel,
+    exhibitionData: { isClosed, exhibition_title: exhTitle },
   } = props
-  const classification =
-    _classification === '*' ? 'Foot in the Door' : _classification
+  const classification = _classification === '*' ? exhTitle : _classification
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
 
   const [additionalPages, setAddlPages] = useState([])
@@ -59,17 +59,20 @@ function Room(props) {
 
   const lastPage = additionalPages[additionalPages.length - 1]
   let finishedPaginating =
-    hits.length < perPage || (lastPage && lastPage.length < perPage)
+    hits.length > perPage ||
+    hits.length < perPage ||
+    (lastPage && lastPage.length < perPage)
 
   useEffect(() => {
     setAddlPages([])
   }, [classification])
 
   const {
-    exhibitionData: { subPanels },
+    exhibitionData: { subPanels, description: exhDescription },
     subpanel,
     isFitD,
   } = props
+  const labelText = isFitD ? null : subpanel?.Text || exhDescription
   const classifications = isFitD
     ? fitdClassifications
     : subPanels.map((p) => p.Title)
@@ -96,11 +99,11 @@ function Room(props) {
         <RoomGrid
           classification={classification}
           hits={hits}
-          perPage={perPage}
+          perPage={Math.max(hits.length, perPage)}
           className="mt-24"
           label={`Browse all ${classification}`}
         >
-          <Text>{subpanel?.Text}</Text>
+          <Text>{labelText}</Text>
         </RoomGrid>
         {additionalPages &&
           additionalPages.map((page, index) => {
@@ -167,7 +170,10 @@ export async function getStaticProps({ params }) {
         ids: panel.artworkIds,
       })),
     })
-    results = await getSearchResults(null, { ids: subpanel.artworkIds })
+    results = await getSearchResults(null, {
+      ids: subpanel ? subpanel.artworkIds : exhibitionData.objects,
+      size: 1000, // when passing ids explicitly, don't limit size?
+    })
   }
 
   return {
