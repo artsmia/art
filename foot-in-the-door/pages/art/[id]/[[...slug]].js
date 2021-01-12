@@ -32,7 +32,7 @@ function Art(props) {
     artwork,
     artwork: {
       title,
-      artist,
+      artist: rawArtist,
       medium,
       dated,
       description,
@@ -45,7 +45,10 @@ function Art(props) {
     classificationResults,
     imagesForCarousel,
     isFitD,
+    exhibitionData: { isClosed },
   } = props
+
+  const artist = rawArtist.replace('Artist: ', '')
 
   const [isFirstVisit, setFirstVisit] = useState(false)
   useEffect(() => {
@@ -64,7 +67,7 @@ function Art(props) {
     ).filter((word) => !word.match(/^\s+$/))
 
   const aspectRatio = image_width / image_height
-  const isPortrait = aspectRatio <= 1
+  const isPortrait = true || aspectRatio <= 1
   const leftWidth = isPortrait ? '1/2' : '2/3'
   const rightWidth = isPortrait ? '1/2' : '1/3'
   const imgMaxHeight = isPortrait ? '90vh' : 'auto'
@@ -95,10 +98,10 @@ function Art(props) {
           className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 `}
         >
           <div className="font-light">
-            <h1 className="text-2xl font-black capitalize">{title}</h1>
-            <h2 className="text-lg font-bold">
-              {artist}, <span className="text-base font-light">{dated}</span>
-            </h2>
+            <h1 className="text-2xl font-black capitalize">
+              {title}, <span className="text-base font-light">{dated}</span>
+            </h1>
+            <h2 className="text-lg font-bold">{artist}</h2>
             <p>{medium}</p>
             <p>{dimension}</p>
             <p className="bg-pink-300 hidden">COLOR SEARCH</p>
@@ -120,9 +123,18 @@ function Art(props) {
           </div>
 
           <div className="border-t-2 border-opacity-75 mt-8 lg:mt-16">
-            <p className="flex items-center">
-              <ShareLinks art={artwork} />
-            </p>
+            {isFitD || (
+              <>
+                <p>
+                  Image: {artwork.rights_type}. {artwork.creditline}
+                </p>
+              </>
+            )}
+            {isFitD && (
+              <p className="flex items-center">
+                <ShareLinks art={artwork} />
+              </p>
+            )}
             {!isFitD || isFirstVisit || (
               <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
                 <JoinCTAPhrase />
@@ -156,7 +168,7 @@ function Art(props) {
               .replace(/\s+/g, '-')}`}
           >
             <a className="px-4 py-4 font-light float-right uppercase">
-              {classification} &rsaquo;
+              Return to <strong>{classification}</strong> &rsaquo;
             </a>
           </NestedLink>
 
@@ -243,7 +255,7 @@ export async function getStaticProps({ params }) {
       },
     }
 
-  const imagesForCarousel = await getImages(4)
+  const imagesForCarousel = isFitD ? await getImages(4) : []
 
   return {
     props: {
@@ -262,13 +274,6 @@ export async function getStaticPaths() {
   return {
     paths: [],
     fallback: 'blocking',
-  }
-}
-
-
-      return { params: { artwork: [id, slug] } }
-    }),
-    fallback: true,
   }
 }
 

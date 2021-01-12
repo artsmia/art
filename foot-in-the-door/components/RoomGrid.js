@@ -62,7 +62,7 @@ function RoomGrid(props) {
               </ViewAllLink>
             ))}
           <p className="uppercase text-center font-hairline">
-            Scroll to enter <strong>{classification}</strong>
+            <strong>{classification}</strong>
           </p>
           <HiOutlineChevronDown className="mx-auto" aria-hidden="true" />
         </>

@@ -151,8 +151,11 @@ function FitdHome(props) {
 }
 
 function MiaExhibition(props) {
-  const { exhibitionData } = props
-  const showSearchAndCarousel = false
+  const {
+    exhibitionData,
+    exhibitionData: { exhibition_title },
+  } = props
+  const [title, subtitle] = exhibition_title.split(': ')
 
   const hideSearch = true
 
@@ -161,10 +164,10 @@ function MiaExhibition(props) {
       <main className="md:flex items-start mb-12">
         <div className="md:w-1/2 mr-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
-            Todd Webb In Africa
+            {title}
           </h1>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">
-            Outside the Frame
+            {subtitle}
           </h2>
           <Text>{exhibitionData?.description}</Text>
 

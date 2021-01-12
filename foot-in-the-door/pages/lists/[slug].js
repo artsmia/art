@@ -35,6 +35,7 @@ function List(props) {
 export default List
 
 export async function getStaticPaths() {
+  return { paths: [], fallback: 'blocking' }
   return {
     paths: [{ params: { id: '152140', slug: 'highlights-of-korean-art' } }],
     fallback: 'blocking',

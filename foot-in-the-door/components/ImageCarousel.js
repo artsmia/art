@@ -12,6 +12,7 @@ function ImageCarousel(props) {
 
   const observerRef = useRef()
   const carouselRef = useRef()
+
   // why won't #map work here? React complains about hooks being called inconsistently
   const itemRefs = data.reduce((refs) => refs.concat(useRef()), [])
 
