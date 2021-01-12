@@ -34,7 +34,7 @@ function LRNav(props) {
         {...containerProps}
         className={cx(
           props.className,
-          `flex justify-between overflow-x-hidden`,
+          `flex overflow-x-hidden`,
           showAllAndStretch ? `mx-4` : '',
           showFullNav ? `justify-center` : 'justify-between',
           'w-screen -ml-4 md:-ml-16',
@@ -53,6 +53,12 @@ function LRNav(props) {
 
           const roomSlug = room?.replace(/\s/g, '-')
 
+          const centerItems = showFullNav && !isFirstRoom && !isLastRoom
+          const rotateInnerLinks =
+            centerItems &&
+            false && // Testing out this idea, not ready for prime time
+            roomLinks.length > 7
+
           return (
             <Link
               key={room}
@@ -61,14 +67,17 @@ function LRNav(props) {
               <a
                 className={cx(
                   'flex px-2 no-underline font-light group',
+                  rotateInnerLinks ? 'transform rotate-45' : '',
                   showFullNav && isFirstRoom
-                    ? 'pr-4 lg:pr-10 ml-4'
+                    ? 'pr-2 lg:pr-10 ml-4'
                     : showFullNav && isLastRoom
-                    ? 'pl-4 lg:pl-10 mr-4'
+                    ? 'pl-2 lg:pl-10 mr-4'
                     : '',
                   isFirstRoom || isLastRoom
                     ? 'uppercase hover:underline'
-                    : 'capitalize hover:underline'
+                    : 'capitalize hover:underline',
+                  // : 'capitalize text-gray-300 hover:text-black',
+                  centerItems ? 'text-center' : ''
                 )}
               >
                 {isFirstRoom && (
