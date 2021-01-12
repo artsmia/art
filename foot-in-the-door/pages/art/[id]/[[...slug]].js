@@ -215,6 +215,7 @@ export async function getStaticProps({ params }) {
     }
   }
 
+  // TODO swap this out for Todd Webb to search for the other artworks
   // within the same panel
   const classification = isFitD
     ? artwork.classification.toLowerCase().replace(/\s/g, '-')

@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 import { classifications, cx, useWindowSize } from '../util'
 import SearchInput, { ExpandableSearchInput } from './SearchInput'
 
-function NavBar() {
+function NavBar({ hideSearch }) {
   // const [searchOpen, setSearchOpen] = useState(false)
   // const toggleSearchDrawer = () => setSearchOpen(!searchOpen)
   const expandedNavDialog = useDialogState()
@@ -33,6 +33,7 @@ function NavBar() {
         </div>
       </div>
       {isSearchPage ||
+        hideSearch ||
         (useDialogSearch ? (
           <div>
             <DialogDisclosure {...expandedNavDialog} className="w-12">

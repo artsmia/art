@@ -11,17 +11,19 @@ function Search(props) {
   return (
     <Layout hideCTA={true}>
       <main>
-        <h1 className="text-center text-5xl font-black capitalize -mt-6">
+        <h1 className="text-center text-4xl font-black capitalize -mt-6">
           <SearchInput terms={rawTerms} />
         </h1>
 
-        <RoomGrid
-          classification={`"${rawTerms}"`}
-          hits={hits}
-          perPage={size || 100}
-          className="mt-16"
-          label={`Search results for "${rawTerms}"`}
-        />
+        {rawTerms && (
+          <RoomGrid
+            classification={`"${rawTerms}"`}
+            hits={hits}
+            perPage={size || 100}
+            className="mt-16"
+            label={`Search results for "${rawTerms}"`}
+          />
+        )}
       </main>
     </Layout>
   )
@@ -43,7 +45,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      rawTerms,
+      rawTerms: rawTerms || null,
       searchResults,
       size: size || null,
     },

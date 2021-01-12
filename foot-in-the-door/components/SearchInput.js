@@ -9,6 +9,9 @@ import { cx } from '../util'
 function SearchInput(props) {
   const { terms, className, dark, placeholder: _placeholder } = props
   const router = useRouter()
+  const {
+    query: { exhibitionId, exhibitionSlug },
+  } = router
 
   const placeholder = _placeholder || 'Search for artist, keyword, color, etc'
 
@@ -48,7 +51,10 @@ function SearchInput(props) {
             } = event
 
             if (event.key === 'Enter') {
-              router.push(`/search/${terms}`)
+              const searchUrl = exhibitionId
+                ? `/exhibitions/${exhibitionId}/${exhibitionSlug}/search/${terms}`
+                : `/search/${terms}`
+              router.push(searchUrl)
             }
           }}
           onFocus={() => props.onFocus && props.onFocus()}

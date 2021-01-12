@@ -154,8 +154,10 @@ function MiaExhibition(props) {
   const { exhibitionData } = props
   const showSearchAndCarousel = false
 
+  const hideSearch = true
+
   return (
-    <Layout hideCTA={true}>
+    <Layout hideCTA={true} hideSearch={hideSearch}>
       <main className="md:flex items-start mb-12">
         <div className="md:w-1/2 mr-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
@@ -166,7 +168,7 @@ function MiaExhibition(props) {
           </h2>
           <Text>{exhibitionData?.description}</Text>
 
-          {showSearchAndCarousel && <SearchInput className="my-6" />}
+          {hideSearch || <SearchInput className="my-6" />}
         </div>
         {props.leadingImages && (
           <ImageCarousel
