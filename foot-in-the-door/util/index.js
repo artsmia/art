@@ -365,3 +365,31 @@ export async function getMiaExhibitionData(exhId, fs) {
     hideSearch,
   }
 }
+
+/* Segment the given phrase into a short, punchy, memorable "main title" and
+ * then the rest. Museum object titles can be pretty long. This was inspired by
+ * our design department requesting that the first few words of a long title
+ * use bold/black typography, with the rest left normal/light for the best
+ * visual appearance and readability. It's also useful when determining a slug
+ * for the artwork
+ */
+export function segmentTitle(rawTitle, options = {}) {
+  const { returnJSX = true } = options
+
+  const segmentedTitle = rawTitle
+    // first based on special characters
+    .split(/([^\(\)\[\],:;]+)/) // eslint-disable-line no-useless-escape
+    .filter((s) => s !== '')
+    // then based on a loose set of prepositions
+    .map((s) => s.split(/( with | in | at )/gi))
+    .flat()
+  const [mainTitle, ...subsequentTitle] = segmentedTitle
+  const title = (
+    <>
+      <strong className="font-black">{mainTitle}</strong>
+      {subsequentTitle.join('')}
+    </>
+  )
+
+  return returnJSX ? title : [mainTitle, ...subsequentTitle]
+}

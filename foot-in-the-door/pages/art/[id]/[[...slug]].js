@@ -21,6 +21,7 @@ import {
   getSearchResults,
   getImages,
   getMiaExhibitionData,
+  segmentTitle,
 } from 'util/index'
 import LikeControl from 'components/LikeControl'
 import ImageWithBackground from 'components/ImageWithBackground'
@@ -31,7 +32,7 @@ function Art(props) {
   const {
     artwork,
     artwork: {
-      title,
+      title: rawTitle,
       artist: rawArtist,
       medium,
       dated,
@@ -49,6 +50,7 @@ function Art(props) {
   } = props
 
   const artist = rawArtist.replace('Artist: ', '')
+  const title = segmentTitle(rawTitle)
 
   const [isFirstVisit, setFirstVisit] = useState(false)
   useEffect(() => {
@@ -67,11 +69,11 @@ function Art(props) {
     ).filter((word) => !word.match(/^\s+$/))
 
   const aspectRatio = image_width / image_height
-  const isPortrait = true || aspectRatio <= 1
+  const isPortrait = isFitD ? aspectRatio <= 1 : true // treat all Mia exhibition artworks as 'portrait'
   const leftWidth = isPortrait ? '1/2' : '2/3'
   const rightWidth = isPortrait ? '1/2' : '1/3'
-  const imgMaxHeight = isPortrait ? '90vh' : 'auto'
-  const imgMaxWidth = isPortrait ? `${90 * aspectRatio}vh` : '100%'
+  // const imgMaxHeight = isPortrait ? '90vh' : 'auto'
+  // const imgMaxWidth = isPortrait ? `${90 * aspectRatio}vh` : '100%'
   const imageProps = getImageProps(artwork, { fullSize: true })
   const { src: imageSrc } = imageProps
 
@@ -98,7 +100,7 @@ function Art(props) {
           className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 `}
         >
           <div className="font-light">
-            <h1 className="text-2xl font-black capitalize">
+            <h1 className="text-2xl font-light capitalize">
               {title}, <span className="text-base font-light">{dated}</span>
             </h1>
             <h2 className="text-lg font-bold">{artist}</h2>

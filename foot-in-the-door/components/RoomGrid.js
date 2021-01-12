@@ -9,7 +9,13 @@ import {
 } from 'reakit/Grid'
 import { HiOutlineChevronDown } from '@meronex/icons/hi'
 
-import { chunkArray, cx, getImageProps, useWindowSize } from '../util'
+import {
+  chunkArray,
+  cx,
+  getImageProps,
+  useWindowSize,
+  segmentTitle,
+} from '../util'
 import { ViewAllLink } from './NavBar'
 import LikeControl from './LikeControl'
 import ImageWithBackground from './ImageWithBackground'
@@ -84,13 +90,16 @@ function RoomGrid(props) {
                   _source: source,
                   _source: {
                     id,
-                    title,
-                    artist,
+                    title: rawTitle,
+                    artist: rawArtist,
                     description,
                     image_width,
                     image_height,
                   },
                 } = art
+
+                const artist = rawArtist.replace('Artist: ', '')
+                const title = segmentTitle(rawTitle)
 
                 const imageLoadStrategy = rowIndex < 2 ? 'eager' : 'lazy'
                 const imageAspectRatio = image_width / image_height
@@ -122,8 +131,8 @@ function RoomGrid(props) {
                         />
                         <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
                           <div className="text-white opacity-100 py-6 px-4">
-                            <h2 className="font-extrabold">{title}</h2>
-                            <h3 className="font-light hidden sm:inline-block">
+                            <h2 className="font-light">{title}</h2>
+                            <h3 className="font-bold hidden sm:inline-block">
                               {artist}
                             </h3>
                           </div>

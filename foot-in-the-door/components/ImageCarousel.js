@@ -108,7 +108,7 @@ function ImageCarousel(props) {
                     />
                     <div className="flex absolute inset-0 items-end">
                       <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100 text-xs font-light">
-                        View Room &rsaquo;
+                        View Group &rsaquo;
                       </p>
                     </div>
                   </div>
