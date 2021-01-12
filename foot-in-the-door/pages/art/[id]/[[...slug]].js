@@ -132,7 +132,7 @@ function Art(props) {
         </div>
       </main>
 
-      {isFirstVisit ? (
+      {isFirstVisit || isClosed ? (
         <ExhibitionContextBlurb
           isFitD={isFitD}
           exhibitionData={props.exhibitionData}
@@ -319,7 +319,7 @@ function ExhibitionContextBlurb(props) {
   const { isFitD, exhibitionData } = props
 
   return isFitD ? (
-    FitDContextBlurb
+    <FitDContextBlurb {...exhibitionData} />
   ) : (
     <>
       <aside className="bg-gray-300 p-4 px-4 mt-8 my-4">
@@ -335,25 +335,37 @@ function ExhibitionContextBlurb(props) {
   )
 }
 
-function FitDContextBlurb() {
-  return (
-    <>
-      <aside className="bg-gray-300 p-4 px-4 mt-8 my-4">
-        <p>
-          “Foot in the Door 5” celebrates the talent, diversity, and enthusiasm
+function FitDContextBlurb({ isClosed }) {
+  const message = isClosed
+    ? `This artwork was featured in "Foot in the Door 5: The Virtual
+            Exhibition," held from November 1, 2020, to January 10, 2021. The
+            online exhibition showcased the works of over 2,000 Minnesota
+            artists, with the unifying criteria that each piece measure less
+            than one cubic foot.
+
+            The concepts expressed in this exhibition were those of the
+            artists, not of the museum. Please direct inquiries to
+            visit@artsmia.org.`
+    : `“Foot in the Door 5” celebrates the talent, diversity, and enthusiasm
           of our state’s visual artists. The exhibition occurs once every 10
           years, and by now, generations of artists have participated in it. The
           sole curatorial criteria? All submissions must measure at or under 12
           inches in height, width, and depth—literally inviting artists to place
-          “a foot” in the museum’s galleries.
-        </p>
+          “a foot” in the museum’s galleries.`
+
+  return (
+    <>
+      <aside className="bg-gray-300 p-4 px-4 mt-8 my-4">
+        <Text>{message}</Text>
       </aside>
-      <Link href="/exhibitions/2760/foot-in-the-door">
-        <a className="block text-center uppercase hover:no-underline">
-          Enter <strong className="font-bold">Foot in the Door</strong>{' '}
-          Exhibition
-        </a>
-      </Link>
+      {isClosed || (
+        <Link href="/exhibitions/2760/foot-in-the-door">
+          <a className="block text-center uppercase hover:no-underline">
+            Enter <strong className="font-bold">Foot in the Door</strong>{' '}
+            Exhibition
+          </a>
+        </Link>
+      )}
     </>
   )
 }

@@ -348,10 +348,17 @@ export async function getMiaExhibitionData(exhId, fs) {
       return panel
     })
 
+  const { display_date } = baseData
+  const [, endDate] = display_date.split(' - ').map((d) => new Date(d))
+  // TODO how exactly to determine this? For now, tie it to FitD's ID
+  const isClosed =
+    Number(exhId) === 2760 && (new Date(endDate) < new Date() || true)
+
   return {
     ...baseData,
     description: baseData.description || extraDescription || null,
     extra: extraData,
     subPanels,
+    isClosed,
   }
 }

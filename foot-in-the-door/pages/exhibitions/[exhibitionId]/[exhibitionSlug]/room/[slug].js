@@ -84,7 +84,7 @@ function Room(props) {
   // }
 
   return (
-    <Layout hideCTA={true}>
+    <Layout hideCTA={true} pageBlocked={isClosed}>
       <main className="md:my-16 flex flex-col">
         <h1 className="text-center text-5xl font-black capitalize md:-mb-20 md:mt-20">
           {classification}

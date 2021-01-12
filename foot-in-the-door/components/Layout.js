@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import Link from 'components/NestedLink'
 import { cx } from '../util'
 import NavBar, { JoinCTA } from '../components/NavBar'
 import { ConditionalSurvey } from '../components/Survey'
 
 function Layout(props) {
-  const { stickyCTA, stickyFooter, hideCTA } = props
+  const { stickyCTA, stickyFooter, hideCTA, pageBlocked } = props
   const [ctaClosed, setCTAClosed] = useState(!stickyCTA)
 
   const { query } = useRouter()
@@ -30,57 +31,87 @@ function Layout(props) {
   }, [])
 
   return (
-    <div className="p-4 md:px-16 md:py-5 text-gray-900">
-      <Head>
-        <title>Foot in the Door</title>
-        <link rel="icon" href="/favicon.ico" />
-        {isFitD && (
-          <meta
-            name="Description"
-            content="Held once every 10 years, “Foot in the Door” is an open exhibition for all Minnesota artists. Now marking its fourth decade, this exhibition celebrates the talent, diversity, and enthusiasm of Minnesota’s visual artists. This is an important event for the arts community and a great opportunity for artists to display their work at Mia. The sole curatorial criteria? Each submission must fit within one cubic foot."
-            key="description"
-          />
-        )}
-      </Head>
-
-      <header className="mb-12">
-        <NavBar />
-      </header>
-
-      <aside
-        className={cx(
-          `inset-x-0 top-0 bg-gray-300 py-2 px-8 md:px-16 -mx-4 -mt-3 mb-12
-           md:-mx-16 w-screen`,
-          stickyCTA && !ctaClosed ? 'sticky z-20' : '',
-          hideCTA ? 'hidden' : ''
-        )}
-      >
-        <JoinCTA onClose={() => setCTAClosed(true)} isClosed={ctaClosed} />
-      </aside>
-
-      {props.children}
-
-      <footer
-        className={cx(
-          stickyFooter
-            ? 'md:sticky md:bottom-0 md:bg-white md:w-screen md:-ml-16 md:px-16 md:z-10'
-            : '',
-          'mt-16'
-        )}
-      >
-        {isFitD && (
-          <>
-            <SponsorLockup />
-            {false && <ConditionalSurvey />}
-            <p className="mt-2 font-lignt text-xs text-center">
-              The concepts expressed in this show are those of the artists, not
-              the museum. Please direct inquiries to visit@artsmia.org.
+    <>
+      {pageBlocked && (
+        <aside className="fixed z-30 inset-0">
+          <div className="fixed inset-x-0 bottom-0 h-screen-3/5 opacity-1 bg-white z-40 p-24">
+            <p>
+              <em>Foot in the Door 5: The Virtual Exhibition</em> was held from
+              November 1, 2020, to January 10, 2021. The online exhibition
+              showcased the works of over 2,000 Minnesota artists, with the
+              unifying criteria that each piece measure less than one cubic
+              foot.{' '}
+              <a href="https://new.artsmia.org/exhibition/foot-in-the-door-5/">
+                Back to exhibition listing
+              </a>
+              .
             </p>
-          </>
+            <p className="mt-4">
+              If you are looking for a specific work that was featured in Foot
+              in the Door for historical reference purposes,{' '}
+              <Link href={'/search'}>search here</Link>.
+            </p>
+          </div>
+          <hr className="fixed top-0 inset-x-0 opacity-25" />
+        </aside>
+      )}
+      <div
+        className={cx(
+          'p-4 md:px-16 md:py-5 text-gray-900',
+          pageBlocked ? 'opacity-25 overflow-hidden' : ''
         )}
-      </footer>
-      <UserSurveillance />
-    </div>
+      >
+        <Head>
+          <title>Foot in the Door</title>
+          <link rel="icon" href="/favicon.ico" />
+          {isFitD && (
+            <meta
+              name="Description"
+              content="Held once every 10 years, “Foot in the Door” is an open exhibition for all Minnesota artists. Now marking its fourth decade, this exhibition celebrates the talent, diversity, and enthusiasm of Minnesota’s visual artists. This is an important event for the arts community and a great opportunity for artists to display their work at Mia. The sole curatorial criteria? Each submission must fit within one cubic foot."
+              key="description"
+            />
+          )}
+        </Head>
+
+        <header className="mb-12">
+          <NavBar hideSearch={props.hideSearch} />
+        </header>
+
+        <aside
+          className={cx(
+            `inset-x-0 top-0 bg-gray-300 py-2 px-8 md:px-16 -mx-4 -mt-3 mb-12
+           md:-mx-16 w-screen`,
+            stickyCTA && !ctaClosed ? 'sticky z-20' : '',
+            hideCTA ? 'hidden' : ''
+          )}
+        >
+          <JoinCTA onClose={() => setCTAClosed(true)} isClosed={ctaClosed} />
+        </aside>
+
+        {props.children}
+
+        <footer
+          className={cx(
+            stickyFooter
+              ? 'md:sticky md:bottom-0 md:bg-white md:w-screen md:-ml-16 md:px-16 md:z-10'
+              : '',
+            'mt-16'
+          )}
+        >
+          {isFitD && (
+            <>
+              <SponsorLockup />
+              {false && <ConditionalSurvey />}
+              <p className="mt-2 font-lignt text-xs text-center">
+                The concepts expressed in this show are those of the artists,
+                not the museum. Please direct inquiries to visit@artsmia.org.
+              </p>
+            </>
+          )}
+        </footer>
+        <UserSurveillance />
+      </div>
+    </>
   )
 }
 

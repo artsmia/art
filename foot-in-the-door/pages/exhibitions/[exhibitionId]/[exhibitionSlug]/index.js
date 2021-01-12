@@ -43,8 +43,10 @@ function ExhibitionHome(props) {
 
 function FitdHome(props) {
   const video = videos[1]
+  const { isClosed } = props.exhibitionData
+
   return (
-    <Layout stickyCTA={true} stickyFooter={true}>
+    <Layout stickyCTA={true} stickyFooter={true} pageBlocked={isClosed}>
       <main className="md:flex items-start mb-12">
         <div className="md:w-1/2 mr-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
