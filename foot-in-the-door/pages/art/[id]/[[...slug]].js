@@ -76,7 +76,7 @@ function Art(props) {
   const { src: imageSrc } = imageProps
 
   return (
-    <Layout hideCTA={true}>
+    <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch}>
       <main className="md:flex md:align-start off:min-h-screen-3/5 pt-2">
         <ImageWithBackground
           imageSrc={imageSrc}

@@ -68,7 +68,7 @@ function Room(props) {
   }, [classification])
 
   const {
-    exhibitionData: { subPanels, description: exhDescription },
+    exhibitionData: { subPanels, description: exhDescription, hideSearch },
     subpanel,
     isFitD,
   } = props
@@ -84,7 +84,7 @@ function Room(props) {
   // }
 
   return (
-    <Layout hideCTA={true} pageBlocked={isClosed}>
+    <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>
       <main className="md:my-16 flex flex-col">
         <h1 className="text-center text-5xl font-black capitalize md:-mb-20 md:mt-20">
           {classification}

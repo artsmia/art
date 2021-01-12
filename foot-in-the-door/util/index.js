@@ -354,11 +354,14 @@ export async function getMiaExhibitionData(exhId, fs) {
   const isClosed =
     Number(exhId) === 2760 && (new Date(endDate) < new Date() || true)
 
+  const hideSearch = Number(exhId) !== 2760
+
   return {
     ...baseData,
     description: baseData.description || extraDescription || null,
     extra: extraData,
     subPanels,
     isClosed,
+    hideSearch,
   }
 }

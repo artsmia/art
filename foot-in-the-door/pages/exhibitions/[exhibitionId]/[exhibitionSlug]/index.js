@@ -153,11 +153,9 @@ function FitdHome(props) {
 function MiaExhibition(props) {
   const {
     exhibitionData,
-    exhibitionData: { exhibition_title },
+    exhibitionData: { exhibition_title, hideSearch },
   } = props
   const [title, subtitle] = exhibition_title.split(': ')
-
-  const hideSearch = true
 
   return (
     <Layout hideCTA={true} hideSearch={hideSearch}>
