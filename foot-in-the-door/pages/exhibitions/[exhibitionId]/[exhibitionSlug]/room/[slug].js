@@ -10,6 +10,7 @@ import {
   getSearchResults,
   getImages,
   getMiaExhibitionData,
+  segmentTitle,
 } from 'util/index'
 import { SupportCTA } from 'components/NavBar'
 import Text from 'components/Text'
@@ -82,12 +83,13 @@ function Room(props) {
   // if (router.isFallback) {
   //   return <div>Loading...</div>
   // }
+  //
 
   return (
     <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>
       <main className="md:my-16 flex flex-col">
-        <h1 className="text-center text-5xl font-black capitalize md:-mb-20 md:mt-20">
-          {classification}
+        <h1 className="text-center text-5xl font-light capitalize md:-mb-20 md:mt-20">
+          {segmentTitle(classification)}
         </h1>
         <LeftRightNav
           classifications={classifications}
@@ -170,8 +172,16 @@ export async function getStaticProps({ params }) {
         ids: panel.artworkIds,
       })),
     })
+    const ids = subpanel
+      ? subpanel.artworkIds
+      : exhibitionData.extra?.length > 0
+      ? exhibitionData.extra
+          .filter((row) => row['ID Type'] === 'ObjectID')
+          .map((row) => row.UniqueID)
+      : exhibitionData.objects
+
     results = await getSearchResults(null, {
-      ids: subpanel ? subpanel.artworkIds : exhibitionData.objects,
+      ids,
       size: 1000, // when passing ids explicitly, don't limit size?
     })
   }
@@ -191,6 +201,11 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
+  const toddWebbData = await getMiaExhibitionData(2830, fs)
+  const toddWebbRooms = toddWebbData.subPanels
+    .map((group) => group.Title.replace(/ /g, '-').toLowerCase())
+    .concat('*')
+
   const exhibitions = [
     {
       id: '2760',
@@ -200,16 +215,7 @@ export async function getStaticPaths() {
     {
       id: '2830',
       slug: 'todd-webb-in-africa',
-      rooms: [
-        'Colonialism & Independence',
-        'Urbanization',
-        'Education',
-        'Trade & Transport',
-        'Built Environment',
-        'Industry & Economy',
-        'Impact On The Environment',
-        'Archival Materials',
-      ],
+      rooms: toddWebbRooms,
     },
   ]
 
