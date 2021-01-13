@@ -153,9 +153,18 @@ function FitdHome(props) {
 function MiaExhibition(props) {
   const {
     exhibitionData,
-    exhibitionData: { exhibition_title, hideSearch },
+    exhibitionData: { exhibition_title, display_date: exhDates, hideSearch },
   } = props
   const [title, subtitle] = exhibition_title.split(': ')
+
+  const exhibitionMoreText =
+    title === 'Todd Webb in Africa'
+      ? `${exhDates}
+
+  Harrison Photography Galleries
+
+  Free Exhibition`
+      : ``
 
   return (
     <Layout hideCTA={true} hideSearch={hideSearch}>
@@ -168,6 +177,7 @@ function MiaExhibition(props) {
             {subtitle}
           </h2>
           <Text>{exhibitionData?.description}</Text>
+          <Text>{exhibitionMoreText}</Text>
 
           {hideSearch || <SearchInput className="my-6" />}
         </div>
@@ -179,10 +189,9 @@ function MiaExhibition(props) {
           />
         )}
       </main>
-      <aside className="md:flex pb-6">
-        <p>additional content?</p>
-        <p>ex: exhibition dates, table of contents?</p>
-      </aside>
+      <div className="md:flex pb-6">
+        <section></section>
+      </div>
       <Head>
         <title>Todd Webb in Africa | Mia </title>
         <meta name="twitter:card" content="summary_large_image"></meta>
