@@ -72,7 +72,7 @@ function Art(props) {
   const isPortrait = isFitD ? aspectRatio <= 1 : true // treat all Mia exhibition artworks as 'portrait'
   const leftWidth = isPortrait ? '1/2' : '2/3'
   const rightWidth = isPortrait ? '1/2' : '1/3'
-  // const imgMaxHeight = isPortrait ? '90vh' : 'auto'
+  const imgMaxHeight = isPortrait ? '97vh' : 'auto'
   // const imgMaxWidth = isPortrait ? `${90 * aspectRatio}vh` : '100%'
   const imageProps = getImageProps(artwork, { fullSize: true })
   const { src: imageSrc } = imageProps
@@ -92,7 +92,12 @@ function Art(props) {
             alt={description}
             key={artwork.id}
             className="sticky top-2"
-            style={{ top: '0.5rem' }}
+            style={{
+              top: '1.5vh',
+              maxHeight: imgMaxHeight,
+              width: 'auto',
+              margin: '0 auto',
+            }}
           />
           <LikeControl artwork={artwork} showConfirmation={true} />
         </ImageWithBackground>
