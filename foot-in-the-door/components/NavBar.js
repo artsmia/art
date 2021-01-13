@@ -166,6 +166,8 @@ function ExhibitionHomeLink({ route, router, className }) {
   const atExhibitionHome =
     route === '/exhibitions/[exhibitionId]/[exhibitionSlug]'
 
+  if (route === '/') return null
+
   return atExhibitionHome && width < 768 ? (
     <a
       href="https://new.artsmia.org/exhibitions/"
