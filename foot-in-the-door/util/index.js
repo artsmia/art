@@ -366,8 +366,8 @@ export async function getMiaExhibitionData(exhId, fs) {
   }
 }
 
-/* Segment the given phrase into a short, punchy, memorable "main title" and
- * then the rest. Museum object titles can be pretty long. This was inspired by
+/* Segment the given phrase into a short, punchy, memorable "main title" with
+ * optional prefix/suffix. Museum object titles can be pretty long. Inspired by
  * our design department requesting that the first few words of a long title
  * use bold/black typography, with the rest left normal/light for the best
  * visual appearance and readability. It's also useful when determining a slug
@@ -376,20 +376,38 @@ export async function getMiaExhibitionData(exhId, fs) {
 export function segmentTitle(rawTitle, options = {}) {
   const { returnJSX = true } = options
 
-  const segmentedTitle = rawTitle
-    // first based on special characters
+  // first, segment on special characters
+  let segmentedTitle = rawTitle
     .split(/([^\(\)\[\],:;]+)/) // eslint-disable-line no-useless-escape
     .filter((s) => s !== '')
-    // then based on a loose set of prepositions
-    .map((s) => s.split(/( with | in | at )/gi))
-    .flat()
-  const [mainTitle, ...subsequentTitle] = segmentedTitle
+
+  // then based on quotes and a loose set of prepositions if the first attempt
+  // left an over-long 'first segment'...
+  if (segmentedTitle[0].length > 23) {
+    segmentedTitle = segmentedTitle.map((s) =>
+      s.split(/(^"[^"]+| with | in | at )/i).filter((s) => s !== '')
+    )
+    segmentedTitle = segmentedTitle.flat(1)
+  }
+
+  let prefix = ''
+  let [mainTitle, ...suffix] = segmentedTitle
+  // shift leading punctuation into `prefix`
+  if (mainTitle.match(/^("|“)/))
+    [prefix, mainTitle] = mainTitle.split(/^("|“)/).filter((s) => s !== '')
+  // ... and trailing whitespace into `suffix`
+  if (mainTitle.match(/\s+$/)) {
+    mainTitle = mainTitle.trim()
+    suffix.unshift(' ')
+  }
+
   const title = (
     <>
+      {prefix && prefix}
       <strong className="font-black">{mainTitle}</strong>
-      {subsequentTitle.join('')}
+      {suffix && suffix.join('')}
     </>
   )
 
-  return returnJSX ? title : [mainTitle, ...subsequentTitle]
+  return returnJSX ? title : [prefix, mainTitle, suffix.join('')]
 }

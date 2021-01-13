@@ -12,14 +12,39 @@ const titles = [
     'The "Ever Young" Studio In The James Town Neighbourhood, Accra',
     'The "Ever Young" Studio',
   ],
+  ['Todd Webb In Africa: Outside The Frame', 'Todd Webb In Africa'],
+  [
+    '"Rhodesia And Nyasaland In Brief" Informational Brochure',
+    'Rhodesia And Nyasaland In Brief',
+    '"',
+    '" Informational Brochure',
+  ],
+  [
+    '“Magadiscio [Sic], Somaliland, A Continent Awakes,” UN Information Services PR Photograph',
+    'Magadiscio',
+    '“', // prefix
+    ' [Sic], Somaliland, A Continent Awakes,” UN Information Services PR Photograph', // suffix
+  ],
+  // TODO prioritize quoted phrase over all other rules?
+  // [
+  //   'Cover Image, “United Nations Photos, Supplement No. 7,” United Nations Office Of Public Information',
+  //   'United Nations Photos, Supplement No. 7',
+  //   'Cover Image, “',
+  //   ',” United Nations Office Of Public Information',
+  // ],
 ]
 
 describe('segment artwork titles', () => {
-  titles.map(([full, expectedFirstSegment]) => {
+  titles.map(([full, expectedMainTitle, expectedPrefix, expectedSuffix]) => {
     test(full, () => {
-      const segments = segmentTitle(full, { returnJSX: false })
+      const [prefix, mainTitle, suffix] = segmentTitle(full, {
+        returnJSX: false,
+      })
 
-      expect(segments[0]).toEqual(expectedFirstSegment)
+      expect(mainTitle).toEqual(expectedMainTitle)
+      if (expectedPrefix) expect(prefix).toEqual(expectedPrefix)
+      if (expectedSuffix?.length > 0) expect(suffix).toEqual(expectedSuffix)
+      //
       // TODO how to test `returnJSX: true`?
     })
   })
