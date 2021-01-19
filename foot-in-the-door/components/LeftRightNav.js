@@ -68,7 +68,7 @@ function LRNav(props) {
                     : '',
                   isFirstRoom || isLastRoom
                     ? 'uppercase hover:underline'
-                    : 'capitalize text-gray-300 hover:text-black'
+                    : 'capitalize hover:underline'
                 )}
               >
                 {isFirstRoom && (
