@@ -60,6 +60,7 @@ module.exports = {
     visibility: ['responsive', 'hover', 'group-hover'],
     opacity: ['hover', 'group-hover'],
     borderColor: ['focus-within'],
+    objectFit: ['hover', 'group-hover'],
   },
   plugins: [require('@tailwindcss/typography')],
 }
