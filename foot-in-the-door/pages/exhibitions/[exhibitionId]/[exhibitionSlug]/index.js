@@ -1,6 +1,6 @@
 /** @format */
 import fs from 'fs'
-import Link from 'next/link'
+import Link from 'components/NestedLink'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
@@ -153,18 +153,22 @@ function FitdHome(props) {
 function MiaExhibition(props) {
   const {
     exhibitionData,
-    exhibitionData: { exhibition_title, display_date: exhDates, hideSearch },
+    exhibitionData: {
+      exhibition_title,
+      display_date: exhDates,
+      hideSearch,
+      subPanels,
+    },
   } = props
   const [title, subtitle] = exhibition_title.split(': ')
 
-  const exhibitionMoreText =
-    title === 'Todd Webb in Africa'
-      ? `${exhDates}
-
-  Harrison Photography Galleries
-
-  Free Exhibition`
-      : ``
+  const exhibitionMoreText = title.match('Todd Webb in Africa')
+    ? `<strong>${exhDates}</strong><br />
+  <strong>Harrison Photography Galleries</strong><br />
+  <strong>Free Exhibition</strong><br />
+  <a href="https://www.thamesandhudsonusa.com/books/todd-webb-in-africa-outside-the-frame-hardcover">Buy the exhibition catalog</a>
+  `
+    : ``
 
   return (
     <Layout hideCTA={true} hideSearch={hideSearch}>
@@ -177,9 +181,31 @@ function MiaExhibition(props) {
             {subtitle}
           </h2>
           <Text>{exhibitionData?.description}</Text>
-          <Text>{exhibitionMoreText}</Text>
+          <Text dangerous={true}>{exhibitionMoreText}</Text>
 
           {hideSearch || <SearchInput className="my-6" />}
+
+          {subPanels && (
+            <>
+              <h2 className="text-xl font-black mt-8">Exhibition Sections</h2>
+              <ul>
+                {subPanels.map((subpanel) => {
+                  const { Title: title } = subpanel
+                  return (
+                    <li key={subpanel.UniqueID}>
+                      <Link
+                        href={`/room/${title
+                          .toLowerCase()
+                          .replace(/\s/g, '-')}`}
+                      >
+                        {subpanel.Title}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </>
+          )}
         </div>
         {props.leadingImages && (
           <ImageCarousel
@@ -227,7 +253,47 @@ export async function getStaticProps({ params }) {
   if (isFitD) {
     leadingImages = await getImages()
   } else {
-    const imageIDs = exhibitionData.subPanels.map((p) => p.artworkIds[0])
+    // const imageIDs = exhibitionData.subPanels.map((p) => p.artworkIds[0])
+
+    // custom leading image for each section:
+    //
+    // Colonialism and Independence: 138019
+    // Untitled (44UN-7925-070), Togoland (Togo), 1958
+    //
+    // Portraits and Power Dynamics: 138006
+    // Untitled (44UN-7907-144), Togoland (Togo), 1958
+    //
+    // Urbanization: 137993
+    // Untitled (44UN-7985-545), Southern Rhodesia (Zimbabwe), 1958
+    //
+    // Education: 137996
+    // Untitled (44UN-7964-083), Somaliland (Somalia), 1958
+    //
+    // Trade and Transport: 138025
+    // Untitled (44UN-7997-226), Ghana, 1958
+    //
+    // Industry and Economy: 138014
+    // Untitled (44UN-8001-498), Somaliland (Somalia), 1958
+    //
+    // Built Environment:
+    // Untitled (44UN-7991-099), Northern Rhodesia (Zambia), 1958
+    //
+    // Impact on the Environment: 138116
+    // Untitled (44UN-7981-177), Northern Rhodesia (Zambia), 1958
+    //
+    // Archival Materials: 137961
+    // Todd Webb's Livingston Hotel Receipt, Moshi, Tanganyika (Tanzania), 22 July 1958, 1958
+    const imageIDs = [
+      138019,
+      138006,
+      137993,
+      137996,
+      138025,
+      138014,
+      137973,
+      138116,
+      137961,
+    ]
     const imagesAPIRequest = await fetch(
       `https://search.artsmia.org/ids/${imageIDs.join(',')}`
     )

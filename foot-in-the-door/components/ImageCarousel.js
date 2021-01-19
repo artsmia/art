@@ -108,7 +108,7 @@ function ImageCarousel(props) {
                     />
                     <div className="flex absolute inset-0 items-end">
                       <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100 text-xs font-light">
-                        View Group &rsaquo;
+                        View Section &rsaquo;
                       </p>
                     </div>
                   </div>
@@ -142,7 +142,7 @@ function ImageCarousel(props) {
         </div>
         <Link href="/exhibitions/2760/foot-in-the-door/room/all">
           <a className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm">
-            View All Groups
+            View All Sections
           </a>
         </Link>
       </p>

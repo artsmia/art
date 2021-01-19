@@ -78,12 +78,38 @@ function Room(props) {
     ? fitdClassifications
     : subPanels.map((p) => p.Title)
 
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  // if (router.isFallback) {
-  //   return <div>Loading...</div>
-  // }
-  //
+  // For an "all" room with defined subpanels,
+  // break each subpanel into it's own artwork grid
+  const artworkGrid =
+    slug === 'all' && subPanels?.length > 0 ? (
+      subPanels.map((subpanel) => {
+        const { Title: title, artworkIds } = subpanel
+        const subHits = hits.filter(
+          (hit) => artworkIds.indexOf(Number(hit._id)) >= 0
+        )
+        return (
+          <>
+            <RoomGrid
+              classification={title}
+              hits={subHits}
+              perPage={30}
+              label={`Browse all ${subpanel.Title}`}
+              className="mt-12"
+            ></RoomGrid>
+          </>
+        )
+      })
+    ) : (
+      <RoomGrid
+        classification={classification}
+        hits={hits}
+        perPage={Math.max(hits.length, perPage)}
+        className="mt-24"
+        label={`Browse all ${classification}`}
+      >
+        <Text>{labelText}</Text>
+      </RoomGrid>
+    )
 
   return (
     <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>
@@ -98,15 +124,7 @@ function Room(props) {
           imagesForCarousel={imagesForCarousel}
           className="order-first md:order-none"
         />
-        <RoomGrid
-          classification={classification}
-          hits={hits}
-          perPage={Math.max(hits.length, perPage)}
-          className="mt-24"
-          label={`Browse all ${classification}`}
-        >
-          <Text>{labelText}</Text>
-        </RoomGrid>
+        {artworkGrid}
         {additionalPages &&
           additionalPages.map((page, index) => {
             return (

@@ -188,7 +188,9 @@ function ExhibitionHomeLink({ route, router, className }) {
   )
 }
 
-function ExitExhibitionLink({ className, ...props }) {
+function ExitExhibitionLink({ route, className, ...props }) {
+  if (route === '/') return null
+
   return (
     <a
       href="https://new.artsmia.org/exhibitions"
