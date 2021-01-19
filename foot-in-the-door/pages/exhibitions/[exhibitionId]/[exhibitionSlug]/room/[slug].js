@@ -95,6 +95,7 @@ function Room(props) {
               perPage={30}
               label={`Browse all ${subpanel.Title}`}
               className="mt-12"
+              hideLikeControl={!isFitD}
             ></RoomGrid>
           </>
         )
@@ -106,6 +107,7 @@ function Room(props) {
         perPage={Math.max(hits.length, perPage)}
         className="mt-24"
         label={`Browse all ${classification}`}
+        hideLikeControl={!isFitD}
       >
         <Text>{labelText}</Text>
       </RoomGrid>

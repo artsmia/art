@@ -99,7 +99,7 @@ function Art(props) {
               margin: '0 auto',
             }}
           />
-          <LikeControl artwork={artwork} showConfirmation={true} />
+          {isFitD && <LikeControl artwork={artwork} showConfirmation={true} />}
         </ImageWithBackground>
         <div
           className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 `}
@@ -166,6 +166,7 @@ function Art(props) {
             perPage={30}
             hideViewAll={true}
             label={`See more ${classification}`}
+            hideLikeControl={!isFitD}
           />
 
           <NestedLink
