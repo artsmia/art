@@ -85,7 +85,7 @@ function ImageCarousel(props) {
     <div className={cx(styles.imageCarousel, className)}>
       <ul ref={carouselRef}>
         {data.map((art, index) => {
-          const { classification: cl } = art
+          const { classification: cl, __artDirectionStyle } = art
           const classif = cl.replace(' (including Digital)', '')
           return (
             <li
@@ -104,7 +104,10 @@ function ImageCarousel(props) {
                       {...getImageProps(art)}
                       alt={art.description}
                       loading={index > 3 ? 'lazy' : undefined}
-                      className="border-black border-b-4 h-64 md:h-96 w-full self-stretch object-cover"
+                      className={cx(
+                        'border-black border-b-4 h-64 md:h-96 w-full self-stretch object-cover',
+                        __artDirectionStyle
+                      )}
                     />
                     <div className="flex absolute inset-0 items-end">
                       <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100 text-xs font-light">

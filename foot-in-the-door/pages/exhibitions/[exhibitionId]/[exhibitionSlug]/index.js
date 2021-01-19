@@ -266,12 +266,14 @@ export async function getStaticProps({ params }) {
     //
     // Urbanization: 137993
     // Untitled (44UN-7985-545), Southern Rhodesia (Zimbabwe), 1958
+    // (left + top justify the image so 'Phillips' is visible)
     //
     // Education: 137996
     // Untitled (44UN-7964-083), Somaliland (Somalia), 1958
     //
     // Trade and Transport: 138025
     // Untitled (44UN-7997-226), Ghana, 1958
+    // (this one should be left justified in the Carousel so 'Customs House' is visible)
     //
     // Industry and Economy: 138014
     // Untitled (44UN-8001-498), Somaliland (Somalia), 1958
@@ -284,6 +286,9 @@ export async function getStaticProps({ params }) {
     //
     // Archival Materials: 137961
     // Todd Webb's Livingston Hotel Receipt, Moshi, Tanganyika (Tanzania), 22 July 1958, 1958
+    //
+    // TODO generalize this!? How to specify not only that a certain image in each group
+    // should be the 'lead', but that it should have specific art direction (focus on the center vs top left)
     const imageIDs = [
       138019,
       138006,
@@ -302,6 +307,8 @@ export async function getStaticProps({ params }) {
     leadingImages = imagesAPI.hits.hits.map((art, index) => ({
       ...art._source,
       classification: exhibitionData.subPanels[index].Title,
+      __artDirectionStyle:
+        [138025, 137993].indexOf(Number(art._id)) >= 0 ? 'object-left-top' : '',
     }))
   }
 
