@@ -111,11 +111,17 @@ function Room(props) {
       </RoomGrid>
     )
 
+  const title = classification.match('Todd Webb') ? (
+    <span className="font-black">{classification}</span>
+  ) : (
+    segmentTitle(classification)
+  )
+
   return (
     <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>
       <main className="md:my-16 flex flex-col">
         <h1 className="text-center text-5xl font-light capitalize md:-mb-20 md:mt-20">
-          {segmentTitle(classification)}
+          {title}
         </h1>
         <LeftRightNav
           classifications={classifications}

@@ -160,7 +160,8 @@ function MiaExhibition(props) {
       subPanels,
     },
   } = props
-  const [title, subtitle] = exhibition_title.split(': ')
+  // const [title, subtitle] = exhibition_title.split(': ')
+  const [title, subtitle] = [exhibition_title]
 
   const exhibitionMoreText = title.match('Todd Webb in Africa')
     ? `<strong>${exhDates}</strong><br />
