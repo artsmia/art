@@ -18,7 +18,7 @@ function LRNav(props) {
 
   const _cls = classifications.map((c) => c.toLowerCase())
   const roomIndex = _cls.indexOf(classification)
-  const prevRoom = _cls[(roomIndex - 1) % _cls.length] || 'mixed media' // how does math work again?! wrapping around would be better than `undefined || const`
+  const prevRoom = _cls[(roomIndex - 1) % _cls.length] || _cls[_cls.length - 1] // how does math work again?! wrapping around would be better than `undefined || const`
   const nextRoom = _cls[(roomIndex + 1) % _cls.length]
 
   const { width } = useWindowSize()
