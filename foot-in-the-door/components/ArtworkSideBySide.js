@@ -6,6 +6,7 @@ import ImageWithBackground from 'components/ImageWithBackground'
 import LikeControl from 'components/LikeControl'
 import Text from 'components/Text'
 import { cx, getImageProps, segmentTitle } from 'util/index'
+import ImageWithMouseZoom from 'components/ImageWithMouseZoom'
 
 function ArtworkSideBySide(props) {
   const {
@@ -48,7 +49,7 @@ function ArtworkSideBySide(props) {
         )}
       >
         {imageIsValid ? (
-          <img
+          <ImageWithMouseZoom
             {...imageProps}
             src={imageSrc}
             alt={description}
@@ -70,7 +71,8 @@ function ArtworkSideBySide(props) {
         {isFitD && <LikeControl artwork={artwork} showConfirmation={true} />}
       </ImageWithBackground>
       <div
-        className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 sticky top-2`}
+        className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:pl-2 sticky top-2`}
+        style={{backdropFilter: 'blur(10px)', background: 'rgba(255, 255, 255, 0.5)'}}
       >
         <div className="font-light py-0">
           <Tombstone artwork={artwork} />
