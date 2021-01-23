@@ -7,6 +7,7 @@ import Link from 'components/NestedLink'
 import { cx } from '../util'
 import NavBar, { JoinCTA } from '../components/NavBar'
 import { ConditionalSurvey } from '../components/Survey'
+import { titleCase } from 'util/index'
 
 function Layout(props) {
   const { stickyCTA, stickyFooter, hideCTA, pageBlocked } = props
@@ -31,12 +32,19 @@ function Layout(props) {
   }, [])
 
   // TODO generalize this
+  // either by making it "Mia Collecitons" in geneeral here, and re-setting it from components further down the tree
+  // or by passing data into Layout?
+  // or by pulling context from useRouter and massaging it into a title?
+  // (or a combination?)
+  const titleFromRouter = query.exhibitionSlug
+    ? titleCase(query.exhibitionSlug?.replace(/-/g, ' '))
+    : ''
   const [pageTitle, pageDescription] = isFitD
     ? [
         'Foot in the Door: The Virtual Exhibition',
         'Held once every 10 years, “Foot in the Door” is an open exhibition for all Minnesota artists. Now marking its fourth decade, this exhibition celebrates the talent, diversity, and enthusiasm of Minnesota’s visual artists. This is an important event for the arts community and a great opportunity for artists to display their work at Mia. The sole curatorial criteria? Each submission must fit within one cubic foot.',
       ]
-    : ['Todd Webb in Africa: Outside the Frame', '']
+    : [`${titleFromRouter} | Mia`, '']
 
   return (
     <>

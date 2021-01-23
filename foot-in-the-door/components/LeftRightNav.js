@@ -51,7 +51,7 @@ function LRNav(props) {
             ? `${room} &rsaquo;`
             : room
 
-          const roomSlug = room.replace(/\s/g, '-')
+          const roomSlug = room?.replace(/\s/g, '-')
 
           return (
             <Link

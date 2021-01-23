@@ -145,7 +145,7 @@ function ImageCarousel(props) {
         </div>
         <Link href="/exhibitions/2760/foot-in-the-door/room/all">
           <a className="uppercase border mr-8 px-2 p-1 font-bold no-underline hover:underline text-sm">
-            View All Sections
+            View All
           </a>
         </Link>
       </p>

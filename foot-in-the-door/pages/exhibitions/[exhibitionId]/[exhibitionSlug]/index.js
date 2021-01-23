@@ -160,12 +160,13 @@ function MiaExhibition(props) {
       subPanels,
     },
   } = props
-  // const [title, subtitle] = exhibition_title.split(': ')
-  const [title, subtitle] = [exhibition_title]
+
+  const [title, subtitle] = exhibition_title.match(/Todd Webb/)
+    ? [exhibition_title]
+    : exhibition_title.split(': ')
 
   const exhibitionMoreText = title.match('Todd Webb in Africa')
-    ? `<strong>${exhDates}</strong><br />
-  <strong>Harrison Photography Galleries</strong><br />
+    ? `<strong>Harrison Photography Galleries</strong><br />
   <strong>Free Exhibition</strong><br />
   <a href="https://www.thamesandhudsonusa.com/books/todd-webb-in-africa-outside-the-frame-hardcover">Buy the exhibition catalog</a>
   `
@@ -182,11 +183,11 @@ function MiaExhibition(props) {
             {subtitle}
           </h2>
           <Text>{exhibitionData?.description}</Text>
-          <Text dangerous={true}>{exhibitionMoreText}</Text>
+          <Text dangerous={true}>{`<strong>${exhDates}</strong><br />${exhibitionMoreText}`}</Text>
 
           {hideSearch || <SearchInput className="my-6" />}
 
-          {subPanels && (
+          {subPanels?.length > 0 && (
             <>
               <h2 className="text-xl font-black mt-8">Exhibition Sections</h2>
               <ul>
@@ -220,10 +221,10 @@ function MiaExhibition(props) {
         <section></section>
       </div>
       <Head>
-        <title>Todd Webb in Africa | Mia </title>
+        <title>{title} | Mia </title>
         <meta name="twitter:card" content="summary_large_image"></meta>
-        <meta property="og:title" content="Todd Webb In Africa | Mia" />
-        <meta property="og:description" content="Todd Webb in Africa" />
+        <meta property="og:title" content={`${title} | Mia`} />
+        <meta property="og:description" content={`${title} | Mia`} />
         <meta property="og:image" content="TODO CHANGE" />
         <meta property="og:url" content="TODO change" />
         <meta property="twitter:card" content="summary_large_image" />
@@ -241,13 +242,14 @@ export async function getStaticPaths() {
       '/exhibitions/2760/foot-in-the-door',
       '/exhibitions/2830/todd-webb-in-africa',
     ],
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
 export async function getStaticProps({ params }) {
-  const exhibitionData = await getMiaExhibitionData(params.exhibitionId, fs)
-  const isFitD = Number(params.exhibitionId) === 2760
+  const exhId = Number(params.exhibitionId)
+  const exhibitionData = await getMiaExhibitionData(exhId, fs)
+  const isFitD = exhId === 2760
   let leadingImages
 
   // TODO de-dupe this
@@ -289,7 +291,7 @@ export async function getStaticProps({ params }) {
     //
     // TODO generalize this!? How to specify not only that a certain image in each group
     // should be the 'lead', but that it should have specific art direction (focus on the center vs top left)
-    const imageIDs = [
+    const toddWebbImageIDs = [
       138019,
       138006,
       137993,
@@ -300,13 +302,14 @@ export async function getStaticProps({ params }) {
       138116,
       137961,
     ]
+    const imageIDs = exhId === 2830 ? toddWebbImageIDs : exhibitionData.objects.slice(0, 5)
     const imagesAPIRequest = await fetch(
       `https://search.artsmia.org/ids/${imageIDs.join(',')}`
     )
     const imagesAPI = await imagesAPIRequest.json()
     leadingImages = imagesAPI.hits.hits.map((art, index) => ({
       ...art._source,
-      classification: exhibitionData.subPanels[index].Title,
+      classification: exhibitionData?.subPanels[index]?.Title ?? 'todo classification',
       __artDirectionStyle:
         [138025, 137993].indexOf(Number(art._id)) >= 0 ? 'object-left-top' : '',
     }))

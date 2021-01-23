@@ -74,8 +74,9 @@ function Art(props) {
   const rightWidth = isPortrait ? '1/2' : '1/3'
   const imgMaxHeight = isPortrait ? '97vh' : 'auto'
   // const imgMaxWidth = isPortrait ? `${90 * aspectRatio}vh` : '100%'
-  const imageProps = getImageProps(artwork, { fullSize: true })
-  const { src: imageSrc } = imageProps
+  const { src: imageSrc, ...imageProps } = getImageProps(artwork, {
+    fullSize: true,
+  })
 
   return (
     <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch}>
@@ -87,22 +88,30 @@ function Art(props) {
             'object-contain object-center max-h-full md:mr-4'
           )}
         >
-          <img
-            {...imageProps}
-            alt={description}
-            key={artwork.id}
-            className="sticky top-2"
-            style={{
-              top: '1.5vh',
-              maxHeight: imgMaxHeight,
-              width: 'auto',
-              margin: '0 auto',
-            }}
-          />
+          {imageProps.valid ? (
+            <img
+              {...imageProps}
+              src={imageSrc}
+              alt={description}
+              key={artwork.id}
+              className="sticky top-2"
+              style={{
+                ...imageProps.style,
+                top: '1.5vh',
+                maxHeight: imgMaxHeight,
+                width: 'auto',
+                margin: '0 auto',
+              }}
+            />
+          ) : (
+            <span {...imageProps} className="sticky top-2">
+              No Image Available
+            </span>
+          )}
           {isFitD && <LikeControl artwork={artwork} showConfirmation={true} />}
         </ImageWithBackground>
         <div
-          className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 `}
+          className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 sticky top-2`}
         >
           <div className="font-light">
             <h1 className="text-2xl font-light capitalize">
@@ -137,11 +146,9 @@ function Art(props) {
                 </p>
               </>
             )}
-            {isFitD && (
-              <p className="flex items-center">
-                <ShareLinks art={artwork} />
-              </p>
-            )}
+            <p className="flex items-center">
+              <ShareLinks art={artwork} hideLinks={!isFitD} />
+            </p>
             {!isFitD || isFirstVisit || (
               <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
                 <JoinCTAPhrase />
@@ -215,7 +222,7 @@ export async function getStaticProps({ params }) {
   const hashid = hashids.encode(numericID)
 
   let artwork = await fetchById(numericID, isFitD)
-  if (!isFitD && exhibitionData && exhibitionData.extra) {
+  if (!isFitD && exhibitionData && exhibitionData.extra?.length > 0) {
     const exhibitionEntryRow = exhibitionData.extra.find(
       (d) => d.UniqueID === numericID
     )
@@ -233,19 +240,30 @@ export async function getStaticProps({ params }) {
       title: parentPanel?.Title,
       siblingArtworkIds,
     }
+  } else {
+    if (!isFitD) {
+      artwork.__group = {
+        title: exhibitionData.exhibition_title,
+        siblingArtworkIds: exhibitionData.objects,
+      }
+    }
   }
 
   // TODO swap this out for Todd Webb to search for the other artworks
   // within the same panel
+  //
+  // And what to do for Mia exhibitions without extra TMS content defined / `subpanels`?
   const classification = isFitD
     ? artwork.classification.toLowerCase().replace(/\s/g, '-')
-    : artwork.__group.title
+    : artwork.__group
+    ? artwork.__group.title
+    : null
   const criteria = isFitD
     ? `classification:${classification}`
     : `artist:'Todd Webb'`
   const classificationResults = await getSearchResults(criteria, {
     isFitD,
-    ids: isFitD ? null : artwork.__group.siblingArtworkIds,
+    ids: isFitD ? null : artwork.__group?.siblingArtworkIds ?? null,
   })
 
   const slug = makeSlug([artwork.title, artwork.artist].join(' '))
@@ -286,12 +304,13 @@ export async function getStaticPaths() {
 }
 
 function ShareLinks(props) {
-  const { art } = props
+  const { art, hideLinks } = props
   const title = `${art.title} by ${art.artist}`
-  const shareMessage = `Visit this artwork in Mia’s Foot in the Door Exhibition`
-  // const shareUrl = `https://fitd-kjell.lume1.vercel.app/exhibitions/2760/foot-in-the-door/art/${art.id}`
-  // const shareUrl = `https://fitd.vercel.app/exhibitions/2760/foot-in-the-door/art/${art.id}`
+
   // TODO change `id` to `:hashid/:slug`? Or get URL from useRouter?
+  // get exhibition name from router (Layout does this)
+  // customize away 'Foot in the Door'
+  const shareMessage = `Visit this artwork in Mia’s Foot in the Door Exhibition`
   const shareUrl = `https://collections.artsmia.org/exhibitions/2760/foot-in-the-door/art/${art.id}`
   const emailLink = `mailto:?subject=${shareMessage}&body=${shareUrl}`
   const twitterLink = `https://twitter.com/intent/tweet?url=${shareUrl}`
@@ -315,7 +334,7 @@ function ShareLinks(props) {
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:site" content="@artsmia" />
       </Head>
-      Share:
+      {hideLinks || <>Share:
       <a href={emailLink}>
         <HiMail className="mx-1" size="1.5rem" />
       </a>{' '}
@@ -325,6 +344,7 @@ function ShareLinks(props) {
       <a href={facebookLink} _target="blank">
         <SiFacebook className="mx-1" size="1.5rem" />
       </a>
+      </>}
     </>
   )
 }

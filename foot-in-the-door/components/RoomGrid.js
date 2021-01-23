@@ -123,12 +123,18 @@ function RoomGrid(props) {
                       )}
                     >
                       <ImageWithBackground as="figure" imageSrc={imageSrc}>
-                        <img
-                          className="h-auto w-full max-h-full"
-                          loading={imageLoadStrategy}
-                          {...imageProps}
-                          alt={description}
-                        />
+                        {imageProps.valid ? (
+                          <img
+                            className="h-auto w-full max-h-full"
+                            loading={imageLoadStrategy}
+                            {...imageProps}
+                            alt={description}
+                          />
+                        ) : (
+                          <span {...imageProps} className="sticky top-2">
+                            {title}
+                          </span>
+                        )}
                         <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
                           <div className="text-white opacity-100 py-6 px-4">
                             <h2 className="font-light">{title}</h2>

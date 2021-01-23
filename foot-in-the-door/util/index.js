@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 export function getImageSrc(artworkData, thumbnail = true) {
   const { id, accession_number } = artworkData
   const isFitD = Boolean(accession_number.match(/FITD/))
+  const useIIIF = false // use options = {}?
 
   if (isFitD) {
     const imageFilename = artworkData.image
@@ -18,6 +19,10 @@ export function getImageSrc(artworkData, thumbnail = true) {
       : `https://foot-in-the-door-2020.s3.amazonaws.com`
 
     return `${domain}/800/${thumb}`
+  } else if (useIIIF) {
+    return `https://iiif.dx.artsmia.org/${id}.jpg/full/${
+      thumbnail ? 400 : 800
+    },/0/default.jpg`
   } else {
     return `https://${id % 7}.api.artsmia.org/${
       thumbnail ? 400 : 800
@@ -28,11 +33,27 @@ export function getImageSrc(artworkData, thumbnail = true) {
 export function getImageProps(artData, options = {}) {
   const { fullSize } = options
 
+  const valid = artData.image === 'valid'
+  // TODO is this the right place to be setting styles?
+  const style = valid
+    ? {}
+    : {
+        background:
+          'url(https://collections.artsmia.org/images/no-image-bg.png) repeat top left',
+        width: '100%',
+        height: '37vh',
+        display: 'block',
+        padding: '1em',
+        textAlign: 'center',
+      }
+
   return {
     src: getImageSrc(artData, !fullSize),
     alt: artData.description,
     width: artData.image_width,
     height: artData.image_height,
+    valid,
+    style,
   }
 }
 
@@ -358,7 +379,7 @@ export async function getMiaExhibitionData(exhId, fs) {
 
   return {
     ...baseData,
-    description: baseData.description || extraDescription || null,
+    description: baseData.exhibition_description || extraDescription || null,
     extra: extraData,
     subPanels,
     isClosed,
@@ -410,4 +431,10 @@ export function segmentTitle(rawTitle, options = {}) {
   )
 
   return returnJSX ? title : [prefix, mainTitle, suffix.join('')]
+}
+
+export function titleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  })
 }
