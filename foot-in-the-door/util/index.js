@@ -415,7 +415,11 @@ export function segmentTitle(rawTitle, options = {}) {
   let [mainTitle, ...suffix] = segmentedTitle
   // shift leading punctuation into `prefix`
   if (mainTitle.match(/^("|“)/))
-    [prefix, mainTitle] = mainTitle.split(/^("|“)/).filter((s) => s !== '')
+    [prefix, mainTitle] = mainTitle.split(/^("|“|\()/).filter((s) => s !== '')
+  if (mainTitle.match(/^(\(|\[)/)) {
+    // shift everything one slot to the left if mainTitle === '('
+    ;[prefix, mainTitle, ...suffix] = [mainTitle, ...suffix] // eslint-disable-line no-extra-semi
+  }
   // ... and trailing whitespace into `suffix`
   if (mainTitle.match(/\s+$/)) {
     mainTitle = mainTitle.trim()

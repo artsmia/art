@@ -25,6 +25,14 @@ const titles = [
     '“', // prefix
     ' [Sic], Somaliland, A Continent Awakes,” UN Information Services PR Photograph', // suffix
   ],
+  ['(Procession Of Oxen)', 'Procession Of Oxen', '(', ')'],
+  // TODO leading `(` should become prefix, THEN segment the resulting title?
+  // [
+  //   '(Writing Box Decorated With Maple Tree And Deer In The Style Of Hon’ami Kōetsu)',
+  //   'Writing Box',
+  //   '(',
+  //   'Decorated With Maple Tree And Deer In The Style Of Hon’ami Kōetsu)',
+  // ],
   // TODO prioritize quoted phrase over all other rules?
   // [
   //   'Cover Image, “United Nations Photos, Supplement No. 7,” United Nations Office Of Public Information',

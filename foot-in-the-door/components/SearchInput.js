@@ -15,6 +15,15 @@ function SearchInput(props) {
 
   const placeholder = _placeholder || 'Search for artist, keyword, color, etc'
 
+  function determineSearchUrl(terms) {
+    if (props.customSearchUrl)
+      return props.customSearchUrl.replace('[searchTerms]', terms)
+
+    return exhibitionId
+      ? `/exhibitions/${exhibitionId}/${exhibitionSlug}/search/${terms}`
+      : `/search/${terms}`
+  }
+
   return (
     <>
       <label
@@ -51,9 +60,7 @@ function SearchInput(props) {
             } = event
 
             if (event.key === 'Enter') {
-              const searchUrl = exhibitionId
-                ? `/exhibitions/${exhibitionId}/${exhibitionSlug}/search/${terms}`
-                : `/search/${terms}`
+              const searchUrl = determineSearchUrl(terms)
               router.push(searchUrl)
             }
           }}
