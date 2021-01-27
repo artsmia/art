@@ -21,12 +21,17 @@ var People = React.createClass({
         const slice = 0
         const sliceSize = 50
         const start = slice*sliceSize
-        const end = Math.min(artistIds.length, (slice+1)*sliceSize)
+        const end = Math.min(artistIds.length, (slice+2)*sliceSize)
         console.info({numArtistIds: artistIds.length, start, end, sliceSize})
 
         return Promise.all(artistIds.slice(start, end).map(id => rest(`${searchEndpoint}/people/${id}`)))
-          .then(values => values.map(({entity}) => {
-            return JSON.parse(entity)
+          .then(values => values.map((data) => {
+            try {
+              return JSON.parse(data.entity)
+            } catch(e) {
+              console.error('error fetching artist data', data.url)
+              return {}
+            }
           }))
       },
     }
