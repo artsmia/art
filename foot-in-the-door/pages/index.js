@@ -5,7 +5,7 @@ import Layout from 'components/Layout'
 import Link from 'components/NestedLink'
 import SearchInput from 'components/SearchInput'
 import ArtworkSideBySide from 'components/ArtworkSideBySide'
-import { cx } from 'util/index'
+import { segmentTitle, cx } from 'util/index'
 
 /** TODO
  *
@@ -27,17 +27,22 @@ function Home() {
       </main>
       <section className="mt-4">
         <LinkRoll
-          title="Ongoing Exhibitions"
+          title="Online Exhibitions"
           items={[
-            [
-              'Foot in the Door 5: The Virtual Exhibition',
-              '/exhibitions/2760/foot-in-the-door',
-              'https://images.artsmia.org/wp-content/uploads/2020/10/31090903/tn_FitD5_web_1200x667-1200x667-525x350.jpg',
-            ],
             [
               'Todd Webb in Africa: Outside the Frame',
               '/exhibitions/2830/todd-webb-in-africa',
               'https://images.artsmia.org/wp-content/uploads/2020/12/21071646/TW_WEBIMAGE_L2020.85.81_cropped-525x350.jpg',
+            ],
+            [
+              'In The Presence of Our Ancestors',
+              'https://new.artsmia.org/exhibition/in-the-presence-of-our-ancestors-southern-perspectives-in-african-american-art',
+              'https://images.artsmia.org/wp-content/uploads/2020/03/07103130/190306_mia334_5395-1-resized1.jpg',
+            ],
+            [
+              'Freedom Rising: I Am the Story / L’Merchie Frazier',
+              'https://new.artsmia.org/exhibition/freedom-rising-i-am-the-story-lmerchie-frazier',
+              'https://images.artsmia.org/wp-content/uploads/2020/10/20083524/ext_202010190009-525x350.jpg',
             ],
           ]}
         />
@@ -62,8 +67,11 @@ function Home() {
           ]}
         />
       </section>
-      <section style={{ minHeight: '90vh' }} className="min-height-screen">
-        <h2 className="text-2xl font-black">Browse Random Artworks</h2>
+      <section
+        style={{ minHeight: '90vh' }}
+        className="min-height-screen mt-12"
+      >
+        <h2 className="text-xl font-black">Browse Random Artworks</h2>
         <RandomArtworkCarousel />
       </section>
       <HomeNav className="mt-8" />
@@ -102,14 +110,18 @@ function LinkRoll(props) {
   const { title, items } = props
 
   return (
-    <section className="">
-      <h2 className="text-xl font-black">{title}</h2>
-      <ul className="list-none flex flex-row">
+    <section className="border-t-2 border-black mb-6">
+      <h2 className="text-xl font-light mb-4">{segmentTitle(title)}</h2>
+      <ul className="list-none flex flex-row flex-wrap">
         {items.map(([name, link, image]) => (
-          <li key={name} className="p-2">
-            <img src={image} alt="" />
+          <li key={name} className="pr-4 mb-2 sm:w-1/2 md:w-1/3 group">
             <Link href={link}>
-              <a>{name}</a>
+              <a className="group-hover:bg-black group-hover:text-white">
+                <img src={image} alt="" />
+                <strong className="font-light text-lg no-underline group-hover:underline">
+                  {segmentTitle(name)}
+                </strong>
+              </a>
             </Link>
           </li>
         ))}
