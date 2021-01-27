@@ -1,5 +1,5 @@
 /** @format */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import Layout from 'components/Layout'
 import Link from 'components/NestedLink'
@@ -128,6 +128,7 @@ function LinkRoll(props) {
 function RandomArtworkCarousel() {
   const [randomArtworks, newRandom] = useState([])
   const [index, setIndex] = useState(0)
+  const randomRef = useRef(null)
 
   const fetchData = async () => {
     const response = await fetch(
@@ -136,6 +137,7 @@ function RandomArtworkCarousel() {
     const newData = await response.json()
     newRandom([...randomArtworks, newData])
     setIndex(0)
+    if (randomArtworks.length > 0) randomRef.current?.scrollIntoView(true)
   }
 
   useEffect(() => {
@@ -147,33 +149,39 @@ function RandomArtworkCarousel() {
     .map((art) => art.id)
     .join(',')}`
 
-  return art ? (
-    <ArtworkSideBySide artwork={art}>
-      <div className="flex flex-row justify-between mt-4">
-        <button
-          onClick={() => setIndex(index + 1)}
-          disabled={randomArtworks.length > 0 && index > 0}
-          className="p-2"
-        >
-          &larr;
-        </button>
-        <button onClick={fetchData} className="p-2">
-          &#8635;
-        </button>
-        <button
-          onClick={() => setIndex(index - 1)}
-          disabled={index < 0}
-          className="p-2"
-        >
-          &rarr;
-        </button>
-      </div>
-      <div className="flex flex-row justify-between">
-        <a href={`https://collections.artsmia.org/art/${art.id}`}>more info</a>
-        {randomArtworks.length > 1 && (
-          <a href={allArtworksLink}>show all {randomArtworks.length}</a>
-        )}
-      </div>
-    </ArtworkSideBySide>
-  ) : null
+  return (
+    <div ref={randomRef}>
+      {art ? (
+        <ArtworkSideBySide artwork={art}>
+          <div className="flex flex-row justify-between mt-4">
+            <button
+              onClick={() => setIndex(index + 1)}
+              disabled={randomArtworks.length > 0 && index > 0}
+              className="p-2"
+            >
+              &larr;
+            </button>
+            <button onClick={fetchData} className="p-2">
+              &#8635;
+            </button>
+            <button
+              onClick={() => setIndex(index - 1)}
+              disabled={index < 0}
+              className="p-2"
+            >
+              &rarr;
+            </button>
+          </div>
+          <div className="flex flex-row justify-between">
+            <a href={`https://collections.artsmia.org/art/${art.id}`}>
+              more info
+            </a>
+            {randomArtworks.length > 1 && (
+              <a href={allArtworksLink}>show all {randomArtworks.length}</a>
+            )}
+          </div>
+        </ArtworkSideBySide>
+      ) : null}
+    </div>
+  )
 }
