@@ -14,7 +14,7 @@ var Home = React.createClass({
   statics: {
     fetchData: {
       searchResults: (params, query) => {
-        let searchUrl = `${SEARCH}/highlight:true`
+        let searchUrl = `${SEARCH}/random/art?q=_exists_:%22list:bhm%22&size=20`
         return rest(searchUrl).then((r) => JSON.parse(r.entity))
       }
     },
@@ -25,7 +25,7 @@ var Home = React.createClass({
     let width = window && window.innerWidth
     let quiltProps = smallViewport ?
       {maxRows: 2, maxWorks: 7} :
-      {maxRows: 3, maxWorks: 30}
+      {maxRows: 2, maxWorks: 17}
 
     if(window && window.ondeviceorientation && width > 500 && width < 800) quiltProps.maxRows = 1
 
@@ -34,7 +34,7 @@ var Home = React.createClass({
         hideResults={true}
         activateInput={true}
         quiltProps={quiltProps}
-        facet={'highlight:true'}
+        facet={'_exists_:"list:bhm"'}
         searchAll={true}
         suggestStyle={{margin: "1em 3em"}}
         bumpSearchBox={smallViewport}
@@ -65,9 +65,9 @@ var HomeDepartmentsAndPages = React.createClass({
       <div className="mdl-grid">
         <ul className="info">
           <li className="mdl-cell mdl-cell--4-col">
-            <Link to='searchResults' params={{terms: 'highlight:true'}}>
-              Highlights
-            </Link>
+            <a href="https://new.artsmia.org/art-artists/">
+              Art + Artists
+            </a>
           </li>
           <li className="mdl-cell mdl-cell--4-col">
             <Link to="/new">
