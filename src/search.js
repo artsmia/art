@@ -31,7 +31,9 @@ var Search = React.createClass({
 
   render() {
     const results = this.state.results
-    const hits = results && results.hits && results.hits.hits // this has to be different from `state.hits` so artworks don't change order when hovered in the quilt
+    // `hits` is different from `state.hits` so artworks don't change order when hovered in the quilt.
+    // Handle both results from the ES search endpoint (`results.hits.hits`) and the randomized search (`[random1, 2, ...]`)
+    const hits = results.hits ? results.hits.hits : results
     const {universal, smallViewport} = this.context
     const path = this.props.path
     const darkenQuilt = this.props.path && (path.match(/\/search/) || path.match('more') && window && window.innerWidth <= 736)
@@ -219,7 +221,8 @@ var Search = React.createClass({
   // If no `art` is passed, that means the quilt has lost focus,
   // reset hits to be the searchResults straigt from ES
   updateFromQuilt(art) {
-    const hits = this.state.results.hits.hits
+    const results = this.state.results
+    const hits = results.hits ? results.hits.hits : results
     if(art) {
       if(this.props.facet) this.linkToClickedArtwork(this.props.facet, art)
       var index = hits.indexOf(art)+1
