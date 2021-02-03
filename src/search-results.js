@@ -20,6 +20,35 @@ function omitResultsById(...ids) {
     }
   }
 }
+/* Given a list of artwork ids to be promoted, find any that exist
+ * in `results` and increase their _score, then re-sort the results
+ */
+function promoteResultsById(...ids) {
+  return function(json, additionalArt) {
+    const idComparison = hit => ids.indexOf(Number(hit._id)) > -1
+    const hits = [
+      ...json.hits.hits,
+      ...additionalArt.map(art => ({
+        _score: 100,
+        _source: art,
+      }))
+    ]
+    const includesId = hits.filter(idComparison)
+    const resortedResults = hits.map(hit => {
+      if(idComparison(hit)) hit._score = hit._score * 100
+
+      return hit
+    }).sort((a, b) => b._score - a._score)
+
+    return {
+      ...json,
+      hits: {
+        ...json.hits,
+        hits: resortedResults,
+      },
+    }
+  }
+}
 function reshapeResultsJson(json) {
   // For this query there are two photographs that are included because of `2013`
   // being included in their title, that really don't belong and are a thorn in
@@ -29,6 +58,13 @@ function reshapeResultsJson(json) {
   // 2013.29
   if(json.query.match(/^2013.29/)) {
     return omitResultsById(126303, 126745)(json)
+  }
+
+  if(json.query.match(/black|african.?american/i)) {
+    // TODO how to do this without hard-coding a single artwork?
+    const gfPortrait = JSON.parse(`{"id":"139005","title":"George Floyd, In Memorium 2020","medium":"Screenprint","classification":" Prints","dimension":"25 × 15 in. (63.5 × 38.1 cm) (sheet)","object_name":"Print","continent":"North America","country":"United States","culture":null,"dated":"2020","room":"Not on View","style":"21st century","inscription":"LLC in pencil: 8:46","signed":"LRC in pencil: David Barthold","markings":"bottom center in pencil: 113/200","text":"As Minneapolis and the world mourned the murder of George Floyd in the summer of 2020, an outpouring of art was created by artists, professional and amateur alike—murals, sidewalk art, sculpture installations, cardboard signs, paintings, drawings, and prints. The works were made to memorialize Floyd and countless other Black citizens martyred in this country, to protest racial injustice and police brutality, and to try to help communities heal. Barthold, a New York printmaker and street artist, completed this powerful memorial portrait of Floyd just days after he was killed. The artist subsequently produced other portrait prints of important Americans—John Lewis, Fred Hampton, Ruth Bader Ginsburg, and Alexandria Ocasio-Cortez—to, in the artist’s words, “remember the lost and honor the living.” Barthold mass-produced these likenesses and pasted them around the city of New York throughout the summer of 2020, and, again, in a campaign just before the 2020 election. To broaden their reach, he shared the images on social media, and sold the prints online, using the proceeds to raise money for Black Lives Matter and the Bail Project.","description":"portrait of George Floyd in black inside an irregularly shaped dark form","provenance":"The artist, New York (2020; sold to McGarry); Rachel McGarry, Deephaven (2020; given to Mia).","portfolio":"From ","creditline":"Anonymous gift","accession_number":"2020.91","artist":"Artist: David Barthold","role":"Artist","nationality":"American","life_date":"American, born 1959","image_copyright":"","department":"Prints and Drawings","rights_type":"Copyright Not Evaluated","image":"valid","image_width":4823,"image_height":7846,"restricted":1,"public_access":"1","curator_approved":0,"catalogue_raissonne":null,"art_champions_text":null,"see_also":[""]}`)
+
+    return promoteResultsById(139005, 7890, 3754, 107241, 126991, 79932)(json, [gfPortrait])
   }
 
   return json
@@ -112,7 +148,7 @@ var SearchResults = React.createClass({
     var {focusedResult} = this.state
     var leftColumnWidth = '35%'
     var {smallViewport} = this.context
-    var unloadedResults = search.hits.total - this.props.hits.length
+    var unloadedResults = Math.max(0, search.hits.total - this.props.hits.length)
     var loadThisManyMore = Math.min(200, unloadedResults)
     var nextPage = Math.min(this.maxResults, this.props.hits.length+loadThisManyMore)
     var nextPageQuery = {...this.props.query, size: nextPage}
@@ -209,7 +245,7 @@ var SearchResults = React.createClass({
   //
   // Also fudge the height of this so the right column scroll doesn't get cut off.
   postSearch({hits, search, showMoreLink}, postSearchOffset) {
-    var showingAll = hits.length == search.hits.total || hits.length >= this.maxResults
+    var showingAll = hits.length >= search.hits.total || hits.length >= this.maxResults
 
     const style = {
       marginTop: '1em',

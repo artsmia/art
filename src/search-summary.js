@@ -21,7 +21,7 @@ const SearchSummary = React.createClass({
       <a onClick={this.toggleAggs} style={{cursor: 'pointer'}}>{showAggs ? 'hide' : 'advanced'}</a>
     </span>
 
-    const showingAll = hits.length == search.hits.total || hits.length >= this.props.maxResults
+    const showingAll = hits.length >= search.hits.total || hits.length >= this.props.maxResults
 
     var {smallViewport} = this.context
     var toolbarClasses = "summaryText mdl-cell " + (smallViewport ?

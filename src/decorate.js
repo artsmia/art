@@ -289,7 +289,7 @@ var DecorationFinder = (search, filters, props, removeFn) => {
     'rights_type:': (term) => (
       <RightsDecorator term={term} params={params} key={term} />
     ),
-    'black lives matter': (term) => (
+    'black|african.?american|list:bhm': (term) => (
       <InfoDecorator term={term} params={params} key={term} />
     ),
     '.*': (term) => {
