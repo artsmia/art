@@ -662,8 +662,11 @@ var IIIFCropper = React.createClass({
     }
 
     const rawIIIFUrl = (currentRegion || squareSmartCrop)
-    const iiifComponents = rawIIIFUrl.match(/.org\/(?<id>[0-9]+).jpg\/(?<region>[^/]+)\/(?<size>[^/]+)\/0\/default.jpg/)
-    const iiifSize = iiifComponents.groups.size
+    // TODO node v7 (running on the server) doesn't support capturing named groups?
+    // const iiifComponents = rawIIIFUrl.match(/.org\/(?<id>[0-9]+).jpg\/(?<region>[^/]+)\/(?<size>[^/]+)\/0\/default.jpg/)
+    // const iiifSize = iiifComponents.groups.size
+    const iiifComponents = rawIIIFUrl.match(/.org\/([0-9]+).jpg\/([^/]+)\/([^/]+)\/0\/default.jpg/)
+    const iiifSize = iiifComponents[3]
     const iiifUrl = rawIIIFUrl.replace(iiifSize, cropSize === 'full' ? cropSize : `${cropSize},`)
 
     return <div>

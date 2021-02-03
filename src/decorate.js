@@ -352,6 +352,7 @@ var DecorationFinder = (search, filters, props, removeFn) => {
 
       return decorators
     })
-    .flat()
+    // .flat() too new! need to upgrade node version on deployment server
+    .reduce((acc, val) => acc.concat(val), [])
     .filter((component) => component)
 }
