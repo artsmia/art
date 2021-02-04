@@ -1,4 +1,5 @@
 /** @format */
+import { Fragment } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -25,7 +26,7 @@ function LRNav(props) {
   const showFullNav = showAllAndStretch && width > 768
 
   const roomLinks = showFullNav
-    ? _cls.filter((room) => room !== classification)
+    ? _cls //.filter((room) => room !== classification)
     : [prevRoom, nextRoom]
 
   return (
@@ -44,7 +45,11 @@ function LRNav(props) {
         {roomLinks.map((room, index) => {
           const isFirstRoom = index === 0
           const isLastRoom = index === roomLinks.length - 1
+          const isCurrentRoom = room === classification
 
+          const roomElem = isCurrentRoom ? (
+            <span title={`Currently Viewing '${room}'`}>&#8226;</span>
+          ) : null
           const roomText = isFirstRoom
             ? `&lsaquo; ${room}`
             : isLastRoom
@@ -59,12 +64,15 @@ function LRNav(props) {
             false && // Testing out this idea, not ready for prime time
             roomLinks.length > 7
 
+          const OuterWrapper = isCurrentRoom ? Fragment : Link
+          const InnerWrapper = isCurrentRoom ? 'span' : 'a'
+
           return (
-            <Link
+            <OuterWrapper
               key={room}
               href={`/exhibitions/${exhId}/${exhSlug}/room/${roomSlug}`}
             >
-              <a
+              <InnerWrapper
                 className={cx(
                   'flex px-2 no-underline font-light group',
                   rotateInnerLinks ? 'transform rotate-45' : '',
@@ -73,9 +81,8 @@ function LRNav(props) {
                     : showFullNav && isLastRoom
                     ? 'pl-2 lg:pl-10 mr-4'
                     : '',
-                  isFirstRoom || isLastRoom
-                    ? 'uppercase hover:underline'
-                    : 'capitalize hover:underline',
+                  isFirstRoom || isLastRoom ? 'uppercase' : 'capitalize',
+                  isCurrentRoom ? '' : 'hover:underline',
                   // : 'capitalize text-gray-300 hover:text-black',
                   centerItems ? 'text-center' : ''
                 )}
@@ -88,7 +95,9 @@ function LRNav(props) {
                     showFullNav={showFullNav}
                   />
                 )}
-                <span dangerouslySetInnerHTML={{ __html: roomText }} />
+                {roomElem || (
+                  <span dangerouslySetInnerHTML={{ __html: roomText }} />
+                )}
                 {isLastRoom && (
                   <PeekImages
                     room={room}
@@ -97,8 +106,8 @@ function LRNav(props) {
                     showFullNav={showFullNav}
                   />
                 )}
-              </a>
-            </Link>
+              </InnerWrapper>
+            </OuterWrapper>
           )
         })}
       </nav>
