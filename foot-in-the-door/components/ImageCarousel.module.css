@@ -10,12 +10,6 @@
     @apply mx-0;
     margin-right: -4rem;
   }
-
-  scrollbar-width: none;
-
-  & ::-webkit-scrollbar {
-    display: none;
-  }
 }
 /**
  * https://stackoverflow.com/questions/3296644/hiding-the-scroll-bar-on-an-html-page

@@ -8,11 +8,11 @@ import Link from 'next/link'
  * [ ] write tests
  * [ ] handle non-NextJS links (to external sites)
  */
-function NestedLink({ children, href, external, ...props }) {
+function NestedLink({ children, href, external, ...linkProps }) {
   const router = useRouter()
   if (external || href.match(/new.artsmia.org|collections.artsmia.org\/info/))
     return (
-      <a href={href} {...props}>
+      <a href={href} {...linkProps}>
         {children}
       </a>
     )
@@ -26,8 +26,8 @@ function NestedLink({ children, href, external, ...props }) {
   }/${givenHrefStripped}`.replace(/\/+/g, '/')
 
   return (
-    <Link {...props} href={nestedHref}>
-      {children}
+    <Link href={nestedHref}>
+      <a {...linkProps}>{children}</a>
     </Link>
   )
 }

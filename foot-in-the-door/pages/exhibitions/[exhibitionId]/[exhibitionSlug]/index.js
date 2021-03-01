@@ -166,9 +166,12 @@ function MiaExhibition(props) {
     : exhibition_title.split(': ')
 
   const exhibitionMoreText = title.match('Todd Webb in Africa')
-    ? `<strong>Harrison Photography Galleries</strong><br />
-  <strong>Free Exhibition</strong><br />
-  <a href="https://www.thamesandhudsonusa.com/books/todd-webb-in-africa-outside-the-frame-hardcover">Buy the exhibition catalog</a>
+    ? `<a href="https://new.artsmia.org/exhibition/todd-webb-in-africa-outside-the-frame" class="hover:underline"><strong>Harrison Photography Galleries</strong><br />
+  <strong>Free Exhibition</strong></a><br /><br />
+  <a href="https://shop.artsmia.org/products/toddwebbinafrica" class="hover:underline">
+    <img src="https://cdn.shopify.com/s/files/1/2315/6715/products/ToddWebbinAfricaBG_1600x.jpg?v=1611250608" alt="" />
+    Buy the exhibition catalog
+  </a>
   `
     : ``
 
@@ -189,13 +192,14 @@ function MiaExhibition(props) {
 
           {subPanels?.length > 0 && (
             <>
-              <h2 className="text-xl font-black mt-8">Exhibition Sections</h2>
-              <ul>
-                {subPanels.map((subpanel) => {
+              <h2 className="text-2xl font-black mt-8">Exhibition Sections</h2>
+              <ul className="list-inside list-disc">
+                {subPanels.map((subpanel, index) => {
                   const { Title: title } = subpanel
                   return (
                     <li key={subpanel.UniqueID}>
                       <Link
+                        className="hover:underline"
                         href={`/room/${title
                           .toLowerCase()
                           .replace(/\s/g, '-')}`}
