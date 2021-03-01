@@ -45,18 +45,17 @@ var Departments = React.createClass({
         {this.departments.map(dept => {
           var name = index => findDepartment(dept)[index]
           var isActive = active === dept
+          var deptLink = `https://new.artsmia.org/art-artists/curatorial-departments/${name(2)}`
 
           return (
-            <Link
-              to="department"
-              key={name(1)}
-              params={{ dept: name(2) }}
+            <a
+              href={deptLink}
               className={`departmentLink mdl-cell mdl-cell--3-col ${isActive &&
                 'isActive'}`}
             >
               <div className={[name(1), 'departmentListItem'].join(' ')} />
               <h2 style={this.props.style}>{dept}</h2>
-            </Link>
+            </a>
           )
         })}
       </div>

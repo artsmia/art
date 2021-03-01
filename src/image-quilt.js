@@ -142,6 +142,7 @@ const ImageQuilt = React.createClass({
 
     var quiltStyle = {
       cursor: 'pointer',
+      minHeight: 150,
       ...this.props.style,
     }
 

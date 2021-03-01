@@ -256,7 +256,7 @@ var SearchResults = React.createClass({
 
     const {searchResults} = this.props.data
     const csvTerms = searchResults.csvQuery
-      || [searchResults.query, searchResults.filter].filter(s => s).join(' ')
+      || [searchResults.query, searchResults.filters].filter(s => s).join(' ')
     const csvUrl = `${SEARCH}/${csvTerms}?format=csv`
     const showCsvLink = true
 
