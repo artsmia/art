@@ -2,132 +2,97 @@
 import { useState, useEffect, useRef } from 'react'
 
 import Layout from 'components/Layout'
-import Link from 'components/NestedLink'
+// import Link from 'components/NestedLink'
 import SearchInput from 'components/SearchInput'
 import ArtworkSideBySide from 'components/ArtworkSideBySide'
-import { segmentTitle, cx } from 'util/index'
+import Head from 'next/head'
 
-/** TODO
- *
- * show link lists horizontally with thumbnail image
- * add interactive museum map
- */
-function Home() {
+function Home(props) {
+  const {
+    wpData: { hero, main },
+  } = props
+
   return (
     <Layout hideCTA={true} hideSearch={true}>
-      <main className="prose max-w-none">
-        <h1>Discover the Collection</h1>
-        <p>
-          Search for artwork using a keyword, artist&apos;s name, style of art,
-          or accession number. Unsure what to search for? Get started with the
-          categories below, or browse more than 80,000 artworks on Mia&apos;s
-          Collection site.
-        </p>
-        <SearchInput customSearchUrl="http://collections.artsmia.org/search/[searchTerms]" />
+      <main className="flex flex-col md:flex-row -mt-6">
+        <img
+          src={hero.image.src}
+          alt=""
+          title={hero.image.caption}
+          className="md:w-2/3"
+        />
+        <div className="md:ml-4 md:w-1/3 flex flex-col">
+          <h2 className="font-black text-2xl">{hero.title}</h2>
+          <div
+            dangerouslySetInnerHTML={{ __html: hero.content }}
+            className="text-xl"
+          />
+
+          <SearchInput
+            customSearchUrl="http://collections.artsmia.org/search/[searchTerms]"
+            className="mt-12"
+          />
+        </div>
       </main>
-      <section className="mt-4">
-        <LinkRoll
-          title="Online Exhibitions"
-          items={[
-            [
-              'Todd Webb in Africa: Outside the Frame',
-              '/exhibitions/2830/todd-webb-in-africa',
-              'https://images.artsmia.org/wp-content/uploads/2020/12/21071646/TW_WEBIMAGE_L2020.85.81_cropped-525x350.jpg',
-            ],
-            [
-              'In The Presence of Our Ancestors',
-              'https://new.artsmia.org/exhibition/in-the-presence-of-our-ancestors-southern-perspectives-in-african-american-art',
-              'https://images.artsmia.org/wp-content/uploads/2020/03/07103130/190306_mia334_5395-1-resized1.jpg',
-            ],
-            [
-              'Freedom Rising: I Am the Story / L’Merchie Frazier',
-              'https://new.artsmia.org/exhibition/freedom-rising-i-am-the-story-lmerchie-frazier',
-              'https://images.artsmia.org/wp-content/uploads/2020/10/20083524/ext_202010190009-525x350.jpg',
-            ],
-          ]}
-        />
-        <LinkRoll
-          title="Special Collections"
-          items={[
-            [
-              'African American Art and Artists',
-              'https://new.artsmia.org/black-history-month/',
-              'https://images.artsmia.org/wp-content/uploads/2021/01/08091830/2018.30.6-525x350.jpg',
-            ],
-            [
-              'Open Access',
-              'https://collections.artsmia.org/info/open-access',
-              'https://iiif.dx.artsmia.org/43359.jpg/1081,486,2306,1537/800,/0/default.jpg',
-            ],
-            [
-              'Women Artists',
-              'https://new.artsmia.org/womens-history-month/',
-              'https://images.artsmia.org/wp-content/uploads/2020/08/03045052/HartiganCrop1.51-525x350.jpg',
-            ],
-          ]}
-        />
-      </section>
+      <nav className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 pt-8">
+        {main.cells.map((cell) => {
+          const { title, image, excerpt, menu } = cell
+
+          return (
+            <li key={title} className="list-none border-t-2 border-black">
+              <a href={normalizeWpLink(cell.link)}>
+                <h3 className="font-black text-xl">{title}</h3>
+                <img src={image.src} alt="" />
+                <span
+                  dangerouslySetInnerHTML={{ __html: excerpt }}
+                  className="inline-block mt-1"
+                />
+              </a>
+              {menu && (
+                <ul className="pt-2">
+                  {menu.map((menuItem) => {
+                    return (
+                      <a
+                        href={normalizeWpLink(menuItem.link)}
+                        className="block font-bold uppercase hover:underline"
+                        key={menuItem.text}
+                      >
+                        {menuItem.text}
+                      </a>
+                    )
+                  })}
+                </ul>
+              )}
+            </li>
+          )
+        })}
+      </nav>
       <section
-        style={{ minHeight: '90vh' }}
+        style={{ minHeight: '90vh', display: 'none' }}
         className="min-height-screen mt-12"
       >
         <h2 className="text-xl font-black">Browse Random Artworks</h2>
         <RandomArtworkCarousel />
       </section>
-      <HomeNav className="mt-8" />
+      <Head>
+        <title>Art + Artists | Mia</title>
+      </Head>
     </Layout>
   )
 }
 
 export default Home
 
-function HomeNav(props) {
-  const { className } = props
-  const itemClasses = 'flex-1 text-center font-bold text-lg'
+export async function getStaticProps() { // context
+  const _fetch = await fetch(`https://new.artsmia.org/api/data/art-artists`)
+  const wpData = await _fetch.json()
 
-  return (
-    <nav className={cx('flex mb-4 border-t-2 border-black px-4', className)}>
-      <a
-        href="https://new.artsmia.org/art-artists/explore"
-        className={itemClasses}
-      >
-        Explore
-      </a>
-      <a
-        href="https://new.artsmia.org/art-artists/curatorial-departments"
-        className={itemClasses}
-      >
-        Departments
-      </a>
-      <a href="https://collections.artsmia.org/new" className={itemClasses}>
-        New to Mia
-      </a>
-    </nav>
-  )
-}
-
-function LinkRoll(props) {
-  const { title, items } = props
-
-  return (
-    <section className="border-t-2 border-black mb-6">
-      <h2 className="text-xl font-light mb-4">{segmentTitle(title)}</h2>
-      <ul className="list-none flex flex-row flex-wrap">
-        {items.map(([name, link, image]) => (
-          <li key={name} className="pr-4 mb-2 sm:w-1/2 md:w-1/3 group">
-            <Link href={link}>
-              <a className="group-hover:bg-black group-hover:text-white">
-                <img src={image} alt="" />
-                <strong className="font-light text-lg no-underline group-hover:underline">
-                  {segmentTitle(name)}
-                </strong>
-              </a>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </section>
-  )
+  return {
+    props: {
+      wpData,
+    },
+    revalidate: 60,
+  }
 }
 
 /** TODO
@@ -196,4 +161,15 @@ function RandomArtworkCarousel() {
       ) : null}
     </div>
   )
+}
+
+function normalizeWpLink(link) {
+  let normalizedLink
+  if (link[0] === '/') {
+    normalizedLink = `https://new.artsmia.org${link}`
+  } else {
+    normalizedLink = link
+  }
+
+  return normalizedLink
 }
