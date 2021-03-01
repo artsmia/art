@@ -24,12 +24,17 @@ var AccessionHighlight = React.createClass({
     var {artwork: art} = this.props.data
     var accDate = new Date(art.accessionDate)
     var accDateString = `${accDate.getFullYear()}`
+    // There's a problem in the accession highlight content entry pipeline where curators
+    // wait a really long time to wrangle the entries into TMS, which results in them having
+    // the wrong accession year. Check `accDateString` against the artwork accession year, and if they
+    // don't match, hide the H2 that shows "Accession Highlight"
+    var hasCorrectAccessionDate = !!art.accession_number.match(accDateString)
 
     return <div>
       <Artwork {...this.props} accessionHighlightView={true}>
         <ArtworkPreview art={art} showDuplicateDetails={true}>
           <div className="description" itemProp="description" style={{'borderTop':'4px solid #232323', 'borderBottom':'4px solid #232323', 'padding':'4px 0', 'margin':'10px 0'}}>
-            <h2>{accDateString} Accession Highlight</h2>
+            {hasCorrectAccessionDate ? <h2>{accDateString} Accession Highlight</h2> : <span style={{display: 'inline-block'}} />}
             <Markdown>{art.accessionHighlightText}</Markdown>
           </div>
         </ArtworkPreview>
