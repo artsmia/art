@@ -164,9 +164,12 @@ function RandomArtworkCarousel() {
 }
 
 function normalizeWpLink(link) {
+  const isArtArtists = link.match(/\/art-artists\//)
   let normalizedLink
-  if (link[0] === '/') {
+  if (link[0] === '/' && !isArtArtists) {
     normalizedLink = `https://new.artsmia.org${link}`
+  } else if (isArtArtists) {
+    normalizedLink = link.replace(/https?:\/\/new.artsmia.org/, '')
   } else {
     normalizedLink = link
   }
