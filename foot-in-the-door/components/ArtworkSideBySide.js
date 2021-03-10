@@ -17,7 +17,7 @@ function ArtworkSideBySide(props) {
       dated,
       description,
       keywords: keywordsString,
-      dimension,
+      // dimension,
       image_width,
       image_height,
     },
@@ -80,11 +80,15 @@ function ArtworkSideBySide(props) {
       >
         <div className="font-light">
           <h1 className="text-2xl font-light capitalize">
-            {title}, <span className="text-base font-light">{dated}</span>
+            {title},{' '}
+            <span className="text-base text-2xl font-light">{dated}</span>
           </h1>
           <h2 className="text-lg font-bold">{artist}</h2>
           <p>{medium}</p>
-          <p>{dimension}</p>
+          <p className="text-sm uppercase">
+            {artwork.creditline}{' '}
+            <span className="ml-4">{artwork.accession_number}</span>
+          </p>
           <p className="bg-pink-300 hidden">COLOR SEARCH</p>
           <p className="py-4 hidden">{description}</p>
           {keywordsString && (

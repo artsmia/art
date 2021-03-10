@@ -83,7 +83,7 @@ function Home(props) {
 
 export default Home
 
-export async function getStaticProps() { // context
+export async function getStaticProps() {
   const _fetch = await fetch(`https://new.artsmia.org/api/data/art-artists`)
   const wpData = await _fetch.json()
 
