@@ -256,6 +256,16 @@ export async function getStaticProps({ params }) {
   const isFitD = exhId === 2760
   let leadingImages
 
+  const simpleExhibitionData = (!exhibitionData.subPanels?.length || 0) > 0
+  if(simpleExhibitionData) {
+    return {
+      redirect: {
+        destination: `/exhibitions/${exhId}/${params.exhibitionSlug}/room/all`,
+        permanent: false,
+      }
+    }
+  }
+
   // TODO de-dupe this
   if (isFitD) {
     leadingImages = await getImages()

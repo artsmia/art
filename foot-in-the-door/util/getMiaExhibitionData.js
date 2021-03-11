@@ -25,11 +25,6 @@ export async function getMiaExhibitionData(exhId, fs) {
     })
     extraData = JSON.parse(extraDataRaw)
   } catch (e) {
-    /* eslint-disable no-console */
-    console.error('failed to read :exhId.json', {
-      exhId,
-      error: e,
-    })
     extraData = []
   }
 
