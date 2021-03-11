@@ -1,5 +1,6 @@
 /** @format */
 import path from 'path'
+import matter from 'gray-matter'
 
 export async function getMiaExhibitionData(exhId, fs) {
   const baseDataR = await fetch(
@@ -26,6 +27,21 @@ export async function getMiaExhibitionData(exhId, fs) {
     extraData = JSON.parse(extraDataRaw)
   } catch (e) {
     extraData = []
+  }
+  // de-dupe JSON/MD file loading?
+  let mdData
+  try {
+    const exhibitionDataPath = path.join(
+      process.cwd(),
+      `data/exhibitions/${exhId}.md`
+    )
+    const mdDataRaw = await fs.readFile(exhibitionDataPath, {
+      encoding: 'utf-8',
+    })
+    const frontMatter = matter(mdDataRaw)
+    mdData = frontMatter.isEmpty ? {} : frontMatter.data
+  } catch (e) {
+    mdData = {}
   }
 
   const mainPanel =
@@ -59,6 +75,7 @@ export async function getMiaExhibitionData(exhId, fs) {
 
   const data = {
     ...baseData,
+    ...mdData,
     description: baseData.exhibition_description || extraDescription || null,
     extra: extraData,
     subPanels,
