@@ -1,5 +1,5 @@
 /** @format */
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import { useEffect, useState } from 'react'
 
 import Layout from 'components/Layout'

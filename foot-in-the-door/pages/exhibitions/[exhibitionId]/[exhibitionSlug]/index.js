@@ -1,5 +1,5 @@
 /** @format */
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import Link from 'components/NestedLink'
 import Head from 'next/head'
 import { useRouter } from 'next/router'

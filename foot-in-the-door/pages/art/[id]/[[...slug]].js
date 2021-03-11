@@ -1,5 +1,5 @@
 /** @format */
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
