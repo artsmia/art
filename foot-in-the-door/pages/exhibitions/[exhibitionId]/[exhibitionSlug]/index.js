@@ -256,7 +256,7 @@ export async function getStaticProps({ params }) {
   const isFitD = exhId === 2760
   let leadingImages
 
-  const simpleExhibitionData = (!exhibitionData.subPanels?.length || 0) > 0
+  const simpleExhibitionData = !isFitD && (!exhibitionData.subPanels?.length || 0) > 0
   if(simpleExhibitionData) {
     return {
       redirect: {
