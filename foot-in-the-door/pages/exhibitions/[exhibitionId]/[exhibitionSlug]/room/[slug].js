@@ -23,7 +23,11 @@ function Room(props) {
     slug,
     results,
     imagesForCarousel,
-    exhibitionData: { isClosed, exhibition_title: exhTitle },
+    exhibitionData: {
+      isClosed,
+      exhibition_title: exhTitle,
+      segmentExhibitionTitle = true,
+    },
   } = props
   const classification = _classification === '*' ? exhTitle : _classification
   const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
@@ -116,9 +120,9 @@ function Room(props) {
     )
 
   // TODO de-dupe this with exhibition index and `segmentTitle` functionality
-  const [title, subtitle] = classification.match(/Todd Webb/)
-    ? [<span className="font-black" key="title">{classification}</span>, undefined]
-    : classification.split(': ')
+  const [title, subtitle] = segmentExhibitionTitle
+    ? classification.split(': ')
+    : [<span className="font-black" key="title">{classification}</span>, undefined]
 
   return (
     <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>

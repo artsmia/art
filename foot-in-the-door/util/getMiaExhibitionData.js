@@ -39,7 +39,12 @@ export async function getMiaExhibitionData(exhId, fs) {
       encoding: 'utf-8',
     })
     const frontMatter = matter(mdDataRaw)
-    mdData = frontMatter.isEmpty ? {} : frontMatter.data
+    mdData = frontMatter.isEmpty
+      ? {}
+      : {
+          ...frontMatter.data,
+          markdownContent: frontMatter.content,
+        }
   } catch (e) {
     mdData = {}
   }

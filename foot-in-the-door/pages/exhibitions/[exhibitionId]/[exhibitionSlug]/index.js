@@ -158,22 +158,17 @@ function MiaExhibition(props) {
       display_date: exhDates,
       hideSearch,
       subPanels,
+      // options from `data/exhibition/:id.md`
+      segmentExhibitionTitle = true,
+      markdownContent = null,
+      showTableOfContents = false,
+      showImageCarousel = false,
     },
   } = props
 
-  const [title, subtitle] = exhibition_title.match(/Todd Webb/)
-    ? [exhibition_title]
-    : exhibition_title.split(': ')
-
-  const exhibitionMoreText = title.match('Todd Webb in Africa')
-    ? `<a href="https://new.artsmia.org/exhibition/todd-webb-in-africa-outside-the-frame" class="hover:underline"><strong>Harrison Photography Galleries</strong><br />
-  <strong>Free Exhibition</strong></a><br /><br />
-  <a href="https://shop.artsmia.org/products/toddwebbinafrica" class="hover:underline">
-    <img src="https://cdn.shopify.com/s/files/1/2315/6715/products/ToddWebbinAfricaBG_1600x.jpg?v=1611250608" alt="" />
-    Buy the exhibition catalog
-  </a>
-  `
-    : ``
+  const [title, subtitle] = segmentExhibitionTitle
+    ? exhibition_title.split(': ')
+    : [exhibition_title]
 
   return (
     <Layout hideCTA={true} hideSearch={hideSearch}>
@@ -186,15 +181,15 @@ function MiaExhibition(props) {
             {subtitle}
           </h2>
           <Text>{exhibitionData?.description}</Text>
-          <Text dangerous={true}>{`<strong>${exhDates}</strong><br />${exhibitionMoreText}`}</Text>
+          <Text dangerous={true}>{`<strong>${exhDates}</strong><br />${markdownContent}`}</Text>
 
           {hideSearch || <SearchInput className="my-6" />}
 
-          {subPanels?.length > 0 && (
+          {subPanels?.length > 0 && showTableOfContents && (
             <>
               <h2 className="text-2xl font-black mt-8">Exhibition Sections</h2>
               <ul className="list-inside list-disc">
-                {subPanels.map((subpanel, index) => {
+                {subPanels.map((subpanel) => {
                   const { Title: title } = subpanel
                   return (
                     <li key={subpanel.UniqueID}>
@@ -213,7 +208,7 @@ function MiaExhibition(props) {
             </>
           )}
         </div>
-        {props.leadingImages && (
+        {showImageCarousel && props.leadingImages && (
           <ImageCarousel
             data={props.leadingImages}
             className="sticky top-0"
@@ -266,57 +261,13 @@ export async function getStaticProps({ params }) {
     }
   }
 
-  // TODO de-dupe this
+  // TODO de-dupe this by creating a FITD.md file and specifying leading images,
+  // how to continue randomly assigning them per category?
   if (isFitD) {
     leadingImages = await getImages()
-  } else {
-    // const imageIDs = exhibitionData.subPanels.map((p) => p.artworkIds[0])
-
-    // custom leading image for each section:
-    //
-    // Colonialism and Independence: 138019
-    // Untitled (44UN-7925-070), Togoland (Togo), 1958
-    //
-    // Portraits and Power Dynamics: 138006
-    // Untitled (44UN-7907-144), Togoland (Togo), 1958
-    //
-    // Urbanization: 137993
-    // Untitled (44UN-7985-545), Southern Rhodesia (Zimbabwe), 1958
-    // (left + top justify the image so 'Phillips' is visible)
-    //
-    // Education: 137996
-    // Untitled (44UN-7964-083), Somaliland (Somalia), 1958
-    //
-    // Trade and Transport: 138025
-    // Untitled (44UN-7997-226), Ghana, 1958
-    // (this one should be left justified in the Carousel so 'Customs House' is visible)
-    //
-    // Industry and Economy: 138014
-    // Untitled (44UN-8001-498), Somaliland (Somalia), 1958
-    //
-    // Built Environment:
-    // Untitled (44UN-7991-099), Northern Rhodesia (Zambia), 1958
-    //
-    // Impact on the Environment: 138116
-    // Untitled (44UN-7981-177), Northern Rhodesia (Zambia), 1958
-    //
-    // Archival Materials: 137961
-    // Todd Webb's Livingston Hotel Receipt, Moshi, Tanganyika (Tanzania), 22 July 1958, 1958
-    //
-    // TODO generalize this!? How to specify not only that a certain image in each group
-    // should be the 'lead', but that it should have specific art direction (focus on the center vs top left)
-    const toddWebbImageIDs = [
-      138019,
-      138006,
-      137993,
-      137996,
-      138025,
-      138014,
-      137973,
-      138116,
-      137961,
-    ]
-    const imageIDs = exhId === 2830 ? toddWebbImageIDs : exhibitionData.objects.slice(0, 5)
+  } else if(exhibitionData.imageCarousel) {
+    const { imageCarousel } = exhibitionData
+    const imageIDs = imageCarousel?.leadingImages
     const imagesAPIRequest = await fetch(
       `https://search.artsmia.org/ids/${imageIDs.join(',')}`
     )
@@ -325,7 +276,7 @@ export async function getStaticProps({ params }) {
       ...art._source,
       classification: exhibitionData?.subPanels[index]?.Title ?? 'todo classification',
       __artDirectionStyle:
-        [138025, 137993].indexOf(Number(art._id)) >= 0 ? 'object-left-top' : '',
+        exhibitionData.imageCarousel.artDirection.indexOf(Number(art._id)) >= 0 ? 'object-left-top' : '',
     }))
   }
 
