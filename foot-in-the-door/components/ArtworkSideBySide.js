@@ -22,10 +22,11 @@ function ArtworkSideBySide(props) {
       image_height,
     },
     isFitD,
+    exhibitionData: { segmentArtTitles = true },
   } = props
 
   const artist = rawArtist.replace('Artist: ', '')
-  const title = segmentTitle(rawTitle)
+  const title = segmentArtTitles ? segmentTitle(rawTitle) : rawTitle
 
   const keywords =
     keywordsString &&
@@ -79,17 +80,24 @@ function ArtworkSideBySide(props) {
         className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 sticky top-2`}
       >
         <div className="font-light">
-          <h1 className="text-2xl font-light capitalize">
+          <h1
+            className={cx(
+              'text-2xl capitalize',
+              segmentArtTitles ? 'font-light' : 'font-black'
+            )}
+          >
             {title},{' '}
             <span className="text-base text-2xl font-light">{dated}</span>
           </h1>
-          <h2 className="text-lg font-bold">{artist}</h2>
+          <h2 className="text-lg">{artist}</h2>
           <p>{medium}</p>
           <p className="text-sm uppercase">
             {artwork.creditline}{' '}
             <span className="ml-4">{artwork.accession_number}</span>
           </p>
           <p className="bg-pink-300 hidden">COLOR SEARCH</p>
+          <p className="font-bold">{artwork.room}</p>
+
           <p className="py-4 hidden">{description}</p>
           {keywordsString && (
             <p className="whitespace-normal break-word overflow-scroll">

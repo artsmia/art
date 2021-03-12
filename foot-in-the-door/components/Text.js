@@ -15,7 +15,7 @@ export default function TextBlock(props) {
               dangerouslySetInnerHTML={{ __html: p }}
             />
           ) : (
-            <p key={index} className="py-4 font-light">
+            <p key={index} className="pb-4 font-light">
               {p}
             </p>
           )

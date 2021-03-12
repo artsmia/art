@@ -13,7 +13,8 @@ export default RedirectToExhibitionWithSlug
 
 export async function getStaticProps({ params }) {
   const exhId = Number(params.exhibitionId)
-  const { slug, exhibition_title: title, ...exhD } = await getMiaExhibitionData(exhId, fs)
+  const exhibitionData = await getMiaExhibitionData(exhId, fs)
+  const { slug, exhibition_title: title } = exhibitionData
   const exhibitionSlug = slug || segmentTitle(title, { returnJSX: false })[1]
     .toLowerCase()
     .replace(/\s+/g, '-')

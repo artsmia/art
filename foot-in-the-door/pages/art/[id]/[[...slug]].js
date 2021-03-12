@@ -32,6 +32,7 @@ function Art(props) {
     imagesForCarousel,
     isFitD,
     exhibitionData: { isClosed },
+    exhibitionData,
   } = props
 
   const [isFirstVisit, setFirstVisit] = useState(false)
@@ -45,7 +46,7 @@ function Art(props) {
 
   return (
     <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch}>
-      <ArtworkSideBySide artwork={artwork} isFitD={isFitD}>
+      <ArtworkSideBySide artwork={artwork} isFitD={isFitD} exhibitionData={exhibitionData}>
         <p className="flex items-center">
           <ShareLinks art={artwork} hideLinks={!isFitD} />
         </p>

@@ -10,7 +10,7 @@ import {
   getSearchResults,
   getImages,
   getMiaExhibitionData,
-  segmentTitle,
+  // segmentTitle,
 } from 'util/index'
 import { SupportCTA } from 'components/NavBar'
 import Text from 'components/Text'
@@ -96,6 +96,7 @@ function Room(props) {
               label={`Browse all ${subpanel.Title}`}
               className="mt-12"
               hideLikeControl={!isFitD}
+              exhibitionData={props.exhibitionData}
             ></RoomGrid>
           </>
         )
@@ -108,23 +109,26 @@ function Room(props) {
         className="mt-24"
         label={`Browse all ${classification}`}
         hideLikeControl={!isFitD}
+        exhibitionData={props.exhibitionData}
       >
-        <Text>{labelText}</Text>
+        <div className="max-w-3xl mx-auto"><Text>{labelText}</Text></div>
       </RoomGrid>
     )
 
-  const title = classification.match('Todd Webb') ? (
-    <span className="font-black">{classification}</span>
-  ) : (
-    segmentTitle(classification)
-  )
+  // TODO de-dupe this with exhibition index and `segmentTitle` functionality
+  const [title, subtitle] = classification.match(/Todd Webb/)
+    ? [<span className="font-black" key="title">{classification}</span>, undefined]
+    : classification.split(': ')
 
   return (
     <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>
       <main className="md:my-16 flex flex-col">
-        <h1 className="text-center text-5xl font-light capitalize md:-mb-20 md:mt-20">
+        <h1 className="text-center text-5xl font-black capitalize">
           {title}
         </h1>
+        {subtitle && <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-center">
+          {subtitle}
+        </h2>}
         <LeftRightNav
           classifications={classifications}
           classification={classification}
@@ -158,14 +162,14 @@ function Room(props) {
         )}
       </main>
       <aside>
-        <LeftRightNav
+        {classifications && <LeftRightNav
           classifications={classifications}
           classification={classification}
           className="flex justify-between pt-48"
           imagesForCarousel={imagesForCarousel}
         >
           {isFitD && <SupportCTA />}
-        </LeftRightNav>
+        </LeftRightNav>}
       </aside>
     </Layout>
   )
