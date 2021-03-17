@@ -22,8 +22,9 @@ function ArtworkSideBySide(props) {
       image_height,
     },
     isFitD,
-    exhibitionData: { segmentArtTitles = true },
+    exhibitionData = {},
   } = props
+  const { segmentArtTitles = true } = exhibitionData
 
   const artist = rawArtist.replace('Artist: ', '')
   const title = segmentArtTitles ? segmentTitle(rawTitle) : rawTitle
