@@ -27,10 +27,14 @@ function Room(props) {
       isClosed,
       exhibition_title: exhTitle,
       segmentExhibitionTitle = true,
+      bypassPublicAccess = true,
     },
   } = props
   const classification = _classification === '*' ? exhTitle : _classification
-  const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
+  let hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
+  if(!bypassPublicAccess) {
+    hits = hits.filter(hit => hit._source.public_access === "1")
+  }
 
   const [additionalPages, setAddlPages] = useState([])
 
@@ -213,6 +217,8 @@ export async function getStaticProps({ params }) {
       ? exhibitionData.extra
           .filter((row) => row['ID Type'] === 'ObjectID')
           .map((row) => row.UniqueID)
+      : exhibitionData.allowArtIds
+      ? exhibitionData.allowArtIds.split(',')
       : exhibitionData.objects
 
     results = await getSearchResults(null, {
