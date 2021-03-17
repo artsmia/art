@@ -8,6 +8,7 @@ import ImageCarousel from 'components/ImageCarousel'
 import Layout from 'components/Layout'
 import SearchInput from 'components/SearchInput'
 import Text from 'components/Text'
+import TitleSubtitle from 'components/TitleSubtitle'
 
 import { getImages, getMiaExhibitionData } from 'util/index'
 
@@ -166,22 +167,11 @@ function MiaExhibition(props) {
     },
   } = props
 
-  // update to use title segmentation algorithm from `/room/[slug].js`
-  // extract to TitleAndSubtitle component?
-  const [title, subtitle] = segmentExhibitionTitle
-    ? exhibition_title.split(': ')
-    : [exhibition_title]
-
   return (
     <Layout hideCTA={true} hideSearch={hideSearch}>
       <main className="md:flex items-start mb-12">
         <div className="md:w-1/2 mr-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide">
-            {title}
-          </h1>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">
-            {subtitle}
-          </h2>
+          <TitleSubtitle title={exhibition_title} useSegmentation={segmentExhibitionTitle} />
           <Text>{exhibitionData?.description}</Text>
           <Text dangerous={true}>{`<strong>${exhDates}</strong><br />${markdownContent}`}</Text>
 
@@ -222,10 +212,10 @@ function MiaExhibition(props) {
         <section></section>
       </div>
       <Head>
-        <title>{title} | Mia </title>
+        <title>{exhibition_title} | Mia </title>
         <meta name="twitter:card" content="summary_large_image"></meta>
-        <meta property="og:title" content={`${title} | Mia`} />
-        <meta property="og:description" content={`${title} | Mia`} />
+        <meta property="og:title" content={`${exhibition_title} | Mia`} />
+        <meta property="og:description" content={`${exhibition_title} | Mia`} />
         <meta property="og:image" content="TODO CHANGE" />
         <meta property="og:url" content="TODO change" />
         <meta property="twitter:card" content="summary_large_image" />

@@ -10,10 +10,10 @@ import {
   getSearchResults,
   getImages,
   getMiaExhibitionData,
-  segmentTitle,
 } from 'util/index'
 import { SupportCTA } from 'components/NavBar'
 import Text from 'components/Text'
+import TitleSubtitle from 'components/TitleSubtitle'
 
 const perPage = 33 // how many items to show per page.
 
@@ -124,20 +124,10 @@ function Room(props) {
       </RoomGrid>
     )
 
-  const [, title, ...subtitles] = segmentExhibitionTitle
-    ? segmentTitle(classification, { returnJSX: false })
-    : [undefined, <span className="font-black" key="title">{classification}</span>, undefined]
-  const subtitle = subtitles.join('').trim().replace(/^[|:]/, '')
-
   return (
     <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>
       <main className="md:my-16 flex flex-col">
-        <h1 className="text-center text-5xl font-black capitalize">
-          {title}
-        </h1>
-        {subtitle && <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-center">
-          {subtitle}
-        </h2>}
+        <TitleSubtitle title={classification} useSegmentation={segmentExhibitionTitle} headerStyles="text-center" />
         <LeftRightNav
           classifications={classifications}
           classification={classification}
