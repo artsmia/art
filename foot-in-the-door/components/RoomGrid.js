@@ -19,6 +19,7 @@ import {
 import { ViewAllLink } from './NavBar'
 import LikeControl from './LikeControl'
 import ImageWithBackground from './ImageWithBackground'
+import Text from 'components/Text'
 
 function RoomGrid(props) {
   const {
@@ -27,6 +28,7 @@ function RoomGrid(props) {
     perPage,
     classification,
     label,
+    text,
     children,
     hideLikeControl,
     exhibitionData,
@@ -99,8 +101,13 @@ function RoomGrid(props) {
       <Grid
         {...grid}
         aria-label={label || 'Search Results'}
-        className={cx('mt-8 mx-auto', useFixedImageGrid && 'xl:w-2/3')}
+        className={cx('mt-8 mx-auto', useFixedImageGrid && 'w-2/3')}
       >
+        {text && (
+          <div className="max-w-3xl mx-auto mb-4">
+            <Text>{text}</Text>
+          </div>
+        )}
         {chunkArray(artworks, gridCols).map((row, rowIndex) => {
           return (
             <GridRow

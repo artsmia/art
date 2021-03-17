@@ -87,7 +87,7 @@ function Room(props) {
   const artworkGrid =
     slug === 'all' && subPanels?.length > 0 ? (
       subPanels.map((subpanel) => {
-        const { Title: title, artworkIds } = subpanel
+        const { Title: title, Text: subpanelText, artworkIds } = subpanel
         const subHits = hits.filter(
           (hit) => artworkIds.indexOf(Number(hit._id)) >= 0
         )
@@ -98,6 +98,7 @@ function Room(props) {
               hits={subHits}
               perPage={30}
               label={`Browse all ${subpanel.Title}`}
+              text={subpanelText}
               className="mt-12"
               hideLikeControl={!isFitD}
               exhibitionData={props.exhibitionData}
