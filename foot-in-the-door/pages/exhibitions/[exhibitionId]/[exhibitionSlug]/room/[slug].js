@@ -120,7 +120,7 @@ function Room(props) {
         hideLikeControl={!isFitD}
         exhibitionData={props.exhibitionData}
       >
-        <div className="max-w-3xl mx-auto"><Text>{labelText}</Text></div>
+        <div className="max-w-3xl mx-auto"><Text dangerous={true}>{labelText}</Text></div>
       </RoomGrid>
     )
 

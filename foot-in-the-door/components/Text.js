@@ -1,7 +1,7 @@
 /** @format */
 
 export default function TextBlock(props) {
-  const textSplitAtNewlines = props.children?.split(/[\r\n][\r\n]/) ?? []
+  const textSplitAtNewlines = splitText(props.children)
 
   return (
     <>
@@ -21,5 +21,13 @@ export default function TextBlock(props) {
           )
         )}
     </>
+  )
+}
+
+export function splitText(text) {
+  return (
+    text
+      ?.split(/[\r\n]{3,}/)
+      .map((p) => p.trim().replace(/[\r\n]{1,}/g, ' <br />\n')) ?? []
   )
 }
