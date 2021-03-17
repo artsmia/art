@@ -11,10 +11,6 @@ function ArtworkSideBySide(props) {
   const {
     artwork,
     artwork: {
-      title: rawTitle,
-      artist: rawArtist,
-      medium,
-      dated,
       description,
       keywords: keywordsString,
       // dimension,
@@ -22,12 +18,7 @@ function ArtworkSideBySide(props) {
       image_height,
     },
     isFitD,
-    exhibitionData = {},
   } = props
-  const { segmentArtTitles = true } = exhibitionData
-
-  const artist = rawArtist.replace('Artist: ', '')
-  const title = segmentArtTitles ? segmentTitle(rawTitle) : rawTitle
 
   const keywords =
     keywordsString &&
@@ -80,26 +71,9 @@ function ArtworkSideBySide(props) {
       <div
         className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:ml-2 sticky top-2`}
       >
-        <div className="font-light">
-          <h1
-            className={cx(
-              'text-2xl capitalize',
-              segmentArtTitles ? 'font-light' : 'font-black'
-            )}
-          >
-            {title},{' '}
-            <span className="text-base text-2xl font-light">{dated}</span>
-          </h1>
-          <h2 className="text-lg">{artist}</h2>
-          <p>{medium}</p>
-          <p className="text-sm uppercase">
-            {artwork.creditline}{' '}
-            <span className="ml-4">{artwork.accession_number}</span>
-          </p>
-          <p className="bg-pink-300 hidden">COLOR SEARCH</p>
-          <p className="font-bold">{artwork.room}</p>
+        <div className="font-light py-0">
+          <Tombstone artwork={artwork} />
 
-          <p className="py-4 hidden">{description}</p>
           {keywordsString && (
             <p className="whitespace-normal break-word overflow-scroll">
               <strong>Keywords</strong>:{' '}
@@ -132,3 +106,50 @@ function ArtworkSideBySide(props) {
 }
 
 export default ArtworkSideBySide
+
+function ArtworkGalleryLocation(props) {
+  const { art, ...wrapperProps } = props
+  const onViewPhrase = art.room.match(/G/)
+    ? `On View in Gallery ${art.room.replace('G', '')}`
+    : art.room
+
+  return <p {...wrapperProps}>{onViewPhrase}</p>
+}
+
+function Tombstone(props) {
+  const {
+    artwork,
+    artwork: {
+      title: rawTitle,
+      artist: rawArtist,
+      dated,
+      medium,
+      creditline,
+      accession_number,
+    },
+    exhibitionData = {},
+  } = props
+  const { segmentArtTitles = true } = exhibitionData
+
+  const artist = rawArtist.replace('Artist: ', '')
+  const title = segmentArtTitles ? segmentTitle(rawTitle) : rawTitle
+
+  return (
+    <>
+      <h1
+        className={cx(
+          'text-2xl capitalize',
+          segmentArtTitles ? 'font-light' : 'font-black'
+        )}
+      >
+        {title}, <span className="text-base text-2xl font-light">{dated}</span>
+      </h1>
+      <h2 className="text-lg pt-0">{artist}</h2>
+      <p>{medium}</p>
+      <p className="text-xs uppercase pt-1">
+        {creditline} <span className="ml-4">{accession_number}</span>
+      </p>
+      <ArtworkGalleryLocation art={artwork} className="font-bold pt-1 pb-4" />
+    </>
+  )
+}
