@@ -10,7 +10,7 @@ import {
   getSearchResults,
   getImages,
   getMiaExhibitionData,
-  // segmentTitle,
+  segmentTitle,
 } from 'util/index'
 import { SupportCTA } from 'components/NavBar'
 import Text from 'components/Text'
@@ -120,10 +120,10 @@ function Room(props) {
       </RoomGrid>
     )
 
-  // TODO de-dupe this with exhibition index and `segmentTitle` functionality
-  const [title, subtitle] = segmentExhibitionTitle
-    ? classification.split(': ')
-    : [<span className="font-black" key="title">{classification}</span>, undefined]
+  const [, title, ...subtitles] = segmentExhibitionTitle
+    ? segmentTitle(classification, { returnJSX: false })
+    : [undefined, <span className="font-black" key="title">{classification}</span>, undefined]
+  const subtitle = subtitles.join('').trim().replace(/^[|:]/, '')
 
   return (
     <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>

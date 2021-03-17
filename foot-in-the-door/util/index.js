@@ -336,7 +336,7 @@ export function segmentTitle(rawTitle, options = {}) {
 
   // first, segment on special characters
   let segmentedTitle = rawTitle
-    .split(/([^\(\)\[\],:;]+)/) // eslint-disable-line no-useless-escape
+    .split(/([^\(\)\[\],:;|]+)/) // eslint-disable-line no-useless-escape
     .filter((s) => s !== '')
 
   // then based on quotes and a loose set of prepositions if the first attempt

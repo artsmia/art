@@ -166,6 +166,8 @@ function MiaExhibition(props) {
     },
   } = props
 
+  // update to use title segmentation algorithm from `/room/[slug].js`
+  // extract to TitleAndSubtitle component?
   const [title, subtitle] = segmentExhibitionTitle
     ? exhibition_title.split(': ')
     : [exhibition_title]
