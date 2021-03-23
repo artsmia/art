@@ -20,6 +20,8 @@ export function getImageSrc(artworkData, thumbnail = true) {
       : `https://foot-in-the-door-2020.s3.amazonaws.com`
 
     return `${domain}/800/${thumb}`
+  } else if (artworkData.__iiif) {
+    return artworkData.__iiif
   } else if (useIIIF) {
     return `https://iiif.dx.artsmia.org/${id}.jpg/full/${
       thumbnail ? 400 : 800
