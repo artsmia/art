@@ -44,6 +44,11 @@ function Art(props) {
     if (visitCount <= 1) setFirstVisit(true)
   }, [])
 
+  const backToGroupLink = (artwork.__group?.link ?? classification)
+    ?.replace(' (including Digital)', '')
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+
   return (
     <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch}>
       <ArtworkSideBySide artwork={artwork} isFitD={isFitD} exhibitionData={exhibitionData}>
@@ -69,17 +74,14 @@ function Art(props) {
             classification={classification}
             hits={classificationResults}
             focused={artwork}
-            perPage={30}
+            perPage={300}
             hideViewAll={true}
             label={`See more ${classification}`}
             hideLikeControl={!isFitD}
           />
 
           <NestedLink
-            href={`/room/${classification
-              ?.replace(' (including Digital)', '')
-              .toLowerCase()
-              .replace(/\s+/g, '-')}`}
+            href={`/room/${backToGroupLink}`}
           >
             <a className="px-4 py-4 font-light float-right uppercase">
               Return to <strong>{classification}</strong> &rsaquo;
@@ -143,6 +145,7 @@ export async function getStaticProps({ params }) {
     if (!isFitD) {
       artwork.__group = {
         title: exhibitionData.exhibition_title,
+        link: 'all',
         siblingArtworkIds: exhibitionData.objects,
       }
     }
@@ -163,6 +166,7 @@ export async function getStaticProps({ params }) {
   const classificationResults = await getSearchResults(criteria, {
     isFitD,
     ids: isFitD ? null : artwork.__group?.siblingArtworkIds ?? null,
+    size: 300,
   })
 
   const slug = makeSlug([artwork.title, artwork.artist].join(' '))
@@ -251,6 +255,11 @@ function ShareLinks(props) {
   )
 }
 
+// TODO - this uses localstorage to track if it's a users first visit to the
+// SITE overall, and shows this context when it is.
+// But should it track visits to each exhibition instead? i.e. if I visit Foot in the Door
+// I should get the context blurb the first time and never again. But when I visit Labor
+// Camp I should see Labor Camp's context, no?
 function ExhibitionContextBlurb(props) {
   const { isFitD, exhibitionData } = props
 
@@ -258,13 +267,12 @@ function ExhibitionContextBlurb(props) {
     <FitDContextBlurb {...exhibitionData} />
   ) : (
     <>
-      <aside className="bg-gray-300 p-4 px-4 mt-8 my-4">
-        <p>{exhibitionData.description.split('\n\n')[0]}</p>
+      <aside className="bg-gray-300 p-4 px-4 mt-8 my-4 pb-0 mb-0">
+        <Text>{exhibitionData.description.split('\n\n')[0]}</Text>
       </aside>
-      <Link href="/exhibitions/2830/todd-webb-in-africa">
-        <a className="block text-center uppercase hover:no-underline">
-          Enter <strong className="font-bold">Todd Webb In Africa</strong>{' '}
-          Exhibition
+      <Link href={`/exhibitions/${exhibitionData.exhibition_id}/`}>
+        <a className="block text-center uppercase hover:underline py-2 pb-4 hover:bg-gray-300">
+          Enter <strong className="font-bold">{exhibitionData.exhibition_title}</strong>
         </a>
       </Link>
     </>

@@ -41,7 +41,7 @@ function RoomGrid(props) {
     gridSpacing = 4,
     gridMaxColumns = 11,
     gridMinColumns = 2,
-    gridMinRows = 2,
+    gridMinRows = 1,
   } = exhibitionData || {}
 
   const hideViewAll = true
@@ -75,7 +75,7 @@ function RoomGrid(props) {
       : gridColsInitial
   // When the number of columns is reduced, `useFixedImageGrid` is needed
   // to modify the grid wrapper styling with a max-width and auto margins
-  const useFixedImageGrid = gridCols !== gridColsByWidth
+  const useFixedImageGrid = gridCols < gridColsByWidth
 
   const {
     asPath: page,
@@ -105,7 +105,7 @@ function RoomGrid(props) {
       >
         {text && (
           <div className="max-w-3xl mx-auto mb-4">
-            <Text>{text}</Text>
+            <Text dangerous={true}>{text}</Text>
           </div>
         )}
         {chunkArray(artworks, gridCols).map((row, rowIndex) => {

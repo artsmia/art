@@ -87,7 +87,7 @@ function ArtworkSideBySide(props) {
               ))}
             </p>
           )}
-          <Text>{artwork?.text}</Text>
+          <Text dangerous={true}>{artwork?.text}</Text>
         </div>
 
         <div className="border-t-2 border-opacity-75 mt-8 lg:mt-16">
