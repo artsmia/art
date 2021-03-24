@@ -140,6 +140,7 @@ function RoomGrid(props) {
 
                 const imageProps = getImageProps(source)
                 const { src: imageSrc } = imageProps
+                const imageIsValid = imageProps.valid && imageProps.width > 0
 
                 return (
                   <Link
@@ -157,7 +158,7 @@ function RoomGrid(props) {
                       )}
                     >
                       <ImageWithBackground as="figure" imageSrc={imageSrc}>
-                        {imageProps.valid ? (
+                        {imageIsValid ? (
                           <img
                             className="h-auto w-full max-h-full"
                             loading={imageLoadStrategy}

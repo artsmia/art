@@ -36,6 +36,7 @@ function ArtworkSideBySide(props) {
   const { src: imageSrc, ...imageProps } = getImageProps(artwork, {
     fullSize: true,
   })
+  const imageIsValid = imageProps.valid && imageProps.width > 0
 
   return (
     <main className="md:flex md:align-start off:min-h-screen-3/5 pt-2">
@@ -46,7 +47,7 @@ function ArtworkSideBySide(props) {
           'object-contain object-center max-h-full md:mr-4'
         )}
       >
-        {imageProps.valid ? (
+        {imageIsValid ? (
           <img
             {...imageProps}
             src={imageSrc}

@@ -36,7 +36,7 @@ export function getImageSrc(artworkData, thumbnail = true) {
 export function getImageProps(artData, options = {}) {
   const { fullSize } = options
 
-  const valid = artData.image === 'valid'
+  const valid = artData.image === 'valid' && artData.image_width > 0
   // TODO is this the right place to be setting styles?
   const style = valid
     ? {}
