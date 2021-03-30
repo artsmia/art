@@ -268,7 +268,7 @@ export async function getStaticProps({ params }) {
       ...art._source,
       classification: exhibitionData?.subPanels[index]?.Title ?? 'todo classification',
       __artDirectionStyle:
-        exhibitionData.imageCarousel.artDirection.indexOf(Number(art._id)) >= 0 ? 'object-left-top' : '',
+        exhibitionData.imageCarousel.artDirection?.indexOf(Number(art._id)) >= 0 ? 'object-left-top' : '',
       __iiif: exhibitionData?.imageCarousel?.leadingImagesIIIF?.[index] ?? null,
     }))
   }
