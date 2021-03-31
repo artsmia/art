@@ -9,7 +9,9 @@ import ImageWithBackground from 'components/ImageWithBackground'
 function ImageCarousel(props) {
   const [carouselIndex, setCarouselIndex] = useState(0)
   const isCollapsed = props.isCollapsed || true
-  const { className, data, exhibitionData, containOnHover = false } = props
+  const { className, data, exhibitionData } = props
+  const containOnHover =
+    props.containOnHover || exhibitionData?.imageCarousel?.containOnHover
 
   const observerRef = useRef()
   const carouselRef = useRef()
