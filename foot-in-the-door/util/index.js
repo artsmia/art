@@ -37,6 +37,7 @@ export function getImageProps(artData, options = {}) {
   const { fullSize } = options
 
   const valid = artData.image === 'valid' && artData.image_width > 0
+  const allowZoom = ['Public Domain'].indexOf(artData.rights_type) > -1
   // TODO is this the right place to be setting styles?
   const style = valid
     ? {}
@@ -55,6 +56,8 @@ export function getImageProps(artData, options = {}) {
     alt: artData.description,
     width: artData.image_width,
     height: artData.image_height,
+    rights_type: artData.rights_type,
+    allowZoom,
     valid,
     style,
   }

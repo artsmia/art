@@ -34,9 +34,12 @@ function ArtworkSideBySide(props) {
   const rightWidth = isPortrait ? '1/2' : '1/3'
   const imgMaxHeight = isPortrait ? '97vh' : 'auto'
   // const imgMaxWidth = isPortrait ? `${90 * aspectRatio}vh` : '100%'
-  const { src: imageSrc, ...imageProps } = getImageProps(artwork, {
-    fullSize: true,
-  })
+  const { src: imageSrc, style: imageStyle, ...imageProps } = getImageProps(
+    artwork,
+    {
+      fullSize: true,
+    }
+  )
   const imageIsValid = imageProps.valid && imageProps.width > 0
 
   return (
@@ -56,7 +59,7 @@ function ArtworkSideBySide(props) {
             key={artwork.id}
             className="sticky top-2"
             style={{
-              ...imageProps.style,
+              ...imageStyle,
               top: '1.5vh',
               maxHeight: imgMaxHeight,
               width: 'auto',
@@ -72,7 +75,10 @@ function ArtworkSideBySide(props) {
       </ImageWithBackground>
       <div
         className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:pl-2 sticky top-2`}
-        style={{backdropFilter: 'blur(10px)', background: 'rgba(255, 255, 255, 0.5)'}}
+        style={{
+          backdropFilter: 'blur(10px)',
+          background: 'rgba(255, 255, 255, 0.5)',
+        }}
       >
         <div className="font-light py-0">
           <Tombstone artwork={artwork} />

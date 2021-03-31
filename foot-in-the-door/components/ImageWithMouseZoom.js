@@ -1,18 +1,23 @@
 /** @format */
 import { useState, useEffect, useRef } from 'react'
 
+let hoverInitiated = false
+
 function ImageWithMouseZoom(props) {
   const [hoverRef, isHovered, x, y] = useHover()
   const scale = 1.5
 
-  const { src: initialSrc, style: givenStyle, ...imageProps } = props
-  const [, id, initialSize = 800] = initialSrc.match('iiif.dx.artsmia.org') 
+  const { src: initialSrc, style: givenStyle, allowZoom, ...imageProps } = props
+  const [, id, initialSize = 800] = initialSrc.match('iiif.dx.artsmia.org')
     ? initialSrc.match(/(\d+).jpg\/full\/(\d+),/)
     : initialSrc.match(/(\d+).jpg/)
   const zoomedSize = Math.round(initialSize * scale)
-  const src = isHovered
-    ? `https://iiif.dx.artsmia.org/${id}.jpg/full/${zoomedSize},/0/default.jpg`
-    : initialSrc
+  const src =
+    allowZoom && (isHovered || hoverInitiated) // once hovered, keep the higher res image in place?
+      ? `https://iiif.dx.artsmia.org/${id}.jpg/full/${zoomedSize},/0/default.jpg`
+      : initialSrc
+
+  if (isHovered && !hoverInitiated) hoverInitiated = true
 
   // delta here should have something to do with image aspect
   // ratio I think?
@@ -25,7 +30,7 @@ function ImageWithMouseZoom(props) {
     ? { ...givenStyle, transform, overflow: 'hidden', cursor: 'zoom-in' }
     : givenStyle
 
-  return (
+  const img = (
     <img
       {...imageProps}
       src={src}
@@ -33,6 +38,19 @@ function ImageWithMouseZoom(props) {
       alt={imageProps.alt}
       ref={hoverRef}
     />
+  )
+
+  return id && allowZoom ? (
+    <a
+      href={`https://universalviewer.io/uv.html?manifest=https://iiif.dx.artsmia.org/${id}.jpg/manifest.json`}
+      title="Click to open full image in new window"
+      target="_blank"
+      rel="noreferrer"
+    >
+      {img}
+    </a>
+  ) : (
+    img
   )
 }
 
