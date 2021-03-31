@@ -26,9 +26,10 @@ function ImageWithMouseZoom(props) {
     `scale(${scale})`,
     `translate3d(${(x - 0.5) * delta}px, ${(y - 0.5) * delta}px, 0`,
   ].join(' ')
-  const style = isHovered
-    ? { ...givenStyle, transform, overflow: 'hidden', cursor: 'zoom-in' }
-    : givenStyle
+  const style =
+    allowZoom && isHovered
+      ? { ...givenStyle, transform, overflow: 'hidden', cursor: 'zoom-in' }
+      : givenStyle
 
   const img = (
     <img
