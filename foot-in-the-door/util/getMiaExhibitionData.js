@@ -1,6 +1,7 @@
 /** @format */
 import path from 'path'
 import matter from 'gray-matter'
+import { segmentTitle } from 'util/index'
 
 export async function getMiaExhibitionData(exhId, fs) {
   const baseDataR = await fetch(
@@ -78,6 +79,13 @@ export async function getMiaExhibitionData(exhId, fs) {
 
   const hideSearch = Number(exhId) !== 2760
 
+  const slug = (
+    mdData.slug ||
+    segmentTitle(baseData.exhibition_title, { returnJSX: false })[1]
+  )
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+
   const data = {
     ...baseData,
     ...mdData,
@@ -86,6 +94,7 @@ export async function getMiaExhibitionData(exhId, fs) {
     subPanels,
     isClosed,
     hideSearch,
+    slug,
   }
 
   return data
