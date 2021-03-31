@@ -64,6 +64,7 @@ function ArtworkSideBySide(props) {
               maxHeight: imgMaxHeight,
               width: 'auto',
               margin: '0 auto',
+              zIndex: '10',
             }}
           />
         ) : (
@@ -78,6 +79,7 @@ function ArtworkSideBySide(props) {
         style={{
           backdropFilter: 'blur(10px)',
           background: 'rgba(255, 255, 255, 0.5)',
+          zIndex: '11',
         }}
       >
         <div className="font-light py-0">
