@@ -74,7 +74,7 @@ function Art(props) {
             classification={classification}
             hits={classificationResults}
             focused={artwork}
-            perPage={300}
+            perPage={30}
             hideViewAll={true}
             label={`See more ${classification}`}
             hideLikeControl={!isFitD}

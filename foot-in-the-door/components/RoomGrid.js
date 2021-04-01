@@ -48,12 +48,12 @@ function RoomGrid(props) {
 
   const grid = useGridState()
 
-  const artworks = hits
-    // When there is a 'focused' artwork, remove it from the grid so it
-    // isn't shown both at the top of the page and in the 'see more' results.
-    .filter((art) => art !== focused)
-    .filter(({ _source: art }) => !!art)
-    .slice(0, perPage)
+  const sliceSiblingArtworks = focused && true
+  const focusedArtIndex =
+    focused && hits.findIndex((hit) => hit._id === focused?.id)
+  const artworks = sliceSiblingArtworks
+    ? hits.slice(focusedArtIndex - perPage / 2, focusedArtIndex + perPage / 2)
+    : hits.filter(({ _source: art }) => !!art).slice(0, perPage)
 
   // Columns as a function of window width.
   // This should be a log function or clamped somehow?
@@ -142,62 +142,70 @@ function RoomGrid(props) {
                 const { src: imageSrc } = imageProps
                 const imageIsValid = imageProps.valid && imageProps.width > 0
 
-                return (
+                const isFocused = id === focused?.id
+
+                const cell = (
+                  <GridCell
+                    {...grid}
+                    as="a"
+                    className={cx(
+                      'relative group flex relative',
+                      rightmostCell ? '' : `mr-${gridSpacing}`,
+                      landscapeImage ? 'flex-grow' : 'flex-shrink'
+                    )}
+                  >
+                    <ImageWithBackground as="figure" imageSrc={imageSrc}>
+                      {imageIsValid ? (
+                        <img
+                          className="h-auto w-full max-h-full"
+                          loading={imageLoadStrategy}
+                          {...imageProps}
+                          alt={description}
+                        />
+                      ) : (
+                        <span {...imageProps} className="sticky top-2">
+                          {title}
+                        </span>
+                      )}
+                      <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
+                        <div className="text-white opacity-100 py-6 px-4">
+                          <h2
+                            className={
+                              segmentArtTitles ? 'font-light' : 'font-bold'
+                            }
+                          >
+                            {title}
+                          </h2>
+                          <h3
+                            className={cx(
+                              'hidden sm:inline-block',
+                              segmentArtTitles ? 'font-bold' : ''
+                            )}
+                          >
+                            {artist}
+                          </h3>
+                        </div>
+                        {hideLikeControl || (
+                          <LikeControl
+                            artwork={source}
+                            className="p-6 hidden md:inline"
+                            hydrateLocal={true}
+                          />
+                        )}
+                      </figcaption>
+                    </ImageWithBackground>
+                  </GridCell>
+                )
+
+                return isFocused ? (
+                  <div className="opacity-25">{cell}</div>
+                ) : (
                   <Link
                     href={`/exhibitions/${exhId}/${exhSlug}/art/${id}`}
                     passHref
                     key={id}
                   >
-                    <GridCell
-                      {...grid}
-                      as="a"
-                      className={cx(
-                        'relative group flex relative',
-                        rightmostCell ? '' : `mr-${gridSpacing}`,
-                        landscapeImage ? 'flex-grow' : 'flex-shrink'
-                      )}
-                    >
-                      <ImageWithBackground as="figure" imageSrc={imageSrc}>
-                        {imageIsValid ? (
-                          <img
-                            className="h-auto w-full max-h-full"
-                            loading={imageLoadStrategy}
-                            {...imageProps}
-                            alt={description}
-                          />
-                        ) : (
-                          <span {...imageProps} className="sticky top-2">
-                            {title}
-                          </span>
-                        )}
-                        <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
-                          <div className="text-white opacity-100 py-6 px-4">
-                            <h2
-                              className={
-                                segmentArtTitles ? 'font-light' : 'font-bold'
-                              }
-                            >
-                              {title}
-                            </h2>
-                            <h3
-                              className={cx(
-                                'hidden sm:inline-block',
-                                segmentArtTitles ? 'font-bold' : ''
-                              )}
-                            >
-                              {artist}
-                            </h3>
-                          </div>
-                          {hideLikeControl || (
-                            <LikeControl
-                              artwork={source}
-                              className="p-6 hidden md:inline"
-                              hydrateLocal={true}
-                            />
-                          )}
-                        </figcaption>
-                      </ImageWithBackground>
-                    </GridCell>
+                    {cell}
                   </Link>
                 )
               })}
