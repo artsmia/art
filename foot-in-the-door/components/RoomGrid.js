@@ -167,7 +167,7 @@ function RoomGrid(props) {
                           {title}
                         </span>
                       )}
-                      <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
+                      <figcaption className="hidden absolute inset-x-0 bottom-0 min-h-full bg-black opacity-75 group-hover:flex max-w-full items-end">
                         <div className="text-white opacity-100 py-6 px-4">
                           <h2
                             className={
