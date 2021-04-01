@@ -154,7 +154,11 @@ function RoomGrid(props) {
                       landscapeImage ? 'flex-grow' : 'flex-shrink'
                     )}
                   >
-                    <ImageWithBackground as="figure" imageSrc={imageSrc}>
+                    <ImageWithBackground
+                      as="figure"
+                      imageSrc={imageSrc}
+                      imageProps={imageProps}
+                    >
                       {imageIsValid ? (
                         <img
                           className="h-auto w-full max-h-full"

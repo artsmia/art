@@ -37,7 +37,7 @@ export function getImageProps(artData, options = {}) {
   const { fullSize } = options
 
   const valid = artData.image === 'valid' && artData.image_width > 0
-  const allowZoom = ['Public Domain'].indexOf(artData.rights_type) > -1
+  const allowZoom = allowImageZoom(artData)
   // TODO is this the right place to be setting styles?
   const style = valid
     ? {}
@@ -61,6 +61,21 @@ export function getImageProps(artData, options = {}) {
     valid,
     style,
   }
+}
+
+export function allowImageZoom(art) {
+  return (
+    art.restricted === 0 ||
+    [
+      'Copyright Protected',
+      'Needs Permission',
+      'In Copyright',
+      'In Copyright - Rights-holder(s) Unlocatable or Unidentifiable',
+      'In Copyright–Rights-holder(s) Unlocatable',
+      'Copyright Not Evaluated',
+      'Permission Denied',
+    ].indexOf(art.rights_type) < 0
+  )
 }
 
 // TODO port this to an API function?

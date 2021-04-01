@@ -46,6 +46,7 @@ function ArtworkSideBySide(props) {
     <main className="md:flex md:align-start off:min-h-screen-3/5 pt-2">
       <ImageWithBackground
         imageSrc={imageSrc}
+        imageProps={imageProps}
         className={cx(
           `relative md:w-${leftWidth}`,
           'object-contain object-center max-h-full md:mr-4'

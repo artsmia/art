@@ -7,4 +7,5 @@
   z-index: -1;
   filter: blur(9px);
   background-size: cover;
+  background-position: center;
 }
