@@ -1,5 +1,5 @@
 /** @format */
-import { Fragment } from 'react'
+import { Fragment, useState, useRef } from 'react'
 
 import Link from 'components/NestedLink'
 import ImageWithBackground from 'components/ImageWithBackground'
@@ -20,6 +20,9 @@ function ArtworkSideBySide(props) {
     },
     isFitD,
   } = props
+
+  const zoomInstructionsRef = useRef(null)
+  const [hideInfo, setHideInfo] = useState(false)
 
   const keywords =
     keywordsString &&
@@ -67,6 +70,8 @@ function ArtworkSideBySide(props) {
               margin: '0 auto',
               zIndex: '10',
             }}
+            instructionsElem={zoomInstructionsRef.current}
+            setHideInfo={setHideInfo}
           />
         ) : (
           <span {...imageProps} className="sticky top-2">
@@ -81,6 +86,7 @@ function ArtworkSideBySide(props) {
           backdropFilter: 'blur(10px)',
           background: 'rgba(255, 255, 255, 0.5)',
           zIndex: '11',
+          visibility: hideInfo ? 'hidden' : 'visible',
         }}
       >
         <div className="font-light py-0">
@@ -108,6 +114,8 @@ function ArtworkSideBySide(props) {
               <p>
                 Image: {artwork.rights_type}. {artwork.creditline}
               </p>
+
+              <p ref={zoomInstructionsRef} className="pt-4"></p>
             </>
           )}
           {props.children}
