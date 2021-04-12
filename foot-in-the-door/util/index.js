@@ -119,23 +119,30 @@ export async function getSearchResults(term, options = {}) {
     from: _from,
     ids,
     isFitD = true,
+    dataPrefix = null,
   } = options
 
+  const baseEndpoint =
+    process.env.searchEndpoint || 'https://search.artsmia.org'
   const from = _from || 0
-  const queryParams = `size=${size || 30}&from=${from}&fitd=${isFitD ? 1 : 0}`
-  const searchEndpoint = (term) =>
-    `https://search.artsmia.org/${term}?${queryParams}`
+  const queryParams = `size=${size || 30}&from=${from}&fitd=${isFitD ? 1 : 0}${
+    dataPrefix ? `&dataPrefix=${dataPrefix}` : ''
+  }`
+  const searchEndpoint = (term) => `${baseEndpoint}/${term}?${queryParams}`
   const randomEndpoint = (term) =>
-    `https://search.artsmia.org/random/art?q=${term}&${queryParams}`
-  const idEndpoint = (ids) => `https://search.artsmia.org/ids/${ids.join(',')}`
+    `${baseEndpoint}/random/art?q=${term}&${queryParams}`
+  const idEndpoint = (ids) =>
+    `${baseEndpoint}/ids/${ids.join(',')}${
+      dataPrefix && `&dataPrefix=${dataPrefix}`
+    }`
 
-  const res = await fetch(
-    useNormalSearch
-      ? searchEndpoint(term)
-      : ids
-      ? idEndpoint(ids.slice(0, size || 30))
-      : randomEndpoint(term)
-  )
+  const endpoint = useNormalSearch
+    ? searchEndpoint(term)
+    : ids
+    ? idEndpoint(ids.slice(0, size || 30))
+    : randomEndpoint(term)
+
+  const res = await fetch(endpoint)
   let results = await res.json()
 
   if (ids) results = results.hits.hits
@@ -143,10 +150,13 @@ export async function getSearchResults(term, options = {}) {
   return results
 }
 
-export async function fetchById(id, isFitD = true) {
-  const res = await fetch(
-    `https://search.artsmia.org/id/${id}${isFitD ? '?fitd=1' : ''}`
-  )
+export async function fetchById(id, isFitD = true, dataPrefix = null) {
+  const baseEndpoint =
+    process.env.searchEndpoint || 'https://search.artsmia.org'
+  const endpoint = `${baseEndpoint}/id/${id}${isFitD ? '?fitd=1' : ''}${
+    dataPrefix ? `?dataPrefix=${dataPrefix}` : ''
+  }`
+  const res = await fetch(endpoint)
   const artwork = await res.json()
 
   return artwork
