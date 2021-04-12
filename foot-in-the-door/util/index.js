@@ -133,7 +133,7 @@ export async function getSearchResults(term, options = {}) {
     `${baseEndpoint}/random/art?q=${term}&${queryParams}`
   const idEndpoint = (ids) =>
     `${baseEndpoint}/ids/${ids.join(',')}${
-      dataPrefix && `&dataPrefix=${dataPrefix}`
+      dataPrefix ? `&dataPrefix=${dataPrefix}` : ''
     }`
 
   const endpoint = useNormalSearch
