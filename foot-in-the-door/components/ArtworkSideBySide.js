@@ -43,7 +43,6 @@ function ArtworkSideBySide(props) {
       fullSize: true,
     }
   )
-  const imageIsValid = imageProps.valid // && imageProps.width > 0
 
   const { testData, dataPrefix } = props.exhibitionData
   if (testData) {
@@ -62,29 +61,23 @@ function ArtworkSideBySide(props) {
         )}
       >
         {false && <p>(AIB PFA IMAGE GOES HERE)</p>}
-        {imageIsValid ? (
-          <ImageWithMouseZoom
-            {...imageProps}
-            src={imageSrc}
-            alt={description}
-            key={artwork.id}
-            className="sticky top-2"
-            style={{
-              ...imageStyle,
-              top: '1.5vh',
-              maxHeight: imgMaxHeight,
-              width: 'auto',
-              margin: '0 auto',
-              zIndex: '10',
-            }}
-            instructionsElem={zoomInstructionsRef.current}
-            setHideInfo={setHideInfo}
-          />
-        ) : (
-          <span {...imageProps} className="sticky top-2">
-            No Image Available
-          </span>
-        )}
+        <ImageWithMouseZoom
+          {...imageProps}
+          src={imageSrc}
+          alt={description}
+          key={artwork.id}
+          className="sticky top-2"
+          style={{
+            ...imageStyle,
+            top: '1.5vh',
+            maxHeight: imgMaxHeight,
+            width: 'auto',
+            margin: '0 auto',
+            zIndex: '10',
+          }}
+          instructionsElem={zoomInstructionsRef.current}
+          setHideInfo={setHideInfo}
+        />
         {isFitD && <LikeControl artwork={artwork} showConfirmation={true} />}
       </ImageWithBackground>
       <div
@@ -135,20 +128,14 @@ function ArtworkSideBySide(props) {
         <div className="mt-12 pt-2" id="partner">
           {testData && (
             <>
-              {imageIsValid ? (
-                <ImageWithMouseZoom
-                  {...imageProps}
-                  src={imageSrc}
-                  alt={description}
-                  key={artwork.id}
-                  className=""
-                  style={{}}
-                />
-              ) : (
-                <span {...imageProps} className="sticky top-2">
-                  No Image Available
-                </span>
-              )}
+              <ImageWithMouseZoom
+                {...imageProps}
+                src={imageSrc}
+                alt={description}
+                key={artwork.id}
+                className=""
+                style={{}}
+              />
               <Tombstone artwork={artwork} />
               <Link href={`/art/${artwork.id}`}>View full artwork info</Link>
             </>

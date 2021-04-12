@@ -1,5 +1,6 @@
 /** @format */
 import { useState, useEffect, useRef } from 'react'
+import Image from 'components/Image'
 
 let hoverInitiated = false
 
@@ -88,12 +89,13 @@ function ImageWithMouseZoom(props) {
   }
 
   const img = (
-    <img
+    <Image
       {...imageProps}
-      src={src}
-      style={style}
       alt={imageProps.alt}
       ref={hoverRef}
+      errorMessage="No Image Available"
+      style={style}
+      src={src}
     />
   )
 

@@ -67,17 +67,17 @@ export function getImageProps(artData, options = {}) {
     : Boolean(artData.image && !artData.image.match(/pdf/))
   const allowZoom = allowImageZoom(artData)
   // TODO is this the right place to be setting styles?
-  const style = valid
-    ? {}
-    : {
-        background:
-          'url(https://collections.artsmia.org/images/no-image-bg.png) repeat top left',
-        width: '100%',
-        height: '37vh',
-        display: 'block',
-        padding: '1em',
-        textAlign: 'center',
-      }
+  const imageErrorStyle = {
+    background:
+      'url(https://collections.artsmia.org/images/no-image-bg.png) repeat top left',
+    width: '100%',
+    minWidth: '7em',
+    minHeight: '37vh',
+    display: 'block',
+    padding: '1em',
+    textAlign: 'center',
+  }
+  const style = valid ? {} : imageErrorStyle
 
   return {
     src: getImageSrc(artData, !fullSize),
@@ -88,6 +88,7 @@ export function getImageProps(artData, options = {}) {
     allowZoom,
     valid,
     style,
+    errorStyle: imageErrorStyle,
   }
 }
 

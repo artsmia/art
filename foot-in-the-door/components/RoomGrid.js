@@ -20,6 +20,7 @@ import { ViewAllLink } from './NavBar'
 import LikeControl from './LikeControl'
 import ImageWithBackground from './ImageWithBackground'
 import Text from 'components/Text'
+import Image from 'components/Image'
 
 function RoomGrid(props) {
   const {
@@ -140,7 +141,6 @@ function RoomGrid(props) {
 
                 const imageProps = getImageProps(source)
                 const { src: imageSrc } = imageProps
-                const imageIsValid = imageProps.valid
 
                 const isFocused = id === focused?.id
 
@@ -159,18 +159,13 @@ function RoomGrid(props) {
                       imageSrc={imageSrc}
                       imageProps={imageProps}
                     >
-                      {imageIsValid ? (
-                        <img
-                          className="h-auto w-full max-h-full"
-                          loading={imageLoadStrategy}
-                          {...imageProps}
-                          alt={description}
-                        />
-                      ) : (
-                        <span {...imageProps} className="sticky top-2">
-                          {title}
-                        </span>
-                      )}
+                      <Image
+                        className="h-auto w-full max-h-full"
+                        loading={imageLoadStrategy}
+                        {...imageProps}
+                        alt={description}
+                        title={title}
+                      />
                       <figcaption className="hidden absolute inset-x-0 bottom-0 min-h-full bg-black opacity-75 group-hover:flex max-w-full items-end">
                         <div className="text-white opacity-100 py-6 px-4">
                           <h2
