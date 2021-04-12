@@ -1,7 +1,7 @@
 /** @format */
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
 
-function Image(props) {
+function Image(props, ref) {
   const {
     valid: imageIsValid,
     title,
@@ -23,6 +23,7 @@ function Image(props) {
       alt={props.alt}
       onLoad={() => setImageStatus('loaded')}
       onError={onImageLoadError}
+      ref={ref}
     />
   ) : (
     <span {...imageProps} style={errorStyle} className="sticky top-2">
@@ -31,4 +32,4 @@ function Image(props) {
   )
 }
 
-export default Image
+export default forwardRef(Image)

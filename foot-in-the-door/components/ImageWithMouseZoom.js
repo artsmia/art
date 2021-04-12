@@ -28,10 +28,9 @@ function ImageWithMouseZoom(props) {
   let id, initialSize
   // Only prep a IIIF image for images hosted within artmsia.org
   if (initialSrc.match(/artsmia.org/)) {
-    ;[, id, initialSize = 800] = // eslint-disable-line no-unused-vars, no-extra-semi
-      initialSrc?.match('iiif.dx.artsmia.org') ?? []
-        ? initialSrc.match(/(\d+).jpg\/full\/(\d+),/)
-        : initialSrc.match(/(\d+).jpg/)
+    ;[, id, initialSize = 800] = initialSrc?.match('iiif.dx.artsmia.org') // eslint-disable-line no-unused-vars, no-extra-semi
+      ? initialSrc.match(/(\d+).jpg\/full\/(\d+),/)
+      : initialSrc.match(/(\d+).jpg/)
   }
   // choosing size - should take image aspect ratio into account?
   // a portrait image that's 1200px wide has vastly more pixels
