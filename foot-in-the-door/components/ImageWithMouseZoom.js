@@ -4,8 +4,11 @@ import { useState, useEffect, useRef } from 'react'
 let hoverInitiated = false
 
 function ImageWithMouseZoom(props) {
+  const { src: initialSrc, style: givenStyle, allowZoom, ...imageProps } = props
+
   const [scale, setScale] = useState(2)
   const [hoverRef, isHovered, zoomActive, x, y] = useHover({
+    allowZoom,
     requireShift: true,
     controls: {
       option: () => setScale(2),
@@ -21,10 +24,14 @@ function ImageWithMouseZoom(props) {
     if (props.setHideInfo) props.setHideInfo(zoomActive && scale > 2)
   }, [scale])
 
-  const { src: initialSrc, style: givenStyle, allowZoom, ...imageProps } = props
-  const [, id, initialSize = 800] = initialSrc.match('iiif.dx.artsmia.org') // eslint-disable-line no-unused-vars
-    ? initialSrc.match(/(\d+).jpg\/full\/(\d+),/)
-    : initialSrc.match(/(\d+).jpg/)
+  let id, initialSize
+  // Only prep a IIIF image for images hosted within artmsia.org
+  if (initialSrc.match(/artsmia.org/)) {
+    ;[, id, initialSize = 800] = // eslint-disable-line no-unused-vars, no-extra-semi
+      initialSrc?.match('iiif.dx.artsmia.org') ?? []
+        ? initialSrc.match(/(\d+).jpg\/full\/(\d+),/)
+        : initialSrc.match(/(\d+).jpg/)
+  }
   // choosing size - should take image aspect ratio into account?
   // a portrait image that's 1200px wide has vastly more pixels
   // than a landscape image
@@ -96,7 +103,7 @@ To zoom the image in place, move your mouse while pressing shift on your keyboar
 Increase the size by pressing the command key, or decrease it with option.
 Close the zoom by moving your mouse out of the image area or pressing control.`
 
-  if (props.instructionsElem) {
+  if (allowZoom && props.instructionsElem) {
     const [preZoomInstr, zoomActiveInstr] = zoomInstructions.split('\n\n')
     if (zoomActive) {
       props.instructionsElem.innerText = zoomActiveInstr
@@ -132,7 +139,7 @@ function useHover(options = {}) {
   const [coords, setCoords] = useState([0, 0])
 
   // Optionally, only trigger 'hover zoom' when the shift key is pressed
-  const { requireShift = false, controls } = options
+  const { requireShift = false, controls, allowZoom } = options
   // IDEA - option to delay 1-2 seconds before flipping `isHovered`?
 
   const ref = useRef(null)
@@ -178,6 +185,8 @@ function useHover(options = {}) {
 
   useEffect(
     () => {
+      if (!allowZoom) return
+
       const node = ref.current
       if (node) {
         node.addEventListener('mouseover', handleMouseOver)
