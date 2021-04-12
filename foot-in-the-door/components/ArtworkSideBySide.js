@@ -9,7 +9,7 @@ import { cx, getImageProps, segmentTitle } from 'util/index'
 import ImageWithMouseZoom from 'components/ImageWithMouseZoom'
 
 function ArtworkSideBySide(props) {
-  const {
+  let {
     artwork,
     artwork: {
       description,
@@ -43,7 +43,13 @@ function ArtworkSideBySide(props) {
       fullSize: true,
     }
   )
-  const imageIsValid = imageProps.valid && imageProps.width > 0
+  const imageIsValid = imageProps.valid // && imageProps.width > 0
+
+  const { testData, dataPrefix } = props.exhibitionData
+  if (testData) {
+    description = testData.description
+    // TODO overwrite main image too, but keep the original artwork imageProps around to be displayed as well?
+  }
 
   return (
     <main className="md:flex md:align-start off:min-h-screen-3/5 pt-2">
@@ -55,6 +61,7 @@ function ArtworkSideBySide(props) {
           'object-contain object-center max-h-full md:mr-4'
         )}
       >
+        {false && <p>(AIB PFA IMAGE GOES HERE)</p>}
         {imageIsValid ? (
           <ImageWithMouseZoom
             {...imageProps}
@@ -90,7 +97,11 @@ function ArtworkSideBySide(props) {
         }}
       >
         <div className="font-light py-0">
-          <Tombstone artwork={artwork} />
+          <Tombstone
+            artwork={artwork}
+            exhibitionData={props.exhibitionData}
+            useTestData={true}
+          />
 
           {keywordsString && (
             <p className="whitespace-normal break-word overflow-scroll">
@@ -109,7 +120,7 @@ function ArtworkSideBySide(props) {
         </div>
 
         <div className="border-t-2 border-opacity-75 mt-8 lg:mt-16">
-          {isFitD || (
+          {isFitD || !!dataPrefix || (
             <>
               <p>
                 Image: {artwork.rights_type}. {artwork.creditline}
@@ -120,6 +131,29 @@ function ArtworkSideBySide(props) {
           )}
           {props.children}
         </div>
+
+        <div className="mt-12 pt-2" id="partner">
+          {testData && (
+            <>
+              {imageIsValid ? (
+                <ImageWithMouseZoom
+                  {...imageProps}
+                  src={imageSrc}
+                  alt={description}
+                  key={artwork.id}
+                  className=""
+                  style={{}}
+                />
+              ) : (
+                <span {...imageProps} className="sticky top-2">
+                  No Image Available
+                </span>
+              )}
+              <Tombstone artwork={artwork} />
+              <Link href={`/art/${artwork.id}`}>View full artwork info</Link>
+            </>
+          )}
+        </div>
       </div>
     </main>
   )
@@ -129,7 +163,7 @@ export default ArtworkSideBySide
 
 function ArtworkGalleryLocation(props) {
   const { art, ...wrapperProps } = props
-  const onViewPhrase = art.room.match(/G/)
+  const onViewPhrase = art.room?.match(/G/)
     ? `On View in Gallery ${art.room.replace('G', '')}`
     : art.room
 
@@ -137,7 +171,7 @@ function ArtworkGalleryLocation(props) {
 }
 
 function Tombstone(props) {
-  const {
+  let {
     artwork,
     artwork: {
       title: rawTitle,
@@ -149,9 +183,18 @@ function Tombstone(props) {
     },
     exhibitionData = {},
   } = props
-  const { segmentArtTitles = true } = exhibitionData
+  const { segmentArtTitles = true, testData } = exhibitionData
 
-  const artist = rawArtist.replace('Artist: ', '')
+  if (testData && props.useTestData) {
+    rawTitle = testData.name
+    creditline = `${testData.yearsOfParticipation} years of participation`
+    medium = testData.flowers
+    rawArtist = null
+    dated = null
+    accession_number = null
+  }
+
+  const artist = rawArtist?.replace('Artist: ', '')
   const title = segmentArtTitles ? segmentTitle(rawTitle) : rawTitle
 
   return (

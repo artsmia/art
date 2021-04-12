@@ -77,11 +77,11 @@ function Room(props) {
   }, [classification])
 
   const {
-    exhibitionData: { subPanels, description: exhDescription, hideSearch },
+    exhibitionData: { subPanels, description: exhDescription, hideSearch, markdownContent },
     subpanel,
     isFitD,
   } = props
-  const labelText = isFitD ? null : subpanel?.Text || exhDescription
+  const labelText = isFitD ? null : subpanel?.Text || exhDescription || markdownContent
   const classifications = isFitD
     ? fitdClassifications
     : subPanels.map((p) => p.Title)
@@ -182,6 +182,7 @@ export async function getStaticProps({ params }) {
   let classification = slug.replace(/-/g, ' ')
   if (classification === 'all') classification = '*'
   const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
+  const { dataPrefix } = exhibitionData
   const subpanel =
     exhibitionData.subPanels.find(
       (p) => p.Title.toLowerCase() === classification
@@ -193,6 +194,12 @@ export async function getStaticProps({ params }) {
     imagesForCarousel = await getImages(4)
     results = await getSearchResults(`classification:${slug}`, {
       size: perPage,
+    })
+  } else if(dataPrefix) {
+    imagesForCarousel = []
+    results = await getSearchResults(null, {
+      dataPrefix,
+      size: 400,
     })
   } else {
     imagesForCarousel = await getImages(4, {

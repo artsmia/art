@@ -31,7 +31,7 @@ function Art(props) {
     classificationResults,
     imagesForCarousel,
     isFitD,
-    exhibitionData: { isClosed },
+    exhibitionData: { isClosed, testData },
     exhibitionData,
   } = props
 
@@ -118,11 +118,12 @@ export async function getStaticProps({ params }) {
   const { id, exhibitionId } = params
   const isFitD = Number(exhibitionId) === 2760
   const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
+  const { dataPrefix } = exhibitionData
 
   const numericID = Number(id) ? Number(id) : hashids.decode(id)
   const hashid = hashids.encode(numericID)
 
-  let artwork = await fetchById(numericID, isFitD)
+  let artwork = await fetchById(numericID, isFitD, dataPrefix)
   if (!isFitD && exhibitionData && exhibitionData.extra?.length > 0) {
     const exhibitionEntryRow = exhibitionData.extra.find(
       (d) => d.UniqueID === numericID
@@ -146,7 +147,7 @@ export async function getStaticProps({ params }) {
       artwork.__group = {
         title: exhibitionData.exhibition_title,
         link: 'all',
-        siblingArtworkIds: exhibitionData.objects,
+        siblingArtworkIds: exhibitionData.objects || null,
       }
     }
   }
@@ -165,6 +166,7 @@ export async function getStaticProps({ params }) {
     : `artist:'Todd Webb'`
   const classificationResults = await getSearchResults(criteria, {
     isFitD,
+    dataPrefix,
     ids: isFitD ? null : artwork.__group?.siblingArtworkIds ?? null,
     size: 300,
   })

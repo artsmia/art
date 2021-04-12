@@ -140,7 +140,7 @@ function RoomGrid(props) {
 
                 const imageProps = getImageProps(source)
                 const { src: imageSrc } = imageProps
-                const imageIsValid = imageProps.valid && imageProps.width > 0
+                const imageIsValid = imageProps.valid
 
                 const isFocused = id === focused?.id
 

@@ -9,7 +9,12 @@ export async function getMiaExhibitionData(exhId, fs) {
       exhId / 1000
     )}/${exhId}.json`
   )
-  const baseData = await baseDataR.json()
+  let baseData
+  try {
+    baseData = await baseDataR.json()
+  } catch (e) {
+    baseData = {}
+  }
 
   // TODO
   //
@@ -71,11 +76,11 @@ export async function getMiaExhibitionData(exhId, fs) {
       return panel
     })
 
-  const { display_date } = baseData
-  const [, endDate] = display_date.split(' - ').map((d) => new Date(d))
+  // const { display_date } = baseData
+  // const [, endDate] = display_date?.split(' - ').map((d) => new Date(d)) ?? []
   // TODO how exactly to determine this? For now, tie it to FitD's ID
-  const isClosed =
-    Number(exhId) === 2760 && (new Date(endDate) < new Date() || true)
+  // [ ] refactor based on frontMatter in exhibition markdown file?
+  const isClosed = Number(exhId) === 2760 // && (new Date(endDate) < new Date() || true)
 
   const hideSearch = Number(exhId) !== 2760
 

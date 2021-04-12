@@ -4,6 +4,7 @@ export { getMiaExhibitionData } from './getMiaExhibitionData'
 
 export function getImageSrc(artworkData, thumbnail = true) {
   const { id, accession_number } = artworkData
+  // TODO replace with more general `dataPrefix`
   const isFitD = Boolean(accession_number.match(/FITD/))
   const useIIIF = false // use options = {}?
 
@@ -20,6 +21,30 @@ export function getImageSrc(artworkData, thumbnail = true) {
       : `https://foot-in-the-door-2020.s3.amazonaws.com`
 
     return `${domain}/800/${thumb}`
+  } else if (accession_number.match(/CREACAD/)) {
+    const imageFilename = artworkData.image
+    const thumb = imageFilename
+      .replace(/jpeg|png|JPG|tiff|pdf?$/i, 'jpg')
+      .replace('+', '%2B')
+      .replace(/ /g, '_')
+      .replace("'", '_')
+      .replace('St._Paul_Music_Academy', 'SPMA')
+      .replace('Van_Kampen', 'V.K.')
+      .split('/')
+      // add `tn_` to the front of the filename
+      .reverse()
+      .map((segment, index) => (index === 0 ? `tn_${segment}` : segment))
+      .reverse()
+      .join('/')
+      .replace(/_0_/, '_O_')
+    // TODO - all this processing should probably happen in the data ingest script?
+
+    const useCloudfront = false
+    const domain = useCloudfront
+      ? `https://d3dbbvm3mhv3af.cloudfront.net`
+      : `http://mia-collections-auxilary-images.s3.amazonaws.com`
+
+    return `${domain}/ca21/${thumb}`
   } else if (artworkData.__iiif) {
     return artworkData.__iiif
   } else if (useIIIF) {
@@ -36,7 +61,10 @@ export function getImageSrc(artworkData, thumbnail = true) {
 export function getImageProps(artData, options = {}) {
   const { fullSize } = options
 
-  const valid = artData.image === 'valid' && artData.image_width > 0
+  const primaryImage = false
+  const valid = primaryImage
+    ? artData.image === 'valid' && artData.image_width > 0
+    : Boolean(artData.image && !artData.image.match(/pdf/))
   const allowZoom = allowImageZoom(artData)
   // TODO is this the right place to be setting styles?
   const style = valid
@@ -66,15 +94,16 @@ export function getImageProps(artData, options = {}) {
 export function allowImageZoom(art) {
   return (
     art.restricted === 0 ||
-    [
-      'Copyright Protected',
-      'Needs Permission',
-      'In Copyright',
-      'In Copyright - Rights-holder(s) Unlocatable or Unidentifiable',
-      'In Copyright–Rights-holder(s) Unlocatable',
-      'Copyright Not Evaluated',
-      'Permission Denied',
-    ].indexOf(art.rights_type) < 0
+    (!!art.rights_type &&
+      [
+        'Copyright Protected',
+        'Needs Permission',
+        'In Copyright',
+        'In Copyright - Rights-holder(s) Unlocatable or Unidentifiable',
+        'In Copyright–Rights-holder(s) Unlocatable',
+        'Copyright Not Evaluated',
+        'Permission Denied',
+      ].indexOf(art.rights_type) < 0)
   )
 }
 
