@@ -30,7 +30,7 @@ const titles = [
     'Piotr Szyhalski / Labor Camp | COVID-19: Labor Camp Report',
     'Piotr Szyhalski / Labor Camp',
     '', // no prefix
-    ' | COVID-19: Labor Camp Report'
+    ' | COVID-19: Labor Camp Report',
   ],
   // TODO leading `(` should become prefix, THEN segment the resulting title?
   // [
