@@ -52,9 +52,12 @@ function RoomGrid(props) {
   const sliceSiblingArtworks = focused && true
   const focusedArtIndex =
     focused && hits.findIndex((hit) => hit._id === focused?.id)
-  const artworks = sliceSiblingArtworks
+  const artworks = (sliceSiblingArtworks
     ? hits.slice(focusedArtIndex - perPage / 2, focusedArtIndex + perPage / 2)
-    : hits.filter(({ _source: art }) => !!art).slice(0, perPage)
+    : hits
+  )
+    .filter(({ _source: art }) => !!art)
+    .slice(0, perPage)
 
   // Columns as a function of window width.
   // This should be a log function or clamped somehow?

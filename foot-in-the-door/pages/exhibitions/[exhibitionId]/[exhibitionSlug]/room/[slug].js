@@ -10,6 +10,7 @@ import {
   getSearchResults,
   getImages,
   getMiaExhibitionData,
+  getMiaExhibitionIdAndData,
 } from 'util/index'
 import { SupportCTA } from 'components/NavBar'
 import Text from 'components/Text'
@@ -77,7 +78,8 @@ function Room(props) {
   }, [classification])
 
   const {
-    exhibitionData: { subPanels, description: exhDescription, hideSearch, markdownContent },
+    exhibitionData: { subPanels, description: exhDescription, hideSearch, markdownContent, lockup },
+    exhibitionData,
     subpanel,
     isFitD,
   } = props
@@ -121,6 +123,9 @@ function Room(props) {
         exhibitionData={props.exhibitionData}
       >
         <div className="max-w-3xl mx-auto"><Text dangerous={true}>{labelText}</Text></div>
+        {lockup && <>
+          <img src={lockup.img} className={lockup.tailwindStyle} alt={lockup.alt} style={{maxWidth: '19em'}} />
+        </>}
       </RoomGrid>
     )
 
@@ -177,16 +182,26 @@ function Room(props) {
 export default Room
 
 export async function getStaticProps({ params }) {
-  const { exhibitionId, slug } = params
-  const isFitD = Number(exhibitionId) === 2760
+  const { slug } = params
   let classification = slug.replace(/-/g, ' ')
   if (classification === 'all') classification = '*'
-  const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
+  const [exhibitionId, exhibitionData] = await getMiaExhibitionIdAndData(params.exhibitionId, fs)
   const { dataPrefix } = exhibitionData
   const subpanel =
     exhibitionData.subPanels.find(
       (p) => p.Title.toLowerCase() === classification
     ) || null
+  const isFitD = Number(exhibitionId) === 2760
+
+  if(params.exhibitionId === '32021') {
+    console.info('redirect?')
+    return {
+      redirect: {
+        destination: `/exhibitions/2898/creativity-academy-2021`,
+        permanent: true,
+      }
+    }
+  }
 
   let results
   let imagesForCarousel

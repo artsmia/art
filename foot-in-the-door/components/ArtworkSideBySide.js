@@ -44,11 +44,10 @@ function ArtworkSideBySide(props) {
     }
   )
 
-  const { testData, dataPrefix } = props.exhibitionData
-  if (testData) {
-    description = testData.description
-    // TODO overwrite main image too, but keep the original artwork imageProps around to be displayed as well?
-  }
+  const { showAuxilaryImage, dataPrefix } = props.exhibitionData
+  const referenceArtworkImageProps = getImageProps(props.referenceArtwork, {
+    fullSize: true,
+  })
 
   return (
     <main className="md:flex md:align-start off:min-h-screen-3/5 pt-2">
@@ -60,7 +59,6 @@ function ArtworkSideBySide(props) {
           'object-contain object-center max-h-full md:mr-4'
         )}
       >
-        {false && <p>(AIB PFA IMAGE GOES HERE)</p>}
         <ImageWithMouseZoom
           {...imageProps}
           src={imageSrc}
@@ -125,19 +123,32 @@ function ArtworkSideBySide(props) {
           {props.children}
         </div>
 
-        <div className="mt-12 pt-2" id="partner">
-          {testData && (
+        <div className="mt-12 pt-2 max-h-full" id="partner">
+          {showAuxilaryImage && props.referenceArtwork && (
             <>
-              <ImageWithMouseZoom
-                {...imageProps}
-                src={imageSrc}
-                alt={description}
-                key={artwork.id}
-                className=""
-                style={{}}
-              />
-              <Tombstone artwork={artwork} />
-              <Link href={`/art/${artwork.id}`}>View full artwork info</Link>
+              <ImageWithBackground
+                imageSrc={referenceArtworkImageProps.src}
+                imageProps={referenceArtworkImageProps}
+                className={cx(
+                  'object-contain object-center max-h-full md:mr-4'
+                )}
+              >
+                <ImageWithMouseZoom
+                  {...referenceArtworkImageProps}
+                  src={referenceArtworkImageProps.src}
+                  key={artwork.id}
+                  className=""
+                  style={{}}
+                />
+              </ImageWithBackground>
+              <Tombstone artwork={props.referenceArtwork} />
+              {/* eslint-disable react/jsx-no-target-blank */}
+              <a
+                href={`https://collections.artsmia.org/art/${artwork.id}`}
+                target="_blank"
+              >
+                View full artwork info &rarr;
+              </a>
             </>
           )}
         </div>
@@ -170,16 +181,7 @@ function Tombstone(props) {
     },
     exhibitionData = {},
   } = props
-  const { segmentArtTitles = true, testData } = exhibitionData
-
-  if (testData && props.useTestData) {
-    rawTitle = testData.name
-    creditline = `${testData.yearsOfParticipation} years of participation`
-    medium = testData.flowers
-    rawArtist = null
-    dated = null
-    accession_number = null
-  }
+  const { segmentArtTitles = true } = exhibitionData
 
   const artist = rawArtist?.replace('Artist: ', '')
   const title = segmentArtTitles ? segmentTitle(rawTitle) : rawTitle

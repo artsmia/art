@@ -1,6 +1,6 @@
 /** @format */
 import { promises as fs } from 'fs'
-import { getMiaExhibitionData, segmentTitle } from 'util/index'
+import { getMiaExhibitionIdAndData, segmentTitle } from 'util/index'
 
 /**
  * Redirect /:id to the same exhibition with title as :slug tagged on.
@@ -12,8 +12,7 @@ function RedirectToExhibitionWithSlug() {
 export default RedirectToExhibitionWithSlug
 
 export async function getStaticProps({ params }) {
-  const exhId = Number(params.exhibitionId)
-  const exhibitionData = await getMiaExhibitionData(exhId, fs)
+  const [exhId, exhibitionData] = await getMiaExhibitionIdAndData(params.exhibitionId, fs)
   const { slug, exhibition_title: title } = exhibitionData
   const exhibitionSlug = slug || segmentTitle(title, { returnJSX: false })[1]
     .toLowerCase()

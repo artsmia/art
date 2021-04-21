@@ -31,8 +31,9 @@ function Art(props) {
     classificationResults,
     imagesForCarousel,
     isFitD,
-    exhibitionData: { isClosed, testData },
+    exhibitionData: { isClosed },
     exhibitionData,
+    referenceArtwork,
   } = props
 
   const [isFirstVisit, setFirstVisit] = useState(false)
@@ -51,7 +52,7 @@ function Art(props) {
 
   return (
     <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch}>
-      <ArtworkSideBySide artwork={artwork} isFitD={isFitD} exhibitionData={exhibitionData}>
+      <ArtworkSideBySide artwork={artwork} isFitD={isFitD} exhibitionData={exhibitionData} referenceArtwork={referenceArtwork}>
         <p className="flex items-center">
           <ShareLinks art={artwork} hideLinks={!isFitD} exhibitionData={props.exhibitionData} />
         </p>
@@ -124,6 +125,12 @@ export async function getStaticProps({ params }) {
   const hashid = hashids.encode(numericID)
 
   let artwork = await fetchById(numericID, isFitD, dataPrefix)
+  let referenceArtwork
+  if(artwork?.referenceArtId?.match('mia:')) {
+    const referenceId = artwork.referenceArtId.replace('mia:', '')
+    referenceArtwork = await fetchById(referenceId)
+  }
+  
   if (!isFitD && exhibitionData && exhibitionData.extra?.length > 0) {
     const exhibitionEntryRow = exhibitionData.extra.find(
       (d) => d.UniqueID === numericID
@@ -197,6 +204,7 @@ export async function getStaticProps({ params }) {
       classificationResults,
       imagesForCarousel,
       exhibitionData,
+      referenceArtwork,
     },
   }
 }

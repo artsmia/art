@@ -10,7 +10,7 @@ import SearchInput from 'components/SearchInput'
 import Text from 'components/Text'
 import TitleSubtitle from 'components/TitleSubtitle'
 
-import { getImages, getMiaExhibitionData } from 'util/index'
+import { getImages, getMiaExhibitionIdAndData } from 'util/index'
 
 import { videos } from './video'
 
@@ -238,8 +238,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const exhId = Number(params.exhibitionId)
-  const exhibitionData = await getMiaExhibitionData(exhId, fs)
+  const [exhId, exhibitionData] = await getMiaExhibitionIdAndData(params.exhibitionId, fs)
   const isFitD = exhId === 2760
   let leadingImages
 

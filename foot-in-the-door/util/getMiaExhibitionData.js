@@ -104,3 +104,11 @@ export async function getMiaExhibitionData(exhId, fs) {
 
   return data
 }
+
+export async function getMiaExhibitionIdAndData(_exhId, fs) {
+  if (_exhId === '32021') _exhId = 2898
+  const exhId = Number(_exhId)
+  const exhibitionData = await getMiaExhibitionData(exhId, fs)
+
+  return [exhId, exhibitionData]
+}

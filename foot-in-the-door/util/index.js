@@ -1,6 +1,9 @@
 /** @format */
 import { useState, useEffect } from 'react'
-export { getMiaExhibitionData } from './getMiaExhibitionData'
+export {
+  getMiaExhibitionData,
+  getMiaExhibitionIdAndData,
+} from './getMiaExhibitionData'
 
 export function getImageSrc(artworkData, thumbnail = true) {
   const { id, accession_number } = artworkData
@@ -28,7 +31,7 @@ export function getImageSrc(artworkData, thumbnail = true) {
       .replace('+', '%2B')
       .replace(/ /g, '_')
       .replace("'", '_')
-      .replace('St._Paul_Music_Academy', 'SPMA')
+      // .replace('St._Paul_Music_Academy', 'SPMA')
       .replace('Van_Kampen', 'V.K.')
       .split('/')
       // add `tn_` to the front of the filename
@@ -42,9 +45,14 @@ export function getImageSrc(artworkData, thumbnail = true) {
     const useCloudfront = false
     const domain = useCloudfront
       ? `https://d3dbbvm3mhv3af.cloudfront.net`
-      : `http://mia-collections-auxilary-images.s3.amazonaws.com`
+      : `https://mia-collections-auxilary-images.s3.amazonaws.com`
 
     return `${domain}/ca21/${thumb}`
+  } else if (accession_number.match(/AIB/)) {
+    const imageFilename = artworkData.image
+      .replace(/\.(jpeg|png|JPG)$/, '.jpg')
+      .replace(/%2./g, '_')
+    return `http://mia-collections-auxilary-images.s3.amazonaws.com/aib21/tn_${imageFilename}`
   } else if (artworkData.__iiif) {
     return artworkData.__iiif
   } else if (useIIIF) {
