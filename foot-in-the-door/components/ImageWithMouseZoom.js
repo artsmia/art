@@ -5,7 +5,13 @@ import Image from 'components/Image'
 let hoverInitiated = false
 
 function ImageWithMouseZoom(props) {
-  const { src: initialSrc, style: givenStyle, allowZoom, ...imageProps } = props
+  const {
+    src: initialSrc,
+    style: givenStyle,
+    allowZoom,
+    children,
+    ...imageProps
+  } = props
 
   const [scale, setScale] = useState(2)
   const [hoverRef, isHovered, zoomActive, x, y] = useHover({
@@ -117,17 +123,27 @@ Close the zoom by moving your mouse out of the image area or pressing control.`
   // IDEA - set a cookie to hide these instructions once a visitor learns them?
   // And we would know they've learned them once they use each control a few times?
 
-  return id && allowZoom ? (
-    <a
-      href={`https://universalviewer.io/uv.html?manifest=https://iiif.dx.artsmia.org/${id}.jpg/manifest.json`}
-      title="Click to open full image in new window"
-      target="_blank"
-      rel="noreferrer"
-    >
-      {img}
-    </a>
+  const wrappedImage =
+    id && allowZoom ? (
+      <a
+        href={`https://universalviewer.io/uv.html?manifest=https://iiif.dx.artsmia.org/${id}.jpg/manifest.json`}
+        title="Click to open full image in new window"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {img}
+      </a>
+    ) : (
+      img
+    )
+
+  return children ? (
+    <div className={props.className}>
+      {wrappedImage}
+      {children}
+    </div>
   ) : (
-    img
+    wrappedImage
   )
 }
 

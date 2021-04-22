@@ -11,13 +11,14 @@ function ImageWithBackground(props) {
     as: WrapperElem,
     className,
     style,
+    opacity,
     ...wrapperProps
   } = props
 
   const Wrapper = WrapperElem || 'div'
 
   const bgImageStyle = imageProps?.valid
-    ? { '--bg-image': `url(${imageSrc})` }
+    ? { '--bg-image': `url(${imageSrc})`, '--bg-opacity': opacity || '.35' }
     : {}
 
   return (

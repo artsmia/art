@@ -125,7 +125,7 @@ export async function getStaticProps({ params }) {
   const hashid = hashids.encode(numericID)
 
   let artwork = await fetchById(numericID, isFitD, dataPrefix)
-  let referenceArtwork
+  let referenceArtwork = null
   if(artwork?.referenceArtId?.match('mia:')) {
     const referenceId = artwork.referenceArtId.replace('mia:', '')
     referenceArtwork = await fetchById(referenceId)
@@ -151,10 +151,11 @@ export async function getStaticProps({ params }) {
     }
   } else {
     if (!isFitD) {
+      const siblingArtworkIds = exhibitionData.objects?.length > 0 ? exhibitionData.objects : null ?? null
       artwork.__group = {
         title: exhibitionData.exhibition_title,
         link: 'all',
-        siblingArtworkIds: exhibitionData.objects || null,
+        siblingArtworkIds,
       }
     }
   }
@@ -170,7 +171,7 @@ export async function getStaticProps({ params }) {
     : null
   const criteria = isFitD
     ? `classification:${classification}`
-    : `artist:'Todd Webb'`
+    : exhibitionData.relatedSearchCriteria || '*'
   const classificationResults = await getSearchResults(criteria, {
     isFitD,
     dataPrefix,
@@ -282,7 +283,7 @@ function ExhibitionContextBlurb(props) {
   ) : (
     <>
       <aside className="bg-gray-300 p-4 px-4 mt-8 my-4 pb-0 mb-0">
-        <Text>{exhibitionData.description.split('\n\n')[0]}</Text>
+        <Text>{exhibitionData?.description?.split('\n\n')[0]}</Text>
       </aside>
       <Link href={`/exhibitions/${exhibitionData.exhibition_id}/`}>
         <a className="block text-center uppercase hover:underline py-2 pb-4 hover:bg-gray-300">

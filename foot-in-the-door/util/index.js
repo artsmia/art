@@ -80,7 +80,7 @@ export function getImageProps(artData, options = {}) {
       'url(https://collections.artsmia.org/images/no-image-bg.png) repeat top left',
     width: '100%',
     minWidth: '7em',
-    minHeight: '37vh',
+    height: '100%',
     display: 'block',
     padding: '1em',
     textAlign: 'center',

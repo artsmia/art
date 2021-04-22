@@ -44,10 +44,16 @@ function ArtworkSideBySide(props) {
     }
   )
 
-  const { showAuxilaryImage, dataPrefix } = props.exhibitionData
-  const referenceArtworkImageProps = getImageProps(props.referenceArtwork, {
-    fullSize: true,
-  })
+  const {
+    dataPrefix,
+    showAuxilaryImage,
+    auxilaryImagePrompt,
+  } = props.exhibitionData
+  const referenceArtworkImageProps = showAuxilaryImage
+    ? getImageProps(props.referenceArtwork, {
+        fullSize: true,
+      })
+    : {}
 
   return (
     <main className="md:flex md:align-start off:min-h-screen-3/5 pt-2">
@@ -58,6 +64,7 @@ function ArtworkSideBySide(props) {
           `relative md:w-${leftWidth}`,
           'object-contain object-center max-h-full md:mr-4'
         )}
+        opacity={'.05'}
       >
         <ImageWithMouseZoom
           {...imageProps}
@@ -123,35 +130,62 @@ function ArtworkSideBySide(props) {
           {props.children}
         </div>
 
-        <div className="mt-12 pt-2 max-h-full" id="partner">
-          {showAuxilaryImage && props.referenceArtwork && (
+        {showAuxilaryImage && props.referenceArtwork && (
+          <div
+            className="mt-12 pt-2 min-h-full md:min-h-screen-3x"
+            id="partner-container"
+          >
             <>
+              {auxilaryImagePrompt && (
+                <p className="font-bold text-lg pb-2">{auxilaryImagePrompt}</p>
+              )}
               <ImageWithBackground
                 imageSrc={referenceArtworkImageProps.src}
                 imageProps={referenceArtworkImageProps}
                 className={cx(
-                  'object-contain object-center max-h-full md:mr-4'
+                  'object-contain object-center max-h-full md:mr-4',
+                  'sticky'
                 )}
+                style={{ top: '1.5vh' }}
+                opacity={'0'}
+                id="partner"
               >
                 <ImageWithMouseZoom
                   {...referenceArtworkImageProps}
                   src={referenceArtworkImageProps.src}
                   key={artwork.id}
-                  className=""
-                  style={{}}
-                />
+                  style={{
+                    maxHeight: '91vh',
+                    width: 'auto',
+                    position: 'relative',
+                  }}
+                  className="group"
+                >
+                  <img
+                    src={imageSrc}
+                    alt=""
+                    className="absolute top-0 right-0 group-hover:hidden md:hidden"
+                    style={{ width: '33%' }}
+                  />
+                </ImageWithMouseZoom>
+                <div className="pt-2 py-4">
+                  <Tombstone artwork={props.referenceArtwork} />
+                  {/* eslint-disable react/jsx-no-target-blank */}
+                  <p className="text-lg pb-2">
+                    Floral Arrangement by {artwork.artist}
+                  </p>
+                  <a
+                    href={`https://collections.artsmia.org/art/${artwork.id}`}
+                    target="_blank"
+                    className="hover:underline"
+                  >
+                    View full artwork info &rarr;
+                  </a>
+                </div>
               </ImageWithBackground>
-              <Tombstone artwork={props.referenceArtwork} />
-              {/* eslint-disable react/jsx-no-target-blank */}
-              <a
-                href={`https://collections.artsmia.org/art/${artwork.id}`}
-                target="_blank"
-              >
-                View full artwork info &rarr;
-              </a>
             </>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </main>
   )

@@ -82,7 +82,12 @@ export async function getMiaExhibitionData(exhId, fs) {
   // [ ] refactor based on frontMatter in exhibition markdown file?
   const isClosed = Number(exhId) === 2760 // && (new Date(endDate) < new Date() || true)
 
-  const hideSearch = Number(exhId) !== 2760
+  // TODO how to limit the search to only include items within
+  // the current exhibition? This is possible for auxilary data
+  // exhibitions which use their own independent ES index
+  // But will need more thinking to search the full objects[1-2] ES
+  // index when results from outside a given exhibition shouldn't be returned?
+  const hideSearch = [2760, 2897].indexOf(Number(exhId)) < 0
 
   const slug = (
     mdData.slug ||
