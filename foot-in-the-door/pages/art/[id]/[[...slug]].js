@@ -51,7 +51,7 @@ function Art(props) {
     .replace(/\s+/g, '-')
 
   return (
-    <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch}>
+    <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch} exhibitionData={exhibitionData}>
       <ArtworkSideBySide artwork={artwork} isFitD={isFitD} exhibitionData={exhibitionData} referenceArtwork={referenceArtwork}>
         <p className="flex items-center">
           <ShareLinks art={artwork} hideLinks={!isFitD} exhibitionData={props.exhibitionData} />
@@ -207,6 +207,7 @@ export async function getStaticProps({ params }) {
       exhibitionData,
       referenceArtwork,
     },
+    revalidate: '600',
   }
 }
 

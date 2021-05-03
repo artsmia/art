@@ -1,17 +1,24 @@
 /** @format */
 import { useState, useEffect, Fragment } from 'react'
-import Link from 'next/link'
+import Link from 'components/NestedLink'
 import { HiHeart, HiOutlineHeart } from '@meronex/icons/hi'
 import { cx, getUserLikes, likeArtwork } from '../util'
 
 function LikeControl(props) {
-  const { artwork, showConfirmation, className, hydrateLocal } = props
+  const {
+    artwork,
+    showConfirmation,
+    className,
+    hydrateLocal,
+    dataPrefix,
+  } = props
   const [artworkLiked, setArtworkLiked] = useState(false)
   useEffect(() => {
     // only do this check on proper artwork pages
     // doing it for every artwork in the grid would be way too many network
     // requests. use global state?
     if (!hydrateLocal && !showConfirmation) return
+
     async function getLikesAndCheckIfThisIsLiked() {
       const existingLikes = await getUserLikes({
         idsOnly: true,
@@ -35,7 +42,7 @@ function LikeControl(props) {
     <HiOutlineHeart {...heartProps} />
   )
   function _likeArtwork(event) {
-    likeArtwork(artwork.id)
+    likeArtwork(artwork.id, dataPrefix)
     setArtworkLiked(true)
     event.preventDefault()
     event.stopPropagation()
@@ -49,14 +56,15 @@ function LikeControl(props) {
         onKeyPress={_likeArtwork}
         role="button"
         tabIndex={0}
-        title="Save this artwork"
+        title={props?.favoriteLanguage?.title ?? 'Favorite this artwork'}
       >
         {heartComponent}
       </span>
       {artworkLiked && showConfirmation && (
         <Link href="/favorites">
           <a className="absolute bottom-0 left-0 px-2 text-white bg-black">
-            View your list of favorite artworks
+            {props?.favoriteLanguage?.confirmation ||
+              'View your list of favorite artworks'}
           </a>
         </Link>
       )}

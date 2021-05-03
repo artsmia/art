@@ -123,14 +123,11 @@ function Room(props) {
         exhibitionData={props.exhibitionData}
       >
         <div className="max-w-3xl mx-auto"><Text dangerous={true}>{labelText}</Text></div>
-        {lockup && <>
-          <img src={lockup.img} className={lockup.tailwindStyle} alt={lockup.alt} style={{maxWidth: '19em'}} />
-        </>}
       </RoomGrid>
     )
 
   return (
-    <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>
+    <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch} exhibitionData={exhibitionData}>
       <main className="md:my-16 flex flex-col">
         <TitleSubtitle title={classification} useSegmentation={segmentExhibitionTitle} headerStyles="text-center" />
         <LeftRightNav

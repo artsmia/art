@@ -22,6 +22,11 @@ import ImageWithBackground from './ImageWithBackground'
 import Text from 'components/Text'
 import Image from 'components/Image'
 
+/** TODO
+ * replace the grid here with native css-grid masonry once browser support increases
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Masonry_Layout
+ */
+
 function RoomGrid(props) {
   const {
     hits,
@@ -81,10 +86,13 @@ function RoomGrid(props) {
   // to modify the grid wrapper styling with a max-width and auto margins
   const useFixedImageGrid = gridCols < gridColsByWidth
 
-  const {
+  let {
     asPath: page,
     query: { exhibitionId: exhId, exhibitionSlug: exhSlug },
   } = useRouter()
+
+  exhId = exhId || 2897
+  exhSlug = exhSlug || 'art-in-bloom-21'
 
   return (
     <section {...containerProps}>

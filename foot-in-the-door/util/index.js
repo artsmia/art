@@ -52,7 +52,7 @@ export function getImageSrc(artworkData, thumbnail = true) {
     const imageFilename = artworkData.image
       .replace(/\.(jpeg|png|JPG)$/, '.jpg')
       .replace(/%2./g, '_')
-    return `http://mia-collections-auxilary-images.s3.amazonaws.com/aib21/tn_${imageFilename}`
+    return `https://mia-collections-auxilary-images.s3.amazonaws.com/aib21/tn_${imageFilename}`
   } else if (artworkData.__iiif) {
     return artworkData.__iiif
   } else if (useIIIF) {
@@ -185,10 +185,10 @@ const isDev = false // TODO env var? Next magic var?
 const searchEndpoint = isDev
   ? `http://localhost:4680`
   : `https://search.artsmia.org`
-export async function likeArtwork(id) {
+export async function likeArtwork(id, dataPrefix) {
   if (isNaN(id)) return // console.error('non-numeric artwork ID')
 
-  const surveyEndpoint = `${searchEndpoint}/survey/art/fitd|${id}/like?subset=fitd`
+  const surveyEndpoint = `${searchEndpoint}/survey/art/${dataPrefix}|${id}/like?subset=${dataPrefix}`
   const res = await fetch(surveyEndpoint, {
     credentials: 'include',
   })
@@ -201,9 +201,11 @@ export async function likeArtwork(id) {
 
 export async function getUserLikes(options = {}) {
   const surveyEndpoint = `${searchEndpoint}/survey/favorites`
-  const { idsOnly, localOnly } = options
+  const { idsOnly, localOnly, dataPrefix } = options
 
-  const localData = JSON.parse(localStorage?.getItem('artsmia-fitd') || '{}')
+  const localData = JSON.parse(
+    localStorage?.getItem(`artsmia-${dataPrefix}`) || '{}'
+  )
   if (localOnly) return localData.likes || []
 
   const res = await fetch(surveyEndpoint, {
@@ -213,7 +215,7 @@ export async function getUserLikes(options = {}) {
 
   const ids = [
     ...new Set([
-      ...likes.map((id) => Number(id.replace('fitd|', ''))),
+      ...likes.map((id) => Number(id.replace(`${dataPrefix}|`, ''))),
       ...(localData.likes || []),
     ]),
   ]

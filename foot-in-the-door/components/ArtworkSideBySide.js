@@ -48,6 +48,7 @@ function ArtworkSideBySide(props) {
     dataPrefix,
     showAuxilaryImage,
     auxilaryImagePrompt,
+    favoriteLanguage,
   } = props.exhibitionData
   const referenceArtworkImageProps = showAuxilaryImage
     ? getImageProps(props.referenceArtwork, {
@@ -66,27 +67,35 @@ function ArtworkSideBySide(props) {
         )}
         opacity={'.05'}
       >
-        <ImageWithMouseZoom
-          {...imageProps}
-          src={imageSrc}
-          alt={description}
-          key={artwork.id}
-          className="sticky top-2"
-          style={{
-            ...imageStyle,
-            top: '1.5vh',
-            maxHeight: imgMaxHeight,
-            width: 'auto',
-            margin: '0 auto',
-            zIndex: '10',
-          }}
-          instructionsElem={zoomInstructionsRef.current}
-          setHideInfo={setHideInfo}
-        />
-        {isFitD && <LikeControl artwork={artwork} showConfirmation={true} />}
+        <div className="sticky top-2" style={{ top: '1.5vh' }}>
+          <ImageWithMouseZoom
+            {...imageProps}
+            src={imageSrc}
+            alt={description}
+            key={artwork.id}
+            style={{
+              ...imageStyle,
+              top: '1.5vh',
+              maxHeight: imgMaxHeight,
+              width: 'auto',
+              margin: '0 auto',
+              zIndex: '10',
+            }}
+            instructionsElem={zoomInstructionsRef.current}
+            setHideInfo={setHideInfo}
+          />
+          {dataPrefix === 'aib21' && (
+            <LikeControl
+              artwork={artwork}
+              showConfirmation={true}
+              dataPrefix={dataPrefix}
+              favoriteLanguage={favoriteLanguage}
+            />
+          )}
+        </div>
       </ImageWithBackground>
       <div
-        className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:pl-2 sticky top-2`}
+        className={`flex flex-col justify-start border-t-2 border-black md:w-${rightWidth} md:pl-2`}
         style={{
           backdropFilter: 'blur(10px)',
           background: 'rgba(255, 255, 255, 0.5)',
@@ -98,16 +107,19 @@ function ArtworkSideBySide(props) {
           <Tombstone
             artwork={artwork}
             exhibitionData={props.exhibitionData}
-            useTestData={true}
+            hideAccessionNumber={dataPrefix === 'aib21'}
           />
 
           {keywordsString && (
-            <p className="whitespace-normal break-word overflow-scroll">
-              <strong>Keywords</strong>:{' '}
+            <p className="">
+              <strong>
+                {props.exhibitionData.keywordsPrompt || 'Keywords'}
+              </strong>
+              :{' '}
               {keywords.map((word, index) => (
                 <Fragment key={word}>
                   <Link href={`/search/keywords:${word}`} key={word}>
-                    <a className="pl-1">{word}</a>
+                    <a className="pl-1 hover:underline">{word}</a>
                   </Link>
                   {index === keywords.length - 1 ? '' : ','}{' '}
                 </Fragment>
@@ -171,13 +183,15 @@ function ArtworkSideBySide(props) {
                 <div className="pt-2 py-4">
                   <Tombstone artwork={props.referenceArtwork} />
                   {/* eslint-disable react/jsx-no-target-blank */}
-                  <p className="text-lg pb-2">
-                    Floral Arrangement by {artwork.artist}
-                  </p>
+                  {false && (
+                    <p className="text-lg pb-2">
+                      Floral Arrangement by {artwork.artist}
+                    </p>
+                  )}
                   <a
                     href={`https://collections.artsmia.org/art/${artwork.id}`}
                     target="_blank"
-                    className="hover:underline"
+                    className="hover:underline font-bold"
                   >
                     View full artwork info &rarr;
                   </a>
@@ -212,6 +226,8 @@ function Tombstone(props) {
       medium,
       creditline,
       accession_number,
+      culture,
+      country,
     },
     exhibitionData = {},
   } = props
@@ -219,6 +235,8 @@ function Tombstone(props) {
 
   const artist = rawArtist?.replace('Artist: ', '')
   const title = segmentArtTitles ? segmentTitle(rawTitle) : rawTitle
+
+  const artistCreator = artist !== '' ? artist : culture || country
 
   return (
     <>
@@ -230,10 +248,13 @@ function Tombstone(props) {
       >
         {title}, <span className="text-base text-2xl font-light">{dated}</span>
       </h1>
-      <h2 className="text-lg pt-0">{artist}</h2>
+      <h2 className="text-lg pt-0">{artistCreator}</h2>
       <p>{medium}</p>
       <p className="text-xs uppercase pt-1">
-        {creditline} <span className="ml-4">{accession_number}</span>
+        {creditline}{' '}
+        {props.hideAccessionNumber ? null : (
+          <span className="ml-4">{accession_number}</span>
+        )}
       </p>
       <ArtworkGalleryLocation art={artwork} className="font-bold pt-1 pb-4" />
     </>

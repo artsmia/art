@@ -10,7 +10,13 @@ import { ConditionalSurvey } from '../components/Survey'
 import { titleCase } from 'util/index'
 
 function Layout(props) {
-  const { stickyCTA, stickyFooter, hideCTA, pageBlocked } = props
+  const {
+    stickyCTA,
+    stickyFooter,
+    hideCTA,
+    pageBlocked,
+    exhibitionData,
+  } = props
   const [ctaClosed, setCTAClosed] = useState(!stickyCTA)
 
   const { query } = useRouter()
@@ -90,7 +96,10 @@ function Layout(props) {
         </Head>
 
         <header className="mb-12">
-          <NavBar hideSearch={props.hideSearch} />
+          <NavBar
+            hideSearch={props.hideSearch}
+            exhibitionData={exhibitionData}
+          />
         </header>
 
         <aside
@@ -114,15 +123,17 @@ function Layout(props) {
             'mt-16'
           )}
         >
-          {isFitD && (
+          {isFitD ? (
             <>
-              <SponsorLockup />
+              <FitDSponsorLockup />
               {false && <ConditionalSurvey />}
               <p className="mt-2 font-lignt text-xs text-center">
                 The concepts expressed in this show are those of the artists,
                 not the museum. Please direct inquiries to visit@artsmia.org.
               </p>
             </>
+          ) : (
+            <Footer exhibitionData={exhibitionData} />
           )}
         </footer>
         <UserSurveillance />
@@ -133,7 +144,7 @@ function Layout(props) {
 
 export default Layout
 
-function SponsorLockup() {
+function FitDSponsorLockup() {
   return (
     <ol id="sponsor-lockup" className="md:flex flex-row">
       <div className="text-xs md:w-2/3 flex-shrink-0 lg:flex lg:border-t-2 lg:mt-4 border-black">
@@ -242,4 +253,13 @@ function UserSurveillance() {
       ></script>
     </>
   )
+}
+
+function Footer(props) {
+  const { exhibitionData } = props
+  const { lockup } = exhibitionData || {}
+
+  return lockup?.img ? (
+    <img src={lockup.img} alt="" className={lockup.tailwindStyle} />
+  ) : null
 }

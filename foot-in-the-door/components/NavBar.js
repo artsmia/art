@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 import { classifications, cx, useWindowSize } from '../util'
 import SearchInput, { ExpandableSearchInput } from './SearchInput'
 
-function NavBar({ hideSearch }) {
+function NavBar({ hideSearch, exhibitionData }) {
   // const [searchOpen, setSearchOpen] = useState(false)
   // const toggleSearchDrawer = () => setSearchOpen(!searchOpen)
   const expandedNavDialog = useDialogState()
@@ -29,7 +29,7 @@ function NavBar({ hideSearch }) {
         <LogoLink route={route} className="mb-2" />
         <div className="text-sm uppercase">
           <ExhibitionHomeLink route={route} router={router} />
-          <ExitExhibitionLink route={route} />
+          <ExitExhibitionLink route={route} exhibitionData={exhibitionData} />
         </div>
       </div>
       {isSearchPage ||
@@ -188,19 +188,26 @@ function ExhibitionHomeLink({ route, router, className }) {
   )
 }
 
-function ExitExhibitionLink({ route, className, ...props }) {
+function ExitExhibitionLink({ route, className, exhibitionData, ...props }) {
+  const exitExhibitionLink =
+    exhibitionData?.wpLink ?? 'https://new.artsmia.org/exhibitions/'
+  console.info('ExitExhibitionLink', {
+    exhibitionData,
+    exitExhibitionLink,
+    route,
+  })
+
   if (route === '/') return null
 
   return (
     <a
-      href="https://new.artsmia.org/exhibitions"
+      href={exitExhibitionLink}
       className={cx(
         'border no-underline font-bold p-2 ml-2 hidden md:inline',
         'hover:bg-black hover:text-white',
         className
       )}
       {...props}
-      title="Show All Exhibitions at Mia"
     >
       Exit Exhibition
     </a>

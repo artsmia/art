@@ -13,7 +13,7 @@ function FavoriteList() {
 
   useEffect(() => {
     async function getData() {
-      const data = await getUserLikes()
+      const data = await getUserLikes({dataPrefix: 'aib21'})
       setData(data)
     }
 
