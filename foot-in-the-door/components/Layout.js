@@ -260,6 +260,9 @@ function Footer(props) {
   const { lockup } = exhibitionData || {}
 
   return lockup?.img ? (
-    <img src={lockup.img} alt="" className={lockup.tailwindStyle} />
+    <>
+      {lockup?.heading ? <h3>{lockup.heading}</h3> : null}
+      <img src={lockup.img} alt="" className={lockup.tailwindStyle} />
+    </>
   ) : null
 }

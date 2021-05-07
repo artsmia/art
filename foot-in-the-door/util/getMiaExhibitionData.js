@@ -87,7 +87,7 @@ export async function getMiaExhibitionData(exhId, fs) {
   // exhibitions which use their own independent ES index
   // But will need more thinking to search the full objects[1-2] ES
   // index when results from outside a given exhibition shouldn't be returned?
-  const hideSearch = [2760, 2897].indexOf(Number(exhId)) < 0
+  const hideSearch = [2760, 2897, 2898].indexOf(Number(exhId)) < 0
 
   const slug = (
     mdData.slug ||

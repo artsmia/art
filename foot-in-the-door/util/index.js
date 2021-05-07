@@ -30,9 +30,10 @@ export function getImageSrc(artworkData, thumbnail = true) {
       .replace(/jpeg|png|JPG|tiff|pdf?$/i, 'jpg')
       .replace('+', '%2B')
       .replace(/ /g, '_')
-      .replace("'", '_')
+      // .replace("'", '_')
       // .replace('St._Paul_Music_Academy', 'SPMA')
-      .replace('Van_Kampen', 'V.K.')
+      // .replace('Van_Kampen', 'V.K.')
+      .replace('Espe_', 'Espe')
       .split('/')
       // add `tn_` to the front of the filename
       .reverse()
