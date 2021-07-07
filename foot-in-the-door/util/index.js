@@ -8,7 +8,7 @@ export {
 export function getImageSrc(artworkData, thumbnail = true) {
   const { id, accession_number } = artworkData
   // TODO replace with more general `dataPrefix`
-  const isFitD = Boolean(accession_number.match(/FITD/))
+  const isFitD = Boolean(accession_number?.match(/FITD/))
   const useIIIF = false // use options = {}?
 
   if (isFitD) {
@@ -24,7 +24,7 @@ export function getImageSrc(artworkData, thumbnail = true) {
       : `https://foot-in-the-door-2020.s3.amazonaws.com`
 
     return `${domain}/800/${thumb}`
-  } else if (accession_number.match(/CREACAD/)) {
+  } else if (accession_number?.match(/CREACAD/)) {
     const imageFilename = artworkData.image
     const thumb = imageFilename
       .replace(/jpeg|png|JPG|tiff|pdf?$/i, 'jpg')
@@ -49,7 +49,7 @@ export function getImageSrc(artworkData, thumbnail = true) {
       : `https://mia-collections-auxilary-images.s3.amazonaws.com`
 
     return `${domain}/ca21/${thumb}`
-  } else if (accession_number.match(/AIB/)) {
+  } else if (accession_number?.match(/AIB/)) {
     const imageFilename = artworkData.image
       .replace(/\.(jpeg|png|JPG)$/, '.jpg')
       .replace(/%2./g, '_')

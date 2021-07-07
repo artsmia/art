@@ -69,7 +69,7 @@ function Room(props) {
 
   const lastPage = additionalPages[additionalPages.length - 1]
   let finishedPaginating =
-    hits.length > perPage ||
+    hits.length >= perPage ||
     hits.length < perPage ||
     (lastPage && lastPage.length < perPage)
 
