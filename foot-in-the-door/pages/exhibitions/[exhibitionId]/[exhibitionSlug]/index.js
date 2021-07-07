@@ -172,8 +172,9 @@ function MiaExhibition(props) {
       <main className="md:flex items-start mb-12">
         <div className="md:w-1/2 mr-12">
           <TitleSubtitle title={exhibition_title} useSegmentation={segmentExhibitionTitle} />
-          <Text>{exhibitionData?.description}</Text>
-          <Text dangerous={true}>{`<strong>${exhDates}</strong><br />${markdownContent}`}</Text>
+          <p className="pb-5">{exhDates}</p>
+          <Text dangerous={true}>{exhibitionData?.description}</Text>
+          <Text dangerous={true}>{`${markdownContent}`}</Text>
 
           {hideSearch || <SearchInput className="my-6" />}
 

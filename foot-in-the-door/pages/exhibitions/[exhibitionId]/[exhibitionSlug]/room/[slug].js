@@ -130,6 +130,11 @@ function Room(props) {
     <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch} exhibitionData={exhibitionData}>
       <main className="md:my-16 flex flex-col">
         <TitleSubtitle title={classification} useSegmentation={segmentExhibitionTitle} headerStyles="text-center" />
+        <p className="text-center pb-5">{exhibitionData.display_date}</p>
+        {false && <>
+          <Text dangerous={true}>{exhibitionData?.description}</Text>
+          <hr />
+        </>}
         <LeftRightNav
           classifications={classifications}
           classification={classification}
