@@ -91,7 +91,7 @@ export async function getStaticProps() {
     props: {
       wpData,
     },
-    revalidate: 60,
+    revalidate: 6000,
   }
 }
 

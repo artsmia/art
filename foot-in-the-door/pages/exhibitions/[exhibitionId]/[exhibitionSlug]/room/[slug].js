@@ -246,7 +246,7 @@ export async function getStaticProps({ params }) {
       imagesForCarousel,
       isFitD,
     },
-    revalidate: 600,
+    revalidate: 6000,
   }
 }
 
@@ -257,11 +257,11 @@ export async function getStaticPaths() {
     .concat('*')
 
   const exhibitions = [
-    {
-      id: '2760',
-      slug: 'foot-in-the-door',
-      rooms: fitdClassifications.concat('*'),
-    },
+    // {
+    //   id: '2760',
+    //   slug: 'foot-in-the-door',
+    //   rooms: fitdClassifications.concat('*'),
+    // },
     {
       id: '2830',
       slug: 'todd-webb-in-africa',

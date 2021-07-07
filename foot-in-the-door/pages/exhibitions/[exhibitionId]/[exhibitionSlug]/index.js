@@ -230,7 +230,7 @@ export default ExhibitionHome
 export async function getStaticPaths() {
   return {
     paths: [
-      '/exhibitions/2760/foot-in-the-door',
+      // '/exhibitions/2760/foot-in-the-door',
       '/exhibitions/2830/todd-webb-in-africa',
     ],
     fallback: 'blocking',
@@ -270,6 +270,8 @@ export async function getStaticProps({ params }) {
         exhibitionData.imageCarousel.artDirection?.indexOf(Number(art._id)) >= 0 ? 'object-left-top' : '',
       __iiif: exhibitionData?.imageCarousel?.leadingImagesIIIF?.[index] ?? null,
     }))
+  } else {
+    leadingImages = null
   }
 
   return {

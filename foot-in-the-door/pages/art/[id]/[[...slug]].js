@@ -207,7 +207,7 @@ export async function getStaticProps({ params }) {
       exhibitionData,
       referenceArtwork,
     },
-    revalidate: '600',
+    revalidate: 6000,
   }
 }
 
