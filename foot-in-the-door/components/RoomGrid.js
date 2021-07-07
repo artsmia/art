@@ -25,6 +25,8 @@ import Image from 'components/Image'
 /** TODO
  * replace the grid here with native css-grid masonry once browser support increases
  * https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Masonry_Layout
+ * https://www.smashingmagazine.com/native-css-masonry-layout-css-grid/
+ * https://rachelandrew.co.uk/archives/2019/06/04/grid-content-re-ordering-and-accessibility/
  */
 
 function RoomGrid(props) {

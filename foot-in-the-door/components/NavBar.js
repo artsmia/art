@@ -191,11 +191,12 @@ function ExhibitionHomeLink({ route, router, className }) {
 function ExitExhibitionLink({ route, className, exhibitionData, ...props }) {
   const exitExhibitionLink =
     exhibitionData?.wpLink ?? 'https://new.artsmia.org/exhibitions/'
-  console.info('ExitExhibitionLink', {
-    exhibitionData,
-    exitExhibitionLink,
-    route,
-  })
+  false &&
+    console.info('ExitExhibitionLink', {
+      exhibitionData,
+      exitExhibitionLink,
+      route,
+    })
 
   if (route === '/') return null
 
