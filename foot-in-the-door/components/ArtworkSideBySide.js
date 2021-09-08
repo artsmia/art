@@ -49,7 +49,7 @@ function ArtworkSideBySide(props) {
     showAuxilaryImage,
     auxilaryImagePrompt,
     favoriteLanguage,
-  } = props.exhibitionData
+  } = props.exhibitionData || {}
   const referenceArtworkImageProps = showAuxilaryImage
     ? getImageProps(props.referenceArtwork, {
         fullSize: true,
