@@ -7,6 +7,8 @@ To start the server locally, you (1) need passing familiarity with
 (3) `npm start` should start the webserver and begin to update the
 javascript bundle.
 
+To compile the sass, install `libsass` and `sassc` (`brew install sassc`) and run `sassc -lm sass/main.scss css/main.css`
+
 # Companion code
 
 It pulls information from many different places:
