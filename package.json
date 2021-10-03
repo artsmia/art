@@ -36,7 +36,7 @@
     "react-proxy": "^1.1.8",
     "react-transform-hmr": "^1.0.4",
     "uglify-js": "^2.3.6",
-    "watchify": "^3.9.0"
+    "watchify": "^3.11.1"
   },
   "dependencies": {
     "@mapbox/react-click-to-select": "^1.1.1",
