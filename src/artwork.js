@@ -322,8 +322,7 @@ var Artwork = React.createClass({
     const iiif0Url = `https://tiles.dx.artsmia.org/iiif/${this.state.id}`
     const iiifUrl = `https://iiif.dx.artsmia.org/${this.state.id}.jpg/info.json`
 
-    rest(iiif0Url)
-
+    rest(iiif0Url).then(
     rest(iiifUrl)
     .then(
       response => JSON.parse(response.entity),
@@ -332,7 +331,7 @@ var Artwork = React.createClass({
         this.setState({zoomLoaded: 'error'})
         return Promise.reject(new Error(`can't load tiles for ${art.id}`))
       }
-    )
+    ))
     .then((data) => {
       this.map = L.map(this.refs.map, {
         crs: L.CRS.Simple,
