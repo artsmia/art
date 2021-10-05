@@ -28,8 +28,8 @@ body{
     font-weight: 400;
     color:$primary;
     margin: 0;
-    line-height:1.3em;
-    font-size:1em;
+    line-height:1.5em;
+    font-size:1.25em;
 }
 
 a {
@@ -624,7 +624,7 @@ header{
   padding-left:8px;
 }
 .departmentLink h2 {
-  font-size: 1em;
+  font-size: 1.5em;
   font-family: $MiaGroteskBold, sans-serif;
   border-top: 3px solid rgba(35,35,35,1);
   padding: 7px 0;
@@ -640,39 +640,30 @@ header{
 }
 .departmentListItem {
   width: 100%;
-  height: 150px;
+  height: 200px;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 
-@function cdnImageUrl($id) {
-  @return "https://" + $id%7 + ".api.artsmia.org/" + $id + ".jpg";
-}
+// @function cdnImageUrl($id) {
+//   @return "https://" + $id%7 + ".api.artsmia.org/" + $id + ".jpg";
+// }
 
-.departmentListItem.africa {
-  background-image: url(cdnImageUrl(4866));
-}
-.departmentListItem.cssaa {
-  background-image: url(cdnImageUrl(12134));
-}
+
+  .departmentListItem.africa {
+    background-image: url(/images/GA.png);}
 .departmentListItem.contemporary {
-  background-image: url(cdnImageUrl(1704));
+  background-image: url(/images/CA.jpeg);
 }
-.departmentListItem.dats {
-  background-image: url(cdnImageUrl(8024));
+.departmentListItem.european {
+  background-image: url(/images/EA.png);
 }
-.departmentListItem.jka {
-  background-image: url(cdnImageUrl(7505));
+.departmentListItem.americas {
+  background-image: url(/images/AOA.jpeg);
 }
-.departmentListItem.paintings {
-  background-image: url(cdnImageUrl(1348));
-}
-.departmentListItem.photography {
-  background-image: url(cdnImageUrl(89324));
-}
-.departmentListItem.prints {
-  background-image: url(cdnImageUrl(9194));
+.departmentListItem.asia {
+  background-image: url(/images/AA.png);
 }
 a.departmentLink h2{
   -webkit-transition: all 150ms linear;

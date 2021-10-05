@@ -25,14 +25,11 @@ var DepartmentsIndexPage = React.createClass({
 
 var Departments = React.createClass({
   departments: [
-    'Art of Africa and the Americas',
-    'Chinese, South and Southeast Asian Art',
-    'Contemporary Art',
-    'Decorative Arts, Textiles and Sculpture',
-    'Japanese and Korean Art',
-    'Paintings',
-    'Photography and New Media',
-    'Prints and Drawings',
+    'Department of the Arts of Global Africa',
+    'Department of Global Contemporary Art',
+    'Department of European Art',
+    'Department of Asian Art',
+    'Department of the Arts of the Americas',
   ],
 
   render() {
