@@ -1,5 +1,9 @@
 This is the code behind [Mia's collection website](http://collections.artsmia.org).
 
+# Required Software to run sass
+Install: sassc -lm sass/main.scss css/main.css
+Install: npm install -g rewatch
+Run when you npm start for code to watch for changes: npm run watchSass
 # Usage
 
 To start the server locally, you (1) need passing familiarity with

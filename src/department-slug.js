@@ -2,14 +2,11 @@ var toSlug = require('speakingurl')
 
 // { full name: short name, …}
 var representations = {
-  "Art of Africa and the Americas": 'africa',
-  "Contemporary Art": 'contemporary',
-  "Decorative Arts, Textiles and Sculpture": 'dats',
-  "Paintings": 'paintings',
-  "Photography and New Media": 'photography',
-  "Prints and Drawings": 'prints',
-  "Chinese, South and Southeast Asian Art": 'cssaa',
-  "Japanese and Korean Art": 'jka'
+  "Department of the Arts of Global Africa": 'africa',
+  "Department of Global Contemporary Art": 'contemporary',
+  "Department of European Art": 'european',
+  "Department of the Arts of the Americas": 'americas',
+  "Department of Asian Art": 'asia',
 }
 
 // Associate [full name, short name, slug]
