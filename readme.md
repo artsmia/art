@@ -23,8 +23,8 @@ It pulls information from many different places:
 * [collection-links](https://github.com/artsmia/collection-links) connects artworks with related content (audio, blog posts, …)
 * [artwork-dimensions](https://github.com/artsmia/artwork-dimensions)
   parses the dimension data for an artwork and builds a graphic referencing the size of a tennis ball.
-* [museumTileLayer](https://github.com/kjell/museumTileLayer)
-  adds a few features to [Leaflet](https://github.com/Leaflet/Leaflet) to display high-resolution photography
+
+* [Leaflet-IIIF](https://github.com/mejackreed/Leaflet-IIIF) adapts Leaflet to display IIIF adhering images.
 
 # Deployment
 
