@@ -3,3 +3,4 @@ node_modules
 css
 node_modules-2018-11-27
 .envrc
+.DS_Store
