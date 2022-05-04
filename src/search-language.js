@@ -12,7 +12,7 @@ var searchLanguageMap = (queryText) => {
     '_exists_:"related:adopt-a-painting"': "Adopt-a-Painting",
     '_exists_:"related:visual-descriptions"': "has Verbal Description of Artwork",
     '_exists_:"related:inspiredByMia"': 'Inspired By Mia',
-    '_exists_:"list:aampi"': 'Asian American and Pacific Islander art',
+    '_exists_:"list:aampi"': 'Asian American and Pacific Islander Artists',
     'room:G*': 'On View',
     'room:"Not on View"': 'Not on View',
     'image:valid': "Image Available",
