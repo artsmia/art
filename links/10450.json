@@ -1,0 +1,28 @@
+[
+  {
+    "id": "10450",
+    "type": "adopt-a-painting",
+    "adopted": "0",
+    "description": "This feast for the senses is currently dulled by layers of disfiguring grime and a gray, cloudy haze embedded in the varnish layer. Unfortunately, this results in a near-complete lack of color saturation. Examination under infrared and ultraviolet light also revealed several areas of old retouching, including many broad and extensive areas of overpaint in the background. Claesz. was certainly a master of surfaces, adept at conveying metal, glass, fabric – even the tantalizing tactility of foodstuffs – with paint. However, under its current layer of dirt, this work is not even close to realizing its full visual potential.­­ Adjusting the old retouching and restoring abrasions will reintegrate the artist’s original design. Assuredly, this elegant repast will offer a dramatic reveal.",
+    "cost": "$4,400.00"
+  },
+  {
+    "id": 941,
+    "title": "Glass Vessels in Dutch Painting of the 17th Century",
+    "description": "Friday, August 15, 1952 - Wednesday, October 01, 1952",
+    "objectIds": [
+      10450
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 942,
+    "title": "Paintings and Sculpture from the Minneapolis Institute of Arts",
+    "description": "Monday, January 14, 1957 - Sunday, March 10, 1957",
+    "objectIds": [
+      10450,
+      278
+    ],
+    "type": "exhibition"
+  }
+]

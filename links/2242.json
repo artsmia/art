@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Dix, Little Girl",
+    "link": "http://audio-tours.s3.amazonaws.com/p380.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "How old are they? A new website guesses the ages of famous faces in our collection—with revealing results",
+    "link": "http://new.artsmia.org/stories/how-old-are-they-a-new-website-guesses-the-ages-of-famous-faces-in-our-collection-with-revealing-results/",
+    "objectIds": "2242 2505 3632 593 95",
+    "type": "mia-story"
+  },
+  {
+    "id": 819,
+    "title": "Getroffen. Otto Dix und die Kunst des Portraits",
+    "description": "Saturday, December 01, 2007 - Sunday, April 06, 2008",
+    "objectIds": [
+      2242
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 964,
+    "title": "Otto Dix",
+    "description": "Thursday, March 18, 2010 - Sunday, January 02, 2011",
+    "objectIds": [
+      2242
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1608,
+    "title": "New Objectivity: Modern German Art in the Weimar Republic 1919-1933",
+    "description": "Sunday, October 04, 2015 - Sunday, January 17, 2016",
+    "objectIds": [
+      2242
+    ],
+    "type": "exhibition"
+  }
+]

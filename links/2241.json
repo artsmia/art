@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Yves Tanguy, Through Birds, Through Fire but Not Through Glass",
+    "link": "http://audio-tours.s3.amazonaws.com/p946.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1103,
+    "title": "Double Solitaire: The Surrealist Worlds of Kay Sage and Yves Tanguy",
+    "description": "Sunday, June 05, 2011 - Sunday, May 13, 2012",
+    "objectIds": [
+      2241
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 127,
+    "title": "Exiles and Emigres: 1922-1945",
+    "description": "Thursday, January 30, 1997 - Sunday, February 01, 1998",
+    "objectIds": [
+      2241
+    ],
+    "type": "exhibition"
+  }
+]

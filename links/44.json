@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1459,
+    "title": "I giardini di Monet",
+    "description": "Friday, October 04, 2013 - Sunday, February 09, 2014",
+    "objectIds": [
+      1413,
+      44
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 2,
+    "title": "John Twachtman: An American Impressionist",
+    "description": "Wednesday, May 19, 1999 - Wednesday, May 31, 2000",
+    "objectIds": [
+      44
+    ],
+    "type": "exhibition"
+  }
+]

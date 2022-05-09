@@ -1,0 +1,49 @@
+[
+  {
+    "id": 613,
+    "title": "Leonardo da Vinci, Michelangelo, and the Renaissance in Florence",
+    "description": "Friday, May 27, 2005 - Monday, September 05, 2005",
+    "objectIds": [
+      1850,
+      7216
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 492,
+    "title": "Venere e Amore: Michelangelo e la nuova bellezza ideale",
+    "description": "Tuesday, June 25, 2002 - Sunday, January 12, 2003",
+    "objectIds": [
+      1850
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Six Tuscan Poets",
+    "object": 1850,
+    "link": "http://artsmia.github.io/listen/#/04_Six_Tuscan_Poets"
+  },
+  {
+    "id": 1768,
+    "title": "Maniera. Bronzino, Pontormo and the Medici Florence",
+    "description": "Wednesday, February 24, 2016 - Sunday, June 05, 2016",
+    "objectIds": [
+      1850
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Vasari, Six Tuscan Poets",
+    "link": "http://audio-tours.s3.amazonaws.com/p315.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1267,
+    "title": "Vasari, Gli Uffizi E Il Duca",
+    "description": "Wednesday, June 15, 2011 - Sunday, January 08, 2012",
+    "objectIds": [
+      1850
+    ],
+    "type": "exhibition"
+  }
+]

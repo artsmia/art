@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1389,
+    "title": "Farmers and Mechanics Bank 1965",
+    "description": "Monday, June 07, 1965 - Wednesday, June 30, 1965",
+    "objectIds": [
+      517
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1399,
+    "title": "Childe Hassam and George Bellows",
+    "description": "Sunday, July 15, 1984 - Sunday, September 16, 1984",
+    "objectIds": [
+      517
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1379,
+    "title": "The American Vision",
+    "description": "Saturday, June 17, 1967 - Wednesday, December 17, 1969",
+    "objectIds": [
+      1332,
+      517,
+      18158
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1398,
+    "title": "Two Hundred Years of American Art",
+    "description": "Friday, March 16, 1984 - Sunday, July 15, 1984",
+    "objectIds": [
+      517
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1397,
+    "title": "American Style: Early Modernist Works in Minnesota Collections",
+    "description": "Saturday, October 24, 1981 - Sunday, December 27, 1981",
+    "objectIds": [
+      517
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 20,
+    "title": "The Allure of the Maine Coast: Robert Henri and His Circle,1903-18",
+    "description": "Thursday, June 29, 1995 - Sunday, October 15, 1995",
+    "objectIds": [
+      517
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1390,
+    "title": "Three Hundred Years of American Art",
+    "description": "Sunday, October 09, 1966 - Sunday, November 20, 1966",
+    "objectIds": [
+      517
+    ],
+    "type": "exhibition"
+  }
+]

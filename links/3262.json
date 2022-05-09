@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1242,
+    "title": "Homecoming: The Art Collection of James J. Hill",
+    "description": "Saturday, May 18, 1991 - Saturday, September 21, 1991",
+    "objectIds": [
+      6230,
+      6239,
+      2036,
+      2037,
+      53,
+      800,
+      1395,
+      1653,
+      1978,
+      2762,
+      2810,
+      10460,
+      797,
+      801,
+      1263,
+      1352,
+      1977,
+      3262
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 463,
+    "title": "L'Ecole de Barbizon",
+    "description": "Thursday, June 20, 2002 - Monday, September 09, 2002",
+    "objectIds": [
+      135,
+      3262
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 418,
+    "title": "Theodore Rousseau Retrospective",
+    "description": "Wednesday, February 06, 2002 - Saturday, March 16, 2002",
+    "objectIds": [
+      3262
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "id": 761,
+    "title": "Papier Moderne",
+    "description": "Sunday, June 11, 2006 - Sunday, January 28, 2007",
+    "objectIds": [
+      99319,
+      63588,
+      7159,
+      7158,
+      40367,
+      40343,
+      40362,
+      53649,
+      40360,
+      40331,
+      53647,
+      57990,
+      32938
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1297,
+    "title": "A Means of Escape: European Posters from 1889 to 1930",
+    "description": "Saturday, August 27, 2011 - Sunday, December 11, 2011",
+    "objectIds": [
+      112278,
+      36695,
+      68538,
+      64177,
+      110043,
+      39570,
+      39905,
+      7158,
+      63793,
+      65630,
+      40329,
+      63588,
+      112513,
+      112606,
+      112607
+    ],
+    "type": "exhibition"
+  }
+]

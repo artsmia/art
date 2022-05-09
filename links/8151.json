@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1155,
+    "title": "Degas: Form, Movement and the Antique",
+    "description": "Saturday, March 12, 2011 - Sunday, June 19, 2011",
+    "objectIds": [
+      7730,
+      8151
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 852,
+    "title": "The Dancer: Degas, Forain, and Toulouse-Lautrec",
+    "description": "Saturday, February 02, 2008 - Sunday, May 11, 2008",
+    "objectIds": [
+      8151
+    ],
+    "type": "exhibition"
+  }
+]

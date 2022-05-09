@@ -1,0 +1,385 @@
+[
+  {
+    "id": 1022,
+    "title": "From Raphael to Carraci: The Art of Papal Rome",
+    "description": "Friday, May 29, 2009 - Sunday, September 06, 2009",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1017,
+    "title": "1986 El Greco exhibition",
+    "description": null,
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1452,
+    "title": "The Greek of Toledo",
+    "description": "Friday, March 14, 2014 - Saturday, June 14, 2014",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1010,
+    "title": "Loan Exhibition of Masterworks by El Greco",
+    "description": "Saturday, May 17, 1947 - Saturday, June 21, 1947",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1642,
+    "title": "TDX_ArtStories",
+    "description": null,
+    "objectIds": [
+      278,
+      376,
+      529,
+      537,
+      566,
+      678,
+      1218,
+      1226,
+      1244,
+      1270,
+      1348,
+      1355,
+      1380,
+      1411,
+      1629,
+      1637,
+      1721,
+      1727,
+      1748,
+      1978,
+      2210,
+      2606,
+      3183,
+      3520,
+      4324,
+      4379,
+      4418,
+      4829,
+      5788,
+      7505,
+      7991,
+      8023,
+      9202,
+      10436,
+      12092,
+      22412,
+      31247,
+      43877,
+      60728,
+      91467,
+      95937,
+      98653,
+      105014,
+      107241,
+      108443,
+      108860,
+      109112,
+      109118,
+      109122,
+      109328,
+      112568,
+      113568,
+      113926,
+      114429,
+      114514,
+      114602,
+      115352,
+      115357,
+      115358,
+      115836,
+      116116,
+      116191,
+      116294,
+      116725,
+      117152,
+      117153,
+      118304,
+      119599
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1617,
+    "title": "The Library of El Greco",
+    "description": "Monday, March 31, 2014 - Sunday, June 29, 2014",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1005,
+    "title": "Masters of Spanish Painting",
+    "description": "Saturday, April 10, 1937 - Monday, May 10, 1937",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Christ Driving the Money Changers form the Temple",
+    "description": "<p>Justice is served as Jesus boots the people preying on pilgrims out of God’s house. The painter known as El Greco loved this scene from the Bible.<em>  And Jesus went into the temple of God, and cast out all them that sold and bought in the temple, and overturned the tables of the moneychangers and the seats of those who sold doves. And He said to them, “It is written, my house shall be called a house of prayer; but you are making it a robber’s den.” </em>(Matthew 21:12) His multiple takes on the subject mark his evolving artistic style, each subsequent version being more abstract and stylized.</p>",
+    "link": "http://artstories.artsmia.org/#/o/278",
+    "type": "artstory"
+  },
+  {
+    "id": 416,
+    "title": "El Greco: Themes and Variations",
+    "description": "Tuesday, May 15, 2001 - Sunday, July 29, 2001",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 942,
+    "title": "Paintings and Sculpture from the Minneapolis Institute of Arts",
+    "description": "Monday, January 14, 1957 - Sunday, March 10, 1957",
+    "objectIds": [
+      10450,
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1002,
+    "title": "Spanish Painting from El Greco to Goya",
+    "description": "Friday, February 17, 1928 - Sunday, April 01, 1928",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1000,
+    "title": "Art Treasures of the United Kingdom",
+    "description": "Tuesday, May 05, 1857 - Saturday, October 17, 1857",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1003,
+    "title": "Exhibition of Spanish Painting",
+    "description": "Friday, October 04, 1935 - Thursday, October 31, 1935",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1011,
+    "title": "Pontormo to Greco: The Age of Mannerism",
+    "description": "Sunday, February 14, 1954 - Sunday, March 28, 1954",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1019,
+    "title": "El Greco: Identity and Transformation",
+    "description": null,
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1008,
+    "title": "Spanish Painting",
+    "description": "Sunday, March 16, 1941 - Sunday, April 27, 1941",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1013,
+    "title": "An Inaugural Exhibition: El Greco, Rembrandt, Goya, Cézanne, Van Gogh, Picasso",
+    "description": "Thursday, September 12, 1957 - Sunday, October 20, 1957",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1009,
+    "title": "El Greco",
+    "description": "Sunday, March 09, 1947 - Sunday, April 13, 1947",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1014,
+    "title": "The Italian Heritage",
+    "description": "Wednesday, May 17, 1967 - Tuesday, August 29, 1967",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1001,
+    "title": "Spanish Old Masters",
+    "description": "Wednesday, October 01, 1913 - Saturday, January 31, 1914",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "El Greco, Christ Driving the Money Changers",
+    "link": "http://audio-tours.s3.amazonaws.com/p522.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 918,
+    "title": "Fortieth Anniversary Exhibition of Forty Masterpieces",
+    "description": "Wednesday, January 12, 1955 - Sunday, February 27, 1955",
+    "objectIds": [
+      547,
+      10448,
+      78,
+      729,
+      320,
+      278,
+      1226,
+      529,
+      592,
+      730,
+      1227,
+      593,
+      794,
+      774,
+      1163,
+      802,
+      1218,
+      10435,
+      1162,
+      1219,
+      795,
+      1197,
+      57591,
+      1230,
+      608,
+      64,
+      109,
+      782,
+      532,
+      726,
+      423,
+      15638,
+      329,
+      738,
+      604
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1006,
+    "title": "Masterpieces of Art",
+    "description": "Sunday, April 30, 1939 - Sunday, October 27, 1940",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1020,
+    "title": "2001 El Greco exhibition",
+    "description": null,
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1012,
+    "title": "Venetian Tradition",
+    "description": "Friday, November 09, 1956 - Tuesday, January 01, 1957",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 999,
+    "title": "Catalogue of pictures by Italian, Spanish, Flemish, Dutch, French, and English masters",
+    "description": "June 1850",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1015,
+    "title": "Harry D. M. Grier Memorial Loan Exhibition: Paintings and Drawings Related to Works in the Frick Collection",
+    "description": "Tuesday, November 14, 1972 - Sunday, November 26, 1972",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1007,
+    "title": "El Greco: Loan Exhibition for the Benefit of the Greek War Relief Association",
+    "description": "Friday, January 17, 1941 - Saturday, February 15, 1941",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1018,
+    "title": "1995 El Greco exhibition",
+    "description": null,
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1016,
+    "title": "El Greco of Toledo",
+    "description": "Thursday, April 01, 1982 - Sunday, February 06, 1983",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 428,
+    "title": "El Greco",
+    "description": "Tuesday, October 07, 2003 - Sunday, May 23, 2004",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1004,
+    "title": "A Century of Progress: Exhibition of Paintings and Sculpture",
+    "description": "Friday, June 01, 1934 - Thursday, November 01, 1934",
+    "objectIds": [
+      278
+    ],
+    "type": "exhibition"
+  }
+]

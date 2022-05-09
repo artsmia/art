@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1157,
+    "title": "Reflections of the Buddha",
+    "description": "Friday, September 09, 2011 - Saturday, March 10, 2012",
+    "objectIds": [
+      30633
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "The Monk Ananda",
+    "link": "http://www.thingiverse.com/thing:562614",
+    "id": "30633",
+    "type": "3d"
+  },
+  {
+    "title": "The Monk Ananda",
+    "link": "http://audio-tours.s3.amazonaws.com/p184.mp3",
+    "type": "audio"
+  }
+]

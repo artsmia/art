@@ -1,0 +1,54 @@
+[
+  {
+    "id": 533,
+    "title": "Eugène Delacroix, 1798-1863",
+    "description": "Saturday, November 01, 2003 - Sunday, February 01, 2004",
+    "objectIds": [
+      799,
+      8152,
+      4578
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1099,
+    "title": "Orientalism in Europe: Delacroix to Kandinsky",
+    "description": "Friday, October 15, 2010 - Sunday, August 28, 2011",
+    "objectIds": [
+      1785,
+      4578
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Delacroix, View of Tangier",
+    "link": "http://audio-tours.s3.amazonaws.com/p729.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 36,
+    "title": "Delacroix: The Last Years",
+    "description": "Saturday, March 07, 1998 - Thursday, January 07, 1999",
+    "objectIds": [
+      799,
+      4578
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 2161,
+    "title": "Eugène Delacroix and Modernity",
+    "description": "Wednesday, February 17, 2016 - Sunday, May 22, 2016",
+    "objectIds": [
+      601,
+      799,
+      1218,
+      1414,
+      1639,
+      1978,
+      4578,
+      115814
+    ],
+    "type": "exhibition"
+  }
+]

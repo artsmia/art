@@ -1,0 +1,119 @@
+[
+  {
+    "title": "Max Beckmann, Blindman's Buff",
+    "link": "http://audio-tours.s3.amazonaws.com/p870.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "Blind Man's Buff",
+    "description": "<p>The cabaret is swinging—hard enough that time has lost meaning and modern sophisticates consort with mythological figures. Amid these pleasure-seekers stand two young people carrying candles. The girl is oblivious to the clamor, steadfastly waiting; the boy is blindfolded but determined to find her—they have a predestined connection. These two give the painting its title, after the old game in which a blindfolded child stumbles through the darkness to find and “tag” other children. When asked if the couple would ever find each other, the artist Max Beckmann said “Perhaps; let us hope it.”</p>",
+    "link": "http://artstories.artsmia.org/#/o/1270",
+    "type": "artstory"
+  },
+  {
+    "id": 55,
+    "title": "Max Beckmann",
+    "description": "Thursday, October 03, 1996 - Friday, January 17, 1997",
+    "objectIds": [
+      1270
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1642,
+    "title": "TDX_ArtStories",
+    "description": null,
+    "objectIds": [
+      278,
+      376,
+      529,
+      537,
+      566,
+      678,
+      1218,
+      1226,
+      1244,
+      1270,
+      1348,
+      1355,
+      1380,
+      1411,
+      1629,
+      1637,
+      1721,
+      1727,
+      1748,
+      1978,
+      2210,
+      2606,
+      3183,
+      3520,
+      4324,
+      4379,
+      4418,
+      4829,
+      5788,
+      7505,
+      7991,
+      8023,
+      9202,
+      10436,
+      12092,
+      22412,
+      31247,
+      43877,
+      60728,
+      91467,
+      95937,
+      98653,
+      105014,
+      107241,
+      108443,
+      108860,
+      109112,
+      109118,
+      109122,
+      109328,
+      112568,
+      113568,
+      113926,
+      114429,
+      114514,
+      114602,
+      115352,
+      115357,
+      115358,
+      115836,
+      116116,
+      116191,
+      116294,
+      116725,
+      117152,
+      117153,
+      118304,
+      119599
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1634,
+    "title": "Restoring a Masterwork III: Max Beckmann's Blind Man's Buff",
+    "description": "Thursday, November 20, 2014 - Friday, March 06, 2015",
+    "objectIds": [
+      1270
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Restoring a Masterpiece III: Fall 2014",
+    "link": "http://new.artsmia.org/restoring-a-masterwork-3/",
+    "id": "1270",
+    "type": "conservation"
+  },
+  {
+    "title": "How do you restore a masterpiece? Carefully. And, in this case, in public.",
+    "link": "http://new.artsmia.org/stories/how-do-you-restore-a-masterpiece-carefully-and-in-this-case-in-public/",
+    "objectIds": "1270",
+    "type": "mia-story"
+  }
+]

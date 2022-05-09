@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1368,
+    "title": "First National Painting Annual",
+    "description": "1948",
+    "objectIds": [
+      10513
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1067,
+    "title": "To Make a World: George Ault and 1940s America",
+    "description": "Friday, March 11, 2011 - Monday, April 16, 2012",
+    "objectIds": [
+      10513
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Ault, Brook in the Mountains",
+    "link": "http://audio-tours.s3.amazonaws.com/p010.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1403,
+    "title": "Second Annual Exhibition of Painting",
+    "description": "Wednesday, November 19, 1947 - Sunday, January 04, 1948",
+    "objectIds": [
+      10513
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1404,
+    "title": "George Ault",
+    "description": "Saturday, May 05, 2001 - Monday, July 23, 2001",
+    "objectIds": [
+      10513
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1367,
+    "title": "Second Annual Paintings Exhibition",
+    "description": "1947",
+    "objectIds": [
+      10513
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1369,
+    "title": "George Ault Nocturnes",
+    "description": "Thursday, December 06, 1973 - Sunday, January 06, 1974",
+    "objectIds": [
+      10513
+    ],
+    "type": "exhibition"
+  }
+]

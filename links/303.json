@@ -1,0 +1,17 @@
+[
+  {
+    "id": 8,
+    "title": "Minnesota Impressionists",
+    "description": "Wednesday, November 20, 1996 - Friday, February 14, 1997",
+    "objectIds": [
+      60,
+      303
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Koehler, Rainy Evening on Henn Ave.",
+    "link": "http://audio-tours.s3.amazonaws.com/p006.mp3",
+    "type": "audio"
+  }
+]

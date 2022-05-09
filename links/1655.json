@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Gustave Caillebotte, Nude on a Couch",
+    "link": "http://audio-tours.s3.amazonaws.com/p730.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "Celebrating sex? Why some people find promiscuity immoral and others not so much",
+    "link": "http://new.artsmia.org/stories/celebrating-sex-why-some-people-find-promiscuity-immoral-and-others-not-so-much/",
+    "objectIds": "1655 44264",
+    "type": "mia-story"
+  },
+  {
+    "id": 1316,
+    "title": "Gustave Caillebotte - New Perspectives in Impressionism",
+    "description": "Thursday, October 18, 2012 - Sunday, January 20, 2013",
+    "objectIds": [
+      1655
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1643,
+    "title": "Gustave Caillebotte: The Painter's Eye",
+    "description": "Sunday, June 28, 2015 - Sunday, February 14, 2016",
+    "objectIds": [
+      1655
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Masterpiece Miley? How the twerking, toking Cyrus is like many of history's greatest artists",
+    "link": "http://new.artsmia.org/stories/masterpiece-miley-how-the-twerking-toking-cyrus-is-like-many-of-historys-greatest-artists/",
+    "objectIds": "1655 2724",
+    "type": "mia-story"
+  },
+  {
+    "id": 519,
+    "title": "Naked! The Female Body and the Rise of Modernism",
+    "description": "Wednesday, September 24, 2003 - Sunday, January 11, 2004",
+    "objectIds": [
+      1655
+    ],
+    "type": "exhibition"
+  }
+]

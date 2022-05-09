@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1436,
+    "title": "Saint John's University 1966",
+    "description": "Thursday, April 28, 1966 - Thursday, June 30, 1966",
+    "objectIds": [
+      18345
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1433,
+    "title": "Cameron Booth: 48 Paintings from 1946 through 1958",
+    "description": "Wednesday, October 29, 1958 - Tuesday, December 02, 1958",
+    "objectIds": [
+      18158,
+      18345
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1431,
+    "title": "Carleton College 1984 to 1988",
+    "description": "Wednesday, August 01, 1984 - Friday, August 19, 1988",
+    "objectIds": [
+      16367,
+      18158,
+      18345,
+      20697
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1441,
+    "title": "First National Bank September 1973",
+    "description": "September 1973",
+    "objectIds": [
+      18345
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1437,
+    "title": "Honeywell 1968",
+    "description": "Friday, July 26, 1968 - Friday, September 27, 1968",
+    "objectIds": [
+      18345
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1428,
+    "title": "Cameron Booth",
+    "description": "Sunday, May 14, 1961 - Monday, June 26, 1961",
+    "objectIds": [
+      16367,
+      18158,
+      18345,
+      20697
+    ],
+    "type": "exhibition"
+  }
+]

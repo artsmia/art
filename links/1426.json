@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1577,
+    "title": "Exposure: Degenerate Art by Hitler - Sale of Lucerne, 1939",
+    "description": "Thursday, October 16, 2014 - Sunday, March 29, 2015",
+    "objectIds": [
+      1426
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1603,
+    "title": "Oskar Kokoschka: The Self in Focus",
+    "description": "Friday, October 04, 2013 - Monday, March 03, 2014",
+    "objectIds": [
+      1426,
+      1557,
+      1943
+    ],
+    "type": "exhibition"
+  }
+]

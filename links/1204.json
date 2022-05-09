@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1560,
+    "title": "Islamic Miniature Paintings from American Collections",
+    "description": "Saturday, April 01, 1967 - Sunday, April 30, 1967",
+    "objectIds": [
+      1204
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1809,
+    "title": "Islamic Painting from American Collections",
+    "description": "Thursday, April 06, 1967 - Wednesday, April 26, 1967",
+    "objectIds": [
+      18102,
+      18104,
+      1196,
+      1194,
+      106160,
+      99886,
+      1191,
+      1187,
+      1214,
+      1213,
+      1186,
+      1197,
+      1198,
+      1200,
+      1203,
+      1204,
+      1209,
+      106161
+    ],
+    "type": "exhibition"
+  }
+]

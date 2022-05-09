@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Manet, The Smoker",
+    "link": "http://audio-tours.s3.amazonaws.com/p454.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1668,
+    "title": "Munch and Van Gogh in Paris",
+    "description": "Thursday, May 07, 2015 - Sunday, January 17, 2016",
+    "objectIds": [
+      1689
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1279,
+    "title": "Manet: Portraying Life",
+    "description": "Thursday, October 04, 2012 - Sunday, April 14, 2013",
+    "objectIds": [
+      1689
+    ],
+    "type": "exhibition"
+  }
+]

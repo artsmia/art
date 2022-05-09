@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1571,
+    "title": "Delacroix and the Matter of Finish",
+    "description": "Sunday, October 27, 2013 - Sunday, May 18, 2014",
+    "objectIds": [
+      799
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 533,
+    "title": "Eugène Delacroix, 1798-1863",
+    "description": "Saturday, November 01, 2003 - Sunday, February 01, 2004",
+    "objectIds": [
+      799,
+      8152,
+      4578
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1102,
+    "title": "Delacroix: De l'idée à l'expression (1798-1863)",
+    "description": "Tuesday, October 18, 2011 - Sunday, May 20, 2012",
+    "objectIds": [
+      799,
+      1978
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 36,
+    "title": "Delacroix: The Last Years",
+    "description": "Saturday, March 07, 1998 - Thursday, January 07, 1999",
+    "objectIds": [
+      799,
+      4578
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 2161,
+    "title": "Eugène Delacroix and Modernity",
+    "description": "Wednesday, February 17, 2016 - Sunday, May 22, 2016",
+    "objectIds": [
+      601,
+      799,
+      1218,
+      1414,
+      1639,
+      1978,
+      4578,
+      115814
+    ],
+    "type": "exhibition"
+  }
+]

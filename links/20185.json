@@ -1,0 +1,38 @@
+[
+  {
+    "id": 119,
+    "title": "James Van DerZee: The Harlem Years",
+    "description": "Sunday, February 11, 2001 - Sunday, April 15, 2001",
+    "objectIds": [
+      20184,
+      20185,
+      2045,
+      20186,
+      2043,
+      2044,
+      20187,
+      20188,
+      25071,
+      25072,
+      27654,
+      27655,
+      27656
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1051,
+    "title": "Afro Modern: Journeys Through the Black Atlantic",
+    "description": "Friday, January 29, 2010 - Sunday, October 10, 2010",
+    "objectIds": [
+      20170,
+      20185,
+      2045,
+      20188,
+      2044,
+      25046,
+      4131
+    ],
+    "type": "exhibition"
+  }
+]

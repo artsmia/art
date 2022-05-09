@@ -1,0 +1,25 @@
+[
+  {
+    "id": 735,
+    "title": "Enigma Variations: Philip Guston and Giorgio de Chirico",
+    "description": "Saturday, September 09, 2006 - Saturday, November 25, 2006",
+    "objectIds": [
+      1941
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 115,
+    "title": "The Other Face of Modern Art",
+    "description": "Saturday, September 15, 2001 - Sunday, March 10, 2002",
+    "objectIds": [
+      1941
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "de Chirico, The Scholar's Playthings",
+    "link": "http://audio-tours.s3.amazonaws.com/p897.mp3",
+    "type": "audio"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1816,
+    "title": "1492 An Exploration of Seven Cities",
+    "description": null,
+    "objectIds": [
+      1374
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1817,
+    "title": "Art of India",
+    "description": "Monday, June 23, 1969 - Saturday, August 23, 1969",
+    "objectIds": [
+      1374
+    ],
+    "type": "exhibition"
+  }
+]

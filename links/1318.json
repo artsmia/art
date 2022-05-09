@@ -1,0 +1,46 @@
+[
+  {
+    "id": 800,
+    "title": "The Surreal Calder",
+    "description": "Sunday, June 11, 2006 - Sunday, September 10, 2006",
+    "objectIds": [
+      1318,
+      5033,
+      101055
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 59,
+    "title": "Paul Klee im Rheinland",
+    "description": "Thursday, March 06, 2003 - Sunday, June 29, 2003",
+    "objectIds": [
+      1318
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 750,
+    "title": "Best in Show! The Dog in Art from the Renaissance to the Post-Modern",
+    "description": "Sunday, October 01, 2006 - Monday, January 01, 2007",
+    "objectIds": [
+      1318
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Paul Klee, Howling Dog",
+    "link": "http://audio-tours.s3.amazonaws.com/p852.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1041,
+    "title": "Der Blaue Reiter, Jawlensky, Kandinsky und die Folgen - Das Geistige in der Kunst",
+    "description": "Sunday, October 31, 2010 - Thursday, February 24, 2011",
+    "objectIds": [
+      2806,
+      1318
+    ],
+    "type": "exhibition"
+  }
+]

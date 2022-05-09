@@ -1,0 +1,36 @@
+[
+  {
+    "id": 426,
+    "title": "Picturing French Style: Three Hundred Years of Art and Fashion",
+    "description": "Friday, September 06, 2002 - Sunday, April 27, 2003",
+    "objectIds": [
+      1353
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": "1353",
+    "type": "adopt-a-painting",
+    "adopted": "1",
+    "description": "",
+    "cost": ""
+  },
+  {
+    "id": 1268,
+    "title": "Juan Gris.  Rimes de la forme et de la couleur",
+    "description": "Friday, June 24, 2011 - Monday, October 31, 2011",
+    "objectIds": [
+      1353
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 635,
+    "title": "Juan Gris (1887-1927)",
+    "description": "Wednesday, June 22, 2005 - Monday, September 19, 2005",
+    "objectIds": [
+      1353
+    ],
+    "type": "exhibition"
+  }
+]

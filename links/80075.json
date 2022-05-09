@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Banksy",
+    "object": "80075",
+    "image": "/images/13.10.16_Richard_BanksyEDIT-1.jpeg",
+    "link": "http://newsflash.dx.artsmia.org/2013/10/banksy/",
+    "date": "2013-10-17 00:00:00 -0500",
+    "type": "newsflash"
+  },
+  {
+    "title": "Ukiyo-e video",
+    "object": "80075",
+    "image": "/images/13.09.03_VideoWoodBlocks_AlgeoEDIT-1.jpg",
+    "link": "http://newsflash.dx.artsmia.org/2013/09/ukiyo-e-video/",
+    "date": "2013-09-05 00:00:00 -0500",
+    "type": "newsflash"
+  }
+]

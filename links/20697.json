@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1428,
+    "title": "Cameron Booth",
+    "description": "Sunday, May 14, 1961 - Monday, June 26, 1961",
+    "objectIds": [
+      16367,
+      18158,
+      18345,
+      20697
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1443,
+    "title": "Cameron Booth 1967",
+    "description": "Sunday, February 26, 1967 - Sunday, March 19, 1967",
+    "objectIds": [
+      20697,
+      21888,
+      21885
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1431,
+    "title": "Carleton College 1984 to 1988",
+    "description": "Wednesday, August 01, 1984 - Friday, August 19, 1988",
+    "objectIds": [
+      16367,
+      18158,
+      18345,
+      20697
+    ],
+    "type": "exhibition"
+  }
+]

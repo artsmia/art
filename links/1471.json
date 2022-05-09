@@ -1,0 +1,22 @@
+[
+  {
+    "id": 667,
+    "title": "Restoring a Masterwork II: Guercino's \"Erminia and Shepherds\"",
+    "description": "Saturday, August 07, 2004 - Sunday, October 31, 2004",
+    "objectIds": [
+      1471
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Restoring a Masterpiece: Fall 1999",
+    "link": "http://archive.artsmia.org/restoration-online/guercino.cfm.html",
+    "id": "1471",
+    "type": "conservation"
+  },
+  {
+    "title": "Guercino, Erminia and the Shepherds",
+    "link": "http://audio-tours.s3.amazonaws.com/p465.mp3",
+    "type": "audio"
+  }
+]

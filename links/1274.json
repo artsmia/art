@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Brancusi, Golden Bird",
+    "link": "http://audio-tours.s3.amazonaws.com/p476.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 54,
+    "title": "A New View: An Architect's Eye",
+    "description": "Monday, November 15, 1993 - Friday, March 11, 1994",
+    "objectIds": [
+      1274
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1609,
+    "title": "Brancusi, Rosso, Man Ray - Framing Sculpture",
+    "description": "Saturday, February 08, 2014 - Sunday, May 25, 2014",
+    "objectIds": [
+      1274
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1141,
+    "title": "Constantin Brancusi and Richard Serra",
+    "description": "Sunday, May 22, 2011 - Sunday, April 15, 2012",
+    "objectIds": [
+      1274
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1460,
+    "title": "The Ecstasy of Color: Munch, Matisse and the Expressionists",
+    "description": "Saturday, September 29, 2012 - Sunday, January 20, 2013",
+    "objectIds": [
+      1639,
+      1224
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Kirchner, Seated Girl (Franzi Fehrmann)",
+    "link": "http://audio-tours.s3.amazonaws.com/p463.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 888,
+    "title": "The Birth of Expressionism: Brücke in Dresden and Berlin, 1905-1913",
+    "description": "Thursday, February 26, 2009 - Monday, June 29, 2009",
+    "objectIds": [
+      1224
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 510,
+    "title": "Expressive Trends",
+    "description": "Sunday, March 23, 2003 - Sunday, August 10, 2003",
+    "objectIds": [
+      1224
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,40 @@
+[
+  {
+    "id": 493,
+    "title": "Emil Nolde im Dialog (1905-1913)",
+    "description": "Saturday, October 12, 2002 - Monday, June 09, 2003",
+    "objectIds": [
+      1800
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 106,
+    "title": "Retrospective James Ensor",
+    "description": "Friday, September 24, 1999 - Friday, January 21, 2000",
+    "objectIds": [
+      1800
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "James Ensor, The Intrigue",
+    "link": "http://audio-tours.s3.amazonaws.com/p943.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "A World Cup tribute: art from around the globe",
+    "link": "http://new.artsmia.org/stories/a-world-cup-tribute-art-from-around-the-globe/",
+    "objectIds": "111088 115752 115895 12155 12217 1387 15062 1517 1556 1639 1671 1785 1800 1822 2724 28662 28710 293 29496 31435 4684 4866 4867 516 5483 5485 57 59171 676 742 7487",
+    "type": "mia-story"
+  },
+  {
+    "id": 910,
+    "title": "Becoming Edvard Munch: Influence, Anxiety, and Myth",
+    "description": "Sunday, February 15, 2009 - Sunday, April 26, 2009",
+    "objectIds": [
+      1800
+    ],
+    "type": "exhibition"
+  }
+]

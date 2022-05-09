@@ -1,0 +1,23 @@
+[
+  {
+    "id": 997,
+    "title": "The Lens of Impressionism: Photography and Painting Along the Normandy Coast",
+    "description": "Saturday, October 10, 2009 - Sunday, May 23, 2010",
+    "objectIds": [
+      10449
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1540,
+    "title": "Impressionists at Waterside",
+    "description": "Sunday, September 01, 2013 - Wednesday, April 30, 2014",
+    "objectIds": [
+      10449,
+      1234,
+      1413,
+      10436
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": 570,
+    "title": "Recent Acquisitions - November 2003 - April 2004",
+    "description": "Saturday, November 22, 2003 - Sunday, April 18, 2004",
+    "objectIds": [
+      65207,
+      64099,
+      81074,
+      80188,
+      77446,
+      70468,
+      70519,
+      79222,
+      32575,
+      80143,
+      82032,
+      81006,
+      82237,
+      81249,
+      81764,
+      81032,
+      83511,
+      81027,
+      81675,
+      83645,
+      82362,
+      83473,
+      83647
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Perugini, I know a maiden fair to see",
+    "link": "http://audio-tours.s3.amazonaws.com/p001.mp3",
+    "type": "audio"
+  }
+]

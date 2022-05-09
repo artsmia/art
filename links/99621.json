@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1619,
+    "title": "Giovanni Segantini: Il ritorno a Milano",
+    "description": "Thursday, September 18, 2014 - Sunday, January 18, 2015",
+    "objectIds": [
+      99621
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1137,
+    "title": "Giovanni Segantini",
+    "description": "Sunday, January 16, 2011 - Monday, April 25, 2011",
+    "objectIds": [
+      99621
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Thanksgiving: A feast for the eyes",
+    "link": "http://new.artsmia.org/stories/thanksgiving-a-feast-for-the-eyes/",
+    "objectIds": "11918 29115 40350 4600 99621",
+    "type": "mia-story"
+  }
+]

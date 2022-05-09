@@ -1,0 +1,29 @@
+[
+  {
+    "id": 831,
+    "title": "The Mythology of the American West",
+    "description": "Friday, September 28, 2007 - Sunday, August 03, 2008",
+    "objectIds": [
+      1492,
+      1820,
+      2903,
+      11708,
+      4510
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1278,
+    "title": "Legacy: The Artistry of the Wyeth Family",
+    "description": "Saturday, May 25, 2013 - Monday, September 02, 2013",
+    "objectIds": [
+      1820
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "N.C. Wyeth, Rural Delivery",
+    "link": "http://audio-tours.s3.amazonaws.com/p314.mp3",
+    "type": "audio"
+  }
+]

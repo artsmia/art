@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1425,
+    "title": "Rochester Art Center 1954",
+    "description": "Tuesday, March 30, 1954 - Friday, April 30, 1954",
+    "objectIds": [
+      16367
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1428,
+    "title": "Cameron Booth",
+    "description": "Sunday, May 14, 1961 - Monday, June 26, 1961",
+    "objectIds": [
+      16367,
+      18158,
+      18345,
+      20697
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1424,
+    "title": "27th Annual Local Artists' Exhibition",
+    "description": "Saturday, November 01, 1941 - Monday, December 01, 1941",
+    "objectIds": [
+      16367
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1429,
+    "title": "Minnesota Department of Education 1971 to 1977",
+    "description": "Friday, February 19, 1971 - Monday, July 18, 1977",
+    "objectIds": [
+      16367
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1335,
+    "title": "Winona Free Public Library 1947",
+    "description": "Monday, November 24, 1947 - Friday, December 19, 1947",
+    "objectIds": [
+      15729,
+      16367
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1427,
+    "title": "The Minneapolis Club 1959 to 1960",
+    "description": "Thursday, June 04, 1959 - Monday, April 25, 1960",
+    "objectIds": [
+      16367,
+      18158,
+      24529
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1426,
+    "title": "Hutchinson Free Public Library",
+    "description": "Sunday, June 20, 1954 - Friday, December 31, 1954",
+    "objectIds": [
+      16367
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1430,
+    "title": "Luthern Brotherhood Gallery 1982 to 1983",
+    "description": "Wednesday, December 15, 1982 - Thursday, February 10, 1983",
+    "objectIds": [
+      16367
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1419,
+    "title": "American Art Today",
+    "description": "1939",
+    "objectIds": [
+      16367
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1431,
+    "title": "Carleton College 1984 to 1988",
+    "description": "Wednesday, August 01, 1984 - Friday, August 19, 1988",
+    "objectIds": [
+      16367,
+      18158,
+      18345,
+      20697
+    ],
+    "type": "exhibition"
+  }
+]
