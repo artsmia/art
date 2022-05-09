@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Moving pictures: Classic films as you've never seen them before—through the lens of artworks",
+    "link": "http://new.artsmia.org/stories/moving-pictures-seeing-artworks-through-hollywoods-lens/",
+    "objectIds": "1315 1325 24413 2505 7615 766 8480",
+    "type": "mia-story"
+  },
+  {
+    "id": 532,
+    "title": "Francis Bacon and the Tradition of Art",
+    "description": "Wednesday, October 15, 2003 - Sunday, June 27, 2004",
+    "objectIds": [
+      1325
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Soutine, Carcass of Beef",
+    "link": "http://audio-tours.s3.amazonaws.com/p952.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 57,
+    "title": "Chaim Soutine",
+    "description": "Wednesday, April 01, 1998 - Wednesday, July 08, 1998",
+    "objectIds": [
+      1325
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1495,
+    "title": "Chaïm Soutine (1893-1943), l'ordre du chaos",
+    "description": "Tuesday, October 02, 2012 - Monday, January 21, 2013",
+    "objectIds": [
+      1325
+    ],
+    "type": "exhibition"
+  }
+]

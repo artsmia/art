@@ -1,0 +1,170 @@
+[
+  {
+    "id": 69,
+    "title": "Francis Bacon: A Retrospective Exhibition",
+    "description": "Sunday, April 11, 1999 - Thursday, October 28, 1999",
+    "objectIds": [
+      1355,
+      40162
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1908,
+    "title": "Reciprocal loan for Delacroix \"Cleopatra and the Peasant\"",
+    "description": "Saturday, January 23, 2016 - Sunday, April 10, 2016",
+    "objectIds": [
+      1355
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1642,
+    "title": "TDX_ArtStories",
+    "description": null,
+    "objectIds": [
+      278,
+      376,
+      529,
+      537,
+      566,
+      678,
+      1218,
+      1226,
+      1244,
+      1270,
+      1348,
+      1355,
+      1380,
+      1411,
+      1629,
+      1637,
+      1721,
+      1727,
+      1748,
+      1978,
+      2210,
+      2606,
+      3183,
+      3520,
+      4324,
+      4379,
+      4418,
+      4829,
+      5788,
+      7505,
+      7991,
+      8023,
+      9202,
+      10436,
+      12092,
+      22412,
+      31247,
+      43877,
+      60728,
+      91467,
+      95937,
+      98653,
+      105014,
+      107241,
+      108443,
+      108860,
+      109112,
+      109118,
+      109122,
+      109328,
+      112568,
+      113568,
+      113926,
+      114429,
+      114514,
+      114602,
+      115352,
+      115357,
+      115358,
+      115836,
+      116116,
+      116191,
+      116294,
+      116725,
+      117152,
+      117153,
+      118304,
+      119599
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Francis Bacon, Study for Portrait VI",
+    "link": "http://audio-tours.s3.amazonaws.com/p853.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1606,
+    "title": "Francis Bacon and Henry Moore: Terror and Beauty",
+    "description": "Saturday, April 05, 2014 - Sunday, July 20, 2014",
+    "objectIds": [
+      1355
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Art Inspires: John Moe on the \"punk rock\" painter Francis Bacon",
+    "link": "http://new.artsmia.org/stories/art-inspires-john-moe-on-the-punk-rock-painter-francis-bacon/",
+    "objectIds": "1355",
+    "type": "mia-story"
+  },
+  {
+    "title": "How to dress for Halloween as your favorite MIA artwork",
+    "link": "http://new.artsmia.org/stories/how-to-dress-for-halloween-as-your-favorite-mia-artwork/",
+    "objectIds": "102644 12134 1355 3520 529",
+    "type": "mia-story"
+  },
+  {
+    "title": "Study for Portrait VI",
+    "description": "<p>His vision is a dark one. Francis Bacon painted several portraits of popes (this is number six), and they all appear trapped, isolated and anguished—but beautifully painted. The portraits are based on Diego Velázquez’s celebrated portrait of Pope Innocent X, from 1650. And through his new way of depicting the human figure, Bacon showed what a portrait can be in the 20th century. In each of several studies he made for the painting, Bacon gave the pope a different face. Ultimately, he makes viewers feel as if they were behind the scenes, witnessing a private performance by a public figure.</p>",
+    "link": "http://artstories.artsmia.org/#/o/1355",
+    "type": "artstory"
+  },
+  {
+    "id": 2316,
+    "title": "Cleveland Museum of Art Centennial Celebration",
+    "description": "Saturday, October 01, 2016 - Saturday, December 31, 2016",
+    "objectIds": [
+      1355
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1076,
+    "title": "In Pursuit of a Masterpiece",
+    "description": "Sunday, October 18, 2009 - Sunday, April 11, 2010",
+    "objectIds": [
+      53,
+      33830,
+      814,
+      2732,
+      666,
+      608,
+      1226,
+      1602,
+      1748,
+      3551,
+      17203,
+      34503,
+      45642,
+      100854,
+      106821,
+      1355,
+      1629,
+      1743,
+      1825,
+      2620,
+      2814,
+      3183,
+      5141,
+      8480
+    ],
+    "type": "exhibition"
+  }
+]

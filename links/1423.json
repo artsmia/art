@@ -1,0 +1,36 @@
+[
+  {
+    "id": 830,
+    "title": "Picasso and American Art",
+    "description": "Saturday, June 16, 2007 - Sunday, September 09, 2007",
+    "objectIds": [
+      3885,
+      1423,
+      1517
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Picasso, Woman by the Sea",
+    "link": "http://audio-tours.s3.amazonaws.com/p788.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 2322,
+    "title": "Picasso: The Artist and His Muses",
+    "description": null,
+    "objectIds": [
+      1423
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1757,
+    "title": "Picasso and the Great War",
+    "description": "Monday, June 20, 2016 - Friday, November 11, 2016",
+    "objectIds": [
+      1423
+    ],
+    "type": "exhibition"
+  }
+]

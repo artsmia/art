@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1084,
+    "title": "Galerie de Feu S.E. le Cardinal Fesch",
+    "description": "1844 to March 1845",
+    "objectIds": [
+      1858
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1085,
+    "title": "Gemälde Alter Meister",
+    "description": "Thursday, April 01, 1971 - Monday, May 17, 1971",
+    "objectIds": [
+      1858
+    ],
+    "type": "exhibition"
+  }
+]

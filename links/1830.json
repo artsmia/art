@@ -1,0 +1,29 @@
+[
+  {
+    "id": 2215,
+    "title": "Private - Popular: Prints in Paris 1900",
+    "description": "Friday, March 03, 2017 - Sunday, June 11, 2017",
+    "objectIds": [
+      1830
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 971,
+    "title": "De la scène au tableau",
+    "description": "Thursday, October 01, 2009 - Sunday, September 26, 2010",
+    "objectIds": [
+      1830
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 680,
+    "title": "Le théâtre de l'Oeuvre",
+    "description": "Monday, April 11, 2005 - Sunday, July 03, 2005",
+    "objectIds": [
+      1830
+    ],
+    "type": "exhibition"
+  }
+]

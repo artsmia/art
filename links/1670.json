@@ -1,0 +1,31 @@
+[
+  {
+    "title": "Art Inspires: A young writer on the mind-stoking mysteries of Magritte and surrealism",
+    "link": "http://new.artsmia.org/stories/art-inspires-a-young-writer-on-the-mind-stoking-mysteries-of-magritte-and-surrealism/",
+    "objectIds": "1670",
+    "type": "mia-story"
+  },
+  {
+    "id": 866,
+    "title": "The Deluded Eye: Five Centuries of Deception",
+    "description": "Thursday, September 25, 2008 - Sunday, January 11, 2009",
+    "objectIds": [
+      1670
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "ReneÃ© Magritte, The Promenades of Euclid",
+    "link": "http://audio-tours.s3.amazonaws.com/p946.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 103,
+    "title": "Retrospective Exhibition: Rene Magritte",
+    "description": "Tuesday, February 10, 1998 - Wednesday, July 01, 1998",
+    "objectIds": [
+      1670
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,85 @@
+[
+  {
+    "id": 1607,
+    "title": "Hell is a Place We Made: Visions of Dante's Inferno",
+    "description": "Thursday, October 02, 2014 - Thursday, October 30, 2014",
+    "objectIds": [
+      59611
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1201,
+    "title": "American Artists' Books: 1967-2004",
+    "description": "Saturday, September 18, 2004 - Sunday, June 12, 2005",
+    "objectIds": [
+      59611,
+      61736,
+      61859,
+      67000,
+      83668,
+      83899,
+      91023,
+      90957,
+      90958,
+      90959,
+      90960,
+      90962,
+      80525,
+      80610
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1184,
+    "title": "Extraordinary Editions: Artist's Books of the 20th Century, Part I and II",
+    "description": "Saturday, May 30, 2009 - Sunday, May 23, 2010",
+    "objectIds": [
+      13291,
+      50068,
+      59611,
+      99103,
+      107073,
+      6040,
+      6055,
+      80618,
+      80622,
+      80634,
+      8900,
+      11466,
+      8880,
+      6075,
+      8842,
+      80934,
+      9068,
+      9184,
+      80852,
+      80171,
+      6089,
+      80133,
+      6091,
+      80751,
+      80218,
+      80784,
+      6101,
+      32341,
+      80678,
+      32345,
+      32623,
+      32635,
+      32497,
+      32501,
+      67473
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1291,
+    "title": "Michael Mazur: The Inferno of Dante",
+    "description": "Saturday, June 11, 2011 - Sunday, March 11, 2012",
+    "objectIds": [
+      59611
+    ],
+    "type": "exhibition"
+  }
+]

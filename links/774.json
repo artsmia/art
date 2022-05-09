@@ -1,0 +1,89 @@
+[
+  {
+    "title": "Degas, Portrait of Mlle. Hortense V.",
+    "link": "http://audio-tours.s3.amazonaws.com/p455.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "Art Inspires: Lyndel King on Edgar Degas",
+    "link": "http://new.artsmia.org/stories/art-inspires-lyndel-king/",
+    "objectIds": "774",
+    "type": "mia-story"
+  },
+  {
+    "id": 29,
+    "title": "Degas and America: The Early Collectors",
+    "description": "Wednesday, February 28, 2001 - Sunday, September 09, 2001",
+    "objectIds": [
+      774,
+      1428,
+      3903,
+      8878,
+      48246,
+      48747,
+      50223
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 918,
+    "title": "Fortieth Anniversary Exhibition of Forty Masterpieces",
+    "description": "Wednesday, January 12, 1955 - Sunday, February 27, 1955",
+    "objectIds": [
+      547,
+      10448,
+      78,
+      729,
+      320,
+      278,
+      1226,
+      529,
+      592,
+      730,
+      1227,
+      593,
+      794,
+      774,
+      1163,
+      802,
+      1218,
+      10435,
+      1162,
+      1219,
+      795,
+      1197,
+      57591,
+      1230,
+      608,
+      64,
+      109,
+      782,
+      532,
+      726,
+      423,
+      15638,
+      329,
+      738,
+      604
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1792,
+    "title": "Reciprocal Loan for Paul Gauguin Christ in the Garden of Olives",
+    "description": "Thursday, October 29, 2015 - Sunday, May 15, 2016",
+    "objectIds": [
+      774
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 2135,
+    "title": "Degas: A New Vision",
+    "description": "Sunday, October 16, 2016 - Sunday, January 08, 2017",
+    "objectIds": [
+      774
+    ],
+    "type": "exhibition"
+  }
+]

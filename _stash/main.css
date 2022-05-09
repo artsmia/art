@@ -1,0 +1,1774 @@
+/* reset & clearfix */
+/* line 3, /Users/kolsen/tmp/art/sass/reset.scss */
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0; }
+
+/* line 11, /Users/kolsen/tmp/art/sass/reset.scss */
+* html .clearfix {
+  zoom: 1; }
+
+/* IE6 */
+/* line 12, /Users/kolsen/tmp/art/sass/reset.scss */
+*:first-child + html .clearfix {
+  zoom: 1; }
+
+/* IE7 */
+/* Eric Meyer's Reset Reloaded */
+/* http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/ */
+/* line 24, /Users/kolsen/tmp/art/sass/reset.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+/* line 33, /Users/kolsen/tmp/art/sass/reset.scss */
+body {
+  line-height: 1; }
+
+/* line 36, /Users/kolsen/tmp/art/sass/reset.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 39, /Users/kolsen/tmp/art/sass/reset.scss */
+blockquote, q {
+  quotes: none; }
+
+/* remember to define focus styles! */
+/* line 43, /Users/kolsen/tmp/art/sass/reset.scss */
+:focus {
+  outline: 0; }
+
+/* remember to highlight inserts somehow! */
+/* line 47, /Users/kolsen/tmp/art/sass/reset.scss */
+ins {
+  text-decoration: none; }
+
+/* line 50, /Users/kolsen/tmp/art/sass/reset.scss */
+del {
+  text-decoration: line-through; }
+
+/* tables still need 'cellspacing="0"' in the markup */
+/* line 54, /Users/kolsen/tmp/art/sass/reset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* apply a natural box layout model to all elements, but allowing components to change */
+/* line 60, /Users/kolsen/tmp/art/sass/reset.scss */
+html {
+  box-sizing: border-box; }
+
+/* line 63, /Users/kolsen/tmp/art/sass/reset.scss */
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+/*   MIA BRAND COLORS   */
+@font-face {
+  font-family: 'artsmia-grid-icons';
+  src: url("../fonts/artsmia-grid-icons.eot?2n9dqf");
+  src: url("../fonts/artsmia-grid-icons.eot?#iefix2n9dqf") format("embedded-opentype"), url("../fonts/artsmia-grid-icons.ttf?2n9dqf") format("truetype"), url("../fonts/artsmia-grid-icons.woff?2n9dqf") format("woff"), url("../fonts/artsmia-grid-icons.svg?2n9dqf#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+/* line 12, /Users/kolsen/tmp/art/sass/ui-icons-font.scss */
+.Grid, .List {
+  font-family: 'artsmia-grid-icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  cursor: pointer;
+  text-indent: -1000em;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+/* line 28, /Users/kolsen/tmp/art/sass/ui-icons-font.scss */
+.Grid:before {
+  content: "\e600"; }
+
+/* line 31, /Users/kolsen/tmp/art/sass/ui-icons-font.scss */
+.icon-view-icon-grid:before {
+  content: "\e601"; }
+
+/* line 34, /Users/kolsen/tmp/art/sass/ui-icons-font.scss */
+.List:before {
+  content: "\e602"; }
+
+/* line 37, /Users/kolsen/tmp/art/sass/ui-icons-font.scss */
+.icon-view-icon-list:before {
+  content: "\e603"; }
+
+/* ===== Mia Font ===== */
+@font-face {
+  font-family: 'MiaGrotesk-Bold';
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.eot");
+  /* IE9 Compat Modes */
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.eot?#iefix") format("embedded-opentype"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.woff") format("woff"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.svg#svgMiaGrotesk-Bold") format("svg");
+  /* Legacy iOS */ }
+
+@font-face {
+  font-family: 'MiaGrotesk-BoldItalic';
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-BoldItalic.eot");
+  /* IE9 Compat Modes */
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-BoldItalic.eot?#iefix") format("embedded-opentype"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-BoldItalic.woff") format("woff"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-BoldItalic.svg#svgMiaGrotesk-BoldItalic") format("svg");
+  /* Legacy iOS */ }
+
+@font-face {
+  font-family: 'MiaGrotesk-Italic';
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Italic.eot");
+  /* IE9 Compat Modes */
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Italic.eot?#iefix") format("embedded-opentype"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Italic.woff") format("woff"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Italic.svg#svgMiaGrotesk-Italic") format("svg");
+  /* Legacy iOS */ }
+
+@font-face {
+  font-family: 'MiaGrotesk-Light';
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.eot");
+  /* IE9 Compat Modes */
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.eot?#iefix") format("embedded-opentype"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.woff") format("woff"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.svg#svgMiaGrotesk-Light") format("svg");
+  /* Legacy iOS */ }
+
+@font-face {
+  font-family: 'MiaGrotesk-LightItalic';
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-LightItalic.eot");
+  /* IE9 Compat Modes */
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-LightItalic.eot?#iefix") format("embedded-opentype"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-LightItalic.woff") format("woff"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-LightItalic.svg#svgMiaGrotesk-LightItalic") format("svg");
+  /* Legacy iOS */ }
+
+@font-face {
+  font-family: 'MiaGrotesk-Regular';
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.eot");
+  /* IE9 Compat Modes */
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.eot?#iefix") format("embedded-opentype"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.woff") format("woff"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.svg#svgMiaGrotesk-Regular") format("svg");
+  /* Legacy iOS */ }
+
+@font-face {
+  font-family: 'MiaGrotesk-Black';
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.eot");
+  /* IE9 Compat Modes */
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.eot?#iefix") format("embedded-opentype"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.woff") format("woff"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.svg#svgMiaGrotesk-Regular") format("svg");
+  /* Legacy iOS */ }
+
+@font-face {
+  font-family: 'MiaGrotesk-BlackItalic';
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-BlackItalic.eot");
+  /* IE9 Compat Modes */
+  src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-BlackItalic.eot?#iefix") format("embedded-opentype"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-BlackItalic.woff") format("woff"), url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-BlackItalic.svg#svgMiaGrotesk-Regular") format("svg");
+  /* Legacy iOS */ }
+
+@media print {
+  /* line 2, /Users/kolsen/tmp/art/sass/print.scss */
+  header, .link-bar,
+  button.material-icons.search, .peek i.material-icons {
+    display: none !important; }
+  /* Object page */
+  /* line 9, /Users/kolsen/tmp/art/sass/print.scss */
+  .artwork .objects-focus .artwork-image {
+    display: block !important; }
+  /* line 13, /Users/kolsen/tmp/art/sass/print.scss */
+  #map, .back-button, .exploreWrapper {
+    display: none !important; }
+  /* line 17, /Users/kolsen/tmp/art/sass/print.scss */
+  .artwork .info {
+    width: 100% !important; }
+  /* Search Results */
+  /* line 24, /Users/kolsen/tmp/art/sass/print.scss */
+  .quilt-search-wrap .quilt-wrap, .filter-button, .views,
+  #suggestions, .summaryText a, .focusedResult {
+    display: none !important; }
+  /* line 28, /Users/kolsen/tmp/art/sass/print.scss */
+  .summaryText, .summaryText h2, .leftBar {
+    width: 100% !important; }
+  /* line 32, /Users/kolsen/tmp/art/sass/print.scss */
+  .objects-wrap .focused {
+    border-bottom: none !important; } }
+
+/* line 19, /Users/kolsen/tmp/art/sass/main.scss */
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden; }
+
+/* line 27, /Users/kolsen/tmp/art/sass/main.scss */
+body {
+  font-family: "MiaGrotesk-Light", sans-serif;
+  font-weight: 400;
+  color: #232323;
+  margin: 0;
+  line-height: 1.3em;
+  font-size: 1em; }
+
+/* line 36, /Users/kolsen/tmp/art/sass/main.scss */
+a {
+  color: rgba(239, 53, 53, 0.9);
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1em; }
+
+/* line 43, /Users/kolsen/tmp/art/sass/main.scss */
+a:hover {
+  color: rgba(35, 35, 35, 0.65);
+  font-weight: 500; }
+
+/* line 48, /Users/kolsen/tmp/art/sass/main.scss */
+#search {
+  /*margin: 8px;*/ }
+
+/* line 52, /Users/kolsen/tmp/art/sass/main.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "MiaGrotesk-Bold", sans-serif; }
+
+/* line 56, /Users/kolsen/tmp/art/sass/main.scss */
+.highlight em, h1 em, h2 em {
+  background-color: yellow; }
+
+/* line 60, /Users/kolsen/tmp/art/sass/main.scss */
+.main-app-bar {
+  color: #fff;
+  background-color: #232323; }
+
+/* line 65, /Users/kolsen/tmp/art/sass/main.scss */
+header {
+  position: fixed;
+  top: 0;
+  z-index: 1; }
+
+/* line 70, /Users/kolsen/tmp/art/sass/main.scss */
+.quilt-search-wrap {
+  min-height: 3em;
+  background: #222; }
+
+/* line 75, /Users/kolsen/tmp/art/sass/main.scss */
+.logo-container {
+  background-image: url("../images/MIA_LOGO_MARK.svg");
+  background-repeat: no-repeat;
+  height: 3.3em;
+  width: 8em;
+  color: #fff;
+  background-position: -2px 3px;
+  position: fixed;
+  display: inline-block;
+  z-index: 5; }
+
+/* line 86, /Users/kolsen/tmp/art/sass/main.scss */
+.global_buttons {
+  background: #232323;
+  width: 5em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: .7em 0;
+  z-index: 1500; }
+
+/* line 95, /Users/kolsen/tmp/art/sass/main.scss */
+.global_display {
+  width: 100%;
+  position: fixed;
+  background: #232323; }
+
+/* line 101, /Users/kolsen/tmp/art/sass/main.scss */
+.global_buttons button.material-icons {
+  padding: 2px 0 0 10px; }
+
+/* line 104, /Users/kolsen/tmp/art/sass/main.scss */
+.wordmark-container {
+  background-image: url("../images/MIA_LOGO_WORDMARK.svg");
+  background-repeat: no-repeat;
+  color: #fff;
+  position: absolute;
+  height: 40px;
+  width: 200px;
+  right: 20px;
+  top: 20px; }
+
+/* line 115, /Users/kolsen/tmp/art/sass/main.scss */
+.agg-wrap {
+  background-color: #ffffff;
+  padding: 0 0 1em 0; }
+
+/* line 120, /Users/kolsen/tmp/art/sass/main.scss */
+.agg-wrap h2 {
+  color: #ededed;
+  text-align: center;
+  cursor: pointer;
+  line-height: 1em;
+  padding-top: 7px; }
+
+/* line 128, /Users/kolsen/tmp/art/sass/main.scss */
+#aggs {
+  padding: 1em 0 0 0;
+  height: auto;
+  overflow: hidden;
+  -webkit-transition: height 0.3s ease-in;
+  -moz-transition: height 0.3s ease-in;
+  -o-transition: height 0.3s ease-in;
+  -ms-transition: height 0.3s ease-in;
+  transition: height 0.3s ease-in;
+  position: relative; }
+
+/* line 140, /Users/kolsen/tmp/art/sass/main.scss */
+.agg-wrap h2 {
+  text-align: center; }
+
+/* line 144, /Users/kolsen/tmp/art/sass/main.scss */
+#aggs dl {
+  display: inline-block;
+  padding: 0 23px 0 0;
+  white-space: normal; }
+
+/* line 149, /Users/kolsen/tmp/art/sass/main.scss */
+#more-aggs {
+  width: 100%;
+  position: relative;
+  float: left;
+  margin: 10px 0;
+  display: inline-block;
+  background: rgba(35, 35, 35, 0.3);
+  min-height: 39px; }
+
+/* line 158, /Users/kolsen/tmp/art/sass/main.scss */
+#more-aggs .material-icons {
+  font-size: 1em; }
+
+/* line 161, /Users/kolsen/tmp/art/sass/main.scss */
+#aggs dt {
+  font-weight: 400;
+  color: #232323;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  padding: 2px 0;
+  text-align: left;
+  margin: 0 0 10px 0;
+  border-top: 3px solid #232323;
+  white-space: normal; }
+
+/* line 172, /Users/kolsen/tmp/art/sass/main.scss */
+#aggs #more-aggs dd {
+  padding: 9px 15px;
+  background: #232323;
+  color: #ffffff;
+  display: inline-block;
+  border: none;
+  opacity: 1;
+  margin: 2px;
+  cursor: pointer; }
+
+/* line 182, /Users/kolsen/tmp/art/sass/main.scss */
+.toggleOpen, .toggleClose {
+  position: absolute;
+  right: 0;
+  background: #232323;
+  color: white;
+  padding: 10px; }
+
+/* line 189, /Users/kolsen/tmp/art/sass/main.scss */
+#aggs dd {
+  line-height: 1.1em;
+  padding: .25em; }
+
+/* line 193, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-wrap {
+  width: 33%;
+  float: left;
+  padding: 10px;
+  margin-right: 10px; }
+
+/* line 200, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result {
+  padding: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  margin-bottom: 3px; }
+
+/* line 210, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result h1 {
+  margin: 0;
+  padding: 0; }
+
+/* line 211, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result h2 {
+  margin: 0;
+  padding: 0;
+  line-height: 1em; }
+
+/* line 214, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result.validImage .artwork-image, .universal .artwork-result .artwork-image {
+  width: 50%;
+  float: left;
+  text-align: center; }
+
+/* line 219, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result.validImage .artwork-summary, .universal .artwork-result .artwork-summary {
+  width: 50%;
+  float: right;
+  padding-left: 10px; }
+
+/* line 224, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result.validImage .artwork-summary h1, .universal .artwork-result .artwork-summary h1 {
+  font-size: 1em;
+  line-height: 1.1em; }
+
+/* line 228, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result.validImage .artwork-summary h2, .universal .artwork-result .artwork-summary h2 {
+  font-size: .9em;
+  line-height: 1em;
+  font-family: "MiaGrotesk-Regular", sans-serif;
+  margin-top: .5em; }
+
+/* line 234, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result.validImage .artwork-summary p, .universal .artwork-result .artwork-summary p {
+  font-size: .857em;
+  line-height: 1.143em;
+  margin-top: .5em; }
+
+/* line 239, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result.validImage .artwork-image > div, .universal .artwork-result .artwork-image > div {
+  max-height: 200px !important; }
+
+/* line 242, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result.validImage .artwork-image img, .universal .artwork-result .artwork-image img {
+  max-width: 100%;
+  max-height: 100%; }
+
+/* line 248, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-wrap .focused {
+  border-bottom: 3px solid #232323; }
+
+/* line 251, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-wrap .focused .artwork-result {
+  margin-bottom: 0; }
+
+/* not working
+    .artwork-result p:not(:first-child){
+        display:none;
+    }
+    */
+/* line 260, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-image div > p, .artwork-result .provenance {
+  display: none; }
+
+/* line 264, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-result p.location {
+  text-align: right;
+  display: inline-block; }
+
+/* line 269, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-image div > p:first-child {
+  display: none; }
+
+/* line 274, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus-sticky {
+  position: fixed;
+  top: 0;
+  right: 0; }
+
+/* line 280, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus {
+  float: left;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  transform: translate3d(0px, 0px, 0px); }
+
+/* line 288, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus h1 {
+  font-family: "MiaGrotesk-Bold", sans-serif;
+  font-size: 1.357em;
+  color: #232323;
+  padding-top: 7px;
+  border-top: 3px solid #232323; }
+
+/* line 295, /Users/kolsen/tmp/art/sass/main.scss */
+span.dated {
+  font-family: "MiaGrotesk-Regular", sans-serif; }
+
+/* line 298, /Users/kolsen/tmp/art/sass/main.scss */
+.info .objects-focus h1 {
+  border-top: none;
+  padding-top: 0;
+  margin: 0; }
+
+/* line 304, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus h2 a {
+  color: #232323; }
+
+/* line 308, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus h5 {
+  font-family: "MiaGrotesk-Regular", sans-serif;
+  font-size: 1.214em;
+  line-height: 1.429em;
+  margin-top: .637em;
+  cursor: hand;
+  margin-top: 10px; }
+
+/* line 316, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus .tombstone {
+  font-size: .857em;
+  line-height: 1.143em;
+  margin-top: .5em;
+  padding: 0;
+  margin-bottom: 0; }
+
+/* line 323, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus .gifted {
+  font-size: .714em;
+  line-height: 1.3em;
+  text-transform: uppercase;
+  padding-top: 1.92em; }
+
+/* line 329, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus .description {
+  padding-top: 1em; }
+
+/* line 332, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus .artwork-image {
+  width: 100%;
+  height: auto; }
+
+/* line 338, /Users/kolsen/tmp/art/sass/main.scss */
+.search-wrap {
+  z-index: 4; }
+
+/* line 341, /Users/kolsen/tmp/art/sass/main.scss */
+.search-wrap div:first-child {
+  max-width: 23em;
+  margin: 0 auto;
+  color: #232323;
+  opacity: 0.95; }
+
+/* line 347, /Users/kolsen/tmp/art/sass/main.scss */
+.search-wrap .mdl-textfield {
+  min-width: 100px; }
+
+/* line 351, /Users/kolsen/tmp/art/sass/main.scss */
+.search-wrapper {
+  background-color: #ededed;
+  padding: 2em;
+  margin-bottom: 15px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+
+/* line 360, /Users/kolsen/tmp/art/sass/main.scss */
+.search-input {
+  font-size: 1.5em;
+  border: none;
+  background: transparent;
+  text-align: center;
+  border-bottom: 3px solid #232323;
+  font-family: "MiaGrotesk-Light", sans-serif;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  border-radius: 0; }
+
+/* line 372, /Users/kolsen/tmp/art/sass/main.scss */
+.mdl-textfield {
+  width: 100%;
+  min-width: 350px;
+  padding-left: 1em;
+  padding-right: 1em;
+  background-color: white; }
+
+/* line 381, /Users/kolsen/tmp/art/sass/main.scss */
+.mdl-textfield__input {
+  color: #232323;
+  border-color: #232323;
+  border-width: 0 0 3px 0;
+  padding: 0.5em;
+  text-align: center; }
+
+/* line 389, /Users/kolsen/tmp/art/sass/main.scss */
+.objectTotal {
+  top: 0;
+  color: #232323; }
+
+/* line 393, /Users/kolsen/tmp/art/sass/main.scss */
+.numbers {
+  font-family: "MiaGrotesk-Bold", sans-serif;
+  color: rgba(35, 35, 35, 0.5);
+  padding-left: 10px;
+  font-size: .9em; }
+
+/* line 399, /Users/kolsen/tmp/art/sass/main.scss */
+::-webkit-input-placeholder {
+  color: #ef3535; }
+
+/* line 403, /Users/kolsen/tmp/art/sass/main.scss */
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #ef3535; }
+
+/* line 407, /Users/kolsen/tmp/art/sass/main.scss */
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #ef3535; }
+
+/* line 411, /Users/kolsen/tmp/art/sass/main.scss */
+:-ms-input-placeholder {
+  color: #ef3535; }
+
+/* ===== TOOLBAR STYLES ===== */
+/* line 415, /Users/kolsen/tmp/art/sass/main.scss */
+.toolbar {
+  background: #232323; }
+
+/* line 418, /Users/kolsen/tmp/art/sass/main.scss */
+.filter-button {
+  border: 3px solid #ffffff;
+  padding: 5px 20px;
+  float: right; }
+
+/* line 423, /Users/kolsen/tmp/art/sass/main.scss */
+.filter-button a, .filter-button a:hover {
+  color: #ffffff; }
+
+/* line 426, /Users/kolsen/tmp/art/sass/main.scss */
+.filter-button:hover {
+  opacity: .7; }
+
+/* line 429, /Users/kolsen/tmp/art/sass/main.scss */
+.views {
+  color: #ffffff;
+  font-size: 2em; }
+
+/* line 433, /Users/kolsen/tmp/art/sass/main.scss */
+.views .List:hover, .views .Grid:hover {
+  opacity: .7; }
+
+@media screen and (max-width: 414px) {
+  /* line 440, /Users/kolsen/tmp/art/sass/main.scss */
+  .toolbar .mdl-grid {
+    justify-content: space-between; }
+  /* line 445, /Users/kolsen/tmp/art/sass/main.scss */
+  .mdl-cell--2-col .filter-button {
+    align-self: flex-start;
+    order: 1; }
+  /* line 450, /Users/kolsen/tmp/art/sass/main.scss */
+  .mdl-cell--4-col {
+    align-self: flex-end;
+    order: 2; } }
+
+/* ===== SEARCH RESULTS STYLES ===== */
+/* line 457, /Users/kolsen/tmp/art/sass/main.scss */
+.link-bar, .back-button {
+  display: inline-block;
+  background: #232323;
+  margin-top: 10px; }
+
+/* line 462, /Users/kolsen/tmp/art/sass/main.scss */
+.link-bar i, .link-bar > a {
+  font-size: 1.5em;
+  line-height: 1em;
+  padding: 10px;
+  border-right: 2px solid #fff;
+  cursor: pointer;
+  -webkit-transition: all 0.5s ease;
+  /* Safari and Chrome */
+  -moz-transition: all 0.5s ease;
+  /* Firefox */
+  -ms-transition: all 0.5s ease;
+  /* IE 9 */
+  -o-transition: all 0.5s ease;
+  /* Opera */
+  transition: all 0.5s ease; }
+
+/* line 474, /Users/kolsen/tmp/art/sass/main.scss */
+.link-bar .social a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1em;
+  padding: 0 10px;
+  line-height: 1em; }
+
+/* line 481, /Users/kolsen/tmp/art/sass/main.scss */
+.link-bar i:hover {
+  opacity: .7; }
+
+/* line 484, /Users/kolsen/tmp/art/sass/main.scss */
+.share {
+  margin-top: 0.5em; }
+
+/* line 487, /Users/kolsen/tmp/art/sass/main.scss */
+.social img {
+  width: 1.5em;
+  height: auto;
+  margin-right: 0.5em; }
+
+/* line 492, /Users/kolsen/tmp/art/sass/main.scss */
+.social {
+  background-color: #232323;
+  display: inline-block;
+  padding: 10px 2px 5px 10px;
+  margin-right: 2px; }
+
+/* line 498, /Users/kolsen/tmp/art/sass/main.scss */
+.social a:hover img {
+  -webkit-transition: all 1s ease;
+  /* Safari and Chrome */
+  -moz-transition: all 1s ease;
+  /* Firefox */
+  -ms-transition: all 1s ease;
+  /* IE 9 */
+  -o-transition: all 1s ease;
+  /* Opera */
+  transition: all 1s ease;
+  opacity: .7; }
+
+/* line 506, /Users/kolsen/tmp/art/sass/main.scss */
+.back-button a {
+  display: inline-block;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.2em;
+  padding: 5px 10px;
+  line-height: 1.5em; }
+
+/* line 514, /Users/kolsen/tmp/art/sass/main.scss */
+.back-button a i {
+  position: relative;
+  top: 5px; }
+
+/* line 518, /Users/kolsen/tmp/art/sass/main.scss */
+.link-bar i.material-icons, .link-bar a.material-icons {
+  color: #ffffff; }
+
+/* line 521, /Users/kolsen/tmp/art/sass/main.scss */
+.peek i.material-icons {
+  font-size: 0.77em;
+  margin-left: 0.1em;
+  padding-right: .5em; }
+
+/* ===== LANDING PAGE STYLES ===== */
+/* line 527, /Users/kolsen/tmp/art/sass/main.scss */
+.landingPageBody, .departmentPage, .curatorProfile {
+  display: inline-block; }
+
+/* line 530, /Users/kolsen/tmp/art/sass/main.scss */
+.shortcutLinks {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px; }
+
+/* line 535, /Users/kolsen/tmp/art/sass/main.scss */
+.shortcutLinks a {
+  color: #232323;
+  transition: ease all 0.8s; }
+
+/* line 540, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentList.mdl-grid, .welcome.mdl-grid {
+  margin-bottom: 2em; }
+
+/* line 543, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentList, .welcome {
+  display: inline-block; }
+
+/* line 546, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentList h2, .welcome h2 {
+  font-family: "MiaGrotesk-Bold", sans-serif, sans-serif;
+  font-size: 2em;
+  padding-left: 8px; }
+
+/* line 551, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentLink h2 {
+  font-size: 1em;
+  font-family: "MiaGrotesk-Bold", sans-serif, sans-serif;
+  border-top: 3px solid #232323;
+  padding: 7px 0;
+  margin: 7px 0;
+  line-height: 1em;
+  color: #232323; }
+
+/* line 560, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentLink {
+  float: left;
+  display: inline-block;
+  vertical-align: bottom;
+  text-align: left; }
+
+/* line 566, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem {
+  width: 100%;
+  height: 150px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat; }
+
+/* line 578, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem.africa {
+  background-image: url("http://1.api.artsmia.org/4866.jpg"); }
+
+/* line 581, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem.cssaa {
+  background-image: url("http://3.api.artsmia.org/12134.jpg"); }
+
+/* line 584, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem.contemporary {
+  background-image: url("http://6.api.artsmia.org/1721.jpg"); }
+
+/* line 587, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem.dats {
+  background-image: url("http://2.api.artsmia.org/8024.jpg"); }
+
+/* line 590, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem.jka {
+  background-image: url("http://1.api.artsmia.org/7505.jpg"); }
+
+/* line 593, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem.paintings {
+  background-image: url("http://4.api.artsmia.org/1348.jpg"); }
+
+/* line 596, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem.photography {
+  background-image: url("http://4.api.artsmia.org/89324.jpg"); }
+
+/* line 599, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentListItem.prints {
+  background-image: url("http://3.api.artsmia.org/9194.jpg"); }
+
+/* line 602, /Users/kolsen/tmp/art/sass/main.scss */
+a.departmentLink h2 {
+  -webkit-transition: all 150ms linear;
+  -moz-transition: all 150ms linear;
+  -ms-transition: all 150ms linear;
+  -o-transition: all 150ms linear;
+  transition: all 150ms linear; }
+
+/* ===== DEPARTMENT PAGES ===== */
+/* line 611, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentPage h2, .curatorsPage h2 {
+  background: transparent;
+  font-size: 1.75em;
+  width: 100%;
+  text-align: left;
+  padding: 0 0 10px 21px;
+  margin: 0;
+  margin-top: 0.7em;
+  line-height: 1em; }
+
+/* line 621, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentPage h2 span.d-visit {
+  display: none; }
+
+/* line 624, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentContent, .departmentResources {
+  padding: 0 5px; }
+
+/* line 627, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentContent p {
+  line-height: 1.4em;
+  padding-left: 10px; }
+
+/* line 632, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentResources h3, .curatorProfile.pageText .curatorContent h2 {
+  border-top: 3px solid #232323;
+  font-size: 1.2em;
+  width: 100%;
+  font-family: "MiaGrotesk-Regular", sans-serif;
+  line-height: 1em;
+  padding: 7px 0; }
+
+/* line 641, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentResources h3:first-child {
+  margin-top: 0; }
+
+/* line 644, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentResources ul {
+  margin-bottom: 2em; }
+
+/* line 647, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentPage h2 a {
+  color: #232323; }
+
+/* line 651, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentContent p {
+  padding: 0 0 20px 0; }
+
+/* line 654, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentResources h3 {
+  padding-bottom: 15px; }
+
+/* line 657, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentResources li {
+  padding-bottom: 10px; }
+
+/* line 660, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorBio, .affinity, .resources {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px; }
+
+/* line 666, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorPic, .affinityImage {
+  width: 30%;
+  float: left;
+  display: inline-block;
+  margin-right: 20px; }
+  /* line 672, /Users/kolsen/tmp/art/sass/main.scss */
+  .curatorPic img, .affinityImage img {
+    width: 100%; }
+
+/* line 676, /Users/kolsen/tmp/art/sass/main.scss */
+.curator-intro {
+  width: 64%;
+  display: inline-block; }
+
+/* line 680, /Users/kolsen/tmp/art/sass/main.scss */
+.affinity-intro p {
+  margin-bottom: 15px; }
+
+/* line 683, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorBio h4 {
+  font-size: 1.1em; }
+
+/* line 686, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorBio h5 {
+  font-family: "MiaGrotesk-Regular", sans-serif;
+  font-size: .9em;
+  padding-bottom: 1em; }
+
+/* line 691, /Users/kolsen/tmp/art/sass/main.scss */
+.departmentBlurb .button {
+  padding: 5px 15px;
+  background: #232323;
+  color: white; }
+
+/* line 696, /Users/kolsen/tmp/art/sass/main.scss */
+.quilt-wrap .lazy-load {
+  display: inline-block;
+  overflow: hidden; }
+
+/* ===== CURATOR PROFILES ===== */
+/* line 701, /Users/kolsen/tmp/art/sass/main.scss */
+#curators a {
+  color: #232323; }
+
+/* line 704, /Users/kolsen/tmp/art/sass/main.scss */
+#curators a:hover {
+  opacity: .7; }
+
+/* line 707, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorsPage .curatorBio {
+  width: 45%;
+  margin-right: 2%;
+  margin-left: 2%;
+  float: left; }
+
+/* line 713, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorProfile.pageText {
+  margin-top: 4em; }
+
+/* line 716, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorProfile.pageText h2 {
+  background: transparent;
+  font-size: 1.75em;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  margin-top: 0.7em;
+  line-height: 1em;
+  border: none; }
+
+/* line 726, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorContent {
+  margin-top: 2em; }
+
+/* line 729, /Users/kolsen/tmp/art/sass/main.scss */
+.curatorContent p {
+  line-height: 1.4em;
+  padding-left: 10px;
+  padding: 0 0 20px 0; }
+
+/* ===== artwork.js STYLES ===== */
+/* line 737, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork #map {
+  position: relative;
+  left: 0;
+  width: 65%;
+  height: calc(100vh - 4em);
+  z-index: 1000;
+  background-color: #ddd; }
+
+/* line 745, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork.smallviewport #map {
+  top: 0;
+  z-index: 2;
+  height: calc(100vh - 10em);
+  overflow: hidden; }
+
+/* line 751, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork .sticky #map {
+  width: 100%;
+  height: 100%; }
+
+/* line 755, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork #map .imageStatus {
+  position: absolute;
+  bottom: 3em;
+  width: 100%;
+  text-align: center;
+  padding: 0 20%; }
+
+/* line 763, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork .info {
+  position: absolute;
+  width: 35%;
+  background: #fff;
+  min-height: calc(100% - 4em);
+  padding: 3.3em 2em;
+  right: 0;
+  overflow-y: scroll;
+  min-height: 100vh; }
+
+/* line 773, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork .info p {
+  width: 100%; }
+
+/* line 777, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork.smallviewport .info {
+  width: 100%;
+  padding-top: 1em; }
+
+/* line 782, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork.smallviewport::before {
+  content: "";
+  display: block;
+  height: 3.5em;
+  background-color: #232323; }
+
+/* line 789, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork .objects-focus {
+  border-top: none;
+  float: none;
+  padding-top: 0; }
+
+/* line 794, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork .objects-focus .artwork-image {
+  display: none; }
+
+/* line 798, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus div > p {
+  margin-bottom: 1em;
+  width: 75%; }
+
+/* line 803, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-focus span {
+  font-style: normal; }
+
+/* line 806, /Users/kolsen/tmp/art/sass/main.scss */
+.artwork-detail {
+  display: table;
+  font-size: smaller;
+  line-height: 1.3em; }
+
+/* line 811, /Users/kolsen/tmp/art/sass/main.scss */
+.detail-row {
+  display: table-row; }
+
+/* line 814, /Users/kolsen/tmp/art/sass/main.scss */
+.detail-title {
+  display: table-cell;
+  padding: 5px 0;
+  font-family: "MiaGrotesk-Regular", sans-serif, sans-serif; }
+
+/* line 819, /Users/kolsen/tmp/art/sass/main.scss */
+.detail-content {
+  display: table-cell;
+  padding: 5px 5px 5px 15px; }
+
+/* line 823, /Users/kolsen/tmp/art/sass/main.scss */
+h5.details-title {
+  border-top: 3px solid #232323;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  padding-top: 3px;
+  cursor: pointer;
+  font-size: 1.5em; }
+
+/* line 831, /Users/kolsen/tmp/art/sass/main.scss */
+.overlay {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: rgba(35, 35, 35, 0.7); }
+
+/* line 837, /Users/kolsen/tmp/art/sass/main.scss */
+.explore-header {
+  height: 200px;
+  display: inline-block;
+  width: 100%;
+  background: url("http://api.artsmia.org/images/8747/1200/large.jpg") no-repeat center center;
+  background-size: cover; }
+
+/* line 844, /Users/kolsen/tmp/art/sass/main.scss */
+.curator-header {
+  height: 3.3em;
+  display: inline-block;
+  width: 100%;
+  background: #232323;
+  position: fixed; }
+
+/* line 851, /Users/kolsen/tmp/art/sass/main.scss */
+.explore {
+  display: inline-block; }
+
+/* line 854, /Users/kolsen/tmp/art/sass/main.scss */
+.explore a {
+  font-size: 1.1em;
+  color: #ffffff;
+  font-family: "MiaGrotesk-Bold", sans-serif, sans-serif;
+  position: absolute;
+  bottom: 10px;
+  left: 10px; }
+
+/* line 862, /Users/kolsen/tmp/art/sass/main.scss */
+.newsflash i, .artstory i, .explore-content i {
+  font-size: 1.5em;
+  color: #ffffff;
+  position: absolute;
+  bottom: 11px;
+  right: 10px; }
+
+/* line 869, /Users/kolsen/tmp/art/sass/main.scss */
+.explore a sub {
+  font-size: 1.1em;
+  color: #ffffff;
+  font-family: "MiaGrotesk-Light", sans-serif, sans-serif; }
+
+/* line 874, /Users/kolsen/tmp/art/sass/main.scss */
+.audioClip a, .audioClip a sub {
+  position: relative;
+  color: #232323;
+  display: inline-block;
+  top: 0; }
+
+/* line 880, /Users/kolsen/tmp/art/sass/main.scss */
+.audioClip a {
+  top: 13px; }
+
+/* line 883, /Users/kolsen/tmp/art/sass/main.scss */
+.newsflash, .artstory, .explore-content {
+  display: inline-block;
+  width: 175px;
+  height: 175px;
+  float: left;
+  margin: 20px 10px 0 0;
+  background-size: cover;
+  position: relative;
+  background-color: #232323; }
+
+/* line 893, /Users/kolsen/tmp/art/sass/main.scss */
+.audioClip {
+  display: inline-block;
+  width: 100%;
+  float: none;
+  clear: both;
+  background-image: none;
+  margin-top: 10px; }
+
+/* line 901, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-page-link {
+  font-size: 8px;
+  text-transform: uppercase;
+  text-align: center;
+  width: 32px;
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  line-height: 1em;
+  font-family: "MiaGrotesk-Bold", sans-serif;
+  color: #222; }
+
+/* line 914, /Users/kolsen/tmp/art/sass/main.scss */
+.objects-page-icon {
+  border: 3px solid #232323;
+  border-radius: 5px;
+  background-image: url("../images/ic_remove_red_eye_black_24px.svg");
+  width: 32px;
+  height: 32px;
+  color: #232323;
+  background-size: cover;
+  margin-bottom: 3px;
+  cursor: hand; }
+
+/* line 926, /Users/kolsen/tmp/art/sass/main.scss */
+.peek a {
+  color: #232323; }
+
+/* line 930, /Users/kolsen/tmp/art/sass/main.scss */
+button.material-icons {
+  background: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #fff;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  font-weight: bold; }
+
+/* ===== page.js STYLES ===== */
+/* line 944, /Users/kolsen/tmp/art/sass/main.scss */
+.pageText {
+  margin: 2em;
+  max-width: 38em; }
+
+/* line 948, /Users/kolsen/tmp/art/sass/main.scss */
+.pageText h1 {
+  font-size: 1.75em;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  line-height: 1em; }
+
+/* line 955, /Users/kolsen/tmp/art/sass/main.scss */
+.pageText h2 {
+  font-size: 1.25em;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  margin-top: 2em;
+  line-height: 1em;
+  border-top: 3px solid #232323;
+  padding-top: 5px; }
+
+/* line 965, /Users/kolsen/tmp/art/sass/main.scss */
+.pageText h3 {
+  font-size: .85em;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  margin-top: 2em;
+  line-height: 1em;
+  font-family: "MiaGrotesk-Bold", sans-serif, sans-serif;
+  border-top: 1px solid #232323;
+  padding-top: 5px; }
+
+/* line 977, /Users/kolsen/tmp/art/sass/main.scss */
+.pageText p {
+  line-height: 1.4em;
+  margin: 0.5em 0; }
+
+/* line 979, /Users/kolsen/tmp/art/sass/main.scss */
+.pageText ul, .pageText ol {
+  list-style: inherit;
+  list-style-position: inside; }
+  /* line 983, /Users/kolsen/tmp/art/sass/main.scss */
+  .pageText ul br, .pageText ol br {
+    display: none; }
+
+/* line 987, /Users/kolsen/tmp/art/sass/main.scss */
+.pageText ol {
+  list-style-type: decimal; }
+
+/* ===== info links homepage STYLES ===== */
+/* line 991, /Users/kolsen/tmp/art/sass/main.scss */
+ul.info {
+  width: 100%;
+  max-width: 100vw;
+  margin-bottom: 2em; }
+  @media screen and (min-width: 480px) {
+    /* line 991, /Users/kolsen/tmp/art/sass/main.scss */
+    ul.info {
+      display: flex; } }
+
+@media screen and (min-width: 480px) {
+  /* line 1001, /Users/kolsen/tmp/art/sass/main.scss */
+  .info li {
+    width: calc(33% - 16px); } }
+
+/* line 1007, /Users/kolsen/tmp/art/sass/main.scss */
+.info li a {
+  padding: 7px 0;
+  width: 100%;
+  display: block;
+  border-top: 3px solid #232323;
+  font-family: "MiaGrotesk-Bold", sans-serif, sans-serif;
+  font-size: 1.5em;
+  color: #232323;
+  -webkit-transition: all 150ms linear;
+  -moz-transition: all 150ms linear;
+  -ms-transition: all 150ms linear;
+  -o-transition: all 150ms linear;
+  transition: all 150ms linear; }
+
+/* line 1021, /Users/kolsen/tmp/art/sass/main.scss */
+.info li a:hover, .departmentLink:hover h2 {
+  background-color: #232323;
+  color: white;
+  padding-left: 10px; }
+
+/* line 1026, /Users/kolsen/tmp/art/sass/main.scss */
+.info li:last-child a {
+  padding-right: 0; }
+
+@media screen and (max-width: 768px) {
+  /* line 1029, /Users/kolsen/tmp/art/sass/main.scss */
+  .objects-focus div > p, .objects-focus .tombstone {
+    width: 100%; } }
+
+/* ===== peek STYLES ===== */
+/* line 1036, /Users/kolsen/tmp/art/sass/main.scss */
+hr {
+  margin: 0; }
+
+/* line 1038, /Users/kolsen/tmp/art/sass/main.scss */
+.peek {
+  margin-right: 3px;
+  cursor: pointer; }
+
+/* line 1042, /Users/kolsen/tmp/art/sass/main.scss */
+.peek.startedOpen, .startedOpen .peek {
+  margin-right: 0; }
+
+/* line 1046, /Users/kolsen/tmp/art/sass/main.scss */
+.peek > .peek {
+  background-color: #232323;
+  margin-bottom: -1px; }
+
+/* line 1051, /Users/kolsen/tmp/art/sass/main.scss */
+.peek p {
+  line-height: 1em;
+  font-size: 1em;
+  font-family: "MiaGrotesk-Light", sans-serif; }
+
+/* line 1057, /Users/kolsen/tmp/art/sass/main.scss */
+.peek.open .peek a {
+  padding: 0 0 10px 10px;
+  display: inline-block;
+  margin-top: 10px;
+  color: #fff;
+  font-family: "MiaGrotesk-Regular", sans-serif;
+  font-size: 12px; }
+
+/* line 1066, /Users/kolsen/tmp/art/sass/main.scss */
+.peek .more-results-link {
+  color: #ef3535;
+  font-family: "MiaGrotesk-Bold", sans-serif;
+  text-align: right;
+  display: inline-block; }
+
+/* line 1073, /Users/kolsen/tmp/art/sass/main.scss */
+.peek .more-results-link:hover {
+  color: rgba(255, 255, 255, 0.5); }
+
+/* line 1077, /Users/kolsen/tmp/art/sass/main.scss */
+.open i {
+  background-color: #ededed;
+  display: inline-block;
+  padding: 5px; }
+
+/* line 1083, /Users/kolsen/tmp/art/sass/main.scss */
+.open i > span {
+  padding-left: 10px; }
+
+/* line 1087, /Users/kolsen/tmp/art/sass/main.scss */
+.peek.startedClosed.open {
+  margin-bottom: 5px; }
+
+/* line 1090, /Users/kolsen/tmp/art/sass/main.scss */
+.tombstone .open i {
+  padding: 5px 5px 7px 2px;
+  line-height: 1em; }
+
+/* ===== decorator STYLES ===== */
+/* line 1097, /Users/kolsen/tmp/art/sass/main.scss */
+.decorator-wrap {
+  width: 100%;
+  background-color: rgba(35, 35, 35, 0.8);
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  padding: 1.5rem; }
+  /* line 1111, /Users/kolsen/tmp/art/sass/main.scss */
+  .decorator-wrap.closed {
+    padding: 0.5rem; }
+  /* line 1115, /Users/kolsen/tmp/art/sass/main.scss */
+  .decorator-wrap .control {
+    align-self: start;
+    justify-self: end;
+    color: white;
+    cursor: pointer; }
+    /* line 1121, /Users/kolsen/tmp/art/sass/main.scss */
+    .decorator-wrap .control:hover {
+      opacity: .7; }
+
+/* line 1127, /Users/kolsen/tmp/art/sass/main.scss */
+.decorator-wrap > .decorator {
+  color: #fff;
+  text-align: left;
+  max-width: 35em;
+  margin: 0;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start; }
+
+/* line 1143, /Users/kolsen/tmp/art/sass/main.scss */
+.decorator-wrap > .decorator h2 {
+  border: 3px solid white;
+  color: white;
+  max-width: 100%;
+  margin-top: 1rem;
+  padding: 0;
+  text-align: left;
+  align-self: center;
+  order: 1; }
+
+/* line 1154, /Users/kolsen/tmp/art/sass/main.scss */
+.decorator-wrap > .decorator h2:hover, .decorator-wrap > .decorator h2 > a:hover {
+  border-color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.65); }
+
+/* line 1159, /Users/kolsen/tmp/art/sass/main.scss */
+.decorator-wrap .decorator h2 a {
+  display: inline-block;
+  width: 100%;
+  padding: 0.68rem;
+  line-height: 1.3em;
+  color: white; }
+
+/* line 1169, /Users/kolsen/tmp/art/sass/main.scss */
+.decorator-wrap .d-gallery {
+  flex-direction: row;
+  align-items: start;
+  max-width: 100vw; }
+
+/* line 1175, /Users/kolsen/tmp/art/sass/main.scss */
+.d-gallery img {
+  max-width: 200px;
+  max-height: 200px;
+  height: auto;
+  align-self: flex-start;
+  cursor: pointer;
+  padding: 0.1em; }
+  /* line 1183, /Users/kolsen/tmp/art/sass/main.scss */
+  .d-gallery img:hover {
+    opacity: 0.9;
+    padding: 0;
+    border: 0.1em solid white; }
+    /* line 1188, /Users/kolsen/tmp/art/sass/main.scss */
+    .d-gallery img:hover:after {
+      content: "Show full map"; }
+
+/* line 1194, /Users/kolsen/tmp/art/sass/main.scss */
+.d-gallery .info {
+  padding: 1em;
+  padding-top: 0;
+  max-width: 35em; }
+
+/* line 1200, /Users/kolsen/tmp/art/sass/main.scss */
+.map.open > div {
+  min-height: 500px;
+  position: relative; }
+
+/* line 1205, /Users/kolsen/tmp/art/sass/main.scss */
+.map.open .controls {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  z-index: 10; }
+
+@media screen and (max-width: 1268px) {
+  /* line 1213, /Users/kolsen/tmp/art/sass/main.scss */
+  .decorator-wrap .d-gallery {
+    flex-direction: column; }
+  /* line 1217, /Users/kolsen/tmp/art/sass/main.scss */
+  .d-gallery .info {
+    padding-top: 1em; }
+  /* line 1222, /Users/kolsen/tmp/art/sass/main.scss */
+  .d-gallery .map.open {
+    overflow: scroll;
+    width: 100vw; } }
+
+@media screen and (max-width: 768px) {
+  /* line 1229, /Users/kolsen/tmp/art/sass/main.scss */
+  .decorator-wrap .d-gallery {
+    overflow: scroll;
+    max-width: 10000vw; } }
+
+/* line 1235, /Users/kolsen/tmp/art/sass/main.scss */
+.d-gallery h3 {
+  line-height: 1.3em;
+  margin-top: 1rem; }
+
+/* line 1236, /Users/kolsen/tmp/art/sass/main.scss */
+.decorator-wrap > .d-department > .departmentContent {
+  margin-left: 0;
+  padding-left: 0;
+  width: 100%;
+  align-self: flex-start; }
+
+/* line 1237, /Users/kolsen/tmp/art/sass/main.scss */
+.decorator-wrap > .d-department > .departmentContent p {
+  padding-left: 0; }
+
+/* line 1239, /Users/kolsen/tmp/art/sass/main.scss */
+.bigflex {
+  -webkit-flex: 2 0 0;
+  flex: 2 0 0; }
+
+/* line 1243, /Users/kolsen/tmp/art/sass/main.scss */
+.smallflex {
+  -webkit-flex: 1 0 0;
+  flex: 1 0 0; }
+
+/* line 1247, /Users/kolsen/tmp/art/sass/main.scss */
+.nav_bar {
+  width: 100%;
+  display: inline-block;
+  border-top: 4px solid white;
+  height: 56px;
+  padding: 13px 7px;
+  z-index: 5;
+  position: relative;
+  top: 3.3em;
+  background: #232323; }
+
+/* line 1258, /Users/kolsen/tmp/art/sass/main.scss */
+ul.nav_list li {
+  display: inline-block;
+  color: white;
+  text-transform: uppercase;
+  padding: 0 13px;
+  font-family: "MiaGrotesk-Regular", sans-serif;
+  font-size: 1.1em;
+  -webkit-transition: all 0.5s linear;
+  -moz-transition: all 0.5s linear;
+  -ms-transition: all 0.5s linear;
+  -o-transition: all 0.5s linear;
+  transition: all 0.5s linear; }
+
+/* line 1271, /Users/kolsen/tmp/art/sass/main.scss */
+.global_nav {
+  float: left; }
+
+/* line 1274, /Users/kolsen/tmp/art/sass/main.scss */
+.quick_nav {
+  float: right;
+  margin-top: -12px; }
+
+/* line 1278, /Users/kolsen/tmp/art/sass/main.scss */
+.nav_item.button {
+  margin-right: 3px;
+  padding: 9px 15px;
+  margin-top: 4px;
+  background: white;
+  color: #232323;
+  text-align: center; }
+
+/* line 1286, /Users/kolsen/tmp/art/sass/main.scss */
+.nav_item a {
+  color: white;
+  -webkit-transition: all 0.5s linear;
+  -moz-transition: all 0.5s linear;
+  -ms-transition: all 0.5s linear;
+  -o-transition: all 0.5s linear;
+  transition: all 0.5s linear; }
+
+/* line 1294, /Users/kolsen/tmp/art/sass/main.scss */
+.nav_item a:hover {
+  color: white;
+  border-bottom: 4px solid white; }
+
+/* line 1298, /Users/kolsen/tmp/art/sass/main.scss */
+.nav_item.button a {
+  color: #232323; }
+
+/* line 1301, /Users/kolsen/tmp/art/sass/main.scss */
+.nav_item.button:hover a {
+  color: white;
+  border-bottom: none; }
+
+/* line 1305, /Users/kolsen/tmp/art/sass/main.scss */
+.donate.nav_item.button:hover {
+  background-color: #ef3535; }
+
+/* line 1308, /Users/kolsen/tmp/art/sass/main.scss */
+.calendar.nav_item.button:hover {
+  background-color: #805696; }
+
+/* line 1311, /Users/kolsen/tmp/art/sass/main.scss */
+.tickets.nav_item.button:hover {
+  background-color: #8cd2cd; }
+
+/* ===== MOBILE navigation ===== */
+/* line 1315, /Users/kolsen/tmp/art/sass/main.scss */
+.mobile-nav.nav_bar {
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  border-top: 4px solid white; }
+
+/* line 1321, /Users/kolsen/tmp/art/sass/main.scss */
+.mobile-nav ul.nav_list li {
+  display: block;
+  font-size: 1.1em;
+  padding: 15px 0;
+  border-bottom: 1px solid #fff; }
+
+/* line 1327, /Users/kolsen/tmp/art/sass/main.scss */
+.mobile-nav .global_nav {
+  width: 60%;
+  float: left; }
+
+/* line 1331, /Users/kolsen/tmp/art/sass/main.scss */
+.mobile-nav .quick_nav {
+  width: 35%;
+  float: right; }
+
+/* line 1335, /Users/kolsen/tmp/art/sass/main.scss */
+.mobile-nav .nav_item.button {
+  margin-right: 3px;
+  padding: 9px 15px;
+  margin-top: 4px;
+  background: white;
+  color: #232323; }
+
+/* line 1344, /Users/kolsen/tmp/art/sass/main.scss */
+button {
+  background: transparent;
+  color: white;
+  font-family: "MiaGrotesk-Regular", sans-serif;
+  cursor: pointer; }
+
+@media screen and (max-width: 768px) {
+  /* line 1352, /Users/kolsen/tmp/art/sass/main.scss */
+  .decorator-wrap {
+    -webkit-flex-direction: column;
+    flex-direction: column; }
+  /* line 1356, /Users/kolsen/tmp/art/sass/main.scss */
+  .decorator-wrap > .decorator {
+    margin-bottom: 1em; }
+  /* line 1357, /Users/kolsen/tmp/art/sass/main.scss */
+  .decorator-wrap > .decorator:last-child {
+    margin-bottom: 0; }
+  /* line 1359, /Users/kolsen/tmp/art/sass/main.scss */
+  .d-gallery h1 {
+    margin-top: 0.5em; } }
+
+@media screen and (max-width: 1050px) and (min-width: 768px) {
+  /* line 1365, /Users/kolsen/tmp/art/sass/main.scss */
+  .nav_bar {
+    height: auto; }
+  /* line 1368, /Users/kolsen/tmp/art/sass/main.scss */
+  .global_nav {
+    width: 65%; }
+  /* line 1371, /Users/kolsen/tmp/art/sass/main.scss */
+  .nav_bar .global_nav ul {
+    display: block;
+    max-width: 100%;
+    text-align: right;
+    font-size: 13px; }
+  /* line 1377, /Users/kolsen/tmp/art/sass/main.scss */
+  .nav_item.button {
+    font-size: 13px; } }
+
+/* ===== invalid (no image) STYLES ===== */
+/* line 1383, /Users/kolsen/tmp/art/sass/main.scss */
+.quilt-row-wrap {
+  display: flex; }
+
+/* line 1387, /Users/kolsen/tmp/art/sass/main.scss */
+.invalid {
+  background: url(../images/no-image-bg.png) repeat top left;
+  background-color: white;
+  flex-grow: 1;
+  min-height: 6.25rem;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+
+/* line 1396, /Users/kolsen/tmp/art/sass/main.scss */
+.lazy-load-visible {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+
+/* line 1401, /Users/kolsen/tmp/art/sass/main.scss */
+.invalid:hover, .lazy-load-visible:hover {
+  opacity: 0.68; }
+
+/* line 1405, /Users/kolsen/tmp/art/sass/main.scss */
+.invalid p {
+  padding: 1em;
+  line-height: 1em;
+  font-family: "MiaGrotesk-Bold", sans-serif;
+  display: table-cell;
+  vertical-align: middle; }
+
+/* line 1413, /Users/kolsen/tmp/art/sass/main.scss */
+.mdl-cell {
+  align-items: flex-start; }
+
+/* ===== explore STYLES ===== */
+/* line 1419, /Users/kolsen/tmp/art/sass/main.scss */
+.explore-section:last-child {
+  margin-bottom: 2.5em; }
+
+/* line 1423, /Users/kolsen/tmp/art/sass/main.scss */
+.explore-section h2 {
+  margin-top: 1.6em;
+  padding: 0;
+  font-size: 1.6em;
+  line-height: 1.6em; }
+
+/* line 1430, /Users/kolsen/tmp/art/sass/main.scss */
+.explore-section h2 span {
+  padding: 0; }
+
+/* line 1434, /Users/kolsen/tmp/art/sass/main.scss */
+.explore-section p {
+  line-height: 1.3em;
+  margin-bottom: 10px; }
+
+/*
+.explore-section p strong{font-family: $MiaGroteskBold;}
+.explore-section p em{font-family:$MiaGroteskBoldItalic}
+*/
+/* line 1448, /Users/kolsen/tmp/art/sass/main.scss */
+img.image {
+  opacity: 0.3;
+  transition: opacity, background-color 1s cubic-bezier(0.47, 0, 0.745, 0.715); }
+
+/* line 1452, /Users/kolsen/tmp/art/sass/main.scss */
+img.loading {
+  border: 1px solid white;
+  box-sizing: border-box;
+  background-color: #232323; }
+
+/* line 1457, /Users/kolsen/tmp/art/sass/main.scss */
+img.loaded {
+  opacity: 1 !important; }
+
+/*# sourceMappingURL=main.css.map */

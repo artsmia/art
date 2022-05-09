@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1105,
+    "title": "Modigliani Scultore",
+    "description": "Saturday, December 18, 2010 - Monday, March 28, 2011",
+    "objectIds": [
+      1502
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Red and Hot: The Many Loves of Modigliani",
+    "link": "http://new.artsmia.org/stories/red-and-hot-the-many-loves-of-modigliani/",
+    "objectIds": "10458 1421 1502",
+    "type": "mia-story"
+  },
+  {
+    "title": "Art Secrets: The Starfish in Her Face",
+    "link": "http://new.artsmia.org/stories/art-secrets-the-starfish-in-her-face/",
+    "objectIds": "1490 1502",
+    "type": "mia-story"
+  },
+  {
+    "title": "Modigliani, Head of a Woman (sculpture)",
+    "link": "http://audio-tours.s3.amazonaws.com/p892.mp3",
+    "type": "audio"
+  }
+]

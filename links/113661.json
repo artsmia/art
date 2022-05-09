@@ -1,0 +1,18 @@
+[
+  {
+    "id": "113661",
+    "type": "adopt-a-painting",
+    "adopted": "1",
+    "description": "This recent gift to the MIA requires treatment before it can be displayed in the galleries. Palamedesz was best known for his military and “merry company” paintings, and with your help, this work will make an excellent pendant to our guardroom painting by Jacob Duck in the 17<sup>th</sup> century Dutch galleries. The original paint is in excellent condition, however, the entire surface of the picture is coated with a thick, glossy varnish that is embedded with grime and has discolored with age. Finer details are obscured, and the composition has lost its sense of depth. The dirty varnish significantly affects the color, giving everything a similar yellow-grey sheen. Removing the varnish would be offer a dramatic reveal.",
+    "cost": "$3,195.00"
+  },
+  {
+    "id": 1600,
+    "title": "The Horse in Art",
+    "description": null,
+    "objectIds": [
+      113661
+    ],
+    "type": "exhibition"
+  }
+]

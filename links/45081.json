@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1666,
+    "title": "Governor's Residence 2014-2016 (A)",
+    "description": "Thursday, August 28, 2014 - Tuesday, August 30, 2016",
+    "objectIds": [
+      18157,
+      5683,
+      45538,
+      34473,
+      45081
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1314,
+    "title": "Governor's Residence: 2011-2013 (2)",
+    "description": "Monday, October 10, 2011 - Saturday, August 31, 2013",
+    "objectIds": [
+      18157,
+      45538,
+      45081
+    ],
+    "type": "exhibition"
+  }
+]

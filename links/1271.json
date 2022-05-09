@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Kirchner, Modern Bohemia",
+    "link": "http://audio-tours.s3.amazonaws.com/p393.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1052,
+    "title": "Ernst Ludwig Kirchner",
+    "description": "Saturday, October 31, 2009 - Sunday, February 14, 2010",
+    "objectIds": [
+      1271,
+      108725
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1256,
+    "title": "The Studio - Workshop and Myth",
+    "description": "Saturday, October 27, 2012 - Sunday, February 10, 2013",
+    "objectIds": [
+      1271
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1257,
+    "title": "Criticism Makes Art: Will Grohmann in the Network of Modern Art",
+    "description": "Thursday, September 27, 2012 - Sunday, January 06, 2013",
+    "objectIds": [
+      1271
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Honoring the Monuments Men, art saviors of World War II, with a self-guided tour at the MIA (Part I)",
+    "link": "http://new.artsmia.org/stories/honoring-the-monuments-men-art-saviors-of-world-war-ii-with-a-self-guided-tour-at-the-mia-part-i/",
+    "objectIds": "116111 1163 1268 1271",
+    "type": "mia-story"
+  },
+  {
+    "id": 969,
+    "title": "The Most Beautiful Museum in the World",
+    "description": "Saturday, March 20, 2010 - Sunday, July 25, 2010",
+    "objectIds": [
+      1271
+    ],
+    "type": "exhibition"
+  }
+]

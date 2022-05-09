@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1332,
+    "title": "Dewey Albinson",
+    "description": "Saturday, April 16, 1977 - Sunday, May 22, 1977",
+    "objectIds": [
+      18441,
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1331,
+    "title": "First National Bank 1977 to 1980",
+    "description": "Friday, July 01, 1977 - Thursday, October 02, 1980",
+    "objectIds": [
+      18441,
+      17316
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1330,
+    "title": "First National Bank 1973",
+    "description": "January 1, 1973",
+    "objectIds": [
+      18441,
+      15729
+    ],
+    "type": "exhibition"
+  }
+]

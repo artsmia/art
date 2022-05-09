@@ -1,0 +1,45 @@
+[
+  {
+    "id": 26,
+    "title": "The Eagle and the Dragon: U.S. Relations with China",
+    "description": "Saturday, April 21, 2001 - Sunday, October 28, 2001",
+    "objectIds": [
+      16978,
+      16979,
+      3137,
+      3142,
+      3143,
+      3155,
+      24039,
+      24040
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 672,
+    "title": "China Exhibition",
+    "description": "Friday, October 15, 2004 - Sunday, March 13, 2005",
+    "objectIds": [
+      3142,
+      24039,
+      3143,
+      24040,
+      3155
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 508,
+    "title": "The Art of China",
+    "description": "Saturday, August 30, 2003 - Sunday, January 04, 2004",
+    "objectIds": [
+      3137,
+      3142,
+      24039,
+      3143,
+      24040,
+      3155
+    ],
+    "type": "exhibition"
+  }
+]

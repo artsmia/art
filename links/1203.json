@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1809,
+    "title": "Islamic Painting from American Collections",
+    "description": "Thursday, April 06, 1967 - Wednesday, April 26, 1967",
+    "objectIds": [
+      18102,
+      18104,
+      1196,
+      1194,
+      106160,
+      99886,
+      1191,
+      1187,
+      1214,
+      1213,
+      1186,
+      1197,
+      1198,
+      1200,
+      1203,
+      1204,
+      1209,
+      106161
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1807,
+    "title": "The Miniature in Persian Art",
+    "description": "Tuesday, April 09, 1963 - Thursday, May 09, 1963",
+    "objectIds": [
+      607,
+      1214,
+      99885,
+      1203
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1806,
+    "title": "Classical Style in Islamic Painting: Examples from American Collections",
+    "description": "Friday, November 01, 1968 - Saturday, January 04, 1969",
+    "objectIds": [
+      1203,
+      676,
+      16995,
+      1194
+    ],
+    "type": "exhibition"
+  }
+]

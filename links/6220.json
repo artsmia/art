@@ -1,0 +1,41 @@
+[
+  {
+    "id": 436,
+    "title": "Ceramics as Sculpture",
+    "description": "Friday, February 02, 2001 - Sunday, July 22, 2001",
+    "objectIds": [
+      6218,
+      6219,
+      6220,
+      6214,
+      6215,
+      45782,
+      6216,
+      6217
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 699,
+    "title": "Regis Masters: Selections from the Permanent Collection",
+    "description": "Saturday, June 12, 2004 - Sunday, December 05, 2004",
+    "objectIds": [
+      2883,
+      8324,
+      40597,
+      9634,
+      13092,
+      13110,
+      45276,
+      52026,
+      60123,
+      6218,
+      6220,
+      52121,
+      62789,
+      80791,
+      81030
+    ],
+    "type": "exhibition"
+  }
+]

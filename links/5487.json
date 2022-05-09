@@ -1,0 +1,26 @@
+[
+  {
+    "id": 258,
+    "title": "Art of the Americas galleries",
+    "description": "Saturday, November 19, 1994 - Thursday, March 18, 1999",
+    "objectIds": [
+      36079,
+      36080,
+      36081,
+      36082,
+      36101,
+      5483,
+      5484,
+      5485,
+      5486,
+      30073,
+      5487
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Maya, Chocolate Pot",
+    "link": "http://audio-tours.s3.amazonaws.com/p405.mp3",
+    "type": "audio"
+  }
+]

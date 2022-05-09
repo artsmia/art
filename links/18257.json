@@ -1,0 +1,53 @@
+[
+  {
+    "id": 531,
+    "title": "An Artist's Paradise: Minnesota Landscapes 1840-1940",
+    "description": "Saturday, January 25, 2003 - Sunday, June 22, 2003",
+    "objectIds": [
+      356,
+      17464,
+      18257,
+      18461,
+      2490,
+      48975,
+      59314,
+      57212,
+      7894,
+      42030,
+      45070,
+      56910,
+      57518,
+      58877,
+      63752
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 2266,
+    "title": "Trees Lovely as a Poem: Works on Paper",
+    "description": "Saturday, August 01, 2015 - Sunday, March 27, 2016",
+    "objectIds": [
+      1643,
+      1789,
+      3359,
+      4497,
+      8762,
+      9028,
+      9457,
+      9501,
+      9552,
+      10478,
+      18257,
+      103181,
+      107186,
+      111126,
+      112886,
+      114619,
+      114891,
+      115992,
+      119344,
+      121313
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "id": 43,
+    "title": "Claude Monet and Frederic Bazille: Early Impressionism and Collaboration in the Studio",
+    "description": "Sunday, September 20, 1998 - Thursday, June 03, 1999",
+    "objectIds": [
+      1234,
+      1480
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1540,
+    "title": "Impressionists at Waterside",
+    "description": "Sunday, September 01, 2013 - Wednesday, April 30, 2014",
+    "objectIds": [
+      10449,
+      1234,
+      1413,
+      10436
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Monet, Seashore at Sainte-Adresse",
+    "link": "http://audio-tours.s3.amazonaws.com/p021.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1565,
+    "title": "Impressionsists on the Water",
+    "description": "Saturday, June 01, 2013 - Sunday, October 13, 2013",
+    "objectIds": [
+      1234
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 720,
+    "title": "Impressionists by the Sea",
+    "description": "Tuesday, July 03, 2007 - Sunday, May 11, 2008",
+    "objectIds": [
+      1234
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1800,
+    "title": "Daubigny, Monet, Van Gogh: Impressions of Landscape",
+    "description": "Friday, February 19, 2016 - Sunday, January 29, 2017",
+    "objectIds": [
+      4191,
+      3531,
+      2624,
+      1234
+    ],
+    "type": "exhibition"
+  }
+]

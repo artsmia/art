@@ -1,0 +1,30 @@
+[
+  {
+    "id": 592,
+    "title": "Judaica 2003 - 2004",
+    "description": "Friday, May 09, 2003 - Wednesday, June 30, 2004",
+    "objectIds": [
+      13199,
+      39820,
+      39821,
+      39819,
+      39822,
+      39826
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 513,
+    "title": "Judaica 2002 - 2003",
+    "description": "Friday, November 08, 2002 - Friday, February 28, 2003",
+    "objectIds": [
+      13199,
+      39821,
+      39819,
+      39822,
+      39826,
+      39820
+    ],
+    "type": "exhibition"
+  }
+]

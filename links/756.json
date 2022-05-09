@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Mexico, House Group",
+    "link": "http://audio-tours.s3.amazonaws.com/p610.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 33,
+    "title": "Art and Archaeology of Ancient West Mexico",
+    "description": "Monday, August 10, 1998 - Friday, April 16, 1999",
+    "objectIds": [
+      756
+    ],
+    "type": "exhibition"
+  }
+]

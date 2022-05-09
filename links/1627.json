@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1627",
+    "type": "adopt-a-painting",
+    "adopted": "0",
+    "description": "Oh, how these poor girls need a little air! A discoloring, amber-colored layer of varnish obscures the darker passages of the painting. There are areas of retouching that have now blanched, making the restoration visible at a viewing distance. The varnish is covered with a moderate grime layer. Structurally, the canvas also needs assistance. There are draws and deformations at the corners, along with a series of sharp, small ripples visible along the entire left edge of the painting. Several tacks are missing at all four corners, and many of the existing tacks are loose and failing. There is a repaired 3-inch tear along the top right edge that is now cupping and tenting, due to the insufficient hold of the lining adhesive to the canvas fabric, and there is associated damage and loss of pigment around the tear site. During the restoration process, the canvas will be removed from the stretcher and humidified in order to relax the deformations. The painting will then be strip-lined, reattached, and properly tensioned on its stretcher. The varnish will be reduced and the disfiguring areas of obvious retouching will be removed and repaired.",
+    "cost": "$4,400.00"
+  },
+  {
+    "title": "Adventures in Couriering, Part I",
+    "link": "http://new.artsmia.org/stories/adventures-in-courier-work-i/",
+    "objectIds": "1627",
+    "type": "mia-story"
+  },
+  {
+    "id": 1522,
+    "title": "Balthus: Cats and Girls",
+    "description": "Monday, September 23, 2013 - Monday, January 13, 2014",
+    "objectIds": [
+      1627
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Balthus, The Living Room",
+    "link": "http://audio-tours.s3.amazonaws.com/p464.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 105,
+    "title": "Pierre Matisse and His Artists",
+    "description": "Thursday, February 14, 2002 - Sunday, May 19, 2002",
+    "objectIds": [
+      1627
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 752,
+    "title": "Balthus",
+    "description": "Tuesday, September 18, 2007 - Sunday, November 04, 2007",
+    "objectIds": [
+      1627
+    ],
+    "type": "exhibition"
+  }
+]

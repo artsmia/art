@@ -1,0 +1,36 @@
+[
+  {
+    "id": 41,
+    "title": "Hokusai: Bridging East and West",
+    "description": "Wednesday, March 18, 1998 - Wednesday, September 02, 1998",
+    "objectIds": [
+      18123,
+      9609,
+      8746,
+      8741,
+      9610,
+      2005,
+      9613,
+      9614,
+      22514,
+      22807,
+      22808,
+      22809,
+      42548
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1318,
+    "title": "Hokusai: Thirty-Six Views of Mount Fuji",
+    "description": "Saturday, March 24, 2012 - Sunday, June 17, 2012",
+    "objectIds": [
+      9155,
+      2005,
+      22642,
+      62750,
+      62747
+    ],
+    "type": "exhibition"
+  }
+]

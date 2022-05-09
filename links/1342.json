@@ -1,0 +1,22 @@
+[
+  {
+    "id": 66,
+    "title": "Vatican Treasures: Early Christian, Renaissance, and Baroque Art from the Papal Collections",
+    "description": "Thursday, January 22, 1998 - Wednesday, April 15, 1998",
+    "objectIds": [
+      1342
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 2194,
+    "title": "The Renaissance.  The Emergence of Europe",
+    "description": "Monday, August 01, 2016 - Sunday, November 27, 2016",
+    "objectIds": [
+      522,
+      1342,
+      108724
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,218 @@
+[
+  {
+    "id": 651,
+    "title": "El Retrato Español",
+    "description": "Monday, October 18, 2004 - Sunday, February 06, 2005",
+    "objectIds": [
+      1226
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1490,
+    "title": "Reciprocal Loan to Timken Museum of Art",
+    "description": "Tuesday, May 08, 2012 - Sunday, September 09, 2012",
+    "objectIds": [
+      1226
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 44,
+    "title": "Goya, un regard libre",
+    "description": "Sunday, March 28, 1999 - Wednesday, July 14, 1999",
+    "objectIds": [
+      1226
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 673,
+    "title": "Aun Aprendo: Goya's Last Works",
+    "description": "Wednesday, February 22, 2006 - Sunday, May 14, 2006",
+    "objectIds": [
+      1226
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Francisco de Goya, Self-Portrait with Dr. Arrieta",
+    "link": "http://audio-tours.s3.amazonaws.com/p721.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1076,
+    "title": "In Pursuit of a Masterpiece",
+    "description": "Sunday, October 18, 2009 - Sunday, April 11, 2010",
+    "objectIds": [
+      53,
+      33830,
+      814,
+      2732,
+      666,
+      608,
+      1226,
+      1602,
+      1748,
+      3551,
+      17203,
+      34503,
+      45642,
+      100854,
+      106821,
+      1355,
+      1629,
+      1743,
+      1825,
+      2620,
+      2814,
+      3183,
+      5141,
+      8480
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 918,
+    "title": "Fortieth Anniversary Exhibition of Forty Masterpieces",
+    "description": "Wednesday, January 12, 1955 - Sunday, February 27, 1955",
+    "objectIds": [
+      547,
+      10448,
+      78,
+      729,
+      320,
+      278,
+      1226,
+      529,
+      592,
+      730,
+      1227,
+      593,
+      794,
+      774,
+      1163,
+      802,
+      1218,
+      10435,
+      1162,
+      1219,
+      795,
+      1197,
+      57591,
+      1230,
+      608,
+      64,
+      109,
+      782,
+      532,
+      726,
+      423,
+      15638,
+      329,
+      738,
+      604
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1642,
+    "title": "TDX_ArtStories",
+    "description": null,
+    "objectIds": [
+      278,
+      376,
+      529,
+      537,
+      566,
+      678,
+      1218,
+      1226,
+      1244,
+      1270,
+      1348,
+      1355,
+      1380,
+      1411,
+      1629,
+      1637,
+      1721,
+      1727,
+      1748,
+      1978,
+      2210,
+      2606,
+      3183,
+      3520,
+      4324,
+      4379,
+      4418,
+      4829,
+      5788,
+      7505,
+      7991,
+      8023,
+      9202,
+      10436,
+      12092,
+      22412,
+      31247,
+      43877,
+      60728,
+      91467,
+      95937,
+      98653,
+      105014,
+      107241,
+      108443,
+      108860,
+      109112,
+      109118,
+      109122,
+      109328,
+      112568,
+      113568,
+      113926,
+      114429,
+      114514,
+      114602,
+      115352,
+      115357,
+      115358,
+      115836,
+      116116,
+      116191,
+      116294,
+      116725,
+      117152,
+      117153,
+      118304,
+      119599
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1620,
+    "title": "Goya's Portraits: The Spirit of an Age",
+    "description": "Wednesday, October 07, 2015 - Sunday, January 10, 2016",
+    "objectIds": [
+      1226
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Self-Portrait with Dr. Arrieta",
+    "description": "<p>He is not well. His face is nearly as pale as the bed sheets. He’s too weak even to drink without help. And are those figures in the shadows real or hallucinations? Who knows? The old man has succumbed to that familiar feeling of weak and aching muscles, mind confused by feverish dreams, days lost to sleep. The painter of this picture—Francisco Goya, in a self-portrait—knew illness all too well. The younger man was his doctor, Eugenio Garcia Arrieta. Goya recovered to live another eight years and produce many more pictures, including this gift of thanks for his doctor.</p>",
+    "link": "http://artstories.artsmia.org/#/o/1226",
+    "type": "artstory"
+  },
+  {
+    "id": 1523,
+    "title": "Goya: Order and Disorder",
+    "description": "Sunday, October 12, 2014 - Monday, January 19, 2015",
+    "objectIds": [
+      1226
+    ],
+    "type": "exhibition"
+  }
+]

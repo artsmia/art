@@ -1,0 +1,66 @@
+[
+  {
+    "title": "Master of the Legend of St. Lucy",
+    "link": "http://audio-tours.s3.amazonaws.com/p328.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 918,
+    "title": "Fortieth Anniversary Exhibition of Forty Masterpieces",
+    "description": "Wednesday, January 12, 1955 - Sunday, February 27, 1955",
+    "objectIds": [
+      547,
+      10448,
+      78,
+      729,
+      320,
+      278,
+      1226,
+      529,
+      592,
+      730,
+      1227,
+      593,
+      794,
+      774,
+      1163,
+      802,
+      1218,
+      10435,
+      1162,
+      1219,
+      795,
+      1197,
+      57591,
+      1230,
+      608,
+      64,
+      109,
+      782,
+      532,
+      726,
+      423,
+      15638,
+      329,
+      738,
+      604
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": "547",
+    "type": "adopt-a-painting",
+    "adopted": "1",
+    "description": "<img class=\"alignnone  wp-image-9922\" src=\"http://new.artsmia.org/wp-content/uploads/sites/8/2013/04/lamentation_1.png\" alt=\"lamentation_1\" width=\"61\" height=\"149\" />  <img class=\"alignnone  wp-image-9921\" src=\"http://new.artsmia.org/wp-content/uploads/sites/8/2013/04/lamentation_1b.png\" alt=\"lamentation_1b\" width=\"230\" height=\"147\" />  <img src=\"http://new.artsmia.org/wp-content/uploads/sites/8/2013/04/lamentation_2.png\" alt=\"lamentation_2\" width=\"61\" height=\"147\" />\r\n<h6>Painting</h6>\r\nThis remarkable triptych is considered to be one of the most characteristic and important works by the Master of the Saint Lucy Legend. Sadly, its inherent brilliance and details in the darker passages are obscured by its present condition. The removal of old discolored varnish (applied in 1952!), embedded grime layers, and discolored retouchings, followed by the application of new varnish, will restore balance to the work’s original color relationships and significantly improve overall visual impact. As the need for new in-painting is extensive, the treatment will be time consuming. With the exception of a small split in the upper right corner of the center panel that will need to be repaired, the panels are structurally stable in general. However, the irregularity of some of the edges has left slight gaps between the panels and frame housing. Minimal filling and toning of the uneven edges will reduce or eliminate these visual distractions. Treatment would also include the paintings on the reverse of the side panels that, when closed, depict the Annunciation.\r\n\r\n<span style=\"line-height: 1.714285714; font-size: 1rem;\">Painting restoration: </span><strong>$25,540.00</strong>\r\n<h6>Frame</h6>\r\nTime has not been particularly kind to the frame that surrounds the Lucy Master’s triptych. Aside from the cosmetic concerns of dirt and grime, missing parts, cracks, and breaks in the wood (as well as joints that are loose and out of alignment) pose a deeper threat in their failure to prevent movement of the panels and consequent damage to their edges.   Restoration of the frame would include a thorough cleaning and consolidation of old surfaces, followed by filling, toning, and re-gilding in areas of loss.  Structural work would include reversal of old break repairs and restoration of the same with state-of-the-art methods.\r\n\r\nFrame restoration: <strong>$20,575.00</strong>",
+    "cost": "$46,115.00"
+  },
+  {
+    "id": 919,
+    "title": "Masterpieces of Flemish Art: Van Eyck to Bosch",
+    "description": "Tuesday, October 18, 1960 - Saturday, December 31, 1960",
+    "objectIds": [
+      547
+    ],
+    "type": "exhibition"
+  }
+]

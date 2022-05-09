@@ -1,0 +1,36 @@
+[
+  {
+    "id": 79,
+    "title": "Signac",
+    "description": "Tuesday, February 27, 2001 - Sunday, December 30, 2001",
+    "objectIds": [
+      1477,
+      1414
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 425,
+    "title": "Neo-Impressionism: Artists on the Edge",
+    "description": "Thursday, June 27, 2002 - Sunday, October 20, 2002",
+    "objectIds": [
+      1272,
+      1477
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1568,
+    "title": "Signac, les couleurs de l'eau",
+    "description": "Saturday, July 13, 2013 - Sunday, October 27, 2013",
+    "objectIds": [
+      1477
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Signac, Blessing of the Tuna Fleet",
+    "link": "http://audio-tours.s3.amazonaws.com/p097.mp3",
+    "type": "audio"
+  }
+]

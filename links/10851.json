@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1795,
+    "title": "Governor's Residence 2014-2016 (C)",
+    "description": "Friday, February 27, 2015 - Monday, August 31, 2015",
+    "objectIds": [
+      10851,
+      10906,
+      114167,
+      115816,
+      115817
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1287,
+    "title": "Governor's Residence: 2011-2013",
+    "description": "Monday, August 29, 2011 - Saturday, August 31, 2013",
+    "objectIds": [
+      16630,
+      22228,
+      10851,
+      24944,
+      3564,
+      3566,
+      25355,
+      25358,
+      10566,
+      25361,
+      25291,
+      3969,
+      27636,
+      4566,
+      4567,
+      4590,
+      4762,
+      4763,
+      4787,
+      29361,
+      30653,
+      5955,
+      13393,
+      34473,
+      105013,
+      105014,
+      21261
+    ],
+    "type": "exhibition"
+  }
+]

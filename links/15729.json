@@ -1,0 +1,120 @@
+[
+  {
+    "id": "15729",
+    "type": "adopt-a-painting",
+    "adopted": "1",
+    "description": "",
+    "cost": ""
+  },
+  {
+    "id": 1335,
+    "title": "Winona Free Public Library 1947",
+    "description": "Monday, November 24, 1947 - Friday, December 19, 1947",
+    "objectIds": [
+      15729,
+      16367
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1339,
+    "title": "Minneapolis Club 1958 to 1963",
+    "description": "Friday, September 26, 1958 - Monday, July 08, 1963",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1330,
+    "title": "First National Bank 1973",
+    "description": "January 1, 1973",
+    "objectIds": [
+      18441,
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1344,
+    "title": "Accomplishments: Minnesota Art Projects in the Depression Years",
+    "description": "Wednesday, April 28, 1976 - Tuesday, July 31, 1979",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1338,
+    "title": "Forty Years of Paintings by Dewey Albinson - A Retrospective Exhibition",
+    "description": "Sunday, January 09, 1955 - Monday, February 28, 1955",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1337,
+    "title": "Centennial Minnesota Paintings",
+    "description": "Thursday, March 17, 1949 - Friday, April 30, 1954",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1342,
+    "title": "Office of the Mayor of Minneapolis 1967 to 1968",
+    "description": "Thursday, June 29, 1967 - Wednesday, January 31, 1968",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1332,
+    "title": "Dewey Albinson",
+    "description": "Saturday, April 16, 1977 - Sunday, May 22, 1977",
+    "objectIds": [
+      18441,
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1343,
+    "title": "First National Bank 1973 to 1976",
+    "description": "Saturday, December 01, 1973 - Friday, April 30, 1976",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1340,
+    "title": "Minnesota Historical Society 1963",
+    "description": "Monday, July 08, 1963 - Monday, September 30, 1963",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1351,
+    "title": "First National Bank 1976 to 1977",
+    "description": "Tuesday, July 06, 1976 - Saturday, April 30, 1977",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1341,
+    "title": "Blake School 1964 to 1965",
+    "description": "Thursday, October 01, 1964 - Wednesday, June 30, 1965",
+    "objectIds": [
+      15729
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1277,
+    "title": "Gauguin: Voyage into Myth",
+    "description": "Tuesday, June 05, 2012 - Sunday, September 30, 2012",
+    "objectIds": [
+      601
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 2161,
+    "title": "Eugène Delacroix and Modernity",
+    "description": "Wednesday, February 17, 2016 - Sunday, May 22, 2016",
+    "objectIds": [
+      601,
+      799,
+      1218,
+      1414,
+      1639,
+      1978,
+      4578,
+      115814
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 24,
+    "title": "Paul Gauguin: Das verlorene Paradies",
+    "description": "Monday, June 01, 1998 - Thursday, October 22, 1998",
+    "objectIds": [
+      601
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Paul Gauguin, Under the Pandanus",
+    "link": "http://audio-tours.s3.amazonaws.com/p744.mp3",
+    "type": "audio"
+  }
+]

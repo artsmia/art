@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1577",
+    "type": "adopt-a-painting",
+    "adopted": "0",
+    "description": "This lovely little vista has languished in storage due to its condition and the lack of an appropriate frame. With your help, we’d love to get into the galleries! All that’s required is a surface removal of the dirty, sticky, yellowed varnish to spiff up the color and the depth, and a bit of structural adjustment to ease the canvas tension. Our in-house framemaker will then create a period-appropriate “home” for the painting.",
+    "cost": "$1,630.00"
+  },
+  {
+    "id": 83,
+    "title": "From the Pedestal to the Pixel",
+    "description": "Sunday, February 22, 1998 - Sunday, May 24, 1998",
+    "objectIds": [
+      18619,
+      1577,
+      1750,
+      1816,
+      1817,
+      1878,
+      2041,
+      4483,
+      19592,
+      30808,
+      44300,
+      44599
+    ],
+    "type": "exhibition"
+  }
+]

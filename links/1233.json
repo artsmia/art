@@ -1,0 +1,18 @@
+[
+  {
+    "title": "In Vitro Beef",
+    "object": "1233",
+    "image": "/images/NewsFlash_Richard_LabBeefEDIT-1.jpeg",
+    "link": "http://newsflash.dx.artsmia.org/2013/08/in-vitro-beef/",
+    "date": "2013-08-07 00:00:00 -0500",
+    "type": "newsflash"
+  },
+  {
+    "title": "Trees Down",
+    "object": "1233",
+    "image": "/images/NewsFlash_Richard_Trees6.26-1.jpeg",
+    "link": "http://newsflash.dx.artsmia.org/2013/06/trees-down/",
+    "date": "2013-06-26 00:00:00 -0500",
+    "type": "newsflash"
+  }
+]

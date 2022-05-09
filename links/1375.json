@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Bernini, Portrait Bust of Pope Clement X",
+    "link": "http://audio-tours.s3.amazonaws.com/p334.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 68,
+    "title": "Gian Lorenzo Bernini, Producer of the Baroque",
+    "description": "Monday, May 10, 1999 - Wednesday, September 22, 1999",
+    "objectIds": [
+      1375
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 530,
+    "title": "Courts of the Baroque Age: From Bernini and Velázquez to Luca Giordano",
+    "description": "Wednesday, October 15, 2003 - Sunday, January 11, 2004",
+    "objectIds": [
+      1375
+    ],
+    "type": "exhibition"
+  }
+]

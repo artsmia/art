@@ -1,0 +1,20 @@
+[
+  {
+    "id": 50,
+    "title": "Lost Paradise: Symbolist Europe",
+    "description": "Monday, May 08, 1995 - Tuesday, October 31, 1995",
+    "objectIds": [
+      1264
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1151,
+    "title": "Edvard Munch.  Mystery behind the Canvas",
+    "description": "Saturday, October 15, 2011 - Sunday, February 26, 2012",
+    "objectIds": [
+      1264
+    ],
+    "type": "exhibition"
+  }
+]

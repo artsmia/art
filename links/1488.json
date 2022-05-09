@@ -1,0 +1,29 @@
+[
+  {
+    "id": 2291,
+    "title": "In the Light of Naples: The Art of Francesco de Mura",
+    "description": "Saturday, September 17, 2016 - Sunday, November 26, 2017",
+    "objectIds": [
+      1488,
+      1772
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "de Mura, Self-Portrait",
+    "link": "http://audio-tours.s3.amazonaws.com/p698.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "As Northern Grade arrives at the museum, a homage to dandies, dudes, and sharp-dressed men",
+    "link": "http://new.artsmia.org/stories/as-northern-grade-arrives-at-the-museum-a-homage-to-dandies-dudes-and-sharp-dressed-men/",
+    "objectIds": "1488 1540 2541",
+    "type": "mia-story"
+  },
+  {
+    "title": "Are books the new vanity backdrop?",
+    "link": "http://new.artsmia.org/stories/newsflash-are-books-the-new-vanity-backdrop/",
+    "objectIds": "1488",
+    "type": "mia-story"
+  }
+]

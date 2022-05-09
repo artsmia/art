@@ -1,0 +1,28 @@
+[
+  {
+    "id": 83,
+    "title": "From the Pedestal to the Pixel",
+    "description": "Sunday, February 22, 1998 - Sunday, May 24, 1998",
+    "objectIds": [
+      18619,
+      1577,
+      1750,
+      1816,
+      1817,
+      1878,
+      2041,
+      4483,
+      19592,
+      30808,
+      44300,
+      44599
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Once at MIA: Behind the scenes in broad daylight",
+    "link": "http://new.artsmia.org/stories/once-at-mia-behind-the-scenes-in-broad-daylight/",
+    "objectIds": "4483",
+    "type": "mia-story"
+  }
+]
