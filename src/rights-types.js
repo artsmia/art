@@ -12,7 +12,7 @@ const publicDomainMark = {
 }
 
 const rightsstatements = [
-  ...require('rightsstatements').map(rs => {
+    ...require('rightsstatements').map(rs => {
     rs.definition = rs.definition
       .replace('The copyright and related rights status of this Item has not been evaluated', 'The copyright and related rights status of this Item has not been evaluated by the Minneapolis Institute of Art (Mia)')
       .replace('Please refer to the organization that has made the Item available for more information.', 'Please contact us for more information.')

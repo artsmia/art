@@ -1,0 +1,3 @@
+export GA_TRACKING_ID="<google analytics ID for this property>"
+export CLOUD_VISION_KEY="<an auth key for google's cloud vision service to use for testing purposes - not used anywhere in the publicly accessible user interface"
+export PRIVILEGED_IP_LIST="<a list of IP addresses that might be able to have priviledged access to non-public museum data>"

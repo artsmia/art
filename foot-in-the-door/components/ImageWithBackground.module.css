@@ -1,10 +1,12 @@
 /** @format */
 
 .imageBlurBackground::after {
-  @apply absolute inset-0 w-full h-full opacity-25;
+  @apply absolute inset-0 w-full h-full;
+  opacity: var(--bg-opacity);
   content: '';
   background-image: var(--bg-image);
   z-index: -1;
   filter: blur(9px);
   background-size: cover;
+  background-position: center;
 }
