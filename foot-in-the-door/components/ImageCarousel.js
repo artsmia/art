@@ -4,11 +4,14 @@ import Link from 'components/NestedLink'
 
 import styles from './ImageCarousel.module.css'
 import { cx, getImageProps } from '../util'
+import ImageWithBackground from 'components/ImageWithBackground'
 
 function ImageCarousel(props) {
   const [carouselIndex, setCarouselIndex] = useState(0)
   const isCollapsed = props.isCollapsed || true
   const { className, data, exhibitionData } = props
+  const containOnHover =
+    props.containOnHover || exhibitionData?.imageCarousel?.containOnHover
 
   const observerRef = useRef()
   const carouselRef = useRef()
@@ -87,6 +90,7 @@ function ImageCarousel(props) {
         {data.map((art, index) => {
           const { classification: cl, __artDirectionStyle } = art
           const classif = cl.replace(' (including Digital)', '')
+          const imageProps = getImageProps(art, { fullSize: true })
           return (
             <li
               key={art.id}
@@ -100,15 +104,18 @@ function ImageCarousel(props) {
               >
                 <a className="no-underline">
                   <div className="group relative mx-1 overflow-hidden">
-                    <img
-                      {...getImageProps(art)}
-                      alt={art.description}
-                      loading={index > 3 ? 'lazy' : undefined}
-                      className={cx(
-                        'border-black border-b-4 h-64 md:h-96 w-full self-stretch object-cover',
-                        __artDirectionStyle
-                      )}
-                    />
+                    <ImageWithBackground imageSrc={imageProps.src}>
+                      <img
+                        {...imageProps}
+                        alt={art.description}
+                        loading={index > 3 ? 'lazy' : undefined}
+                        className={cx(
+                          'border-black border-b-4 h-64 md:h-96 w-full self-stretch object-cover',
+                          __artDirectionStyle,
+                          containOnHover ? 'group-hover:object-contain' : ''
+                        )}
+                      />
+                    </ImageWithBackground>
                     <div className="flex absolute inset-0 items-end">
                       <p className="hidden group-hover:inline text-white px-4 py-2 bg-black w-full uppercase opacity-100 text-xs font-light">
                         View Section &rsaquo;

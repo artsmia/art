@@ -19,6 +19,15 @@ import {
 import { ViewAllLink } from './NavBar'
 import LikeControl from './LikeControl'
 import ImageWithBackground from './ImageWithBackground'
+import Text from 'components/Text'
+import Image from 'components/Image'
+
+/** TODO
+ * replace the grid here with native css-grid masonry once browser support increases
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Masonry_Layout
+ * https://www.smashingmagazine.com/native-css-masonry-layout-css-grid/
+ * https://rachelandrew.co.uk/archives/2019/06/04/grid-content-re-ordering-and-accessibility/
+ */
 
 function RoomGrid(props) {
   const {
@@ -27,35 +36,65 @@ function RoomGrid(props) {
     perPage,
     classification,
     label,
+    text,
     children,
     hideLikeControl,
+    exhibitionData,
     ...containerProps
   } = props
+
+  // Custom settings on an exhibition-by-exhibition basis
+  const {
+    segmentArtTitles = true,
+    gridSpacing = 4,
+    gridMaxColumns = 11,
+    gridMinColumns = 2,
+    gridMinRows = 1,
+  } = exhibitionData || {}
 
   const hideViewAll = true
 
   const grid = useGridState()
 
-  const artworks = hits
-    // When there is a 'focused' artwork, remove it from the grid so it
-    // isn't shown both at the top of the page and in the 'see more' results.
-    .filter((art) => art !== focused)
+  const sliceSiblingArtworks = focused && true
+  const focusedArtIndex =
+    focused && hits.findIndex((hit) => hit._id === focused?.id)
+  const artworks = (sliceSiblingArtworks
+    ? hits.slice(focusedArtIndex - perPage / 2, focusedArtIndex + perPage / 2)
+    : hits
+  )
     .filter(({ _source: art }) => !!art)
     .slice(0, perPage)
 
   // Columns as a function of window width.
   // This should be a log function or clamped somehow?
-  // Ideally, small screens get 2 columns, and big screens get a max of 5?
-  // default to 2 for server rendered pages for mobile first
   const { width: windowWidth } = useWindowSize()
-  const gridCols = windowWidth
-    ? Math.min(5, Math.max(2, Math.floor(windowWidth / 234)))
-    : 2
+  const gridColsByWidth = windowWidth ? Math.floor(windowWidth / 234) : 2
+  // uses `grid{Max,Min}Columns` which can be set on a per-exhibition
+  // basis in the exhibition markdown setup file
+  const gridColsInitial = Math.min(
+    gridMaxColumns,
+    Math.max(gridMinColumns, gridColsByWidth)
+  )
+  // Also take into consideration the number of artworks in the grid -
+  // when the grid is small it's probably better to spread images across
+  // at least two rows, so when `artworksLength < gridCols*n`, use a smaller
+  // grid to coax out the minimim number of rows.
+  const gridCols =
+    gridColsInitial * gridMinRows >= artworks.length
+      ? Math.floor(artworks.length / gridMinRows)
+      : gridColsInitial
+  // When the number of columns is reduced, `useFixedImageGrid` is needed
+  // to modify the grid wrapper styling with a max-width and auto margins
+  const useFixedImageGrid = gridCols < gridColsByWidth
 
-  const {
+  let {
     asPath: page,
     query: { exhibitionId: exhId, exhibitionSlug: exhSlug },
   } = useRouter()
+
+  exhId = exhId || 2897
+  exhSlug = exhSlug || 'art-in-bloom-21'
 
   return (
     <section {...containerProps}>
@@ -76,16 +115,21 @@ function RoomGrid(props) {
       <Grid
         {...grid}
         aria-label={label || 'Search Results'}
-        className="flex flex-wrap mt-8"
+        className={cx('mt-8 mx-auto', useFixedImageGrid && 'w-2/3')}
       >
+        {text && (
+          <div className="max-w-3xl mx-auto mb-4">
+            <Text dangerous={true}>{text}</Text>
+          </div>
+        )}
         {chunkArray(artworks, gridCols).map((row, rowIndex) => {
           return (
             <GridRow
               {...grid}
               key={rowIndex}
-              className="flex min-h-32 lg:min-h-48 max-h-96 my-2 block"
+              className={`flex min-h-32 lg:min-h-48 max-h-96 mb-${gridSpacing} block`}
             >
-              {row.map((art) => {
+              {row.map((art, cellIndex) => {
                 const {
                   _source: source,
                   _source: {
@@ -99,59 +143,81 @@ function RoomGrid(props) {
                 } = art
 
                 const artist = rawArtist.replace('Artist: ', '')
-                const title = segmentTitle(rawTitle)
+                const title = segmentArtTitles
+                  ? segmentTitle(rawTitle)
+                  : rawTitle
 
                 const imageLoadStrategy = rowIndex < 2 ? 'eager' : 'lazy'
                 const imageAspectRatio = image_width / image_height
                 const landscapeImage = imageAspectRatio > 1
+                const rightmostCell = cellIndex + 1 === row.length
 
                 const imageProps = getImageProps(source)
                 const { src: imageSrc } = imageProps
 
-                return (
+                const isFocused = id === focused?.id
+
+                const cell = (
+                  <GridCell
+                    {...grid}
+                    as="a"
+                    className={cx(
+                      'relative group flex relative',
+                      rightmostCell ? '' : `mr-${gridSpacing}`,
+                      landscapeImage ? 'flex-grow' : 'flex-shrink'
+                    )}
+                  >
+                    <ImageWithBackground
+                      as="figure"
+                      imageSrc={imageSrc}
+                      imageProps={imageProps}
+                    >
+                      <Image
+                        className="h-auto w-full max-h-full"
+                        loading={imageLoadStrategy}
+                        {...imageProps}
+                        alt={description}
+                        title={title}
+                      />
+                      <figcaption className="hidden absolute inset-x-0 bottom-0 min-h-full bg-black opacity-75 group-hover:flex max-w-full items-end">
+                        <div className="text-white opacity-100 py-6 px-4">
+                          <h2
+                            className={
+                              segmentArtTitles ? 'font-light' : 'font-bold'
+                            }
+                          >
+                            {title}
+                          </h2>
+                          <h3
+                            className={cx(
+                              'hidden sm:inline-block',
+                              segmentArtTitles ? 'font-bold' : ''
+                            )}
+                          >
+                            {artist}
+                          </h3>
+                        </div>
+                        {hideLikeControl || (
+                          <LikeControl
+                            artwork={source}
+                            className="p-6 hidden md:inline"
+                            hydrateLocal={true}
+                          />
+                        )}
+                      </figcaption>
+                    </ImageWithBackground>
+                  </GridCell>
+                )
+
+                return isFocused ? (
+                  <div className="opacity-25">{cell}</div>
+                ) : (
                   <Link
                     href={`/exhibitions/${exhId}/${exhSlug}/art/${id}`}
                     passHref
                     key={id}
                   >
-                    <GridCell
-                      {...grid}
-                      as="a"
-                      className={cx(
-                        'relative group flex relative mx-2',
-                        landscapeImage ? 'flex-grow' : 'flex-shrink'
-                      )}
-                    >
-                      <ImageWithBackground as="figure" imageSrc={imageSrc}>
-                        {imageProps.valid ? (
-                          <img
-                            className="h-auto w-full max-h-full"
-                            loading={imageLoadStrategy}
-                            {...imageProps}
-                            alt={description}
-                          />
-                        ) : (
-                          <span {...imageProps} className="sticky top-2">
-                            {title}
-                          </span>
-                        )}
-                        <figcaption className="hidden absolute inset-0 bg-black opacity-75 group-hover:flex max-w-full items-end">
-                          <div className="text-white opacity-100 py-6 px-4">
-                            <h2 className="font-light">{title}</h2>
-                            <h3 className="font-bold hidden sm:inline-block">
-                              {artist}
-                            </h3>
-                          </div>
-                          {hideLikeControl || (
-                            <LikeControl
-                              artwork={source}
-                              className="p-6 hidden md:inline"
-                              hydrateLocal={true}
-                            />
-                          )}
-                        </figcaption>
-                      </ImageWithBackground>
-                    </GridCell>
+                    {cell}
                   </Link>
                 )
               })}

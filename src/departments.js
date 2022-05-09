@@ -25,6 +25,12 @@ var DepartmentsIndexPage = React.createClass({
 
 var Departments = React.createClass({
   departments: [
+    // NEW Departments -- commenting out for now as to not create potential bugs with server file
+    // 'Department of the Arts of Global Africa',
+    // 'Department of Global Contemporary Art',
+    // 'Department of European Art',
+    // 'Department of Asian Art',
+    // 'Department of the Arts of the Americas',
     'Art of Africa and the Americas',
     'Chinese, South and Southeast Asian Art',
     'Contemporary Art',

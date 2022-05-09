@@ -1,5 +1,5 @@
 /** @format */
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
@@ -32,6 +32,8 @@ function Art(props) {
     imagesForCarousel,
     isFitD,
     exhibitionData: { isClosed },
+    exhibitionData,
+    referenceArtwork,
   } = props
 
   const [isFirstVisit, setFirstVisit] = useState(false)
@@ -43,11 +45,16 @@ function Art(props) {
     if (visitCount <= 1) setFirstVisit(true)
   }, [])
 
+  const backToGroupLink = (artwork.__group?.link ?? classification)
+    ?.replace(' (including Digital)', '')
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+
   return (
-    <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch}>
-      <ArtworkSideBySide artwork={artwork} isFitD={isFitD}>
+    <Layout hideCTA={true} hideSearch={props.exhibitionData?.hideSearch} exhibitionData={exhibitionData}>
+      <ArtworkSideBySide artwork={artwork} isFitD={isFitD} exhibitionData={exhibitionData} referenceArtwork={referenceArtwork}>
         <p className="flex items-center">
-          <ShareLinks art={artwork} hideLinks={!isFitD} />
+          <ShareLinks art={artwork} hideLinks={!isFitD} exhibitionData={props.exhibitionData} />
         </p>
         {!isFitD || isFirstVisit || (
           <p className="bg-gray-300 px-4 py-2 mt-4 font-light">
@@ -75,10 +82,7 @@ function Art(props) {
           />
 
           <NestedLink
-            href={`/room/${classification
-              ?.replace(' (including Digital)', '')
-              .toLowerCase()
-              .replace(/\s+/g, '-')}`}
+            href={`/room/${backToGroupLink}`}
           >
             <a className="px-4 py-4 font-light float-right uppercase">
               Return to <strong>{classification}</strong> &rsaquo;
@@ -115,11 +119,18 @@ export async function getStaticProps({ params }) {
   const { id, exhibitionId } = params
   const isFitD = Number(exhibitionId) === 2760
   const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
+  const { dataPrefix } = exhibitionData
 
   const numericID = Number(id) ? Number(id) : hashids.decode(id)
   const hashid = hashids.encode(numericID)
 
-  let artwork = await fetchById(numericID, isFitD)
+  let artwork = await fetchById(numericID, isFitD, dataPrefix)
+  let referenceArtwork = null
+  if(artwork?.referenceArtId?.match('mia:')) {
+    const referenceId = artwork.referenceArtId.replace('mia:', '')
+    referenceArtwork = await fetchById(referenceId)
+  }
+  
   if (!isFitD && exhibitionData && exhibitionData.extra?.length > 0) {
     const exhibitionEntryRow = exhibitionData.extra.find(
       (d) => d.UniqueID === numericID
@@ -140,9 +151,11 @@ export async function getStaticProps({ params }) {
     }
   } else {
     if (!isFitD) {
+      const siblingArtworkIds = exhibitionData.objects?.length > 0 ? exhibitionData.objects : null ?? null
       artwork.__group = {
         title: exhibitionData.exhibition_title,
-        siblingArtworkIds: exhibitionData.objects,
+        link: 'all',
+        siblingArtworkIds,
       }
     }
   }
@@ -158,10 +171,12 @@ export async function getStaticProps({ params }) {
     : null
   const criteria = isFitD
     ? `classification:${classification}`
-    : `artist:'Todd Webb'`
+    : exhibitionData.relatedSearchCriteria || '*'
   const classificationResults = await getSearchResults(criteria, {
     isFitD,
+    dataPrefix,
     ids: isFitD ? null : artwork.__group?.siblingArtworkIds ?? null,
+    size: 300,
   })
 
   const slug = makeSlug([artwork.title, artwork.artist].join(' '))
@@ -190,7 +205,9 @@ export async function getStaticProps({ params }) {
       classificationResults,
       imagesForCarousel,
       exhibitionData,
+      referenceArtwork,
     },
+    revalidate: 6000,
   }
 }
 
@@ -202,14 +219,18 @@ export async function getStaticPaths() {
 }
 
 function ShareLinks(props) {
-  const { art, hideLinks } = props
-  const title = `${art.title} by ${art.artist}`
+  const { art, hideLinks, exhibitionData } = props
+  const mainArtist = art.artist.split(';')[0].replace('Artist: ', '')
+  const title = `${art.title} by ${mainArtist}`
+
+  const { exhibition_title: exhTitle, exhibition_id: exhId, slug: exhSlug } = exhibitionData
 
   // TODO change `id` to `:hashid/:slug`? Or get URL from useRouter?
   // get exhibition name from router (Layout does this)
   // customize away 'Foot in the Door'
-  const shareMessage = `Visit this artwork in Mia’s Foot in the Door Exhibition`
-  const shareUrl = `https://collections.artsmia.org/exhibitions/2760/foot-in-the-door/art/${art.id}`
+  const shareMessage = `Visit this artwork in Mia’s ${exhTitle} Exhibition`
+  const shareUrl = `https://collections.artsmia.org/exhibitions/${exhId}/${exhSlug}/art/${art.id}`
+
   const emailLink = `mailto:?subject=${shareMessage}&body=${shareUrl}`
   const twitterLink = `https://twitter.com/intent/tweet?url=${shareUrl}`
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`
@@ -218,10 +239,10 @@ function ShareLinks(props) {
   return (
     <>
       <Head>
-        <title>{title} | Foot in the Door</title>
+        <title>{title} | {exhTitle}</title>
         <meta
           name="Description"
-          content={`Artwork: ${title} | Foot in the Door at Mia`}
+          content={`Artwork: ${title} | ${exhTitle} at Mia`}
           key="description"
         />
         <meta name="twitter:card" content="summary_large_image"></meta>
@@ -250,6 +271,11 @@ function ShareLinks(props) {
   )
 }
 
+// TODO - this uses localstorage to track if it's a users first visit to the
+// SITE overall, and shows this context when it is.
+// But should it track visits to each exhibition instead? i.e. if I visit Foot in the Door
+// I should get the context blurb the first time and never again. But when I visit Labor
+// Camp I should see Labor Camp's context, no?
 function ExhibitionContextBlurb(props) {
   const { isFitD, exhibitionData } = props
 
@@ -257,13 +283,12 @@ function ExhibitionContextBlurb(props) {
     <FitDContextBlurb {...exhibitionData} />
   ) : (
     <>
-      <aside className="bg-gray-300 p-4 px-4 mt-8 my-4">
-        <p>{exhibitionData.description.split('\n\n')[0]}</p>
+      <aside className="bg-gray-300 p-4 px-4 mt-8 my-4 pb-0 mb-0">
+        <Text>{exhibitionData?.description?.split('\n\n')[0]}</Text>
       </aside>
-      <Link href="/exhibitions/2830/todd-webb-in-africa">
-        <a className="block text-center uppercase hover:no-underline">
-          Enter <strong className="font-bold">Todd Webb In Africa</strong>{' '}
-          Exhibition
+      <Link href={`/exhibitions/${exhibitionData.exhibition_id}/`}>
+        <a className="block text-center uppercase hover:underline py-2 pb-4 hover:bg-gray-300">
+          Enter <strong className="font-bold">{exhibitionData.exhibition_title}</strong>
         </a>
       </Link>
     </>

@@ -8,6 +8,7 @@ var SEARCH = require('./endpoints').search
 var SearchSummary = require('./search-summary')
 var ResultsList = require('./search-results/list')
 var ResultsGrid = require('./search-results/grid')
+var searchLanguageMap = require('./search-language')
 
 function omitResultsById(...ids) {
   return (json) => {
@@ -260,12 +261,20 @@ var SearchResults = React.createClass({
     const csvUrl = `${SEARCH}/${csvTerms}?format=csv`
     const showCsvLink = true
 
+    var pretty = {
+      query: searchLanguageMap(search.query),
+      filters: searchLanguageMap(search.filters),
+    }
+    pretty['searchString'] = [pretty.query, pretty.filters]
+      .filter(string => !!string && string !== '*' && string !== 'undefined')
+      .join(', ')
+
     return <div ref="postSearch" style={style}>
       <p>
         showing {hits.length} {' '}
         {showingAll || <span>of {search.hits.total} {' '}</span>}
-        results matching <code>{search.query}</code>
-        {search.filters && <span> and <code>{search.filters}</code></span>}
+        results matching <code>{pretty.query}</code>
+        {search.filters && <span> and <code>{pretty.filters}</code></span>}
         {showingAll || showMoreLink}
       </p>
 

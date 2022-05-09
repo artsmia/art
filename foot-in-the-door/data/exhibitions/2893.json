@@ -1,0 +1,62 @@
+[
+  {
+    "UniqueID": 2893,
+    "ID Type": "ExhibitionID",
+    "Record type": "Exhibition",
+    "Order": 0,
+    "ObjectNumber": null,
+    "ParentID": null,
+    "Public Access": true,
+    "Title": "Siah Armajani: A Bridge Divides, A Bridge Transforms",
+    "Dates": "Thursday, March 18, 2021 - Sunday, September 12, 2021",
+    "Start Date": "Mar-18-2021",
+    "End Date": "Sep-12-2021",
+    "Text Type": "Panel",
+    "Text": "<i>A bridge divides what is “above” the bridge, what is “below” the bridge, what is “before” the bridge and what is “after” the bridge, but at the same time it brings totality and turns it into a neighborhood.</i>\n– Siah Armajani\n\nIn 1960, at the urging of his family, Siah Armajani (Iranian American, 1939-2020) left his native Iran for the United States, landing in St. Paul where his uncle taught at Macalester College. The artist was an activist at a time of political upheaval in his native country and, for him, immigration was a political act. \n\nThe installation in this rotunda celebrates an important facet of Armajani’s career: the act of bridging. Ironically, bridges emphasize divisions even as they create connections. As an immigrant, Armajani understood his status as a metaphorical bridge between two cultures, and between two locations. For Armajani, the questions of citizenship and culture are deeply embedded in his works. "
+  },
+  {
+    "UniqueID": 45348,
+    "ID Type": "ObjectID",
+    "Record type": "ObjectLabel",
+    "Order": 1,
+    "ObjectNumber": "2001.293.1",
+    "ParentID": 2893,
+    "Public Access": true,
+    "Title": null,
+    "Dates": null,
+    "Start Date": null,
+    "End Date": null,
+    "Text Type": "ExhObject Label",
+    "Text": "Armajani’s public art projects are his most recognizable artistic contributions, including the landmark Irene Hixon Whitney Bridge (1988), an airy steel structure crossing over sixteen lanes of highway to connect the Minneapolis Sculpture Garden to Loring Park. \n \nThe iconic bridge was not Armajani’s first examination of Minneapolis’ iconic architecture. In 1980, the artist played with its downtown skyway system, conceiving <i>Skyway No. 2</i>. Armajani would go on to design two skyways in 1988: <i>Sky Bridge No. 1</i> crosses Marquette Avenue between Wells Fargo Center and Six Quebec; <i>Sky Bridge No. 2</i> connects Gaviidae Common and City Center."
+  },
+  {
+    "UniqueID": 109173,
+    "ID Type": "ObjectID",
+    "Record type": "ObjectLabel",
+    "Order": 2,
+    "ObjectNumber": "2010.22",
+    "ParentID": 2893,
+    "Public Access": true,
+    "Title": null,
+    "Dates": null,
+    "Start Date": null,
+    "End Date": null,
+    "Text Type": "ExhObject Label",
+    "Text": "In this work, Armajani explores exile as a physical, political, and emotional condition. Here, Armajani's cage-like structure is inhabited by a faceless figure who sleeps at a desk; outside and above, another watches. The two are frozen in this voyeuristic tableau, forever separated by the sculpture's closed doors and glass walls. Armajani's title references Theodor Adorno, the German philosopher who fled his native country during the Nazi regime. For him, exile was an ethical choice. As Adorno wrote, \"It is part of morality not to be at home in one's home.\""
+  },
+  {
+    "UniqueID": 111030,
+    "ID Type": "ObjectID",
+    "Record type": "ObjectLabel",
+    "Order": 3,
+    "ObjectNumber": "2010.100a-c",
+    "ParentID": 2893,
+    "Public Access": true,
+    "Title": null,
+    "Dates": null,
+    "Start Date": null,
+    "End Date": null,
+    "Text Type": "ExhObject Label",
+    "Text": "Siah Armajani's drawing captures the disaster that befell New Orleans, and many communities along the U.S. Gulf Coast, in the wake of Hurricane Katrina. This major storm hit the region in August, 2005 and caused devastating flooding. Floodwater overflowed banks, dykes, and levees, and destroyed homes and contaminated drinking water. The water short-circuited electrical systems, turning out lights, shutting down refrigerators and freezers, and leaving little to eat. In Armajani’s work, the comforts of home flow downstream: a dinner table with empty plates, a bed, a house. A car floats wheels-up, no longer a means of escape; the bridge has collapsed anyway. Crows survey the catastrophe, ignore the scarecrow, perhaps waiting to exploit the carnage."
+  }
+]

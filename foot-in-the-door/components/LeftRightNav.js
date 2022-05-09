@@ -23,7 +23,10 @@ function LRNav(props) {
   const nextRoom = _cls[(roomIndex + 1) % _cls.length]
 
   const { width } = useWindowSize()
-  const showFullNav = showAllAndStretch && width > 768
+  const showFullNav =
+    showAllAndStretch && width > 768 && classifications.length > 5
+
+  if (roomIndex === -1) return null
 
   const roomLinks = showFullNav
     ? _cls //.filter((room) => room !== classification)

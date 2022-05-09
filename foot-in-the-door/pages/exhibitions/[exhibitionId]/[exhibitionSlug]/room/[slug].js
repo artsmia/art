@@ -1,5 +1,5 @@
 /** @format */
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import { useEffect, useState } from 'react'
 
 import Layout from 'components/Layout'
@@ -10,10 +10,11 @@ import {
   getSearchResults,
   getImages,
   getMiaExhibitionData,
-  segmentTitle,
+  getMiaExhibitionIdAndData,
 } from 'util/index'
 import { SupportCTA } from 'components/NavBar'
 import Text from 'components/Text'
+import TitleSubtitle from 'components/TitleSubtitle'
 
 const perPage = 33 // how many items to show per page.
 
@@ -23,10 +24,18 @@ function Room(props) {
     slug,
     results,
     imagesForCarousel,
-    exhibitionData: { isClosed, exhibition_title: exhTitle },
+    exhibitionData: {
+      isClosed,
+      exhibition_title: exhTitle,
+      segmentExhibitionTitle = true,
+      bypassPublicAccess = true,
+    },
   } = props
   const classification = _classification === '*' ? exhTitle : _classification
-  const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
+  let hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
+  if(!bypassPublicAccess) {
+    hits = hits.filter(hit => hit._source.public_access === "1")
+  }
 
   const [additionalPages, setAddlPages] = useState([])
 
@@ -60,7 +69,7 @@ function Room(props) {
 
   const lastPage = additionalPages[additionalPages.length - 1]
   let finishedPaginating =
-    hits.length > perPage ||
+    hits.length >= perPage ||
     hits.length < perPage ||
     (lastPage && lastPage.length < perPage)
 
@@ -69,11 +78,12 @@ function Room(props) {
   }, [classification])
 
   const {
-    exhibitionData: { subPanels, description: exhDescription, hideSearch },
+    exhibitionData: { subPanels, description: exhDescription, hideSearch, markdownContent, lockup },
+    exhibitionData,
     subpanel,
     isFitD,
   } = props
-  const labelText = isFitD ? null : subpanel?.Text || exhDescription
+  const labelText = isFitD ? null : subpanel?.Text || exhDescription || markdownContent
   const classifications = isFitD
     ? fitdClassifications
     : subPanels.map((p) => p.Title)
@@ -83,7 +93,7 @@ function Room(props) {
   const artworkGrid =
     slug === 'all' && subPanels?.length > 0 ? (
       subPanels.map((subpanel) => {
-        const { Title: title, artworkIds } = subpanel
+        const { Title: title, Text: subpanelText, artworkIds } = subpanel
         const subHits = hits.filter(
           (hit) => artworkIds.indexOf(Number(hit._id)) >= 0
         )
@@ -94,8 +104,10 @@ function Room(props) {
               hits={subHits}
               perPage={30}
               label={`Browse all ${subpanel.Title}`}
+              text={subpanelText}
               className="mt-12"
               hideLikeControl={!isFitD}
+              exhibitionData={props.exhibitionData}
             ></RoomGrid>
           </>
         )
@@ -108,23 +120,21 @@ function Room(props) {
         className="mt-24"
         label={`Browse all ${classification}`}
         hideLikeControl={!isFitD}
+        exhibitionData={props.exhibitionData}
       >
-        <Text>{labelText}</Text>
+        <div className="max-w-3xl mx-auto"><Text dangerous={true}>{labelText}</Text></div>
       </RoomGrid>
     )
 
-  const title = classification.match('Todd Webb') ? (
-    <span className="font-black">{classification}</span>
-  ) : (
-    segmentTitle(classification)
-  )
-
   return (
-    <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch}>
+    <Layout hideCTA={true} pageBlocked={isClosed} hideSearch={hideSearch} exhibitionData={exhibitionData}>
       <main className="md:my-16 flex flex-col">
-        <h1 className="text-center text-5xl font-light capitalize md:-mb-20 md:mt-20">
-          {title}
-        </h1>
+        <TitleSubtitle title={classification} useSegmentation={segmentExhibitionTitle} headerStyles="text-center" />
+        <p className="text-center pb-5">{exhibitionData.display_date}</p>
+        {false && <>
+          <Text dangerous={true}>{exhibitionData?.description}</Text>
+          <hr />
+        </>}
         <LeftRightNav
           classifications={classifications}
           classification={classification}
@@ -158,14 +168,14 @@ function Room(props) {
         )}
       </main>
       <aside>
-        <LeftRightNav
+        {classifications && <LeftRightNav
           classifications={classifications}
           classification={classification}
           className="flex justify-between pt-48"
           imagesForCarousel={imagesForCarousel}
         >
           {isFitD && <SupportCTA />}
-        </LeftRightNav>
+        </LeftRightNav>}
       </aside>
     </Layout>
   )
@@ -174,15 +184,26 @@ function Room(props) {
 export default Room
 
 export async function getStaticProps({ params }) {
-  const { exhibitionId, slug } = params
-  const isFitD = Number(exhibitionId) === 2760
+  const { slug } = params
   let classification = slug.replace(/-/g, ' ')
   if (classification === 'all') classification = '*'
-  const exhibitionData = await getMiaExhibitionData(exhibitionId, fs)
+  const [exhibitionId, exhibitionData] = await getMiaExhibitionIdAndData(params.exhibitionId, fs)
+  const { dataPrefix } = exhibitionData
   const subpanel =
     exhibitionData.subPanels.find(
       (p) => p.Title.toLowerCase() === classification
     ) || null
+  const isFitD = Number(exhibitionId) === 2760
+
+  if(params.exhibitionId === '32021') {
+    console.info('redirect?')
+    return {
+      redirect: {
+        destination: `/exhibitions/2898/creativity-academy-2021`,
+        permanent: true,
+      }
+    }
+  }
 
   let results
   let imagesForCarousel
@@ -190,6 +211,12 @@ export async function getStaticProps({ params }) {
     imagesForCarousel = await getImages(4)
     results = await getSearchResults(`classification:${slug}`, {
       size: perPage,
+    })
+  } else if(dataPrefix) {
+    imagesForCarousel = []
+    results = await getSearchResults(null, {
+      dataPrefix,
+      size: 400,
     })
   } else {
     imagesForCarousel = await getImages(4, {
@@ -204,6 +231,8 @@ export async function getStaticProps({ params }) {
       ? exhibitionData.extra
           .filter((row) => row['ID Type'] === 'ObjectID')
           .map((row) => row.UniqueID)
+      : exhibitionData.allowArtIds
+      ? exhibitionData.allowArtIds.split(',')
       : exhibitionData.objects
 
     results = await getSearchResults(null, {
@@ -222,7 +251,7 @@ export async function getStaticProps({ params }) {
       imagesForCarousel,
       isFitD,
     },
-    revalidate: 600,
+    revalidate: 6000,
   }
 }
 
@@ -233,11 +262,11 @@ export async function getStaticPaths() {
     .concat('*')
 
   const exhibitions = [
-    {
-      id: '2760',
-      slug: 'foot-in-the-door',
-      rooms: fitdClassifications.concat('*'),
-    },
+    // {
+    //   id: '2760',
+    //   slug: 'foot-in-the-door',
+    //   rooms: fitdClassifications.concat('*'),
+    // },
     {
       id: '2830',
       slug: 'todd-webb-in-africa',

@@ -1,9 +1,14 @@
 /** @format */
 import { useState, useEffect } from 'react'
+export {
+  getMiaExhibitionData,
+  getMiaExhibitionIdAndData,
+} from './getMiaExhibitionData'
 
 export function getImageSrc(artworkData, thumbnail = true) {
   const { id, accession_number } = artworkData
-  const isFitD = Boolean(accession_number.match(/FITD/))
+  // TODO replace with more general `dataPrefix`
+  const isFitD = Boolean(accession_number?.match(/FITD/))
   const useIIIF = false // use options = {}?
 
   if (isFitD) {
@@ -19,6 +24,38 @@ export function getImageSrc(artworkData, thumbnail = true) {
       : `https://foot-in-the-door-2020.s3.amazonaws.com`
 
     return `${domain}/800/${thumb}`
+  } else if (accession_number?.match(/CREACAD/)) {
+    const imageFilename = artworkData.image
+    const thumb = imageFilename
+      .replace(/jpeg|png|JPG|tiff|pdf?$/i, 'jpg')
+      .replace('+', '%2B')
+      .replace(/ /g, '_')
+      // .replace("'", '_')
+      // .replace('St._Paul_Music_Academy', 'SPMA')
+      // .replace('Van_Kampen', 'V.K.')
+      .replace('Espe_', 'Espe')
+      .split('/')
+      // add `tn_` to the front of the filename
+      .reverse()
+      .map((segment, index) => (index === 0 ? `tn_${segment}` : segment))
+      .reverse()
+      .join('/')
+      .replace(/_0_/, '_O_')
+    // TODO - all this processing should probably happen in the data ingest script?
+
+    const useCloudfront = false
+    const domain = useCloudfront
+      ? `https://d3dbbvm3mhv3af.cloudfront.net`
+      : `https://mia-collections-auxilary-images.s3.amazonaws.com`
+
+    return `${domain}/ca21/${thumb}`
+  } else if (accession_number?.match(/AIB/)) {
+    const imageFilename = artworkData.image
+      .replace(/\.(jpeg|png|JPG)$/, '.jpg')
+      .replace(/%2./g, '_')
+    return `https://mia-collections-auxilary-images.s3.amazonaws.com/aib21/tn_${imageFilename}`
+  } else if (artworkData.__iiif) {
+    return artworkData.__iiif
   } else if (useIIIF) {
     return `https://iiif.dx.artsmia.org/${id}.jpg/full/${
       thumbnail ? 400 : 800
@@ -33,28 +70,51 @@ export function getImageSrc(artworkData, thumbnail = true) {
 export function getImageProps(artData, options = {}) {
   const { fullSize } = options
 
-  const valid = artData.image === 'valid'
+  const primaryImage = false
+  const valid = primaryImage
+    ? artData.image === 'valid' && artData.image_width > 0
+    : Boolean(artData.image && !artData.image.match(/pdf/))
+  const allowZoom = allowImageZoom(artData)
   // TODO is this the right place to be setting styles?
-  const style = valid
-    ? {}
-    : {
-        background:
-          'url(https://collections.artsmia.org/images/no-image-bg.png) repeat top left',
-        width: '100%',
-        height: '37vh',
-        display: 'block',
-        padding: '1em',
-        textAlign: 'center',
-      }
+  const imageErrorStyle = {
+    background:
+      'url(https://collections.artsmia.org/images/no-image-bg.png) repeat top left',
+    width: '100%',
+    minWidth: '7em',
+    height: '100%',
+    display: 'block',
+    padding: '1em',
+    textAlign: 'center',
+  }
+  const style = valid ? {} : imageErrorStyle
 
   return {
     src: getImageSrc(artData, !fullSize),
     alt: artData.description,
     width: artData.image_width,
     height: artData.image_height,
+    rights_type: artData.rights_type,
+    allowZoom,
     valid,
     style,
+    errorStyle: imageErrorStyle,
   }
+}
+
+export function allowImageZoom(art) {
+  return (
+    art.restricted === 0 ||
+    (!!art.rights_type &&
+      [
+        'Copyright Protected',
+        'Needs Permission',
+        'In Copyright',
+        'In Copyright - Rights-holder(s) Unlocatable or Unidentifiable',
+        'In Copyright–Rights-holder(s) Unlocatable',
+        'Copyright Not Evaluated',
+        'Permission Denied',
+      ].indexOf(art.rights_type) < 0)
+  )
 }
 
 // TODO port this to an API function?
@@ -68,23 +128,30 @@ export async function getSearchResults(term, options = {}) {
     from: _from,
     ids,
     isFitD = true,
+    dataPrefix = null,
   } = options
 
+  const baseEndpoint =
+    process.env.searchEndpoint || 'https://search.artsmia.org'
   const from = _from || 0
-  const queryParams = `size=${size || 30}&from=${from}&fitd=${isFitD ? 1 : 0}`
-  const searchEndpoint = (term) =>
-    `https://search.artsmia.org/${term}?${queryParams}`
+  const queryParams = `size=${size || 30}&from=${from}&fitd=${isFitD ? 1 : 0}${
+    dataPrefix ? `&dataPrefix=${dataPrefix}` : ''
+  }`
+  const searchEndpoint = (term) => `${baseEndpoint}/${term}?${queryParams}`
   const randomEndpoint = (term) =>
-    `https://search.artsmia.org/random/art?q=${term}&${queryParams}`
-  const idEndpoint = (ids) => `https://search.artsmia.org/ids/${ids.join(',')}`
+    `${baseEndpoint}/random/art?q=${term}&${queryParams}`
+  const idEndpoint = (ids) =>
+    `${baseEndpoint}/ids/${ids.join(',')}${
+      dataPrefix ? `&dataPrefix=${dataPrefix}` : ''
+    }`
 
-  const res = await fetch(
-    useNormalSearch
-      ? searchEndpoint(term)
-      : ids
-      ? idEndpoint(ids.slice(0, size || 30))
-      : randomEndpoint(term)
-  )
+  const endpoint = useNormalSearch
+    ? searchEndpoint(term)
+    : ids
+    ? idEndpoint(ids.slice(0, size || 30))
+    : randomEndpoint(term)
+
+  const res = await fetch(endpoint)
   let results = await res.json()
 
   if (ids) results = results.hits.hits
@@ -92,10 +159,13 @@ export async function getSearchResults(term, options = {}) {
   return results
 }
 
-export async function fetchById(id, isFitD = true) {
-  const res = await fetch(
-    `https://search.artsmia.org/id/${id}${isFitD ? '?fitd=1' : ''}`
-  )
+export async function fetchById(id, isFitD = true, dataPrefix = null) {
+  const baseEndpoint =
+    process.env.searchEndpoint || 'https://search.artsmia.org'
+  const endpoint = `${baseEndpoint}/id/${id}${isFitD ? '?fitd=1' : ''}${
+    dataPrefix ? `?dataPrefix=${dataPrefix}` : ''
+  }`
+  const res = await fetch(endpoint)
   const artwork = await res.json()
 
   return artwork
@@ -116,10 +186,10 @@ const isDev = false // TODO env var? Next magic var?
 const searchEndpoint = isDev
   ? `http://localhost:4680`
   : `https://search.artsmia.org`
-export async function likeArtwork(id) {
+export async function likeArtwork(id, dataPrefix) {
   if (isNaN(id)) return // console.error('non-numeric artwork ID')
 
-  const surveyEndpoint = `${searchEndpoint}/survey/art/fitd|${id}/like?subset=fitd`
+  const surveyEndpoint = `${searchEndpoint}/survey/art/${dataPrefix}|${id}/like?subset=${dataPrefix}`
   const res = await fetch(surveyEndpoint, {
     credentials: 'include',
   })
@@ -132,9 +202,11 @@ export async function likeArtwork(id) {
 
 export async function getUserLikes(options = {}) {
   const surveyEndpoint = `${searchEndpoint}/survey/favorites`
-  const { idsOnly, localOnly } = options
+  const { idsOnly, localOnly, dataPrefix } = options
 
-  const localData = JSON.parse(localStorage?.getItem('artsmia-fitd') || '{}')
+  const localData = JSON.parse(
+    localStorage?.getItem(`artsmia-${dataPrefix}`) || '{}'
+  )
   if (localOnly) return localData.likes || []
 
   const res = await fetch(surveyEndpoint, {
@@ -144,7 +216,7 @@ export async function getUserLikes(options = {}) {
 
   const ids = [
     ...new Set([
-      ...likes.map((id) => Number(id.replace('fitd|', ''))),
+      ...likes.map((id) => Number(id.replace(`${dataPrefix}|`, ''))),
       ...(localData.likes || []),
     ]),
   ]
@@ -323,70 +395,6 @@ export function useWindowSize() {
   return windowSize
 }
 
-export async function getMiaExhibitionData(exhId, fs) {
-  const baseDataR = await fetch(
-    `http://cdn.dx.artsmia.org/exhibitions/${Math.floor(
-      exhId / 1000
-    )}/${exhId}.json`
-  )
-  const baseData = await baseDataR.json()
-
-  // TODO
-  //
-  // fs should be imported here, instead of passed as an arg, but that fails to compile
-  // why can't I `import fs` in this file?
-  let extraData
-  try {
-    const extraDataRaw = await fs.readFileSync(
-      `data/exhibitions/${exhId}.json`,
-      {
-        encoding: 'utf-8',
-      }
-    )
-    extraData = JSON.parse(extraDataRaw)
-  } catch (e) {
-    extraData = []
-  }
-
-  const mainPanel =
-    extraData.find(
-      (data) =>
-        data['ID Type'] === 'ExhibitionId' && data.UniqueId === Number(exhId)
-    ) ?? extraData[0]
-  const extraDescription = mainPanel?.Text
-
-  const subPanels = extraData
-    .filter((d) => d['Record type'] === 'SubPanel')
-    .map((panel) => {
-      panel.artworkIds =
-        extraData
-          .filter((d) => d.ParentID === panel.UniqueID)
-          .map((art) => art.UniqueID) ?? null
-
-      // panel.nextPanel = extraData[extraData.indexOf(panel) + 2]
-      // panel.prevPanel = extraData[extraData.indexOf(panel) - 1]
-
-      return panel
-    })
-
-  const { display_date } = baseData
-  const [, endDate] = display_date.split(' - ').map((d) => new Date(d))
-  // TODO how exactly to determine this? For now, tie it to FitD's ID
-  const isClosed =
-    Number(exhId) === 2760 && (new Date(endDate) < new Date() || true)
-
-  const hideSearch = Number(exhId) !== 2760
-
-  return {
-    ...baseData,
-    description: baseData.exhibition_description || extraDescription || null,
-    extra: extraData,
-    subPanels,
-    isClosed,
-    hideSearch,
-  }
-}
-
 /* Segment the given phrase into a short, punchy, memorable "main title" with
  * optional prefix/suffix. Museum object titles can be pretty long. Inspired by
  * our design department requesting that the first few words of a long title
@@ -399,7 +407,7 @@ export function segmentTitle(rawTitle, options = {}) {
 
   // first, segment on special characters
   let segmentedTitle = rawTitle
-    .split(/([^\(\)\[\],:;]+)/) // eslint-disable-line no-useless-escape
+    .split(/([^\(\)\[\],:;|]+)/) // eslint-disable-line no-useless-escape
     .filter((s) => s !== '')
 
   // then based on quotes and a loose set of prepositions if the first attempt

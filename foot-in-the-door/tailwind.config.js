@@ -30,6 +30,7 @@ module.exports = {
         48: '12rem',
         64: '16rem',
         'screen-3/5': '60vh',
+        'screen-3x': '277vh',
       },
       maxHeight: {
         64: '16rem',
@@ -60,6 +61,7 @@ module.exports = {
     visibility: ['responsive', 'hover', 'group-hover'],
     opacity: ['hover', 'group-hover'],
     borderColor: ['focus-within'],
+    objectFit: ['hover', 'group-hover'],
   },
   plugins: [require('@tailwindcss/typography')],
 }
