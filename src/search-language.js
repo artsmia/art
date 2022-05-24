@@ -20,6 +20,7 @@ var searchLanguageMap = (queryText) => {
     'room:"G320"': "TODO: need to match parameters more cleverly? This should return 'In Gallery 320' or something",
     '_exists_:"list:nahm"': 'Native American Heritage Month',
     '_exists_:"list:whm"': 'Women\'s History Month',
+    '_exists_:"list:pride-month"': "2SLGBTQIA+ Artists"
   }
 
 
