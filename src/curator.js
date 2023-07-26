@@ -34,6 +34,9 @@ var Curator = React.createClass({
         return rest(endpoint).then((r) => JSON.parse(r.entity))
       }
     },
+    willTransitionTo: function (transition, params, query, callback) {
+      return transition.redirect('home', {status: 301})
+    },
   },
 
   render() {
