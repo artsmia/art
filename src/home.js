@@ -83,7 +83,7 @@ var HomeDepartmentsAndPages = React.createClass({
 							It is our mission to enrich the community by collecting, preserving, and making accessible outstanding
 							works of art from the world’s diverse cultures. With over 90,000 artworks, Mia’s collection includes art
 							from six continents, spanning about 5,000 years. Here you will find world-famous artworks that embody the
-							highest levels of artistic achievement and speaks to the enduring power of human creativity to shape our
+							highest levels of artistic achievement and speak to the enduring power of human creativity to shape our
 							world.{" "}
 						</p>
 					</div>
