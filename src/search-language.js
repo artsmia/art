@@ -23,7 +23,8 @@ var searchLanguageMap = (queryText) => {
 		'_exists_:"list:nahm"': "Native American Heritage Month",
 		'_exists_:"list:whm"': "Women's History Month",
 		'_exists_:"list:pride-month"': "2SLGBTQIA+ Artists",
-		'_exists_:"list:hispanic-heritage"': "Hispanic Heritage"
+		'_exists_:"list:hispanic-heritage"': "Hispanic Heritage",
+		'_exists_:"list:arts-of-americas"': "Arts of the Americas"
 	}
 
 	var reversedMap = Object.keys(map).reduce((reversed, key) => {
