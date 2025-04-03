@@ -29,6 +29,10 @@ app.get('/search/', (req, res, next) => {
   next()
 })
 
+app.get('*', (req, res) => {
+	res.send(index);
+  });
+
 var html = ({ title, meta, link }, data, body) => {
   const renderedHead = [
     `${title}`,
