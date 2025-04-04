@@ -1,0 +1,70 @@
+[
+  {
+    "id": 63,
+    "title": "Vincent Van Gogh and the Avant-Garde: Painters of the Petit Boulevard",
+    "description": "Saturday, February 17, 2001 - Sunday, September 02, 2001",
+    "objectIds": [
+      1414
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 79,
+    "title": "Signac",
+    "description": "Tuesday, February 27, 2001 - Sunday, December 30, 2001",
+    "objectIds": [
+      1477,
+      1414
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Signac, Snow, Boulevard de Clichy",
+    "link": "http://audio-tours.s3.amazonaws.com/p027.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 2161,
+    "title": "Eugène Delacroix and Modernity",
+    "description": "Wednesday, February 17, 2016 - Sunday, May 22, 2016",
+    "objectIds": [
+      601,
+      799,
+      1218,
+      1414,
+      1639,
+      1978,
+      4578,
+      115814
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 494,
+    "title": "Vincent's Choice: the Musée Imaginaire of Van Gogh",
+    "description": "Friday, February 14, 2003 - Sunday, June 15, 2003",
+    "objectIds": [
+      1414
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 534,
+    "title": "Seurat and the Making of \"La Grande Jatte\"",
+    "description": "Wednesday, June 16, 2004 - Sunday, September 19, 2004",
+    "objectIds": [
+      1414
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1542,
+    "title": "Neo-Impressionism, from light to color",
+    "description": "Friday, October 10, 2014 - Sunday, March 29, 2015",
+    "objectIds": [
+      1272,
+      1414
+    ],
+    "type": "exhibition"
+  }
+]

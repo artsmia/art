@@ -1,0 +1,34 @@
+[
+  {
+    "id": 556,
+    "title": "Governor's Residence: 2003-2012",
+    "description": "Wednesday, April 23, 2003 - Thursday, May 31, 2012",
+    "objectIds": [
+      563,
+      63,
+      1242,
+      1917,
+      21172,
+      10511
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 874,
+    "title": "From Peasants to Presidents: Sweden's Greatest Etcher",
+    "description": "Wednesday, February 06, 2008 - Sunday, June 01, 2008",
+    "objectIds": [
+      1242
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1280,
+    "title": "Luminous Modernism: Nordic Art in America",
+    "description": "Thursday, October 20, 2011 - Saturday, February 11, 2012",
+    "objectIds": [
+      1242
+    ],
+    "type": "exhibition"
+  }
+]

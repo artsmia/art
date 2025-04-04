@@ -1,0 +1,23 @@
+[
+  {
+    "id": 556,
+    "title": "Governor's Residence: 2003-2012",
+    "description": "Wednesday, April 23, 2003 - Thursday, May 31, 2012",
+    "objectIds": [
+      563,
+      63,
+      1242,
+      1917,
+      21172,
+      10511
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": "10511",
+    "type": "adopt-a-painting",
+    "adopted": "0",
+    "description": "This lovely little picture would appear so much more appetizing without its current layers of thick, yellowed, glossy varnish. During its history, someone decided to fix the painting by retouching a few areas of loss and abrasion. Unfortunately, the pigments were poorly matched; thus the areas of overpaint are considerably lighter and rather obvious, compared to the original paint surface. The previous attempts at restoration will be reversed, and a new, color-saturating layer of varnish will be applied to the surface of the painting, which will certainly serve to make this fruit bowl more appealing.",
+    "cost": "$2,840.00"
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Ife City, Shrine Head",
+    "link": "http://audio-tours.s3.amazonaws.com/p918.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "Shrine Head",
+    "description": "<p>She’s beautiful, of course. You can imagine the glint in her eye, the gleam of her lips, so realistic is this ceramic sculpture from nearly 900 years ago. In fact, in 1911, a German explorer in Africa couldn’t wrap his head around the possibility that Africans created it—it’s so different from the abstract art more typical of the continent—and instead proposed that Greek settlers had made it. We know better now, thanks to archaeology and oral history: royals in the ancient city of Ife, in present-day Nigeria, often hired artists to create life-like portraits like this in clay or bronze of themselves, friends, and family.</p>\n",
+    "link": "http://artstories.artsmia.org/#/o/4866",
+    "type": "artstory"
+  },
+  {
+    "id": 1158,
+    "title": "Heroic Africans: Legendary Leaders, Iconic Sculptures",
+    "description": "Monday, September 19, 2011 - Sunday, January 29, 2012",
+    "objectIds": [
+      4866
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "A World Cup tribute: art from around the globe",
+    "link": "http://new.artsmia.org/stories/a-world-cup-tribute-art-from-around-the-globe/",
+    "objectIds": "111088 115752 115895 12155 12217 1387 15062 1517 1556 1639 1671 1785 1800 1822 2724 28662 28710 293 29496 31435 4684 4866 4867 516 5483 5485 57 59171 676 742 7487",
+    "type": "mia-story"
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "10593",
+    "type": "adopt-a-painting",
+    "adopted": "0",
+    "description": "This amazing frame is now completely unstable, due to failing joints, causing movement and shifting, as well as a good deal of flaking gesso. Numerous areas of overpaint have darkened; some areas of bronze paint have gotten wet (!) and now appear green, due to corrosion. The sides of the frame are extremely splotchy and dirty. The frame appears to have been coated with tinted glue to help protect the gold (and probably to make the gilding appear older).\r\n\r\n<img class=\" wp-image-9956 alignright\" style=\"margin-left: 10px;\" src=\"http://new.artsmia.org/wp-content/uploads/sites/8/2013/04/prudhon-248x300.png\" alt=\"prudhon\" width=\"198\" height=\"240\" />Due to the extensive damage present at the front edge, this area will need to be entirely regilded. Lifting gesso will be consolidated, cracks will be filled with appropriate adhesives, loose carvings will be secured, wood and gesso losses will be filled, and areas of gold loss will be regilded and toned. This is a major restoration project that has been on our curatorial radar for years.",
+    "cost": "$9,860.00"
+  },
+  {
+    "title": "Honoring the Monuments Men, art saviors of World War II, with a self-guided tour at the MIA (Part II)",
+    "link": "http://new.artsmia.org/stories/honoring-the-monuments-men-art-saviors-of-world-war-ii-with-a-self-guided-tour-at-the-mia-part-ii/",
+    "objectIds": "10593 111619 11955 1386 30522",
+    "type": "mia-story"
+  },
+  {
+    "id": 89,
+    "title": "Pierre-Paul Prud'hon",
+    "description": "Monday, January 20, 1997 - Wednesday, June 17, 1998",
+    "objectIds": [
+      10593
+    ],
+    "type": "exhibition"
+  }
+]

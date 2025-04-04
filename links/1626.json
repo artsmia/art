@@ -1,0 +1,25 @@
+[
+  {
+    "id": 633,
+    "title": "The Splendor of Ruins in French Landscape Painting, 1640-1800",
+    "description": "Saturday, March 19, 2005 - Saturday, October 15, 2005",
+    "objectIds": [
+      1626
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Vernet, Imaginary Italian Harbor Scene",
+    "link": "http://audio-tours.s3.amazonaws.com/p515.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 95,
+    "title": "Autour de Claude-Joseph Vernet, la marine a voile de 1650 a 1890",
+    "description": "Saturday, May 01, 1999 - Tuesday, September 21, 1999",
+    "objectIds": [
+      1626
+    ],
+    "type": "exhibition"
+  }
+]

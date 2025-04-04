@@ -1,0 +1,34 @@
+[
+  {
+    "id": 940,
+    "title": "Fine Art in Sports",
+    "description": "Tuesday, November 13, 1962 - Friday, November 30, 1962",
+    "objectIds": [
+      589
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Bril, Landscape",
+    "link": "http://audio-tours.s3.amazonaws.com/p673.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1319,
+    "title": "The Art of Golf",
+    "description": "Saturday, February 04, 2012 - Sunday, February 17, 2013",
+    "objectIds": [
+      589
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 939,
+    "title": "Sports and Recreation Panorama",
+    "description": "Wednesday, April 01, 1959 - Thursday, April 30, 1959",
+    "objectIds": [
+      589
+    ],
+    "type": "exhibition"
+  }
+]

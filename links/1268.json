@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1266,
+    "title": "Lyonel Feininger:  At the Edge of the World",
+    "description": "Thursday, June 30, 2011 - Sunday, May 13, 2012",
+    "objectIds": [
+      1268
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Honoring the Monuments Men, art saviors of World War II, with a self-guided tour at the MIA (Part I)",
+    "link": "http://new.artsmia.org/stories/honoring-the-monuments-men-art-saviors-of-world-war-ii-with-a-self-guided-tour-at-the-mia-part-i/",
+    "objectIds": "116111 1163 1268 1271",
+    "type": "mia-story"
+  },
+  {
+    "id": 1574,
+    "title": "Degenerate Art: The Attack of Modern Art in Nazi Germany, 1937",
+    "description": "Thursday, March 13, 2014 - Monday, September 01, 2014",
+    "objectIds": [
+      1268
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 58,
+    "title": "Lyonel Feininger",
+    "description": "Monday, June 01, 1998 - Thursday, January 28, 1999",
+    "objectIds": [
+      1268
+    ],
+    "type": "exhibition"
+  }
+]

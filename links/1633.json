@@ -1,0 +1,43 @@
+[
+  {
+    "id": 98,
+    "title": "Kunstwelten im Dialog",
+    "description": "Tuesday, October 05, 1999 - Wednesday, April 19, 2000",
+    "objectIds": [
+      1633
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Epstein, Female Figure",
+    "link": "http://audio-tours.s3.amazonaws.com/p573.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 970,
+    "title": "Wild Thing: Epstein, Gaudier-Brzeska and Gill",
+    "description": "Saturday, October 24, 2009 - Sunday, January 24, 2010",
+    "objectIds": [
+      1633
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1054,
+    "title": "The Vorticists: Rebel Artists in London and New York, 1914-1918",
+    "description": "Thursday, September 30, 2010 - Sunday, September 04, 2011",
+    "objectIds": [
+      1633
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1394,
+    "title": "Another time. From Decadent movement to Modern style",
+    "description": "Saturday, September 22, 2012 - Sunday, January 13, 2013",
+    "objectIds": [
+      1633
+    ],
+    "type": "exhibition"
+  }
+]

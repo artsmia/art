@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Daumier, The Fugitives-Painting",
+    "link": "http://audio-tours.s3.amazonaws.com/p746.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1519,
+    "title": "Daumier is Tremendous",
+    "description": "Saturday, March 02, 2013 - Sunday, June 02, 2013",
+    "objectIds": [
+      1241
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 42,
+    "title": "Daumier",
+    "description": "Monday, May 03, 1999 - Wednesday, May 17, 2000",
+    "objectIds": [
+      1241
+    ],
+    "type": "exhibition"
+  }
+]

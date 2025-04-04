@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1242,
+    "title": "Homecoming: The Art Collection of James J. Hill",
+    "description": "Saturday, May 18, 1991 - Saturday, September 21, 1991",
+    "objectIds": [
+      6230,
+      6239,
+      2036,
+      2037,
+      53,
+      800,
+      1395,
+      1653,
+      1978,
+      2762,
+      2810,
+      10460,
+      797,
+      801,
+      1263,
+      1352,
+      1977,
+      3262
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Barye, Theseus Slaying a Centaur",
+    "link": "http://audio-tours.s3.amazonaws.com/p514.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "Theseus Slaying the Centaur Bianor by Antione-Louis Barye",
+    "link": "http://www.thingiverse.com/thing:743690",
+    "id": "1263",
+    "type": "3d"
+  }
+]

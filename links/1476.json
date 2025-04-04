@@ -1,0 +1,16 @@
+[
+  {
+    "title": "de Morales, Man of Sorrows",
+    "link": "http://audio-tours.s3.amazonaws.com/p276.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1852,
+    "title": "El Divino Morales",
+    "description": "Thursday, October 01, 2015 - Sunday, January 10, 2016",
+    "objectIds": [
+      1476
+    ],
+    "type": "exhibition"
+  }
+]

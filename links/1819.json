@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1095,
+    "title": "Remington's Bronco Buster: From Art Icon to Pop Icon",
+    "description": "Saturday, February 20, 2010 - Thursday, February 25, 2010",
+    "objectIds": [
+      1819
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": "1819",
+    "type": "adopt-a-painting",
+    "adopted": "0",
+    "description": "Our horse and rider need a lot of TLC, both structurally and cosmetically. The stretcher, which is original to the painting, has been tightened so much over the years that the sides have bowed inward, and the corners are straining. The solution involves removal of the canvas from the stretcher, extending the tacking margins by means of a strip lining, resecuring the canvas and adjusting its tension appropriately. In addition, there are mold stains on the lower half of the canvas verso, and large bits of debris that have lodged between the canvas and stretcher. These have caused a number of sharp, convex deformations along the bottom edge of the canvas, which need to be reduced and flattened.\r\n\r\nOn the surface, the sky is broadly overpainted with a grayish green-blue, as opposed to the original, brighter blue below. There are scattered stains and discolorations throughout, as well as various losses - even a scratch – that affect all layers of the paint. A thick resin varnish was tactlessly applied over an existing dirt and grime layer, and most regrettably, over a number of dark brown splatter accretions and drips in the lower left corner. The current varnish poorly saturates the paint, and the surface quality is noticeably diminished. Treatment involves removal of the varnish, and reduction/removal of the grime layers and accretions. Losses will be filled, areas of abrasion and staining will be toned or inpainted, and a new coat of non-yellowing varnish will be applied. The finished results will be impressive and noticeable.",
+    "cost": "$3,050.00"
+  },
+  {
+    "title": "Wyeth, Bronco Buster",
+    "link": "http://audio-tours.s3.amazonaws.com/p512.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "Bronco Buster",
+    "object": 1819,
+    "link": "http://artsmia.github.io/listen/#/09_Bronco"
+  }
+]

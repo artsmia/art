@@ -1,0 +1,25 @@
+[
+  {
+    "id": 895,
+    "title": "The Finest in the Western Country: Wisconsin Decorative Arts 1820-1900",
+    "description": "Thursday, September 11, 2008 - Sunday, January 04, 2009",
+    "objectIds": [
+      2421
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 131,
+    "title": "Norwegian Folk Art: The Migration of a Tradition",
+    "description": "Wednesday, November 06, 1996 - Thursday, February 20, 1997",
+    "objectIds": [
+      2421
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Aslak Lie, Cupboard",
+    "link": "http://audio-tours.s3.amazonaws.com/p145.mp3",
+    "type": "audio"
+  }
+]

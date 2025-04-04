@@ -1,0 +1,22 @@
+[
+  {
+    "id": 85,
+    "title": "Oskar Kokoschka Memorial",
+    "description": "Monday, January 15, 2001 - Tuesday, April 17, 2001",
+    "objectIds": [
+      1557
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1603,
+    "title": "Oskar Kokoschka: The Self in Focus",
+    "description": "Friday, October 04, 2013 - Monday, March 03, 2014",
+    "objectIds": [
+      1426,
+      1557,
+      1943
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,175 @@
+[
+  {
+    "id": 933,
+    "title": "The Art of Collecting: Acquisitions at The Minneapolis Institute of Arts, 1980-1985",
+    "description": "Sunday, February 16, 1986 - Sunday, April 20, 1986",
+    "objectIds": [
+      3115,
+      2903,
+      24529,
+      3058,
+      2724,
+      2806,
+      3076,
+      3077,
+      3205,
+      3217,
+      3221,
+      10512,
+      2725,
+      2762,
+      2808,
+      3059,
+      3114,
+      3148,
+      3162,
+      3204,
+      3212,
+      3267,
+      3280,
+      3282,
+      3296,
+      3321,
+      10439
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Art Inspires: Kristin Makholm on Georgia O'Keeffe",
+    "link": "http://new.artsmia.org/stories/art-inspires-kristin-makholm-ph-d/",
+    "objectIds": "2725",
+    "type": "mia-story"
+  },
+  {
+    "id": 876,
+    "title": "Dove/O'Keeffe: Circles of Influence",
+    "description": "Sunday, June 07, 2009 - Monday, September 07, 2009",
+    "objectIds": [
+      2725
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 5,
+    "title": "Made in America: Ten Centuries of American Art",
+    "description": "Sunday, February 05, 1995 - Sunday, April 30, 1995",
+    "objectIds": [
+      77,
+      425,
+      486,
+      577,
+      689,
+      1381,
+      18664,
+      1548,
+      19724,
+      19812,
+      19871,
+      2050,
+      11715,
+      2252,
+      22048,
+      2620,
+      22114,
+      2725,
+      2891,
+      2900,
+      3125,
+      24489,
+      3306,
+      24492,
+      24493,
+      24501,
+      24508,
+      9934,
+      24513,
+      24514,
+      3384,
+      3590,
+      3820,
+      3914,
+      3831,
+      3896,
+      3968,
+      3982,
+      8674,
+      4013,
+      26892,
+      4137,
+      4285,
+      8673,
+      4242,
+      4487
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1301,
+    "title": "Into the Night: Georgia O'Keeffe to Gregory Crewdson",
+    "description": "Saturday, October 06, 2012 - Monday, January 28, 2013",
+    "objectIds": [
+      2725
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 728,
+    "title": "Georgia O'Keeffe: Circling Around Abstraction",
+    "description": "Saturday, February 10, 2007 - Sunday, January 06, 2008",
+    "objectIds": [
+      1554,
+      2725,
+      105228
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "The lost art of summer vacation",
+    "link": "http://new.artsmia.org/stories/the-lost-art-of-summer-vacation/",
+    "objectIds": "103135 1184 23123 2725 30810",
+    "type": "mia-story"
+  },
+  {
+    "id": 1678,
+    "title": "Georgia O'Keeffe",
+    "description": "Saturday, November 07, 2015 - Sunday, February 07, 2016",
+    "objectIds": [
+      1554,
+      2725
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1761,
+    "title": "New Women: Four New York Modernists, 1910-1935",
+    "description": "Thursday, February 18, 2016 - Sunday, May 15, 2016",
+    "objectIds": [
+      2725
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "O'Keeffe, City Night",
+    "link": "http://audio-tours.s3.amazonaws.com/p947.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 503,
+    "title": "Georgia O'Keeffe: From the Plains",
+    "description": "Thursday, October 23, 2003 - Sunday, February 01, 2004",
+    "objectIds": [
+      2725
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1322,
+    "title": "The Magical City",
+    "description": "Saturday, September 29, 2012 - Sunday, January 13, 2013",
+    "objectIds": [
+      2725,
+      3390
+    ],
+    "type": "exhibition"
+  }
+]

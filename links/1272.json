@@ -1,0 +1,45 @@
+[
+  {
+    "id": 425,
+    "title": "Neo-Impressionism: Artists on the Edge",
+    "description": "Thursday, June 27, 2002 - Sunday, October 20, 2002",
+    "objectIds": [
+      1272,
+      1477
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1542,
+    "title": "Neo-Impressionism, from light to color",
+    "description": "Friday, October 10, 2014 - Sunday, March 29, 2015",
+    "objectIds": [
+      1272,
+      1414
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Seurat, Port-en-Bessin",
+    "link": "http://audio-tours.s3.amazonaws.com/p725.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1575,
+    "title": "Seurat. Master of Pointillism",
+    "description": "Saturday, May 24, 2014 - Sunday, September 07, 2014",
+    "objectIds": [
+      1272
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1303,
+    "title": "Neo-Impressionism",
+    "description": "Saturday, November 03, 2012 - Sunday, March 17, 2013",
+    "objectIds": [
+      1272
+    ],
+    "type": "exhibition"
+  }
+]

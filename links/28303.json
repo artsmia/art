@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1315,
+    "title": "Marsden Hartley in Dogtown",
+    "description": "Saturday, June 09, 2012 - Sunday, October 14, 2012",
+    "objectIds": [
+      28303
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 151,
+    "title": "Art from the Collection of Richard L. Hillstrom",
+    "description": "Tuesday, August 29, 2000 - Thursday, December 28, 2000",
+    "objectIds": [
+      8155,
+      28303,
+      28304,
+      5683,
+      43264
+    ],
+    "type": "exhibition"
+  }
+]

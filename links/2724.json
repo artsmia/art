@@ -1,0 +1,60 @@
+[
+  {
+    "title": "Kirchner, Dance Training",
+    "link": "http://audio-tours.s3.amazonaws.com/p392.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "Flip-side finds: Secrets of the creative battle",
+    "link": "http://new.artsmia.org/stories/flip-side-finds-secrets-of-the-creative-battle/",
+    "objectIds": "111870 19941 2724 33422 772",
+    "type": "mia-story"
+  },
+  {
+    "title": "Masterpiece Miley? How the twerking, toking Cyrus is like many of history's greatest artists",
+    "link": "http://new.artsmia.org/stories/masterpiece-miley-how-the-twerking-toking-cyrus-is-like-many-of-historys-greatest-artists/",
+    "objectIds": "1655 2724",
+    "type": "mia-story"
+  },
+  {
+    "title": "A World Cup tribute: art from around the globe",
+    "link": "http://new.artsmia.org/stories/a-world-cup-tribute-art-from-around-the-globe/",
+    "objectIds": "111088 115752 115895 12155 12217 1387 15062 1517 1556 1639 1671 1785 1800 1822 2724 28662 28710 293 29496 31435 4684 4866 4867 516 5483 5485 57 59171 676 742 7487",
+    "type": "mia-story"
+  },
+  {
+    "id": 933,
+    "title": "The Art of Collecting: Acquisitions at The Minneapolis Institute of Arts, 1980-1985",
+    "description": "Sunday, February 16, 1986 - Sunday, April 20, 1986",
+    "objectIds": [
+      3115,
+      2903,
+      24529,
+      3058,
+      2724,
+      2806,
+      3076,
+      3077,
+      3205,
+      3217,
+      3221,
+      10512,
+      2725,
+      2762,
+      2808,
+      3059,
+      3114,
+      3148,
+      3162,
+      3204,
+      3212,
+      3267,
+      3280,
+      3282,
+      3296,
+      3321,
+      10439
+    ],
+    "type": "exhibition"
+  }
+]

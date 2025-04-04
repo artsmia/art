@@ -1,0 +1,28 @@
+[
+  {
+    "id": 865,
+    "title": "Bernini and the Birth of Baroque Portrait Sculpture",
+    "description": "Tuesday, August 05, 2008 - Sunday, March 08, 2009",
+    "objectIds": [
+      565,
+      1588
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 22,
+    "title": "Sovrane Passioni",
+    "description": "Thursday, September 03, 1998 - Thursday, December 17, 1998",
+    "objectIds": [
+      565
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": "565",
+    "type": "adopt-a-painting",
+    "adopted": "0",
+    "description": "<img class=\" wp-image-9925 alignright\" style=\"margin-left: 10px;\" src=\"http://new.artsmia.org/wp-content/uploads/sites/8/2013/04/stringa-235x300.png\" alt=\"stringa\" width=\"188\" height=\"240\" />This frame is in dire need of assistance. It’s in poor condition, rife with loose parts and losses, including insect damage. Over the centuries, people have tried to improve its appearance, resulting in discolored patches of overpaint, flaking gesso, and bits of replacement parts. Unfortunately, we have found that the original gold leaf has also been covered up with gold paint; these elements will be restored and regilded. Major losses will be reconstructed by the conservators in keeping with the original design. This is a much-needed undertaking and will result in a dramatically improved appearance for both painting and frame.",
+    "cost": "$8,230.00"
+  }
+]

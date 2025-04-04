@@ -1,0 +1,154 @@
+[
+  {
+    "id": 1408,
+    "title": "Mystic, Connecticut 1921",
+    "description": "1921",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1415,
+    "title": "Paintings by George Bellows",
+    "description": "Wednesday, November 07, 1945 - Saturday, December 15, 1945",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1406,
+    "title": "Charlottsville, Virginia 1921",
+    "description": "1921",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1564,
+    "title": "Only in Canada",
+    "description": "Friday, May 10, 2013 - Monday, September 02, 2013",
+    "objectIds": [
+      1385,
+      1546,
+      1851,
+      60161
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1411,
+    "title": "Southeastern Fair 1922",
+    "description": "1922",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1407,
+    "title": "New York, New York 1921",
+    "description": "1921",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1400,
+    "title": "Portrait Painters",
+    "description": "1920",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1414,
+    "title": "Exhibition of Paintings by George Bellows",
+    "description": "Sunday, February 22, 1925 - Sunday, March 08, 1925",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1412,
+    "title": "Exhibition of Paintings, Drawings and Lithographs by George W. Bellows",
+    "description": "Monday, February 26, 1923 - Saturday, March 31, 1923",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1410,
+    "title": "Carson, Pierie & Scott 1922",
+    "description": "1922",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1416,
+    "title": "George Bellows: Paintings, Drawings and Prints",
+    "description": "Thursday, January 31, 1946 - Sunday, March 10, 1946",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1409,
+    "title": "116th Annual Exhibition of the Pennsylvania Academy of Fine Arts",
+    "description": "February 6, 1921 to March 27, 1921",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1418,
+    "title": "Jewelry and Finery, 18th through 20th Centuries",
+    "description": "Saturday, February 18, 1967 - Sunday, March 26, 1967",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1417,
+    "title": "George Bellows",
+    "description": "Tuesday, May 03, 1960 - Saturday, May 28, 1960",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1413,
+    "title": "Milwaukee Art Institute 1923",
+    "description": "Sunday, July 01, 1923 - Monday, December 31, 1923",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1402,
+    "title": "Randolph-Macon Women's College 1921",
+    "description": "1921",
+    "objectIds": [
+      1385
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "George Bellows, Mrs. T. in Cream Silk, No 2",
+    "link": "http://audio-tours.s3.amazonaws.com/p851.mp3",
+    "type": "audio"
+  }
+]

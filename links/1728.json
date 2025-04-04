@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1647,
+    "title": "Bazille et la naissance de l'impressionnisme",
+    "description": "Saturday, June 25, 2016 - Sunday, July 09, 2017",
+    "objectIds": [
+      1480,
+      1728
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 809,
+    "title": "L'Impressionnisme vu d'Amérique",
+    "description": "Saturday, June 09, 2007 - Sunday, January 20, 2008",
+    "objectIds": [
+      129,
+      1413,
+      1728,
+      1428
+    ],
+    "type": "exhibition"
+  }
+]

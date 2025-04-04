@@ -1,0 +1,56 @@
+[
+  {
+    "id": 961,
+    "title": "Degas: Master of French Art",
+    "description": "Friday, December 12, 2008 - Sunday, March 22, 2009",
+    "objectIds": [
+      1265
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 689,
+    "title": "Explorations in Bronze: Degas and New Mexico Sculptors",
+    "description": "Friday, June 10, 2005 - Sunday, October 02, 2005",
+    "objectIds": [
+      1265
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 415,
+    "title": "Our Noble Steeds",
+    "description": "2004",
+    "objectIds": [
+      12356,
+      479,
+      17125,
+      11975,
+      790,
+      17506,
+      17535,
+      17554,
+      17646,
+      17818,
+      1187,
+      1265,
+      18346,
+      18428,
+      9234,
+      1732,
+      2607,
+      8216,
+      11585,
+      11610,
+      18505,
+      18675,
+      19183,
+      19189,
+      19209,
+      19415,
+      21232,
+      21275
+    ],
+    "type": "exhibition"
+  }
+]

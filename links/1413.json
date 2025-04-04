@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1056,
+    "title": "Monet's Water Lilies",
+    "description": "Thursday, February 17, 2011 - Sunday, June 12, 2011",
+    "objectIds": [
+      1413
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 809,
+    "title": "L'Impressionnisme vu d'Amérique",
+    "description": "Saturday, June 09, 2007 - Sunday, January 20, 2008",
+    "objectIds": [
+      129,
+      1413,
+      1728,
+      1428
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 603,
+    "title": "Monet's Garden",
+    "description": "Friday, October 29, 2004 - Sunday, February 13, 2005",
+    "objectIds": [
+      1413
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Monet, The Japonese Footbridge",
+    "link": "http://audio-tours.s3.amazonaws.com/p360.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 1251,
+    "title": "The Journey Round Van Gogh:The painting of spaces crossed, from Turner to Gauguin and Rothko",
+    "description": "Saturday, November 12, 2011 - Sunday, April 15, 2012",
+    "objectIds": [
+      1413
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1669,
+    "title": "Monet/Kelly",
+    "description": "Saturday, November 22, 2014 - Sunday, February 15, 2015",
+    "objectIds": [
+      1413
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Dogwood's Greg Hoyt and Stephanie Ratanas talk myths, mummies, and their surprising new single-source coffee",
+    "link": "http://new.artsmia.org/stories/dogwoods-greg-hoyt-and-stephanie-ratanas-talk-myths-mummies-and-their-surprising-new-single-source-coffee/",
+    "objectIds": "1413 1721 95",
+    "type": "mia-story"
+  },
+  {
+    "id": 1540,
+    "title": "Impressionists at Waterside",
+    "description": "Sunday, September 01, 2013 - Wednesday, April 30, 2014",
+    "objectIds": [
+      10449,
+      1234,
+      1413,
+      10436
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1762,
+    "title": "Painting the Modern Garden: Monet to Matisse",
+    "description": "Sunday, October 11, 2015 - Sunday, April 17, 2016",
+    "objectIds": [
+      1413
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 67,
+    "title": "Nympheas de Monet",
+    "description": "Wednesday, April 21, 1999 - Thursday, August 19, 1999",
+    "objectIds": [
+      1413
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1459,
+    "title": "I giardini di Monet",
+    "description": "Friday, October 04, 2013 - Sunday, February 09, 2014",
+    "objectIds": [
+      1413,
+      44
+    ],
+    "type": "exhibition"
+  }
+]

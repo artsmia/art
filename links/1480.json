@@ -1,0 +1,31 @@
+[
+  {
+    "id": 547,
+    "title": "Fréderic Bazille",
+    "description": "Wednesday, October 01, 2003 - Sunday, January 18, 2004",
+    "objectIds": [
+      1480
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 43,
+    "title": "Claude Monet and Frederic Bazille: Early Impressionism and Collaboration in the Studio",
+    "description": "Sunday, September 20, 1998 - Thursday, June 03, 1999",
+    "objectIds": [
+      1234,
+      1480
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1647,
+    "title": "Bazille et la naissance de l'impressionnisme",
+    "description": "Saturday, June 25, 2016 - Sunday, July 09, 2017",
+    "objectIds": [
+      1480,
+      1728
+    ],
+    "type": "exhibition"
+  }
+]

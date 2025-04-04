@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1906,
+    "title": "Japanese Poets and Poetry",
+    "description": "Tuesday, June 16, 1987 - Sunday, September 06, 1987",
+    "objectIds": [
+      6906,
+      122074,
+      122079,
+      99414,
+      122144,
+      122156,
+      122357
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1905,
+    "title": "Masters of Japanese Calligraphy 8th-19th Century",
+    "description": "Thursday, October 04, 1984 - Sunday, January 06, 1985",
+    "objectIds": [
+      6906
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1904,
+    "title": "Fuji no e",
+    "description": null,
+    "objectIds": [
+      6906
+    ],
+    "type": "exhibition"
+  }
+]

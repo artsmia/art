@@ -1,0 +1,16 @@
+[
+  {
+    "id": 65,
+    "title": "Enamels of Limoges",
+    "description": "Thursday, February 22, 1996 - Tuesday, July 16, 1996",
+    "objectIds": [
+      11957
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Anointing the Body of Christ",
+    "link": "http://audio-tours.s3.amazonaws.com/p820.mp3",
+    "type": "audio"
+  }
+]

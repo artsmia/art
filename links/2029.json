@@ -1,0 +1,29 @@
+[
+  {
+    "id": 470,
+    "title": "Elegy: A Tribute Performance by the Twin Cities Arts Community",
+    "description": "October 8, 2001",
+    "objectIds": [
+      2029,
+      3252,
+      3438,
+      3460,
+      4120,
+      8825,
+      5646,
+      50026,
+      43055,
+      7865
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 120,
+    "title": "Eastman Johnson: Painting America",
+    "description": "Wednesday, September 29, 1999 - Wednesday, September 20, 2000",
+    "objectIds": [
+      2029
+    ],
+    "type": "exhibition"
+  }
+]

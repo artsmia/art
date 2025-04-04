@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1845,
+    "title": "Contemporary Art Objects in the Mary and Jackson Burke Collection",
+    "description": "Wednesday, February 26, 1986 - Wednesday, April 16, 1986",
+    "objectIds": [
+      37186,
+      6358,
+      6920,
+      6926
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 286,
+    "title": "Four Audacious Artists: Individualism in Japanese Art",
+    "description": "Saturday, April 01, 1995 - Sunday, July 09, 1995",
+    "objectIds": [
+      37202,
+      89718,
+      37186,
+      37191,
+      37190,
+      37184,
+      37189,
+      6358,
+      37185,
+      123100
+    ],
+    "type": "exhibition"
+  }
+]

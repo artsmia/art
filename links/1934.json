@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1302,
+    "title": "Open-Air Painting",
+    "description": "Tuesday, February 05, 2013 - Sunday, May 12, 2013",
+    "objectIds": [
+      1934,
+      1218
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 691,
+    "title": "Rétrospective Courbet",
+    "description": "Monday, October 08, 2007 - Sunday, September 28, 2008",
+    "objectIds": [
+      1934
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Courbet, Chateau at Ornans",
+    "link": "http://audio-tours.s3.amazonaws.com/p091.mp3",
+    "type": "audio"
+  }
+]

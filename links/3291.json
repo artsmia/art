@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1069,
+    "title": "Dali: The Late Work",
+    "description": "Saturday, August 07, 2010 - Sunday, January 02, 2011",
+    "objectIds": [
+      3291
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Dali, Portrait of Juan de Pareja, the Assistant to VelÃ¡zquez",
+    "link": "http://audio-tours.s3.amazonaws.com/p854.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 638,
+    "title": "Salvador Dali",
+    "description": "Sunday, September 12, 2004 - Monday, May 30, 2005",
+    "objectIds": [
+      3291
+    ],
+    "type": "exhibition"
+  }
+]

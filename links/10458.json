@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Red and Hot: The Many Loves of Modigliani",
+    "link": "http://new.artsmia.org/stories/red-and-hot-the-many-loves-of-modigliani/",
+    "objectIds": "10458 1421 1502",
+    "type": "mia-story"
+  },
+  {
+    "id": 483,
+    "title": "Amedeo Modigliani",
+    "description": "Friday, October 25, 2002 - Sunday, March 02, 2003",
+    "objectIds": [
+      10458,
+      1421
+    ],
+    "type": "exhibition"
+  }
+]

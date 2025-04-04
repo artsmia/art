@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1845,
+    "title": "Contemporary Art Objects in the Mary and Jackson Burke Collection",
+    "description": "Wednesday, February 26, 1986 - Wednesday, April 16, 1986",
+    "objectIds": [
+      37186,
+      6358,
+      6920,
+      6926
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 1909,
+    "title": "Modern Japanese Ceramics in American Collections",
+    "description": null,
+    "objectIds": [
+      6907,
+      6918,
+      6920,
+      99425
+    ],
+    "type": "exhibition"
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "id": 808,
+    "title": "Alexander Roslin",
+    "description": "Thursday, September 27, 2007 - Sunday, May 18, 2008",
+    "objectIds": [
+      99368
+    ],
+    "type": "exhibition"
+  },
+  {
+    "id": 981,
+    "title": "Alexander Roslin and the Comtesse d'Egmont Pignatelli",
+    "description": "Saturday, August 30, 2008 - Sunday, November 30, 2008",
+    "objectIds": [
+      106482,
+      106483,
+      106488,
+      106489,
+      106490,
+      106487,
+      106485,
+      106484,
+      3057,
+      99368
+    ],
+    "type": "exhibition"
+  }
+]

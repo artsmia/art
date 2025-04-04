@@ -1,0 +1,13 @@
+[
+  {
+    "title": "Queen Anne Room",
+    "link": "http://audio-tours.s3.amazonaws.com/p783.mp3",
+    "type": "audio"
+  },
+  {
+    "title": "Once at MIA: The art of partying",
+    "link": "http://new.artsmia.org/stories/once-at-mia-the-art-of-drinking/",
+    "objectIds": "9668",
+    "type": "mia-story"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "title": "How old are they? A new website guesses the ages of famous faces in our collection—with revealing results",
+    "link": "http://new.artsmia.org/stories/how-old-are-they-a-new-website-guesses-the-ages-of-famous-faces-in-our-collection-with-revealing-results/",
+    "objectIds": "2242 2505 3632 593 95",
+    "type": "mia-story"
+  },
+  {
+    "title": "Moving pictures: Classic films as you've never seen them before—through the lens of artworks",
+    "link": "http://new.artsmia.org/stories/moving-pictures-seeing-artworks-through-hollywoods-lens/",
+    "objectIds": "1315 1325 24413 2505 7615 766 8480",
+    "type": "mia-story"
+  },
+  {
+    "id": 674,
+    "title": "American ABC",
+    "description": "Wednesday, February 01, 2006 - Sunday, January 07, 2007",
+    "objectIds": [
+      2505
+    ],
+    "type": "exhibition"
+  },
+  {
+    "title": "Read, Portrait of a Boy",
+    "link": "http://audio-tours.s3.amazonaws.com/p016.mp3",
+    "type": "audio"
+  },
+  {
+    "id": 2314,
+    "title": "Securing the Shadow: Posthumous Portraiture in America",
+    "description": "Monday, October 31, 2016 - Monday, February 13, 2017",
+    "objectIds": [
+      2505
+    ],
+    "type": "exhibition"
+  }
+]
