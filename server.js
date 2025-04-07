@@ -40,6 +40,10 @@ var html = ({ title, meta, link }, data, body) => {
 
 app.use(serveStatic("."))
 
+app.get('*', (req, res) => {
+	res.send(index);
+});
+
 app.use((req, res, next) => {
 	var actingUrl = req.url.replace(/\/(.*)\/$/, "/$1")
 	const internalIPs = process.env.PRIVILEGED_IP_LIST
