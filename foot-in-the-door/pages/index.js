@@ -16,7 +16,7 @@ function Home(props) {
     <Layout hideCTA={true} hideSearch={true}>
       <main className="flex flex-col md:flex-row -mt-6">
         <img
-          src={hero.image.src}
+          src={""}
           alt=""
           title={hero.image.caption}
           className="md:w-2/3"
@@ -42,7 +42,7 @@ function Home(props) {
             <li key={title} className="list-none border-t-2 border-black">
               <a href={normalizeWpLink(cell.link)}>
                 <h3 className="font-black text-xl">{title}</h3>
-                <img src={image.src} alt="" />
+                <img src={""} alt="" />
                 <span
                   dangerouslySetInnerHTML={{ __html: excerpt }}
                   className="inline-block mt-1"
@@ -164,9 +164,10 @@ function RandomArtworkCarousel() {
 }
 
 function normalizeWpLink(link) {
-  const isArtArtists = link.match(/\/art-artists\//)
+  //const isArtArtists = link.match(/\/art-artists\//)
+  const isArtArtists = false
   let normalizedLink
-  if (link[0] === '/' && !isArtArtists) {
+  if (link && link[0] === '/' && !isArtArtists) {
     normalizedLink = `https://new.artsmia.org${link}`
   } else if (isArtArtists) {
     normalizedLink = link.replace(/https?:\/\/new.artsmia.org/, '')

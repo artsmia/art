@@ -28,7 +28,11 @@ var Artwork = React.createClass({
       artwork: (params, existingData) => {
         if(existingData && existingData.id && existingData.id == params.id) return Promise.resolve(existingData)
         return rest(`${SEARCH}/id/`+params.id)
-        .then((r) => JSON.parse(r.entity))
+        .then((r) => {
+	  console.log('rest URL', `${SEARCH}/id/`+params.id);
+	  console.log('r.entity', r.entity);
+	  return JSON.parse(r.entity);
+	})
         .then(art => {
           art.slug = _Artwork.slug(art)
           return art
