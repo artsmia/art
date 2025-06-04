@@ -1,0 +1,22 @@
+services:
+  collections:
+    container_name: ddev-${DDEV_SITENAME}-collections
+    restart: unless-stopped
+    build:
+      context: collections
+    command: "sleep infinity"
+    expose:
+      - 1314
+    volumes:
+      - ./..:/app
+      - ddev-global-cache:/mnt/ddev-global-cache
+      - ".:/mnt/ddev_config"
+    working_dir: /app
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=3001:1314
+      - HTTPS_EXPOSE=3000:1314
+    networks: [default, ddev_default]
