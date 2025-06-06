@@ -5,8 +5,6 @@ var Router = require('react-router')
 var { Link } = Router
 var Helmet = require('react-helmet')
 
-var Home = require('./home')
-var Departments = Home.Departments
 var findDepartment = require('./department-slug')
 
 var DepartmentsIndexPage = React.createClass({
