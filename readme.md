@@ -2,32 +2,22 @@ This is the code behind [Mia's collection website](http://collections.artsmia.or
 
 # Usage
 
-`ddev start` to start local containers and install dependencies.
+`ddev start` to start local containers, install dependencies, and build the production bundle.
 
 ```
 # Start the server in dev/watch mode (blocking)
 ddev exec -s collections npm run start
+
+# Or run server in production mode (blocking)
+ddev exec -s collections npm run build
+ddev exec -s collections npm run serve
 ```
 
 While `start` runs, the site is viewable at https://artsmia-collections.ddev.site:3000/
 
-## Test production build
-
-```
-# Manually build bundle.js
-ddev exec -s collections npm run build
-
-# Run server in production mode (blocking)
-ddev exec -s collections npm run serve
-```
-
 # Legacy instructions
 
-## Required Software to run sass
-
-Install: sassc -lm sass/main.scss css/main.css
-Install: npm install -g rewatch
-Run when you npm start for code to watch for changes: npm run watchSass
+Run when you npm start for code to watch for changes: `npm run watchSass`
 
 ## Usage
 
