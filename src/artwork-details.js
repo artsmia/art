@@ -110,17 +110,7 @@ var ArtworkDetails = React.createClass({
         art.artist.replace(/^([^;]+):/, "")
       ),
       this.buildPeekableDetail("nationality"),
-<<<<<<< HEAD
       ['artist_life', (art) => [art.life_date || '']],
-=======
-      [
-        "artist_life",
-        (art) => [
-          art.life_date &&
-            art.life_date.replace(new RegExp(art.nationality + "(, )?"), ""),
-        ],
-      ],
->>>>>>> 227c791 (Install and apply prettier)
       [
         "role",
         (_, raw) => {
@@ -130,17 +120,11 @@ var ArtworkDetails = React.createClass({
       ],
       ["gallery", (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
       this.buildPeekableDetail("department"),
-<<<<<<< HEAD
       ["dimension",
-=======
-      [
-        "dimension",
->>>>>>> 227c791 (Install and apply prettier)
         (art, rawArt) => {
           var showFancyDimension =
             art.dimension && this.dimensions().length > 0;
 
-<<<<<<< HEAD
             return [
     <div>
       {(art.dimension || "").split(/\r?\n/).map((line, index) => {
@@ -176,41 +160,6 @@ var ArtworkDetails = React.createClass({
       </div>
     )
   ];
-=======
-          return [
-            art.dimension && (
-              <div>
-                {showFancyDimension
-                  ? this.dimensions().map(([d, aspect]) => {
-                      return (
-                        <span
-                          style={{ display: "block" }}
-                          onMouseEnter={this.toggleDimensionGraphic.bind(
-                            this,
-                            aspect
-                          )}
-                          key={aspect}
-                        >
-                          {d}
-                        </span>
-                      );
-                    })
-                  : art.dimension}
-              </div>
-            ),
-            showFancyDimension && (
-              <div>
-                {rawArt.dimension.match(/cm/) && (
-                  <Isvg
-                    src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
-                    key={this.state.dimensionGraphicName}
-                    onLoad={this.dimensionSvgLoaded}
-                  />
-                )}
-              </div>
-            ),
-          ];
->>>>>>> 227c791 (Install and apply prettier)
         },
       ],
       [
@@ -471,21 +420,11 @@ var ArtworkDetails = React.createClass({
             currentUrl
           );
 
-<<<<<<< HEAD
           var curatorMessage =
             `Object information is subject to revision and enhancement based on ongoing research and review. If you notice an error or have additional information about this object, please contact collectionsdata@artsmia.org.`
           var imageMessage = `Does something look wrong with this image? ${imageSender}`;
 
           return [<Markdown>{curatorMessage + "\n\n" + imageMessage}</Markdown>];
-=======
-          var dataMessage = art.curator_approved
-            ? `This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.`
-            : `This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.`;
-
-          var imageMessage = `Does something look wrong with this image? ${imageSender}`;
-
-          return [<Markdown>{dataMessage + "\n\n" + imageMessage}</Markdown>];
->>>>>>> 227c791 (Install and apply prettier)
         },
       ],
     ];
