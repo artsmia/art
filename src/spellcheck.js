@@ -1,11 +1,10 @@
-var React = require('react')
+var React = require("react");
 // var SpellChecker = require('spellchecker')
 
 var Spellcheck = React.createClass({
   render() {
-    debugger
+    debugger;
   },
-})
+});
 
-module.exports = Spellcheck
-
+module.exports = Spellcheck;

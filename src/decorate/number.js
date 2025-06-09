@@ -6,34 +6,34 @@
  * TODO implement accession number recognition and lifting
  */
 
-var React = require('react')
+var React = require("react");
 
-const Image = require('../image')
-var { getFacetAndValue } = require('../artwork/creator')
+const Image = require("../image");
+var { getFacetAndValue } = require("../artwork/creator");
 
 var NumberDecorator = React.createClass({
   render() {
-    const term = this.props.term[0]
-    const hits = this.props.hits
+    const term = this.props.term[0];
+    const hits = this.props.hits;
     const matchingAccessionNumber =
       term.match(/\d+.\d+/) &&
-      hits.find(hit => hit._source.accession_number === term)
+      hits.find((hit) => hit._source.accession_number === term);
 
-    return <span>number decorator goes here</span>
+    return <span>number decorator goes here</span>;
   },
-})
+});
 
 const AccessionLifter = React.createClass({
   render() {
-    const { hit } = this.props
-    const art = hit._source
+    const { hit } = this.props;
+    const art = hit._source;
 
     return (
       <div>
         <p>Searching for an accession number?</p>
       </div>
-    )
+    );
   },
-})
+});
 
-module.exports = NumberDecorator
+module.exports = NumberDecorator;

@@ -1,13 +1,13 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
-var Router = require('react-router')
-var rest = require('rest')
+var React = require("react");
+var ReactDOM = require("react-dom");
+var Router = require("react-router");
+var rest = require("rest");
 
-var RandomArtwork = require('../random-artwork')
-var ArtworkPreview = require('../artwork-preview')
-var Artwork = require('../artwork')
-var SEARCH = require('../endpoints').search
-var ArtworkPageMetadata = require('../artwork/page-metadata')
+var RandomArtwork = require("../random-artwork");
+var ArtworkPreview = require("../artwork-preview");
+var Artwork = require("../artwork");
+var SEARCH = require("../endpoints").search;
+var ArtworkPageMetadata = require("../artwork/page-metadata");
 
 // module.exports = RandomArtwork(ArtworkPreview, 'image:valid public_access:1')
 var RandomArtworkPage = React.createClass({
@@ -15,53 +15,62 @@ var RandomArtworkPage = React.createClass({
   statics: {
     fetchData: {
       artwork: (params, existingData) => {
-        if(false) return Promise.resolve(existingData)
+        if (false) return Promise.resolve(existingData);
 
-        const q = params.q || existingData.q || 'image:valid%20public_access:1'
-        return rest(`${SEARCH}/random/art?q=${q}`)
-        .then((r) => JSON.parse(r.entity))
+        const q = params.q || existingData.q || "image:valid%20public_access:1";
+        return rest(`${SEARCH}/random/art?q=${q}`).then((r) =>
+          JSON.parse(r.entity)
+        );
       },
     },
   },
 
   getInitialState() {
-    return { history: [this.props.data.artwork.id] }
+    return { history: [this.props.data.artwork.id] };
   },
 
   render() {
-    const {data, data: {artwork: art}} = this.props
-    const reloadButton = <button onClick={this.nextRandom} title="Show the next random artwork">&#x21bb; Next random</button>
+    const {
+      data,
+      data: { artwork: art },
+    } = this.props;
+    const reloadButton = (
+      <button onClick={this.nextRandom} title="Show the next random artwork">
+        &#x21bb; Next random
+      </button>
+    );
 
-    return <div>
-      <Artwork
-        data={data}
-        art={art}
-        showLink={true}
-        showLinkComponent={reloadButton}
-        {...this.props}
-      />
-      <ArtworkPageMetadata art={art} prependTitle={'Random Artwork: '} />
-    </div>
+    return (
+      <div>
+        <Artwork
+          data={data}
+          art={art}
+          showLink={true}
+          showLinkComponent={reloadButton}
+          {...this.props}
+        />
+        <ArtworkPageMetadata art={art} prependTitle={"Random Artwork: "} />
+      </div>
+    );
   },
 
   nextRandom() {
-    const {history} = this.state || {}
-    const historyParam = history && history.length > 0
-      ? `${[...history].reverse().slice(0, 5).join(',')}` // 5 most recently visited random artworks - don't let ?history=… get too long
-      : ''
-    this.setState({history: history.concat(this.props.data.artwork.id)})
+    const { history } = this.state || {};
+    const historyParam =
+      history && history.length > 0
+        ? `${[...history].reverse().slice(0, 5).join(",")}` // 5 most recently visited random artworks - don't let ?history=… get too long
+        : "";
+    this.setState({ history: history.concat(this.props.data.artwork.id) });
     const query = {
       ...this.getQuery(),
       history: historyParam,
-    }
+    };
 
-    this.transitionTo(`/art/random`, {}, query)
+    this.transitionTo(`/art/random`, {}, query);
   },
-})
+});
 
-module.exports = RandomArtworkPage
-
-
+module.exports = RandomArtworkPage;
 
 /* TODO
  *

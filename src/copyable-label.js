@@ -1,10 +1,7 @@
-var React = require('react')
+var React = require("react");
 
 module.exports = React.createClass({
   render() {
-    return <textarea>
-      {JSON.stringify(this.props.art, null, 2)}
-    </textarea>
+    return <textarea>{JSON.stringify(this.props.art, null, 2)}</textarea>;
   },
-})
-
+});
