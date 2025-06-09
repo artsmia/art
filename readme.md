@@ -2,31 +2,14 @@ This is the code behind [Mia's collection website](http://collections.artsmia.or
 
 # Usage
 
-`ddev start` to start local containers, install dependencies, and build the production bundle.
-
 ```
-# Start the server in dev/watch mode (blocking)
-ddev exec -s collections npm run start
-
-# Or run server in production mode (blocking)
-ddev exec -s collections npm run build
-ddev exec -s collections npm run serve
+nvm use
+npm ci
+npm run build
+npm run start
 ```
 
-While `start` runs, the site is viewable at https://artsmia-collections.ddev.site:3000/
-
-# Legacy instructions
-
-Run when you npm start for code to watch for changes: `npm run watchSass`
-
-## Usage
-
-To start the server locally, you (1) need passing familiarity with
-`node`. (2) `npm install` to download all this project's dependencies.
-(3) `npm start` should start the webserver and begin to update the
-javascript bundle.
-
-To compile the sass, install `libsass` and `sassc` (`brew install sassc`) and run `sassc -lm sass/main.scss css/main.css`
+While `start` runs, the site is viewable at http://localhost:1314/
 
 # Companion code
 
