@@ -1,49 +1,53 @@
-var React = require('react')
-var Router = require('react-router')
-var {Link} = Router
-var Helmet = require('react-helmet')
-var rest = require('rest')
-var R = require('ramda')
+var React = require("react");
+var Router = require("react-router");
+var { Link } = Router;
+var Helmet = require("react-helmet");
+var rest = require("rest");
+var R = require("ramda");
 
-var Search = require('./search')
-var SEARCH = require('./endpoints').search
-var ArtworkPreview = require('./artwork-preview')
-var ArtworkResult = require('./artwork-result')
-var _Artwork = require('./_artwork')
-var Peek = require('./peek')
-var Markdown = require('./markdown')
-var ArtworkImage = require('./artwork-image')
+var Search = require("./search");
+var SEARCH = require("./endpoints").search;
+var ArtworkPreview = require("./artwork-preview");
+var ArtworkResult = require("./artwork-result");
+var _Artwork = require("./_artwork");
+var Peek = require("./peek");
+var Markdown = require("./markdown");
+var ArtworkImage = require("./artwork-image");
 
 var RecentAccessions = React.createClass({
   statics: {
     fetchData: {
-      searchResults: (params, query) => rest(`${SEARCH}/recent:true`)
-      .then(r => JSON.parse(r.entity)),
-      accessionHighlights: (params, query) => rest(`${SEARCH}/accessionHighlight:true?sort=accessionDate-desc`)
-      .then(r => JSON.parse(r.entity)),
-    }
+      searchResults: (params, query) =>
+        rest(`${SEARCH}/recent:true`).then((r) => JSON.parse(r.entity)),
+      accessionHighlights: (params, query) =>
+        rest(`${SEARCH}/accessionHighlight:true?sort=accessionDate-desc`).then(
+          (r) => JSON.parse(r.entity)
+        ),
+    },
   },
 
   accessionHighlightsGrid() {
-    var {accessionHighlights, recent} = this.props.data
+    var { accessionHighlights, recent } = this.props.data;
     const artworks = accessionHighlights.hits.hits
-      .map(h => h._source)
-      .filter(art => [127658, 126980, 126982, 126983, 126984, 127053, 127055].indexOf(parseInt(art.id)) == -1)
-    var groupedByDate = R.groupBy(
-      h => {
-        const accessionNumberYear = h.accession_number.split('.')[0]
-        // This was needed to group accessions by quarter, but we are using year now so fall back to the accesion number
-        const accessionDateYear = h.accessionDate.split('-')[0]
-        const date = accessionNumberYear
-        return date == 2107 ? 2017 : date
-      },
-      artworks
-    ) // {<date>: [<highlights>], …}
+      .map((h) => h._source)
+      .filter(
+        (art) =>
+          [127658, 126980, 126982, 126983, 126984, 127053, 127055].indexOf(
+            parseInt(art.id)
+          ) == -1
+      );
+    var groupedByDate = R.groupBy((h) => {
+      const accessionNumberYear = h.accession_number.split(".")[0];
+      // This was needed to group accessions by quarter, but we are using year now so fall back to the accesion number
+      const accessionDateYear = h.accessionDate.split("-")[0];
+      const date = accessionNumberYear;
+      return date == 2107 ? 2017 : date;
+    }, artworks); // {<date>: [<highlights>], …}
 
     var customImageFunctionStatic = (id) =>
-      `https://collections.artsmia.org/_info/accession_highlights/${id}.jpg`
+      `https://collections.artsmia.org/_info/accession_highlights/${id}.jpg`;
     var customImageFunctionSmartCrop = (id) =>
-      `https://iiif.dx.artsmia.org//${id}.jpg/-1,-1,800,800/800,/0/default.jpg`
+      `https://iiif.dx.artsmia.org//${id}.jpg/-1,-1,800,800/800,/0/default.jpg`;
     // combine 'static' and 'IIIF smart crop' with custom IIIF hand-crops
     var customCrops = `
       https://iiif.dx.artsmia.org/128386.jpg/4670,4987,2147,1890/800,/0/default.jpg
@@ -68,59 +72,92 @@ var RecentAccessions = React.createClass({
       https://iiif.dx.artsmia.org/124782.jpg/563,69,4357,3716/800,/0/default.jpg
       https://iiif.dx.artsmia.org/123915.jpg/561,591,3983,3396/800,/0/default.jpg
       https://iiif.dx.artsmia.org/123335.jpg/891,57,4881,4162/800,/0/default.jpg
-    `.split(/\s+/).filter(url => url !== '')
+    `
+      .split(/\s+/)
+      .filter((url) => url !== "");
     // If a custom detail URL was included above, use that.
     // Otherwise, try the IIIF smart crop
     var customImageFunction = (id) => {
-      return customCrops.find(iiifUrl => iiifUrl.match(`${id}.jpg`)) || customImageFunctionSmartCrop(id)
-    }
+      return (
+        customCrops.find((iiifUrl) => iiifUrl.match(`${id}.jpg`)) ||
+        customImageFunctionSmartCrop(id)
+      );
+    };
 
-    return <div>
-      {Object.keys(groupedByDate).reverse().map(accessionDate => {
-        var highlights = groupedByDate[accessionDate]
-        const aspectRatio = parseInt(accessionDate) > 2016 ? {width: 400, height: 300} : {width: 400, height: 400}
+    return (
+      <div>
+        {Object.keys(groupedByDate)
+          .reverse()
+          .map((accessionDate) => {
+            var highlights = groupedByDate[accessionDate];
+            const aspectRatio =
+              parseInt(accessionDate) > 2016
+                ? { width: 400, height: 300 }
+                : { width: 400, height: 400 };
 
-        return <div className="grid_wrapper" key={accessionDate}>
-          <h3>{accessionDate.split('-').slice(0, 2).reverse().join('/')}</h3>
-          {highlights.filter(highlight => highlight.image === 'valid').map((highlight, index) => {
-            return <div className="single_highlight">
-              <Link to="accessionHighlight" params={{id: highlight.id, slug: _Artwork.slug(highlight)}}>
-                <div className="highlight_image">
-                  <div className="highlight_content">
-                    <ArtworkImage
-                      art={highlight}
-                      ignoreStyle={false}
-                      style={{maxWidth: '111%', maxHeight: '111%'}}
-                      containerStyle={{maxWidth: '100%', maxHeight: '100%', overflow: 'hidden'}}
-                      lazyLoad={index > 1} // load the first 2 straight up and lazy load the rest
-                      customImage={customImageFunction} />
-                  </div>
-                </div>
-              </Link>
-            </div>
+            return (
+              <div className="grid_wrapper" key={accessionDate}>
+                <h3>
+                  {accessionDate.split("-").slice(0, 2).reverse().join("/")}
+                </h3>
+                {highlights
+                  .filter((highlight) => highlight.image === "valid")
+                  .map((highlight, index) => {
+                    return (
+                      <div className="single_highlight">
+                        <Link
+                          to="accessionHighlight"
+                          params={{
+                            id: highlight.id,
+                            slug: _Artwork.slug(highlight),
+                          }}
+                        >
+                          <div className="highlight_image">
+                            <div className="highlight_content">
+                              <ArtworkImage
+                                art={highlight}
+                                ignoreStyle={false}
+                                style={{ maxWidth: "111%", maxHeight: "111%" }}
+                                containerStyle={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  overflow: "hidden",
+                                }}
+                                lazyLoad={index > 1} // load the first 2 straight up and lazy load the rest
+                                customImage={customImageFunction}
+                              />
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
+                    );
+                  })}
+              </div>
+            );
           })}
-        </div>
-      })}
-    </div>
+      </div>
+    );
   },
 
   render() {
-    return <div className="new-to-mia">
-      <div className="explore-section">
-        <h2>Accession Highlights</h2>
-        {this.accessionHighlightsGrid()}
+    return (
+      <div className="new-to-mia">
+        <div className="explore-section">
+          <h2>Accession Highlights</h2>
+          {this.accessionHighlightsGrid()}
 
-        <h2 style={{paddingTop: '3em'}}>All Recent Accessions</h2>
-        <Peek
-          facet='recent'
-          q='true'
-          quiltProps={{maxRowHeight: 600}}
-          shuffleQuilt={true}
+          <h2 style={{ paddingTop: "3em" }}>All Recent Accessions</h2>
+          <Peek
+            facet="recent"
+            q="true"
+            quiltProps={{ maxRowHeight: 600 }}
+            shuffleQuilt={true}
           />
+        </div>
+        <Helmet title="New to Mia - Acquisition Highlights" />
       </div>
-      <Helmet title="New to Mia - Acquisition Highlights" />
-    </div>
-  }
-})
+    );
+  },
+});
 
-module.exports = RecentAccessions
+module.exports = RecentAccessions;

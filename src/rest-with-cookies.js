@@ -1,10 +1,10 @@
-var rest = require('rest')
+var rest = require("rest");
 
-var restDefaultInterceptor = require('rest/interceptor/defaultRequest')
+var restDefaultInterceptor = require("rest/interceptor/defaultRequest");
 var restWithCorsCookies = rest.wrap(restDefaultInterceptor, {
   mixin: {
-    withCredentials: true
-  }
-})
+    withCredentials: true,
+  },
+});
 
-module.exports = restWithCorsCookies
+module.exports = restWithCorsCookies;
