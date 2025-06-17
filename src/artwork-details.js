@@ -110,13 +110,7 @@ var ArtworkDetails = React.createClass({
         art.artist.replace(/^([^;]+):/, "")
       ),
       this.buildPeekableDetail("nationality"),
-      [
-        "artist_life",
-        (art) => [
-          art.life_date &&
-            art.life_date.replace(new RegExp(art.nationality + "(, )?"), ""),
-        ],
-      ],
+      ['artist_life', (art) => [art.life_date || '']],
       [
         "role",
         (_, raw) => {
