@@ -120,45 +120,46 @@ var ArtworkDetails = React.createClass({
       ],
       ["gallery", (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
       this.buildPeekableDetail("department"),
-      [
-        "dimension",
+      ["dimension",
         (art, rawArt) => {
           var showFancyDimension =
             art.dimension && this.dimensions().length > 0;
 
-          return [
-            art.dimension && (
-              <div>
-                {showFancyDimension
-                  ? this.dimensions().map(([d, aspect]) => {
-                      return (
-                        <span
-                          style={{ display: "block" }}
-                          onMouseEnter={this.toggleDimensionGraphic.bind(
-                            this,
-                            aspect
-                          )}
-                          key={aspect}
-                        >
-                          {d}
-                        </span>
-                      );
-                    })
-                  : art.dimension}
-              </div>
-            ),
-            showFancyDimension && (
-              <div>
-                {rawArt.dimension.match(/cm/) && (
-                  <Isvg
-                    src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
-                    key={this.state.dimensionGraphicName}
-                    onLoad={this.dimensionSvgLoaded}
-                  />
-                )}
-              </div>
-            ),
-          ];
+            return [
+    <div>
+      {(art.dimension || "").split(/\r?\n/).map((line, index) => {
+        var match = this.dimensions().find(([d]) => line.includes(d));
+        if (match) {
+          var [, aspect] = match;
+          return (
+            <span
+              key={index}
+              style={{ display: "block" }}
+              onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)}
+            >
+              {line}
+            </span>
+          );
+        }
+        return (
+          <span key={index} style={{ display: "block" }}>
+            {line}
+          </span>
+        );
+      })}
+    </div>,
+    showFancyDimension && (
+      <div>
+        {rawArt.dimension.match(/cm/) && (
+          <Isvg
+            src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
+            key={this.state.dimensionGraphicName}
+            onLoad={this.dimensionSvgLoaded}
+          />
+        )}
+      </div>
+    )
+  ];
         },
       ],
       [
