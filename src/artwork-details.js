@@ -420,13 +420,11 @@ var ArtworkDetails = React.createClass({
             currentUrl
           );
 
-          var dataMessage = art.curator_approved
-            ? `This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.`
-            : `This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.`;
-
+          var curatorMessage =
+            `Object information is subject to revision and enhancement based on ongoing research and review. If you notice an error or have additional information about this object, please contact collectionsdata@artsmia.org.`
           var imageMessage = `Does something look wrong with this image? ${imageSender}`;
 
-          return [<Markdown>{dataMessage + "\n\n" + imageMessage}</Markdown>];
+          return [<Markdown>{curatorMessage + "\n\n" + imageMessage}</Markdown>];
         },
       ],
     ];
