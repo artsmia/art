@@ -1,45 +1,61 @@
-var React = require('react')
-var Router = require('react-router')
-var Helmet = require('react-helmet')
-var rest = require('rest')
+var React = require("react");
+var Router = require("react-router");
+var Helmet = require("react-helmet");
+var rest = require("rest");
 
-var Search = require('./search')
-var SearchResults = require('./search-results')
-var Markdown = require('./markdown')
-var Peek = require('./peek')
-var collectionInfo = require('./endpoints').info
+var Search = require("./search");
+var SearchResults = require("./search-results");
+var Markdown = require("./markdown");
+var Peek = require("./peek");
+var collectionInfo = require("./endpoints").info;
 
 var Page = React.createClass({
   statics: {
     fetchData: {
-      page: (params, query) => rest(collectionInfo)
-        .then(r => JSON.parse(r.entity).pages)
-        .then(pages => pages[params.name]),
-      searchResults: (params, query) => Page.fetchData.page(params, query)
-        .then(page => SearchResults.fetchData.searchResults({terms: page.query}))
-    }
+      page: (params, query) =>
+        rest(collectionInfo)
+          .then((r) => JSON.parse(r.entity).pages)
+          .then((pages) => pages[params.name]),
+      searchResults: (params, query) =>
+        Page.fetchData
+          .page(params, query)
+          .then((page) =>
+            SearchResults.fetchData.searchResults({ terms: page.query })
+          ),
+    },
   },
 
   render() {
-    var {title, content, query} = this.props.data.page
+    var { title, content, query } = this.props.data.page;
 
-    return <section className="page">
-      {query && <Search
-        hideResults={true}
-        hideInput={true}
-        facet={query}
-        {...this.props}
-      />}
+    return (
+      <section className="page">
+        {query && (
+          <Search
+            hideResults={true}
+            hideInput={true}
+            facet={query}
+            {...this.props}
+          />
+        )}
 
-      <div className="pageText">
-        <h1>{title}</h1>
-        <Markdown>{content}</Markdown>
-      </div>
+        <div className="pageText">
+          <h1>{title}</h1>
+          <Markdown>{content}</Markdown>
+        </div>
 
-      {query && <Peek q={query} filtered={true} quiltProps={{maxRowHeight: 400}} offset={10} />}
-      <Helmet title={title} />
-    </section>
+        {query && (
+          <Peek
+            q={query}
+            filtered={true}
+            quiltProps={{ maxRowHeight: 400 }}
+            offset={10}
+          />
+        )}
+        <Helmet title={title} />
+      </section>
+    );
   },
-})
+});
 
-module.exports = Page
+module.exports = Page;

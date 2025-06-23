@@ -1,18 +1,15 @@
 This is the code behind [Mia's collection website](http://collections.artsmia.org).
 
-# Required Software to run sass
-Install: sassc -lm sass/main.scss css/main.css
-Install: npm install -g rewatch
-Run when you npm start for code to watch for changes: npm run watchSass
-
 # Usage
 
-To start the server locally, you (1) need passing familiarity with
-`node`. (2) `npm install` to download all this project's dependencies.
-(3) `npm start` should start the webserver and begin to update the
-javascript bundle.
+```
+nvm use
+npm ci
+npm run build
+npm run start
+```
 
-To compile the sass, install `libsass` and `sassc` (`brew install sassc`) and run `sassc -lm sass/main.scss css/main.css`
+While `start` runs, the site is viewable at http://localhost:1314/
 
 # Companion code
 

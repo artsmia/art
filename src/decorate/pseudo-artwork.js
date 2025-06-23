@@ -1,50 +1,50 @@
 /** @format */
-var React = require('react')
-var { Link } = require('react-router')
+var React = require("react");
+var { Link } = require("react-router");
 
 var InspiredByMiaDecorator = React.createClass({
   // displayName: 'Artwork Group',
   render() {
     // TODO dedupe logic for 'lifting' artworks with Audio decorator
-    const term = this.props.term[0]
-    const hits = this.props.hits
-    const {isInspiredByMia} = this.props
+    const term = this.props.term[0];
+    const hits = this.props.hits;
+    const { isInspiredByMia } = this.props;
 
     const hitsWithInspired =
-      hits && hits.filter((hit) => hit._source['related:inspiredByMia'])
+      hits && hits.filter((hit) => hit._source["related:inspiredByMia"]);
 
-    const showHitsWithInspired = !isInspiredByMia &&
-      hitsWithInspired && hitsWithInspired.length < 51
+    const showHitsWithInspired =
+      !isInspiredByMia && hitsWithInspired && hitsWithInspired.length < 51;
 
     // END TODO
 
     return (
-      <div style={{ color: 'white', maxWidth: '100%' }}>
-        <h3 style={{ display: 'inline', lineHeight: '24px' }}>
+      <div style={{ color: "white", maxWidth: "100%" }}>
+        <h3 style={{ display: "inline", lineHeight: "24px" }}>
           Inspired By Mia
         </h3>
-        <p style={{ display: 'inline' }}>
+        <p style={{ display: "inline" }}>
           : The artworks in this list are not part of Mia's collection, but were
           inspired by it. Our collection is here for you in person and online.
-          An art museum has walls, but inspiration is limitless.{' '}
+          An art museum has walls, but inspiration is limitless.{" "}
           {!showHitsWithInspired || (
             <Link
               to="filteredSearchResults"
-              params={{ terms: '*', splat: `_exists_:"related:inspiredByMia"` }}
-              query={{embed: 1}}
+              params={{ terms: "*", splat: `_exists_:"related:inspiredByMia"` }}
+              query={{ embed: 1 }}
             >
               See all &rarr;
             </Link>
           )}
         </p>
         {showHitsWithInspired ? (
-          <div style={{ overflow: 'scroll' }}>
+          <div style={{ overflow: "scroll" }}>
             <InspiredArtworkScroll hits={hitsWithInspired} />
           </div>
         ) : (
           <p>
             How does Mia inspire you? Show us! Our collection is here for you in
-            person and online.{' '}
+            person and online.{" "}
             <a href="https://new.artsmia.org/art-artists/inspired-by-mia">
               #InspiredByMia
             </a>
@@ -52,29 +52,29 @@ var InspiredByMiaDecorator = React.createClass({
           </p>
         )}
       </div>
-    )
+    );
   },
-})
+});
 
-module.exports = InspiredByMiaDecorator
+module.exports = InspiredByMiaDecorator;
 
 var InspiredArtworkScroll = React.createClass({
   render() {
-    const { hits } = this.props
+    const { hits } = this.props;
     const inspireds = hits
       .map(({ _source: s }) => {
-        return s['related:inspiredByMia']
+        return s["related:inspiredByMia"];
       })
-      .flat()
+      .flat();
 
     return (
       <div>
         {hits ? (
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              marginTop: '1em',
+              display: "flex",
+              flexDirection: "row",
+              marginTop: "1em",
             }}
           >
             {inspireds.map((hit) => {
@@ -83,23 +83,23 @@ var InspiredArtworkScroll = React.createClass({
                   to="sandboxArtwork"
                   params={{ id: hit.wpid }}
                   style={{
-                    display: 'inline-block',
-                    width: '9em',
-                    margin: '0 0 0 1em',
+                    display: "inline-block",
+                    width: "9em",
+                    margin: "0 0 0 1em",
                   }}
                 >
-                  <img src={hit.image} style={{ maxWidth: '7em' }} />
+                  <img src={hit.image} style={{ maxWidth: "7em" }} />
                   <br />
                   <strong>{hit.title}</strong>
                   <p>{hit.artist}</p>
                 </Link>
-              )
+              );
             })}
           </div>
         ) : (
-          'no hits'
+          "no hits"
         )}
       </div>
-    )
+    );
   },
-})
+});

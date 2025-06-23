@@ -1,148 +1,221 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
-var {Link} = require('react-router')
-var capitalize = require('capitalize')
-var Isvg = require('react-inlinesvg')
-var cx = require('classnames')
-var ClickToSelect = require('@mapbox/react-click-to-select')
+var React = require("react");
+var ReactDOM = require("react-dom");
+var { Link } = require("react-router");
+var capitalize = require("capitalize");
+var Isvg = require("react-inlinesvg");
+var cx = require("classnames");
+var ClickToSelect = require("@mapbox/react-click-to-select");
 
-var Markdown = require('./markdown')
-var Peek = require('./peek')
-var dimensionSvg = require('./endpoints').dimensionSvg
+var Markdown = require("./markdown");
+var Peek = require("./peek");
+var dimensionSvg = require("./endpoints").dimensionSvg;
 var {
   legacy: rightsDescriptions,
   rightsStatements,
   findByName: findRightsByName,
   RightsStatementIcon,
-} = require('./rights-types.js')
-var feedbackSender = require('./email-data-sender')
-var _Artwork = require('./_artwork')
+} = require("./rights-types.js");
+var feedbackSender = require("./email-data-sender");
+var _Artwork = require("./_artwork");
 
 var ArtworkDetails = React.createClass({
   build(field, fn) {
-    var {art, highlights} = this.props
-    if(this.props.onlyShowHighlightDetails && !highlights[field]) return
+    var { art, highlights } = this.props;
+    if (this.props.onlyShowHighlightDetails && !highlights[field]) return;
 
-    var humanFieldName = capitalize.words(field).replace('_', ' ')
-    var artAndHighlights = this.artAndHighlights()
-    var [content, extraContent] = fn ? fn(artAndHighlights, art) : [artAndHighlights[field]]
-    if(!content || content == '') return
-    var showExtra = extraContent && this.state.expandDetailsMatrix[field]
-    var classes = cx("detail-row", {expandable: extraContent, expanded: showExtra}, field)
+    var humanFieldName = capitalize.words(field).replace("_", " ");
+    var artAndHighlights = this.artAndHighlights();
+    var [content, extraContent] = fn
+      ? fn(artAndHighlights, art)
+      : [artAndHighlights[field]];
+    if (!content || content == "") return;
+    var showExtra = extraContent && this.state.expandDetailsMatrix[field];
+    var classes = cx(
+      "detail-row",
+      { expandable: extraContent, expanded: showExtra },
+      field
+    );
 
-    return <div className={classes} key={field}>
-      <div onClick={this.toggleExtra.bind(this, field)}>
-        <dt className="detail-title">{humanFieldName}</dt>
-        <dd className='detail-content'>{content}</dd>
+    return (
+      <div className={classes} key={field}>
+        <div onClick={this.toggleExtra.bind(this, field)}>
+          <dt className="detail-title">{humanFieldName}</dt>
+          <dd className="detail-content">{content}</dd>
+        </div>
+        {showExtra && <div className="detail-extra">{extraContent}</div>}
       </div>
-      {showExtra && <div className="detail-extra">{extraContent}</div>}
-    </div>
+    );
   },
 
   toggleExtra(field) {
-    var {expandDetailsMatrix} = this.state
-    expandDetailsMatrix[field] = !expandDetailsMatrix[field]
-    this.setState({expandDetailsMatrix})
+    var { expandDetailsMatrix } = this.state;
+    expandDetailsMatrix[field] = !expandDetailsMatrix[field];
+    this.setState({ expandDetailsMatrix });
   },
 
   // merge `art` with `highlights`, replacing the un-highlighted values with
   // their 'highlit' equivalent
   artAndHighlights() {
-    var {art, highlights} = this.props
+    var { art, highlights } = this.props;
 
-    return !highlights ? art : Object.assign({...art}, Object.keys(highlights).reduce((object, key) => {
-      var value = highlights[key] && highlights[key][0]
-      if(typeof value == 'string') value = <Markdown>{value}</Markdown>
-      object[key] = value
-      return object
-    }, {}))
+    return !highlights
+      ? art
+      : Object.assign(
+          { ...art },
+          Object.keys(highlights).reduce((object, key) => {
+            var value = highlights[key] && highlights[key][0];
+            if (typeof value == "string") value = <Markdown>{value}</Markdown>;
+            object[key] = value;
+            return object;
+          }, {})
+        );
   },
 
   buildPeekableDetail(field, extra, value) {
-    var {art} = this.props
-    var highlights = this.artAndHighlights()
+    var { art } = this.props;
+    var highlights = this.artAndHighlights();
 
     return [
       field,
-      art => [
+      (art) => [
         value || highlights[field],
         <div>
           {extra}
           <Peek facet={field} q={value || art[field]} />
-        </div>
-      ]
-    ]
+        </div>,
+      ],
+    ];
   },
 
   details() {
-    var {art} = this.props
+    var { art } = this.props;
     return [
-      ['deaccessioned', (art, raw) => [
-        raw.deaccessioned && `${art.deaccessionedDate}`, <div>
-          {raw.deaccessionedReason && <p>{raw.deaccessionedReason}</p>}
-          <Link to="/info/deaccessions">Artworks are deaccessioned for many reasons</Link>
-        </div>
-      ]],
-      ['title'],
-      this.buildPeekableDetail('dated'),
-      this.buildPeekableDetail('artist', this.props.art.life_date, art.artist.replace(/^([^;]+):/, '')),
-      this.buildPeekableDetail('nationality'),
-      ['artist_life', (art) => [art.life_date && art.life_date.replace(new RegExp(art.nationality+"(, )?"), '')]],
-      ['role', (_, raw) => {
-        var roleFromArtistField = raw.artist.match(/^([^;]+):/)
-        return [roleFromArtistField ? roleFromArtistField[1] : raw.role]
-      }],
-      ['gallery', (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
-      this.buildPeekableDetail('department'),
-      ['dimension', (art, rawArt) => {
-        var showFancyDimension = art.dimension && this.dimensions().length > 0
+      [
+        "deaccessioned",
+        (art, raw) => [
+          raw.deaccessioned && `${art.deaccessionedDate}`,
+          <div>
+            {raw.deaccessionedReason && <p>{raw.deaccessionedReason}</p>}
+            <Link to="/info/deaccessions">
+              Artworks are deaccessioned for many reasons
+            </Link>
+          </div>,
+        ],
+      ],
+      ["title"],
+      this.buildPeekableDetail("dated"),
+      this.buildPeekableDetail(
+        "artist",
+        this.props.art.life_date,
+        art.artist.replace(/^([^;]+):/, "")
+      ),
+      this.buildPeekableDetail("nationality"),
+      ['artist_life', (art) => [art.life_date || '']],
+      [
+        "role",
+        (_, raw) => {
+          var roleFromArtistField = raw.artist.match(/^([^;]+):/);
+          return [roleFromArtistField ? roleFromArtistField[1] : raw.role];
+        },
+      ],
+      ["gallery", (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
+      this.buildPeekableDetail("department"),
+      ["dimension",
+        (art, rawArt) => {
+          var showFancyDimension =
+            art.dimension && this.dimensions().length > 0;
 
-        return [
-          art.dimension && <div>{showFancyDimension ? this.dimensions().map(([d, aspect]) => {
-            return <span style={{display: 'block'}} onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)} key={aspect}>{d}</span>
-          }) : art.dimension}</div>,
-          showFancyDimension && <div>
-            {rawArt.dimension.match(/cm/) && <Isvg
-              src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
-              key={this.state.dimensionGraphicName}
-              onLoad={this.dimensionSvgLoaded}
-            />}
-          </div>
-        ]
-      }],
-      ['credit', (art, raw) => [art.creditline, <Peek facet="creditline" q={raw.creditline} />]],
-      ['accession_number'],
-      this.buildPeekableDetail('medium'),
-      this.buildPeekableDetail('country'),
-      this.buildPeekableDetail('culture'),
-      ['century', (art, raw) => [art.style, <Peek facet="style" q={raw.style} />]],
-      ['provenance'],
-      ['rights', (art, raw) => {
-        var rights = rightsDescriptions.getRights(art)
-        var rs = findRightsByName(rights)
+            return [
+    <div>
+      {(art.dimension || "").split(/\r?\n/).map((line, index) => {
+        var match = this.dimensions().find(([d]) => line.includes(d));
+        if (match) {
+          var [, aspect] = match;
+          return (
+            <span
+              key={index}
+              style={{ display: "block" }}
+              onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)}
+            >
+              {line}
+            </span>
+          );
+        }
+        return (
+          <span key={index} style={{ display: "block" }}>
+            {line}
+          </span>
+        );
+      })}
+    </div>,
+    showFancyDimension && (
+      <div>
+        {rawArt.dimension.match(/cm/) && (
+          <Isvg
+            src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
+            key={this.state.dimensionGraphicName}
+            onLoad={this.dimensionSvgLoaded}
+          />
+        )}
+      </div>
+    )
+  ];
+        },
+      ],
+      [
+        "credit",
+        (art, raw) => [
+          art.creditline,
+          <Peek facet="creditline" q={raw.creditline} />,
+        ],
+      ],
+      ["accession_number"],
+      this.buildPeekableDetail("medium"),
+      this.buildPeekableDetail("country"),
+      this.buildPeekableDetail("culture"),
+      [
+        "century",
+        (art, raw) => [art.style, <Peek facet="style" q={raw.style} />],
+      ],
+      ["provenance"],
+      [
+        "rights",
+        (art, raw) => {
+          var rights = rightsDescriptions.getRights(art);
+          var rs = findRightsByName(rights);
 
-        return [(art.image_copyright || rights) && <div>
-          {art.image_copyright && decodeURIComponent(art.image_copyright)}
-          {art.image_copyright && rights && <br/>}
-          {rights && <span>{rs ? rs.label : rights}</span>}
-        </div>,
-        <div>
-          {rs && <p>
-            {rs.definition}
-            <br />
-            <a href={rs.id} title="See more information by visiting righststatments.org">
-              <RightsStatementIcon 
-                statement={rs} 
-                color="dark" 
-                alt=""
-              /> {rs.label} ({rs.identifier})
-            </a>
-          </p>}
-          <Peek facet="rights_type" q={rights} />
-          <p><a href="https://new.artsmia.org/copyright-and-image-access/">Mia's Copyright and Image Access & Use Policies</a></p>
-        </div>
-        ]
-      }],
+          return [
+            (art.image_copyright || rights) && (
+              <div>
+                {art.image_copyright && decodeURIComponent(art.image_copyright)}
+                {art.image_copyright && rights && <br />}
+                {rights && <span>{rs ? rs.label : rights}</span>}
+              </div>
+            ),
+            <div>
+              {rs && (
+                <p>
+                  {rs.definition}
+                  <br />
+                  <a
+                    href={rs.id}
+                    title="See more information by visiting righststatments.org"
+                  >
+                    <RightsStatementIcon statement={rs} color="dark" alt="" />{" "}
+                    {rs.label} ({rs.identifier})
+                  </a>
+                </p>
+              )}
+              <Peek facet="rights_type" q={rights} />
+              <p>
+                <a href="https://new.artsmia.org/copyright-and-image-access/">
+                  Mia's Copyright and Image Access & Use Policies
+                </a>
+              </p>
+            </div>,
+          ];
+        },
+      ],
       // apparently markings/inscription/signed are 'for our eyes only'
       // ['markings', (art) => {
       //   // show deprecated `marks` field if none of the new `markings, signature, inscription` fields exist yet
@@ -150,18 +223,24 @@ var ArtworkDetails = React.createClass({
       // }],
       // ['inscription'],
       // ['signed'],
-      ['classification', (art, raw) => {
-        if(!raw.classification) return []
+      [
+        "classification",
+        (art, raw) => {
+          if (!raw.classification) return [];
 
-        var classificationPeeks = raw.classification.split(',')
-        .map((classification, index) => <Peek facet="classification" q={classification} key={index} />)
+          var classificationPeeks = raw.classification
+            .split(",")
+            .map((classification, index) => (
+              <Peek facet="classification" q={classification} key={index} />
+            ));
 
-        return [
-          <p>{art.classification}</p>,
-          <div>{classificationPeeks}</div>
-        ]
-      }],
-      this.buildPeekableDetail('object_name'),
+          return [
+            <p>{art.classification}</p>,
+            <div>{classificationPeeks}</div>,
+          ];
+        },
+      ],
+      this.buildPeekableDetail("object_name"),
       // disable tags due to frequent inaccuracies
       // ['tags', art => {
       //   if(!art.tags) return []
@@ -175,160 +254,244 @@ var ArtworkDetails = React.createClass({
       //     })}</p>
       // ]
       // }],
-      ['catalogue_raisonne', (art) => {
-        if(!art.catalogue_raissonne) return []
-        return [ <div>{art.catalogue_raissonne}</div>]
-      }],
-      ['wikipedia', (art) => {
-        return ['Cite this information', <div>
-          <ClickToSelect>
-            <code name="Mia">&#123;&#123;cite web |title={art.title} |url=https://collections.artsmia.org/art/{art.id} |author={art.artist} |year={art.dated} |accessdate={(new Date).toUTCString().split(' ').slice(1, 4).join(' ')} |publisher=Minneapolis Institute of Art&#125;&#125;</code>
-          </ClickToSelect>
-        </div>]
-      }],
-      ['IIIF', (art) => {
-        if(true || art.rights_type !== 'Public Domain') return []
+      [
+        "catalogue_raisonne",
+        (art) => {
+          if (!art.catalogue_raissonne) return [];
+          return [<div>{art.catalogue_raissonne}</div>];
+        },
+      ],
+      [
+        "wikipedia",
+        (art) => {
+          return [
+            "Cite this information",
+            <div>
+              <ClickToSelect>
+                <code name="Mia">
+                  &#123;&#123;cite web |title={art.title}{" "}
+                  |url=https://collections.artsmia.org/art/{art.id} |author=
+                  {art.artist} |year={art.dated} |accessdate=
+                  {new Date().toUTCString().split(" ").slice(1, 4).join(" ")}{" "}
+                  |publisher=Minneapolis Institute of Art&#125;&#125;
+                </code>
+              </ClickToSelect>
+            </div>,
+          ];
+        },
+      ],
+      [
+        "IIIF",
+        (art) => {
+          if (true || art.rights_type !== "Public Domain") return [];
 
-        const manifestLink = `https://iiif.dx.artsmia.org/${art.id}.jpg/manifest.json`
-        const uvLink = `https://universalviewer.io/uv.html?manifest=${manifestLink}`
-        const miradorLink = `https://projectmirador.org/embed/?iiif-content=${manifestLink}`
+          const manifestLink = `https://iiif.dx.artsmia.org/${art.id}.jpg/manifest.json`;
+          const uvLink = `https://universalviewer.io/uv.html?manifest=${manifestLink}`;
+          const miradorLink = `https://projectmirador.org/embed/?iiif-content=${manifestLink}`;
 
-        return ['Share this image with IIIF', <div>
-          <p><a href="https://iiif.io/"><abbr title="international image interoperability framework">IIIF</abbr></a> provides a way for images to be shared in a standard way.</p>
-          <p>This artworks has a &ldquo;<a href={manifestLink}>Manifest</a>&rdquo; that encodes information about it and that can be linked into a wide range of IIIF-enabled systems.</p>
-          <p>(Such as <a href={uvLink}>Universal Viewer</a> or <a href={miradorLink}>Mirador</a>.)</p>
-        </div>]
-      }],
-      ['exhibition_history', (art) => {
-        if(!art.exhibition_history) return []
-        return [<Markdown>{art.exhibition_history}</Markdown>]
-      }],
-      ['see_also', (art, raw) => {
-        var also = raw.see_also && raw.see_also.filter(id => id !== "" && id !== raw.id)
+          return [
+            "Share this image with IIIF",
+            <div>
+              <p>
+                <a href="https://iiif.io/">
+                  <abbr title="international image interoperability framework">
+                    IIIF
+                  </abbr>
+                </a>{" "}
+                provides a way for images to be shared in a standard way.
+              </p>
+              <p>
+                This artworks has a &ldquo;<a href={manifestLink}>Manifest</a>
+                &rdquo; that encodes information about it and that can be linked
+                into a wide range of IIIF-enabled systems.
+              </p>
+              <p>
+                (Such as <a href={uvLink}>Universal Viewer</a> or{" "}
+                <a href={miradorLink}>Mirador</a>.)
+              </p>
+            </div>,
+          ];
+        },
+      ],
+      [
+        "exhibition_history",
+        (art) => {
+          if (!art.exhibition_history) return [];
+          return [<Markdown>{art.exhibition_history}</Markdown>];
+        },
+      ],
+      [
+        "see_also",
+        (art, raw) => {
+          var also =
+            raw.see_also &&
+            raw.see_also.filter((id) => id !== "" && id !== raw.id);
 
-        if(!also) return []
+          if (!also) return [];
 
-        var alsoString = `${also.length} other artwork${also.length > 1 ? 's' : ''}`
-        var alsoLink = <a href={`/search/ids/${raw.see_also.join(',')}`}>{alsoString}</a>
+          var alsoString = `${also.length} other artwork${
+            also.length > 1 ? "s" : ""
+          }`;
+          var alsoLink = (
+            <a href={`/search/ids/${raw.see_also.join(",")}`}>{alsoString}</a>
+          );
 
-        console.info('artwork details see_also', {
-          also,
-          alsoString,
-          rawSeeA: raw.see_also,
-        })
+          console.info("artwork details see_also", {
+            also,
+            alsoString,
+            rawSeeA: raw.see_also,
+          });
 
-        return also && also.length > 0 ?
-          [
-            alsoLink, 
-            <Peek facet="see_also" q={raw.id} />
-          ] :
-          []
-      }],
-      ['portfolio', (art, raw) => {
-        if(!raw.portfolio || raw.portfolio == 'From ') return []
-        var portfolioName = raw.portfolio
-        .replace('From From', 'From') // some have double 'from'
+          return also && also.length > 0
+            ? [alsoLink, <Peek facet="see_also" q={raw.id} />]
+            : [];
+        },
+      ],
+      [
+        "portfolio",
+        (art, raw) => {
+          if (!raw.portfolio || raw.portfolio == "From ") return [];
+          var portfolioName = raw.portfolio.replace("From From", "From"); // some have double 'from'
 
-        return [portfolioName, <Peek facet="portfolio" q={portfolioName} />]
-      }],
-      ['accession_highlight', (art) => {
-        if(!art.accessionHighlight) return []
-        return [
-          <p>
-            <Link to="accessionHighlight" params={{id: art.id, slug: _Artwork.slug(art)}}>
-              This was one of Mia's top highlights in {art.accessionDate.split('-')[0]}.<br/>
-            </Link>
-            <Link to="recent">See the rest!</Link>
-          </p>,
-          <Markdown>{art.accessionHighlightText + '\n\n---'}</Markdown>
-        ]
-      }],
-      ['metadata', (art) => {
-        const message = `Click here to see the machine readable JSON data that underpins this page.`
-        return [
-          <Markdown>{message}</Markdown>,
-          <div>
+          return [portfolioName, <Peek facet="portfolio" q={portfolioName} />];
+        },
+      ],
+      [
+        "accession_highlight",
+        (art) => {
+          if (!art.accessionHighlight) return [];
+          return [
             <p>
-              <a href={`https://search.artsmia.org/id/${art.id}`}>Access metadata though our search API</a> /{' '}
-              <a href={`https://search.artsmia.org/ids/${art.id}?format=csv`}>Download as CSV</a>
-            </p>
-            <Markdown>{`If you're interested in this, you might also want to check out our [Open Access](/info/open-access) page.`}</Markdown>
-            <pre><ClickToSelect><code>{JSON.stringify(art, null, 2)}</code></ClickToSelect></pre>
-          </div>,
-        ]
-      }],
-      ['curator_approved', art => {
-        var currentUrl = window.location && window.location.href.split('/').slice(0, 5).join('/')
-        var dataSender = feedbackSender(undefined, undefined, 'Collections data feedback', currentUrl)
-        var imageSender = feedbackSender('collectionsdata+images@artsmia.org', 'Let us know', 'Collections image feedback', currentUrl)
+              <Link
+                to="accessionHighlight"
+                params={{ id: art.id, slug: _Artwork.slug(art) }}
+              >
+                This was one of Mia's top highlights in{" "}
+                {art.accessionDate.split("-")[0]}.<br />
+              </Link>
+              <Link to="recent">See the rest!</Link>
+            </p>,
+            <Markdown>{art.accessionHighlightText + "\n\n---"}</Markdown>,
+          ];
+        },
+      ],
+      [
+        "metadata",
+        (art) => {
+          const message = `Click here to see the machine readable JSON data that underpins this page.`;
+          return [
+            <Markdown>{message}</Markdown>,
+            <div>
+              <p>
+                <a href={`https://search.artsmia.org/id/${art.id}`}>
+                  Access metadata though our search API
+                </a>{" "}
+                /{" "}
+                <a href={`https://search.artsmia.org/ids/${art.id}?format=csv`}>
+                  Download as CSV
+                </a>
+              </p>
+              <Markdown>{`If you're interested in this, you might also want to check out our [Open Access](/info/open-access) page.`}</Markdown>
+              <pre>
+                <ClickToSelect>
+                  <code>{JSON.stringify(art, null, 2)}</code>
+                </ClickToSelect>
+              </pre>
+            </div>,
+          ];
+        },
+      ],
+      [
+        "curator_approved",
+        (art) => {
+          var currentUrl =
+            window.location &&
+            window.location.href.split("/").slice(0, 5).join("/");
+          var dataSender = feedbackSender(
+            undefined,
+            undefined,
+            "Collections data feedback",
+            currentUrl
+          );
+          var imageSender = feedbackSender(
+            "collectionsdata+images@artsmia.org",
+            "Let us know",
+            "Collections image feedback",
+            currentUrl
+          );
 
-        var dataMessage = art.curator_approved ?
-          `This record is from historic documentation and may not have been reviewed by a curator, so may be inaccurate or incomplete. Our records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.` :
-          `This record has been reviewed by our curatorial staff but may be incomplete. These records are frequently revised and enhanced. If you notice a mistake or have additional information about this object, please email ${dataSender}.`
+          var curatorMessage =
+            `Object information is subject to revision and enhancement based on ongoing research and review. If you notice an error or have additional information about this object, please contact collectionsdata@artsmia.org.`
+          var imageMessage = `Does something look wrong with this image? ${imageSender}`;
 
-        var imageMessage = `Does something look wrong with this image? ${imageSender}`
-
-        return [<Markdown>
-          {dataMessage + '\n\n' + imageMessage}
-        </Markdown>]
-      }],
-    ]
+          return [<Markdown>{curatorMessage + "\n\n" + imageMessage}</Markdown>];
+        },
+      ],
+    ];
   },
 
   getInitialState() {
-    var dimensions = this.dimensions()
-    var firstDimensionName = dimensions && dimensions[0] && dimensions[0][1]
+    var dimensions = this.dimensions();
+    var firstDimensionName = dimensions && dimensions[0] && dimensions[0][1];
     var expandDetails = this.details().reduce((reduced, [field]) => {
-      reduced[field] = false
-      return reduced
-    }, {})
-    expandDetails['dimension'] = !!firstDimensionName
+      reduced[field] = false;
+      return reduced;
+    }, {});
+    expandDetails["dimension"] = !!firstDimensionName;
 
     return {
       expandDetailsMatrix: expandDetails,
       dimensionGraphicName: firstDimensionName,
-    }
+    };
   },
 
   render() {
-    var {art, highlights} = this.props
-    var skip = this.props.skipFields ? this.props.skipFields.split(' ') : []
+    var { art, highlights } = this.props;
+    var skip = this.props.skipFields ? this.props.skipFields.split(" ") : [];
     var details = this.details()
-    .filter(([field]) => skip.indexOf(field) < 0)
-    .map(field => this.build(...field))
-    .filter(detail => !!detail)
+      .filter(([field]) => skip.indexOf(field) < 0)
+      .map((field) => this.build(...field))
+      .filter((detail) => !!detail);
 
-    return <dl className='artwork-detail'>
-      {details}
-    </dl>
+    return <dl className="artwork-detail">{details}</dl>;
   },
 
   dimensions() {
-    var {dimension} = this.props.art
-    if(!dimension) return []
+    var { dimension } = this.props.art;
+    if (!dimension) return [];
     // var dimension = this.props.highlights ? this.props.highlights.dimension : this.props.art
-    return dimension.split("\r\n")
-    .filter(string => string.match(/[x\|×].*cm/))
-    .map(string => {
-      var aspect = string.match(/cm\)\s\(*([^\(]+)\)$/)
+    return dimension
+      .split("\r\n")
+      .filter((string) => string.match(/[x\|×].*cm/))
+      .map((string) => {
+        var aspect = string.match(/cm\)\s\(*([^\(]+)\)$/);
 
-      return [string, aspect ? aspect[1].replace(/[^a-zA-z]+/g, '-').replace(/^-|-$/, '') : 'dimensions']
-    })
+        return [
+          string,
+          aspect
+            ? aspect[1].replace(/[^a-zA-z]+/g, "-").replace(/^-|-$/, "")
+            : "dimensions",
+        ];
+      });
   },
 
   toggleDimensionGraphic(aspect) {
-    this.setState({dimensionGraphicName: aspect})
+    this.setState({ dimensionGraphicName: aspect });
   },
 
   dimensionSvgLoaded() {
-    if(this.state.heightAdjusted) return
-    this.setState({heightAdjusted: true})
-    var domNode = ReactDOM.findDOMNode(this)
-    this.context.onHeightChange && this.context.onHeightChange(domNode.parentElement.parentElement.parentElement.parentElement.clientHeight)
+    if (this.state.heightAdjusted) return;
+    this.setState({ heightAdjusted: true });
+    var domNode = ReactDOM.findDOMNode(this);
+    this.context.onHeightChange &&
+      this.context.onHeightChange(
+        domNode.parentElement.parentElement.parentElement.parentElement
+          .clientHeight
+      );
   },
-})
+});
 ArtworkDetails.contextTypes = {
   onHeightChange: React.PropTypes.func,
-}
+};
 
-module.exports = ArtworkDetails
+module.exports = ArtworkDetails;

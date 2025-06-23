@@ -12,32 +12,32 @@
  * linear gradient behind the play/pause icons to ensure visibility?
  */
 
-var React = require('react')
+var React = require("react");
 
-const Image = require('../image')
-var { getFacetAndValue } = require('../artwork/creator')
+const Image = require("../image");
+var { getFacetAndValue } = require("../artwork/creator");
 
 var AudioDecorator = React.createClass({
   render() {
-    const term = this.props.term[0]
-    const hits = this.props.hits
+    const term = this.props.term[0];
+    const hits = this.props.hits;
 
     const hitsWithAudio =
-      hits && hits.filter((hit) => hit._source['related:audio-stops'])
+      hits && hits.filter((hit) => hit._source["related:audio-stops"]);
 
     const matchingAudioStop = hitsWithAudio.find((hit) => {
-      const hitAudioNumber = hit._source['related:audio-stops'][0].number
-      return hitAudioNumber === term || hitAudioNumber === `0{term}`
-    })
+      const hitAudioNumber = hit._source["related:audio-stops"][0].number;
+      return hitAudioNumber === term || hitAudioNumber === `0{term}`;
+    });
 
-    const isAudioNumberSearchTerm = term.match(/\d{1,3}/)
-    const zeroPadTerm = parseInt(term).toLocaleString('en-US', {
+    const isAudioNumberSearchTerm = term.match(/\d{1,3}/);
+    const zeroPadTerm = parseInt(term).toLocaleString("en-US", {
       minimumIntegerDigits: 3,
       useGrouping: false,
-    })
+    });
     const matchingAudioWithoutArtworkConnection =
       isAudioNumberSearchTerm &&
-      `http://audio-tours.s3.amazonaws.com/p${zeroPadTerm}.mp3`
+      `http://audio-tours.s3.amazonaws.com/p${zeroPadTerm}.mp3`;
 
     // TODOoooo - 1 and two digit audio numbers aren't caught by ES
     // when "97" is searched for, the results from ES don't include the artwork
@@ -50,14 +50,14 @@ var AudioDecorator = React.createClass({
 
     const otherHitsWithAudio = hitsWithAudio.filter(
       (hit) => hit !== matchingAudioStop
-    )
+    );
 
-    if (!hits || (!matchingAudioStop && !otherHitsWithAudio)) return <span />
+    if (!hits || (!matchingAudioStop && !otherHitsWithAudio)) return <span />;
 
     return (
       <div
         className="decorator audio"
-        style={{ overflow: 'scroll', maxWidth: '100%' }}
+        style={{ overflow: "scroll", maxWidth: "100%" }}
       >
         {(matchingAudioStop || otherHitsWithAudio) && (
           <AudioStopLifter
@@ -68,9 +68,9 @@ var AudioDecorator = React.createClass({
           />
         )}
       </div>
-    )
+    );
   },
-})
+});
 
 /**
  * 'Lifts' a lower search result into featured position - here an audio stop
@@ -89,12 +89,12 @@ const AudioStopLifter = React.createClass({
       played: [],
       playNext: undefined,
       showPlaylist: false,
-    }
+    };
   },
 
   render() {
-    const { hit, hitsWithAudio, directAudioLink } = this.props
-    const { showPlaylist, playNextId, errorLoadingAudioFile } = this.state
+    const { hit, hitsWithAudio, directAudioLink } = this.props;
+    const { showPlaylist, playNextId, errorLoadingAudioFile } = this.state;
 
     if (!hit && directAudioLink && !errorLoadingAudioFile) {
       return (
@@ -102,15 +102,15 @@ const AudioStopLifter = React.createClass({
           src={directAudioLink}
           controls
           onError={() => {
-            this.setState({ errorLoadingAudioFile: true })
+            this.setState({ errorLoadingAudioFile: true });
           }}
         />
-      )
+      );
     }
 
-    if (!hit && hitsWithAudio.length === 0) return <span />
+    if (!hit && hitsWithAudio.length === 0) return <span />;
 
-    const playlist = [hit, ...hitsWithAudio].filter((id) => id)
+    const playlist = [hit, ...hitsWithAudio].filter((id) => id);
 
     const audioCardProps = {
       handlePlayStart: this.handlePlayStart,
@@ -118,7 +118,7 @@ const AudioStopLifter = React.createClass({
       forceSearchUpdate: this.props.forceSearchUpdate,
       playingId: this.state.playingId,
       playing: this.state.playing,
-    }
+    };
 
     const audioCards =
       hit && !showPlaylist ? (
@@ -131,7 +131,7 @@ const AudioStopLifter = React.createClass({
         playlist.map((_hit, index) => {
           const shouldAutoPlay = playNextId
             ? this.state.playNextId === _hit._id
-            : false && index === 0
+            : false && index === 0;
 
           return (
             <AudioCard
@@ -141,116 +141,111 @@ const AudioStopLifter = React.createClass({
               autoPlay={shouldAutoPlay}
               {...audioCardProps}
             />
-          )
+          );
         })
-      )
+      );
 
     const playlistToggler = (
       <button onClick={() => this.setState({ showPlaylist: !showPlaylist })}>
         toggle playlist
       </button>
-    )
+    );
 
     return (
       <div
-        style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto' }}
+        style={{ display: "flex", flexDirection: "row", marginLeft: "auto" }}
       >
         {audioCards}
         {hit && hitsWithAudio.length > 1 && playlistToggler}
       </div>
-    )
+    );
   },
 
   handlePlayStart(art) {
-    this.setState({ playing: true, playingId: art.id })
+    this.setState({ playing: true, playingId: art.id });
   },
 
   handlePlayEnd(endedStopArt) {
-    const { hit, hitsWithAudio } = this.props
-    const playlist = [hit, ...hitsWithAudio].filter((id) => id)
-    const endedIndex = playlist.findIndex((t) => endedStopArt.id === t._id)
-    const nextTrack = playlist[endedIndex + 1]
+    const { hit, hitsWithAudio } = this.props;
+    const playlist = [hit, ...hitsWithAudio].filter((id) => id);
+    const endedIndex = playlist.findIndex((t) => endedStopArt.id === t._id);
+    const nextTrack = playlist[endedIndex + 1];
 
     this.setState({
       playNextId: nextTrack && nextTrack._id,
       playingId: nextTrack && nextTrack._id,
       played: this.state.played.concat(endedStopArt.id),
-    })
+    });
 
     if (!nextTrack) {
       // TODO speak indication of the end of the playlist?
     }
   },
-})
+});
 
 const AudioCard = React.createClass({
   getInitialState() {
-    return { imageHovered: false }
+    return { imageHovered: false };
   },
 
   render() {
-    const { imageHovered } = this.state
-    const {
-      hit,
-      handlePlayStart,
-      handlePlayEnd,
-      autoPlay,
-      forceSearchUpdate,
-    } = this.props
+    const { imageHovered } = this.state;
+    const { hit, handlePlayStart, handlePlayEnd, autoPlay, forceSearchUpdate } =
+      this.props;
 
-    const art = hit && hit._source
-    const audio = art['related:audio-stops'][0]
+    const art = hit && hit._source;
+    const audio = art["related:audio-stops"][0];
 
-    const baseWidth = 300
-    const baseHeight = 150
-    const maxWidth = imageHovered ? baseWidth * 2 : baseWidth
-    const maxHeight = imageHovered ? baseHeight * 2 : baseHeight
+    const baseWidth = 300;
+    const baseHeight = 150;
+    const maxWidth = imageHovered ? baseWidth * 2 : baseWidth;
+    const maxHeight = imageHovered ? baseHeight * 2 : baseHeight;
 
-    const fav = getFacetAndValue(art)
-    const artCreator = fav && fav[1] ? fav[1].split(';')[0] : ''
+    const fav = getFacetAndValue(art);
+    const artCreator = fav && fav[1] ? fav[1].split(";")[0] : "";
 
-    const isPaused = this.audio ? this.audio.paused : true
+    const isPaused = this.audio ? this.audio.paused : true;
 
-    const pausedIconSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14.5c-3.59 0-6.5-2.91-6.5-6.5s2.91-6.5 6.5-6.5 6.5 2.91 6.5 6.5-2.91 6.5-6.5 6.5zm-2-10l6 3.5-6 3.5z"/></svg>`
-    const playIconSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14.5c-3.59 0-6.5-2.91-6.5-6.5s2.91-6.5 6.5-6.5 6.5 2.91 6.5 6.5-2.91 6.5-6.5 6.5zm-3-9.5h2v6h-2zm4 0h2v6h-2z"/></svg>`
-    const maskSvg = !!isPaused ? pausedIconSvg : playIconSvg
+    const pausedIconSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14.5c-3.59 0-6.5-2.91-6.5-6.5s2.91-6.5 6.5-6.5 6.5 2.91 6.5 6.5-2.91 6.5-6.5 6.5zm-2-10l6 3.5-6 3.5z"/></svg>`;
+    const playIconSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 14.5c-3.59 0-6.5-2.91-6.5-6.5s2.91-6.5 6.5-6.5 6.5 2.91 6.5 6.5-2.91 6.5-6.5 6.5zm-3-9.5h2v6h-2zm4 0h2v6h-2z"/></svg>`;
+    const maskSvg = !!isPaused ? pausedIconSvg : playIconSvg;
 
     const playIconMask = (
       <div
         style={{
-          WebkitFilter: 'drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.75))',
+          WebkitFilter: "drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.75))",
         }}
       >
         <div
           style={{
             maskImage: `url('${maskSvg}')`,
             WebkitMaskImage: `url('${maskSvg}')`,
-            display: 'inline-block',
-            width: '30%',
-            height: '30%',
+            display: "inline-block",
+            width: "30%",
+            height: "30%",
             content: "''",
-            color: '#666',
-            maskRepeat: 'no-repeat',
-            WebkitMaskRepeat: 'no-repeat',
-            maskSize: 'contain',
-            WebkitMaskSize: 'contain',
-            backgroundColor: '#eee',
-            padding: '0 5px 0 0',
-            opacity: '0.9',
-            position: 'absolute',
-            bottom: '5%',
-            left: '2%',
-            pointerEvents: 'none',
+            color: "#666",
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
+            maskSize: "contain",
+            WebkitMaskSize: "contain",
+            backgroundColor: "#eee",
+            padding: "0 5px 0 0",
+            opacity: "0.9",
+            position: "absolute",
+            bottom: "5%",
+            left: "2%",
+            pointerEvents: "none",
             minHeight: 51,
           }}
         />
       </div>
-    )
+    );
 
     return (
       <div>
-        <figure className="audioClip" style={{ maxWidth: '71%' }}>
-          <div style={{ position: 'relative' }}>
+        <figure className="audioClip" style={{ maxWidth: "71%" }}>
+          <div style={{ position: "relative" }}>
             <Image
               art={art}
               style={{ maxWidth, maxHeight }}
@@ -268,110 +263,110 @@ const AudioCard = React.createClass({
           </figcaption>
           <audio
             style={{
-              maxWidth: '100%',
-              visibility: this.audio && isPaused ? 'hidden' : 'visible',
-              visibility: 'hidden',
+              maxWidth: "100%",
+              visibility: this.audio && isPaused ? "hidden" : "visible",
+              visibility: "hidden",
             }}
-            src={audio.link.replace('http:', 'https:')}
+            src={audio.link.replace("http:", "https:")}
             controls
             onPlay={this.handlePlay}
             onEnded={() => handlePlayEnd(art)}
             onError={() => {
               console.error(
-                'TODO handle when audio file isnt on s3 - error playing audio for',
+                "TODO handle when audio file isnt on s3 - error playing audio for",
                 art
-              )
-              handlePlayEnd(art)
+              );
+              handlePlayEnd(art);
             }}
             ref={(audio) => {
-              this.audio = audio
+              this.audio = audio;
             }}
           />
         </figure>
       </div>
-    )
+    );
   },
 
   // TODO only allow one card to play at a a time
   componentDidUpdate() {
-    const audio = this.audio
-    const { hit } = this.props
-    const art = hit._source
+    const audio = this.audio;
+    const { hit } = this.props;
+    const art = hit._source;
 
     if (audio && this.props.autoPlay && audio.currentTime === 0) {
-      audio.scrollIntoViewIfNeeded()
-      audio.play()
+      audio.scrollIntoViewIfNeeded();
+      audio.play();
     }
 
-    if (!audio.paused && this.props.playingId !== art.id) audio.pause()
+    if (!audio.paused && this.props.playingId !== art.id) audio.pause();
   },
 
   handlePlay() {
-    const { audio } = this
-    const art = this.props.hit._source
-    this.props.forceSearchUpdate(this.props.hit)
-    this.props.handlePlayStart(art)
+    const { audio } = this;
+    const art = this.props.hit._source;
+    this.props.forceSearchUpdate(this.props.hit);
+    this.props.handlePlayStart(art);
 
     if (audio.currentTime > 0) {
-      audio.volume = 1
-      return
+      audio.volume = 1;
+      return;
     }
 
     if (!this.props.autoPlay) {
-      audio.play()
-      return
+      audio.play();
+      return;
     }
 
     // if just starting, speak the artwork title over the audio stop
     // and then reset to play audio from beginning
-    const prevVolume = audio.volume
-    const prevTime = audio.currentTime
-    audio.volume = 0
-    audio.playbackRate = 0.1
-    this.speakAudioIntroduction()
+    const prevVolume = audio.volume;
+    const prevTime = audio.currentTime;
+    audio.volume = 0;
+    audio.playbackRate = 0.1;
+    this.speakAudioIntroduction();
 
     const restartAudioPlaying = () => {
-      const needleTime = prevTime === 0 ? 0.001 : prevTime
-      audio.playbackRate = 1
-      audio.volume = prevVolume
-      audio.currentTime = needleTime
-    }
+      const needleTime = prevTime === 0 ? 0.001 : prevTime;
+      audio.playbackRate = 1;
+      audio.volume = prevVolume;
+      audio.currentTime = needleTime;
+    };
 
     const delayAudioStopWhileSpeaking = (count = 1) => {
       setTimeout(() => {
         speechSynthesis.pending || speechSynthesis.speaking
           ? delayAudioStopWhileSpeaking(count + 1)
-          : setTimeout(restartAudioPlaying, 300)
-      }, 100 * count)
-    }
+          : setTimeout(restartAudioPlaying, 300);
+      }, 100 * count);
+    };
 
-    delayAudioStopWhileSpeaking()
+    delayAudioStopWhileSpeaking();
   },
 
   playPause(evt) {
-    const { audio } = this
-    audio && audio.paused ? audio.play() : audio.pause()
-    this.setState((prevState) => prevState)
+    const { audio } = this;
+    audio && audio.paused ? audio.play() : audio.pause();
+    this.setState((prevState) => prevState);
   },
 
   speakAudioIntroduction() {
-    const art = this.props.hit._source
-    const fav = getFacetAndValue(art)
-    const artCreator = fav && fav[1] ? fav[1].split(';')[0] : ''
+    const art = this.props.hit._source;
+    const fav = getFacetAndValue(art);
+    const artCreator = fav && fav[1] ? fav[1].split(";")[0] : "";
 
     if (
-      'speechSynthesis' in window &&
+      "speechSynthesis" in window &&
       window.speechSynthesis.getVoices().length > 0
     ) {
-      const sp = window.speechSynthesis
-      const speakArtworkInfo = new SpeechSynthesisUtterance()
-      const artworkIntro = [art.title.replace(/<\/?i>/g, ''), artCreator].join(
-        ' '
-      )
-      speakArtworkInfo.text = artworkIntro
-      sp.speak(speakArtworkInfo)
+      const sp = window.speechSynthesis;
+      const speakArtworkInfo = new SpeechSynthesisUtterance();
+      const artworkIntro = [art.title.replace(/<\/?i>/g, ""), artCreator].join(
+        " "
+      );
+      speakArtworkInfo.text = artworkIntro;
+      sp.speak(speakArtworkInfo);
     }
   },
-})
+});
 
-module.exports = AudioDecorator
+module.exports = AudioDecorator;

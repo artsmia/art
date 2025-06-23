@@ -1,118 +1,193 @@
-var React = require('react')
-var {Link} = require('react-router')
+var React = require("react");
+var { Link } = require("react-router");
 
-var Markdown = require('../markdown')
-var findDepartment = require('../department-slug')
+var Markdown = require("../markdown");
+var findDepartment = require("../department-slug");
 
 var DepartmentDecorator = React.createClass({
   getInitialState() {
-    var [deptName, selector, slug] = this.getNameAndSelector(this.props.department)
-    var {departmentInfo} = this.props
-    var info = departmentInfo && departmentInfo.departments[selector]
+    var [deptName, selector, slug] = this.getNameAndSelector(
+      this.props.department
+    );
+    var { departmentInfo } = this.props;
+    var info = departmentInfo && departmentInfo.departments[selector];
 
     return {
       deptName,
       selector,
       slug,
       info: info,
-      blurb: info && info.content || DepartmentContent[selector] || `Sorry, there's no "${deptName}" department.`,
+      blurb:
+        (info && info.content) ||
+        DepartmentContent[selector] ||
+        `Sorry, there's no "${deptName}" department.`,
       expanded: this.props.expanded || !!this.props.params.dept || false,
-    }
+    };
   },
 
   render() {
-    var {department} = this.props
-    var {deptName, selector, blurb, expanded} = this.state
+    var { department } = this.props;
+    var { deptName, selector, blurb, expanded } = this.state;
 
-    var [blurbA, blurbB] = blurb.split('<hr />')
+    var [blurbA, blurbB] = blurb.split("<hr />");
 
-    var fullInfo = expanded && this.getFullInfo(blurbB)
+    var fullInfo = expanded && this.getFullInfo(blurbB);
 
-    return <div className="departmentBlurb mdl-grid decorator d-department">
-      <h2><Link to='department' params={{dept: this.state.slug, terms: department}}><span className="d-visit">Visit </span>{this.state.deptName}</Link></h2>
-      <div className="mdl-cell mdl-cell--6-col departmentContent">
-        {expanded ? <Markdown alreadyRendered={true}>{blurbA}</Markdown> : this.shortBlurb()}
-        {expanded && this.affinityBlurb()}
+    return (
+      <div className="departmentBlurb mdl-grid decorator d-department">
+        <h2>
+          <Link
+            to="department"
+            params={{ dept: this.state.slug, terms: department }}
+          >
+            <span className="d-visit">Visit </span>
+            {this.state.deptName}
+          </Link>
+        </h2>
+        <div className="mdl-cell mdl-cell--6-col departmentContent">
+          {expanded ? (
+            <Markdown alreadyRendered={true}>{blurbA}</Markdown>
+          ) : (
+            this.shortBlurb()
+          )}
+          {expanded && this.affinityBlurb()}
+        </div>
+        {expanded && fullInfo}
       </div>
-      {expanded && fullInfo}
-    </div>
+    );
   },
 
   getNameAndSelector(term) {
-    var decodedTerm = decodeURIComponent(term)
-    var deptName = findDepartment(decodedTerm) ? decodedTerm : decodedTerm.match(/department:"?([^"]*)"?/)[1]
-    return findDepartment(deptName)
+    var decodedTerm = decodeURIComponent(term);
+    var deptName = findDepartment(decodedTerm)
+      ? decodedTerm
+      : decodedTerm.match(/department:"?([^"]*)"?/)[1];
+    return findDepartment(deptName);
   },
 
   shortBlurb() {
-    return <div>
-      <Markdown>{this.state.blurb.split('\n')[0]}</Markdown>
-    </div>
+    return (
+      <div>
+        <Markdown>{this.state.blurb.split("\n")[0]}</Markdown>
+      </div>
+    );
   },
 
   getFullInfo(info) {
-    var {deptName} = this.state
+    var { deptName } = this.state;
 
-    return <div className="departmentResources mdl-cell mdl-cell--6-col">
-      <div>{this.getCurators()}</div>
-      <Markdown alreadyRendered={true}>{info}</Markdown>
-    </div>
+    return (
+      <div className="departmentResources mdl-cell mdl-cell--6-col">
+        <div>{this.getCurators()}</div>
+        <Markdown alreadyRendered={true}>{info}</Markdown>
+      </div>
+    );
   },
 
   getCurators() {
     var curators = this.state.info.curators
-    .map(name => this.props.departmentInfo.curators[name])
-    .filter(exists => !!exists)
-    .filter(({emeritus}) => !emeritus)
-    .filter(curator => !curator.name.match(/yasufumi/i))
+      .map((name) => this.props.departmentInfo.curators[name])
+      .filter((exists) => !!exists)
+      .filter(({ emeritus }) => !emeritus)
+      .filter((curator) => !curator.name.match(/yasufumi/i));
 
-    return curators.length > 0 && <div id="curators">
-      <h3>Curators</h3>
-      {curators.map(curator => {
-        curator.photo = `https://collections.artsmia.org/_info/curator-portraits/${curator.slug}.jpg`
+    return (
+      curators.length > 0 && (
+        <div id="curators">
+          <h3>Curators</h3>
+          {curators.map((curator) => {
+            curator.photo = `https://collections.artsmia.org/_info/curator-portraits/${curator.slug}.jpg`;
 
-        return <div className="curatorBio" key={curator.slug}>
-          <Link to="curator" params={{slug:curator.slug}}>
-            <div className="curatorPic">
-              <img src={curator.photo} alt={`portrait of ${curator.name}`} />
-            </div>
-            <div className="curator-intro">
-            <h4>{curator.name}</h4>
-            <h5><Markdown>{curator.title}</Markdown></h5>
-            </div>
-          </Link>
+            return (
+              <div className="curatorBio" key={curator.slug}>
+                <Link to="curator" params={{ slug: curator.slug }}>
+                  <div className="curatorPic">
+                    <img
+                      src={curator.photo}
+                      alt={`portrait of ${curator.name}`}
+                    />
+                  </div>
+                  <div className="curator-intro">
+                    <h4>{curator.name}</h4>
+                    <h5>
+                      <Markdown>{curator.title}</Markdown>
+                    </h5>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
         </div>
-      })}
-    </div>
+      )
+    );
   },
 
   getAffinity() {
-    var affinities = this.props.departmentInfo.affinityGroups
-    .filter(ag => ag.departments && ag.departments.indexOf(findDepartment(this.props.department)[1]) > -1)
+    var affinities = this.props.departmentInfo.affinityGroups.filter(
+      (ag) =>
+        ag.departments &&
+        ag.departments.indexOf(findDepartment(this.props.department)[1]) > -1
+    );
 
-    return affinities.map(a => {
-      var image = <img src={a.featuredArt ? `http://api.artsMia.org/images/${a.featuredArt}/400/medium.jpg` : a.image} />
-      image = a.featuredArt ? <Link to="artwork" params={{id: a.featuredArt}}>{image}</Link> : image
+    return affinities.map((a) => {
+      var image = (
+        <img
+          src={
+            a.featuredArt
+              ? `http://api.artsMia.org/images/${a.featuredArt}/400/medium.jpg`
+              : a.image
+          }
+        />
+      );
+      image = a.featuredArt ? (
+        <Link to="artwork" params={{ id: a.featuredArt }}>
+          {image}
+        </Link>
+      ) : (
+        image
+      );
 
-      return <div className="affinity" key={a.title}>
-        <h3>{a.title}</h3>
-        <div className="affinityImage">{image}</div>
-        <div className="affinity-intro">
-        <Markdown alreadyRendered={true}>{a.content}</Markdown>
-          <p>Mia’s Affinity Groups are a great way for museum members to connect more closely with special areas of art interest, allowing you to delve deeper into the curatorial area of your choice.</p>
-          <a href="http://new.artsmia.org/join-and-invest/affinity-groups/" className="button">Learn More</a>
+      return (
+        <div className="affinity" key={a.title}>
+          <h3>{a.title}</h3>
+          <div className="affinityImage">{image}</div>
+          <div className="affinity-intro">
+            <Markdown alreadyRendered={true}>{a.content}</Markdown>
+            <p>
+              Mia’s Affinity Groups are a great way for museum members to
+              connect more closely with special areas of art interest, allowing
+              you to delve deeper into the curatorial area of your choice.
+            </p>
+            <a
+              href="http://new.artsmia.org/join-and-invest/affinity-groups/"
+              className="button"
+            >
+              Learn More
+            </a>
+          </div>
         </div>
-      </div>
-    })
+      );
+    });
   },
 
   affinityBlurb() {
-    return <div className="affinity">
-      <p>Mia’s Affinity Groups are a great way for museum members to connect more closely with special areas of art interest, allowing you to delve deeper into the curatorial area of your choice.</p>
-      <a href="http://new.artsmia.org/join-and-invest/affinity-groups/" className="button">Learn More</a>
-    </div>
+    return (
+      <div className="affinity">
+        <p>
+          Mia’s Affinity Groups are a great way for museum members to connect
+          more closely with special areas of art interest, allowing you to delve
+          deeper into the curatorial area of your choice.
+        </p>
+        <a
+          href="http://new.artsmia.org/join-and-invest/affinity-groups/"
+          className="button"
+        >
+          Learn More
+        </a>
+      </div>
+    );
   },
-})
+});
 
 var DepartmentContent = {
   africa: `The Arts of Africa and the Americas Department is dedicated to the immense creativity of Native peoples across the world, from prehistory to the present. The collection has grown significantly since the department was founded more than thirty years ago, and now numbers more than 3,000 objects, including masterworks of sculpture, ceramics, metalsmithing, painting, basketry, and bead-, shell-, and quillwork, reflecting the diversity of these regions and cultures.\r\n\r\nHighlights of African art at the museum include a ceramic portrait head from the ancient civilization of Ife, a thousand-year-old wooden horse-and-rider from Djenne, and a cast bronze leopard and a carved ivory tusk, both from the eighteenth-century Kingdom of Benin. Other important pieces are a rare Luba mask, one of only two known in the world, a dramatic dance mask often known as a “firespitter” from Cote d’Ivoire, and a palace door created by the famed Yoruba artist Areogun of Osi.\r\n\r\nThe Native American galleries are equally rich in examples of the highest quality art, such as our unparalleled three-thousand-year-old Olmec jade mask, an exceptional nineteenth-century Sun Mask from the Northwest Coast, and a monumental pipe in the form of a bound prisoner, made in southeastern United States around 1200. Additional masterworks include the finely worked gold earspools from the ancient Andes, and a beaded man’s shoulder pouch made in Minnesota in the early 1800s.\r\n\r\nOur Oceanic collection contains world-class pieces, such as the Maori Poutokomanawa (Post Figure) created in the 1840s, the three fabulous Malagan figures, an early Papuan Gope Board, and the Bis Pole, a centerpiece of the gallery.`,
@@ -123,6 +198,6 @@ var DepartmentContent = {
   prints: `The Department of Prints &amp; Drawings keeps up an active program of thematic exhibitions, but it is also the Mia’s hidden treasure chest. At any given time, only a fraction of the museum’s collection of nearly 40,000 prints and 3,000 drawings is on view in the galleries. Nearly all, however, are available to the public in the comfort of the <a href=\"http://new.artsMia.org/visit/study-rooms/\">Herschel V. Jones Print Study Room</a>. To prepare for your visit, please make an appointment by phone (612) 870-3105 or by e-mail (<a href=\"mailto:printstudy@artsMia.org\">printstudy@artsMia.org</a>).\r\n\r\nMany of the greatest European and American artists from the Renaissance to the present are represented, often in considerable depth and quality. Among the highlights are old master prints by Albrecht Dürer and Rembrandt van Rijn; Jacopo de’Barbari’s amazing bird’s-eye view of Venice; a rare presentation copy of Francisco de Goya’s <em>Los Caprichos</em>; a fabulous monotype by William Blake; extensive holdings in nineteenth-century French and British prints and drawings, featuring artists such as James McNeill Whistler, Edgar Degas, and Félix Buhot; and outstanding twentieth-century drawings by Lovis Corinth, Egon Schiele, Ernst Ludwig Kirchner, Erich Heckel, Piet Mondrian, Georges Rouault, Henri Matisse, Jasper Johns, Andy Warhol, Roy Lichtenstein, Jim Dine, Ed Ruscha, Nicola Hicks, and many more. The department is building its collection of twenty-first-century prints and drawings, which is reaching ever further beyond America and Europe to other parts of the world. P&amp;D has secured works by William Kentridge, Julie Mehretu, Mequitta Ahuja, Jaune Quick-to-See Smith, Chuck Close, Luis Jimenez, Cynthia Lin, Carlos Amorales, Diane Victor, and more.\r\n\r\nThere are also fascinating collections within the collection. The department has a large number of books designed and illustrated by artists, which is especially rich in works from France. Students of modern printmaking will want to explore the Vermillion Editions Limited Archival Collection, which contains examples of all the prints published by that Twin Cities press as well as preparatory drawings, proofs, and maquettes that led to the finished work. Botanical, zoological, fashion, and ornamental illustrations from the fifteenth through the twentieth centuries all figure in the mix, as does a wide array of works by Minnesota and regional artists.\r\n\r\nThe <a href=\"http://new.artsMia.org/join-and-invest/affinity-groups/\">Prints &amp; Drawings Affinity Group</a> provides a terrific opportunity to learn more about this vital field of art, to meet others with similar interests, and to help the Mia improve its ability to make art available to the public.`,
   cssaa: `The Department of Chinese and South and Southeast Asian Art has benefited greatly from generous gifts from knowledgeable collectors. Augustus L. Searle, Alfred F. Pillsbury, Richard P. Gale, Louis W. Hill, Jr., and Ruth and Bruce Dayton have donated collections of international reputation. These include ancient Chinese bronzes, ancient and post-Song jade, Chinese monochrome ceramics, and classical Chinese furniture. In addition, curators have built exquisite collections of Qing dynasty silk textiles and Miao textiles.\r\n\r\nSome of the first works of art to enter the museum’s collection were from South (India, Bangladesh, Sri Lanka, Pakistan, Nepal, Bhutan, and Afghanistan) and Southeast Asia (Cambodia, Laos, Myanmar, Thailand, Malaysia, Vietnam, Singapore, Indonesia, Brunei and the Philippines), beginning in 1914 when Charles Freer donated several Thai Buddhist sculptures.  In 1929 Sarah Bell Pillsbury Gale gave the museum its first major Indian work of art, a 12th century bronze (ca. 1100) Dancing Shiva (Nataraja).  The highlight of the South Asian collection is a monumental stone Yogini sculpture from 10<span style=\"font-size: 11px;\">th </span>century south India. Today the South Asian collection numbers about 150 objects and the Southeast Asian collection numbers around 183.\r\n\r\nWithin the galleries there are two Chinese period rooms including an original reception hall from the late Ming dynasty and a ca. 1700 Suzchou-area library.`,
   jka: `The collection of Japanese and Korean art includes over 7,000 works ranging from ancient to contemporary and is amongst the top five collections in the United States. The permanent display space for Japanese art is the largest in the Western world with 15 galleries and over 10,000 square feet (930 sqm). The collection itself includes Buddhist sculpture, woodblock prints, paintings, lacquer, works of bamboo, and ceramics, and it is particularly rich in works from the Edo period (1610–1868).\r\n\r\nTwo historic rooms, a formal audience hall (<i>shoin</i>) and a teahouse (<i>chashitsu</i>), allow highly visible installations within the permanent galleries and serve to heighten awareness of the relationship between art and architecture.</p><p>The Department of Japanese and Korean art has benefited greatly from generous gifts from knowledgeable collectors. Richard P. Gale, Louis W. Hill, Jr., Ruth and Bruce Dayton, and Ellen and Fred Wells have all donated specialized collections of international reputation. With the addition of over 1,500 works of art from the collections of Elizabeth and Willard “Bill” Clark and the Clark Center for Japanese Art in 2013 and half of the world-renowned Mary Griggs Burke collection, the Japanese and Korean art galleries are no doubt a destination for both art enthusiasts and scholars alike.</p><p>The department is dedicated to providing the public with a broad overview of Japanese and Korean art. By showcasing art both chronologically and by medium, the galleries show the history of not only the objects themselves, but also of a collected process of artistic creation. This can be seen, for example, by the scope of ceramics, ranging from early utilitarian to contemporary sculptures.</p><p>Of notable strength is the collection of <i>ukiyo-e</i> paintings and prints, popularly known as “pictures of the floating world”. The core of the collection was built by Richard P. Gale and Louis W. Hill, Jr., and the Gale bequest included some 57 paintings and 206 prints, many of which are rare and in admirable condition. A strong collection of <i>Ōtsu-e</i>, folk paintings produced in and around the town of Ōtsu during the Edo period, came from collectors Edson and Harriet Spencer who also donated their collection of tiger paintings.`,
-}
+};
 
-module.exports = DepartmentDecorator
+module.exports = DepartmentDecorator;
