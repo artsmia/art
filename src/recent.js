@@ -18,7 +18,7 @@ var RecentAccessions = React.createClass({
   statics: {
     fetchData: {
       searchResults: (params, query) =>
-        rest(`${SEARCH}/recent:true`).then((r) => JSON.parse(r.entity)),
+        rest(`${SEARCH}/search?filters=recent:1`).then((r) => JSON.parse(r.entity)),
       accessionHighlights: (params, query) =>
         rest(`${SEARCH}/accessionHighlight:true?sort=accessionDate-desc`).then(
           (r) => JSON.parse(r.entity)
@@ -149,7 +149,8 @@ var RecentAccessions = React.createClass({
           <h2 style={{ paddingTop: "3em" }}>All Recent Accessions</h2>
           <Peek
             facet="recent"
-            q="true"
+            q="1"
+            filtered={true}
             quiltProps={{ maxRowHeight: 600 }}
             shuffleQuilt={true}
           />
