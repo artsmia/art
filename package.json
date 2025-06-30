@@ -59,7 +59,7 @@
     "ramda": "^0.23.0",
     "react": "^0.14.8",
     "react-addons-pure-render-mixin": "^0.14.8",
-    "react-cookie": "^0.3.4",
+    "react-cookie": "^8.0.1",
     "react-dom": "^0.14.8",
     "react-ga": "1.2.0",
     "react-helmet": "^3.3.2",
