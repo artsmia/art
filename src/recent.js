@@ -20,7 +20,7 @@ var RecentAccessions = React.createClass({
       searchResults: (params, query) =>
         rest(`${SEARCH}/search?filters=recent:1`).then((r) => JSON.parse(r.entity)),
       accessionHighlights: (params, query) =>
-        rest(`${SEARCH}/accessionHighlight:true?sort=accessionDate-desc`).then(
+        rest(`${SEARCH}/search?filters=highlights:1&sort=accessionDate-desc`).then(
           (r) => JSON.parse(r.entity)
         ),
     },
@@ -37,9 +37,9 @@ var RecentAccessions = React.createClass({
           ) == -1
       );
     var groupedByDate = R.groupBy((h) => {
-      const accessionNumberYear = h.accession_number.split(".")[0];
+      const accessionNumberYear = (h.accession_number || "").split(".")[0] || "Unknown";
       // This was needed to group accessions by quarter, but we are using year now so fall back to the accesion number
-      const accessionDateYear = h.accessionDate.split("-")[0];
+  const accessionDateYear = (h.accessionDate || "").split("-")[0] || "Unknown";
       const date = accessionNumberYear;
       return date == 2107 ? 2017 : date;
     }, artworks); // {<date>: [<highlights>], …}
@@ -144,8 +144,12 @@ var RecentAccessions = React.createClass({
       <div className="new-to-mia">
         <div className="explore-section">
           <h2>Accession Highlights</h2>
-          {this.accessionHighlightsGrid()}
-
+          <Peek
+            facet="highlights"
+            q="1"
+            filtered={true}
+            quiltProps={{ maxRowHeight: 600 }}
+          />
           <h2 style={{ paddingTop: "3em" }}>All Recent Accessions</h2>
           <Peek
             facet="recent"
