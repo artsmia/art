@@ -20,6 +20,17 @@ var NotFound = React.createClass({
 
   statics: {
     willTransitionTo: function (transition, params, query, callback) {
+      if (
+        typeof window !== "undefined" &&
+        window.location.pathname === "/search"
+      ) {
+        const q = new URLSearchParams(location.search).get("q");
+        if (q) {
+          window.location = `/search/${q}`;
+          return;
+        }
+      }
+
       var redirectUrl = params && isInternetArchivedPage(params.splat);
 
       if (false && redirectUrl) {
