@@ -65,7 +65,7 @@ Sometimes when testing things out, it's easier to run the node process by hand i
 This is a bit more advanced, but worth knowing how to do. First, if there's a tmux session already running on the server, `tmux attach` will connect to it. You'll see a "status bar" on the bottom of your terminal window with something like:
 
 ```
-[0] 0:node- 1:node  4:bash*
+[0] 0:node- 1:node  4:bash* 
 ```
 
 That means that there are three virtual "windows": window #0, running a node process; window #1, also running node; and #4, this one running bash. The `*` in `4:bash*` means tmux is currently showing window 4, the bash process. To connect to window #0, press <control-b> and then the window number, here `0`. The screen will refresh and you'll be on the screen with a node process running. You can tell if this is the collections site based on the messages logged to the screen. (They'll look just like what you see when running the server in your local environment!)
