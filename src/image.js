@@ -70,7 +70,6 @@ const Image = React.createClass({
     var sizeSetting =
     this.props.art.Rights_Image_Display === "Full" ? "full" : 800;
   
-console.log('Image URL:', imageCDN(this.props.art, sizeSetting));
 
     const imageCandidates = [
         imageCDN(this.props.art, sizeSetting)
