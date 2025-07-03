@@ -67,18 +67,8 @@ const Image = React.createClass({
   },
 
   imageURL() {
-    var sizeSetting =
-    this.props.art.Rights_Image_Display === "Full" ? "full" : 800;
-  
+  return imageCDN(this.props.art, 800);
 
-    const imageCandidates = [
-        imageCDN(this.props.art, sizeSetting)
-    ].filter((url) => url);
-    const firstUnFailedImageUrl = imageCandidates.find(
-      (url) => (this.state.failedLoads || []).indexOf(url) < 0
-    );
-
-    return firstUnFailedImageUrl;
   },
 
   componentWillReceiveProps(nextProps) {
