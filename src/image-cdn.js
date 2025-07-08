@@ -1,5 +1,5 @@
 function imageForCollections(art, size = 800) {
-  var baseUrl = 'https://pictures.artsmia.org/web_objects_cache/';
+  var baseUrl = 'https://img.artsmia.org/web_objects_cache/';
 
   // Clean up Cache_Location for URL
 if (!art.Cache_Location || !art.Primary_RenditionNumber) return null;
