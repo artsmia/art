@@ -57,10 +57,10 @@ const ImageQuilt = React.createClass({
       ) {
         s.image = "invalid";
         var splitOn = /;|:|\]/;
-        [s.title_short, s.artist_short] = [
-          s.title.split(splitOn)[0],
-          s.artist.split(splitOn)[0],
-        ];
+       [s.title_short, s.artist_short] = [
+       (s.title || "").split(splitOn)[0],
+       (s.artist || "").split(splitOn)[0],
+       ];
         var text = s.title_short;
         s.text_length = text.length;
         var deltaAverageTextLength = text.length / 17; // bigger box for items with more text
