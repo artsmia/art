@@ -25,6 +25,19 @@ var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
   getInitialState() {
+    if (!this.props.data.searchResults) {
+      if (typeof window !== "undefined") {
+        const q = new URLSearchParams(location.search).get("q");
+        if (q) {
+          window.location = `/search/${q}`;
+          return;
+        }
+      }
+
+      this.transitionTo("home");
+      return;
+    }
+
     const { blank } = this.props;
     const results =
       this.props.results ||

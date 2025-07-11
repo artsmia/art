@@ -1,9 +1,10 @@
-@import "reset.scss";
-@import "brand-colors.scss";
-@import "ui-icons-font.scss";
-@import "mia-font.scss";
+@use "sass:meta";
+@use "reset.scss";
+@use "brand-colors.scss";
+@use "ui-icons-font.scss";
+@use "mia-font.scss";
 @media print {
-  @import "print.scss";
+  @include meta.load-css("print.scss");
 }
 
 $MiaGroteskBold: 'MiaGrotesk-Bold', sans-serif;
@@ -26,7 +27,7 @@ $MiaGroteskRlackItalic: 'MiaGrotesk-BlackItalic', sans-serif;
 body{
     font-family: $MiaGroteskLight;
     font-weight: 400;
-    color:$primary;
+    color:brand-colors.$primary;
     margin: 0;
     line-height:1.5em;
     font-size:1.25em;
@@ -64,7 +65,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .main-app-bar{
     color:#fff;
-    background-color:$primary;
+    background-color:brand-colors.$primary;
 }
 
 header{
@@ -98,7 +99,7 @@ header{
     z-index: 5;
 }
 .global_buttons {
-  background: $primary;
+  background: brand-colors.$primary;
   width: 5em;
   position: fixed;
   top: 0;
@@ -132,7 +133,7 @@ header{
 }
 
 .agg-wrap h2{
-    color:$whitish;
+    color:brand-colors.$whitish;
     text-align:center;
     cursor: pointer;
     line-height: 1em;
@@ -174,18 +175,18 @@ header{
 }
 #aggs dt{
     font-weight:400;
-    color:$primary;
+    color:brand-colors.$primary;
     text-transform:uppercase;
     font-size:0.75em;
     padding:2px 0;
     text-align: left;
     margin:0 0 10px 0;
-    border-top:3px solid $primary;
+    border-top:3px solid brand-colors.$primary;
     white-space: normal;
 }
 #aggs #more-aggs dd {
   padding: 9px 15px;
-  background: $primary;
+  background: brand-colors.$primary;
   color: #ffffff;
   display: inline-block;
   border: none;
@@ -196,7 +197,7 @@ header{
 .toggleOpen, .toggleClose {
   position: absolute;
   right: 0;
-  background: $primary;
+  background: brand-colors.$primary;
   color: white;
   padding: 10px;
 }
@@ -270,7 +271,7 @@ header{
     }
 
     .objects-wrap .focused {
-      border-bottom: 3px solid $primary;
+      border-bottom: 3px solid brand-colors.$primary;
     }
     .objects-wrap .focused .artwork-result {
       margin-bottom: 0;
@@ -313,7 +314,7 @@ header{
       h1 {
           font-family: $MiaGroteskLight;
           font-size:1.357em;
-          color: $primary;
+          color: brand-colors.$primary;
       }
       h1 strong {
         font-family: $MiaGroteskBold;
@@ -327,7 +328,7 @@ header{
     }
 
     .objects-focus h2 a {
-      color: $primary;
+      color: brand-colors.$primary;
     }
 
     .objects-focus h5{
@@ -358,7 +359,7 @@ header{
         width:100%;
         height:auto;
         margin-bottom: 7px;
-        border-bottom: 3px solid $primary;
+        border-bottom: 3px solid brand-colors.$primary;
     }
 
 
@@ -373,7 +374,7 @@ header{
 }
 .search-wrap div:first-child {
     margin:0 auto;
-    color:$primary;
+    color:brand-colors.$primary;
 }
 .search-wrap > div:first-child {
   opacity: 0.95;
@@ -383,7 +384,7 @@ header{
 }
 
 .search-wrapper {
-    background-color:$whitish;
+    background-color:brand-colors.$whitish;
     padding:2em;
     margin-bottom:15px;
     border-radius:3px;
@@ -398,7 +399,7 @@ header{
     border: none;
     background: transparent;
     text-align: center;
-    border-bottom: 3px solid $primary;
+    border-bottom: 3px solid brand-colors.$primary;
     font-family: $MiaGroteskLight;
     -webkit-appearance: none;
     -webkit-border-radius: 0;
@@ -415,8 +416,8 @@ header{
 }
 
 .mdl-textfield__input {
-    color:$primary;
-    border-color:$primary;
+    color:brand-colors.$primary;
+    border-color:brand-colors.$primary;
     border-width:0 0 3px 0;
     padding:0.5em;
     text-align:center;
@@ -424,7 +425,7 @@ header{
 
 .objectTotal {
     top:0;
-    color:$primary;
+    color:brand-colors.$primary;
 }
 .numbers {
   font-family: $MiaGroteskBold;
@@ -433,23 +434,23 @@ header{
   font-size: .9em;
 }
 ::-webkit-input-placeholder {
-   color: $support;
+   color: brand-colors.$support;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   color: $support;
+   color: brand-colors.$support;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: $support;
+   color: brand-colors.$support;
 }
 
 :-ms-input-placeholder {
-   color: $support;
+   color: brand-colors.$support;
 }
 /* ===== TOOLBAR STYLES ===== */
 .toolbar {
-  background: $primary;
+  background: brand-colors.$primary;
 }
 .filter-button {
   border: 3px solid #ffffff;
@@ -756,7 +757,7 @@ a.departmentLink h2{
 }
 .departmentBlurb .button {
   padding: 5px 15px;
-  background: $primary;
+  background: brand-colors.$primary;
   color: white;
 }
 .quilt-wrap .lazy-load {
@@ -765,7 +766,7 @@ a.departmentLink h2{
 }
 /* ===== CURATOR PROFILES ===== */
 #curators a {
-  color: $primary;
+  color: brand-colors.$primary;
 }
 #curators a:hover {
   opacity:.7;
@@ -1042,7 +1043,7 @@ $transitionOut: .3s 0;
   }
 }
 h5.details-title {
-    border-top:3px solid $primary;
+    border-top:3px solid brand-colors.$primary;
     margin-top:1em;
     margin-bottom:0.5em;
     padding-top:3px;
@@ -1058,7 +1059,7 @@ h5.details-title {
 .new-to-mia {
   display: inline-block;
   width: 100%;
-  background: $primary;
+  background: brand-colors.$primary;
   padding-top: 3em;
   color: white; // $support;
   min-height: 100vh;
@@ -1081,7 +1082,7 @@ h5.details-title {
   height: 3.3em;
   display: inline-block;
   width: 100%;
-  background: $primary;
+  background: brand-colors.$primary;
   position: fixed
 }
 .explore {
@@ -1118,7 +1119,7 @@ h5.details-title {
 }
 .explore .adopt-ptg a {
   font-size:.9em;
-  color: $primary;
+  color: brand-colors.$primary;
   font-family: $MiaGroteskRegular, sans-serif;
   position: relative;
   left:0;
@@ -1126,7 +1127,7 @@ h5.details-title {
 }
 .explore .adopt-ptg a i {
   font-size:.9em;
-  color: $primary;
+  color: brand-colors.$primary;
   position: relative;
   top: 2px;
 }
@@ -1187,19 +1188,19 @@ h5.details-title {
 }
 
 .objects-page-icon{
-    border:3px solid $primary;
+    border:3px solid brand-colors.$primary;
     border-radius: 5px;
     background-image:url('../images/ic_remove_red_eye_black_24px.svg');
     width:32px;
     height:32px;
-    color:$primary;
+    color:brand-colors.$primary;
     background-size:cover;
     margin-bottom:3px;
     cursor: hand;
  }
 
  .peek a {
-   color: $primary;
+   color: brand-colors.$primary;
  }
 
 button.material-icons {
@@ -1248,7 +1249,7 @@ button.material-icons {
     margin: 0;
     margin-top:2em;
     line-height: 1em;
-    border-top:3px solid $primary;
+    border-top:3px solid brand-colors.$primary;
     padding-top:5px;
 }
 .pageText h3{
@@ -1259,7 +1260,7 @@ button.material-icons {
     margin-top:2em;
     line-height: 1em;
     font-family: $MiaGroteskBold, sans-serif;
-    border-top:1px solid $primary;
+    border-top:1px solid brand-colors.$primary;
     padding-top:5px;
 }
 
@@ -1297,10 +1298,10 @@ button.material-icons {
     padding:7px 0;
     width:100%;
     display:block;
-    border-top:3px solid $primary;
+    border-top:3px solid brand-colors.$primary;
     font-family: $MiaGroteskBold, sans-serif;
     font-size:1.5em;
-    color:$primary;
+    color:brand-colors.$primary;
     -webkit-transition: all 150ms linear;
     -moz-transition: all 150ms linear;
     -ms-transition: all 150ms linear;
@@ -1308,7 +1309,7 @@ button.material-icons {
     transition: all 150ms linear;
 }
 .landingPageBody .info li a:hover, .departmentLink:hover h2, .departmentLink.isActive h2 {
-    background-color:$primary;
+    background-color:brand-colors.$primary;
     color:white;
     padding: 0 10px;
 }
@@ -1334,7 +1335,7 @@ hr{margin:0;}
 }
 
 .peek > .peek{
-    background-color:$primary;
+    background-color:brand-colors.$primary;
     margin-bottom:-1px;
 }
 
@@ -1355,7 +1356,7 @@ hr{margin:0;}
 }
 
 .peek .more-results-link{
-    color:$support;
+    color:brand-colors.$support;
     font-family:$MiaGroteskBold;
     text-align:right;
     display:inline-block;
@@ -1552,7 +1553,7 @@ hr{margin:0;}
   z-index: 5;
   position: relative;
   top: 3.3em;
-  background: $primary;
+  background: brand-colors.$primary;
 }
 ul.nav_list li {
   display: inline-block;
@@ -1579,7 +1580,7 @@ ul.nav_list li {
     padding: 9px 15px;
     margin-top: 4px;
     background: white;
-    color: $primary;
+    color: brand-colors.$primary;
     text-align: center;
 }
 .nav_item a {
@@ -1595,7 +1596,7 @@ ul.nav_list li {
   border-bottom: 4px solid white;
 }
 .nav_item.button a {
-  color: $primary;
+  color: brand-colors.$primary;
 }
 .nav_item.button:hover a {
   color: white;
@@ -1636,7 +1637,7 @@ ul.nav_list li {
     padding: 9px 15px;
     margin-top: 4px;
     background: white;
-    color: $primary;
+    color: brand-colors.$primary;
 }
 
 
