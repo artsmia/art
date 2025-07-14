@@ -1,4 +1,4 @@
-/*New to Mia page Peek text overwrite*/
+/*New to Mia page Peek verwrite*/
 [data-peek-type] > div > div > a[href*="/search/"] {
   position: relative;
   display: flex;
@@ -21,4 +21,8 @@
 
 .more-results-link {
   margin-left: auto;
+}
+
+body:has(.new-to-mia) {
+  background-color: #232323 !important;
 }
