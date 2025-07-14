@@ -153,7 +153,7 @@ var RecentAccessions = React.createClass({
           />
           </div>
 
-          <h2 style={{ paddingTop: "3em" }}>All Recent Accessions</h2>
+          <h2 style={{ paddingTop: "3em" }}> Recent Accessions</h2>
           <div data-peek-type="recent">
           <Peek
             facet="recent"
