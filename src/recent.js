@@ -144,13 +144,17 @@ var RecentAccessions = React.createClass({
       <div className="new-to-mia">
         <div className="explore-section">
           <h2>Accession Highlights</h2>
+          <div data-peek-type="highlights">
           <Peek
             facet="highlights"
             q="1"
             filtered={true}
             quiltProps={{ maxRowHeight: 600 }}
           />
+          </div>
+
           <h2 style={{ paddingTop: "3em" }}>All Recent Accessions</h2>
+          <div data-peek-type="recent">
           <Peek
             facet="recent"
             q="1"
@@ -158,6 +162,7 @@ var RecentAccessions = React.createClass({
             quiltProps={{ maxRowHeight: 600 }}
             shuffleQuilt={true}
           />
+        </div>
         </div>
         <Helmet title="New to Mia - Acquisition Highlights" />
       </div>

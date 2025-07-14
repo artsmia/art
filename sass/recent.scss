@@ -1,0 +1,24 @@
+/*New to Mia page Peek text overwrite*/
+[data-peek-type] > div > div > a[href*="/search/"] {
+  position: relative;
+  display: flex;
+  white-space: nowrap;
+}
+
+[data-peek-type] > div > div > a[href*="/search/"] span:nth-child(3) {
+  display: none;
+}
+
+[data-peek-type="highlights"] > div > div > a[href*="/search/"]::after {
+  content: "Accession Highlights";
+  margin-left: 0.07em;
+}
+
+[data-peek-type="recent"] > div > div > a[href*="/search/"]::after {
+  content: "Recent Accessions";
+  margin-left: 0.07em;
+}
+
+.more-results-link {
+  margin-left: auto;
+}
