@@ -20,7 +20,7 @@ var SearchResultsList = React.createClass({
     if (!focusedResult) leftColumnWidth = "100%";
 
     var results = this.props.hits.map((hit) => {
-      var id = hit._source.id.replace("http://api.artsmia.org/objects/", "");
+      var id = String(hit._source.id || "").replace("http://api.artsmia.org/objects/", "");
       var focused = focusedResult === hit._source;
       return (
         <div
