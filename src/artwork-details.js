@@ -127,7 +127,7 @@ var ArtworkDetails = React.createClass({
 
             return [
     <div>
-      {(art.dimension || "").split(/\r?\n/).map((line, index) => {
+      {(String(art.dimension || "")).split(/\r?\n/).map((line, index) => {
         var match = this.dimensions().find(([d]) => line.includes(d));
         if (match) {
           var [, aspect] = match;
