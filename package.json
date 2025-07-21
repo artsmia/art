@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run watch\" \"npm run watchSass\" \"npm run serve\"",
-    "watch": "watchify index.js -p livereactload -o bundle.js -dv",
+    "watch": "watchify index.js -o bundle.js -dv",
     "watchSass": "sass --watch sass/main.scss css/main.css",
     "serve": "serve . --single -p 1314",
     "build-js": "NODE_ENV=production browserify index.js | uglifyjs -c -m | sed 's|http://localhost:4680|https://search.artsmia.org|'> bundle.js",
