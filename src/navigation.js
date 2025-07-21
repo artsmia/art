@@ -14,9 +14,9 @@ var GlobalNavigation = React.createClass({
     { navItem: "About", link: "https://new.artsmia.org/about/" },
   ],
   quicknav: [
-    { navItem: "tickets", link: "https://artsmia.org/donate" },
+    { navItem: "tickets", link: "https://tickets.artsmia.org/events" },
     { navItem: "calendar", link: "https://new.artsmia.org/visit/calendar/" },
-    { navItem: "donate", link: "https://artsmia.org/donate" },
+    { navItem: "donate", link: "https://tickets.artsmia.org/events?category=Donation" },
   ],
   render() {
     var { smallViewport } = this.context;
