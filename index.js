@@ -40,11 +40,9 @@ Router.HistoryLocation.getCurrentPath = function getCurrentPath() {
 Router.run(routes, Router.HistoryLocation, (Handler, state) => {
   if (trackAnalytics) Fathom.trackPageview();
   window.privilegedClientIP = true;
-
-  var rehydratedData = window.__DATA__;
   window.__DATA__ = null;
 
-  fetchComponentData(state, rehydratedData).then((data) => {
+  fetchComponentData(state).then((data) => {
     ReactDOM.render(
       <Handler {...state} data={data} />,
       document.querySelector("#app")
