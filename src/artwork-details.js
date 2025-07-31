@@ -343,7 +343,7 @@ var ArtworkDetails = React.createClass({
           });
 
           return also && also.length > 0
-            ? [alsoLink, <Peek facet="see_also" q={raw.id} />]
+            ? [alsoLink, <Peek facet="see_also"  q={also.join(',')} />]
             : [];
         },
       ],
