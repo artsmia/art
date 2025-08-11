@@ -321,30 +321,24 @@ var ArtworkDetails = React.createClass({
         },
       ],
       [
-        "see_also",
+"see_also",
         (art, raw) => {
-          var also =
-            raw.see_also &&
-            raw.see_also.filter((id) => id !== "" && id !== raw.id);
+          // Accept string or array from backend
+          var seeAlso = raw.see_also;
+          var also = Array.isArray(seeAlso)
+            ? seeAlso
+            : (typeof seeAlso === "string" ? seeAlso.split(",") : []);
+          also = also
+            .map(id => String(id).trim())
+            .filter(id => id && String(id) !== String(raw.id));
 
-          if (!also) return [];
+          if (!also.length) return [];
 
-          var alsoString = `${also.length} other artwork${
-            also.length > 1 ? "s" : ""
-          }`;
-          var alsoLink = (
-            <a href={`/search/ids/${raw.see_also.join(",")}`}>{alsoString}</a>
-          );
+          var alsoString = `${also.length} other artwork${also.length > 1 ? "s" : ""}`;
+          var alsoLink = <a href={`/search/ids/${also.join(",")}`}>{alsoString}</a>;
 
-          console.info("artwork details see_also", {
-            also,
-            alsoString,
-            rawSeeA: raw.see_also,
-          });
-
-          return also && also.length > 0
-            ? [alsoLink, <Peek facet="see_also"  q={also.join(',')} />]
-            : [];
+          //pass a string (raw.id) into peek
+          return [alsoLink, <Peek facet="see_also" q={String(raw.id)} />];
         },
       ],
       [
