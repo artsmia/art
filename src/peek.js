@@ -87,10 +87,22 @@ var Peek = React.createClass({
 
     var queryString = decodeURIComponent(this.state.facetedQ);
     var humanLanguage = searchLanguageMap(queryString);
+    var label = "";
+    if (this.props.filtered && this.state.facet) {
+      if (this.state.facet === "recent") {
+        label = "Recent Accessions";
+      } else if (this.state.facet === "highlights") {
+        label = "Accession Highlights";
+      } else {
+        label = this.state.facet;
+      }
+    } else {
+      label = `${this.state.query} ${
+        this.state.facet ? "(" + this.state.facet + ")" : ""
+      }`;
+    }
     var searchExplanation =
-      humanLanguage !== queryString
-        ? humanLanguage
-        : `${this.state.query} ${this.state.facet && `(${this.state.facet})`}`;
+      humanLanguage !== queryString ? humanLanguage : label;
 
     var style = this.props.style || {};
 
@@ -117,7 +129,7 @@ var Peek = React.createClass({
         })}
         style={{ cursor: "pointer", ...style }}
       >
-        {this.props.children && (
+        {this.props.children && ( 
           <i>
             <span itemProp={microdata ? "name" : ""}>{peekText}</span>
             {!this.props.universal && showIcon && icon}
