@@ -28,34 +28,33 @@ var Search = React.createClass({
     const q = new URLSearchParams(location.search).get("q");
     if (!this.props.data || !this.props.data.searchResults) {
       if (q) {
-      window.location = `/search/${encodeURIComponent(q)}`;
-      return;
+        window.location = `/search/${encodeURIComponent(q)}`;
+        return;
+      }
+      return {
+        results: { hits: { hits: [] } },
+        terms: "",
+        hits: [],
+        showAggs: this.props.showAggs,
+        blank: this.props.blank,
+      };
     }
+
+    const blank = this.props.blank;
+    const results = this.props.results || this.props.data.searchResults;
+
     return {
-      results: { hits: { hits: [] } },
-      terms: "",
-      hits: [],
+      results: results,
+      terms: blank
+        ? ""
+        : this.props.params &&
+          this.props.params.terms &&
+          decodeURIComponent(this.props.params.terms),
+      hits: Array.isArray(results)
+        ? results
+        : (results && results.hits && results.hits.hits) || [],
       showAggs: this.props.showAggs,
       blank: this.props.blank,
-    };
-  }
-
-  const blank = this.props.blank;
-  const results =
-  this.props.results || this.props.data.searchResults;
-
-  return {
-    results: results,
-    terms: blank
-      ? ""
-      : this.props.params &&
-        this.props.params.terms &&
-        decodeURIComponent(this.props.params.terms),
-    hits: Array.isArray(results)
-      ? results
-      : (results && results.hits && results.hits.hits) || [],
-    showAggs: this.props.showAggs,
-    blank: this.props.blank,
     };
   },
 
