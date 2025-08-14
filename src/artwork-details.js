@@ -321,7 +321,7 @@ var ArtworkDetails = React.createClass({
         },
       ],
       [
-"see_also",
+        "see_also",
         (art, raw) => {
           // Accept string or array from backend
           var seeAlso = raw.see_also;
