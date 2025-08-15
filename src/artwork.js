@@ -160,6 +160,7 @@ var Artwork = React.createClass({
         ref="map"
         id="map"
         style={mapStyle}
+        className="leaflet-container"
       >
         {this.state.has3d && (
           <SketchfabEmbed model={this.state.has3d} show={this.state.show3d} />
