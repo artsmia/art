@@ -110,7 +110,7 @@ var ArtworkDetails = React.createClass({
         art.artist.replace(/^([^;]+):/, "")
       ),
       this.buildPeekableDetail("nationality"),
-      ['artist_life', (art) => [art.life_date || '']],
+      ["artist_life", (art) => [art.life_date || ""]],
       [
         "role",
         (_, raw) => {
@@ -120,46 +120,50 @@ var ArtworkDetails = React.createClass({
       ],
       ["gallery", (art, raw) => [art.room, <Peek facet="room" q={raw.room} />]],
       this.buildPeekableDetail("department"),
-      ["dimension",
+      [
+        "dimension",
         (art, rawArt) => {
           var showFancyDimension =
             art.dimension && this.dimensions().length > 0;
 
-            return [
-    <div>
-      {(art.dimension || "").split(/\r?\n/).map((line, index) => {
-        var match = this.dimensions().find(([d]) => line.includes(d));
-        if (match) {
-          var [, aspect] = match;
-          return (
-            <span
-              key={index}
-              style={{ display: "block" }}
-              onMouseEnter={this.toggleDimensionGraphic.bind(this, aspect)}
-            >
-              {line}
-            </span>
-          );
-        }
-        return (
-          <span key={index} style={{ display: "block" }}>
-            {line}
-          </span>
-        );
-      })}
-    </div>,
-    showFancyDimension && (
-      <div>
-        {rawArt.dimension.match(/cm/) && (
-          <Isvg
-            src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
-            key={this.state.dimensionGraphicName}
-            onLoad={this.dimensionSvgLoaded}
-          />
-        )}
-      </div>
-    )
-  ];
+          return [
+            <div>
+              {(art.dimension || "").split(/\r?\n/).map((line, index) => {
+                var match = this.dimensions().find(([d]) => line.includes(d));
+                if (match) {
+                  var [, aspect] = match;
+                  return (
+                    <span
+                      key={index}
+                      style={{ display: "block" }}
+                      onMouseEnter={this.toggleDimensionGraphic.bind(
+                        this,
+                        aspect
+                      )}
+                    >
+                      {line}
+                    </span>
+                  );
+                }
+                return (
+                  <span key={index} style={{ display: "block" }}>
+                    {line}
+                  </span>
+                );
+              })}
+            </div>,
+            showFancyDimension && (
+              <div>
+                {rawArt.dimension.match(/cm/) && (
+                  <Isvg
+                    src={dimensionSvg(art.id, this.state.dimensionGraphicName)}
+                    key={this.state.dimensionGraphicName}
+                    onLoad={this.dimensionSvgLoaded}
+                  />
+                )}
+              </div>
+            ),
+          ];
         },
       ],
       [
@@ -272,7 +276,11 @@ var ArtworkDetails = React.createClass({
                   &#123;&#123;cite web |title={art.title}{" "}
                   |url=https://collections.artsmia.org/art/{art.id} |author=
                   {art.artist} |year={art.dated} |accessdate=
-                  {new Date().toUTCString().split(" ").slice(1, 4).join(" ")}{" "}
+                  {new Date()
+                    .toUTCString()
+                    .split(" ")
+                    .slice(1, 4)
+                    .join(" ")}{" "}
                   |publisher=Minneapolis Institute of Art&#125;&#125;
                 </code>
               </ClickToSelect>
@@ -325,18 +333,28 @@ var ArtworkDetails = React.createClass({
         (art, raw) => {
           // Accept string or array from backend
           var seeAlso = raw.see_also;
-          var also = Array.isArray(seeAlso)
-            ? seeAlso
-            : (typeof seeAlso === "string" ? seeAlso.split(",") : []);
+          let also = [];
+          if (Array.isArray(raw.see_also)) {
+            also = raw.see_also;
+          } else if (typeof raw.see_also === "string") {
+            also = raw.see_also.split(",");
+          }
           also = also
-            .map(id => String(id).trim())
-            .filter(id => id && String(id) !== String(raw.id));
+            .map((id) => String(id).trim())
+            .filter((id) => id && String(id) !== String(raw.id));
 
-          if (!also.length) return [];
+          if (!also.length) {
+            return [];
+          }
 
-          var alsoString = `${also.length} other artwork${also.length > 1 ? "s" : ""}`;
-          var alsoLink = <a href={`/search/ids/${also.join(",")}`}>{alsoString}</a>;
-
+          var alsoString = `${also.length} other artwork${
+            also.length > 1 ? "s" : ""
+          }`;
+          var alsoLink = (
+            <a href={`/search/ids/${encodeURIComponent(also.join(","))}`}>
+              {alsoString}
+            </a>
+          );
           //pass a string (raw.id) into peek
           return [alsoLink, <Peek facet="see_also" q={String(raw.id)} />];
         },
@@ -414,11 +432,12 @@ var ArtworkDetails = React.createClass({
             currentUrl
           );
 
-          var curatorMessage =
-            `Object information is subject to revision and enhancement based on ongoing research and review. If you notice an error or have additional information about this object, please contact collectionsdata@artsmia.org.`
+          var curatorMessage = `Object information is subject to revision and enhancement based on ongoing research and review. If you notice an error or have additional information about this object, please contact collectionsdata@artsmia.org.`;
           var imageMessage = `Does something look wrong with this image? ${imageSender}`;
 
-          return [<Markdown>{curatorMessage + "\n\n" + imageMessage}</Markdown>];
+          return [
+            <Markdown>{curatorMessage + "\n\n" + imageMessage}</Markdown>,
+          ];
         },
       ],
     ];
