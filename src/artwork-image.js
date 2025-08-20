@@ -41,14 +41,16 @@ var ArtworkImage = React.createClass({
       showImage && (
         <div className="artwork-image" style={containerStyle}>
           {image}
-          <Markdown>{art.image_copyright}</Markdown>
+          <Markdown allowAnchors={this.props.allowAnchors}>
+            {art.image_copyright}
+          </Markdown>
         </div>
       )
     );
   },
 
   getDefaultProps() {
-    return { lazyLoad: true };
+    return { allowAnchors: true, lazyLoad: true };
   },
 });
 

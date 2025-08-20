@@ -73,7 +73,9 @@ var Peek = React.createClass({
           };
     var text =
       this.props.highlightedValue !== this.props.controlValue ? (
-        <Markdown tag="span">{this.props.highlightedValue}</Markdown>
+        <Markdown tag="span" allowAnchors={false}>
+          {this.props.highlightedValue}
+        </Markdown>
       ) : (
         this.props.children
       );
