@@ -67,8 +67,7 @@ const Image = React.createClass({
   },
 
   imageURL() {
-  return imageCDN(this.props.art, 800);
-
+    return imageCDN(this.props.art, 800);
   },
 
   componentWillReceiveProps(nextProps) {
