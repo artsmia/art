@@ -1,0 +1,22 @@
+// Align "Headings" to the left of the peek
+.new-to-mia  h2 {
+  padding-left: 140px !important;
+  margin-bottom: 1rem !important; 
+}
+
+// Align results link to left of the peek
+.new-to-mia .peek > div > a {
+  padding-left: 140px !important; 
+}
+
+// Align View more results link to right of the peek
+.new-to-mia .more-results-link {
+  padding-right: 140px !important;  
+}
+
+// Flexbox solution to compress peek
+.new-to-mia .quilt-row-wrap {
+  padding-left: 140px !important;
+  padding-right: 140px !important;
+}
+

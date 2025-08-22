@@ -15,6 +15,15 @@ var Markdown = require("./markdown");
 var ArtworkImage = require("./artwork-image");
 
 var RecentAccessions = React.createClass({
+
+componentDidMount() {
+  // Wait for browser to finish rendering, then trigger resize
+  window.requestAnimationFrame(() => {
+    window.dispatchEvent(new Event('resize'));
+  });
+},
+
+
   statics: {
     fetchData: {
       searchResults: (params, query) =>
@@ -144,19 +153,19 @@ var RecentAccessions = React.createClass({
       <div className="new-to-mia">
         <div className="explore-section">
           <h2>Accession Highlights</h2>
- <Peek
-            facet="highlights"
+          <Peek
+           facet="highlights"
             q="1"
             filtered={true}
-            quiltProps={{ maxRowHeight: 600 }}
+            quiltProps={{ maxRowHeight: 200, maxWorks: 7 }}
           />
-          <h2 style={{ paddingTop: "3em" }}>Recent Accessions</h2>
+          <h2>Recent Accessions</h2>
           <Peek
             facet="recent"
             q="1"
             filtered={true}
-            quiltProps={{ maxRowHeight: 600 }}
-            shuffleQuilt={true}
+            quiltProps={{ maxRowHeight: 200, maxWorks: 7 }}
+            
           />
         </div>
         <Helmet title="New to Mia - Acquisition Highlights" />
