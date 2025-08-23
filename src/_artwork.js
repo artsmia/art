@@ -242,7 +242,7 @@ var CopyableLabel = React.createClass({
 var testCloudfrontImage = (art, callback) => {
   var rights = rightsDescriptions.getRights(art);
   var downloadFullRes = art.rights_type === "Public Domain";
-  var cdnUrl = imageCDN(art.id, !downloadFullRes ? 800 : "full");
+  const cdnUrl = imageCDN(art, !downloadFullRes ? 800 : "full");
 
   if (typeof document == "undefined") {
     // we're currently server-rendered
@@ -251,12 +251,7 @@ var testCloudfrontImage = (art, callback) => {
 
   var i = document.createElement("img");
   i.onload = () => callback(cdnUrl);
-  i.onerror = () =>
-    callback(
-      `https://api.artsmia.org/images/${art.id}/${
-        art.restricted ? "400/medium.jpg" : "800/large.jpg"
-      }`
-    );
+  i.onerror = () => callback(imageCDN(art, 800));
   i.src = cdnUrl;
 };
 
