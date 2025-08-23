@@ -4,7 +4,6 @@
  * @param {object} art
  * @param {'full' | 400 | 800} size
  */
-
 function imageCDN(art, size = 800) {
   var baseUrl = "https://img.artsmia.org/web_objects_cache/";
 
