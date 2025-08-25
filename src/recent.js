@@ -15,23 +15,23 @@ var Markdown = require("./markdown");
 var ArtworkImage = require("./artwork-image");
 
 var RecentAccessions = React.createClass({
-
-componentDidMount() {
-  // Wait for browser to finish rendering, then trigger resize
-  window.requestAnimationFrame(() => {
-    window.dispatchEvent(new Event('resize'));
-  });
-},
-
+  componentDidMount() {
+    // Wait for browser to finish rendering, then trigger resize
+    window.requestAnimationFrame(() => {
+      window.dispatchEvent(new Event("resize"));
+    });
+  },
 
   statics: {
     fetchData: {
       searchResults: (params, query) =>
-        rest(`${SEARCH}/search?filters=recent:1`).then((r) => JSON.parse(r.entity)),
-      accessionHighlights: (params, query) =>
-        rest(`${SEARCH}/search?filters=highlights:1&sort=accessionDate-desc`).then(
-          (r) => JSON.parse(r.entity)
+        rest(`${SEARCH}/search?filters=recent:1`).then((r) =>
+          JSON.parse(r.entity)
         ),
+      accessionHighlights: (params, query) =>
+        rest(
+          `${SEARCH}/search?filters=highlights:1&sort=accessionDate-desc`
+        ).then((r) => JSON.parse(r.entity)),
     },
   },
 
@@ -46,9 +46,11 @@ componentDidMount() {
           ) == -1
       );
     var groupedByDate = R.groupBy((h) => {
-      const accessionNumberYear = (h.accession_number || "").split(".")[0] || "Unknown";
+      const accessionNumberYear =
+        (h.accession_number || "").split(".")[0] || "Unknown";
       // This was needed to group accessions by quarter, but we are using year now so fall back to the accesion number
-      const accessionDateYear = (h.accessionDate || "").split("-")[0] || "Unknown";
+      const accessionDateYear =
+        (h.accessionDate || "").split("-")[0] || "Unknown";
       const date = accessionNumberYear;
       return date == 2107 ? 2017 : date;
     }, artworks); // {<date>: [<highlights>], …}
@@ -139,7 +141,7 @@ componentDidMount() {
                           </div>
                         </Link>
                       </div>
-                    ); 
+                    );
                   })}
               </div>
             );
@@ -154,18 +156,17 @@ componentDidMount() {
         <div className="explore-section">
           <h2>Accession Highlights</h2>
           <Peek
-           facet="highlights"
+            facet="highlights"
             q="1"
             filtered={true}
-            quiltProps={{ maxRowHeight: 200, maxWorks: 7 }}
+            quiltProps={{ maxWorks: 6 }}
           />
           <h2>Recent Accessions</h2>
           <Peek
             facet="recent"
             q="1"
             filtered={true}
-            quiltProps={{ maxRowHeight: 200, maxWorks: 7 }}
-            
+            quiltProps={{ maxWorks: 6 }}
           />
         </div>
         <Helmet title="New to Mia - Acquisition Highlights" />
