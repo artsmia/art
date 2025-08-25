@@ -25,7 +25,6 @@ const Image = React.createClass({
     };
 
     var url = this.imageURL();
-    if (art.image_url) ignoreStyle = true;
 
     const _style = {
       ...(ignoreStyle ? { maxWidth: "100%", maxHeight: "69vh" } : style),
@@ -68,40 +67,7 @@ const Image = React.createClass({
   },
 
   imageURL() {
-    var { customImage, size, showLink } = this.props;
-    var { id, image_url } = this.props.art;
-
-    if (image_url) return image_url;
-
-    // This watches out for the image to fail ONCE, then swaps in
-    // the 400px IIIF thumbnail
-    // TODO: cascade from customImage -> S3 -> api.artsmia.org?
-    const binaryFailImageUrl = this.state.skipCDN
-      ? `https://iiif.dx.artsmia.org/${id}.jpg/full/400,/0/default.jpg`
-      : customImage
-      ? customImage(id)
-      : imageCDN(id, size || showLink ? undefined : 800);
-
-    // do this by tracking when a URL fails to load in this.state.failedLoads `[]`
-    // (variable might need a re-name)
-    // and checking that state against the image to be loaded here.
-    // Options:
-    // customImage by function
-    // S3 thumbnail
-    // IIIF thumbnail
-    // non-existent image that will trigger the `error` state
-    const imageCandidates = [
-      customImage ? customImage(id) : null,
-      imageCDN(id, size || showLink ? undefined : 800),
-      // `https://iiif.dx.artsmia.org/${id}.jpg/-1,-1,800,800/800,/0/default.jpg`,
-      `https://iiif.dx.artsmia.org/${id}.jpg/full/800,/0/default.jpg`,
-      "http://0.api.artsmia.org/null.jpg",
-    ].filter((url) => url);
-    const firstUnFailedImageUrl = imageCandidates.find(
-      (url) => (this.state.failedLoads || []).indexOf(url) < 0
-    );
-
-    return firstUnFailedImageUrl;
+    return imageCDN(this.props.art, 800);
   },
 
   componentWillReceiveProps(nextProps) {

@@ -25,25 +25,23 @@ var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
   getInitialState() {
-    if (!this.props.data.searchResults) {
-      if (typeof window !== "undefined") {
-        const q = new URLSearchParams(location.search).get("q");
-        if (q) {
-          window.location = `/search/${q}`;
-          return;
-        }
+    const q = new URLSearchParams(location.search).get("q");
+    if (!this.props.data || !this.props.data.searchResults) {
+      if (q) {
+        window.location = `/search/${encodeURIComponent(q)}`;
+        return;
       }
-
-      this.transitionTo("home");
-      return;
+      return {
+        results: { hits: { hits: [] } },
+        terms: "",
+        hits: [],
+        showAggs: this.props.showAggs,
+        blank: this.props.blank,
+      };
     }
 
-    const { blank } = this.props;
-    const results =
-      this.props.results ||
-      (this.props.data && this.props.data.searchResults) ||
-      [];
-    results || this.props.blank || this.transitionTo("home");
+    const blank = this.props.blank;
+    const results = this.props.results || this.props.data.searchResults;
 
     return {
       results: results,
@@ -52,7 +50,9 @@ var Search = React.createClass({
         : this.props.params &&
           this.props.params.terms &&
           decodeURIComponent(this.props.params.terms),
-      hits: (results && results.hits && results.hits.hits) || [],
+      hits: Array.isArray(results)
+        ? results
+        : (results && results.hits && results.hits.hits) || [],
       showAggs: this.props.showAggs,
       blank: this.props.blank,
     };
