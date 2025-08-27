@@ -498,10 +498,10 @@ Figure.contextTypes = {
 
 var slug = (art) => {
   var creator = Creator.getFacetAndValue(art)[1];
-  var string = [
-    art.title.replace(/<[^ ]+?>/g, "").match(titleSegmentDelimiter)[1],
-    creator && creator.split(";")[0],
-  ]
+  var titleMatch = (art.title || "")
+    .replace(/<[^ ]+?>/g, "")
+    .match(titleSegmentDelimiter);
+  var string = [titleMatch && titleMatch[1], creator && creator.split(";")[0]]
     .filter((e) => e)
     .join(" ")
     .replace(/’|'/g, "")
