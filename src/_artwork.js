@@ -41,17 +41,19 @@ var Title = React.createClass({
   render() {
     var { art, link, highlights } = this.props;
     var _title = highlighter(art, highlights, "title");
-    var segmentedTitle = _title.replace(
-      titleSegmentDelimiter,
-      (segment) => `<strong>${segment}</strong>`
-    );
+    var segmentedTitle =
+      _title &&
+      _title.replace(
+        titleSegmentDelimiter,
+        (segment) => `<strong>${segment}</strong>`
+      );
 
-    var title = <Markdown tag="span">{segmentedTitle}</Markdown>;
-    var title = (
+    var title = segmentedTitle ? (
       <h1 itemProp="name">
-        {title}, <span className="dated">{art.dated}</span>
+        <Markdown tag="span">{segmentedTitle}</Markdown>
+        {art.dated && <span className="dated">, {art.dated}</span>}
       </h1>
-    );
+    ) : null;
 
     return (
       <ConditionalLinkWrapper {...this.props}>{title}</ConditionalLinkWrapper>
