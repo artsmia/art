@@ -54,7 +54,9 @@ var Curators = React.createClass({
                     <div className="curator-intro">
                       <h4>{curator.name}</h4>
                       <h5>
-                        <Markdown>{curator.title}</Markdown>
+                        <Markdown allowAnchors={false}>
+                          {curator.title}
+                        </Markdown>
                       </h5>
                     </div>
                   </Link>

@@ -115,6 +115,7 @@ var RecentAccessions = React.createClass({
                           <div className="highlight_image">
                             <div className="highlight_content">
                               <ArtworkImage
+                                allowAnchors={false}
                                 art={highlight}
                                 ignoreStyle={false}
                                 style={{ maxWidth: "111%", maxHeight: "111%" }}
