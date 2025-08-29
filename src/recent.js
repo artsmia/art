@@ -153,15 +153,16 @@ var RecentAccessions = React.createClass({
   render() {
     return (
       <div className="new-to-mia">
+        <h1 className="page-title">New to Mia</h1>
         <div className="explore-section">
-          <h2>Accession Highlights</h2>
+          <h3>Accession Highlights</h3>
           <Peek
             facet="highlights"
             q="1"
             filtered={true}
             quiltProps={{ maxWorks: 6 }}
           />
-          <h2>Recent Accessions</h2>
+          <h3>Recent Accessions</h3>
           <Peek
             facet="recent"
             q="1"
