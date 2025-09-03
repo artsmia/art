@@ -153,7 +153,18 @@ var RecentAccessions = React.createClass({
   render() {
     return (
       <div className="new-to-mia">
-        <h1 className="page-title">New to Mia</h1>
+        <div className="header-image"></div>
+        <div className="explore-section container">
+          <h1 className="page-title">New to Mia</h1>
+          <p className="page-subtitle">
+            Our collection keeps growing as the world keeps changing. Whether
+            it’s a masterpiece by a celebrated artist, a contemporary work that
+            speaks to our times, or the creation of someone whose talents were
+            previously overlooked, Mia collects artworks that reflect the full
+            breadth of human creativity. Learn more about Mia’s collections
+            practice here.
+          </p>
+        </div>
         <div className="explore-section">
           <h3>Accession Highlights</h3>
           <Peek
