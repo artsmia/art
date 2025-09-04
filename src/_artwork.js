@@ -48,12 +48,17 @@ var Title = React.createClass({
         (segment) => `<strong>${segment}</strong>`
       );
 
-    var title = segmentedTitle ? (
-      <h1 itemProp="name">
-        <Markdown tag="span">{segmentedTitle}</Markdown>
-        {art.dated && <span className="dated">, {art.dated}</span>}
-      </h1>
-    ) : null;
+    var title;
+    if (segmentedTitle) {
+      title = (
+        <h1 itemProp="name">
+          <Markdown tag="span">{segmentedTitle}</Markdown>
+          {art.dated && <span className="dated">, {art.dated}</span>}
+        </h1>
+      );
+    } else {
+      title = null;
+    }
 
     return (
       <ConditionalLinkWrapper {...this.props}>{title}</ConditionalLinkWrapper>
