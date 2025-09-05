@@ -511,7 +511,10 @@ var slug = (art) => {
   var titleMatch = (art.title || "")
     .replace(/<[^ ]+?>/g, "")
     .match(titleSegmentDelimiter);
-  var string = [titleMatch && titleMatch[1], creator && creator.split(";")[0]]
+  var string = [
+    titleMatch ? titleMatch[1] : "",
+    creator ? creator.split(";")[0] : "",
+  ]
     .filter((e) => e)
     .join(" ")
     .replace(/’|'/g, "")
