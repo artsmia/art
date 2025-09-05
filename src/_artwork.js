@@ -52,7 +52,9 @@ var Title = React.createClass({
     if (segmentedTitle) {
       title = (
         <h1 itemProp="name">
-          <Markdown tag="span">{segmentedTitle}</Markdown>
+          <Markdown tag="span" allowAnchors={false}>
+            {segmentedTitle}
+          </Markdown>
           {art.dated && <span className="dated">, {art.dated}</span>}
         </h1>
       );
@@ -487,6 +489,7 @@ var Figure = React.createClass({
         <ConditionalLinkWrapper art={art} link={link}>
           <ArtworkImage
             art={art}
+            allowAnchors={false}
             id={id}
             lazyLoad={false}
             className="artwork-image"

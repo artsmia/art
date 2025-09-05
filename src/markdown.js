@@ -17,7 +17,18 @@ var Markdown = React.createClass({
     let Tag = this.props.tag || "div";
     let rendered = this.props.alreadyRendered ? content : marked(content);
     if (this.props.tag) rendered = rendered.replace(/<.?p>/g, "").trim();
-    return <Tag dangerouslySetInnerHTML={{ __html: rendered }}></Tag>;
+
+    if (!this.props.allowAnchors) {
+      // This component disallows anchors (probably because this element already
+      // appears inside an anchor).
+      rendered = rendered.replace(/<a [^>]+>/g, "").replace(/<\/a>/g, "");
+    }
+
+    return <Tag dangerouslySetInnerHTML={{ __html: rendered }} />;
+  },
+
+  getDefaultProps() {
+    return { allowAnchors: true };
   },
 });
 
