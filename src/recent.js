@@ -16,10 +16,109 @@ var ArtworkImage = require("./artwork-image");
 
 var RecentAccessions = React.createClass({
   componentDidMount() {
-    // Wait for browser to finish rendering, then trigger resize
-    window.requestAnimationFrame(() => {
+    // ensure layout math runs after initial paint
+    requestAnimationFrame(() => {
       window.dispatchEvent(new Event("resize"));
     });
+
+    // small delay so lazyload/quilt/images have settled
+    this.initialFixTimer = setTimeout(() => {
+      this.adjustQuiltRowLayout();
+    }, 100);
+
+    // re-run on load and on resize
+    window.addEventListener("load", this.adjustQuiltRowLayout);
+    window.addEventListener("resize", this.adjustQuiltRowLayout);
+  },
+
+  componentWillUnmount() {
+    clearTimeout(this.initialFixTimer);
+    window.removeEventListener("load", this.adjustQuiltRowLayout);
+    window.removeEventListener("resize", this.adjustQuiltRowLayout);
+  },
+
+  adjustQuiltRowLayout() {
+    const quiltRowSelector =
+      ".new-to-mia .explore-section .peek .quilt-row-wrap";
+    const minAspectRatio = 0.5;
+    const maxAspectRatio = 4;
+
+    try {
+      const quiltRows = document.querySelectorAll(quiltRowSelector);
+      if (!quiltRows.length) return;
+
+      const calculateAspectRatio = (img) => {
+        if (!img) return 1;
+        const rect = img.getBoundingClientRect();
+        const naturalW = img.naturalWidth || img.width || rect.width || 1;
+        const naturalH = img.naturalHeight || img.height || rect.height || 1;
+        const ratio = naturalW / naturalH;
+        return Math.max(minAspectRatio, Math.min(maxAspectRatio, ratio));
+      };
+
+      quiltRows.forEach((quiltRow) => {
+        // only use images that have fully loaded
+        const loadedImages = [...quiltRow.querySelectorAll("img")].filter(
+          (img) => img && img.complete
+        );
+        if (!loadedImages.length) return;
+
+        const totalAspectRatio = loadedImages.reduce(
+          (sum, img) => sum + calculateAspectRatio(img),
+          0
+        );
+        if (totalAspectRatio === 0) return;
+
+        const availableRowWidth = Math.round(quiltRow.clientWidth);
+        const calculatedRowHeight = availableRowWidth / totalAspectRatio;
+        const rowHeightPx = Math.round(calculatedRowHeight);
+
+        // row styles: no gaps; left-aligned; fixed height
+        Object.assign(quiltRow.style, {
+          minHeight: `${rowHeightPx}px`,
+          height: `${rowHeightPx}px`,
+          display: "flex",
+          gap: "0",
+          justifyContent: "flex-start",
+        });
+
+        // distribute widths; last tile gets the remainder
+        const artworkTiles = [...quiltRow.children];
+        let remainingWidth = availableRowWidth;
+
+        artworkTiles.forEach((tile, index) => {
+          const tileImage = tile.querySelector("img");
+          const imageAspectRatio = calculateAspectRatio(tileImage);
+
+          const tileWidth =
+            index === artworkTiles.length - 1
+              ? remainingWidth
+              : Math.round(imageAspectRatio * calculatedRowHeight);
+
+          Object.assign(tile.style, {
+            flex: "0 0 auto",
+            width: `${tileWidth}px`,
+            height: `${rowHeightPx}px`,
+            marginRight: "0",
+            paddingRight: "0",
+            boxSizing: "content-box",
+          });
+
+          if (tileImage) {
+            Object.assign(tileImage.style, {
+              width: "100%",
+              height: "100%",
+              objectFit: "contain", // keep original aspect; no crop
+              display: "block",
+            });
+          }
+
+          remainingWidth -= tileWidth;
+        });
+      });
+    } catch (error) {
+      console.warn("quilt row layout adjustment failed:", error);
+    }
   },
 
   statics: {
@@ -162,7 +261,11 @@ var RecentAccessions = React.createClass({
             speaks to our times, or the creation of someone whose talents were
             previously overlooked, Mia collects artworks that reflect the full
             breadth of human creativity. Learn more about Mia’s collections
-            practice here.
+            practice{" "}
+            <a href="https://new.artsmia.org/art-artists/managing-mias-collection">
+              here
+            </a>
+            .
           </p>
         </div>
         <div className="explore-section">
