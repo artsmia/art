@@ -18,23 +18,23 @@ var RecentAccessions = React.createClass({
   componentDidMount() {
     // ensure layout math runs after initial paint
     requestAnimationFrame(() => {
-      window.dispatchEvent(new Event("resize"));
+      +requestAnimationFrame(this.adjustQuiltRowLayout);
     });
 
     // small delay so lazyload/quilt/images have settled
-    this.initialFixTimer = setTimeout(() => {
-      this.adjustQuiltRowLayout();
-    }, 100);
+    this.initialFixTimer = setTimeout(this.adjustQuiltRowLayout, 100);
 
     // re-run on load and on resize
     window.addEventListener("load", this.adjustQuiltRowLayout);
     window.addEventListener("resize", this.adjustQuiltRowLayout);
+    window.addEventListener("peek", this.adjustQuiltRowLayout);
   },
 
   componentWillUnmount() {
     clearTimeout(this.initialFixTimer);
     window.removeEventListener("load", this.adjustQuiltRowLayout);
     window.removeEventListener("resize", this.adjustQuiltRowLayout);
+    window.removeEventListener("peek", this.adjustQuiltRowLayout);
   },
 
   adjustQuiltRowLayout() {
@@ -58,12 +58,19 @@ var RecentAccessions = React.createClass({
 
       quiltRows.forEach((quiltRow) => {
         // only use images that have fully loaded
-        const loadedImages = [...quiltRow.querySelectorAll("img")].filter(
-          (img) => img && img.complete
-        );
-        if (!loadedImages.length) return;
+        const imgs = Array.from(quiltRow.querySelectorAll("img"));
+        if (!imgs.length) return;
+        const pending = imgs.filter((img) => !img.complete);
+        if (pending.length) {
+          pending.forEach((img) =>
+            img.addEventListener("load", this.adjustQuiltRowLayout, {
+              once: true,
+            })
+          );
+          return;
+        }
 
-        const totalAspectRatio = loadedImages.reduce(
+        const totalAspectRatio = imgs.reduce(
           (sum, img) => sum + calculateAspectRatio(img),
           0
         );
