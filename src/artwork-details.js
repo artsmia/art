@@ -17,6 +17,7 @@ var {
 } = require("./rights-types.js");
 var feedbackSender = require("./email-data-sender");
 var _Artwork = require("./_artwork");
+var { parseAlternativeTitles } = require("./alt-title");
 
 var ArtworkDetails = React.createClass({
   build(field, fn) {
@@ -103,6 +104,24 @@ var ArtworkDetails = React.createClass({
         ],
       ],
       ["title"],
+      [
+        "alternative_title",
+        (art, raw) => {
+          const { altTitleFirst, state } = parseAlternativeTitles(raw.TitleAlt);
+          return state === "static" ? [altTitleFirst + ","] : [];
+        },
+      ],
+      [
+        "alternative_titles",
+        (art, raw) => {
+          const { altTitleFirst, altTitlesRest, state } = parseAlternativeTitles(raw.TitleAlt);
+          if (state !== "peekable") return [];
+          return [
+            <span>{altTitleFirst}<span className="comma-when-expanded">,</span></span>,
+            <div>{altTitlesRest.map((title, i) => <div key={i}>{title},</div>)}</div>
+          ];
+        },
+      ],
       this.buildPeekableDetail("dated"),
       this.buildPeekableDetail(
         "artist",
