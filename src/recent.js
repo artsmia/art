@@ -18,7 +18,7 @@ var RecentAccessions = React.createClass({
   componentDidMount() {
     // ensure layout math runs after initial paint
     requestAnimationFrame(() => {
-      +requestAnimationFrame(this.adjustQuiltRowLayout);
+      requestAnimationFrame(this.adjustQuiltRowLayout);
     });
 
     // small delay so lazyload/quilt/images have settled
@@ -264,13 +264,12 @@ var RecentAccessions = React.createClass({
           <h1 className="page-title">New to Mia</h1>
           <p className="page-subtitle">
             Our collection keeps growing as the world keeps changing. Whether
-            it’s a masterpiece by a celebrated artist, a contemporary work that
+            it's a masterpiece by a celebrated artist, a contemporary work that
             speaks to our times, or the creation of someone whose talents were
             previously overlooked, Mia collects artworks that reflect the full
-            breadth of human creativity. Learn more about Mia’s collections
-            practice{" "}
+            breadth of human creativity.{" "}
             <a href="https://new.artsmia.org/art-artists/managing-mias-collection">
-              here
+              Learn more about Mia's collections
             </a>
             .
           </p>

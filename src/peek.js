@@ -129,7 +129,7 @@ var Peek = React.createClass({
         })}
         style={{ cursor: "pointer", ...style }}
       >
-        {this.props.children && ( 
+        {this.props.children && (
           <i>
             <span itemProp={microdata ? "name" : ""}>{peekText}</span>
             {!this.props.universal && showIcon && icon}
@@ -271,6 +271,14 @@ var Peek = React.createClass({
       var url = relatedJson.link;
       if (url) return (window.location = url);
     }
+
+    // If an artwork was clicked, go directly to it instead of search results
+    const artworkId = art.id || (art._source && art._source.id);
+    if (artworkId) {
+      return this.transitionTo("artwork", { id: artworkId });
+    }
+
+    // Otherwise, navigate to search results
     this.props.filtered
       ? this.transitionTo("filteredSearchResults", {
           terms: "*",

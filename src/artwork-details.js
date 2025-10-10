@@ -136,7 +136,7 @@ var ArtworkDetails = React.createClass({
                     var [, aspect] = match;
                     return (
                       <span
-                        key={index}
+                        key={line}
                         style={{ display: "block" }}
                         onMouseEnter={this.toggleDimensionGraphic.bind(
                           this,
@@ -148,7 +148,7 @@ var ArtworkDetails = React.createClass({
                     );
                   }
                   return (
-                    <span key={index} style={{ display: "block" }}>
+                    <span key={line} style={{ display: "block" }}>
                       {line}
                     </span>
                   );
