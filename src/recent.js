@@ -269,7 +269,7 @@ var RecentAccessions = React.createClass({
             previously overlooked, Mia collects artworks that reflect the full
             breadth of human creativity.{" "}
             <a href="https://new.artsmia.org/art-artists/managing-mias-collection">
-              Learn more about Mia's collections
+              Learn more about Mia's collections practice
             </a>
             .
           </p>
