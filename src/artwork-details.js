@@ -123,6 +123,7 @@ var ArtworkDetails = React.createClass({
         },
       ],
       this.buildPeekableDetail("dated"),
+      this.buildPeekableDetail("dynasty"),
       this.buildPeekableDetail(
         "artist",
         this.props.art.life_date,
