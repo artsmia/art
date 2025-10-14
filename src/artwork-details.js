@@ -108,7 +108,7 @@ var ArtworkDetails = React.createClass({
         "alternative_title",
         (art, raw) => {
           const { altTitleFirst, state } = parseAlternativeTitles(raw.TitleAlt);
-          return state === "static" ? [altTitleFirst + ","] : [];
+          return state === "static" ? [altTitleFirst] : [];
         },
       ],
       [
