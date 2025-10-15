@@ -114,11 +114,19 @@ var ArtworkDetails = React.createClass({
       [
         "alternative_titles",
         (art, raw) => {
-          const { altTitleFirst, altTitlesRest, state } = parseAlternativeTitles(raw.TitleAlt);
+          const { altTitleFirst, altTitlesRest, state } =
+            parseAlternativeTitles(raw.TitleAlt);
           if (state !== "peekable") return [];
           return [
-            <span>{altTitleFirst}<span className="comma-when-expanded">,</span></span>,
-            <div>{altTitlesRest.map((title, i) => <div key={i}>{title},</div>)}</div>
+            <span>
+              {altTitleFirst}
+              <span className="comma-when-expanded">,</span>
+            </span>,
+            <div>
+              {altTitlesRest.map((title, i) => (
+                <div key={title}>{title},</div>
+              ))}
+            </div>,
           ];
         },
       ],
