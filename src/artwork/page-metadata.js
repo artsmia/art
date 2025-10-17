@@ -1,6 +1,7 @@
 var React = require("react");
 var Helmet = require("react-helmet");
 
+var SEARCH = require("../endpoints").search;
 var _Artwork = require("../_artwork");
 var imageCDN = require("../image-cdn");
 
@@ -41,7 +42,7 @@ module.exports = ({ art, noIndex, prependTitle }) => {
       ]}
       link={[
         { rel: "canonical", href: canonicalURL },
-        { rel: "prefetch", href: `https://search.artsmia.org/id/${art.id}` },
+        { rel: "prefetch", href: `${SEARCH}/id/${art.id}` },
         {
           rel: "prefetch",
           href: `https://iiif.dx.artsmia.org/${art.id}.jpg/info.json`,

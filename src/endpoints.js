@@ -1,7 +1,13 @@
 var protocol = (typeof window == "undefined" ? "http" : "https") + "://";
+
+function removeTrailingSlash(url) {
+  return url.replace(/\/$/, "");
+}
+
 module.exports = {
-  search: protocol + "search.artsmia.org",
-  // search: 'http://localhost:4680',
+  // NOTE: The build rewrites <SEARCH_ORIGIN> in bundle.js
+  search: removeTrailingSlash("<SEARCH_ORIGIN>"),
+
   info: "https://artsmia.github.io/collection-info/index.json",
   dimensionSvg: (id, file) =>
     `https://mia-dimensions.s3.amazonaws.com/${id}/${file || "dimensions"}.svg`,

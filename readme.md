@@ -1,4 +1,4 @@
-This is the code behind [Mia's collection website](http://collections.artsmia.org).
+This is the code behind [Mia's collection website](https://collections.artsmia.org).
 
 # Usage
 

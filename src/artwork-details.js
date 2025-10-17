@@ -6,6 +6,7 @@ var Isvg = require("react-inlinesvg");
 var cx = require("classnames");
 var ClickToSelect = require("@mapbox/react-click-to-select");
 
+var SEARCH = require("./endpoints").search;
 var Markdown = require("./markdown");
 var Peek = require("./peek");
 var dimensionSvg = require("./endpoints").dimensionSvg;
@@ -395,11 +396,11 @@ var ArtworkDetails = React.createClass({
             <Markdown>{message}</Markdown>,
             <div>
               <p>
-                <a href={`https://search.artsmia.org/id/${art.id}`}>
+                <a href={`${SEARCH}/id/${art.id}`}>
                   Access metadata though our search API
                 </a>{" "}
                 /{" "}
-                <a href={`https://search.artsmia.org/ids/${art.id}?format=csv`}>
+                <a href={`${SEARCH}/ids/${art.id}?format=csv`}>
                   Download as CSV
                 </a>
               </p>

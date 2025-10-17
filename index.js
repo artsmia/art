@@ -28,7 +28,7 @@ Router.HistoryLocation.__unpatched__getCurrentPath =
 Router.HistoryLocation.getCurrentPath = function getCurrentPath() {
   // re-write `pathname` to render even when this page is archived at the internet
   // archive…
-  var iaPathRegex = new RegExp("/web/[0-9]+/http://collections.artsmia.org");
+  var iaPathRegex = new RegExp("/web/[0-9]+/https://collections.artsmia.org");
   var pathnameWithoutWaybackPrefix = window.location.pathname.replace(
     iaPathRegex,
     ""
