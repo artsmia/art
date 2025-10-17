@@ -8,6 +8,7 @@ SEARCH_ORIGIN="${SEARCH_ORIGIN%/}"
 
 # Build bundle.js
 NODE_ENV=production browserify index.js \
-  | uglifyjs -c -m \
-  | sed "s|\<SEARCH_ORIGIN>|${SEARCH_ORIGIN}|g" \
+  | sed "s|<SEARCH_ORIGIN>|${SEARCH_ORIGIN}|g" \
   > bundle.js
+
+#  | uglifyjs -c -m \
