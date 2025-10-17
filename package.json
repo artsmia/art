@@ -11,7 +11,8 @@
     "serve": "serve . --single -p 1314",
     "build-js": "bash build.sh",
     "build-css": "sass sass/main.scss css/main.css",
-    "build": "npm run build-js && npm run build-css"
+    "build-clean-deploy": "rm -rf _stash foot-in-the-door sass src",
+    "build": "npm run build-js && npm run build-css && npm run build-clean-deploy"
   },
   "author": "",
   "license": "MIT",
