@@ -14,12 +14,12 @@ if (trackAnalytics)
     includedDomains: ["collections.artsmia.org"],
   });
 
-window.history &&
-  history.replaceState(
-    {},
-    "",
-    window.location.href.replace(/\/(.*)\/$/, "/$1")
-  );
+const url = new URL(window.location.href);
+if (url.pathname.length > 2 && url.pathname.endsWith("/")) {
+  url.pathname = url.pathname.substring(0, url.pathname.length - 1);
+  console.log(url.toString());
+  history.replaceState({}, "", url.toString());
+}
 
 // Patch react-router to render the correct pages even when they're archived
 // with a different URL at the internet archive
