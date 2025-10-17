@@ -16,7 +16,7 @@ module.exports = ({ art, noIndex, prependTitle }) => {
       .join(", ");
 
   var imageUrl = imageCDN(art.id);
-  var canonicalURL = `http://collections.artsmia.org/art/${art.id}/${art.slug}`;
+  var canonicalURL = `https://collections.artsmia.org/art/${art.id}/${art.slug}`;
 
   return (
     <Helmet
