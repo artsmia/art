@@ -14,7 +14,7 @@ var Home = React.createClass({
   statics: {
     fetchData: {
       searchResults: (params, query) => {
-        let searchUrl = `${SEARCH}/random/art?q=_exists_:%22list:bhm%22&size=20`;
+        let searchUrl = `${SEARCH}/random/art?q=list:bhm&size=20`;
         return rest(searchUrl).then((r) => JSON.parse(r.entity));
       },
     },
@@ -36,7 +36,7 @@ var Home = React.createClass({
           hideResults={true}
           activateInput={true}
           quiltProps={quiltProps}
-          facet={'_exists_:"list:bhm"'}
+          facet={"list:list:bhm"}
           searchAll={true}
           suggestStyle={{ margin: "1em 3em" }}
           bumpSearchBox={smallViewport}
