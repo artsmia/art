@@ -7,11 +7,8 @@ function getResultTotal(result) {
     // Old ElasticSearch
     return t;
   }
-  if (t.value && typeof t.value === "number") {
-    // OpenSearch
-    return t.value;
-  }
-  return 0;
+  // OpenSearch
+  return typeof t.value === "number" ? t.value : 0;
 }
 
 module.exports = {
