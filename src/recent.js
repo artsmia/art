@@ -15,14 +15,129 @@ var Markdown = require("./markdown");
 var ArtworkImage = require("./artwork-image");
 
 var RecentAccessions = React.createClass({
+  componentDidMount() {
+    // ensure layout math runs after initial paint
+    requestAnimationFrame(() => {
+      requestAnimationFrame(this.adjustQuiltRowLayout);
+    });
+
+    // small delay so lazyload/quilt/images have settled
+    this.initialFixTimer = setTimeout(this.adjustQuiltRowLayout, 100);
+
+    // re-run on load and on resize
+    window.addEventListener("load", this.adjustQuiltRowLayout);
+    window.addEventListener("resize", this.adjustQuiltRowLayout);
+    window.addEventListener("peek", this.adjustQuiltRowLayout);
+  },
+
+  componentWillUnmount() {
+    clearTimeout(this.initialFixTimer);
+    window.removeEventListener("load", this.adjustQuiltRowLayout);
+    window.removeEventListener("resize", this.adjustQuiltRowLayout);
+    window.removeEventListener("peek", this.adjustQuiltRowLayout);
+  },
+
+  adjustQuiltRowLayout() {
+    const quiltRowSelector =
+      ".new-to-mia .explore-section .peek .quilt-row-wrap";
+    const minAspectRatio = 0.5;
+    const maxAspectRatio = 4;
+
+    try {
+      const quiltRows = document.querySelectorAll(quiltRowSelector);
+      if (!quiltRows.length) return;
+
+      const calculateAspectRatio = (img) => {
+        if (!img) return 1;
+        const rect = img.getBoundingClientRect();
+        const naturalW = img.naturalWidth || img.width || rect.width || 1;
+        const naturalH = img.naturalHeight || img.height || rect.height || 1;
+        const ratio = naturalW / naturalH;
+        return Math.max(minAspectRatio, Math.min(maxAspectRatio, ratio));
+      };
+
+      quiltRows.forEach((quiltRow) => {
+        // only use images that have fully loaded
+        const imgs = Array.from(quiltRow.querySelectorAll("img"));
+        if (!imgs.length) return;
+        const pending = imgs.filter((img) => !img.complete);
+        if (pending.length) {
+          pending.forEach((img) =>
+            img.addEventListener("load", this.adjustQuiltRowLayout, {
+              once: true,
+            })
+          );
+          return;
+        }
+
+        const totalAspectRatio = imgs.reduce(
+          (sum, img) => sum + calculateAspectRatio(img),
+          0
+        );
+        if (totalAspectRatio === 0) return;
+
+        const availableRowWidth = Math.round(quiltRow.clientWidth);
+        const calculatedRowHeight = availableRowWidth / totalAspectRatio;
+        const rowHeightPx = Math.round(calculatedRowHeight);
+
+        // row styles: no gaps; left-aligned; fixed height
+        Object.assign(quiltRow.style, {
+          minHeight: `${rowHeightPx}px`,
+          height: `${rowHeightPx}px`,
+          display: "flex",
+          gap: "0",
+          justifyContent: "flex-start",
+        });
+
+        // distribute widths; last tile gets the remainder
+        const artworkTiles = [...quiltRow.children];
+        let remainingWidth = availableRowWidth;
+
+        artworkTiles.forEach((tile, index) => {
+          const tileImage = tile.querySelector("img");
+          const imageAspectRatio = calculateAspectRatio(tileImage);
+
+          const tileWidth =
+            index === artworkTiles.length - 1
+              ? remainingWidth
+              : Math.round(imageAspectRatio * calculatedRowHeight);
+
+          Object.assign(tile.style, {
+            flex: "0 0 auto",
+            width: `${tileWidth}px`,
+            height: `${rowHeightPx}px`,
+            marginRight: "0",
+            paddingRight: "0",
+            boxSizing: "content-box",
+          });
+
+          if (tileImage) {
+            Object.assign(tileImage.style, {
+              width: "100%",
+              height: "100%",
+              objectFit: "contain", // keep original aspect; no crop
+              display: "block",
+            });
+          }
+
+          remainingWidth -= tileWidth;
+        });
+      });
+    } catch (error) {
+      console.warn("quilt row layout adjustment failed:", error);
+    }
+  },
+
   statics: {
     fetchData: {
       searchResults: (params, query) =>
-        rest(`${SEARCH}/recent:true`).then((r) => JSON.parse(r.entity)),
-      accessionHighlights: (params, query) =>
-        rest(`${SEARCH}/accessionHighlight:true?sort=accessionDate-desc`).then(
-          (r) => JSON.parse(r.entity)
+        rest(`${SEARCH}/search?filters=recent:1`).then((r) =>
+          JSON.parse(r.entity)
         ),
+      accessionHighlights: (params, query) =>
+        rest(
+          `${SEARCH}/search?filters=highlights:1&sort=accessionDate-desc`
+        ).then((r) => JSON.parse(r.entity)),
     },
   },
 
@@ -37,9 +152,11 @@ var RecentAccessions = React.createClass({
           ) == -1
       );
     var groupedByDate = R.groupBy((h) => {
-      const accessionNumberYear = h.accession_number.split(".")[0];
+      const accessionNumberYear =
+        (h.accession_number || "").split(".")[0] || "Unknown";
       // This was needed to group accessions by quarter, but we are using year now so fall back to the accesion number
-      const accessionDateYear = h.accessionDate.split("-")[0];
+      const accessionDateYear =
+        (h.accessionDate || "").split("-")[0] || "Unknown";
       const date = accessionNumberYear;
       return date == 2107 ? 2017 : date;
     }, artworks); // {<date>: [<highlights>], …}
@@ -143,16 +260,35 @@ var RecentAccessions = React.createClass({
   render() {
     return (
       <div className="new-to-mia">
+        <div className="header-image"></div>
+        <div className="explore-section container">
+          <h1 className="page-title">New to Mia</h1>
+          <p className="page-subtitle">
+            Our collection keeps growing as the world keeps changing. Whether
+            it's a masterpiece by a celebrated artist, a contemporary work that
+            speaks to our times, or the creation of someone whose talents were
+            previously overlooked, Mia collects artworks that reflect the full
+            breadth of human creativity.{" "}
+            <a href="https://new.artsmia.org/art-artists/managing-mias-collection">
+              Learn more about Mia's collections practice
+            </a>
+            .
+          </p>
+        </div>
         <div className="explore-section">
-          <h2>Accession Highlights</h2>
-          {this.accessionHighlightsGrid()}
-
-          <h2 style={{ paddingTop: "3em" }}>All Recent Accessions</h2>
+          <h3>Accession Highlights</h3>
+          <Peek
+            facet="highlights"
+            q="1"
+            filtered={true}
+            quiltProps={{ maxWorks: 6 }}
+          />
+          <h3>Recent Accessions</h3>
           <Peek
             facet="recent"
-            q="true"
-            quiltProps={{ maxRowHeight: 600 }}
-            shuffleQuilt={true}
+            q="1"
+            filtered={true}
+            quiltProps={{ maxWorks: 6 }}
           />
         </div>
         <Helmet title="New to Mia - Acquisition Highlights" />

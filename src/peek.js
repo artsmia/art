@@ -90,10 +90,22 @@ var Peek = React.createClass({
 
     var queryString = decodeURIComponent(this.state.facetedQ);
     var humanLanguage = searchLanguageMap(queryString);
+    var label = "";
+    if (this.props.filtered && this.state.facet) {
+      if (this.state.facet === "recent") {
+        label = "Recent Accessions";
+      } else if (this.state.facet === "highlights") {
+        label = "Accession Highlights";
+      } else {
+        label = this.state.facet;
+      }
+    } else {
+      label = `${this.state.query} ${
+        this.state.facet ? "(" + this.state.facet + ")" : ""
+      }`;
+    }
     var searchExplanation =
-      humanLanguage !== queryString
-        ? humanLanguage
-        : `${this.state.query} ${this.state.facet && `(${this.state.facet})`}`;
+      humanLanguage !== queryString ? humanLanguage : label;
 
     var style = this.props.style || {};
 
@@ -262,6 +274,14 @@ var Peek = React.createClass({
       var url = relatedJson.link;
       if (url) return (window.location = url);
     }
+
+    // If an artwork was clicked, go directly to it instead of search results
+    const artworkId = art.id || (art._source && art._source.id);
+    if (artworkId) {
+      return this.transitionTo("artwork", { id: artworkId });
+    }
+
+    // Otherwise, navigate to search results
     this.props.filtered
       ? this.transitionTo("filteredSearchResults", {
           terms: "*",
