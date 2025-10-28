@@ -5,6 +5,7 @@ var { Link } = require("react-router");
 var Decorate = require("./decorate");
 var Aggregations = require("./aggregations");
 var searchLanguageMap = require("./search-language");
+const { getResultTotal } = require("./util/search-utils");
 
 const SearchSummary = React.createClass({
   render() {
@@ -27,7 +28,8 @@ const SearchSummary = React.createClass({
     );
 
     const showingAll =
-      hits.length >= search.hits.total || hits.length >= this.props.maxResults;
+      hits.length >= getResultTotal(search) ||
+      hits.length >= this.props.maxResults;
 
     var { smallViewport } = this.context;
     var toolbarClasses =
@@ -55,7 +57,7 @@ const SearchSummary = React.createClass({
           <div className={toolbarClasses}>
             <h2 onClick={this.toggleContent}>
               showing {hits.length}{" "}
-              {showingAll || <span>of {search.hits.total} </span>}
+              {showingAll || <span>of {getResultTotal(search)} </span>}
               results{" "}
               {pretty.query && (
                 <span>

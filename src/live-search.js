@@ -2,6 +2,7 @@ var React = require("react");
 
 var Search = require("./search");
 var SearchResults = require("./search-results");
+const { getResultTotal } = require("./util/search-utils");
 
 var styles = {
   searchBox: {
@@ -70,7 +71,7 @@ var LiveSearch = React.createClass({
     var { results } = this.state;
     return (
       results.hits &&
-      `(${Math.min(results.hits.total, 10)} of ${results.hits.total}
+      `(${Math.min(getResultTotal(results), 10)} of ${getResultTotal(results)}
       results for '${this.state.terms}'.
       hit enter to see the rest)`
     );

@@ -10,6 +10,7 @@ var SEARCH = require("./endpoints").search;
 var ImageQuilt = require("./image-quilt");
 var searchLanguageMap = require("./search-language");
 var Markdown = require("./markdown");
+const { getResultTotal } = require("./util/search-utils");
 
 var Peek = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -132,8 +133,8 @@ var Peek = React.createClass({
           >
             {result && this.quiltFromResults()}
             <Link {...linkProps} style={{ width: "100%" }}>
-              {(result && result.hits && result.hits.total) || "search"} results
-              for {searchExplanation}
+              {getResultTotal(result) || "search"} results for{" "}
+              {searchExplanation}
               <span
                 style={{ float: "right", marginRight: "10px" }}
                 className="more-results-link"
