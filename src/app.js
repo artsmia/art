@@ -186,12 +186,13 @@ var App = React.createClass({
   },
 
   toggleMenu(event) {
+    event && event.preventDefault();
+    event && event.stopPropagation();
+
     this.setState({
       showMenu: !this.state.showMenu,
       showSearch: false,
     });
-
-    event && event.preventDefault();
   },
 
   getInitialState() {
