@@ -1,16 +1,14 @@
 // Alternative Titles Styling
 // Handles the display and positioning of alternative titles in artwork details
 
-.detail-row.alternative_title .detail-extra,
-.detail-row.alternative_titles .detail-extra {
-  margin-left: calc(6em + 15px);
-  margin-top: -1.5em;
+.detail-row.alternative_titles .alt-title-lines {
+  display: inline-block;
 }
 
-.detail-row.alternative_titles .comma-when-expanded {
-  display: none;
+.detail-row.alternative_titles .alt-title-line {
+  display: block;
 }
 
-.detail-row.alternative_titles.expanded .comma-when-expanded {
-  display: inline;
+.detail-row.alternative_titles .alt-title-line--first {
+  margin-top: 0;
 }

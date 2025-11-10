@@ -48,6 +48,51 @@ var ArtworkDetails = React.createClass({
     );
   },
 
+  buildAlternativeTitles(field, altData) {
+    var { altTitleFirst, altTitlesRest } = altData;
+    var isExpanded = this.state.expandDetailsMatrix[field];
+
+    // Determine if we should show a comma after first title
+    var showComma = false;
+    if (isExpanded && altTitlesRest.length > 0) {
+      showComma = true;
+    }
+
+    // Build the remaining titles if expanded
+    var remainingTitles = null;
+    if (isExpanded) {
+      remainingTitles = altTitlesRest.map((title, i) => (
+        <span className="alt-title-line" key={i}>
+          {title},
+        </span>
+      ));
+    }
+
+    var fieldLabel = capitalize.words(field).replace("_", " ");
+    var cssClasses = cx(
+      "detail-row",
+      { expandable: true, expanded: isExpanded },
+      field
+    );
+
+    return (
+      <div className={cssClasses} key={field}>
+        <div onClick={this.toggleExtra.bind(this, field)}>
+          <dt className="detail-title">{fieldLabel}</dt>
+          <dd className="detail-content">
+            <span className="alt-title-lines">
+              <span className="alt-title-line alt-title-line--first">
+                {altTitleFirst}
+                {showComma && ","}
+              </span>
+              {remainingTitles}
+            </span>
+          </dd>
+        </div>
+      </div>
+    );
+  },
+
   toggleExtra(field) {
     var { expandDetailsMatrix } = this.state;
     expandDetailsMatrix[field] = !expandDetailsMatrix[field];
@@ -114,20 +159,9 @@ var ArtworkDetails = React.createClass({
       [
         "alternative_titles",
         (art, raw) => {
-          const { altTitleFirst, altTitlesRest, state } =
-            parseAlternativeTitles(raw.TitleAlt);
-          if (state !== "peekable") return [];
-          return [
-            <span>
-              {altTitleFirst}
-              <span className="comma-when-expanded">,</span>
-            </span>,
-            <div>
-              {altTitlesRest.map((title, i) => (
-                <div key={title}>{title},</div>
-              ))}
-            </div>,
-          ];
+          const parsed = parseAlternativeTitles(raw.TitleAlt);
+          if (parsed.state !== "peekable") return [];
+          return [parsed];
         },
       ],
       this.buildPeekableDetail("dated"),
@@ -491,7 +525,13 @@ var ArtworkDetails = React.createClass({
     var skip = this.props.skipFields ? this.props.skipFields.split(" ") : [];
     var details = this.details()
       .filter(([field]) => skip.indexOf(field) < 0)
-      .map((field) => this.build(...field))
+      .map(([field, fn]) => {
+        if (field === "alternative_titles") {
+          const [altData] = fn ? fn({}, art) : [];
+          return altData ? this.buildAlternativeTitles(field, altData) : null;
+        }
+        return this.build(field, fn);
+      })
       .filter((detail) => !!detail);
 
     return <dl className="artwork-detail">{details}</dl>;
