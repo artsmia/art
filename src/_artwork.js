@@ -41,21 +41,26 @@ var Title = React.createClass({
   render() {
     var { art, link, highlights } = this.props;
     var _title = highlighter(art, highlights, "title");
-    var segmentedTitle = _title.replace(
-      titleSegmentDelimiter,
-      (segment) => `<strong>${segment}</strong>`
-    );
+    var segmentedTitle =
+      _title &&
+      _title.replace(
+        titleSegmentDelimiter,
+        (segment) => `<strong>${segment}</strong>`
+      );
 
-    var title = (
-      <Markdown tag="span" allowAnchors={false}>
-        {segmentedTitle}
-      </Markdown>
-    );
-    title = (
-      <h1 itemProp="name">
-        {title}, <span className="dated">{art.dated}</span>
-      </h1>
-    );
+    var title;
+    if (segmentedTitle) {
+      title = (
+        <h1 itemProp="name">
+          <Markdown tag="span" allowAnchors={false}>
+            {segmentedTitle}
+          </Markdown>
+          {art.dated && <span className="dated">, {art.dated}</span>}
+        </h1>
+      );
+    } else {
+      title = null;
+    }
 
     return (
       <ConditionalLinkWrapper {...this.props}>{title}</ConditionalLinkWrapper>
@@ -503,9 +508,12 @@ Figure.contextTypes = {
 
 var slug = (art) => {
   var creator = Creator.getFacetAndValue(art)[1];
+  var titleMatch = (art.title || "")
+    .replace(/<[^ ]+?>/g, "")
+    .match(titleSegmentDelimiter);
   var string = [
-    art.title.replace(/<[^ ]+?>/g, "").match(titleSegmentDelimiter)[1],
-    creator && creator.split(";")[0],
+    titleMatch ? titleMatch[1] : "",
+    creator ? creator.split(";")[0] : "",
   ]
     .filter((e) => e)
     .join(" ")
