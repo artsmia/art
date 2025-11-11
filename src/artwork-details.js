@@ -190,29 +190,31 @@ var ArtworkDetails = React.createClass({
 
           return [
             <div>
-              {(art.dimension || "").split(/\r?\n/).map((line, index) => {
-                var match = this.dimensions().find(([d]) => line.includes(d));
-                if (match) {
-                  var [, aspect] = match;
+              {(typeof art.dimension === "string" ? art.dimension : "")
+                .split(/\r?\n/)
+                .map((line, index) => {
+                  var match = this.dimensions().find(([d]) => line.includes(d));
+                  if (match) {
+                    var [, aspect] = match;
+                    return (
+                      <span
+                        key={line}
+                        style={{ display: "block" }}
+                        onMouseEnter={this.toggleDimensionGraphic.bind(
+                          this,
+                          aspect
+                        )}
+                      >
+                        {line}
+                      </span>
+                    );
+                  }
                   return (
-                    <span
-                      key={index}
-                      style={{ display: "block" }}
-                      onMouseEnter={this.toggleDimensionGraphic.bind(
-                        this,
-                        aspect
-                      )}
-                    >
+                    <span key={line} style={{ display: "block" }}>
                       {line}
                     </span>
                   );
-                }
-                return (
-                  <span key={index} style={{ display: "block" }}>
-                    {line}
-                  </span>
-                );
-              })}
+                })}
             </div>,
             showFancyDimension && (
               <div>

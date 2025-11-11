@@ -179,20 +179,20 @@ var App = React.createClass({
   toggleSearch(event, args) {
     var { forceClose } = event || {};
     var { data } = this.props;
-    this.setState(
-      data && data.searchResults && !forceClose
-        ? { activateSearch: event.timeStamp }
-        : { showSearch: forceClose ? false : !this.state.showSearch }
-    );
-    this.setState({ showMenu: false });
+    this.setState({
+      showSearch: forceClose ? false : !this.state.showSearch,
+      showMenu: false,
+    });
   },
+
   toggleMenu(event) {
+    event && event.preventDefault();
+    event && event.stopPropagation();
+
     this.setState({
       showMenu: !this.state.showMenu,
       showSearch: false,
     });
-
-    event && event.preventDefault();
   },
 
   getInitialState() {
