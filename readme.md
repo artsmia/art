@@ -3,9 +3,9 @@ This is the code behind [Mia's collection website](https://collections.artsmia.o
 # Usage
 
 ```
+cp .envrc.sample .envrc
 nvm use
 npm ci
-npm run build
 npm run start
 ```
 
