@@ -1,0 +1,14 @@
+// Alternative Titles Styling
+// Handles the display and positioning of alternative titles in artwork details
+
+.detail-row.alternative_titles .alt-title-lines {
+  display: inline-block;
+}
+
+.detail-row.alternative_titles .alt-title-line {
+  display: block;
+}
+
+.detail-row.alternative_titles .alt-title-line--first {
+  margin-top: 0;
+}
