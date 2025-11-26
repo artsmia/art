@@ -221,7 +221,7 @@ var Peek = React.createClass({
     if (q == null) return false;
     return facet
       ? `${facet}:"${encodeURIComponent(
-          q.replace(/"/g, "").replace("\r\n", " ")
+          q.replace(/"/g, "").replace("\r\n", " ").replace(/–/g, "-")
         )}"`
       : q;
   },
