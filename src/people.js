@@ -6,6 +6,7 @@ var Helmet = require("react-helmet");
 var toSlug = require("speakingurl");
 var LazyLoad = require("react-lazy-load").default;
 
+var SEARCH = require("./endpoints").search;
 var Search = require("./search");
 var SearchResults = require("./search-results");
 var Peek = require("./peek");
@@ -14,7 +15,7 @@ var People = React.createClass({
   statics: {
     fetchData: {
       artists: (params, query) => {
-        return rest(`http://localhost:4680/people/index`).then((r) => {
+        return rest(`${SEARCH}/people/index`).then((r) => {
           const json = JSON.parse(r.entity);
           console.info("artists People", params, json);
           window.artists = json;

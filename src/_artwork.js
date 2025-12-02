@@ -251,7 +251,12 @@ var CopyableLabel = React.createClass({
 var testCloudfrontImage = (art, callback) => {
   var rights = rightsDescriptions.getRights(art);
   var downloadFullRes = art.rights_type === "Public Domain";
-  const cdnUrl = imageCDN(art, !downloadFullRes ? 800 : "full");
+  const cdnUrl =
+    imageCDN(art, !downloadFullRes ? 800 : "full") || imageCDN(art, 800);
+  if (!cdnUrl) {
+    callback(null);
+    return;
+  }
 
   if (typeof document == "undefined") {
     // we're currently server-rendered
@@ -337,7 +342,9 @@ var LinkBar = React.createClass({
                 testCloudfrontImage(
                   art,
                   (url) => {
-                    this.setState({ resolvedImageDownloadUrl: url });
+                    if (url) {
+                      this.setState({ resolvedImageDownloadUrl: url });
+                    }
                   },
                   this.props.downloadFullRes
                 );

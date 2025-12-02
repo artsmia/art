@@ -9,6 +9,7 @@ var SearchSummary = require("./search-summary");
 var ResultsList = require("./search-results/list");
 var ResultsGrid = require("./search-results/grid");
 var searchLanguageMap = require("./search-language");
+const { getResultTotal } = require("./util/search-utils");
 
 function omitResultsById(...ids) {
   return (json) => {
@@ -175,7 +176,7 @@ var SearchResults = React.createClass({
     var { smallViewport } = this.context;
     var unloadedResults = Math.max(
       0,
-      search.hits.total - this.props.hits.length
+      getResultTotal(search) - this.props.hits.length
     );
     var loadThisManyMore = Math.min(200, unloadedResults);
     var nextPage = Math.min(
@@ -289,7 +290,7 @@ var SearchResults = React.createClass({
   // Also fudge the height of this so the right column scroll doesn't get cut off.
   postSearch({ hits, search, showMoreLink }, postSearchOffset) {
     var showingAll =
-      hits.length >= search.hits.total || hits.length >= this.maxResults;
+      hits.length >= getResultTotal(search) || hits.length >= this.maxResults;
 
     const style = {
       marginTop: "1em",
@@ -317,7 +318,7 @@ var SearchResults = React.createClass({
       <div ref="postSearch" style={style}>
         <p>
           showing {hits.length}{" "}
-          {showingAll || <span>of {search.hits.total} </span>}
+          {showingAll || <span>of {getResultTotal(search)} </span>}
           results matching <code>{pretty.query}</code>
           {search.filters && (
             <span>

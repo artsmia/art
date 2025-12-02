@@ -6,7 +6,7 @@ var { Link } = require("react-router");
 var GlobalNavigation = React.createClass({
   mainnav: [
     { navItem: "Exhibitions", link: "https://new.artsmia.org/exhibitions" },
-    { navItem: "Collection", link: "httpss://collections.artsmia.org/" },
+    { navItem: "Collection", link: "https://collections.artsmia.org/" },
     { navItem: "Visit", link: "https://new.artsmia.org/visit/" },
     { navItem: "Discover", link: "https://new.artsmia.org/discover/" },
     { navItem: "Shop", link: "https://new.artsmia.org/shop/" },
