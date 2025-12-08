@@ -128,19 +128,6 @@ var RecentAccessions = React.createClass({
     }
   },
 
-  statics: {
-    fetchData: {
-      searchResults: (params, query) =>
-        rest(`${SEARCH}/search?filters=recent:1`).then((r) =>
-          JSON.parse(r.entity)
-        ),
-      accessionHighlights: (params, query) =>
-        rest(
-          `${SEARCH}/search?filters=highlights:1&sort=accessionDate-desc`
-        ).then((r) => JSON.parse(r.entity)),
-    },
-  },
-
   accessionHighlightsGrid() {
     var { accessionHighlights, recent } = this.props.data;
     const artworks = accessionHighlights.hits.hits

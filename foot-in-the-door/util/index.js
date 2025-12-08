@@ -131,8 +131,7 @@ export async function getSearchResults(term, options = {}) {
     dataPrefix = null,
   } = options
 
-  const baseEndpoint =
-    process.env.searchEndpoint || 'https://search.artsmia.org'
+  const baseEndpoint = process.env.SEARCH_ORIGIN.replace(/\/$/, '')
   const from = _from || 0
   const queryParams = `size=${size || 30}&from=${from}&fitd=${isFitD ? 1 : 0}${
     dataPrefix ? `&dataPrefix=${dataPrefix}` : ''
@@ -160,8 +159,7 @@ export async function getSearchResults(term, options = {}) {
 }
 
 export async function fetchById(id, isFitD = true, dataPrefix = null) {
-  const baseEndpoint =
-    process.env.searchEndpoint || 'https://search.artsmia.org'
+  const baseEndpoint = process.env.SEARCH_ORIGIN.replace(/\/$/, '')
   const endpoint = `${baseEndpoint}/id/${id}${isFitD ? '?fitd=1' : ''}${
     dataPrefix ? `?dataPrefix=${dataPrefix}` : ''
   }`

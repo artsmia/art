@@ -1,3 +1,8 @@
+
+if (!process.env.SEARCH_ORIGIN) {
+  throw new Error('Missing env var SEARCH_ORIGIN');
+}
+
 module.exports = {
   // TODO these re-writes are causing routing problems?
   // I think they interfere with `basePath`?

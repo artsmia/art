@@ -36,7 +36,6 @@ var Home = React.createClass({
           hideResults={true}
           activateInput={true}
           quiltProps={quiltProps}
-          facet={'_exists_:"list:bhm"'}
           searchAll={true}
           suggestStyle={{ margin: "1em 3em" }}
           bumpSearchBox={smallViewport}

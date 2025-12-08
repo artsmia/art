@@ -14,12 +14,12 @@ if (trackAnalytics)
     includedDomains: ["collections.artsmia.org"],
   });
 
-window.history &&
-  history.replaceState(
-    {},
-    "",
-    window.location.href.replace(/\/(.*)\/$/, "/$1")
-  );
+const url = new URL(window.location.href);
+if (url.pathname.length > 2 && url.pathname.endsWith("/")) {
+  url.pathname = url.pathname.substring(0, url.pathname.length - 1);
+  console.log(url.toString());
+  history.replaceState({}, "", url.toString());
+}
 
 // Patch react-router to render the correct pages even when they're archived
 // with a different URL at the internet archive
@@ -28,7 +28,7 @@ Router.HistoryLocation.__unpatched__getCurrentPath =
 Router.HistoryLocation.getCurrentPath = function getCurrentPath() {
   // re-write `pathname` to render even when this page is archived at the internet
   // archive…
-  var iaPathRegex = new RegExp("/web/[0-9]+/http://collections.artsmia.org");
+  var iaPathRegex = new RegExp("/web/[0-9]+/https://collections.artsmia.org");
   var pathnameWithoutWaybackPrefix = window.location.pathname.replace(
     iaPathRegex,
     ""

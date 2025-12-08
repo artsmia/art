@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run watch\" \"npm run watchSass\" \"npm run serve\"",
-    "watch": "watchify index.js -o bundle.js -dv",
+    "start": "source .envrc && concurrently \"npm run watch\" \"npm run watchSass\" \"npm run serve\"",
+    "watch": "watchify index.js -o 'bash build-watch.sh > bundle.js' -dv",
     "watchSass": "sass --watch sass/main.scss css/main.css",
     "serve": "serve . --single -p 1314",
-    "build-js": "NODE_ENV=production browserify index.js | uglifyjs -c -m | sed 's|http://localhost:4680|https://search.artsmia.org|'> bundle.js",
+    "build-js": "bash build.sh",
     "build-css": "sass sass/main.scss css/main.css",
-    "build": "npm run build-js && npm run build-css"
+    "build-clean-deploy": "rm -rf _stash foot-in-the-door sass src",
+    "build": "npm run build-js && npm run build-css && npm run build-clean-deploy"
   },
   "author": "",
   "license": "MIT",

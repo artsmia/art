@@ -4,6 +4,10 @@
   --section-spacing: 1rem;
   --heading-spacing: 1rem;
   --image-row-height-max: 180px;
+  background-color: #fff !important;
+  font-family: "Mia Regular", "Helvetica Neue", Helvetica, sans-serif;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 
   @media (min-width: 768px) {
     --page-gutter: 2rem;
@@ -14,10 +18,6 @@
     --page-gutter: 3rem;
     --image-row-height: 18vw;
   }
-  background-color: #fff !important;
-  font-family: "Mia Regular", "Helvetica Neue", Helvetica, sans-serif;
-  margin-top: 0 !important;
-  padding-top: 0 !important;
 
   /* --- Header Image --- */
   .header-image {
