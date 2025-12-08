@@ -1,3 +1,12 @@
-export GA_TRACKING_ID="<google analytics ID for this property>"
-export CLOUD_VISION_KEY="<an auth key for google's cloud vision service to use for testing purposes - not used anywhere in the publicly accessible user interface"
-export PRIVILEGED_IP_LIST="<a list of IP addresses that might be able to have priviledged access to non-public museum data>"
+
+export SEARCH_ORIGIN=https://search.artsmia.org
+
+# google analytics ID for this property
+export GA_TRACKING_ID="UA-32999675-6"
+
+# auth key for google's cloud vision service to use for testing purposes - not used anywhere in the publicly accessible user interface
+export CLOUD_VISION_KEY="AIzaSyDv1dSksjv2fvEXUEOr6yGEqmoQUSeshDQ"
+
+# list of IP addresses that might be able to have priviledged access to non-public museum data
+export PRIVILEGED_IP_LIST="68.168.184.2 207.250.46.170 ::1"
+
