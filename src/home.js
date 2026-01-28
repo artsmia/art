@@ -14,7 +14,7 @@ var Home = React.createClass({
   statics: {
     fetchData: {
       searchResults: (params, query) => {
-        let searchUrl = `${SEARCH}/random/art?q=_exists_:%22list:bhm%22&size=20`;
+        let searchUrl = `${SEARCH}/random/art?size=20`;
         return rest(searchUrl).then((r) => JSON.parse(r.entity));
       },
     },
