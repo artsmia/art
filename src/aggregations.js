@@ -196,7 +196,7 @@ var Aggregations = React.createClass({
         search.filters.match(new RegExp(`${agg}:"(.*?)"`, "i"));
       if (aggIsActive) {
         var value = aggIsActive[1];
-        buckets.find((b) => b.key == value) || buckets.push({ doc_count: 0, key: value });
+        buckets.find((bucket) => bucket.key == value) || buckets.push({ doc_count: 0, key: value });
       }
       _aggs.push({
         ...raw,
