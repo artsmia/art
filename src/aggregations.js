@@ -174,14 +174,17 @@ var Aggregations = React.createClass({
       const raw = aggs[agg];
       const rawBuckets = raw && raw.buckets;
       // Terms aggregations return buckets as array; filters aggregations (e.g. "On View") return an object
-      let buckets = Array.isArray(rawBuckets)
-        ? rawBuckets
-        : rawBuckets && typeof rawBuckets === "object"
-        ? Object.entries(rawBuckets).map(([key, v]) => ({
-            key,
-            doc_count: v && v.doc_count,
-          }))
-        : [];
+      let buckets;
+      if (Array.isArray(rawBuckets)) {
+        buckets = rawBuckets;
+      } else if (rawBuckets && typeof rawBuckets === "object") {
+        buckets = Object.entries(rawBuckets).map(([key, bucket]) => ({
+          key,
+          doc_count: bucket && bucket.doc_count,
+        }));
+      } else {
+        buckets = [];
+      }
       const openByDefault = order.slice(0, 3).indexOf(agg) > -1;
       // make sure to show the value of the filter, even if there are no matches.
       // If there's an active filter, and it's key isn't in the buckets of that aggregation,
