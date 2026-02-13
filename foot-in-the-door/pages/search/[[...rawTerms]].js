@@ -6,7 +6,9 @@ import { getSearchResults } from '../../util'
 
 function Search(props) {
   const { size, searchResults: results, rawTerms } = props
-  const hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
+  let hits =
+    results && results.hits ? results.hits.hits : Array.isArray(results) ? results : []
+  if (!Array.isArray(hits)) hits = []
 
   return (
     <Layout hideCTA={true}>

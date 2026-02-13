@@ -171,6 +171,17 @@ var Aggregations = React.createClass({
     ];
 
     for (var agg in aggs) {
+      const raw = aggs[agg];
+      const rawBuckets = raw && raw.buckets;
+      // Terms aggregations return buckets as array; filters aggregations (e.g. "On View") return an object
+      let buckets = Array.isArray(rawBuckets)
+        ? rawBuckets
+        : rawBuckets && typeof rawBuckets === "object"
+        ? Object.entries(rawBuckets).map(([key, v]) => ({
+            key,
+            doc_count: v && v.doc_count,
+          }))
+        : [];
       const openByDefault = order.slice(0, 3).indexOf(agg) > -1;
       // make sure to show the value of the filter, even if there are no matches.
       // If there's an active filter, and it's key isn't in the buckets of that aggregation,
@@ -182,12 +193,12 @@ var Aggregations = React.createClass({
         search.filters.match(new RegExp(`${agg}:"(.*?)"`, "i"));
       if (aggIsActive) {
         var value = aggIsActive[1];
-        aggs[agg].buckets.find(({ _, key }) => key == value) ||
-          aggs[agg].buckets.push({ doc_count: 0, key: value });
+        buckets.find((b) => b.key == value) || buckets.push({ doc_count: 0, key: value });
       }
       _aggs.push({
-        ...aggs[agg],
+        ...raw,
         name: agg,
+        buckets,
         open: openByDefault,
         displayName: agg.replace(/_/g, " "),
         active: search.filters && search.filters.match(new RegExp(agg, "i")),
