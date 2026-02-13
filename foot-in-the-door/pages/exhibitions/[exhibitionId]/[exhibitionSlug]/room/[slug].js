@@ -32,7 +32,9 @@ function Room(props) {
     },
   } = props
   const classification = _classification === '*' ? exhTitle : _classification
-  let hits = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
+  let hits =
+    results && results.hits ? results.hits.hits : Array.isArray(results) ? results : []
+  if (!Array.isArray(hits)) hits = []
   if(!bypassPublicAccess) {
     hits = hits.filter(hit => hit._source.public_access === "1")
   }
@@ -62,7 +64,9 @@ function Room(props) {
       }
     )
 
-    const moreArtworks = results.hits ? results.hits.hits : results // searches and random querys return differently shaped JSON
+    let moreArtworks =
+      results && results.hits ? results.hits.hits : Array.isArray(results) ? results : []
+    if (!Array.isArray(moreArtworks)) moreArtworks = []
 
     setAddlPages(additionalPages.concat([moreArtworks]))
   }
