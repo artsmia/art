@@ -56,7 +56,10 @@ var Aggregations = React.createClass({
                     {agg.displayName}
                   </dt>
                   {(agg.open || aggIsActive) &&
-                    agg.buckets.slice(0, 5).map(function (bucket) {
+                    agg.buckets
+                      .filter((bucket) => bucket.doc_count > 0)
+                      .slice(0, 5)
+                      .map(function (bucket) {
                       let filterString = customFilters[agg.name]
                         ? customFilters[agg.name][bucket.key] || bucket.key
                         : agg.name.toLowerCase() + ':"' + bucket.key + '"';
@@ -64,8 +67,8 @@ var Aggregations = React.createClass({
                         filterString = 'rights_type:"' + bucket.key + '"';
                       const filterRegex = new RegExp(
                         decodeURIComponent(filterString).replace(
-                          /([\[\]\?])/,
-                          "\\$1"
+                          /[.*+?^${}()|[\]\\]/g,
+                          "\\$&"
                         ),
                         "i"
                       );
