@@ -3,11 +3,7 @@ var { Link } = require("react-router");
 var { isInternetArchivedPage } = require("../util/archived-page-handler.js");
 var Footer = require("../footer");
 
-var WORDMARK_SRC =
-  "https://mia-styleguide.s3.amazonaws.com/dist/images/mia-wordmark.svg";
-var WORDMARK_FALLBACK = "/images/MIA_LOGO_WORDMARK.svg";
-var ERROR_IMG =
-  "https://s3.amazonaws.com/mia-images/not-found.jpg";
+var ERROR_IMG_SRC = "/images/error.jpg";
 
 var NotFound = React.createClass({
   componentDidMount() {
@@ -15,44 +11,39 @@ var NotFound = React.createClass({
       document.body.classList.add("not-found-page");
     }
   },
-
   componentWillUnmount() {
     if (typeof document !== "undefined" && document.body) {
       document.body.classList.remove("not-found-page");
     }
   },
-
   render() {
     return (
       <div className="not-found-page">
-        <div className="container">
-          <div className="not-found-wordmark">
-            <Link to="home" aria-label="Minneapolis Institute of Art">
-              <img
-                src={WORDMARK_SRC}
-                alt="Minneapolis Institute of Art"
-                onError={(e) => {
-                  if (e.target.src !== WORDMARK_FALLBACK) {
-                    e.target.src = WORDMARK_FALLBACK;
-                  }
-                }}
-              />
-            </Link>
-          </div>
-          <main>
+        <div className={"container"}>
+          <Link to="/" className="not-found-wordmark" title="Minneapolis Institute of Art">
             <img
-              src={ERROR_IMG}
-              alt='A black and white photo of several women standing beside a chalkboard twice and a handmade sign which read "Lost Persons Dept"'
+              src="https://mia-styleguide.s3.amazonaws.com/dist/images/mia-wordmark.svg"
+              alt="Minneapolis Institute of Art"
             />
-            <h1>404. Sorry! Couldn't find that page :(</h1>
+          </Link>
+          <main id="maincontent">
+            <img
+              src={ERROR_IMG_SRC}
+              alt={
+                'a black and white photo of several women standing beside a chainlink fence and a handmade sign which reads "Lost Persons Area"'
+              }
+            />
+
+            <h1>Sorry! Couldn't find that page.</h1>
             <p>
-              We have recently redesigned our site and things may have moved. If
-              your link didn't work or you are not finding what you are looking
-              for please use the search.
+              We have recently redesigned our site and things may have moved. If your
+              link didn't work or you are not finding what you are looking for please
+              use the search.
             </p>
           </main>
-          <Footer />
         </div>
+
+        <Footer />
       </div>
     );
   },
@@ -73,10 +64,6 @@ var NotFound = React.createClass({
       var redirectUrl = params && isInternetArchivedPage(params.splat);
 
       if (false && redirectUrl) {
-        // `transition` happens at the server level and results
-        // in a 301 redirect, which doesn't fix the problem with this site
-        // archived on archive.org
-        // Time for a better idea!
         transition.redirect(redirectUrl);
       }
 

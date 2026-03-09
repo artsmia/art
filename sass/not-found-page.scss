@@ -18,6 +18,20 @@
   font-style: normal;
 }
 
+/* On 404, hide the header’s white logo until the hamburger menu is open */
+body.not-found-page header > a:first-child,
+body.not-found-page header .logo-container {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+body.not-found-page header.open > a:first-child,
+body.not-found-page header.open .logo-container {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
 .not-found-page {
   background: #fff;
   color: #231f20;
