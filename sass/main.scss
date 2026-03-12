@@ -5,6 +5,7 @@
 @use "ui-icons-font.scss";
 @use "mia-font.scss";
 @use "alternative-titles.scss";
+@use "not-found-page.scss";
 @media print {
   @include meta.load-css("print.scss");
 }
