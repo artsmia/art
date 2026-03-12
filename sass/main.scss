@@ -1106,21 +1106,6 @@ h5.details-title {
   height: 100%;
   background: rgba(35, 35, 35, 0.7);
 }
-.new-to-mia {
-  display: inline-block;
-  width: 100%;
-  background: brand-colors.$primary;
-  padding-top: 3em;
-  color: white; // $support;
-  min-height: 100vh;
-
-  .explore-section {
-    padding: 0 1em;
-    background: #232323;
-    position: relative;
-    z-index: 4;
-  }
-}
 .explore-header {
   height: 200px;
   display: inline-block;

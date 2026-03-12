@@ -1,101 +1,461 @@
-.new-to-mia {
-  --page-gutter: 1rem;
-  --content-max-width: 1200px;
-  --section-spacing: 1rem;
-  --heading-spacing: 1rem;
-  --image-row-height-max: 180px;
-  background-color: #fff !important;
-  font-family: "Mia Regular", "Helvetica Neue", Helvetica, sans-serif;
-  margin-top: 0 !important;
-  padding-top: 0 !important;
+// New to Mia page – theme tokens
+$ntm-page-bg: #ffffff;
+$ntm-card-bg: #f3f4f6;
+$ntm-black: #000000;
+$ntm-text-dark: #231f20;
+$ntm-text-body: rgba(35, 31, 32, 0.85);
+$ntm-accent: #e33c2f;
+$ntm-accent-hover: rgba(35, 35, 35, 0.65);
+$ntm-heading: #111827;
+$ntm-meta: #6b7280;
+$ntm-empty-title: #1b2233;
+$ntm-empty-copy: #647086;
+$ntm-empty-icon: #bac2cf;
+$ntm-empty-border: #d9dfe9;
+$ntm-empty-bg: #f8f9fb;
 
-  @media (min-width: 768px) {
-    --page-gutter: 2rem;
-    --image-row-height: 25vw;
-  }
+$ntm-content-max-width: 96rem;
+$ntm-content-padding-mobile: 0.75rem;
+$ntm-breakpoint: 768px;
+$ntm-breakpoint-wide: 900px;
 
-  @media (min-width: 1024px) {
-    --page-gutter: 3rem;
-    --image-row-height: 18vw;
-  }
+$ntm-font-inter: "Inter", system-ui, sans-serif;
+$ntm-font-mia-black: "Mia Black", "Helvetica Neue", Helvetica, sans-serif;
+$ntm-font-mia-light: "Mia Light", "Helvetica Neue", Helvetica, sans-serif;
+$ntm-font-mia-bold: "Mia Bold", "Helvetica Neue", Helvetica, sans-serif;
+$ntm-font-body: "Mia Regular", "Helvetica Neue", Helvetica, sans-serif;
 
-  /* --- Header Image --- */
-  .header-image {
+/* Body: logo & nav when page is active */
+body.ntm-page-active .logo-container {
+  display: none;
+}
+body.ntm-page-active header.open .logo-container {
+  display: block;
+}
+body.ntm-page-active header.open .global_buttons button.menu {
+  display: none;
+}
+
+/* Shared: card thumb + image (used by highlights and recent) */
+%ntm-card-thumb {
+  aspect-ratio: 1 / 1;
+  border-radius: 0;
+  overflow: hidden;
+  background: transparent;
+  margin-bottom: 0.75rem;
+
+  .artwork-image {
+    min-height: 0;
     width: 100%;
-    height: 125px !important;
-    background-image: url("https://img.artsmia.org/web_objects_cache/127000/000/80/127081/mia_8008778_full.jpg");
-    background-size: 100% auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin: 0 0 0.5rem 0;
-    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .artwork-image .image,
+  .artwork-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain !important;
+    object-position: center;
+  }
+}
+
+/* Shared: empty state (no data) */
+%ntm-empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+
+  .material-icons {
+    font-size: 3rem;
+    color: $ntm-empty-icon;
+    margin-bottom: 0.65rem;
+  }
+  [class*="-empty-title"] {
+    margin: 0;
+    color: $ntm-empty-title;
+    font-size: 1.2rem;
+    font-family: $ntm-font-mia-bold;
+  }
+  [class*="-empty-copy"] {
+    margin: 0.4rem 0 0;
+    color: $ntm-empty-copy;
+    font-size: 0.9rem;
+  }
+}
+
+/* Shared: section heading style */
+%ntm-section-heading {
+  margin: 0 0 1rem;
+  padding-top: 0.5rem;
+  border-top: 3px solid $ntm-black;
+  color: $ntm-black;
+  font-family: $ntm-font-inter;
+  font-size: 2.25rem;
+  line-height: 1.15;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}
+
+.new-to-mia {
+  background-color: $ntm-page-bg;
+  font-family: $ntm-font-body;
+  margin-top: 0 !important;
+  padding-top: 4rem;
+
+  /* Intro hero */
+  .ntm-intro-hero {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 2.5rem;
+    margin-bottom: 5rem;
+    align-items: flex-start;
   }
 
-  .page-title {
-    font-family: "Mia Bold", "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 2.5rem;
-    font-weight: 800;
-    line-height: 1.2;
-    color: #000;
-    margin: 0 0 1.25rem 0;
+  .ntm-intro-image {
+    flex: 1 1 260px;
+    min-width: 0;
+    width: 100%;
+    height: 421px;
+    overflow: hidden;
+    background: $ntm-card-bg;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .page-subtitle {
-    font-family: "Mia Light", "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 1.25rem;
-    font-weight: 300;
-    line-height: 1.6;
-    color: #231f20;
-    margin: 0 0 2rem 0;
-    max-width: var(--content-max-width); /* aligns with images */
-    text-align: left;
+  @media (min-width: $ntm-breakpoint) {
+    .ntm-intro-image {
+      flex: 0 0 auto;
+      width: 822px;
+      height: 539px;
+      max-width: 100%;
+    }
+    .ntm-intro-card {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 52%;
+    }
   }
 
-  /* --- Section Container --- */
-  .explore-section {
-    max-width: var(--content-max-width);
+  .ntm-intro-image-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .ntm-page-content {
+    max-width: $ntm-content-max-width;
     margin: 0 auto;
-    background-color: #fff !important;
-    /* --- Section Headings --- */
-    h3 {
-      font-family: "Mia Bold", "Helvetica Neue", Helvetica, sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      line-height: 1.4;
-      color: #000;
-      margin-top: var(--section-spacing);
-      margin-bottom: 0.75rem;
-      text-align: left;
+    padding: 0 86px 5rem;
+    box-sizing: border-box;
+  }
+
+  .ntm-intro-card {
+    max-width: 64rem;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: left;
+
+    h1 {
+      font-family: $ntm-font-mia-black;
+      font-size: 50px;
+      font-weight: 900;
+      margin: 0 0 14px 0;
+      color: $ntm-text-dark;
+      line-height: 1.1;
+    }
+    p {
+      font-family: $ntm-font-mia-light;
+      font-size: 25px;
+      line-height: 1.5;
+      color: $ntm-text-body;
+      margin: 0 0 30px 0;
+      max-width: 64rem;
+    }
+  }
+
+  .ntm-intro-link {
+    font-family: $ntm-font-inter;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: $ntm-accent;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+
+    &:hover {
+      color: $ntm-accent-hover;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.18em;
+    }
+  }
+
+  /* Accession Highlights */
+  .ntm-highlights-section {
+    margin: 0 0 5rem;
+    padding: 0;
+  }
+
+  .ntm-highlights-head {
+    max-width: none;
+    margin: 0 0 1rem;
+    border-top: none;
+
+    h2 {
+      margin: 0 0 1rem;
+      padding-top: 0.5rem;
+      border-top: 3px solid $ntm-black;
+      color: $ntm-black;
+      font-family: $ntm-font-inter;
+      font-size: 2.25rem;
+      line-height: 1.15;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+    }
+  }
+
+  .ntm-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: $ntm-breakpoint) {
+    .ntm-highlights-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .ntm-highlight-card {
+    min-width: 0;
+    display: block;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+
+    .ntm-highlight-thumb {
+      @extend %ntm-card-thumb;
+    }
+    .ntm-highlight-thumb .artwork-image img {
+      transition: transform 0.2s ease-in-out;
+    }
+    &:hover .ntm-highlight-thumb .artwork-image img {
+      transform: scale(1.05);
+    }
+  }
+
+  .ntm-highlight-title {
+    margin: 0;
+    font-family: $ntm-font-inter;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: $ntm-heading;
+  }
+
+  .ntm-highlight-meta {
+    margin: 0.25rem 0 0;
+    color: $ntm-meta;
+    font-family: $ntm-font-inter;
+    font-size: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .ntm-highlights-more {
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    max-width: none;
+    padding: 0.75rem 1.5rem;
+    background: $ntm-black;
+    border: 1px solid transparent;
+    border-radius: 0;
+    color: #fff;
+    text-decoration: none;
+    font-family: $ntm-font-inter;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+      background: #fff;
+      color: $ntm-black;
+      border-color: $ntm-black;
+      text-decoration: none;
+    }
+  }
+
+  .ntm-highlights-empty {
+    max-width: none;
+    margin: 0;
+    border-radius: 1rem;
+    border: 2px dashed $ntm-empty-border;
+    background: $ntm-empty-bg;
+    @extend %ntm-empty-state;
+  }
+
+  /* Recent Accessions */
+  .ntm-recent-section {
+    max-width: none;
+    margin: 0 0 5rem;
+    padding: 3rem 0 0;
+  }
+
+  .ntm-recent-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem 3rem;
+    align-items: flex-start;
+  }
+
+  .ntm-recent-intro {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 18rem;
+  }
+
+  @media (min-width: $ntm-breakpoint-wide) {
+    .ntm-recent-intro {
+      width: 22%;
+      max-width: 14rem;
+    }
+  }
+
+  .ntm-recent-heading {
+    @extend %ntm-section-heading;
+  }
+
+  .ntm-recent-cta {
+    display: inline-block;
+    color: $ntm-black;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .ntm-recent-list {
+    flex: 1 1 0;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (min-width: $ntm-breakpoint) {
+    .ntm-recent-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .ntm-recent-item:nth-child(3n + 2) {
+      margin-top: 2rem;
+    }
+  }
+
+  .ntm-recent-item {
+    display: block;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ntm-recent-thumb {
+    @extend %ntm-card-thumb;
+  }
+
+  .ntm-recent-copy {
+    min-width: 0;
+    margin-top: 0.75rem;
+  }
+
+  .ntm-recent-artist {
+    margin: 0 0 0.2rem;
+    color: $ntm-heading;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+    font-family: $ntm-font-inter;
+  }
+
+  .ntm-recent-title {
+    margin: 0;
+    color: $ntm-meta;
+    font-size: 0.9rem;
+    line-height: 1.35;
+    font-family: $ntm-font-inter;
+  }
+
+  .ntm-recent-empty {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 2.4rem 1rem;
+    @extend %ntm-empty-state;
+  }
+
+  /* Mobile */
+  @media (max-width: $ntm-breakpoint) {
+    .ntm-page-content {
+      margin-left: 0;
+      margin-right: 0;
+      padding: 0 $ntm-content-padding-mobile;
     }
 
-    .peek > .peek .quilt-row-wrap {
-      vertical-align: top;
+    .ntm-intro-hero {
+      margin-bottom: 3rem;
+      gap: 1.5rem;
     }
 
-    /* --- Quilt Row --- */
-    .quilt-row-wrap {
-      display: flex !important;
-      justify-content: flex-start !important;
-      flex-wrap: nowrap;
-      gap: 0 !important; /* make sure there’s no CSS gap */
-    }
-    .quilt-row-wrap > *,
-    .quilt-row-wrap > * .LazyLoad {
-      margin-right: 0 !important;
-      padding-right: 0 !important;
-      border-right: 0 !important;
-      box-sizing: content-box !important;
+    .ntm-intro-image {
+      aspect-ratio: 4 / 3;
     }
 
-    /* flex-gap fallback (older Safari) */
-    @supports not (gap: 1px) {
-      /* no fallback margin; we want zero gap */
-      .quilt-row-wrap > * {
-        margin-right: 0 !important;
+    .ntm-intro-card p {
+      font-size: 1.08rem;
+      line-height: 1.5;
+    }
+
+    .ntm-intro-link {
+      font-size: 1rem;
+    }
+
+    .ntm-highlights-head {
+      margin-bottom: 1rem;
+      h2 {
+        font-size: 1.65rem;
       }
-      .quilt-row-wrap > *:last-child {
-        margin-right: 0 !important;
-      }
+    }
+
+    .ntm-highlights-more {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.75rem;
+    }
+
+    .ntm-recent-section {
+      padding: 1.4rem 0 3rem 0;
+    }
+
+    .ntm-recent-heading {
+      font-size: 1.65rem;
+    }
+
+    .ntm-recent-artist {
+      font-size: 0.95rem;
+    }
+
+    .ntm-recent-title {
+      font-size: 0.85rem;
     }
   }
 }

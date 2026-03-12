@@ -3,282 +3,285 @@ var Router = require("react-router");
 var { Link } = Router;
 var Helmet = require("react-helmet");
 var rest = require("rest");
-var R = require("ramda");
 
-var Search = require("./search");
 var SEARCH = require("./endpoints").search;
-var ArtworkPreview = require("./artwork-preview");
-var ArtworkResult = require("./artwork-result");
 var _Artwork = require("./_artwork");
-var Peek = require("./peek");
-var Markdown = require("./markdown");
-var ArtworkImage = require("./artwork-image");
+var imageCDN = require("./image-cdn");
+
+var INTRO_IMAGE_URL =
+  "https://img.artsmia.org/web_objects_cache/127000/000/80/127081/mia_8008778_full.jpg";
+var FILTER_VALUE = encodeURIComponent('"1"');
+
+function fetchSearchEndpoint(path, size) {
+  return rest(`${SEARCH}/${path}:${FILTER_VALUE}?size=${size}`).then((r) =>
+    JSON.parse(r.entity)
+  );
+}
+
+function getHits(data) {
+  var hits = data && data.hits;
+  return (hits && hits.hits) || [];
+}
+
+function artworksWithValidImages(artworks) {
+  return artworks.filter(
+    (art) => art.image === "valid" && Number(art.image_width || 0) > 0
+  );
+}
+
+var IMG_STYLE = { width: "100%", height: "100%", objectFit: "cover" };
+var CONTAINER_STYLE = { width: "100%", height: "100%", overflow: "hidden" };
 
 var RecentAccessions = React.createClass({
+  getInitialState() {
+    return { failedImageIds: {} };
+  },
+
   componentDidMount() {
-    // ensure layout math runs after initial paint
-    requestAnimationFrame(() => {
-      requestAnimationFrame(this.adjustQuiltRowLayout);
-    });
-
-    // small delay so lazyload/quilt/images have settled
-    this.initialFixTimer = setTimeout(this.adjustQuiltRowLayout, 100);
-
-    // re-run on load and on resize
-    window.addEventListener("load", this.adjustQuiltRowLayout);
-    window.addEventListener("resize", this.adjustQuiltRowLayout);
-    window.addEventListener("peek", this.adjustQuiltRowLayout);
+    document.body.classList.add("ntm-page-active");
   },
 
   componentWillUnmount() {
-    clearTimeout(this.initialFixTimer);
-    window.removeEventListener("load", this.adjustQuiltRowLayout);
-    window.removeEventListener("resize", this.adjustQuiltRowLayout);
-    window.removeEventListener("peek", this.adjustQuiltRowLayout);
+    document.body.classList.remove("ntm-page-active");
   },
 
-  adjustQuiltRowLayout() {
-    const quiltRowSelector =
-      ".new-to-mia .explore-section .peek .quilt-row-wrap";
-    const minAspectRatio = 0.5;
-    const maxAspectRatio = 4;
-
-    try {
-      const quiltRows = document.querySelectorAll(quiltRowSelector);
-      if (!quiltRows.length) return;
-
-      const calculateAspectRatio = (img) => {
-        if (!img) return 1;
-        const rect = img.getBoundingClientRect();
-        const naturalW = img.naturalWidth || img.width || rect.width || 1;
-        const naturalH = img.naturalHeight || img.height || rect.height || 1;
-        const ratio = naturalW / naturalH;
-        return Math.max(minAspectRatio, Math.min(maxAspectRatio, ratio));
-      };
-
-      quiltRows.forEach((quiltRow) => {
-        // only use images that have fully loaded
-        const imgs = Array.from(quiltRow.querySelectorAll("img"));
-        if (!imgs.length) return;
-        const pending = imgs.filter((img) => !img.complete);
-        if (pending.length) {
-          pending.forEach((img) =>
-            img.addEventListener("load", this.adjustQuiltRowLayout, {
-              once: true,
-            })
-          );
-          return;
-        }
-
-        const totalAspectRatio = imgs.reduce(
-          (sum, img) => sum + calculateAspectRatio(img),
-          0
-        );
-        if (totalAspectRatio === 0) return;
-
-        const availableRowWidth = Math.round(quiltRow.clientWidth);
-        const calculatedRowHeight = availableRowWidth / totalAspectRatio;
-        const rowHeightPx = Math.round(calculatedRowHeight);
-
-        // row styles: no gaps; left-aligned; fixed height
-        Object.assign(quiltRow.style, {
-          minHeight: `${rowHeightPx}px`,
-          height: `${rowHeightPx}px`,
-          display: "flex",
-          gap: "0",
-          justifyContent: "flex-start",
-        });
-
-        // distribute widths; last tile gets the remainder
-        const artworkTiles = [...quiltRow.children];
-        let remainingWidth = availableRowWidth;
-
-        artworkTiles.forEach((tile, index) => {
-          const tileImage = tile.querySelector("img");
-          const imageAspectRatio = calculateAspectRatio(tileImage);
-
-          const tileWidth =
-            index === artworkTiles.length - 1
-              ? remainingWidth
-              : Math.round(imageAspectRatio * calculatedRowHeight);
-
-          Object.assign(tile.style, {
-            flex: "0 0 auto",
-            width: `${tileWidth}px`,
-            height: `${rowHeightPx}px`,
-            marginRight: "0",
-            paddingRight: "0",
-            boxSizing: "content-box",
-          });
-
-          if (tileImage) {
-            Object.assign(tileImage.style, {
-              width: "100%",
-              height: "100%",
-              objectFit: "contain", // keep original aspect; no crop
-              display: "block",
-            });
-          }
-
-          remainingWidth -= tileWidth;
-        });
-      });
-    } catch (error) {
-      console.warn("quilt row layout adjustment failed:", error);
-    }
+  markImageFailed(art) {
+    var id = this.sanitizeArtworkId(art.id);
+    if (!id) return;
+    this.setState(function (prev) {
+      return { failedImageIds: { ...prev.failedImageIds, [id]: true } };
+    });
   },
 
-  accessionHighlightsGrid() {
-    var { accessionHighlights, recent } = this.props.data;
-    const artworks = accessionHighlights.hits.hits
-      .map((h) => h._source)
-      .filter(
-        (art) =>
-          [127658, 126980, 126982, 126983, 126984, 127053, 127055].indexOf(
-            parseInt(art.id)
-          ) == -1
-      );
-    var groupedByDate = R.groupBy((h) => {
-      const accessionNumberYear =
-        (h.accession_number || "").split(".")[0] || "Unknown";
-      // This was needed to group accessions by quarter, but we are using year now so fall back to the accesion number
-      const accessionDateYear =
-        (h.accessionDate || "").split("-")[0] || "Unknown";
-      const date = accessionNumberYear;
-      return date == 2107 ? 2017 : date;
-    }, artworks); // {<date>: [<highlights>], …}
+  statics: {
+    fetchData: {
+      searchResults: () => fetchSearchEndpoint("recent", 60),
+      accessionHighlights: () => fetchSearchEndpoint("highlights", 20),
+    },
+  },
 
-    var customImageFunctionStatic = (id) =>
-      `https://collections.artsmia.org/_info/accession_highlights/${id}.jpg`;
-    var customImageFunctionSmartCrop = (id) =>
-      `https://iiif.dx.artsmia.org//${id}.jpg/-1,-1,800,800/800,/0/default.jpg`;
-    // combine 'static' and 'IIIF smart crop' with custom IIIF hand-crops
-    var customCrops = `
-      https://iiif.dx.artsmia.org/128386.jpg/4670,4987,2147,1890/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/129702.jpg/2687,2039,3112,3080/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/128360.jpg/3448,1206,1389,1279/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/128390.jpg/6047,2248,1675,1641/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/128682.jpg/2934,1256,1155,1184/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/130109.jpg/1247,3512,2340,2294/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/128091.jpg/1230,1243,2532,2506/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/128430.jpg/5195,3201,2320,2157/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/129758.jpg/1487,1554,2787,2587/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/131786.jpg/1741,4474,1781,1696/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/136410.jpg/575,333,738,768/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/131334.jpg/2719,2393,1519,1474/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/132174.jpg/2399,2019,1838,1706/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/136221.jpg/445,6119,2527,2264/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/131646.jpg/2675,635,3645,3634/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/136392.jpg/2425,574,1277,1186/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/131330.jpg/1854,279,3047,3064/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/126884.jpg/988,601,2786,2376/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/126818.jpg/22,200,5367,4577/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/124782.jpg/563,69,4357,3716/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/123915.jpg/561,591,3983,3396/800,/0/default.jpg
-      https://iiif.dx.artsmia.org/123335.jpg/891,57,4881,4162/800,/0/default.jpg
-    `
-      .split(/\s+/)
-      .filter((url) => url !== "");
-    // If a custom detail URL was included above, use that.
-    // Otherwise, try the IIIF smart crop
-    var customImageFunction = (id) => {
-      return (
-        customCrops.find((iiifUrl) => iiifUrl.match(`${id}.jpg`)) ||
-        customImageFunctionSmartCrop(id)
-      );
-    };
+  sanitizeArtworkId(id) {
+    return String(id || "").replace("http://api.artsmia.org/objects/", "");
+  },
 
+  filterByWorkingImages(artworks) {
+    return artworks.filter(
+      (art) => !this.state.failedImageIds[this.sanitizeArtworkId(art.id)]
+    );
+  },
+
+  highlightResults() {
+    return getHits((this.props.data || {}).accessionHighlights);
+  },
+
+  highlightArtworks() {
+    return this.highlightResults()
+      .map((hit) => hit._source)
+      .filter((art) => !!art);
+  },
+
+  highlightArtworksWithImages() {
+    return artworksWithValidImages(this.highlightArtworks());
+  },
+
+  artistLine(art) {
     return (
-      <div>
-        {Object.keys(groupedByDate)
-          .reverse()
-          .map((accessionDate) => {
-            var highlights = groupedByDate[accessionDate];
-            const aspectRatio =
-              parseInt(accessionDate) > 2016
-                ? { width: 400, height: 300 }
-                : { width: 400, height: 400 };
+      art.artist_display ||
+      art.artist ||
+      art.culture ||
+      art.country ||
+      "Unknown artist"
+    );
+  },
 
-            return (
-              <div className="grid_wrapper" key={accessionDate}>
-                <h3>
-                  {accessionDate.split("-").slice(0, 2).reverse().join("/")}
-                </h3>
-                {highlights
-                  .filter((highlight) => highlight.image === "valid")
-                  .map((highlight, index) => {
-                    return (
-                      <div className="single_highlight">
-                        <Link
-                          to="accessionHighlight"
-                          params={{
-                            id: highlight.id,
-                            slug: _Artwork.slug(highlight),
-                          }}
-                        >
-                          <div className="highlight_image">
-                            <div className="highlight_content">
-                              <ArtworkImage
-                                allowAnchors={false}
-                                art={highlight}
-                                ignoreStyle={false}
-                                style={{ maxWidth: "111%", maxHeight: "111%" }}
-                                containerStyle={{
-                                  maxWidth: "100%",
-                                  maxHeight: "100%",
-                                  overflow: "hidden",
-                                }}
-                                lazyLoad={index > 1} // load the first 2 straight up and lazy load the rest
-                                customImage={customImageFunction}
-                              />
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    );
-                  })}
-              </div>
-            );
-          })}
+  dateLine(art) {
+    return art.dated || art.date_display || art.accessionDate || "";
+  },
+
+  renderArtworkThumb(art) {
+    return (
+      <div className="artwork-image" style={CONTAINER_STYLE}>
+        <img
+          src={imageCDN(art, 800)}
+          alt={art.title || ""}
+          onError={() => this.markImageFailed(art)}
+          style={IMG_STYLE}
+        />
       </div>
     );
+  },
+
+  renderHighlightCard(art, index) {
+    var id = this.sanitizeArtworkId(art.id);
+    return (
+      <Link
+        className="ntm-highlight-card"
+        key={id || `highlight-${index}`}
+        to="accessionHighlight"
+        params={{ id: id, slug: _Artwork.slug(art) }}
+      >
+        <div className="ntm-highlight-thumb">
+          {this.renderArtworkThumb(art)}
+        </div>
+        <h3 className="ntm-highlight-title">{art.title}</h3>
+        <p className="ntm-highlight-meta">
+          {this.artistLine(art)}
+          {this.dateLine(art) ? `, ${this.dateLine(art)}` : ""}
+        </p>
+      </Link>
+    );
+  },
+
+  renderAccessionHighlightsSection() {
+    var cards = this.filterByWorkingImages(this.highlightArtworksWithImages()).slice(0, 4);
+    return (
+      <section className="ntm-highlights-section">
+        <div className="ntm-highlights-head">
+          <h2>Accession Highlights</h2>
+        </div>
+        {cards.length ? (
+          <div className="ntm-highlights-with-cards">
+            <div className="ntm-highlights-grid">
+              {cards.map(this.renderHighlightCard)}
+            </div>
+            <Link
+              className="ntm-highlights-more"
+              to="filteredSearchResults"
+              params={{ terms: "*", splat: 'highlights:"1"' }}
+            >
+              All Accession Highlights
+            </Link>
+          </div>
+        ) : (
+          <div className="ntm-highlights-empty">
+            <span className="material-icons">museum</span>
+            <p className="ntm-highlights-empty-title">No highlights yet</p>
+            <p className="ntm-highlights-empty-copy">
+              Check back soon for our latest additions.
+            </p>
+          </div>
+        )}
+      </section>
+    );
+  },
+
+  recentResults() {
+    return getHits((this.props.data || {}).searchResults);
+  },
+
+  recentArtworks() {
+    return this.recentResults()
+      .map((hit) => hit._source)
+      .filter((art) => !!art);
+  },
+
+  recentArtworksWithImages() {
+    return artworksWithValidImages(this.recentArtworks());
+  },
+
+  renderRecentCard(art, index) {
+    var id = this.sanitizeArtworkId(art.id);
+    return (
+      <Link
+        className="ntm-recent-item"
+        key={id || `recent-${index}`}
+        to="artwork"
+        params={{ id }}
+      >
+        <div className="ntm-recent-thumb">
+          {this.renderArtworkThumb(art)}
+        </div>
+        <div className="ntm-recent-copy">
+          <p className="ntm-recent-artist">{this.artistLine(art)}</p>
+          <p className="ntm-recent-title">{art.title || ""}</p>
+        </div>
+      </Link>
+    );
+  },
+
+  renderRecentAccessionsSection() {
+    var cards = this.filterByWorkingImages(this.recentArtworksWithImages()).slice(0, 9);
+    return (
+      <section className="ntm-recent-section">
+        <div className="ntm-recent-wrap">
+          <div className="ntm-recent-intro">
+            <h2 className="ntm-recent-heading">Recent Accessions</h2>
+            <Link
+              className="ntm-recent-cta"
+              to="filteredSearchResults"
+              params={{ terms: "*", splat: 'recent:"1"' }}
+            >
+              Explore recent accessions →
+            </Link>
+          </div>
+          {cards.length ? (
+            <div className="ntm-recent-list">{cards.map(this.renderRecentCard)}</div>
+          ) : (
+            <div className="ntm-recent-empty">
+              <span className="material-icons">history</span>
+              <p className="ntm-recent-empty-title">Check back soon for new accessions</p>
+              <p className="ntm-recent-empty-copy">
+                We are constantly updating our digital archive.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  },
+
+  getPreloadLinks() {
+    var links = [{ rel: "preload", as: "image", href: INTRO_IMAGE_URL }];
+    var all = [].concat(
+      this.highlightArtworksWithImages().slice(0, 4),
+      this.recentArtworksWithImages().slice(0, 9)
+    );
+    all.forEach(function (art) {
+      var url = imageCDN(art, 800);
+      if (url) links.push({ rel: "preload", as: "image", href: url });
+    });
+    return links;
   },
 
   render() {
     return (
       <div className="new-to-mia">
-        <div className="header-image"></div>
-        <div className="explore-section container">
-          <h1 className="page-title">New to Mia</h1>
-          <p className="page-subtitle">
-            Our collection keeps growing as the world keeps changing. Whether
-            it's a masterpiece by a celebrated artist, a contemporary work that
-            speaks to our times, or the creation of someone whose talents were
-            previously overlooked, Mia collects artworks that reflect the full
-            breadth of human creativity.{" "}
-            <a href="https://new.artsmia.org/art-artists/managing-mias-collection">
-              Learn more about Mia's collections practice
-            </a>
-            .
-          </p>
+        <div className="ntm-page-content">
+          <section className="ntm-intro-hero">
+            <div className="ntm-intro-image">
+              <img
+                alt=""
+                aria-hidden="true"
+                className="ntm-intro-image-img"
+                src={INTRO_IMAGE_URL}
+              />
+            </div>
+            <div className="ntm-intro-card">
+              <h1>New to Mia</h1>
+              <p>
+                Our collection keeps growing as the world keeps changing. Whether
+                it's a masterpiece by a celebrated artist, a contemporary work that
+                speaks to our times, or the creation of someone whose talents were
+                previously overlooked, Mia collects artworks that reflect the full
+                breadth of human creativity.
+              </p>
+              <a
+                className="ntm-intro-link"
+                href="https://new.artsmia.org/art-artists/managing-mias-collection"
+              >
+                Learn more about Mia's collections practice
+              </a>
+            </div>
+          </section>
+          <div className="explore-section">
+            {this.renderAccessionHighlightsSection()}
+            {this.renderRecentAccessionsSection()}
+          </div>
         </div>
-        <div className="explore-section">
-          <h3>Accession Highlights</h3>
-          <Peek
-            facet="highlights"
-            q="1"
-            filtered={true}
-            quiltProps={{ maxWorks: 6 }}
-          />
-          <h3>Recent Accessions</h3>
-          <Peek
-            facet="recent"
-            q="1"
-            filtered={true}
-            quiltProps={{ maxWorks: 6 }}
-          />
-        </div>
-        <Helmet title="New to Mia - Acquisition Highlights" />
+        <Helmet
+          title="New to Mia - Acquisition Highlights"
+          link={this.getPreloadLinks()}
+        />
       </div>
     );
   },
