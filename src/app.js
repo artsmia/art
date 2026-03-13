@@ -7,6 +7,7 @@ var cx = require("classnames");
 
 var LiveSearch = require("./live-search");
 var GlobalNavigation = require("./navigation");
+var Footer = require("./footer");
 var consoleWelcomeMessage = require("./console-welcome-message");
 var Survey = require("./survey");
 
@@ -73,6 +74,8 @@ var App = React.createClass({
           activateSearch={this.state.activateSearch}
           toggleAppHeader={this.toggleHeader}
         />
+
+        <Footer />
 
         {this.state.disableSurveyPopup || (
           <div
