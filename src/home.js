@@ -22,13 +22,9 @@ var Home = React.createClass({
 
   render() {
     let { smallViewport } = this.context;
-    let width = window && window.innerWidth;
     let quiltProps = smallViewport
-      ? { maxRows: 2, maxWorks: 7 }
-      : { maxRows: 2, maxWorks: 17 };
-
-    if (window && window.ondeviceorientation && width > 500 && width < 800)
-      quiltProps.maxRows = 1;
+      ? { maxRows: 1, maxWorks: 5 }
+      : { maxRows: 1, maxWorks: 10 };
 
     return (
       <div>

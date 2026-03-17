@@ -5,8 +5,6 @@ var debounce = require("debounce");
 var { pathSatisfies } = require("ramda");
 var cx = require("classnames");
 
-var LiveSearch = require("./live-search");
-var GlobalNavigation = require("./navigation");
 var Footer = require("./footer");
 var consoleWelcomeMessage = require("./console-welcome-message");
 var Survey = require("./survey");
@@ -38,7 +36,6 @@ var App = React.createClass({
       isDev,
       smallViewport: this.isSmallViewport(),
     });
-    var showMenuOrSearch = this.state.showMenu || this.state.showSearch;
 
     return (
       <div className={classes}>
@@ -48,13 +45,21 @@ var App = React.createClass({
             outline: -webkit-focus-ring-color auto 5px;
           }
         `}</style>
-        {this.state.hideHeader || (
-          <header
-            style={{ zIndex: showMenuOrSearch ? 444 : 1 }}
-            className={cx({ open: showMenuOrSearch })}
-          >
-            {logo}
-            {this.globalToolBar()}
+        {!this.state.hideHeader && (
+          <header>
+            <div className="header-left">
+              {logo}
+              {this.primaryNav()}
+            </div>
+            <div className="header-right">
+              <button
+                type="button"
+                className="header-menu-btn"
+                aria-label="Menu"
+              >
+                <span className="material-icons">menu</span>
+              </button>
+            </div>
           </header>
         )}
         <Helmet
@@ -69,13 +74,14 @@ var App = React.createClass({
             { property: "og:url", content: canonicalURL },
           ]}
         />
-        <RouteHandler
-          {...this.props}
-          activateSearch={this.state.activateSearch}
-          toggleAppHeader={this.toggleHeader}
-        />
-
-        <Footer />
+        <div className="main-content">
+          <RouteHandler
+            {...this.props}
+            activateSearch={this.state.activateSearch}
+            toggleAppHeader={this.toggleHeader}
+          />
+          <Footer />
+        </div>
 
         {this.state.disableSurveyPopup || (
           <div
@@ -132,6 +138,20 @@ var App = React.createClass({
     );
   },
 
+  primaryNav() {
+    var path = this.props.path || "";
+    return (
+      <nav className="header-primary-nav" aria-label="Main">
+        <Link to="recent" className={path === "/new" ? "is-active" : ""}>
+          New to Mia
+        </Link>
+        <Link to="explore" className={path === "/explore" ? "is-active" : ""}>
+          Explore
+        </Link>
+      </nav>
+    );
+  },
+
   toggleHeader() {
     this.setState({ hideHeader: !this.state.hideHeader });
   },
@@ -142,60 +162,6 @@ var App = React.createClass({
       smallViewport: this.state.smallViewport,
       clientIp: this.props.clientIp,
     };
-  },
-
-  globalToolBar() {
-    var searchButton = (
-      <button className="material-icons search" onClick={this.toggleSearch}>
-        {this.state.showSearch ? "close" : "search"}
-      </button>
-    );
-    var searchTrigger = this.props.universal ? (
-      <Link to="home">{searchButton}</Link>
-    ) : (
-      searchButton
-    );
-    var menuButton = (
-      <button className="material-icons menu" onClick={this.toggleMenu}>
-        {this.state.showMenu ? "close" : "menu"}
-      </button>
-    );
-    var menuTrigger = menuButton;
-    return (
-      <div>
-        <div className="global_buttons">
-          {menuTrigger}
-          {searchTrigger}
-        </div>
-        <div className="global_display">
-          {this.state.showMenu && (
-            <GlobalNavigation closeNav={this.toggleMenu} />
-          )}
-          {this.state.showSearch && (
-            <LiveSearch afterSearch={this.toggleSearch} />
-          )}
-        </div>
-      </div>
-    );
-  },
-
-  toggleSearch(event, args) {
-    var { forceClose } = event || {};
-    var { data } = this.props;
-    this.setState({
-      showSearch: forceClose ? false : !this.state.showSearch,
-      showMenu: false,
-    });
-  },
-
-  toggleMenu(event) {
-    event && event.preventDefault();
-    event && event.stopPropagation();
-
-    this.setState({
-      showMenu: !this.state.showMenu,
-      showSearch: false,
-    });
   },
 
   getInitialState() {
@@ -211,7 +177,6 @@ var App = React.createClass({
     const showSurveyPopup = false; // don't show until survey fetches data and knows if this user has already completed or rejected the survey
 
     return {
-      showSearch: false,
       smallViewport: this.isSmallViewport(),
       enteredViaMore: window.enteredViaMore,
       showSurveyPopup,
@@ -219,23 +184,9 @@ var App = React.createClass({
     };
   },
 
-  // wrap in a click handler when the navigation isn't visible, and open the nav
-  // once nav is open, a second click goes to artsmia.org
   makeLogo() {
-    var { showMenu } = this.state;
     var logo = <div className="logo-container"></div>;
-
-    if (this.props.universal) return <a href="/">{logo}</a>;
-
-    return showMenu ? (
-      <a href="https://new.artsmia.org" title="Back to artsmia.org">
-        {logo}
-      </a>
-    ) : (
-      <a href="/" onClick={this.toggleMenu}>
-        {logo}
-      </a>
-    );
+    return <a href="/">{logo}</a>;
   },
 
   noIndex() {

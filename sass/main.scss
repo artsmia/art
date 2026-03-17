@@ -7,6 +7,7 @@
 @use "alternative-titles.scss";
 @use "not-found-page.scss";
 @use "footer.scss";
+@use "nav.scss";
 @media print {
   @include meta.load-css("print.scss");
 }
@@ -37,20 +38,16 @@ body {
   font-size: 1.25em;
 }
 
-a {
+.main-content a {
   color: rgba(239, 53, 53, 0.9);
   font-weight: 500;
   text-decoration: none;
   font-size: 1em;
 }
 
-a:hover {
+.main-content a:hover {
   color: rgba(35, 35, 35, 0.65);
   font-weight: 500;
-}
-
-#search {
-  /*margin: 8px;*/
 }
 
 h1,
@@ -79,14 +76,27 @@ h6 {
   background-color: brand-colors.$primary;
 }
 
-header {
-  position: fixed;
-  top: 0;
-  z-index: 1;
-}
 .quilt-search-wrap {
   min-height: 3em;
-  background: #222;
+  background: #fff;
+}
+
+.quilt-wrap.has-children {
+  position: relative;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.quilt-wrap.dark {
+  display: block;
+  min-height: 3.5rem;
+}
+
+#quilt-controls {
+  float: right;
+  display: none;
 }
 
 .quilt-wrap a:hover {
@@ -103,30 +113,11 @@ header {
   background-repeat: no-repeat;
   height: 3.3em;
   width: 8em;
-  color: #fff;
   background-position: -2px 3px;
-  position: fixed;
   display: inline-block;
-  z-index: 5;
-}
-.global_buttons {
-  background: brand-colors.$primary;
-  width: 5em;
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 0.7em 0;
-  z-index: 1500;
-}
-.global_display {
-  width: 100%;
-  position: fixed;
-  background: rgb(35, 35, 35);
+  flex-shrink: 0;
 }
 
-.global_buttons button.material-icons {
-  padding: 2px 0 0 10px;
-}
 .wordmark-container {
   background-image: url("../images/MIA_LOGO_WORDMARK.svg");
   background-repeat: no-repeat;
@@ -398,6 +389,7 @@ header {
 }
 .search-wrap > div:first-child {
   opacity: 0.95;
+  width: 100%;
 }
 .search-wrap .mdl-textfield {
   min-width: 100px;
@@ -413,6 +405,115 @@ header {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   min-width: 19em; // initial width, overridden in JS according to search term length
   max-width: 96vw;
+}
+
+.quilt-search-wrap.has-quilt {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.quilt-banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0)
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-search-area {
+  padding: 2rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-search-title {
+  margin: 0 0 16px 0;
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-align: center;
+  text-shadow:
+    0 0 20px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(0, 0, 0, 0.7),
+    0 0 60px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.search-wrapper.banner-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+  min-width: 16rem;
+  height: 50px;
+  padding: 0 24px 0 3rem;
+  margin-bottom: 0;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.banner-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.search-wrapper.banner-search form {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.search-wrapper.banner-search .search-input {
+  font-size: 1.125rem;
+  font-weight: 700;
+  border: none;
+  border-bottom: none;
+  text-align: left;
+  padding: 0;
+  background: transparent;
+  color: #000;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  outline: none !important;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &:focus {
+    outline: none !important;
+    box-shadow: none;
+    border: none;
+  }
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.9);
+  }
 }
 
 .search-input {
@@ -881,59 +982,10 @@ a.departmentLink h2 {
     @extend %shadowBurstTopLeft;
   }
 
-  .global_buttons {
-    // IDEA radial gradient behind the white buttons to show them against the white background
-    //
-    // background: radial-gradient(circle at top right, #aaa, #ccc 21%, #eee 31%, #fff);
-    // background-image: linear-gradient(
-    //   -135deg,
-    //   rgba(199,199,199,0.3),
-    //   rgba(220, 220, 220, 0.3) 21%,
-    //   rgba(240, 240, 240, 0.3) 31%,
-    //   rgba(255, 255, 255, 0.3) 77%
-    // ); // TODO - see through linear gradient?
-    // background-image: linear-gradient(-135deg, #aaa, #ccc 21%, #eee 31%, #fff 77%);
-    //
-    // &:hover {
-    //   background: #232323;
-    // }
-    //
-    // …NOPE
-    //
-    // Instead, make the buttons dark, and let the background use a blur backdrop?
-    // Downside: No FF suport
-    // Maybe add javascript to this so when the page is 'docked' at the top, the button is opaque
-    // but once scrolling and interaction happens it fades into the background?
-    background: inherit;
-    backdrop-filter: blur(3px);
-    border-radius: 1em;
-    button {
-      color: rgba(35, 35, 35, 0.7);
-    }
-    //
-    // My other idea is to hide them behind the top of the page by 'scrolling the page up'
-    // with JS onload, so they're behind the part of the page visible at load and an up scroll
-    // reveals the top nav? Maybe the logo would be z-indexed to show, while the rest of the nav
-    // bar is hidden?
-  }
-
-  header.open .global_buttons {
-    background: white;
-    border-radius: 0;
-
-    button {
-      color: #232323;
-    }
-  }
-
   .artwork.smallviewport::before {
     #map {
       background-image: none;
     }
-  }
-
-  &.smallviewport .global_buttons {
-    background: #232323;
   }
 }
 // END WIPBETA

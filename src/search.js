@@ -75,8 +75,8 @@ var Search = React.createClass({
     const showQuilt = !darkenQuilt && headerArtworks;
     var quiltProps = Object.assign(
       {
-        maxRows: this.state.showAggs ? 1 : 2,
-        maxWorks: 10,
+        maxRows: 1,
+        maxWorks: 8,
         artworks: headerArtworks,
         onClick: this.updateFromQuilt,
         disableHover: this.props.hideResults || this.props.disableHover,
@@ -87,23 +87,19 @@ var Search = React.createClass({
       this.props.quiltProps || {}
     );
 
-    const idealSearchBoxWidth = Math.max(
-      17,
-      (this.state.terms && this.state.terms.length * 1.1) || 0
-    );
     const formProps = universal
       ? { action: "/search/", method: "get" }
       : { action: "" };
     const simpleSearchBox = (
-      <div
-        className="search-wrapper"
-        style={{ width: idealSearchBoxWidth + "em" }}
-      >
+      <div className="search-wrapper banner-search">
+        <span className="material-icons banner-search-icon" aria-hidden="true">
+          search
+        </span>
         <form {...formProps}>
           <input
             className="search-input"
             type="search"
-            placeholder="search"
+            placeholder="Search the collection..."
             value={searchLanguageMap(this.state.terms)}
             onKeyDown={this.keyDown}
             onChange={this.throttledSearch}
@@ -140,35 +136,31 @@ var Search = React.createClass({
     };
 
     const searchBox = (
-      <div
-        className="quilt-search-wrap"
-        style={
-          (showQuilt && {
-            position: "relative",
-            width: "100%",
-            overflow: "hidden",
-          }) ||
-          {}
-        }
-      >
-        {(showQuilt && <ImageQuilt {...quiltProps} />) || (
-          <span
-            className="quilt-wrap dark"
-            style={{ display: "block", minHeight: "3.5rem" }}
-          />
-        )}
         <div
-          className="search-wrap"
-          style={
-            showQuilt && !this.props.bumpSearchBox
-              ? searchOverQuiltStyles
-              : searchStyles
-          }
+          className={"quilt-search-wrap" + (showQuilt ? " has-quilt" : "")}
         >
-          <div style={{ opacity: this.props.hideHeader ? "1" : "0.95" }}>
-            {simpleSearchBox}
-          </div>
-        </div>
+        {showQuilt ? (
+          <ImageQuilt {...quiltProps}>
+            <div className="quilt-banner-overlay" />
+            <div
+              className="search-wrap"
+              style={
+                !this.props.bumpSearchBox
+                  ? searchOverQuiltStyles
+                  : searchStyles
+              }
+            >
+              <div style={{ opacity: this.props.hideHeader ? "1" : "0.95" }}>
+                <div className="hero-search-area">
+                  <h1 className="banner-search-title">Mia&apos;s Collection</h1>
+                  {simpleSearchBox}
+                </div>
+              </div>
+            </div>
+          </ImageQuilt>
+        ) : (
+          <span className="quilt-wrap dark" />
+        )}
       </div>
     );
 
