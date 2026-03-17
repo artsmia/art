@@ -99,7 +99,7 @@ var Search = React.createClass({
           <input
             className="search-input"
             type="search"
-            placeholder="Search the collection..."
+                  placeholder="Search the collection"
             value={searchLanguageMap(this.state.terms)}
             onKeyDown={this.keyDown}
             onChange={this.throttledSearch}
@@ -152,7 +152,7 @@ var Search = React.createClass({
             >
               <div style={{ opacity: this.props.hideHeader ? "1" : "0.95" }}>
                 <div className="hero-search-area">
-                  <h1 className="banner-search-title">Mia&apos;s Collection</h1>
+                  <h1 className="banner-search-title">Collection</h1>
                   {simpleSearchBox}
                 </div>
               </div>
