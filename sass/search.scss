@@ -1,0 +1,12 @@
+.search-page-content {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 0 86px 5rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .search-page-content {
+    padding: 0 1rem 3rem;
+  }
+}
