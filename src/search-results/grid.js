@@ -3,9 +3,6 @@ var Router = require("react-router");
 var splitArray = require("split-array");
 
 var ImageQuilt = require("../image-quilt");
-var ArtworkImage = require("../artwork-image");
-var FocusedResult = require("./focused.js");
-var SearchSummary = require("../search-summary");
 
 var SearchResultsGrid = React.createClass({
   mixins: [Router.Navigation],
@@ -26,15 +23,7 @@ var SearchResultsGrid = React.createClass({
   },
 
   render() {
-    var {
-      hits,
-      leftColumnWidth,
-      focusedResult,
-      smallViewport,
-      focusHandler,
-      isInspiredByMia,
-      ...focusedProps
-    } = this.props;
+    var { hits, isInspiredByMia } = this.props;
     var targetHeight = hits.length < 20 ? 250 : 150;
 
     const customImageFn = this.props.customImage;
@@ -49,7 +38,6 @@ var SearchResultsGrid = React.createClass({
           maxRows={1000}
           rowHeight={targetHeight}
           maxRowHeight={500}
-          onClick={this.clickResult}
           key={index}
           customImageFn={customImageFn}
           isInspiredByMia={isInspiredByMia}
@@ -73,54 +61,14 @@ var SearchResultsGrid = React.createClass({
     });
     var more = this.props.postSearch;
 
-    var stuff = (
-      <div style={{ minHeight: "150vh" }}>
-        {dividedQuilts}
-        {more}
-      </div>
-    );
-
-    if (smallViewport || this.context.universal) {
-      focusedResult = null;
-    }
-
-    if (!focusedResult) leftColumnWidth = "100%";
-
-    var wrappedQuilt = !focusedResult ? (
-      stuff
-    ) : (
-      <div
-        className="leftBar"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: leftColumnWidth,
-        }}
-      >
-        {stuff}
-      </div>
-    );
-
     return (
       <div style={{ position: "relative", minHeight: this.props.minHeight }}>
-        {wrappedQuilt}
-        {focusedResult && (
-          <FocusedResult
-            key={focusedResult._source.id}
-            art={focusedResult._source}
-            highlights={focusedResult.highlight}
-            {...this.props}
-          />
-        )}
+        <div style={{ minHeight: "150vh" }}>
+          {dividedQuilts}
+          {more}
+        </div>
       </div>
     );
-  },
-
-  clickResult(art) {
-    art && this.props.focusHandler(art, SearchResultsGrid);
   },
 });
 

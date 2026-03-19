@@ -193,7 +193,7 @@ var Search = React.createClass({
         {!!hideSearch || searchBox}
         {this.props.children}
         {(this.props.hideResults && suggestions) || (
-          <div>
+          <div className="search-page-content">
             <SearchResults
               {...this.props}
               hits={this.state.hits}

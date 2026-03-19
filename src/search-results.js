@@ -111,22 +111,17 @@ var SearchResults = React.createClass({
   },
 
   getInitialState() {
-    var focus = window.clickedArtwork || this.props.hits[0];
-    setTimeout(() => (window.clickedArtwork = null));
     var { smallViewport } = this.context;
 
     var isInspiredByMia = this.isInspiredByMia();
 
-    var { view, preview: showPreview } = this.props.query;
+    var { view } = this.props.query;
     var initialView =
       (view && view == "list") || smallViewport || this.context.universal
         ? ResultsList
         : ResultsGrid;
 
-    var showPreview = showPreview == "false" || isInspiredByMia ? false : true;
-
     return {
-      focusedResult: showPreview && focus && focus,
       view: initialView,
       isInspiredByMia,
     };
@@ -153,16 +148,6 @@ var SearchResults = React.createClass({
     );
   },
 
-  componentWillReceiveProps(nextProps) {
-    var { showPreview } = this.state;
-    var focused =
-      window.clickedArtwork ||
-      (this.state && this.state.focusedResult) ||
-      (showPreview && nextProps.hits[0]);
-    this.focusResult(focused);
-    if (window.clickedArtwork) window.clickedArtwork = null;
-  },
-
   maxResults: 5000,
 
   triggerLoad(nextPage) {
@@ -171,9 +156,6 @@ var SearchResults = React.createClass({
 
   render() {
     var search = this.props.data.searchResults;
-    var { focusedResult } = this.state;
-    var leftColumnWidth = "35%";
-    var { smallViewport } = this.context;
     var unloadedResults = Math.max(
       0,
       getResultTotal(search) - this.props.hits.length
@@ -210,9 +192,7 @@ var SearchResults = React.createClass({
       showMoreLink,
       maxResults: this.maxResults,
       query: this.props.query,
-      forceSearchUpdate: (nextFocusResult) => {
-        this.focusResult(nextFocusResult);
-      },
+      forceSearchUpdate: () => {},
       embed: this.props.embed,
       handleCancelEmbed: this.props.handleCancelEmbed,
       isInspiredByMia: this.state.isInspiredByMia,
@@ -248,9 +228,6 @@ var SearchResults = React.createClass({
         </SearchSummary>
         {this.props.suggestions}
         <this.state.view
-          leftColumnWidth={leftColumnWidth}
-          focusedResult={focusedResult}
-          focusHandler={this.focusResult}
           search={search}
           hits={this.props.hits}
           postSearch={this.postSearch(
@@ -264,17 +241,6 @@ var SearchResults = React.createClass({
         />
       </div>
     );
-  },
-
-  focusResult(hit, nextView = false) {
-    var { smallViewport } = this.context;
-
-    if (smallViewport && nextView) {
-      this.transitionTo("artwork", { id: hit._id });
-    } else {
-      !smallViewport && nextView && this.changeView(nextView);
-      this.setState({ focusedResult: hit ? hit : null });
-    }
   },
 
   changeView(next) {
@@ -355,7 +321,6 @@ var SearchResults = React.createClass({
     ) {
       this.setState({
         isInspiredByMia: this.isInspiredByMia(),
-        focusedResult: null,
       });
     }
   },
