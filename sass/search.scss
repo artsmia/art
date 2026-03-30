@@ -1,12 +1,173 @@
+// Match marketing site: centered column, max 1280px, 20px gutters inside the box.
 .search-page-content {
-  max-width: 96rem;
+  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 86px 5rem;
+  padding: 0 20px 5rem;
   box-sizing: border-box;
-}
 
-@media (max-width: 768px) {
-  .search-page-content {
+  @media (max-width: 768px) {
     padding: 0 1rem 3rem;
+  }
+
+  .quilt-wrap {
+    width: 100%;
+    min-height: 150px;
+    --quilt-card-gap: 0px;
+    --quilt-row-gap: 0px;
+  }
+
+  .quilt-row-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--quilt-card-gap);
+    width: 100%;
+
+    &:not(:last-child) {
+      margin-bottom: var(--quilt-row-gap);
+    }
+
+    > * {
+      flex-shrink: 0;
+    }
+  }
+
+  .quilt-patch-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .quilt-patch-card__link {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  // Tight frame: modest padding, flex center on both axes; img scales with contain inside the box.
+  .quilt-patch-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    background-color: #fafafa;
+    background-image: linear-gradient(180deg, #fcfcfc 0%, #f8f8f8 100%);
+    transition: background-color 0.15s ease;
+
+    .LazyLoad {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    img.image {
+      flex: 0 1 auto;
+      display: block;
+      width: auto !important;
+      height: auto !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      object-fit: contain !important;
+      object-position: center;
+    }
+  }
+
+  .quilt-patch-card:hover .quilt-patch-image,
+  .quilt-patch-card:focus-within .quilt-patch-image {
+    background-color: #f2f2f2;
+  }
+
+  .image,
+  .LazyLoad {
+    opacity: 1 !important;
+    transition: none !important;
+    background: transparent !important;
+
+    &.loading {
+      border: 0 !important;
+      background: transparent !important;
+      color: transparent !important;
+    }
+  }
+
+  .quilt-patch-meta {
+    margin-top: 0.35rem;
+    padding-bottom: 0.4rem;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    text-align: left;
+    line-height: 1.2;
+  }
+
+  .quilt-patch-artist,
+  .quilt-patch-dated {
+    display: block;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-wrap: anywhere;
+    text-align: left;
+  }
+
+  a.quilt-patch-title,
+  .quilt-patch-title {
+    display: -webkit-box;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-wrap: anywhere;
+    text-align: left;
+    font-family: "MiaGrotesk-Bold", sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600 !important;
+    line-height: 1.45;
+    color: #222;
+    text-decoration: none;
+  }
+
+  a.quilt-patch-title:hover,
+  a.quilt-patch-title:focus {
+    color: #222;
+  }
+
+  .quilt-patch-artist {
+    margin-top: 0.2rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #5c5c5c;
+  }
+
+  .quilt-patch-dated {
+    margin-top: 0.15rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #5c5c5c;
   }
 }
