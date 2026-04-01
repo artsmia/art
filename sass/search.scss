@@ -117,6 +117,7 @@
 
   .quilt-patch-artist,
   .quilt-patch-dated {
+    display: block;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -127,22 +128,6 @@
     -webkit-line-clamp: 2;
     overflow-wrap: anywhere;
     text-align: left;
-  }
-
-  .quilt-patch-artist {
-    margin-top: 0.2rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    line-height: 1.4;
-    color: #5c5c5c;
-  }
-
-  .quilt-patch-dated {
-    margin-top: 0.15rem;
-    font-size: 0.75rem;
-    font-weight: 400;
-    line-height: 1.4;
-    color: #5c5c5c;
   }
 
   a.quilt-patch-title,
@@ -170,4 +155,19 @@
     color: #222;
   }
 
+  .quilt-patch-artist {
+    margin-top: 0.2rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #5c5c5c;
+  }
+
+  .quilt-patch-dated {
+    margin-top: 0.15rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #5c5c5c;
+  }
 }
