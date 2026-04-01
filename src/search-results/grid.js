@@ -2,7 +2,7 @@ var React = require("react");
 var Router = require("react-router");
 var splitArray = require("split-array");
 
-var SearchImageQuilt = require("./search-image-quilt");
+var ImageQuilt = require("../image-quilt");
 
 var SearchResultsGrid = React.createClass({
   mixins: [Router.Navigation],
@@ -23,27 +23,35 @@ var SearchResultsGrid = React.createClass({
   },
 
   render() {
-    var { hits } = this.props;
-    var batchSize = 48;
+    var { hits, isInspiredByMia } = this.props;
+    var targetHeight = hits.length < 20 ? 250 : 150;
 
     const customImageFn = this.props.customImage;
 
-    var quilts = splitArray(hits, batchSize).map((chunkedHits, index) => {
-      var chunkedQuilt = this.cachedQuilts[index] || (
-        <SearchImageQuilt
+    const useQuiltCache = !isInspiredByMia;
+    console.info("grid render", { isInspiredByMia, useQuiltCache });
+
+    var quilts = splitArray(hits, 50).map((chunkedHits, index) => {
+      var chunkedQuilt = (useQuiltCache && this.cachedQuilts[index]) || (
+        <ImageQuilt
           artworks={chunkedHits}
+          maxRows={1000}
+          rowHeight={targetHeight}
+          maxRowHeight={500}
           key={index}
           customImageFn={customImageFn}
+          isInspiredByMia={isInspiredByMia}
+          disableHover={true}
         />
       );
 
-      if (chunkedHits.length >= batchSize) this.cachedQuilts[index] = chunkedQuilt;
+      if (chunkedHits.length >= 50) this.cachedQuilts[index] = chunkedQuilt;
       return chunkedQuilt;
     });
 
     var dividedQuilts = quilts.map((quilt, index) => {
-      var start = index * batchSize;
-      var end = (index + 1) * batchSize;
+      var start = index * 50;
+      var end = (index + 1) * 50;
       var _key = `range:${start}-${end}`;
       return (
         <div id={_key} key={_key}>
