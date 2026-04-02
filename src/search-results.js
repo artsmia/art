@@ -7,7 +7,6 @@ var rest = require("rest");
 var SEARCH = require("./endpoints").search;
 var SearchSummary = require("./search-summary");
 var ResultsList = require("./search-results/list");
-var ResultsGrid = require("./search-results/grid");
 var searchLanguageMap = require("./search-language");
 const { getResultTotal } = require("./util/search-utils");
 
@@ -111,18 +110,9 @@ var SearchResults = React.createClass({
   },
 
   getInitialState() {
-    var { smallViewport } = this.context;
-
     var isInspiredByMia = this.isInspiredByMia();
 
-    var { view } = this.props.query;
-    var initialView =
-      (view && view == "list") || smallViewport || this.context.universal
-        ? ResultsList
-        : ResultsGrid;
-
     return {
-      view: initialView,
       isInspiredByMia,
     };
   },
@@ -213,21 +203,15 @@ var SearchResults = React.createClass({
 
     console.info("search-results render", {
       isInspiredByMia,
-      view: this.state.view.displayName,
+      view: "list",
       props: this.props,
     });
 
     return (
       <div>
-        <SearchSummary {...summaryProps}>
-          <SearchResultViewToggle
-            click={this.changeView}
-            activeView={this.state.view}
-            views={[ResultsList, ResultsGrid]}
-          />
-        </SearchSummary>
+        <SearchSummary {...summaryProps} />
         {this.props.suggestions}
-        <this.state.view
+        <ResultsList
           search={search}
           hits={this.props.hits}
           postSearch={this.postSearch(
@@ -241,10 +225,6 @@ var SearchResults = React.createClass({
         />
       </div>
     );
-  },
-
-  changeView(next) {
-    next && this.setState({ view: next });
   },
 
   // How to code this: after seeing all the results (on a page?)
@@ -343,37 +323,3 @@ SearchResults.contextTypes = {
 };
 
 module.exports = SearchResults;
-
-var SearchResultViewToggle = React.createClass({
-  render() {
-    var { views, click, activeView } = this.props;
-
-    var toggles = views.map((r) => {
-      var name = r.displayName.replace("SearchResults", "");
-      var activeStyle =
-        (activeView === r && {
-          color: "#222",
-          backgroundColor: "white",
-          borderRadius: 5,
-          margin: "0 5px",
-          display: "inline-block",
-        }) ||
-        {};
-      return (
-        <span
-          key={name}
-          onClick={this.toggleView.bind(this, r)}
-          style={activeStyle}
-        >
-          <i className={name}></i>
-        </span>
-      );
-    });
-
-    return <div className="mdl-cell mdl-cell--2-col views">{toggles}</div>;
-  },
-
-  toggleView(view) {
-    this.props.click(view);
-  },
-});

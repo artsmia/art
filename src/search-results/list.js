@@ -31,6 +31,8 @@ var SearchResultsList = React.createClass({
       >
         <div className="objects-wrap">
           {results}
+        </div>
+        <div className="search-results-post">
           {this.props.postSearch}
         </div>
       </div>

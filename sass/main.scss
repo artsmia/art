@@ -66,8 +66,8 @@ h6 {
 .artwork-result,
 .focusedResult {
   em {
-    background-color: rgba(255, 255, 0, 0.5);
-    padding: 0 1px;
+    background: transparent;
+    padding: 0;
   }
   .block-highlight {
     border: 3px solid rgba(255, 255, 0, 0.5);
@@ -216,42 +216,6 @@ header {
 #aggs dd {
   line-height: 1.1em;
   padding: 0.25em;
-}
-.objects-wrap {
-  width: 33%;
-  float: left;
-  padding: 10px;
-  margin-right: 10px;
-}
-
-.artwork-result {
-  padding: 10px;
-  background-color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  width: 100%;
-  margin: 0;
-  margin-bottom: 3px;
-  position: relative;
-  z-index: 3;
-}
-.objects-wrap > div:nth-child(11n + 11):after {
-  content: "";
-  display: block;
-  width: 110%;
-  margin-left: -7%;
-  height: 5em;
-  background: rgba(35, 35, 35, 1);
-}
-
-.artwork-result h1 {
-  margin: 0;
-  padding: 0;
-}
-.artwork-result h2 {
-  margin: 0;
-  padding: 0;
-  line-height: 1em;
 }
 
 .artwork-result.validImage,
