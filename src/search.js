@@ -35,7 +35,6 @@ var Search = React.createClass({
         results: { hits: { hits: [] } },
         terms: "",
         hits: [],
-        showAggs: this.props.showAggs,
         blank: this.props.blank,
       };
     }
@@ -53,7 +52,6 @@ var Search = React.createClass({
       hits: Array.isArray(results)
         ? results
         : (results && results.hits && results.hits.hits) || [],
-      showAggs: this.props.showAggs,
       blank: this.props.blank,
     };
   },
@@ -75,7 +73,7 @@ var Search = React.createClass({
     const showQuilt = !darkenQuilt && headerArtworks;
     var quiltProps = Object.assign(
       {
-        maxRows: this.state.showAggs ? 1 : 2,
+        maxRows: 2,
         maxWorks: 10,
         artworks: headerArtworks,
         onClick: this.updateFromQuilt,
@@ -172,11 +170,6 @@ var Search = React.createClass({
       </div>
     );
 
-    var aggsProps = {
-      showAggs: this.state.showAggs,
-      toggleAggs: this.toggleAggs,
-    };
-
     var suggestions = (
       <Suggest
         search={this.props.data && this.props.data.searchResults}
@@ -197,7 +190,6 @@ var Search = React.createClass({
             <SearchResults
               {...this.props}
               hits={this.state.hits}
-              {...aggsProps}
               suggestions={suggestions}
               minHeight={this.state.minHeight}
               embed={hideSearch}
@@ -329,10 +321,6 @@ var Search = React.createClass({
       terms: "*",
       splat: facet,
     });
-  },
-
-  toggleAggs() {
-    this.setState({ showAggs: !this.state.showAggs });
   },
 
   activateSearch() {

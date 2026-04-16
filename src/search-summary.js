@@ -2,8 +2,6 @@ var React = require("react");
 var Helmet = require("react-helmet");
 var { Link } = require("react-router");
 
-var Decorate = require("./decorate");
-var Aggregations = require("./aggregations");
 var searchLanguageMap = require("./search-language");
 const { getResultTotal } = require("./util/search-utils");
 
@@ -12,20 +10,6 @@ const SearchSummary = React.createClass({
     const search = this.props.search;
     if (!search || !search.hits) return <div />;
     const hits = this.props.hits;
-    const results = this.props.results;
-    const { showAggs } = this.props;
-
-    // only allow opening the filters box when
-    // 1. there's more than 1 result
-    // 2. there are filters applied that could be reducing the results to 0
-    const toggleAggs = ((hits && hits.length > 1) ||
-      (search.filters && search.filters.length > 0)) && (
-      <span className="filter-button">
-        <a onClick={this.toggleAggs} style={{ cursor: "pointer" }}>
-          {showAggs ? "hide" : "advanced"}
-        </a>
-      </span>
-    );
 
     const showingAll =
       hits.length >= getResultTotal(search) ||
@@ -55,7 +39,7 @@ const SearchSummary = React.createClass({
         <div className="toolbar mdl-grid">
           {this.props.children}
           <div className={toolbarClasses}>
-            <h2 onClick={this.toggleContent}>
+            <h2>
               showing {hits.length}{" "}
               {showingAll || <span>of {getResultTotal(search)} </span>}
               results{" "}
@@ -97,14 +81,7 @@ const SearchSummary = React.createClass({
               )}
             </h2>
           </div>
-          {!this.props.embed && (
-            <div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
-          )}
         </div>
-
-        {showAggs && <Aggregations search={search} {...this.props} />}
-        <Decorate search={search} params={this.props.params} {...this.props} />
-        {false && <ClosedBanner />}
         <Helmet
           title={`🔎 ${pretty.searchString}`}
           meta={[
@@ -117,10 +94,6 @@ const SearchSummary = React.createClass({
         />
       </div>
     );
-  },
-
-  toggleAggs() {
-    this.props.toggleAggs();
   },
 });
 SearchSummary.contextTypes = {

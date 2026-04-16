@@ -177,8 +177,6 @@ var SearchResults = React.createClass({
       search: this.props.data.searchResults,
       hits: this.props.hits,
       params: this.props.params,
-      showAggs: this.props.showAggs,
-      toggleAggs: this.props.toggleAggs,
       showMoreLink,
       maxResults: this.maxResults,
       query: this.props.query,
