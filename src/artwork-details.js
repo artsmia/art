@@ -25,7 +25,10 @@ var ArtworkDetails = React.createClass({
     var { art, highlights } = this.props;
     if (this.props.onlyShowHighlightDetails && !highlights[field]) return;
 
-    var humanFieldName = capitalize.words(field).replace("_", " ");
+    var humanFieldName =
+      field === "portfolio"
+        ? "Portfolio/Series"
+        : capitalize.words(field).replace("_", " ");
     var artAndHighlights = this.artAndHighlights();
     var [content, extraContent] = fn
       ? fn(artAndHighlights, art)
@@ -150,6 +153,15 @@ var ArtworkDetails = React.createClass({
         ],
       ],
       ["title"],
+      [
+        "portfolio",
+        (art, raw) => {
+          if (!raw.portfolio || raw.portfolio == "From ") return [];
+          var portfolioName = raw.portfolio.replace("From From", "From"); // some have double 'from'
+
+          return [portfolioName, <Peek facet="portfolio" q={portfolioName} />];
+        },
+      ],
       [
         "alternative_title",
         (art, raw) => {
@@ -422,15 +434,6 @@ var ArtworkDetails = React.createClass({
           );
           //pass a string (raw.id) into peek
           return [alsoLink, <Peek facet="see_also" q={String(raw.id)} />];
-        },
-      ],
-      [
-        "portfolio",
-        (art, raw) => {
-          if (!raw.portfolio || raw.portfolio == "From ") return [];
-          var portfolioName = raw.portfolio.replace("From From", "From"); // some have double 'from'
-
-          return [portfolioName, <Peek facet="portfolio" q={portfolioName} />];
         },
       ],
       [
