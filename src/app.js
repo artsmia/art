@@ -41,12 +41,6 @@ var App = React.createClass({
 
     return (
       <div className={classes}>
-        <style type="text/css">{`
-          *:focus {
-            outline: 1px dotted #212121;
-            outline: -webkit-focus-ring-color auto 5px;
-          }
-        `}</style>
         {this.state.hideHeader || (
           <header
             style={{ zIndex: showMenuOrSearch ? 444 : 1 }}

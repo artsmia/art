@@ -85,33 +85,36 @@ var Search = React.createClass({
       this.props.quiltProps || {}
     );
 
-    const idealSearchBoxWidth = Math.max(
-      17,
-      (this.state.terms && this.state.terms.length * 1.1) || 0
-    );
     const formProps = universal
       ? { action: "/search/", method: "get" }
       : { action: "" };
     const simpleSearchBox = (
-      <div
-        className="search-wrapper"
-        style={{ width: idealSearchBoxWidth + "em" }}
-      >
-        <form {...formProps}>
+      <div className="search-wrapper">
+        <form {...formProps} onSubmit={this.handleSubmit}>
           <input
             className="search-input"
             type="search"
-            placeholder="search"
+            placeholder="Search the collection"
             value={searchLanguageMap(this.state.terms)}
             onKeyDown={this.keyDown}
             onChange={this.throttledSearch}
             onFocus={({ target }) => target && target.select()}
-            style={{ width: "100%", pointerEvents: "all" }}
+            style={{ pointerEvents: "all" }}
             name="q"
             ref="searchInput"
             autoComplete="off"
             list="searchCompletions"
           />
+          <button
+            className="search-button"
+            type="submit"
+            aria-label="Search"
+            style={{ pointerEvents: "all" }}
+          >
+            <span className="material-icons" aria-hidden="true">
+              search
+            </span>
+          </button>
         </form>
       </div>
     );
@@ -329,6 +332,12 @@ var Search = React.createClass({
       node.focus();
       node.value && node.setSelectionRange(0, node.value.length);
     }
+  },
+
+  handleSubmit(e) {
+    if (this.context.universal) return;
+    e && e.preventDefault && e.preventDefault();
+    this.search();
   },
 });
 Search.contextTypes = {

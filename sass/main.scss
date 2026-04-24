@@ -84,11 +84,6 @@ header {
   top: 0;
   z-index: 1;
 }
-.quilt-search-wrap {
-  min-height: 3em;
-  background: #222;
-}
-
 .quilt-wrap a:hover {
   overflow: visible !important;
   // z-index: 100;
@@ -282,50 +277,6 @@ header {
   height: auto;
   margin-bottom: 7px;
   border-bottom: 3px solid brand-colors.$primary;
-}
-
-.search-wrap {
-  z-index: 4;
-  background: transparent !important;
-}
-@media screen and (max-width: 600px) {
-  #morePage .search-wrap {
-    background: #232323 !important;
-  }
-}
-.search-wrap div:first-child {
-  margin: 0 auto;
-  color: brand-colors.$primary;
-}
-.search-wrap > div:first-child {
-  opacity: 0.95;
-}
-.search-wrap .mdl-textfield {
-  min-width: 100px;
-}
-
-.search-wrapper {
-  background-color: brand-colors.$whitish;
-  padding: 2em;
-  margin-bottom: 15px;
-  border-radius: 3px;
-  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-    0 10px 10px rgba(0, 0, 0, 0.22);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  min-width: 19em; // initial width, overridden in JS according to search term length
-  max-width: 96vw;
-}
-
-.search-input {
-  font-size: 1.5em;
-  border: none;
-  background: transparent;
-  text-align: center;
-  border-bottom: 3px solid brand-colors.$primary;
-  font-family: $MiaGroteskLight;
-  -webkit-appearance: none;
-  -webkit-border-radius: 0;
-  border-radius: 0;
 }
 
 .mdl-textfield {
@@ -1813,7 +1764,6 @@ img,
 }
 
 .agg-wrap,
-.search-wrap,
 .landingPageBody,
 .departmentPage,
 .explore-section,
@@ -1825,14 +1775,7 @@ img,
   background: white;
 }
 
-.search-wrap {
-  background: none;
-}
-
 @media (max-width: 501px) {
-  .search-wrap {
-    background: rgba(35, 35, 35, 1);
-  }
   .single_highlight {
     position: relative;
     display: inline-block;
