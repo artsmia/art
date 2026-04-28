@@ -54,6 +54,15 @@
   line-height: 1;
 }
 
+.search-results-title {
+  font-family: "MiaGrotesk-Bold", sans-serif;
+  font-size: 2em;
+  padding-left: 8px;
+  margin: 0 0 0.35rem;
+  color: rgb(35, 35, 35);
+  text-align: left;
+}
+
 .search-page-content {
   --search-page-max-width: 1280px;
   --search-page-gutter: 20px;

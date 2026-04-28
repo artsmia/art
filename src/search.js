@@ -167,6 +167,7 @@ var Search = React.createClass({
           }
         >
           <div style={{ opacity: this.props.hideHeader ? "1" : "0.95" }}>
+            <h1 className="search-results-title">Collection</h1>
             {simpleSearchBox}
           </div>
         </div>
