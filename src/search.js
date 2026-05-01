@@ -124,7 +124,7 @@ var Search = React.createClass({
       left: 0,
       right: 0,
       width: "100%",
-      textAlign: "center",
+      textAlign: "left",
       pointerEvents: "none",
       display: hideInput ? "none" : "inherit",
       padding: this.props.bumpSearchBox ? "0.5em" : "0",
@@ -167,7 +167,10 @@ var Search = React.createClass({
           }
         >
           <div style={{ opacity: this.props.hideHeader ? "1" : "0.95" }}>
-            <h1 className="search-results-title">Collection</h1>
+            <h1 className="search-results-title">Mia&apos;s Collection</h1>
+            <p className="search-results-subtitle">
+              Explore Mia&apos;s art collection from the comforts of your home.
+            </p>
             {simpleSearchBox}
           </div>
         </div>
@@ -187,10 +190,10 @@ var Search = React.createClass({
 
     return (
       <div id="search">
-        {!!hideSearch || searchBox}
         {this.props.children}
-        {(this.props.hideResults && suggestions) || (
-          <div className="search-page-content">
+        <div className="search-page-content">
+          {!!hideSearch || searchBox}
+          {(this.props.hideResults && suggestions) || (
             <SearchResults
               {...this.props}
               hits={this.state.hits}
@@ -199,8 +202,8 @@ var Search = React.createClass({
               embed={hideSearch}
               handleCancelEmbed={() => this.setState({ cancelEmbed: true })}
             />
-          </div>
-        )}
+          )}
+        </div>
         {this.props.hideResults && <ClosedBanner />}
       </div>
     );

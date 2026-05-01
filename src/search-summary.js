@@ -19,16 +19,28 @@ const SearchSummary = React.createClass({
       .join(", ");
 
     const resultTotal = getResultTotal(search) || hits.length;
-    const queryLabel =
-      pretty.query && pretty.query !== "*" && pretty.query !== "undefined"
-        ? pretty.query
-        : "";
-    const summaryText = queryLabel
-      ? `${resultTotal} results for ${queryLabel}`
-      : `${resultTotal} results`;
+    const summaryText = `${resultTotal} results`;
+    const filterChips = ["On view", "Has image", "Has Open Access image"];
 
     return (
       <div className="search-results-header">
+        <div className="search-results-controls">
+          <button className="search-filters-trigger" type="button">
+            <span className="material-icons" aria-hidden="true">
+              tune
+            </span>
+            <span>Filters</span>
+          </button>
+          {filterChips.map((chipLabel, index) => (
+            <button
+              key={chipLabel}
+              className={`search-filter-chip${index === 0 ? " is-active" : ""}`}
+              type="button"
+            >
+              {chipLabel}
+            </button>
+          ))}
+        </div>
         <div className="search-results-summary">{summaryText}</div>
         <Helmet
           title={`🔎 ${pretty.searchString}`}
