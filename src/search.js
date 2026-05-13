@@ -53,6 +53,7 @@ var Search = React.createClass({
         ? results
         : (results && results.hits && results.hits.hits) || [],
       blank: this.props.blank,
+      filtersOpen: false,
     };
   },
 
@@ -201,6 +202,8 @@ var Search = React.createClass({
               minHeight={this.state.minHeight}
               embed={hideSearch}
               handleCancelEmbed={() => this.setState({ cancelEmbed: true })}
+              filtersOpen={this.state.filtersOpen}
+              onToggleFilters={this.toggleFilters}
             />
           )}
         </div>
@@ -342,6 +345,10 @@ var Search = React.createClass({
     if (this.context.universal) return;
     e && e.preventDefault && e.preventDefault();
     this.search();
+  },
+
+  toggleFilters() {
+    this.setState({ filtersOpen: !this.state.filtersOpen });
   },
 });
 Search.contextTypes = {

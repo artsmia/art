@@ -134,6 +134,7 @@ var SearchResults = React.createClass({
       this.props.hits != nextProps.hits ||
       this.props.completions !== nextProps.completions ||
       this.props.query.sort !== nextProps.query.sort ||
+      this.props.filtersOpen !== nextProps.filtersOpen ||
       this.state !== nextState
     );
   },
@@ -184,6 +185,8 @@ var SearchResults = React.createClass({
       embed: this.props.embed,
       handleCancelEmbed: this.props.handleCancelEmbed,
       isInspiredByMia: this.state.isInspiredByMia,
+      filtersOpen: this.props.filtersOpen,
+      onToggleFilters: this.props.onToggleFilters,
       ...this.props.summaryProps,
     };
 
@@ -206,21 +209,33 @@ var SearchResults = React.createClass({
     });
 
     return (
-      <div>
+      <div className="search-results-layout">
         <SearchSummary {...summaryProps} />
         {this.props.suggestions}
-        <ResultsList
-          search={search}
-          hits={this.props.hits}
-          postSearch={this.postSearch(
-            summaryProps,
-            this.state.postSearchOffset
-          )}
-          smallViewport={this.context.smallViewport}
-          showRelated={showFocusRelatedContent}
-          customImage={customImageFn && customImageFn.bind(this)}
-          isInspiredByMia={isInspiredByMia}
-        />
+        <div
+          className={`search-results-body${this.props.filtersOpen ? " is-open" : ""}`}
+        >
+          <aside
+            id="search-side-panel"
+            className="search-side-panel"
+            aria-hidden={!this.props.filtersOpen}
+          />
+          <div className="search-results-main">
+            <ResultsList
+              search={search}
+              hits={this.props.hits}
+              filtersOpen={this.props.filtersOpen}
+              postSearch={this.postSearch(
+                summaryProps,
+                this.state.postSearchOffset
+              )}
+              smallViewport={this.context.smallViewport}
+              showRelated={showFocusRelatedContent}
+              customImage={customImageFn && customImageFn.bind(this)}
+              isInspiredByMia={isInspiredByMia}
+            />
+          </div>
+        </div>
       </div>
     );
   },

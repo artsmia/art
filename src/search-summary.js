@@ -25,7 +25,13 @@ const SearchSummary = React.createClass({
     return (
       <div className="search-results-header">
         <div className="search-results-controls">
-          <button className="search-filters-trigger" type="button">
+          <button
+            className="search-filters-trigger"
+            type="button"
+            onClick={this.props.onToggleFilters}
+            aria-expanded={!!this.props.filtersOpen}
+            aria-controls="search-side-panel"
+          >
             <span className="material-icons" aria-hidden="true">
               tune
             </span>
