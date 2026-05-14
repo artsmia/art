@@ -84,6 +84,140 @@ function reshapeResultsJson(json) {
   return json;
 }
 
+function renderAdvancedFilterPanel() {
+  return (
+    <div className="search-advanced-filters">
+      <section className="search-filter-section">
+        <span className="search-filter-label">Date</span>
+        <div className="search-filter-grid-2">
+          <div>
+            <span className="search-filter-sub-label">From</span>
+            <input
+              id="filter-date-from"
+              className="search-filter-line-input"
+              placeholder="Year"
+              type="number"
+              data-filter="dateFrom"
+              readOnly
+              tabIndex={-1}
+            />
+          </div>
+          <div>
+            <span className="search-filter-sub-label">To</span>
+            <input
+              id="filter-date-to"
+              className="search-filter-line-input"
+              placeholder="Year"
+              type="number"
+              data-filter="dateTo"
+              readOnly
+              tabIndex={-1}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Department</span>
+        <input
+          id="filter-department"
+          className="search-filter-line-input"
+          placeholder="Search"
+          type="text"
+          data-filter="department"
+          readOnly
+          tabIndex={-1}
+        />
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Location</span>
+        <input
+          id="filter-location"
+          className="search-filter-line-input"
+          placeholder="Country, continent, or nationality"
+          type="text"
+          data-filter="location"
+          readOnly
+          tabIndex={-1}
+        />
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Medium</span>
+        <input
+          id="filter-medium"
+          className="search-filter-line-input"
+          placeholder="Search"
+          type="text"
+          data-filter="medium"
+          readOnly
+          tabIndex={-1}
+        />
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Show only</span>
+        <div className="search-filter-stack-tight">
+          <div
+            className="search-filter-toggle-row"
+            data-filter="onView"
+          >
+            <span className="search-filter-toggle-label">On View</span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+          <div
+            className="search-filter-toggle-row"
+            data-filter="hasImage"
+          >
+            <span className="search-filter-toggle-label">Has image</span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+          <div
+            className="search-filter-toggle-row"
+            data-filter="hasOpenAccessImage"
+          >
+            <span className="search-filter-toggle-label">
+              Has Open Access image
+            </span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Media</span>
+        <div className="search-filter-stack-tight">
+          <div
+            className="search-filter-toggle-row"
+            data-filter="hasAudio"
+          >
+            <span className="search-filter-toggle-label">Has Audio</span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+          <div
+            className="search-filter-toggle-row"
+            data-filter="has3dModel"
+          >
+            <span className="search-filter-toggle-label">Has 3D Model</span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 var SearchResults = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
@@ -219,7 +353,9 @@ var SearchResults = React.createClass({
             id="search-side-panel"
             className="search-side-panel"
             aria-hidden={!this.props.filtersOpen}
-          />
+          >
+            {renderAdvancedFilterPanel()}
+          </aside>
           <div className="search-results-main">
             <ResultsList
               search={search}
