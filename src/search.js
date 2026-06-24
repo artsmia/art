@@ -94,6 +94,43 @@ var Search = React.createClass({
     const formProps = universal
       ? { action: "/search/", method: "get" }
       : { action: "" };
+
+    const heroSearchBox = (
+      <section className="home-hero">
+        <div className="home-hero-inner">
+          <h1 className="home-hero-title">Search the Collection</h1>
+          <div className="home-search-wrap">
+            <div className="search-wrapper">
+              <form {...formProps} onSubmit={this.handleFormSubmit}>
+                <input
+                  className="search-input"
+                  type="search"
+                  placeholder="Search the collection"
+                  value={searchLanguageMap(this.state.terms)}
+                  onKeyDown={this.keyDown}
+                  onChange={this.throttledSearch}
+                  onFocus={({ target }) => target && target.select()}
+                  name="q"
+                  ref="searchInput"
+                  autoComplete="off"
+                  list="searchCompletions"
+                />
+                <button
+                  type="submit"
+                  className="search-button"
+                  aria-label="Search"
+                >
+                  <span className="material-icons" aria-hidden="true">
+                    search
+                  </span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+
     const simpleSearchBox = (
       <div
         className="search-wrapper"
@@ -187,10 +224,11 @@ var Search = React.createClass({
 
     var { embed } = this.props.query || {};
     var hideSearch = embed && !this.state.cancelEmbed;
+    var { heroLayout } = this.props;
 
     return (
-      <div id="search">
-        {!!hideSearch || searchBox}
+      <div id="search" className={heroLayout ? "home-search" : undefined}>
+        {!!hideSearch || (heroLayout ? heroSearchBox : searchBox)}
         {this.props.children}
         {(this.props.hideResults && suggestions) || (
           <div>
@@ -269,6 +307,11 @@ var Search = React.createClass({
       this.search();
       event.preventDefault();
     }
+  },
+
+  handleFormSubmit(event) {
+    event.preventDefault();
+    this.search();
   },
 
   componentWillReceiveProps(nextProps) {

@@ -1,0 +1,126 @@
+@use "brand-colors.scss";
+
+$MiaGroteskBold: "MiaGrotesk-Bold", sans-serif;
+$MiaGroteskLight: "MiaGrotesk-Light", sans-serif;
+
+.home-page {
+  .home-search {
+    background: #fff;
+  }
+
+  .home-hero {
+    background: #fff;
+    text-align: center;
+    padding: 7rem 1.5rem 2rem;
+
+    @media (min-width: 768px) {
+      padding: 8rem 1.5rem 2.5rem;
+    }
+  }
+
+  .home-hero-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  .home-hero-title {
+    font-family: $MiaGroteskBold, sans-serif;
+    font-size: clamp(2.75rem, 9vw, 5.5rem);
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: rgb(35, 35, 35);
+    margin: 0 0 3rem;
+  }
+
+  .home-search-wrap {
+    max-width: 50rem;
+    margin: 3rem auto 0;
+  }
+
+  .search-wrapper {
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    width: 100%;
+    margin-bottom: 0;
+    box-sizing: border-box;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    min-width: 0;
+    max-width: none;
+
+    form {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+  }
+
+  .search-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    padding: 0.82rem 1.2rem;
+    font-size: 1.55em;
+    line-height: 1.35;
+    color: #222;
+    font-family: $MiaGroteskLight, sans-serif;
+    text-align: left;
+    -webkit-appearance: none;
+    border-radius: 0;
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      appearance: none;
+      display: none;
+    }
+
+    &::placeholder {
+      color: #707070;
+      opacity: 0.8;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .search-button {
+    width: 4.6rem;
+    flex: 0 0 auto;
+    border: 0;
+    border-left: 1px solid #d9d9d9;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .material-icons {
+      font-size: 1.65em;
+      line-height: 1;
+    }
+  }
+
+  #suggestions {
+    color: rgb(35, 35, 35);
+    margin: 0.75rem 0 0;
+
+    a {
+      color: brand-colors.$primary;
+    }
+  }
+
+  .home-main {
+    max-width: 96rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+
+    @media (min-width: 1024px) {
+      padding: 0 3rem;
+    }
+  }
+}
