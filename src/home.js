@@ -4,8 +4,14 @@ var { Link } = Router;
 
 var Search = require("./search");
 var MapPage = require("./map-page");
+var HomeNewToMia = require("./home-new-to-mia");
+var homeFetchData = require("./home-fetch-data");
 
 var Home = React.createClass({
+  statics: {
+    fetchData: homeFetchData,
+  },
+
   render() {
     return (
       <div className="home-page">
@@ -17,7 +23,9 @@ var Home = React.createClass({
           suggestStyle={{ margin: "0.75rem 0 0" }}
           {...this.props}
         />
-        <main className="home-main" />
+        <main className="home-main">
+          <HomeNewToMia data={this.props.data} />
+        </main>
         <div id="map">
           <MapPage hideList={true}>
             <Link

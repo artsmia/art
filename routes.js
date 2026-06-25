@@ -21,7 +21,6 @@ var Map = require("./src/map-page");
 var More = require("./src/more");
 var Exhibition = require("./src/exhibition");
 var Artist = require("./src/artist");
-var RecentAccessions = require("./src/recent");
 var AccessionHighlight = require("./src/accession-highlight");
 var ArtChampionPage = require("./src/art-champion");
 var PeopleById = require("./src/people-by-id");
@@ -87,7 +86,9 @@ var routes = (
       path="exhibitions/:id/:slug"
       handler={Exhibition}
     />
-    <Route name="recent" path="/new" handler={RecentAccessions} />
+    <Route name="recent" path="/new">
+      <Redirect to="home" />
+    </Route>
     <Route name="surveys" path="surveys/:surveyId" handler={Survey} />
     <Route name="survey" path="survey" handler={Survey} />
     <NotFoundRoute handler={NotFound} />

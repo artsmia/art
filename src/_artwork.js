@@ -478,6 +478,8 @@ var Figure = React.createClass({
       className,
       customImage,
       ignoreImageStyle,
+      imageFallback,
+      onImageError,
       ...figureProps
     } = this.props;
     var id = art.id;
@@ -502,6 +504,8 @@ var Figure = React.createClass({
             className="artwork-image"
             customImage={customImage}
             ignoreStyle={ignoreImageStyle}
+            fallback={imageFallback}
+            onImageError={onImageError}
           />
         </ConditionalLinkWrapper>
         <figcaption>{this.props.children}</figcaption>

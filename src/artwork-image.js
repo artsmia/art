@@ -7,7 +7,7 @@ var rightsDescriptions = require("./rights-types.js");
 
 var ArtworkImage = React.createClass({
   render() {
-    let { art, id, customImage, style, containerStyle, ignoreStyle } =
+    let { art, id, customImage, style, containerStyle, ignoreStyle, fallback, onImageError } =
       this.props;
     let aspectRatio = art.image_width / art.image_height;
     let maxWidth = window.innerWidth ? Math.min(window.innerWidth, 400) : 400;
@@ -27,25 +27,35 @@ var ArtworkImage = React.createClass({
         customImage={customImage}
         key={id}
         lazyLoad={this.props.lazyLoad}
+        onImageInvalidation={onImageError}
       />
     );
 
     var rights = rightsDescriptions.getRights(art);
     var showImage =
+      !!fallback ||
       !!customImage ||
       (art.image == "valid" &&
         art.image_width > 0 &&
         rights !== "Permission Denied");
 
-    return (
-      showImage && (
+    if (!showImage) return null;
+
+    if (fallback) {
+      return (
         <div className="artwork-image" style={containerStyle}>
-          {image}
-          <Markdown allowAnchors={this.props.allowAnchors}>
-            {art.image_copyright}
-          </Markdown>
+          {fallback}
         </div>
-      )
+      );
+    }
+
+    return (
+      <div className="artwork-image" style={containerStyle}>
+        {image}
+        <Markdown allowAnchors={this.props.allowAnchors}>
+          {art.image_copyright}
+        </Markdown>
+      </div>
     );
   },
 

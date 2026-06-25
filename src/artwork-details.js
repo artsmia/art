@@ -449,7 +449,7 @@ var ArtworkDetails = React.createClass({
                 This was one of Mia's top highlights in{" "}
                 {art.accessionDate.split("-")[0]}.<br />
               </Link>
-              <Link to="recent">See the rest!</Link>
+              <Link to="/#new-to-mia">See the rest!</Link>
             </p>,
             <Markdown>{art.accessionHighlightText + "\n\n---"}</Markdown>,
           ];
