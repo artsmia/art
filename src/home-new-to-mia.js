@@ -20,7 +20,7 @@ function artworksWithValidImages(artworks) {
 var IMG_STYLE = { width: "100%", height: "100%", objectFit: "cover" };
 var CONTAINER_STYLE = { width: "100%", height: "100%", overflow: "hidden" };
 var RECENT_ACCESSIONS_MIN = 3;
-var RECENT_ACCESSIONS_MAX = 10;
+var RECENT_ACCESSIONS_MAX = 9;
 
 var HomeNewToMia = React.createClass({
   getInitialState() {

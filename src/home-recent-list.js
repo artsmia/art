@@ -3,6 +3,7 @@ var ReactDOM = require("react-dom");
 var Router = require("react-router");
 var Masonry = require("masonry-layout");
 var imagesLoaded = require("imagesloaded");
+var debounce = require("debounce");
 
 var ArtworkResult = require("./artwork-result");
 
@@ -12,6 +13,13 @@ function hasValidImage(art) {
 
 var HomeRecentList = React.createClass({
   mixins: [Router.Navigation],
+
+  getInitialState() {
+    return {
+      columnWidth: 320,
+      gutter: 32,
+    };
+  },
 
   sanitizeArtworkId(id) {
     return String(id || "").replace("http://api.artsmia.org/objects/", "");
@@ -25,7 +33,11 @@ var HomeRecentList = React.createClass({
         var id = this.sanitizeArtworkId(art.id);
 
         return (
-          <div key={id} onClick={this.handleClick.bind(this, art, id)}>
+          <div
+            key={id}
+            onClick={this.handleClick.bind(this, art, id)}
+            style={{ width: this.state.columnWidth + "px" }}
+          >
             <ArtworkResult
               id={id}
               data={{ artwork: art }}
@@ -45,16 +57,19 @@ var HomeRecentList = React.createClass({
   },
 
   componentDidMount() {
+    this.handleResize = debounce(this.syncLayoutMetrics, 120);
+    window.addEventListener("resize", this.handleResize);
     this.initializeMasonry();
   },
 
   componentDidUpdate(prevProps) {
     if (prevProps.artworks !== this.props.artworks) {
-      this.layoutMasonry();
+      this.syncLayoutMetrics();
     }
   },
 
   componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
     if (this.imagesLoader) this.imagesLoader.off("progress", this.layoutMasonry);
     if (this.masonry) this.masonry.destroy();
     this.imagesLoader = null;
@@ -64,23 +79,74 @@ var HomeRecentList = React.createClass({
   initializeMasonry() {
     var container = ReactDOM.findDOMNode(this.refs.objectsWrap);
     if (!container) return;
+    var metrics = this.getLayoutMetrics(container.clientWidth || 0);
 
     this.masonry = new Masonry(container, {
       itemSelector: ".objects-wrap > div",
-      columnWidth: 320,
-      gutter: 32,
-      isFitWidth: true,
+      columnWidth: metrics.columnWidth,
+      gutter: metrics.gutter,
       horizontalOrder: true,
       transitionDuration: "0.22s",
     });
 
     this.imagesLoader = imagesLoaded(container);
     this.imagesLoader.on("progress", this.layoutMasonry);
-    this.layoutMasonry();
+    this.syncLayoutMetrics();
   },
 
   layoutMasonry() {
     if (this.masonry) this.masonry.layout();
+  },
+
+  getLayoutMetrics(containerWidth) {
+    var gutter = containerWidth <= 700 ? 20 : 32;
+    var minColumnWidth = containerWidth <= 700 ? 240 : 260;
+    var targetColumnWidth = 320;
+    var safeWidth = Math.max(containerWidth, minColumnWidth);
+    var columns = Math.max(
+      1,
+      Math.floor((safeWidth + gutter) / (minColumnWidth + gutter))
+    );
+    var columnWidth = Math.floor(
+      (safeWidth - gutter * (columns - 1)) / columns
+    );
+
+    if (columnWidth > targetColumnWidth) {
+      columns = Math.max(
+        columns,
+        Math.round((safeWidth + gutter) / (targetColumnWidth + gutter))
+      );
+      columnWidth = Math.floor(
+        (safeWidth - gutter * (columns - 1)) / columns
+      );
+    }
+
+    return {
+      columnWidth: Math.max(minColumnWidth, columnWidth),
+      gutter: gutter,
+    };
+  },
+
+  syncLayoutMetrics() {
+    var container = ReactDOM.findDOMNode(this.refs.objectsWrap);
+    if (!container) return;
+
+    var metrics = this.getLayoutMetrics(container.clientWidth || 0);
+
+    if (this.masonry) {
+      this.masonry.options.columnWidth = metrics.columnWidth;
+      this.masonry.options.gutter = metrics.gutter;
+    }
+
+    if (
+      this.state.columnWidth !== metrics.columnWidth ||
+      this.state.gutter !== metrics.gutter
+    ) {
+      this.setState(metrics, this.layoutMasonry);
+      return;
+    }
+
+    this.layoutMasonry();
   },
 
   handleClick(art, id) {
