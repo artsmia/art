@@ -28,6 +28,11 @@ var searchLanguageMap = (queryText) => {
     '_exists_:"list:hispanic-heritage"': "Hispanic Heritage",
     '_exists_:"list:arts-of-americas"': "Arts of the Americas",
     '_exists_:"list:spookyseason"': "Spooky",
+    '_exists_:"list:euro-highlights-pre-1800"': "European Highlights pre-1800",
+    '_exists_:"list:euro-highlights-1800-1960s"':
+      "European Highlights 1800–1960s",
+    '_exists_:"list:euro-highlights-prints-drawings"':
+      "European Highlights: Prints and Drawings",
   };
 
   var reversedMap = Object.keys(map).reduce((reversed, key) => {

@@ -4,6 +4,7 @@ var { Link } = Router;
 
 var Search = require("./search");
 var MapPage = require("./map-page");
+var HomeExploreHero = require("./home-explore-hero");
 var HomeNewToMia = require("./home-new-to-mia");
 var homeFetchData = require("./home-fetch-data");
 
@@ -24,6 +25,7 @@ var Home = React.createClass({
           {...this.props}
         />
         <main className="home-main">
+          <HomeExploreHero data={this.props.data} />
           <HomeNewToMia data={this.props.data} />
         </main>
         <div id="map">
