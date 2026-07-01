@@ -7,6 +7,8 @@
 @use "alternative-titles.scss";
 @use "not-found-page.scss";
 @use "home.scss";
+@use "footer.scss";
+@use "nav.scss";
 @media print {
   @include meta.load-css("print.scss");
 }
@@ -37,20 +39,16 @@ body {
   font-size: 1.25em;
 }
 
-a {
+.main-content a {
   color: rgba(239, 53, 53, 0.9);
   font-weight: 500;
   text-decoration: none;
   font-size: 1em;
 }
 
-a:hover {
+.main-content a:hover {
   color: rgba(35, 35, 35, 0.65);
   font-weight: 500;
-}
-
-#search {
-  /*margin: 8px;*/
 }
 
 h1,
@@ -79,11 +77,29 @@ h6 {
   background-color: brand-colors.$primary;
 }
 
-header {
-  position: fixed;
-  top: 0;
-  z-index: 1;
+.quilt-search-wrap {
+  min-height: 3em;
+  background: #fff;
 }
+
+.quilt-wrap.has-children {
+  position: relative;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.quilt-wrap.dark {
+  display: block;
+  min-height: 3.5rem;
+}
+
+#quilt-controls {
+  float: right;
+  display: none;
+}
+
 .quilt-wrap a:hover {
   overflow: visible !important;
   // z-index: 100;
@@ -98,30 +114,11 @@ header {
   background-repeat: no-repeat;
   height: 3.3em;
   width: 8em;
-  color: #fff;
   background-position: -2px 3px;
-  position: fixed;
   display: inline-block;
-  z-index: 5;
-}
-.global_buttons {
-  background: brand-colors.$primary;
-  width: 5em;
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 0.7em 0;
-  z-index: 1500;
-}
-.global_display {
-  width: 100%;
-  position: fixed;
-  background: rgb(35, 35, 35);
+  flex-shrink: 0;
 }
 
-.global_buttons button.material-icons {
-  padding: 2px 0 0 10px;
-}
 .wordmark-container {
   background-image: url("../images/MIA_LOGO_WORDMARK.svg");
   background-repeat: no-repeat;
@@ -710,59 +707,10 @@ a.departmentLink h2 {
     @extend %shadowBurstTopLeft;
   }
 
-  .global_buttons {
-    // IDEA radial gradient behind the white buttons to show them against the white background
-    //
-    // background: radial-gradient(circle at top right, #aaa, #ccc 21%, #eee 31%, #fff);
-    // background-image: linear-gradient(
-    //   -135deg,
-    //   rgba(199,199,199,0.3),
-    //   rgba(220, 220, 220, 0.3) 21%,
-    //   rgba(240, 240, 240, 0.3) 31%,
-    //   rgba(255, 255, 255, 0.3) 77%
-    // ); // TODO - see through linear gradient?
-    // background-image: linear-gradient(-135deg, #aaa, #ccc 21%, #eee 31%, #fff 77%);
-    //
-    // &:hover {
-    //   background: #232323;
-    // }
-    //
-    // …NOPE
-    //
-    // Instead, make the buttons dark, and let the background use a blur backdrop?
-    // Downside: No FF suport
-    // Maybe add javascript to this so when the page is 'docked' at the top, the button is opaque
-    // but once scrolling and interaction happens it fades into the background?
-    background: inherit;
-    backdrop-filter: blur(3px);
-    border-radius: 1em;
-    button {
-      color: rgba(35, 35, 35, 0.7);
-    }
-    //
-    // My other idea is to hide them behind the top of the page by 'scrolling the page up'
-    // with JS onload, so they're behind the part of the page visible at load and an up scroll
-    // reveals the top nav? Maybe the logo would be z-indexed to show, while the rest of the nav
-    // bar is hidden?
-  }
-
-  header.open .global_buttons {
-    background: white;
-    border-radius: 0;
-
-    button {
-      color: #232323;
-    }
-  }
-
   .artwork.smallviewport::before {
     #map {
       background-image: none;
     }
-  }
-
-  &.smallviewport .global_buttons {
-    background: #232323;
   }
 }
 // END WIPBETA

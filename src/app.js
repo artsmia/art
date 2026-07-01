@@ -5,8 +5,7 @@ var debounce = require("debounce");
 var { pathSatisfies } = require("ramda");
 var cx = require("classnames");
 
-var LiveSearch = require("./live-search");
-var GlobalNavigation = require("./navigation");
+var Footer = require("./footer");
 var consoleWelcomeMessage = require("./console-welcome-message");
 var Survey = require("./survey");
 
@@ -37,18 +36,39 @@ var App = React.createClass({
       isDev,
       smallViewport: this.isSmallViewport(),
     });
-    var showMenuOrSearch = this.state.showMenu || this.state.showSearch;
 
     return (
       <div className={classes}>
-        {this.state.hideHeader || (
-          <header
-            style={{ zIndex: showMenuOrSearch ? 444 : 1 }}
-            className={cx({ open: showMenuOrSearch })}
-          >
-            {logo}
-            {this.globalToolBar()}
-          </header>
+        <style type="text/css">{`
+          *:focus {
+            outline: 1px dotted #212121;
+            outline: -webkit-focus-ring-color auto 5px;
+          }
+        `}</style>
+        {!this.state.hideHeader && (
+          <div className="header-shell">
+            <header className={cx({ open: this.state.menuOpen })}>
+              <div className="header-left">
+                {logo}
+                {this.primaryNav()}
+              </div>
+              <div className="header-right">
+                <button
+                  type="button"
+                  className="header-menu-btn"
+                  aria-label={this.state.menuOpen ? "Close menu" : "Open menu"}
+                  aria-expanded={this.state.menuOpen}
+                  aria-controls="header-expanded-nav"
+                  onClick={this.toggleMenu}
+                >
+                  <span className="material-icons">
+                    {this.state.menuOpen ? "close" : "menu"}
+                  </span>
+                </button>
+              </div>
+            </header>
+            {this.state.menuOpen && this.expandedNav()}
+          </div>
         )}
         <Helmet
           title="Collection | Minneapolis Institute of Art"
@@ -62,11 +82,14 @@ var App = React.createClass({
             { property: "og:url", content: canonicalURL },
           ]}
         />
-        <RouteHandler
-          {...this.props}
-          activateSearch={this.state.activateSearch}
-          toggleAppHeader={this.toggleHeader}
-        />
+        <div className="main-content">
+          <RouteHandler
+            {...this.props}
+            activateSearch={this.state.activateSearch}
+            toggleAppHeader={this.toggleHeader}
+          />
+          <Footer />
+        </div>
 
         {this.state.disableSurveyPopup || (
           <div
@@ -101,6 +124,64 @@ var App = React.createClass({
     );
   },
 
+  expandedNav() {
+    var expandedNavColumns = [
+      [
+        { label: "Exhibitions", href: "https://new.artsmia.org/exhibitions" },
+        { label: "Art + Artists", href: "https://new.artsmia.org/art-artists" },
+      ],
+      [
+        { label: "Programs", href: "https://new.artsmia.org/discover" },
+        { label: "About", href: "https://new.artsmia.org/about" },
+      ],
+      [
+        { label: "Shop", href: "https://new.artsmia.org/shop" },
+        { label: "Visit", href: "https://new.artsmia.org/visit" },
+      ],
+    ];
+
+    var utilityLinks = [
+      { label: "Tickets", href: "https://tickets.artsmia.org/events" },
+      { label: "Calendar", href: "https://new.artsmia.org/visit/calendar" },
+      {
+        label: "Donate",
+        href: "https://tickets.artsmia.org/events?category=Donation",
+      },
+    ];
+
+    return (
+      <div
+        id="header-expanded-nav"
+        className="header-expanded-nav"
+        onClick={this.closeMenu}
+      >
+        <div className="expanded-nav-section expanded-nav-label-wrap">
+          <div className="expanded-nav-label">Explore ArtsMia.org</div>
+        </div>
+        <div className="expanded-nav-separator" />
+        <div className="expanded-nav-section expanded-nav-grid">
+          {expandedNavColumns.map((column, columnIndex) => (
+            <div className="expanded-nav-column" key={`col-${columnIndex}`}>
+              {column.map(({ label, href }) => (
+                <a key={label + href} href={href} onClick={this.closeMenu}>
+                  {label}
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div className="expanded-nav-separator" />
+        <div className="expanded-nav-section expanded-nav-utility">
+          {utilityLinks.map(({ label, href }) => (
+            <a key={label + href} href={href} onClick={this.closeMenu}>
+              {label}
+            </a>
+          ))}
+        </div>
+      </div>
+    );
+  },
+
   componentDidMount() {
     (this.debouncedResize = debounce(this.handleResize, 500)),
       window.addEventListener("resize", this.debouncedResize);
@@ -123,8 +204,77 @@ var App = React.createClass({
     );
   },
 
+  primaryNav() {
+    var path = this.props.path || "";
+    var navLinks = [
+      { key: "new", label: "New to Mia", to: "recent", activePath: "/new" },
+      {
+        key: "explore",
+        label: "Explore",
+        to: "explore",
+        activePath: "/explore",
+      },
+      {
+        key: "purcell-cutts-house",
+        label: "Purcell-Cutts House",
+        to: "page",
+        params: { name: "purcell-cutts-house" },
+        activePath: "/info/purcell-cutts-house",
+      },
+      {
+        key: "provenance-research",
+        label: "Provenance Research",
+        to: "page",
+        params: { name: "provenance-research" },
+        activePath: "/info/provenance-research",
+      },
+      {
+        key: "deaccessions",
+        label: "Deaccessions",
+        to: "page",
+        params: { name: "deaccessions" },
+        activePath: "/info/deaccessions",
+      },
+      {
+        key: "conservation",
+        label: "Conservation",
+        to: "page",
+        params: { name: "conservation" },
+        activePath: "/info/conservation",
+      },
+    ];
+
+    return (
+      <nav className="header-primary-nav" aria-label="Main">
+        {navLinks.map(({ key, label, to, params, activePath }) => {
+          return (
+            <Link
+              key={key}
+              to={to}
+              params={params}
+              className={path === activePath ? "is-active" : ""}
+            >
+              {label}
+            </Link>
+          );
+        })}
+      </nav>
+    );
+  },
+
   toggleHeader() {
     this.setState({ hideHeader: !this.state.hideHeader });
+  },
+
+  toggleMenu(event) {
+    event && event.preventDefault();
+    event && event.stopPropagation();
+    this.setState({ menuOpen: !this.state.menuOpen });
+  },
+
+  closeMenu() {
+    if (!this.state.menuOpen) return;
+    this.setState({ menuOpen: false });
   },
 
   getChildContext() {
@@ -133,60 +283,6 @@ var App = React.createClass({
       smallViewport: this.state.smallViewport,
       clientIp: this.props.clientIp,
     };
-  },
-
-  globalToolBar() {
-    var searchButton = (
-      <button className="material-icons search" onClick={this.toggleSearch}>
-        {this.state.showSearch ? "close" : "search"}
-      </button>
-    );
-    var searchTrigger = this.props.universal ? (
-      <Link to="home">{searchButton}</Link>
-    ) : (
-      searchButton
-    );
-    var menuButton = (
-      <button className="material-icons menu" onClick={this.toggleMenu}>
-        {this.state.showMenu ? "close" : "menu"}
-      </button>
-    );
-    var menuTrigger = menuButton;
-    return (
-      <div>
-        <div className="global_buttons">
-          {menuTrigger}
-          {searchTrigger}
-        </div>
-        <div className="global_display">
-          {this.state.showMenu && (
-            <GlobalNavigation closeNav={this.toggleMenu} />
-          )}
-          {this.state.showSearch && (
-            <LiveSearch afterSearch={this.toggleSearch} />
-          )}
-        </div>
-      </div>
-    );
-  },
-
-  toggleSearch(event, args) {
-    var { forceClose } = event || {};
-    var { data } = this.props;
-    this.setState({
-      showSearch: forceClose ? false : !this.state.showSearch,
-      showMenu: false,
-    });
-  },
-
-  toggleMenu(event) {
-    event && event.preventDefault();
-    event && event.stopPropagation();
-
-    this.setState({
-      showMenu: !this.state.showMenu,
-      showSearch: false,
-    });
   },
 
   getInitialState() {
@@ -202,7 +298,7 @@ var App = React.createClass({
     const showSurveyPopup = false; // don't show until survey fetches data and knows if this user has already completed or rejected the survey
 
     return {
-      showSearch: false,
+      menuOpen: false,
       smallViewport: this.isSmallViewport(),
       enteredViaMore: window.enteredViaMore,
       showSurveyPopup,
@@ -210,23 +306,9 @@ var App = React.createClass({
     };
   },
 
-  // wrap in a click handler when the navigation isn't visible, and open the nav
-  // once nav is open, a second click goes to artsmia.org
   makeLogo() {
-    var { showMenu } = this.state;
     var logo = <div className="logo-container"></div>;
-
-    if (this.props.universal) return <a href="/">{logo}</a>;
-
-    return showMenu ? (
-      <a href="https://new.artsmia.org" title="Back to artsmia.org">
-        {logo}
-      </a>
-    ) : (
-      <a href="/" onClick={this.toggleMenu}>
-        {logo}
-      </a>
-    );
+    return <a href="/">{logo}</a>;
   },
 
   noIndex() {

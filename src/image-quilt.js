@@ -100,30 +100,12 @@ const ImageQuilt = React.createClass({
 
     var rows = this.getPartition(shuffledArtworks || artworks, numRows);
 
-    console.info("ImageQuilt", {
-      summedAspectRatio,
-      rowHeight,
-      numRows,
-      rows,
-      hPadding,
-      hPaddingInt,
-      vPadding,
-      isInspiredByMia,
-    });
-
     const images = rows.map((row, index) => {
       var rowSummedAspectRatio = row.reduce((sum, art) => {
         return sum + art._source.aspect_ratio;
       }, 0);
       var rowAspectRatio = rowSummedAspectRatio / row.length;
       var unadjustedHeight = this.state.width / rowSummedAspectRatio;
-
-      false &&
-        console.info("ImageQuilt row", {
-          rowSummedAspectRatio,
-          rowAspectRatio,
-          unadjustedHeight,
-        });
 
       var images = row.map((art) => {
         var _art = art._source;
@@ -136,11 +118,6 @@ const ImageQuilt = React.createClass({
           unadjustedHeight > maxRowHeight
             ? width / (unadjustedHeight / maxRowHeight)
             : width;
-
-        false &&
-          console.info("ImageQuilt row image", {
-            widthAdjustedToClipTallRows,
-          });
 
         return (
           <QuiltPatch
@@ -183,17 +160,24 @@ const ImageQuilt = React.createClass({
     var quiltStyle = {
       cursor: "pointer",
       minHeight: 150,
+      ...(this.props.children
+        ? { width: this.state.width || "100%" }
+        : {}),
       ...this.props.style,
     };
 
+    var quiltClassName =
+      "quilt-wrap" + (this.props.children ? " has-children" : "");
+
     return (
       <div
-        className="quilt-wrap"
+        className={quiltClassName}
         onMouseLeave={this.hovered.bind(this, null, false)}
         style={quiltStyle}
       >
         {images}
-        <div id="quilt-controls" style={{ float: "right", display: "none" }}>
+        {this.props.children}
+        <div id="quilt-controls">
           {this.state.maxWorks < this.props.artworks.length && (
             <a onClick={this.enlarge.bind(this, 1, 10)}>more thumbnails</a>
           )}
@@ -317,7 +301,6 @@ const ImageQuilt = React.createClass({
     });
   },
   reset() {
-    console.info("resetting quilt", this.props);
     if (this.state.morphInterval) clearInterval(this.state.morphInterval);
     this.setState({
       maxRows: this.props.maxRows,
@@ -326,7 +309,6 @@ const ImageQuilt = React.createClass({
   },
   morph(delta = 1) {
     const morph = () => {
-      console.info("morphing", this.state.maxWorks, this.props.artworks.length);
       if (
         this.state.maxWorks > this.props.artworks.length ||
         this.state.maxRows <= 0
@@ -382,8 +364,6 @@ var QuiltPatch = React.createClass({
       WebkitTransform: "translateY(-50%) translateX(-50%)",
       position: "absolute",
     };
-
-    false && console.info("QuiltPatch", { hPadding, imgStyle });
 
     var image = (
       <Image
