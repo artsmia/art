@@ -20,7 +20,7 @@ function artworksWithValidImages(artworks) {
 var IMG_STYLE = { width: "100%", height: "100%", objectFit: "cover" };
 var CONTAINER_STYLE = { width: "100%", height: "100%", overflow: "hidden" };
 var RECENT_ACCESSIONS_MIN = 3;
-var RECENT_ACCESSIONS_MAX = 9;
+var RECENT_ACCESSIONS_MAX = 8;
 
 var HomeNewToMia = React.createClass({
   getInitialState() {
@@ -128,7 +128,7 @@ var HomeNewToMia = React.createClass({
               {cards.map(this.renderHighlightCard)}
             </div>
             <Link
-              className="ntm-highlights-more"
+              className="home-button ntm-highlights-more"
               to="filteredSearchResults"
               params={{ terms: "*", splat: 'highlights:"1"' }}
             >

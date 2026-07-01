@@ -166,24 +166,7 @@ $ntm-font-mia-bold: "Mia Bold", "Helvetica Neue", Helvetica, sans-serif;
     display: block;
     margin: 0 auto;
     width: auto;
-    padding: 0.75rem 1.5rem;
-    background: $ntm-black;
-    border: 1px solid transparent;
-    border-radius: 0;
-    color: #fff;
-    text-decoration: none;
-    font-family: $ntm-font-inter;
-    font-size: 0.95rem;
-    font-weight: 700;
     text-align: center;
-    transition: background-color 0.2s, color 0.2s;
-
-    &:hover {
-      background: #fff;
-      color: $ntm-black;
-      border-color: $ntm-black;
-      text-decoration: none;
-    }
   }
 
   .ntm-highlights-empty {
