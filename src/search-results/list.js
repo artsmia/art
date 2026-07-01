@@ -1,33 +1,21 @@
 var React = require("react");
+var ReactDOM = require("react-dom");
+var Router = require("react-router");
+var Masonry = require("masonry-layout");
+var imagesLoaded = require("imagesloaded");
 
 var ArtworkResult = require("../artwork-result");
-var FocusedResult = require("./focused");
 
 var SearchResultsList = React.createClass({
-  render() {
-    var {
-      leftColumnWidth,
-      focusedResult,
-      focusHandler,
-      smallViewport,
-      customImage,
-      ...focusedProps
-    } = this.props;
+  mixins: [Router.Navigation],
 
-    if (smallViewport || this.context.universal) {
-      focusedResult = null;
-    }
-    if (!focusedResult) leftColumnWidth = "100%";
+  render() {
+    var { smallViewport, customImage } = this.props;
 
     var results = this.props.hits.map((hit) => {
       var id = String(hit._source.id || "").replace("http://api.artsmia.org/objects/", "");
-      var focused = focusedResult === hit._source;
       return (
-        <div
-          key={id}
-          onClick={this.handleClick.bind(this, hit)}
-          className={focused ? "focused" : ""}
-        >
+        <div key={id} onClick={this.handleClick.bind(this, hit)}>
           <ArtworkResult
             id={id}
             data={{ artwork: hit._source }}
@@ -44,34 +32,69 @@ var SearchResultsList = React.createClass({
         className="search-results-wrap clearfix"
         style={{ position: "relative", minHeight: this.props.minHeight }}
       >
-        <div
-          className="objects-wrap leftBar"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            width: leftColumnWidth,
-          }}
-        >
+        <div className="objects-wrap" ref="objectsWrap">
           {results}
+        </div>
+        <div className="search-results-post">
           {this.props.postSearch}
         </div>
-        {focusedResult && (
-          <FocusedResult
-            key={focusedResult._source.id}
-            art={focusedResult._source}
-            highlights={focusedResult.highlight}
-            {...this.props}
-          />
-        )}
       </div>
     );
   },
 
+  componentDidMount() {
+    this.initializeMasonry();
+  },
+
+  componentDidUpdate(prevProps) {
+    const hitsChanged = prevProps.hits !== this.props.hits;
+    const filterStateChanged = prevProps.filtersOpen !== this.props.filtersOpen;
+
+    if (hitsChanged || filterStateChanged) {
+      this.layoutMasonry();
+    }
+
+    if (filterStateChanged) {
+      clearTimeout(this.transitionLayoutTimer);
+      this.transitionLayoutTimer = setTimeout(() => {
+        this.layoutMasonry();
+      }, 240);
+    }
+  },
+
+  componentWillUnmount() {
+    clearTimeout(this.transitionLayoutTimer);
+    if (this.imagesLoader) this.imagesLoader.off("progress", this.layoutMasonry);
+    if (this.masonry) this.masonry.destroy();
+    this.imagesLoader = null;
+    this.masonry = null;
+  },
+
+  initializeMasonry() {
+    const container = ReactDOM.findDOMNode(this.refs.objectsWrap);
+    if (!container) return;
+
+    this.masonry = new Masonry(container, {
+      itemSelector: ".objects-wrap > div",
+      columnWidth: 320,
+      gutter: 32,
+      isFitWidth: true,
+      horizontalOrder: true,
+      transitionDuration: "0.22s",
+    });
+
+    this.imagesLoader = imagesLoaded(container);
+    this.imagesLoader.on("progress", this.layoutMasonry);
+    this.layoutMasonry();
+  },
+
+  layoutMasonry: function () {
+    if (this.masonry) this.masonry.layout();
+  },
+
   handleClick(hit) {
-    this.props.focusHandler(hit, SearchResultsList);
+    if (!hit) return;
+    this.transitionTo("artwork", { id: hit._id });
   },
 });
 SearchResultsList.contextTypes = {

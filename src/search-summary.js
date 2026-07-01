@@ -1,9 +1,6 @@
 var React = require("react");
 var Helmet = require("react-helmet");
-var { Link } = require("react-router");
 
-var Decorate = require("./decorate");
-var Aggregations = require("./aggregations");
 var searchLanguageMap = require("./search-language");
 const { getResultTotal } = require("./util/search-utils");
 
@@ -12,31 +9,6 @@ const SearchSummary = React.createClass({
     const search = this.props.search;
     if (!search || !search.hits) return <div />;
     const hits = this.props.hits;
-    const results = this.props.results;
-    const { showAggs } = this.props;
-
-    // only allow opening the filters box when
-    // 1. there's more than 1 result
-    // 2. there are filters applied that could be reducing the results to 0
-    const toggleAggs = ((hits && hits.length > 1) ||
-      (search.filters && search.filters.length > 0)) && (
-      <span className="filter-button">
-        <a onClick={this.toggleAggs} style={{ cursor: "pointer" }}>
-          {showAggs ? "hide" : "advanced"}
-        </a>
-      </span>
-    );
-
-    const showingAll =
-      hits.length >= getResultTotal(search) ||
-      hits.length >= this.props.maxResults;
-
-    var { smallViewport } = this.context;
-    var toolbarClasses =
-      "summaryText mdl-cell " +
-      (smallViewport
-        ? "mdl-cell--4-col"
-        : "mdl-cell--8-col mdl-cell--4-col-tablet");
 
     var pretty = {
       query: searchLanguageMap(search.query),
@@ -46,65 +18,36 @@ const SearchSummary = React.createClass({
       .filter((string) => !!string && string !== "*" && string !== "undefined")
       .join(", ");
 
-    var { sort } = this.props.query;
-    var humanizeSnakeCase = (s) =>
-      `_${s}`.replace(/_(.?)/g, (_, x) => ` ${x.toUpperCase()}`).trim();
+    const resultTotal = getResultTotal(search) || hits.length;
+    const summaryText = `${resultTotal} results`;
+    const filterChips = ["On view", "Has image", "Has Open Access image"];
 
     return (
-      <div className="agg-wrap">
-        <div className="toolbar mdl-grid">
-          {this.props.children}
-          <div className={toolbarClasses}>
-            <h2 onClick={this.toggleContent}>
-              showing {hits.length}{" "}
-              {showingAll || <span>of {getResultTotal(search)} </span>}
-              results{" "}
-              {pretty.query && (
-                <span>
-                  matching <code>{pretty.query}</code>
-                </span>
-              )}
-              {search.filters && (
-                <span>
-                  {" "}
-                  and <code>{decodeURIComponent(pretty.filters)}</code> (
-                  <Link
-                    to="searchResults"
-                    query={search.query}
-                    params={{ terms: `${search.query}`, splat: "" }}
-                  >
-                    clear filters
-                  </Link>
-                  )
-                </span>
-              )}
-              {sort && (
-                <span>
-                  {" "}
-                  sorted by {humanizeSnakeCase(sort.replace(/(-|\.).*/, ""))}
-                </span>
-              )}
-              {showingAll || this.props.showMoreLink}
-              {this.props.embed && (
-                <span>
-                  {" "}
-                  (
-                  <a href="#" onClick={this.props.handleCancelEmbed}>
-                    show search
-                  </a>
-                  )
-                </span>
-              )}
-            </h2>
-          </div>
-          {!this.props.embed && (
-            <div className="mdl-cell mdl-cell--2-col">{toggleAggs}</div>
-          )}
+      <div className="search-results-header">
+        <div className="search-results-controls">
+          <button
+            className="search-filters-trigger"
+            type="button"
+            onClick={this.props.onToggleFilters}
+            aria-expanded={!!this.props.filtersOpen}
+            aria-controls="search-side-panel"
+          >
+            <span className="material-icons" aria-hidden="true">
+              tune
+            </span>
+            <span>Filters</span>
+          </button>
+          {filterChips.map((chipLabel, index) => (
+            <button
+              key={chipLabel}
+              className={`search-filter-chip${index === 0 ? " is-active" : ""}`}
+              type="button"
+            >
+              {chipLabel}
+            </button>
+          ))}
         </div>
-
-        {showAggs && <Aggregations search={search} {...this.props} />}
-        <Decorate search={search} params={this.props.params} {...this.props} />
-        {false && <ClosedBanner />}
+        <div className="search-results-summary">{summaryText}</div>
         <Helmet
           title={`🔎 ${pretty.searchString}`}
           meta={[
@@ -118,13 +61,6 @@ const SearchSummary = React.createClass({
       </div>
     );
   },
-
-  toggleAggs() {
-    this.props.toggleAggs();
-  },
 });
-SearchSummary.contextTypes = {
-  smallViewport: React.PropTypes.bool,
-};
 
 module.exports = SearchSummary;

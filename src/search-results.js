@@ -7,7 +7,6 @@ var rest = require("rest");
 var SEARCH = require("./endpoints").search;
 var SearchSummary = require("./search-summary");
 var ResultsList = require("./search-results/list");
-var ResultsGrid = require("./search-results/grid");
 var searchLanguageMap = require("./search-language");
 const { getResultTotal } = require("./util/search-utils");
 
@@ -85,6 +84,140 @@ function reshapeResultsJson(json) {
   return json;
 }
 
+function renderAdvancedFilterPanel() {
+  return (
+    <div className="search-advanced-filters">
+      <section className="search-filter-section">
+        <span className="search-filter-label">Date</span>
+        <div className="search-filter-grid-2">
+          <div>
+            <span className="search-filter-sub-label">From</span>
+            <input
+              id="filter-date-from"
+              className="search-filter-line-input"
+              placeholder="Year"
+              type="number"
+              data-filter="dateFrom"
+              readOnly
+              tabIndex={-1}
+            />
+          </div>
+          <div>
+            <span className="search-filter-sub-label">To</span>
+            <input
+              id="filter-date-to"
+              className="search-filter-line-input"
+              placeholder="Year"
+              type="number"
+              data-filter="dateTo"
+              readOnly
+              tabIndex={-1}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Department</span>
+        <input
+          id="filter-department"
+          className="search-filter-line-input"
+          placeholder="Search"
+          type="text"
+          data-filter="department"
+          readOnly
+          tabIndex={-1}
+        />
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Location</span>
+        <input
+          id="filter-location"
+          className="search-filter-line-input"
+          placeholder="Country, continent, or nationality"
+          type="text"
+          data-filter="location"
+          readOnly
+          tabIndex={-1}
+        />
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Medium</span>
+        <input
+          id="filter-medium"
+          className="search-filter-line-input"
+          placeholder="Search"
+          type="text"
+          data-filter="medium"
+          readOnly
+          tabIndex={-1}
+        />
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Show only</span>
+        <div className="search-filter-stack-tight">
+          <div
+            className="search-filter-toggle-row"
+            data-filter="onView"
+          >
+            <span className="search-filter-toggle-label">On View</span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+          <div
+            className="search-filter-toggle-row"
+            data-filter="hasImage"
+          >
+            <span className="search-filter-toggle-label">Has image</span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+          <div
+            className="search-filter-toggle-row"
+            data-filter="hasOpenAccessImage"
+          >
+            <span className="search-filter-toggle-label">
+              Has Open Access image
+            </span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="search-filter-section">
+        <span className="search-filter-label">Media</span>
+        <div className="search-filter-stack-tight">
+          <div
+            className="search-filter-toggle-row"
+            data-filter="hasAudio"
+          >
+            <span className="search-filter-toggle-label">Has Audio</span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+          <div
+            className="search-filter-toggle-row"
+            data-filter="has3dModel"
+          >
+            <span className="search-filter-toggle-label">Has 3D Model</span>
+            <div className="search-filter-toggle-box">
+              <div className="search-filter-toggle-dot" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 var SearchResults = React.createClass({
   mixins: [Router.State, Router.Navigation],
 
@@ -111,23 +244,9 @@ var SearchResults = React.createClass({
   },
 
   getInitialState() {
-    var focus = window.clickedArtwork || this.props.hits[0];
-    setTimeout(() => (window.clickedArtwork = null));
-    var { smallViewport } = this.context;
-
     var isInspiredByMia = this.isInspiredByMia();
 
-    var { view, preview: showPreview } = this.props.query;
-    var initialView =
-      (view && view == "list") || smallViewport || this.context.universal
-        ? ResultsList
-        : ResultsGrid;
-
-    var showPreview = showPreview == "false" || isInspiredByMia ? false : true;
-
     return {
-      focusedResult: showPreview && focus && focus,
-      view: initialView,
       isInspiredByMia,
     };
   },
@@ -149,18 +268,9 @@ var SearchResults = React.createClass({
       this.props.hits != nextProps.hits ||
       this.props.completions !== nextProps.completions ||
       this.props.query.sort !== nextProps.query.sort ||
+      this.props.filtersOpen !== nextProps.filtersOpen ||
       this.state !== nextState
     );
-  },
-
-  componentWillReceiveProps(nextProps) {
-    var { showPreview } = this.state;
-    var focused =
-      window.clickedArtwork ||
-      (this.state && this.state.focusedResult) ||
-      (showPreview && nextProps.hits[0]);
-    this.focusResult(focused);
-    if (window.clickedArtwork) window.clickedArtwork = null;
   },
 
   maxResults: 5000,
@@ -171,9 +281,6 @@ var SearchResults = React.createClass({
 
   render() {
     var search = this.props.data.searchResults;
-    var { focusedResult } = this.state;
-    var leftColumnWidth = "35%";
-    var { smallViewport } = this.context;
     var unloadedResults = Math.max(
       0,
       getResultTotal(search) - this.props.hits.length
@@ -205,17 +312,15 @@ var SearchResults = React.createClass({
       search: this.props.data.searchResults,
       hits: this.props.hits,
       params: this.props.params,
-      showAggs: this.props.showAggs,
-      toggleAggs: this.props.toggleAggs,
       showMoreLink,
       maxResults: this.maxResults,
       query: this.props.query,
-      forceSearchUpdate: (nextFocusResult) => {
-        this.focusResult(nextFocusResult);
-      },
+      forceSearchUpdate: () => {},
       embed: this.props.embed,
       handleCancelEmbed: this.props.handleCancelEmbed,
       isInspiredByMia: this.state.isInspiredByMia,
+      filtersOpen: this.props.filtersOpen,
+      onToggleFilters: this.props.onToggleFilters,
       ...this.props.summaryProps,
     };
 
@@ -233,52 +338,42 @@ var SearchResults = React.createClass({
 
     console.info("search-results render", {
       isInspiredByMia,
-      view: this.state.view.displayName,
+      view: "list",
       props: this.props,
     });
 
     return (
-      <div>
-        <SearchSummary {...summaryProps}>
-          <SearchResultViewToggle
-            click={this.changeView}
-            activeView={this.state.view}
-            views={[ResultsList, ResultsGrid]}
-          />
-        </SearchSummary>
+      <div className="search-results-layout">
+        <SearchSummary {...summaryProps} />
         {this.props.suggestions}
-        <this.state.view
-          leftColumnWidth={leftColumnWidth}
-          focusedResult={focusedResult}
-          focusHandler={this.focusResult}
-          search={search}
-          hits={this.props.hits}
-          postSearch={this.postSearch(
-            summaryProps,
-            this.state.postSearchOffset
-          )}
-          smallViewport={this.context.smallViewport}
-          showRelated={showFocusRelatedContent}
-          customImage={customImageFn && customImageFn.bind(this)}
-          isInspiredByMia={isInspiredByMia}
-        />
+        <div
+          className={`search-results-body${this.props.filtersOpen ? " is-open" : ""}`}
+        >
+          <aside
+            id="search-side-panel"
+            className="search-side-panel"
+            aria-hidden={!this.props.filtersOpen}
+          >
+            {renderAdvancedFilterPanel()}
+          </aside>
+          <div className="search-results-main">
+            <ResultsList
+              search={search}
+              hits={this.props.hits}
+              filtersOpen={this.props.filtersOpen}
+              postSearch={this.postSearch(
+                summaryProps,
+                this.state.postSearchOffset
+              )}
+              smallViewport={this.context.smallViewport}
+              showRelated={showFocusRelatedContent}
+              customImage={customImageFn && customImageFn.bind(this)}
+              isInspiredByMia={isInspiredByMia}
+            />
+          </div>
+        </div>
       </div>
     );
-  },
-
-  focusResult(hit, nextView = false) {
-    var { smallViewport } = this.context;
-
-    if (smallViewport && nextView) {
-      this.transitionTo("artwork", { id: hit._id });
-    } else {
-      !smallViewport && nextView && this.changeView(nextView);
-      this.setState({ focusedResult: hit ? hit : null });
-    }
-  },
-
-  changeView(next) {
-    next && this.setState({ view: next });
   },
 
   // How to code this: after seeing all the results (on a page?)
@@ -355,7 +450,6 @@ var SearchResults = React.createClass({
     ) {
       this.setState({
         isInspiredByMia: this.isInspiredByMia(),
-        focusedResult: null,
       });
     }
   },
@@ -378,37 +472,3 @@ SearchResults.contextTypes = {
 };
 
 module.exports = SearchResults;
-
-var SearchResultViewToggle = React.createClass({
-  render() {
-    var { views, click, activeView } = this.props;
-
-    var toggles = views.map((r) => {
-      var name = r.displayName.replace("SearchResults", "");
-      var activeStyle =
-        (activeView === r && {
-          color: "#222",
-          backgroundColor: "white",
-          borderRadius: 5,
-          margin: "0 5px",
-          display: "inline-block",
-        }) ||
-        {};
-      return (
-        <span
-          key={name}
-          onClick={this.toggleView.bind(this, r)}
-          style={activeStyle}
-        >
-          <i className={name}></i>
-        </span>
-      );
-    });
-
-    return <div className="mdl-cell mdl-cell--2-col views">{toggles}</div>;
-  },
-
-  toggleView(view) {
-    this.props.click(view);
-  },
-});

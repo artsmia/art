@@ -35,7 +35,6 @@ var Search = React.createClass({
         results: { hits: { hits: [] } },
         terms: "",
         hits: [],
-        showAggs: this.props.showAggs,
         blank: this.props.blank,
       };
     }
@@ -53,8 +52,8 @@ var Search = React.createClass({
       hits: Array.isArray(results)
         ? results
         : (results && results.hits && results.hits.hits) || [],
-      showAggs: this.props.showAggs,
       blank: this.props.blank,
+      filtersOpen: false,
     };
   },
 
@@ -75,7 +74,7 @@ var Search = React.createClass({
     const showQuilt = !darkenQuilt && headerArtworks;
     var quiltProps = Object.assign(
       {
-        maxRows: this.state.showAggs ? 1 : 2,
+        maxRows: 2,
         maxWorks: 10,
         artworks: headerArtworks,
         onClick: this.updateFromQuilt,
@@ -87,10 +86,6 @@ var Search = React.createClass({
       this.props.quiltProps || {}
     );
 
-    const idealSearchBoxWidth = Math.max(
-      17,
-      (this.state.terms && this.state.terms.length * 1.1) || 0
-    );
     const formProps = universal
       ? { action: "/search/", method: "get" }
       : { action: "" };
@@ -132,25 +127,32 @@ var Search = React.createClass({
     );
 
     const simpleSearchBox = (
-      <div
-        className="search-wrapper"
-        style={{ width: idealSearchBoxWidth + "em" }}
-      >
-        <form {...formProps}>
+      <div className="search-wrapper">
+        <form {...formProps} onSubmit={this.handleSubmit}>
           <input
             className="search-input"
             type="search"
-            placeholder="search"
+            placeholder="Search the collection"
             value={searchLanguageMap(this.state.terms)}
             onKeyDown={this.keyDown}
             onChange={this.throttledSearch}
             onFocus={({ target }) => target && target.select()}
-            style={{ width: "100%", pointerEvents: "all" }}
+            style={{ pointerEvents: "all" }}
             name="q"
             ref="searchInput"
             autoComplete="off"
             list="searchCompletions"
           />
+          <button
+            className="search-button"
+            type="submit"
+            aria-label="Search"
+            style={{ pointerEvents: "all" }}
+          >
+            <span className="material-icons" aria-hidden="true">
+              search
+            </span>
+          </button>
         </form>
       </div>
     );
@@ -160,7 +162,7 @@ var Search = React.createClass({
       left: 0,
       right: 0,
       width: "100%",
-      textAlign: "center",
+      textAlign: "left",
       pointerEvents: "none",
       display: hideInput ? "none" : "inherit",
       padding: this.props.bumpSearchBox ? "0.5em" : "0",
@@ -203,16 +205,15 @@ var Search = React.createClass({
           }
         >
           <div style={{ opacity: this.props.hideHeader ? "1" : "0.95" }}>
+            <h1 className="search-results-title">Mia&apos;s Collection</h1>
+            <p className="search-results-subtitle">
+              Explore Mia&apos;s art collection from the comforts of your home.
+            </p>
             {simpleSearchBox}
           </div>
         </div>
       </div>
     );
-
-    var aggsProps = {
-      showAggs: this.state.showAggs,
-      toggleAggs: this.toggleAggs,
-    };
 
     var suggestions = (
       <Suggest
@@ -228,21 +229,22 @@ var Search = React.createClass({
 
     return (
       <div id="search" className={heroLayout ? "home-search" : undefined}>
-        {!!hideSearch || (heroLayout ? heroSearchBox : searchBox)}
         {this.props.children}
-        {(this.props.hideResults && suggestions) || (
-          <div>
+        <div className="search-page-content">
+          {!!hideSearch || (heroLayout ? heroSearchBox : searchBox)}
+          {(this.props.hideResults && suggestions) || (
             <SearchResults
               {...this.props}
               hits={this.state.hits}
-              {...aggsProps}
               suggestions={suggestions}
               minHeight={this.state.minHeight}
               embed={hideSearch}
               handleCancelEmbed={() => this.setState({ cancelEmbed: true })}
+              filtersOpen={this.state.filtersOpen}
+              onToggleFilters={this.toggleFilters}
             />
-          </div>
-        )}
+          )}
+        </div>
         {this.props.hideResults && <ClosedBanner />}
       </div>
     );
@@ -374,16 +376,22 @@ var Search = React.createClass({
     });
   },
 
-  toggleAggs() {
-    this.setState({ showAggs: !this.state.showAggs });
-  },
-
   activateSearch() {
     var node = ReactDOM.findDOMNode(this.refs.searchInput);
     if (node) {
       node.focus();
       node.value && node.setSelectionRange(0, node.value.length);
     }
+  },
+
+  handleSubmit(e) {
+    if (this.context.universal) return;
+    e && e.preventDefault && e.preventDefault();
+    this.search();
+  },
+
+  toggleFilters() {
+    this.setState({ filtersOpen: !this.state.filtersOpen });
   },
 });
 Search.contextTypes = {

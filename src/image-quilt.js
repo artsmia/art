@@ -413,7 +413,6 @@ var QuiltPatch = React.createClass({
 
     return (
       <Link
-        onClick={this.clickOrDontClick}
         style={{ ...style, position: "relative" }}
         to="artwork"
         params={{ id: art.id }}
@@ -423,13 +422,6 @@ var QuiltPatch = React.createClass({
     );
   },
 
-  // halt the click event if javascript is loaded
-  // clicking triggers the right-hand preview, not the `<a>`
-  // TODO make this work with command click tho
-  clickOrDontClick(event) {
-    if (!this.context.universal) event.preventDefault();
-  },
-
   getDefaultProps() {
     return {
       lazyLoad: true,
@@ -437,7 +429,3 @@ var QuiltPatch = React.createClass({
     };
   },
 });
-QuiltPatch.contextTypes = {
-  router: React.PropTypes.func,
-  universal: React.PropTypes.bool,
-};
