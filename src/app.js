@@ -1,5 +1,5 @@
 var React = require("react");
-var { RouteHandler, Link } = require("react-router");
+var { RouteHandler } = require("react-router");
 var Helmet = require("react-helmet");
 var debounce = require("debounce");
 var { pathSatisfies } = require("ramda");
@@ -27,6 +27,31 @@ var surveyStyle = {
 
 const isDev = process.env.NODE_ENV !== "production";
 
+const wordmarkSrc =
+  "https://images.artsmia.org/wp-content/uploads/2022/05/16151023/Mia_Isolated_Wordmark_100K.svg";
+
+const MAIN_NAV = [
+  { id: "browse", text: "Browse", href: "#" },
+  { id: "tickets", text: "Tickets", href: "https://tickets.artsmia.org/events" },
+  {
+    id: "calendar",
+    text: "Calendar",
+    href: "https://new.artsmia.org/visit/calendar",
+  },
+  {
+    id: "donate",
+    text: "Donate",
+    href: "https://tickets.artsmia.org/events?category=Donation",
+  },
+];
+
+const UTILITY_NAV = {
+  id: "mia-org",
+  text: "artsmia.org",
+  href: "https://new.artsmia.org",
+  external: true,
+};
+
 var App = React.createClass({
   render() {
     var logo = this.makeLogo();
@@ -47,27 +72,29 @@ var App = React.createClass({
         `}</style>
         {!this.state.hideHeader && (
           <div className="header-shell">
-            <header className={cx({ open: this.state.menuOpen })}>
-              <div className="header-left">
-                {logo}
-                {this.primaryNav()}
-              </div>
-              <div className="header-right">
-                <button
-                  type="button"
-                  className="header-menu-btn"
-                  aria-label={this.state.menuOpen ? "Close menu" : "Open menu"}
-                  aria-expanded={this.state.menuOpen}
-                  aria-controls="header-expanded-nav"
-                  onClick={this.toggleMenu}
-                >
-                  <span className="material-icons">
-                    {this.state.menuOpen ? "close" : "menu"}
-                  </span>
-                </button>
+            <header>
+              <div className="header-row">
+                <div className="header-logo-wrap">{logo}</div>
+                <div className="header-nav-wrap position-relative">
+                  {this.siteNav()}
+                  <a
+                    href="#"
+                    onClick={this.toggleMenu}
+                    aria-label="Mobile Navigation"
+                    aria-expanded={this.state.menuOpen ? "true" : "false"}
+                  >
+                    <div
+                      id="nav-icon"
+                      className={this.state.menuOpen ? "open" : "close"}
+                    >
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </a>
+                </div>
               </div>
             </header>
-            {this.state.menuOpen && this.expandedNav()}
           </div>
         )}
         <Helmet
@@ -88,7 +115,7 @@ var App = React.createClass({
             activateSearch={this.state.activateSearch}
             toggleAppHeader={this.toggleHeader}
           />
-          <Footer />
+          {!this.isArtworkPage() && <Footer />}
         </div>
 
         {this.state.disableSurveyPopup || (
@@ -124,64 +151,6 @@ var App = React.createClass({
     );
   },
 
-  expandedNav() {
-    var expandedNavColumns = [
-      [
-        { label: "Exhibitions", href: "https://new.artsmia.org/exhibitions" },
-        { label: "Art + Artists", href: "https://new.artsmia.org/art-artists" },
-      ],
-      [
-        { label: "Programs", href: "https://new.artsmia.org/discover" },
-        { label: "About", href: "https://new.artsmia.org/about" },
-      ],
-      [
-        { label: "Shop", href: "https://new.artsmia.org/shop" },
-        { label: "Visit", href: "https://new.artsmia.org/visit" },
-      ],
-    ];
-
-    var utilityLinks = [
-      { label: "Tickets", href: "https://tickets.artsmia.org/events" },
-      { label: "Calendar", href: "https://new.artsmia.org/visit/calendar" },
-      {
-        label: "Donate",
-        href: "https://tickets.artsmia.org/events?category=Donation",
-      },
-    ];
-
-    return (
-      <div
-        id="header-expanded-nav"
-        className="header-expanded-nav"
-        onClick={this.closeMenu}
-      >
-        <div className="expanded-nav-section expanded-nav-label-wrap">
-          <div className="expanded-nav-label">Explore ArtsMia.org</div>
-        </div>
-        <div className="expanded-nav-separator" />
-        <div className="expanded-nav-section expanded-nav-grid">
-          {expandedNavColumns.map((column, columnIndex) => (
-            <div className="expanded-nav-column" key={`col-${columnIndex}`}>
-              {column.map(({ label, href }) => (
-                <a key={label + href} href={href} onClick={this.closeMenu}>
-                  {label}
-                </a>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div className="expanded-nav-separator" />
-        <div className="expanded-nav-section expanded-nav-utility">
-          {utilityLinks.map(({ label, href }) => (
-            <a key={label + href} href={href} onClick={this.closeMenu}>
-              {label}
-            </a>
-          ))}
-        </div>
-      </div>
-    );
-  },
-
   componentDidMount() {
     (this.debouncedResize = debounce(this.handleResize, 500)),
       window.addEventListener("resize", this.debouncedResize);
@@ -204,62 +173,125 @@ var App = React.createClass({
     );
   },
 
-  primaryNav() {
-    var path = this.props.path || "";
-    var navLinks = [
-      { key: "new", label: "New to Mia", to: "recent", activePath: "/new" },
-      {
-        key: "explore",
-        label: "Explore",
-        to: "explore",
-        activePath: "/explore",
-      },
-      {
-        key: "purcell-cutts-house",
-        label: "Purcell-Cutts House",
-        to: "page",
-        params: { name: "purcell-cutts-house" },
-        activePath: "/info/purcell-cutts-house",
-      },
-      {
-        key: "provenance-research",
-        label: "Provenance Research",
-        to: "page",
-        params: { name: "provenance-research" },
-        activePath: "/info/provenance-research",
-      },
-      {
-        key: "deaccessions",
-        label: "Deaccessions",
-        to: "page",
-        params: { name: "deaccessions" },
-        activePath: "/info/deaccessions",
-      },
-      {
-        key: "conservation",
-        label: "Conservation",
-        to: "page",
-        params: { name: "conservation" },
-        activePath: "/info/conservation",
-      },
-    ];
+  siteNav() {
+    var menuOpen = this.state.menuOpen;
+    var search = this.state.search;
+    var utility = UTILITY_NAV;
 
     return (
-      <nav className="header-primary-nav" aria-label="Main">
-        {navLinks.map(({ key, label, to, params, activePath }) => {
-          return (
-            <Link
-              key={key}
-              to={to}
-              params={params}
-              className={path === activePath ? "is-active" : ""}
-            >
-              {label}
-            </Link>
-          );
-        })}
+      <nav className="nav" aria-label="Site Navigation">
+        <div className="header-nav-desktop">
+          <ul className="header-nav-links uppercase">
+            {MAIN_NAV.map(({ id, text, href }) => (
+              <li key={id}>
+                <a href={href} title={text} aria-label={text}>
+                  {text}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href={utility.href}
+                title={utility.text}
+                aria-label={utility.text}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {utility.text}
+                <span className="header-nav-external" aria-hidden="true">
+                  {" "}
+                  ↗
+                </span>
+              </a>
+            </li>
+          </ul>
+          <ul className="header-nav-utility uppercase">
+            <li className="search" aria-label="Click to Search">
+              <form className="search-header" onSubmit={this.handleSearchSubmit}>
+                <label className="hidden" htmlFor="header-search">
+                  Search
+                </label>
+                <input
+                  type="search"
+                  placeholder=""
+                  className="search"
+                  name="search"
+                  id="header-search"
+                  aria-label="Search"
+                  value={search}
+                  onChange={this.handleSearchChange}
+                />
+              </form>
+            </li>
+          </ul>
+        </div>
+        <div
+          id="nav-items"
+          className={menuOpen ? "open-nav" : "close"}
+          aria-label="Mobile Navigation"
+          aria-expanded={menuOpen ? "true" : "false"}
+        >
+          <ul className="header-mobile-links uppercase">
+            {MAIN_NAV.map(({ id, text, href }) => (
+              <li key={id}>
+                <a
+                  href={href}
+                  title={text}
+                  aria-label={text}
+                  onClick={this.closeMenu}
+                >
+                  {text}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href={utility.href}
+                title={utility.text}
+                aria-label={utility.text}
+                onClick={this.closeMenu}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {utility.text}
+                <span className="header-nav-external" aria-hidden="true">
+                  {" "}
+                  ↗
+                </span>
+              </a>
+            </li>
+            <li className="search" aria-label="Click to Search">
+              <form className="search-header" onSubmit={this.handleSearchSubmit}>
+                <label className="hidden" htmlFor="header-search-mobile">
+                  Search
+                </label>
+                <input
+                  type="search"
+                  placeholder=""
+                  className="search non-focus"
+                  name="search"
+                  id="header-search-mobile"
+                  aria-label="Search"
+                  value={search}
+                  onChange={this.handleSearchChange}
+                />
+              </form>
+            </li>
+          </ul>
+        </div>
       </nav>
     );
+  },
+
+  handleSearchChange(event) {
+    this.setState({ search: event.target.value });
+  },
+
+  handleSearchSubmit(event) {
+    event.preventDefault();
+    var query = (this.state.search || "").trim();
+    if (!query) return;
+    window.location = "/search/" + encodeURIComponent(query);
   },
 
   toggleHeader() {
@@ -299,6 +331,7 @@ var App = React.createClass({
 
     return {
       menuOpen: false,
+      search: "",
       smallViewport: this.isSmallViewport(),
       enteredViaMore: window.enteredViaMore,
       showSurveyPopup,
@@ -307,12 +340,24 @@ var App = React.createClass({
   },
 
   makeLogo() {
-    var logo = <div className="logo-container"></div>;
-    return <a href="/">{logo}</a>;
+    return (
+      <a href="/" aria-label="back to home">
+        <img
+          className="header-logo"
+          src={wordmarkSrc}
+          alt="Minneapolis Institute of Art home"
+        />
+      </a>
+    );
   },
 
   noIndex() {
     return process.env.NODE_ENV !== "production";
+  },
+
+  isArtworkPage() {
+    var path = this.props.path || "";
+    return /^\/art\//.test(path);
   },
 });
 App.childContextTypes = {
