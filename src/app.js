@@ -31,7 +31,7 @@ const wordmarkSrc =
   "https://images.artsmia.org/wp-content/uploads/2022/05/16151023/Mia_Isolated_Wordmark_100K.svg";
 
 const MAIN_NAV = [
-  { id: "browse", text: "Browse", href: "#" },
+  { id: "browse", text: "Browse", href: "/browse" },
   { id: "tickets", text: "Tickets", href: "https://tickets.artsmia.org/events" },
   {
     id: "calendar",

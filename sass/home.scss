@@ -39,6 +39,45 @@ $MiaGroteskLight: "MiaGrotesk-Light", sans-serif;
     margin: 1.5rem auto 0;
   }
 
+  .home-hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.65rem;
+    margin-top: 1.25rem;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .home-hero-action {
+    color: #6f6f6f;
+    text-decoration: none;
+
+    &:hover {
+      color: #232323;
+      text-decoration: none;
+    }
+  }
+
+  .main-content & .home-hero-action {
+    color: #6f6f6f;
+    font-weight: 500;
+
+    &:hover {
+      color: #232323;
+    }
+  }
+
+  .home-hero-action-sep {
+    color: #6f6f6f;
+    user-select: none;
+  }
+
   .search-wrapper {
     background: #fff;
     border: 1px solid #d9d9d9;

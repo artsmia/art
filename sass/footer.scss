@@ -98,6 +98,17 @@ $footer-gutter-lg: 3rem;
   float: none;
   margin: 0;
   flex: 1 1 16rem;
+
+  @media (min-width: 768px) {
+    width: auto;
+    flex: 0 1 auto;
+  }
+}
+
+.footer .row.thirds .col.col-3:first-child {
+  @media (min-width: 768px) {
+    flex: 1 1 auto;
+  }
 }
 
 .footer .row.thirds .col.col-3:empty {

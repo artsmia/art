@@ -1,14 +1,37 @@
 var React = require("react");
-var ReactDOM = require("react-dom");
 var Router = require("react-router");
-var { Link } = require("react-router");
 var rest = require("rest");
 
 var SEARCH = require("./endpoints").search;
 var SearchSummary = require("./search-summary");
 var ResultsList = require("./search-results/list");
-var searchLanguageMap = require("./search-language");
-const { getResultTotal } = require("./util/search-utils");
+var ResultsPagination = require("./results-pagination");
+const { getResultTotal, isBrowsePath } = require("./util/search-utils");
+const {
+  RESULTS_PAGE_SIZE,
+  currentPageFromQuery,
+  totalPagesFromCount,
+} = require("./util/pagination-utils");
+
+function isBrowsePage(props) {
+  return isBrowsePath(props);
+}
+
+function fetchRandomArt(size) {
+  var q = encodeURIComponent("image:valid public_access:1");
+  return rest(
+    SEARCH + "/random/art?size=" + (size || RESULTS_PAGE_SIZE) + "&q=" + q
+  ).then(function (response) {
+    var hits = JSON.parse(response.entity);
+    if (!Array.isArray(hits)) hits = [];
+    return { hits: hits };
+  });
+}
+
+function currentPageNumber(props, state) {
+  if (isBrowsePage(props)) return state.browseCurrentPage || 1;
+  return currentPageFromQuery(props.query);
+}
 
 function omitResultsById(...ids) {
   return (json) => {
@@ -224,14 +247,15 @@ var SearchResults = React.createClass({
   statics: {
     fetchData: {
       searchResults: (params, query) => {
-        var size = (query && query.size) || 100;
+        var page = currentPageFromQuery(query);
+        var from = (page - 1) * RESULTS_PAGE_SIZE;
         var sort = query && query.sort;
         const filters = params.splat;
         const properlyCodedTerms = params.terms.replace(/\/|%2F/g, " "); // no forward slashes in search `/`
         const properlyCodedFilters = encodeURIComponent(
           decodeURIComponent(filters)
         ); // yuck
-        let searchUrl = `${SEARCH}/${properlyCodedTerms}?size=${size}`;
+        let searchUrl = `${SEARCH}/${properlyCodedTerms}?size=${RESULTS_PAGE_SIZE}&from=${from}`;
         if (sort) searchUrl += `&sort=${sort}`;
         if (filters) searchUrl += `&filters=${properlyCodedFilters}`;
         if ((window && window.enteredViaMore) || (query && query.more))
@@ -248,6 +272,9 @@ var SearchResults = React.createClass({
 
     return {
       isInspiredByMia,
+      browsePages: {},
+      browseCurrentPage: 1,
+      loadingBrowsePage: false,
     };
   },
 
@@ -268,51 +295,136 @@ var SearchResults = React.createClass({
       this.props.hits != nextProps.hits ||
       this.props.completions !== nextProps.completions ||
       this.props.query.sort !== nextProps.query.sort ||
+      this.props.query.page !== nextProps.query.page ||
       this.props.filtersOpen !== nextProps.filtersOpen ||
+      this.props.activeFilterChips !== nextProps.activeFilterChips ||
       this.state !== nextState
     );
   },
 
   maxResults: 5000,
 
-  triggerLoad(nextPage) {
-    this.setState({ loadingMore: nextPage });
+  totalPages() {
+    var search = this.props.data && this.props.data.searchResults;
+    var total = getResultTotal(search);
+    return totalPagesFromCount(total, RESULTS_PAGE_SIZE, this.maxResults);
+  },
+
+  isLoadingPage() {
+    if (isBrowsePage(this.props)) return this.state.loadingBrowsePage;
+    return false;
+  },
+
+  goToPage(event, page) {
+    if (isBrowsePage(this.props)) {
+      this.goBrowsePage(event, page);
+    } else {
+      this.goSearchPage(event, page);
+    }
+  },
+
+  goSearchPage(event, page) {
+    event.preventDefault();
+    if (page < 1 || page > this.totalPages()) return;
+
+    var { terms, splat } = this.props.params;
+    var filters = splat;
+    var routeName = filters ? "filteredSearchResults" : "searchResults";
+    var query = Object.assign({}, this.props.query, { page: page });
+    delete query.size;
+    delete query.more;
+
+    this.transitionTo(routeName, { terms, splat: filters }, query);
+    window.scrollTo(0, 0);
+  },
+
+  goBrowsePage(event, page) {
+    event.preventDefault();
+    if (page < 1 || this.state.loadingBrowsePage) return;
+    if (page > this.totalPages()) return;
+
+    var hasCachedPage =
+      page === 1
+        ? this.props.hits.length > 0 || this.state.browsePages[1]
+        : !!this.state.browsePages[page];
+
+    this.setState({ browseCurrentPage: page }, function () {
+      this.ensureBrowsePageLoaded();
+      if (hasCachedPage) window.scrollTo(0, 0);
+    });
+  },
+
+  fetchBrowsePage(page) {
+    this.setState({ loadingBrowsePage: true });
+    fetchRandomArt(RESULTS_PAGE_SIZE).then((result) => {
+      this.setState(
+        function (prevState) {
+          var browsePages = Object.assign({}, prevState.browsePages);
+          browsePages[page] = result.hits;
+          return {
+            browsePages: browsePages,
+            loadingBrowsePage: false,
+          };
+        },
+        function () {
+          window.scrollTo(0, 0);
+        }
+      );
+    });
+  },
+
+  ensureBrowsePageLoaded() {
+    if (!isBrowsePage(this.props) || this.state.loadingBrowsePage) return;
+    var page = currentPageNumber(this.props, this.state);
+    if (page === 1 || this.state.browsePages[page]) return;
+    this.fetchBrowsePage(page);
+  },
+
+  renderCsvLink() {
+    if (isBrowsePage(this.props)) return null;
+
+    var search = this.props.data && this.props.data.searchResults;
+    if (!search) return null;
+
+    var csvTerms =
+      search.csvQuery ||
+      [search.query, search.filters].filter(function (s) {
+        return s;
+      }).join(" ");
+
+    return (
+      <p className="results-csv-link">
+        <a href={SEARCH + "/" + csvTerms + "?format=csv"}>
+          Download results as CSV
+        </a>
+      </p>
+    );
+  },
+
+  displayHits() {
+    if (!isBrowsePage(this.props)) return this.props.hits;
+    var page = currentPageNumber(this.props, this.state);
+    var cached = this.state.browsePages[page];
+    if (cached) return cached;
+    if (page === 1) return this.props.hits;
+    return [];
   },
 
   render() {
     var search = this.props.data.searchResults;
-    var unloadedResults = Math.max(
-      0,
-      getResultTotal(search) - this.props.hits.length
-    );
-    var loadThisManyMore = Math.min(200, unloadedResults);
-    var nextPage = Math.min(
-      this.maxResults,
-      this.props.hits.length + loadThisManyMore
-    );
-    var nextPageQuery = { ...this.props.query, size: nextPage };
-    var showMoreLink = search && (
-      <span>
-        .&nbsp;(
-        <Link
-          to={search.filters ? "filteredSearchResults" : "searchResults"}
-          params={{ terms: search.query, splat: search.filters }}
-          query={nextPageQuery}
-          onClick={this.triggerLoad.bind(this, nextPage)}
-        >
-          load {loadThisManyMore} more
-        </Link>
-        )
-      </span>
-    );
-
-    if (this.state.loadingMore) showMoreLink = " (…loading)";
+    var hits = this.displayHits();
+    var browsePage = isBrowsePage(this.props);
+    var pageLoading =
+      browsePage && this.state.loadingBrowsePage && hits.length === 0;
+    var currentPage = currentPageNumber(this.props, this.state);
+    var totalPages = this.totalPages();
+    var showPagination = totalPages > 1;
 
     var summaryProps = {
       search: this.props.data.searchResults,
-      hits: this.props.hits,
+      hits: hits,
+      path: this.props.path,
       params: this.props.params,
-      showMoreLink,
       maxResults: this.maxResults,
       query: this.props.query,
       forceSearchUpdate: () => {},
@@ -321,6 +433,8 @@ var SearchResults = React.createClass({
       isInspiredByMia: this.state.isInspiredByMia,
       filtersOpen: this.props.filtersOpen,
       onToggleFilters: this.props.onToggleFilters,
+      activeFilterChips: this.props.activeFilterChips,
+      onToggleFilterChip: this.props.onToggleFilterChip,
       ...this.props.summaryProps,
     };
 
@@ -335,12 +449,6 @@ var SearchResults = React.createClass({
           return inspired && inspired[0].image;
         }
       : undefined;
-
-    console.info("search-results render", {
-      isInspiredByMia,
-      view: "list",
-      props: this.props,
-    });
 
     return (
       <div className="search-results-layout">
@@ -357,92 +465,74 @@ var SearchResults = React.createClass({
             {renderAdvancedFilterPanel()}
           </aside>
           <div className="search-results-main">
-            <ResultsList
-              search={search}
-              hits={this.props.hits}
-              filtersOpen={this.props.filtersOpen}
-              postSearch={this.postSearch(
-                summaryProps,
-                this.state.postSearchOffset
-              )}
-              smallViewport={this.context.smallViewport}
-              showRelated={showFocusRelatedContent}
-              customImage={customImageFn && customImageFn.bind(this)}
-              isInspiredByMia={isInspiredByMia}
-            />
+            {pageLoading ? (
+              <div className="results-loading" aria-live="polite">
+                Loading artworks…
+              </div>
+            ) : (
+              <ResultsList
+                key={
+                  (browsePage ? "browse-" : "search-") + currentPage
+                }
+                search={search}
+                hits={hits}
+                filtersOpen={this.props.filtersOpen}
+                smallViewport={this.context.smallViewport}
+                showRelated={showFocusRelatedContent}
+                customImage={customImageFn && customImageFn.bind(this)}
+                isInspiredByMia={isInspiredByMia}
+              />
+            )}
+            {showPagination && (
+              <div className="results-pagination-wrap">
+                <ResultsPagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  loading={this.isLoadingPage()}
+                  onPageChange={this.goToPage}
+                  ariaLabel={browsePage ? "Browse pages" : "Search results pages"}
+                />
+                {this.renderCsvLink()}
+              </div>
+            )}
           </div>
         </div>
       </div>
     );
   },
 
-  // How to code this: after seeing all the results (on a page?)
-  // summarize them and give the chance to do something. Such as:
-  // * load more
-  // * did you find what you were looking for? (solicit feedback)
-  // * related searches?
-  //
-  // Also fudge the height of this so the right column scroll doesn't get cut off.
-  postSearch({ hits, search, showMoreLink }, postSearchOffset) {
-    var showingAll =
-      hits.length >= getResultTotal(search) || hits.length >= this.maxResults;
-
-    const style = {
-      marginTop: "1em",
-      padding: "1em",
-      borderTop: "1em solid #232323",
-      minHeight: Math.max(50, this.state.minHeight - postSearchOffset),
-    };
-
-    const { searchResults } = this.props.data;
-    const csvTerms =
-      searchResults.csvQuery ||
-      [searchResults.query, searchResults.filters].filter((s) => s).join(" ");
-    const csvUrl = `${SEARCH}/${csvTerms}?format=csv`;
-    const showCsvLink = true;
-
-    var pretty = {
-      query: searchLanguageMap(search.query),
-      filters: searchLanguageMap(search.filters),
-    };
-    pretty["searchString"] = [pretty.query, pretty.filters]
-      .filter((string) => !!string && string !== "*" && string !== "undefined")
-      .join(", ");
-
-    return (
-      <div ref="postSearch" style={style}>
-        <p>
-          showing {hits.length}{" "}
-          {showingAll || <span>of {getResultTotal(search)} </span>}
-          results matching <code>{pretty.query}</code>
-          {search.filters && (
-            <span>
-              {" "}
-              and <code>{pretty.filters}</code>
-            </span>
-          )}
-          {showingAll || showMoreLink}
-        </p>
-
-        {showCsvLink && (
-          <p>
-            <a href={csvUrl}>Download results as CSV</a>
-          </p>
-        )}
-      </div>
-    );
+  componentWillReceiveProps(nextProps) {
+    if (
+      isBrowsePage(nextProps) &&
+      nextProps.data &&
+      nextProps.data.searchResults !==
+        (this.props.data && this.props.data.searchResults)
+    ) {
+      var firstPage =
+        (nextProps.data.searchResults.hits &&
+          nextProps.data.searchResults.hits.hits) ||
+        [];
+      this.setState({
+        browsePages: { 1: firstPage },
+        browseCurrentPage: 1,
+        loadingBrowsePage: false,
+      });
+    }
   },
 
-  componentDidUpdate(prevProps, prevState) {
-    var domNode =
-      this.refs.postSearch && ReactDOM.findDOMNode(this.refs.postSearch);
-    var offset = domNode.getBoundingClientRect().top;
-    if (domNode && offset != prevState.postSearchOffset) {
-      this.setState({ postSearchOffset: offset || 0 });
+  componentDidMount() {
+    if (
+      isBrowsePage(this.props) &&
+      this.props.hits.length &&
+      !this.state.browsePages[1]
+    ) {
+      this.setState({ browsePages: { 1: this.props.hits } });
     }
+    this.ensureBrowsePageLoaded();
+  },
 
-    if (this.props.query.size == this.state.loadingMore)
-      this.setState({ loadingMore: false });
+  componentDidUpdate(prevProps) {
+    this.ensureBrowsePageLoaded();
 
     if (
       this.props.params.terms !== prevProps.params.terms ||

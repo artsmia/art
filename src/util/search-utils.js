@@ -11,6 +11,13 @@ function getResultTotal(result) {
   return typeof t.value === "number" ? t.value : 0;
 }
 
+function isBrowsePath(props) {
+  if (props && props.route && props.route.name === "browse") return true;
+  var path = ((props && props.path) || "").split("?")[0].replace(/\/$/, "");
+  return path === "/browse";
+}
+
 module.exports = {
   getResultTotal,
+  isBrowsePath,
 };

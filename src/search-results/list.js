@@ -35,9 +35,9 @@ var SearchResultsList = React.createClass({
         <div className="objects-wrap" ref="objectsWrap">
           {results}
         </div>
-        <div className="search-results-post">
-          {this.props.postSearch}
-        </div>
+        {this.props.postSearch && (
+          <div className="search-results-post">{this.props.postSearch}</div>
+        )}
       </div>
     );
   },
@@ -50,7 +50,16 @@ var SearchResultsList = React.createClass({
     const hitsChanged = prevProps.hits !== this.props.hits;
     const filterStateChanged = prevProps.filtersOpen !== this.props.filtersOpen;
 
-    if (hitsChanged || filterStateChanged) {
+    if (hitsChanged) {
+      this.destroyMasonry();
+      if (this.props.hits.length) {
+        window.requestAnimationFrame(() => {
+          if (this.props.hits.length) {
+            this.initializeMasonry();
+          }
+        });
+      }
+    } else if (filterStateChanged) {
       this.layoutMasonry();
     }
 
@@ -64,10 +73,25 @@ var SearchResultsList = React.createClass({
 
   componentWillUnmount() {
     clearTimeout(this.transitionLayoutTimer);
+    this.destroyMasonry();
+  },
+
+  destroyMasonry() {
     if (this.imagesLoader) this.imagesLoader.off("progress", this.layoutMasonry);
     if (this.masonry) this.masonry.destroy();
     this.imagesLoader = null;
     this.masonry = null;
+
+    const container = this.refs.objectsWrap && ReactDOM.findDOMNode(this.refs.objectsWrap);
+    if (!container) return;
+
+    container.style.height = "";
+    Array.prototype.forEach.call(container.children, function (item) {
+      item.style.position = "";
+      item.style.left = "";
+      item.style.top = "";
+      item.style.transform = "";
+    });
   },
 
   initializeMasonry() {

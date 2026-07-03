@@ -6,6 +6,7 @@ var App = require("./src/app");
 var Home = require("./src/home");
 var Search = require("./src/search");
 var SearchResults = require("./src/search-results");
+var Browse = require("./src/browse");
 var Artwork = require("./src/artwork");
 var ArtistsByLetter = require("./src/artists-by-letter");
 var ObjectsById = require("./src/objects-by-id");
@@ -51,6 +52,7 @@ var routes = (
       path="sandbox/:id/:slug"
       handler={PseudoArtwork}
     />
+    <Route name="browse" path="/browse" handler={Browse} />
     <Route name="search" path="/search/" handler={Search}>
       <Route name="searchResults" path=":terms" handler={SearchResults}>
         <Route

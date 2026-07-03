@@ -19,7 +19,12 @@ var ImageQuilt = require("./image-quilt");
 var SearchResults = require("./search-results");
 var Suggest = require("./suggest");
 var searchLanguageMap = require("./search-language");
+var { isBrowsePath } = require("./util/search-utils");
 var ClosedBanner = require("./museum-closed-banner");
+
+function filtersOpenFromQuery(query) {
+  return !!(query && (query.filters === "open" || query.filters === "1"));
+}
 
 var Search = React.createClass({
   mixins: [Router.State, Router.Navigation],
@@ -36,6 +41,8 @@ var Search = React.createClass({
         terms: "",
         hits: [],
         blank: this.props.blank,
+        filtersOpen: false,
+        activeFilterChips: {},
       };
     }
 
@@ -54,6 +61,7 @@ var Search = React.createClass({
         : (results && results.hits && results.hits.hits) || [],
       blank: this.props.blank,
       filtersOpen: false,
+      activeFilterChips: {},
     };
   },
 
@@ -69,6 +77,7 @@ var Search = React.createClass({
     const darkenQuilt =
       this.props.path &&
       (path.match(/\/search/) ||
+        isBrowsePath(this.props) ||
         (path.match("more") && window && window.innerWidth <= 736));
     const headerArtworks = ImageQuilt.getImagedResults(hits);
     const showQuilt = !darkenQuilt && headerArtworks;
@@ -121,6 +130,21 @@ var Search = React.createClass({
                 </button>
               </form>
             </div>
+            <nav className="home-hero-actions" aria-label="Search options">
+              <Link to="browse" className="home-hero-action">
+                Browse
+              </Link>
+              <span className="home-hero-action-sep" aria-hidden="true">
+                ·
+              </span>
+              <Link
+                to="browse"
+                query={{ filters: "open" }}
+                className="home-hero-action"
+              >
+                Advanced Search
+              </Link>
+            </nav>
           </div>
         </div>
       </section>
@@ -242,12 +266,35 @@ var Search = React.createClass({
               handleCancelEmbed={() => this.setState({ cancelEmbed: true })}
               filtersOpen={this.state.filtersOpen}
               onToggleFilters={this.toggleFilters}
+              activeFilterChips={this.state.activeFilterChips}
+              onToggleFilterChip={this.toggleFilterChip}
             />
           )}
         </div>
         {this.props.hideResults && <ClosedBanner />}
       </div>
     );
+  },
+
+  scheduleFiltersOpen() {
+    var self = this;
+    requestAnimationFrame(function () {
+      var panel = document.getElementById("search-side-panel");
+      if (panel) panel.offsetWidth;
+      requestAnimationFrame(function () {
+        self.setState({ filtersOpen: true });
+      });
+    });
+  },
+
+  componentDidMount() {
+    if (filtersOpenFromQuery(this.props.query)) {
+      this.scheduleFiltersOpen();
+    }
+    if (this.props.activateInput) {
+      this.activateSearch();
+    }
+    window.lastSearchedTerms = this.state.terms;
   },
 
   componentWillMount() {
@@ -268,13 +315,6 @@ var Search = React.createClass({
     rest(`${SEARCH}/autofill/${terms}`)
       .then((r) => JSON.parse(r.entity))
       .then((completions) => this.setState({ completions }));
-  },
-
-  componentDidMount() {
-    if (this.props.activateInput) {
-      this.activateSearch();
-    }
-    window.lastSearchedTerms = this.state.terms;
   },
 
   throttledSearch(event) {
@@ -391,7 +431,19 @@ var Search = React.createClass({
   },
 
   toggleFilters() {
-    this.setState({ filtersOpen: !this.state.filtersOpen });
+    if (this.state.filtersOpen) {
+      this.setState({ filtersOpen: false });
+      return;
+    }
+    this.scheduleFiltersOpen();
+  },
+
+  toggleFilterChip(chipLabel) {
+    this.setState(function (prevState) {
+      var activeFilterChips = Object.assign({}, prevState.activeFilterChips);
+      activeFilterChips[chipLabel] = !activeFilterChips[chipLabel];
+      return { activeFilterChips: activeFilterChips };
+    });
   },
 });
 Search.contextTypes = {
