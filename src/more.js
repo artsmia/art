@@ -61,7 +61,7 @@ var More = React.createClass({
 
             <hr />
             <p>
-              <Link to="explore">More ways to explore the collection</Link>
+              <Link to="discover">More ways to discover the collection</Link>
             </p>
           </div>
         </div>

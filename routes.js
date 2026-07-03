@@ -13,7 +13,7 @@ var Department = require("./src/department");
 var DepartmentsIndex = require("./src/departments").index;
 var Curator = require("./src/curator");
 var Curators = require("./src/curators");
-var Explore = require("./src/explore");
+var Discover = require("./src/discover");
 var Page = require("./src/page");
 var Info = require("./src/info");
 var Gallery = require("./src/gallery");
@@ -65,7 +65,8 @@ var routes = (
     <Route name="departments" path="/departments" handler={DepartmentsIndex} />
     <Route name="curator" path="/curators/:slug" handler={Curator} />
     <Route name="curators" path="/curators" handler={Curators} />
-    <Route name="explore" path="/explore" handler={Explore} />
+    <Route name="discover" path="/discover" handler={Discover} />
+    <Redirect from="/explore" to="/discover" />
     <Route
       name="artistsByName"
       path="/search/artists/:letter"
