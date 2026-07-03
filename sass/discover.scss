@@ -24,6 +24,42 @@
   }
 }
 
+.discover-page .discover-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background: #000;
+  border: 1px solid transparent;
+  border-radius: 0;
+  color: #fff;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: #fff;
+    color: #000;
+    border-color: #000;
+    text-decoration: none;
+  }
+
+  &:active {
+    background: #fff;
+    color: #000;
+    border-color: #000;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
 .discover-page .discover-carousel {
   margin: 0 0 3rem;
   padding: 0;
@@ -385,5 +421,161 @@
 
   .discover-page .discover-carousel__mosaic-grid > .discover-carousel__image-slot {
     min-height: 6rem;
+  }
+}
+
+// Accession highlights
+.discover-page .ntm-highlights-section {
+  margin: 0 0 4rem;
+  padding: 0;
+}
+
+.discover-page .ntm-highlights-head {
+  margin: 0 0 1rem;
+
+  h2 {
+    margin: 0 0 1rem;
+    padding-top: 0.5rem;
+    border-top: 3px solid #000;
+    color: #000;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 2.25rem;
+    line-height: 1.15;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+  }
+}
+
+.discover-page .ntm-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .discover-page .ntm-highlights-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.discover-page .ntm-highlight-card {
+  min-width: 0;
+  display: block;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+
+  .ntm-highlight-thumb {
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+    overflow: hidden;
+    background: transparent;
+    margin-bottom: 0.75rem;
+
+    .artwork-image {
+      min-height: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .artwork-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain !important;
+      object-position: center;
+      transition: transform 0.2s ease-in-out;
+    }
+  }
+
+  &:hover .ntm-highlight-thumb .artwork-image img {
+    transform: scale(1.05);
+  }
+}
+
+.discover-page .ntm-highlight-text.artwork-summary {
+  width: 100%;
+  float: none;
+  padding: 0;
+  min-width: 0;
+
+  h1,
+  h2 {
+    margin: 0;
+    padding: 0;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  h1 {
+    font-family: "MiaGrotesk-Bold", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #222;
+  }
+
+  h1 .dated {
+    font-family: "MiaGrotesk-Regular", sans-serif;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-family: "MiaGrotesk-Regular", sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #5c5c5c;
+    margin-top: 0.2rem;
+  }
+}
+
+.discover-page .ntm-highlights-more {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+  text-align: center;
+}
+
+.discover-page .ntm-highlights-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  border-radius: 1rem;
+  border: 2px dashed #d9dfe9;
+  background: #f8f9fb;
+
+  .material-icons {
+    font-size: 3rem;
+    color: #bac2cf;
+    margin-bottom: 0.65rem;
+  }
+
+  .ntm-highlights-empty-title {
+    margin: 0;
+    color: #1b2233;
+    font-size: 1.2rem;
+    font-family: "Mia Bold", "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+  .ntm-highlights-empty-copy {
+    margin: 0.4rem 0 0;
+    color: #647086;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .discover-page .ntm-highlights-head h2 {
+    font-size: 1.65rem;
+  }
+
+  .discover-page .ntm-highlights-more {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.75rem;
   }
 }
