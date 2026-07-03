@@ -19,8 +19,6 @@ var rightsDescriptions = require("./rights-types.js");
 var ClosedBanner = require("./museum-closed-banner");
 var NoImagePlaceholder = require("./no-image-placeholder");
 
-var Sticky = require("react-sticky");
-
 var Artwork = React.createClass({
   mixins: [Router.State],
   statics: {
@@ -256,19 +254,8 @@ var Artwork = React.createClass({
     } else {
       content = (
         <div>
+          {map}
           {info}
-
-          <Sticky
-            stickyStyle={{
-              position: "fixed",
-              height: "100%",
-              width: "65%",
-              top: 0,
-              transform: "translate3d(0px,0px,0px)",
-            }}
-          >
-            {map}
-          </Sticky>
         </div>
       );
     }
@@ -348,7 +335,6 @@ var Artwork = React.createClass({
   componentDidUpdate() {
     if (this.context.smallViewport != this.state.lastSmallViewportSetting) {
       this.setState({ lastSmallViewportSetting: this.context.smallViewport });
-   
     }
 
     if (this.state.id !== this.props.data.artwork.id) {

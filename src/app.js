@@ -60,6 +60,8 @@ var App = React.createClass({
       universal: this.props.universal,
       isDev,
       smallViewport: this.isSmallViewport(),
+      "artwork-page":
+        this.isArtworkPage() && !this.isSmallViewport(),
     });
 
     return (

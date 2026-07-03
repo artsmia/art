@@ -665,12 +665,80 @@ a.departmentLink h2 {
 
 /* ===== artwork.js STYLES ===== */
 
+$artwork-header-height: 60.5px; // header-row padding + logo
+$artwork-header-height-compact: 54px;
+
+.artwork-page {
+  height: 100vh;
+  overflow-y: auto;
+
+  .header-shell {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+  }
+
+  .main-content {
+    padding-top: $artwork-header-height;
+  }
+
+  .artwork:not(.smallviewport) > div {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .artwork:not(.smallviewport) #map {
+    position: sticky;
+    top: $artwork-header-height;
+    width: 65%;
+    height: calc(100vh - #{$artwork-header-height});
+    flex-shrink: 0;
+  }
+
+  .artwork:not(.smallviewport) .info {
+    position: relative;
+    width: 35%;
+    flex-shrink: 0;
+    min-height: calc(100vh - #{$artwork-header-height});
+    overflow: visible;
+  }
+}
+
+@media (max-width: 1200px) {
+  .artwork-page {
+    .main-content {
+      padding-top: $artwork-header-height-compact;
+    }
+
+    .artwork:not(.smallviewport) #map {
+      top: $artwork-header-height-compact;
+      height: calc(100vh - #{$artwork-header-height-compact});
+    }
+
+    .artwork:not(.smallviewport) .info {
+      min-height: calc(100vh - #{$artwork-header-height-compact});
+    }
+  }
+}
+
 .artwork #map {
   position: relative;
   left: 0;
   width: 65%;
   height: calc(100vh - 4em);
   background-color: #ddd;
+  box-sizing: border-box;
+  border-left: 1.5rem solid #fff;
+  border-bottom: 1.5rem solid #fff;
+}
+
+@media (min-width: 1024px) {
+  .artwork #map {
+    border-left-width: 2.5rem;
+    border-bottom-width: 2.5rem;
+  }
 }
 
 // BETA! WIP! white background for the image zoomer
@@ -719,6 +787,7 @@ a.departmentLink h2 {
   width: 100vw !important;
   height: 100vh !important;
   z-index: 9 !important;
+  border: 0 !important;
 }
 @import "../node_modules/leaflet-fullscreen/dist/leaflet.fullscreen.css";
 .artwork.smallviewport #map {
@@ -782,7 +851,6 @@ $transitionOut: 0.3s 0;
   position: absolute;
   width: 35%;
   background: #fff;
-  min-height: calc(100% - 4em);
   padding: 3.3em 2em;
   right: 0;
   overflow-y: scroll;
