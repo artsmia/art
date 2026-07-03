@@ -6,8 +6,8 @@ var debounce = require("debounce");
 var cookie = require("react-cookie");
 
 var linearPartition = require("linear-partitioning");
-var ArtworkImage = require("./artwork-image");
 var Image = require("./image");
+var NoImagePlaceholder = require("./no-image-placeholder");
 
 const ImageQuilt = React.createClass({
   mixins: [PureRenderMixin],
@@ -374,21 +374,11 @@ var QuiltPatch = React.createClass({
       />
     );
 
-    var textStyle = {
-      ...style,
-      display: "table",
-      whiteSpace: "normal",
-    };
-
     var patch =
       art.image == "valid" ? (
         image
       ) : (
-        <span className="invalid" style={textStyle} {...other}>
-          <p>
-            <strong>{art.title_short}</strong>
-          </p>
-        </span>
+        <NoImagePlaceholder style={style} />
       );
 
     return (

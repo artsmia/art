@@ -272,6 +272,13 @@ $search-filter-panel-width: 320px;
       transform: none !important;
     }
 
+    .artwork-image .no-image-placeholder {
+      align-self: stretch;
+      width: 100%;
+      min-height: clamp(240px, 36vw, 460px);
+      max-height: clamp(240px, 36vw, 460px);
+    }
+
     .artwork-summary {
       width: 100%;
       float: none;

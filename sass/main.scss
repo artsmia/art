@@ -1504,6 +1504,30 @@ button {
 }
 /* ===== invalid (no image) STYLES ===== */
 
+.no-image-placeholder {
+  background-color: #ddd;
+  color: #232323;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 6.25rem;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s ease;
+
+  .no-image-placeholder-label {
+    margin: 0;
+    padding: 1em;
+    line-height: 1.2;
+    font-family: $MiaGroteskBold;
+  }
+}
+
+.quilt-wrap a:hover .no-image-placeholder {
+  opacity: 0.68;
+}
+
 .quilt-row-wrap {
   display: flex;
 }

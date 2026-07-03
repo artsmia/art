@@ -17,6 +17,7 @@ var ArtworkRelatedContent = require("./artwork-related");
 var ArtworkPageMetadata = require("./artwork/page-metadata");
 var rightsDescriptions = require("./rights-types.js");
 var ClosedBanner = require("./museum-closed-banner");
+var NoImagePlaceholder = require("./no-image-placeholder");
 
 var Sticky = require("react-sticky");
 
@@ -176,7 +177,7 @@ var Artwork = React.createClass({
                 </p>
               ))}
           </div>
-        )) || <NoImagePlaceholder art={art} />}
+        )) || <ArtworkNoImagePlaceholder art={art} />}
         {smallViewport && showMoreIcon && exploreIcon}
       </div>
     );
@@ -416,9 +417,8 @@ var noImageStyle = {
     width: "77%",
     textAlign: "center",
   },
-  pattern: {},
 };
-var NoImagePlaceholder = React.createClass({
+var ArtworkNoImagePlaceholder = React.createClass({
   render() {
     var { art } = this.props;
     var model = art["related:3dmodels"] && art["related:3dmodels"][0];
@@ -426,9 +426,7 @@ var NoImagePlaceholder = React.createClass({
       <SketchfabEmbed model={model} />
     ) : (
       <div style={noImageStyle.wrapper}>
-        <div className="noImage invalid">
-          <p>No Image Available</p>
-        </div>
+        <NoImagePlaceholder />
       </div>
     );
   },

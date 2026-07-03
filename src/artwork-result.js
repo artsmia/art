@@ -35,14 +35,13 @@ var ArtworkResult = React.createClass({
         (key) => key.match(/related:/) && !key.match(/related:exhibitions/)
       ).length > 0;
     var customImage = this.props.customImage;
-    var { imageFallback, onImageError } = this.props;
+    var { onImageError } = this.props;
 
     return (
       <Artwork.Figure
         art={art}
         className="artwork-result"
         customImage={customImage}
-        imageFallback={imageFallback}
         onImageError={onImageError}
       >
         <div className="artwork-summary">
