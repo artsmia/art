@@ -7,6 +7,8 @@ var rest = require("rest");
 var SEARCH = require("./endpoints").search;
 var _Artwork = require("./_artwork");
 var imageCDN = require("./image-cdn");
+var HomeExploreHero = require("./home-explore-hero");
+var exploreArtworks = require("./home-explore-artworks");
 
 var INTRO_IMAGE_URL =
   "https://img.artsmia.org/web_objects_cache/127000/000/80/127081/mia_8008778_full.jpg";
@@ -57,6 +59,7 @@ var RecentAccessions = React.createClass({
     fetchData: {
       searchResults: () => fetchSearchEndpoint("recent", 60),
       accessionHighlights: () => fetchSearchEndpoint("highlights", 20),
+      exploreHero: () => exploreArtworks.fetchUniqueArtworksForHighlight("whm"),
     },
   },
 
@@ -84,20 +87,6 @@ var RecentAccessions = React.createClass({
     return artworksWithValidImages(this.highlightArtworks());
   },
 
-  artistLine(art) {
-    return (
-      art.artist_display ||
-      art.artist ||
-      art.culture ||
-      art.country ||
-      "Unknown artist"
-    );
-  },
-
-  dateLine(art) {
-    return art.dated || art.date_display || art.accessionDate || "";
-  },
-
   renderArtworkThumb(art) {
     return (
       <div className="artwork-image" style={CONTAINER_STYLE}>
@@ -106,6 +95,20 @@ var RecentAccessions = React.createClass({
           alt={art.title || ""}
           onError={() => this.markImageFailed(art)}
           style={IMG_STYLE}
+        />
+      </div>
+    );
+  },
+
+  renderArtworkSummary(art) {
+    return (
+      <div className="ntm-artwork-text artwork-summary">
+        <_Artwork.Title art={art} link={false} />
+        <_Artwork.Creator
+          art={art}
+          wrapper="h2"
+          peek={false}
+          showPeeks={false}
         />
       </div>
     );
@@ -123,11 +126,7 @@ var RecentAccessions = React.createClass({
         <div className="ntm-highlight-thumb">
           {this.renderArtworkThumb(art)}
         </div>
-        <h3 className="ntm-highlight-title">{art.title}</h3>
-        <p className="ntm-highlight-meta">
-          {this.artistLine(art)}
-          {this.dateLine(art) ? `, ${this.dateLine(art)}` : ""}
-        </p>
+        {this.renderArtworkSummary(art)}
       </Link>
     );
   },
@@ -191,10 +190,7 @@ var RecentAccessions = React.createClass({
         <div className="ntm-recent-thumb">
           {this.renderArtworkThumb(art)}
         </div>
-        <div className="ntm-recent-copy">
-          <p className="ntm-recent-artist">{this.artistLine(art)}</p>
-          <p className="ntm-recent-title">{art.title || ""}</p>
-        </div>
+        {this.renderArtworkSummary(art)}
       </Link>
     );
   },
@@ -275,6 +271,7 @@ var RecentAccessions = React.createClass({
           </section>
           <div className="explore-section">
             {this.renderAccessionHighlightsSection()}
+            <HomeExploreHero data={this.props.data} />
             {this.renderRecentAccessionsSection()}
           </div>
         </div>

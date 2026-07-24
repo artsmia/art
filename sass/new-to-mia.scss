@@ -6,8 +6,6 @@ $ntm-text-dark: #231f20;
 $ntm-text-body: rgba(35, 31, 32, 0.85);
 $ntm-accent: #e33c2f;
 $ntm-accent-hover: rgba(35, 35, 35, 0.65);
-$ntm-heading: #111827;
-$ntm-meta: #6b7280;
 $ntm-empty-title: #1b2233;
 $ntm-empty-copy: #647086;
 $ntm-empty-icon: #bac2cf;
@@ -50,7 +48,7 @@ body.ntm-page-active header.open .global_buttons button.menu {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
   .artwork-image .image,
   .artwork-image img {
@@ -58,7 +56,7 @@ body.ntm-page-active header.open .global_buttons button.menu {
     height: 100%;
     display: block;
     object-fit: contain !important;
-    object-position: center;
+    object-position: left center;
   }
 }
 
@@ -253,21 +251,39 @@ body.ntm-page-active header.open .global_buttons button.menu {
     }
   }
 
-  .ntm-highlight-title {
-    margin: 0;
-    font-family: $ntm-font-inter;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.25;
-    color: $ntm-heading;
-  }
+  .ntm-artwork-text.artwork-summary {
+    h1,
+    h2 {
+      margin: 0;
+      padding: 0;
+    }
 
-  .ntm-highlight-meta {
-    margin: 0.25rem 0 0;
-    color: $ntm-meta;
-    font-family: $ntm-font-inter;
-    font-size: 0.75rem;
-    line-height: 1.35;
+    h1 {
+      font-family: "MiaGrotesk-Light", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.35;
+      color: #222;
+    }
+
+    h1 strong {
+      font-family: "MiaGrotesk-Bold", sans-serif;
+      font-weight: 600;
+    }
+
+    h1 .dated {
+      font-family: "MiaGrotesk-Light", sans-serif;
+      font-weight: 400;
+    }
+
+    h2 {
+      font-family: "MiaGrotesk-Regular", sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      line-height: 1.35;
+      color: #5c5c5c;
+      margin-top: 0.2rem;
+    }
   }
 
   .ntm-highlights-more {
@@ -375,28 +391,6 @@ body.ntm-page-active header.open .global_buttons button.menu {
     @extend %ntm-card-thumb;
   }
 
-  .ntm-recent-copy {
-    min-width: 0;
-    margin-top: 0.75rem;
-  }
-
-  .ntm-recent-artist {
-    margin: 0 0 0.2rem;
-    color: $ntm-heading;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.25;
-    font-family: $ntm-font-inter;
-  }
-
-  .ntm-recent-title {
-    margin: 0;
-    color: $ntm-meta;
-    font-size: 0.9rem;
-    line-height: 1.35;
-    font-family: $ntm-font-inter;
-  }
-
   .ntm-recent-empty {
     flex: 1 1 0;
     min-width: 0;
@@ -448,14 +442,6 @@ body.ntm-page-active header.open .global_buttons button.menu {
 
     .ntm-recent-heading {
       font-size: 1.65rem;
-    }
-
-    .ntm-recent-artist {
-      font-size: 0.95rem;
-    }
-
-    .ntm-recent-title {
-      font-size: 0.85rem;
     }
   }
 }
