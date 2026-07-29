@@ -96,7 +96,7 @@ var HomeDepartmentsAndPages = React.createClass({
             <p>
               It is our mission to enrich the community by collecting,
               preserving, and making accessible outstanding works of art from
-              the world’s diverse cultures. With over 100,000 artworks, Mia’s
+              the world’s diverse cultures. With more than 100,000 artworks, Mia’s
               collection includes art from six continents, spanning about 5,000
               years. Here you will find world-famous artworks that embody the
               highest levels of artistic achievement and speak to the enduring
