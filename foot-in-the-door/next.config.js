@@ -34,15 +34,25 @@ module.exports = {
     ]
   },
   async redirects() {
-    // Redirect away to top-level new.artsmia.org interior pages
-    return 'stories visit programs join-and-invest about shop'
-    .split(' ')
-    .map(section => {
-      return {
+    const collectionRedirects = [
+      {
+        source: '/exhibitions/2898/creativity-academy-2021/room/all',
+        destination: 'https://collections.artsmia.org/ ',
+        permanent: true,
+      },
+    ]
+
+    const mainSiteRedirects = 'stories visit programs join-and-invest about shop'
+      .split(' ')
+      .map(section => ({
         source: `/${section}/:params*`,
         destination: `https://new.artsmia.org/${section}/:params*`,
         permanent: true,
-      }
-    })
+      }))
+
+    return [
+      ...collectionRedirects,
+      ...mainSiteRedirects,
+    ]
   },
 }
