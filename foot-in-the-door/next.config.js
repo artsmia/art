@@ -34,13 +34,6 @@ module.exports = {
     ]
   },
   async redirects() {
-    const collectionRedirects = [
-      {
-        source: '/exhibitions/2898/creativity-academy-2021/room/all',
-        destination: 'https://collections.artsmia.org/',
-        permanent: true,
-      },
-    ]
 
     const mainSiteRedirects = 'stories visit programs join-and-invest about shop'
       .split(' ')
@@ -51,7 +44,6 @@ module.exports = {
       }))
 
     return [
-      ...collectionRedirects,
       ...mainSiteRedirects,
     ]
   },
