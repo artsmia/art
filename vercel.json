@@ -4,6 +4,11 @@
       "source": "/exhibitions/2898/creativity-academy-2021/room/all",
       "destination": "https://collections.artsmia.org/",
       "permanent": true
+    },
+    {
+      "source": "/redirect-test",
+      "destination": "https://collections.artsmia.org/",
+      "permanent": true
     }
   ],
   "rewrites": [
