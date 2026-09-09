@@ -37,7 +37,7 @@ module.exports = {
     const collectionRedirects = [
       {
         source: '/exhibitions/2898/creativity-academy-2021/room/all',
-        destination: 'https://collections.artsmia.org/ ',
+        destination: 'https://collections.artsmia.org/',
         permanent: true,
       },
     ]
