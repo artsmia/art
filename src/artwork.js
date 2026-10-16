@@ -12,6 +12,7 @@ var ArtworkDetails = require("./artwork-details");
 var _Artwork = require("./_artwork");
 var Image = require("./image");
 var ImageAdvisory = require("./image-advisory");
+var advisoryRevealStore = require("./advisory-reveal-store");
 var imageCDN = require("./image-cdn");
 var SEARCH = require("./endpoints").search;
 var ArtworkRelatedContent = require("./artwork-related");
@@ -295,6 +296,7 @@ var Artwork = React.createClass({
   },
 
   dismissImageAdvisory() {
+    advisoryRevealStore.reveal(this.state.id);
     this.setState({ imageAdvisoryDismissed: true });
   },
 
@@ -333,7 +335,7 @@ var Artwork = React.createClass({
       show3d: navigatedFrom3dModelSearch,
       smallViewportShowInfoOrRelatedContent: window && window.enteredViaMore,
       showBiggie,
-      imageAdvisoryDismissed: false,
+      imageAdvisoryDismissed: advisoryRevealStore.isRevealed(art.id),
     };
   },
 
