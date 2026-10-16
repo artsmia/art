@@ -100,12 +100,41 @@ var Artwork = React.createClass({
         : 20;
     if (smallViewport && this.state.show3d) mapHeight = 67;
 
+    var showImageAdvisory =
+      !!art.content_warnings && !this.state.imageAdvisoryDismissed;
+
     var image = (
       <Image
         art={art}
         style={{ maxWidth: "95%", maxHeight: mapHeight - 5 + "vh" }}
       />
     );
+
+    if (art.content_warnings) {
+      image = (
+        <div
+          className={cx("image-advisory-frame", {
+            "is-blurred": showImageAdvisory,
+          })}
+        >
+          {image}
+          {showImageAdvisory && (
+            <div className="image-advisory-overlay">
+              <div className="image-advisory-overlay__content">
+                <strong>Content advisory</strong>
+                <p style={{ whiteSpace: "pre-line" }}>{art.content_warnings}</p>
+                <button
+                  type="button"
+                  onClick={this.dismissImageAdvisory}
+                >
+                  View image
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
 
     var showMoreIcon =
       Object.keys(art).filter(
@@ -285,6 +314,10 @@ var Artwork = React.createClass({
     this.setState({ show3d: nextShow3d });
   },
 
+  dismissImageAdvisory() {
+    this.setState({ imageAdvisoryDismissed: true });
+  },
+
   getInitialState() {
     var art = this.props.data.artwork;
     art.id =
@@ -320,6 +353,7 @@ var Artwork = React.createClass({
       show3d: navigatedFrom3dModelSearch,
       smallViewportShowInfoOrRelatedContent: window && window.enteredViaMore,
       showBiggie,
+      imageAdvisoryDismissed: false,
     };
   },
 

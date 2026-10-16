@@ -984,6 +984,56 @@ $transitionOut: 0.3s 0;
   }
 }
 
+.artwork .image-advisory-frame {
+  position: relative;
+  display: inline-block;
+  max-width: 95%;
+  line-height: 0;
+}
+
+.artwork .image-advisory-frame.is-blurred img {
+  filter: blur(9px);
+}
+
+.artwork .image-advisory-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(35, 35, 35, 0.72);
+  color: #fff;
+  text-align: center;
+}
+
+.artwork .image-advisory-overlay__content {
+  width: min(78%, 18em);
+  font-family: "MiaGrotesk-Bold", sans-serif;
+  font-size: 0.9em;
+  line-height: 1.2em;
+}
+
+.artwork .image-advisory-overlay__content strong {
+  display: block;
+  margin-bottom: 0.35em;
+}
+
+.artwork .image-advisory-overlay__content p {
+  margin: 0 0 1.5em;
+  width: 100%;
+}
+
+.artwork .image-advisory-overlay__content button {
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-family: "MiaGrotesk-Bold", sans-serif;
+  font-size: 0.95em;
+  line-height: 1;
+  padding: 0.55em 1em;
+  cursor: pointer;
+}
+
 #map {
   .leaflet-map-pane,
   .leaflet-control-container {
