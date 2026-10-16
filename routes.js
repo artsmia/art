@@ -29,6 +29,7 @@ var Survey = require("./src/survey");
 var RandomArtwork = require("./src/pages/random");
 var NotFound = require("./src/pages/not-found");
 var PseudoArtwork = require("./src/pseudo-artwork.js");
+var OneStrangeNight = require("./src/one-strange-night");
 
 var routes = (
   <Route handler={App} path="/">
@@ -91,6 +92,11 @@ var routes = (
     <Route name="surveys" path="surveys/:surveyId" handler={Survey} />
     <Route name="survey" path="survey" handler={Survey} />
     <NotFoundRoute handler={NotFound} />
+    <Route
+      name="oneStrangeNight"
+      path="/one-strange-night-at-mia"
+      handler={OneStrangeNight}
+    />
   </Route>
 );
 

@@ -1,0 +1,258 @@
+.one-strange-night {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  padding-top: 6rem;
+}
+
+.one-strange-night-artworks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 2rem;
+  row-gap: 2.5rem;
+  align-items: start;
+}
+
+.one-strange-night-artwork {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  .one-strange-night-artwork-title {
+    border-top: 2px solid #222;
+    padding-top: 0.75rem;
+    margin: 0 0 1rem;
+
+    font-size: 1rem;
+    line-height: 1.4;
+    font-weight: 700;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  figure {
+    margin: 0;
+    padding: 0;
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+  }
+}
+
+.one-strange-night-artwork-metadata {
+  font-size: 0.8rem;
+  line-height: 1.4;
+
+  p {
+    margin: 0 0 0.25rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .one-strange-night-artworks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .one-strange-night {
+    padding: 0 1rem;
+  }
+
+  .one-strange-night-artworks {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.one-strange-night-artwork-title {
+  border-top: 2px solid #222;
+  padding-top: 0.5rem;
+  margin: 0 0 1rem;
+
+  font-size: 1rem;
+  line-height: 1.15;
+  font-weight: bold;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.one-strange-night-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 4rem;
+
+  &-image {
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &-content {
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.one-strange-night-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 4rem;
+
+  &-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  &-content {
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  }
+}
+
+.one-strange-night-book {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 3rem;
+  margin-bottom: 4rem;
+
+  &-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 250px;
+  }
+
+  &-content {
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .one-strange-night-hero,
+  .one-strange-night-book {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .one-strange-night-book {
+    padding: 2rem;
+  }
+}
+
+.osn-artwork {
+  min-width: 0;
+}
+
+.osn-artwork-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.osn-artwork-title {
+  border-top: 2px solid #222;
+  padding-top: 0.75rem;
+  margin: 0 0 1rem;
+
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #222;
+}
+
+.osn-artwork-image {
+  width: 100%;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.osn-artwork-caption {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #444;
+
+  p {
+    margin: 0;
+  }
+}
+
+.osn-artwork-link:hover .osn-artwork-title {
+  text-decoration: underline;
+}
