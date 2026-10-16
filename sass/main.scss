@@ -88,7 +88,8 @@ header {
   background: #222;
 }
 
-.quilt-wrap a:hover {
+.quilt-wrap a:hover,
+.quilt-wrap [role="button"]:hover {
   overflow: visible !important;
   // z-index: 100;
 

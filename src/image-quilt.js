@@ -378,6 +378,7 @@ var QuiltPatch = React.createClass({
       hPadding,
       advisoryRevealed,
       onRevealAdvisory,
+      onClick,
       ...other
     } = this.props;
     var id = art.id;
@@ -407,7 +408,7 @@ var QuiltPatch = React.createClass({
         art={art}
         compact={true}
         revealed={advisoryRevealed}
-        onReveal={onRevealAdvisory}
+        onReveal={this.revealAndFocus}
       >
         <Image
           art={art}
@@ -435,23 +436,42 @@ var QuiltPatch = React.createClass({
         </span>
       );
 
+    var wrapStyle = { ...style, position: "relative", cursor: "pointer" };
+
+    // SSR / no-JS: real link to the artwork page.
+    // Client: focus/preview via onClick only — no fake Link that can navigate.
+    if (this.context.universal) {
+      return (
+        <Link style={wrapStyle} to="artwork" params={{ id: art.id }}>
+          {patch}
+        </Link>
+      );
+    }
+
     return (
-      <Link
-        onClick={this.clickOrDontClick}
-        style={{ ...style, position: "relative" }}
-        to="artwork"
-        params={{ id: art.id }}
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={this.activateOnKey}
+        style={wrapStyle}
       >
         {patch}
-      </Link>
+      </div>
     );
   },
 
-  // halt the click event if javascript is loaded
-  // clicking triggers the right-hand preview, not the `<a>`
-  // TODO make this work with command click tho
-  clickOrDontClick(event) {
-    if (!this.context.universal) event.preventDefault();
+  activateOnKey(event) {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    this.props.onClick && this.props.onClick(event);
+  },
+
+  // View button: unblur (shared state) and open the search preview.
+  revealAndFocus() {
+    var { onRevealAdvisory, onClick } = this.props;
+    onRevealAdvisory && onRevealAdvisory();
+    onClick && onClick();
   },
 
   getDefaultProps() {

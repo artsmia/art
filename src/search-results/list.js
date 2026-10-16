@@ -16,10 +16,11 @@ var SearchResultsList = React.createClass({
       ...focusedProps
     } = this.props;
 
-    if (smallViewport || this.context.universal) {
+    if (this.context.universal) {
       focusedResult = null;
     }
     if (!focusedResult) leftColumnWidth = "100%";
+    else if (smallViewport) leftColumnWidth = "0%";
 
     var results = this.props.hits.map((hit) => {
       var id = String(hit._source.id || "").replace("http://api.artsmia.org/objects/", "");
@@ -41,7 +42,10 @@ var SearchResultsList = React.createClass({
             }
             onRevealAdvisory={
               revealAdvisory &&
-              (() => revealAdvisory(hit._source.id))
+              (() => {
+                revealAdvisory(hit._source.id);
+                this.handleClick(hit);
+              })
             }
           />
         </div>

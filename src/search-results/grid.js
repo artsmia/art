@@ -86,11 +86,12 @@ var SearchResultsGrid = React.createClass({
       </div>
     );
 
-    if (smallViewport || this.context.universal) {
+    if (this.context.universal) {
       focusedResult = null;
     }
 
     if (!focusedResult) leftColumnWidth = "100%";
+    else if (smallViewport) leftColumnWidth = "0%";
 
     var wrappedQuilt = !focusedResult ? (
       stuff

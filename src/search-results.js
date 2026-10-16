@@ -9,6 +9,7 @@ var SearchSummary = require("./search-summary");
 var ResultsList = require("./search-results/list");
 var ResultsGrid = require("./search-results/grid");
 var searchLanguageMap = require("./search-language");
+var advisoryRevealStore = require("./advisory-reveal-store");
 const { getResultTotal } = require("./util/search-utils");
 
 function omitResultsById(...ids) {
@@ -129,7 +130,7 @@ var SearchResults = React.createClass({
       focusedResult: showPreview && focus && focus,
       view: initialView,
       isInspiredByMia,
-      revealedAdvisoryById: {},
+      revealedAdvisoryById: advisoryRevealStore.getRevealedMap(),
     };
   },
 
@@ -140,6 +141,7 @@ var SearchResults = React.createClass({
   revealAdvisory(id) {
     var key = String(id);
     if (this.state.revealedAdvisoryById[key]) return;
+    advisoryRevealStore.reveal(key);
     this.setState({
       revealedAdvisoryById: {
         ...this.state.revealedAdvisoryById,
@@ -286,14 +288,10 @@ var SearchResults = React.createClass({
   },
 
   focusResult(hit, nextView = false) {
-    var { smallViewport } = this.context;
-
-    if (smallViewport && nextView) {
-      this.transitionTo("artwork", { id: hit._id });
-    } else {
-      !smallViewport && nextView && this.changeView(nextView);
-      this.setState({ focusedResult: hit ? hit : null });
-    }
+    // Always open the in-page preview. Full artwork pages are reached only
+    // via the explicit "details" link in the preview (or list "more" link).
+    !this.context.smallViewport && nextView && this.changeView(nextView);
+    this.setState({ focusedResult: hit ? hit : null });
   },
 
   changeView(next) {

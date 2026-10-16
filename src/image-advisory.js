@@ -5,6 +5,9 @@ var cx = require("classnames");
  * Blur + overlay when art.content_warnings is set.
  * Controlled via `revealed` / `onReveal` when a parent shares reveal state
  * (e.g. search gallery + focused preview). Otherwise uses local dismiss state.
+ *
+ * Only the button reveals. Overlay clicks are swallowed so a blurred
+ * thumbnail is not selected into the search preview.
  */
 var ImageAdvisory = React.createClass({
   getInitialState() {
@@ -16,6 +19,13 @@ var ImageAdvisory = React.createClass({
       return !!this.props.revealed;
     }
     return this.state.localRevealed;
+  },
+
+  swallowClick(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   },
 
   reveal(event) {
@@ -49,7 +59,7 @@ var ImageAdvisory = React.createClass({
         {showOverlay && (
           <div
             className="image-advisory-overlay"
-            onClick={compact ? this.reveal : undefined}
+            onClick={this.swallowClick}
           >
             <div className="image-advisory-overlay__content">
               {!compact && <strong>Content advisory</strong>}
