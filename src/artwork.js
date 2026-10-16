@@ -11,6 +11,7 @@ var ArtworkPreview = require("./artwork-preview");
 var ArtworkDetails = require("./artwork-details");
 var _Artwork = require("./_artwork");
 var Image = require("./image");
+var ImageAdvisory = require("./image-advisory");
 var imageCDN = require("./image-cdn");
 var SEARCH = require("./endpoints").search;
 var ArtworkRelatedContent = require("./artwork-related");
@@ -100,41 +101,20 @@ var Artwork = React.createClass({
         : 20;
     if (smallViewport && this.state.show3d) mapHeight = 67;
 
-    var showImageAdvisory =
-      !!art.content_warnings && !this.state.imageAdvisoryDismissed;
-
     var image = (
-      <Image
+      <ImageAdvisory
         art={art}
-        style={{ maxWidth: "95%", maxHeight: mapHeight - 5 + "vh" }}
-      />
+        revealed={
+          art.content_warnings ? this.state.imageAdvisoryDismissed : undefined
+        }
+        onReveal={this.dismissImageAdvisory}
+      >
+        <Image
+          art={art}
+          style={{ maxWidth: "95%", maxHeight: mapHeight - 5 + "vh" }}
+        />
+      </ImageAdvisory>
     );
-
-    if (art.content_warnings) {
-      image = (
-        <div
-          className={cx("image-advisory-frame", {
-            "is-blurred": showImageAdvisory,
-          })}
-        >
-          {image}
-          {showImageAdvisory && (
-            <div className="image-advisory-overlay">
-              <div className="image-advisory-overlay__content">
-                <strong>Content advisory</strong>
-                <p style={{ whiteSpace: "pre-line" }}>{art.content_warnings}</p>
-                <button
-                  type="button"
-                  onClick={this.dismissImageAdvisory}
-                >
-                  View image
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
 
     var showMoreIcon =
       Object.keys(art).filter(

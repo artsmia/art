@@ -3,12 +3,21 @@ let LazyLoad = require("react-lazy-load").default;
 
 var Markdown = require("./markdown");
 var Image = require("./image");
+var ImageAdvisory = require("./image-advisory");
 var rightsDescriptions = require("./rights-types.js");
 
 var ArtworkImage = React.createClass({
   render() {
-    let { art, id, customImage, style, containerStyle, ignoreStyle } =
-      this.props;
+    let {
+      art,
+      id,
+      customImage,
+      style,
+      containerStyle,
+      ignoreStyle,
+      advisoryRevealed,
+      onRevealAdvisory,
+    } = this.props;
     let aspectRatio = art.image_width / art.image_height;
     let maxWidth = window.innerWidth ? Math.min(window.innerWidth, 400) : 400;
     let width = aspectRatio >= 1 ? maxWidth : maxWidth / aspectRatio;
@@ -40,7 +49,13 @@ var ArtworkImage = React.createClass({
     return (
       showImage && (
         <div className="artwork-image" style={containerStyle}>
-          {image}
+          <ImageAdvisory
+            art={art}
+            revealed={advisoryRevealed}
+            onReveal={onRevealAdvisory}
+          >
+            {image}
+          </ImageAdvisory>
           <Markdown allowAnchors={this.props.allowAnchors}>
             {art.image_copyright}
           </Markdown>
