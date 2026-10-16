@@ -6,8 +6,8 @@ var cx = require("classnames");
  * Controlled via `revealed` / `onReveal` when a parent shares reveal state
  * (e.g. search gallery + focused preview). Otherwise uses local dismiss state.
  *
- * Only the button reveals. Overlay clicks are swallowed so a blurred
- * thumbnail is not selected into the search preview.
+ * Only the button reveals. Overlay clicks bubble so a blurred thumbnail can
+ * still be selected into the search preview (image stays blurred).
  */
 var ImageAdvisory = React.createClass({
   getInitialState() {
@@ -19,13 +19,6 @@ var ImageAdvisory = React.createClass({
       return !!this.props.revealed;
     }
     return this.state.localRevealed;
-  },
-
-  swallowClick(event) {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
   },
 
   reveal(event) {
@@ -57,10 +50,7 @@ var ImageAdvisory = React.createClass({
       >
         {children}
         {showOverlay && (
-          <div
-            className="image-advisory-overlay"
-            onClick={this.swallowClick}
-          >
+          <div className="image-advisory-overlay">
             <div className="image-advisory-overlay__content">
               {!compact && <strong>Content advisory</strong>}
               {!compact && (
