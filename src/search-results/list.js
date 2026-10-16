@@ -11,6 +11,8 @@ var SearchResultsList = React.createClass({
       focusHandler,
       smallViewport,
       customImage,
+      isAdvisoryRevealed,
+      revealAdvisory,
       ...focusedProps
     } = this.props;
 
@@ -34,10 +36,19 @@ var SearchResultsList = React.createClass({
             highlights={hit.highlight}
             showMore={smallViewport}
             customImage={customImage}
+            advisoryRevealed={
+              isAdvisoryRevealed && isAdvisoryRevealed(hit._source.id)
+            }
+            onRevealAdvisory={
+              revealAdvisory &&
+              (() => revealAdvisory(hit._source.id))
+            }
           />
         </div>
       );
     });
+
+    var focusedId = focusedResult && focusedResult._source.id;
 
     return (
       <div
@@ -60,10 +71,16 @@ var SearchResultsList = React.createClass({
         </div>
         {focusedResult && (
           <FocusedResult
+            {...this.props}
             key={focusedResult._source.id}
             art={focusedResult._source}
             highlights={focusedResult.highlight}
-            {...this.props}
+            advisoryRevealed={
+              isAdvisoryRevealed && isAdvisoryRevealed(focusedId)
+            }
+            onRevealAdvisory={
+              revealAdvisory && (() => revealAdvisory(focusedId))
+            }
           />
         )}
       </div>

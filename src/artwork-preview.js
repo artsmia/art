@@ -59,6 +59,8 @@ var ArtworkPreview = React.createClass({
         style={style}
         link={showLink}
         ignoreImageStyle={true}
+        advisoryRevealed={this.props.advisoryRevealed}
+        onRevealAdvisory={this.props.onRevealAdvisory}
       >
         <div className="art-details preview-header">
           {art.deaccessioned == "true" && <DeaccessionedBanner art={art} />}

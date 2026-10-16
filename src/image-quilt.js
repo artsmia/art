@@ -8,6 +8,7 @@ var cookie = require("react-cookie");
 var linearPartition = require("linear-partitioning");
 var ArtworkImage = require("./artwork-image");
 var Image = require("./image");
+var ImageAdvisory = require("./image-advisory");
 
 const ImageQuilt = React.createClass({
   mixins: [PureRenderMixin],
@@ -154,6 +155,14 @@ const ImageQuilt = React.createClass({
             customImageFn={this.props.customImageFn}
             lazyLoad={this.props.lazyLoad}
             hPadding={hPadding}
+            advisoryRevealed={
+              this.props.isAdvisoryRevealed &&
+              this.props.isAdvisoryRevealed(_art.id)
+            }
+            onRevealAdvisory={
+              this.props.revealAdvisory &&
+              (() => this.props.revealAdvisory(_art.id))
+            }
           />
         );
       });
@@ -362,7 +371,15 @@ module.exports = ImageQuilt;
 
 var QuiltPatch = React.createClass({
   render() {
-    var { art, width, customImageFn, hPadding, ...other } = this.props;
+    var {
+      art,
+      width,
+      customImageFn,
+      hPadding,
+      advisoryRevealed,
+      onRevealAdvisory,
+      ...other
+    } = this.props;
     var id = art.id;
 
     var style = {
@@ -386,12 +403,19 @@ var QuiltPatch = React.createClass({
     false && console.info("QuiltPatch", { hPadding, imgStyle });
 
     var image = (
-      <Image
+      <ImageAdvisory
         art={art}
-        style={imgStyle}
-        customImage={customImageFn}
-        {...other}
-      />
+        compact={true}
+        revealed={advisoryRevealed}
+        onReveal={onRevealAdvisory}
+      >
+        <Image
+          art={art}
+          style={imgStyle}
+          customImage={customImageFn}
+          {...other}
+        />
+      </ImageAdvisory>
     );
 
     var textStyle = {

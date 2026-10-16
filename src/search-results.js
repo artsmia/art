@@ -129,7 +129,23 @@ var SearchResults = React.createClass({
       focusedResult: showPreview && focus && focus,
       view: initialView,
       isInspiredByMia,
+      revealedAdvisoryById: {},
     };
+  },
+
+  isAdvisoryRevealed(id) {
+    return !!this.state.revealedAdvisoryById[String(id)];
+  },
+
+  revealAdvisory(id) {
+    var key = String(id);
+    if (this.state.revealedAdvisoryById[key]) return;
+    this.setState({
+      revealedAdvisoryById: {
+        ...this.state.revealedAdvisoryById,
+        [key]: true,
+      },
+    });
   },
 
   isInspiredByMia() {
@@ -261,6 +277,9 @@ var SearchResults = React.createClass({
           showRelated={showFocusRelatedContent}
           customImage={customImageFn && customImageFn.bind(this)}
           isInspiredByMia={isInspiredByMia}
+          revealedAdvisoryById={this.state.revealedAdvisoryById}
+          isAdvisoryRevealed={this.isAdvisoryRevealed}
+          revealAdvisory={this.revealAdvisory}
         />
       </div>
     );

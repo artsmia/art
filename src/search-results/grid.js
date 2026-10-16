@@ -19,8 +19,10 @@ var SearchResultsGrid = React.createClass({
       this.props.search.query != nextProps.search.query ||
       this.props.search.filters != nextProps.search.filters ||
       this.props.hits.slice(0, 10) !== nextProps.hits.slice(0, 10);
+    var advisoryChanged =
+      this.props.revealedAdvisoryById !== nextProps.revealedAdvisoryById;
 
-    if (searchChanged) {
+    if (searchChanged || advisoryChanged) {
       this.cachedQuilts = [];
     }
   },
@@ -33,6 +35,8 @@ var SearchResultsGrid = React.createClass({
       smallViewport,
       focusHandler,
       isInspiredByMia,
+      isAdvisoryRevealed,
+      revealAdvisory,
       ...focusedProps
     } = this.props;
     var targetHeight = hits.length < 20 ? 250 : 150;
@@ -54,6 +58,8 @@ var SearchResultsGrid = React.createClass({
           customImageFn={customImageFn}
           isInspiredByMia={isInspiredByMia}
           disableHover={true}
+          isAdvisoryRevealed={isAdvisoryRevealed}
+          revealAdvisory={revealAdvisory}
         />
       );
 
@@ -109,10 +115,18 @@ var SearchResultsGrid = React.createClass({
         {wrappedQuilt}
         {focusedResult && (
           <FocusedResult
+            {...this.props}
             key={focusedResult._source.id}
             art={focusedResult._source}
             highlights={focusedResult.highlight}
-            {...this.props}
+            advisoryRevealed={
+              isAdvisoryRevealed &&
+              isAdvisoryRevealed(focusedResult._source.id)
+            }
+            onRevealAdvisory={
+              revealAdvisory &&
+              (() => revealAdvisory(focusedResult._source.id))
+            }
           />
         )}
       </div>
