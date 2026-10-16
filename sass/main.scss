@@ -1034,6 +1034,31 @@ $transitionOut: 0.3s 0;
   cursor: pointer;
 }
 
+.artwork .body-of-work-context {
+  margin: 0.5em 0 0.75em;
+}
+
+.artwork .body-of-work-context__card {
+  display: block;
+  background: rgb(35, 35, 35);
+  color: #fff;
+  max-width: 75%;
+  padding: 10px 14px 12px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.artwork .body-of-work-context__body {
+  width: 100%;
+  margin: 0;
+  color: inherit;
+  font-family: "MiaGrotesk-Regular", sans-serif;
+  font-weight: 400;
+  font-size: 0.7em;
+  line-height: 1.45em;
+  text-align: left;
+}
+
 #map {
   .leaflet-map-pane,
   .leaflet-control-container {
