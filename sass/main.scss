@@ -1009,10 +1009,11 @@ $transitionOut: 0.3s 0;
 }
 
 .image-advisory-overlay__content {
-  width: min(78%, 18em);
+  width: min(90%, 24em);
   font-family: "MiaGrotesk-Bold", sans-serif;
   font-size: 0.9em;
   line-height: 1.2em;
+  text-wrap: balance;
 
   strong {
     display: block;
