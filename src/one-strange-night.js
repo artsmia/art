@@ -2,9 +2,9 @@ var React = require("react");
 var rest = require("rest");
 var Helmet = require("react-helmet");
 var { Link } = require("react-router");
+var imageCDN = require("./image-cdn");
 
 var SEARCH = require("./endpoints").search;
-var Artwork = require("./_artwork");
 
 var ARTWORK_IDS = [
     827,
@@ -45,17 +45,21 @@ var OneStrangeNight = React.createClass({
     var artworks = this.props.data.artworks || [];
 
     return (
-      <main className="one-strange-night">
-        <OneStrangeNightHero />
-        <OneStrangeNightBook />
-        <section className="one-strange-night-artworks">
-          {artworks.map((art) => (
-            <ArtworkCard key={art.id} art={art} />
-          ))}
-        </section>
+      <div>
+        <div className="header-image"></div>
+        <main className="one-strange-night">
+          <OneStrangeNightHero />
+          <OneStrangeNightBook />
+          <section className="one-strange-night-artworks">
+            {artworks.map((art) => (
+              <ArtworkCard key={art.id} art={art} />
+            ))}
+          </section>
 
-        <Helmet title="One Strange Night at Mia" />
-      </main>
+          <Helmet title="One Strange Night at Mia" />
+        </main>
+      </div>
+
     );
   },
 });
@@ -77,7 +81,7 @@ var ArtworkCard = React.createClass({
 
           <div className="osn-artwork-image">
             <img
-              src={art.image}
+              src={imageCDN(art, 800)}
               alt={art.title}
               loading="lazy"
             />
@@ -93,29 +97,27 @@ var ArtworkCard = React.createClass({
 });
 
 var ArtworkMetadata = React.createClass({
-  
   render() {
     var { art } = this.props;
 
-    return (
-      <div className="one-strange-night-artwork-metadata">
-        <p>
-          {[
-            art.artist,
-            art.life_date,
-            art.dated,
-            art.medium,
-          ]
-            .filter(Boolean)
-            .join(", ")}
-        </p>
+    var description = [
+      art.artist,
+      art.life_date,
+      art.dated,
+      art.medium,
+    ].filter(Boolean).join(", ");
 
-        <p>
-          {[art.creditline, art.accession_number]
-            .filter(Boolean)
-            .join(" ")}
-        </p>
-      </div>
+    var credit = [
+      art.creditline,
+      art.accession_number,
+    ].filter(Boolean).join(" ");
+
+    return (
+      <p className="one-strange-night-artwork-metadata">
+        {description}
+        {description && credit ? ". " : ""}
+        {credit}
+      </p>
     );
   },
 });
@@ -133,12 +135,32 @@ var OneStrangeNightHero = React.createClass({
 
         <div className="one-strange-night-hero-content">
           <h1>The Art Behind the Adventure</h1>
-          <h2>The Pillsbury Owl’s adventure began with a single coloring page, but soon took on a life of its own.</h2>
+
+          <p className="osn-hero-intro">
+            The Pillsbury Owl’s adventure began with a single coloring
+            page, but soon took on a life of its own.
+          </p>
 
           <p>
-            Inspired by Art Adventure, Mia’s program that introduces K–6 students to remarkable works of art through looking, wondering, and conversation, one coloring page grew into a collection featuring favorites from across the museum. Then the Owl took off. Those artworks became the characters, places, and surprises of One Strange Night at Mia, a coloring adventure through the museum. Meet the original works below—and see where the story began.
+            Inspired by Art Adventure, Mia’s program that introduces
+            K–6 students to remarkable works of art through looking,
+            wondering, and conversation, one coloring page grew into
+            a collection featuring favorites from across the museum.
           </p>
-          <a href="https://new.artsmia.org/programs/teachers-and-students/art-adventure">Learn more about Art Adventure</a>
+
+          <p>
+            Then the Owl took off. Those artworks became the characters,
+            places, and surprises of <em>One Strange Night at Mia</em>,
+            a coloring adventure through the museum. Meet the original
+            works below—and see where the story began.
+          </p>
+
+          <a
+            className="osn-hero-link"
+            href="https://new.artsmia.org/programs/teachers-and-students/art-adventure"
+          >
+            Learn more about Art Adventure →
+          </a>
         </div>
       </section>
     );
@@ -161,7 +183,16 @@ var OneStrangeNightBook = React.createClass({
 
           <div className="one-strange-night-book-actions">
             <p>The adventure doesn’t have to end at the museum. One Strange Night at Mia brings artworks from Mia’s collection to life through coloring, creativity, and a little imagination. Download the full coloring book for free, or order a printed copy on Amazon.</p>
-            <a href="images/one_strange_night_at_mia_coloring_book.pdf" className="button">Start Coloring for free</a>
+            <a
+              href="https://images.artsmia.org/wp-content/uploads/2026/10/06132145/one_strange_night_at_mia_coloring_book.pdf"
+              className="osn-book-button"
+              download
+            >
+              Start Coloring for free
+            </a>
+            <a className="osn-secondary-button" href="https://shop.artsmia.org/products/one-strange-night-at-mia-a-coloring-adventure">
+              Buy from The Store at Mia ↗
+            </a>
           </div>
         </div>
       </section>
