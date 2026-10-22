@@ -11,7 +11,7 @@ var FocusedResult = React.createClass({
       /(\d+)/,
       (int) => parseInt(int) + 3
     );
-    var { art, highlights, smallViewport } = this.props;
+    var { art, highlights } = this.props;
     var hasRelatedHighlight =
       highlights &&
       Object.keys(highlights)
@@ -24,9 +24,9 @@ var FocusedResult = React.createClass({
         baseStyle={{
           position: "relative",
           top: 0,
-          left: smallViewport ? 0 : leftSpacing,
+          left: leftSpacing,
           right: 0,
-          width: smallViewport ? "100%" : "60%",
+          width: "60%",
         }}
         stickyStyle={{ position: "fixed" }}
       >

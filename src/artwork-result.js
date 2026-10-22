@@ -41,6 +41,7 @@ var ArtworkResult = React.createClass({
         art={art}
         className="artwork-result"
         customImage={customImage}
+        compact={this.props.compact}
         advisoryRevealed={this.props.advisoryRevealed}
         onRevealAdvisory={this.props.onRevealAdvisory}
       >

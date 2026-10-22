@@ -288,10 +288,14 @@ var SearchResults = React.createClass({
   },
 
   focusResult(hit, nextView = false) {
-    // Always open the in-page preview. Full artwork pages are reached only
-    // via the explicit "details" link in the preview (or list "more" link).
-    !this.context.smallViewport && nextView && this.changeView(nextView);
-    this.setState({ focusedResult: hit ? hit : null });
+    var { smallViewport } = this.context;
+
+    if (smallViewport && nextView) {
+      this.transitionTo("artwork", { id: hit._id });
+    } else {
+      !smallViewport && nextView && this.changeView(nextView);
+      this.setState({ focusedResult: hit ? hit : null });
+    }
   },
 
   changeView(next) {

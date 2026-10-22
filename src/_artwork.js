@@ -478,6 +478,7 @@ var Figure = React.createClass({
       className,
       customImage,
       ignoreImageStyle,
+      compact,
       advisoryRevealed,
       onRevealAdvisory,
       ...figureProps
@@ -495,19 +496,19 @@ var Figure = React.createClass({
         itemType="https://schema.org/VisualArtwork"
       >
         <link itemProp="url" href={`/art/${id}`} />
-        <ConditionalLinkWrapper art={art} link={link}>
-          <ArtworkImage
-            art={art}
-            allowAnchors={false}
-            id={id}
-            lazyLoad={false}
-            className="artwork-image"
-            customImage={customImage}
-            ignoreStyle={ignoreImageStyle}
-            advisoryRevealed={advisoryRevealed}
-            onRevealAdvisory={onRevealAdvisory}
-          />
-        </ConditionalLinkWrapper>
+        <ArtworkImage
+          art={art}
+          allowAnchors={false}
+          id={id}
+          lazyLoad={false}
+          className="artwork-image"
+          customImage={customImage}
+          ignoreStyle={ignoreImageStyle}
+          compact={compact}
+          artworkLink={link}
+          advisoryRevealed={advisoryRevealed}
+          onRevealAdvisory={onRevealAdvisory}
+        />
         <figcaption>{this.props.children}</figcaption>
       </figure>
     );

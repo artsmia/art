@@ -1,13 +1,11 @@
 var React = require("react");
+var { Link } = require("react-router");
 var cx = require("classnames");
 
 /**
  * Blur + overlay when art.content_warnings is set.
- * Controlled via `revealed` / `onReveal` when a parent shares reveal state
- * (e.g. search gallery + focused preview). Otherwise uses local dismiss state.
- *
- * Only the button reveals. Overlay clicks bubble so a blurred thumbnail can
- * still be selected into the search preview (image stays blurred).
+ * Compact thumbnails have no reveal control. They unblur only when a
+ * parent passes `revealed` (side panel or object page, via the shared store).
  */
 var ImageAdvisory = React.createClass({
   getInitialState() {
@@ -34,9 +32,17 @@ var ImageAdvisory = React.createClass({
   },
 
   render() {
-    var { art, children, compact } = this.props;
+    var { art, children, compact, artworkLink } = this.props;
+    var image = artworkLink && art ? (
+      <Link to="artwork" params={{ id: art.id }}>
+        {children}
+      </Link>
+    ) : (
+      children
+    );
+
     if (!art || !art.content_warnings) {
-      return children;
+      return image;
     }
 
     var showOverlay = !this.isRevealed();
@@ -48,17 +54,49 @@ var ImageAdvisory = React.createClass({
           "image-advisory-frame--compact": compact,
         })}
       >
-        {children}
+        {image}
         {showOverlay && (
-          <div className="image-advisory-overlay">
+          <div
+            className="image-advisory-overlay"
+            onClick={compact ? undefined : this.swallowClick}
+          >
             <div className="image-advisory-overlay__content">
-              {!compact && <strong>Content advisory</strong>}
-              {!compact && (
-                <p style={{ whiteSpace: "pre-line" }}>{art.content_warnings}</p>
+              {compact ? (
+                <i
+                  className="fa-regular fa-eye-slash image-advisory-overlay__icon"
+                  title="Content advisory"
+                  aria-hidden="true"
+                />
+              ) : (
+                <div className="image-advisory-overlay__layout">
+                  <div className="image-advisory-overlay__message">
+                    <i
+                      className="fa-regular fa-eye-slash image-advisory-overlay__icon"
+                      aria-hidden="true"
+                    />
+                    <strong>Content advisory</strong>
+                    <p>
+                      <span>
+                        This work contains graphic depictions of violence,
+                        serious
+                      </span>
+                      <span>
+                        injury, severe emaciation, death, or human&nbsp;remains.
+                      </span>
+                    </p>
+                  </div>
+                  <div className="image-advisory-overlay__footer">
+                    <hr className="image-advisory-overlay__rule" />
+                    <button
+                      type="button"
+                      className="image-advisory-overlay__action"
+                      onClick={this.reveal}
+                    >
+                      View image
+                    </button>
+                  </div>
+                </div>
               )}
-              <button type="button" onClick={this.reveal}>
-                {compact ? "View" : "View image"}
-              </button>
             </div>
           </div>
         )}
