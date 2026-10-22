@@ -6,6 +6,7 @@
 @use "mia-font.scss";
 @use "alternative-titles.scss";
 @use "not-found-page.scss";
+@use "content-advisory.scss";
 @media print {
   @include meta.load-css("print.scss");
 }
@@ -305,10 +306,6 @@ header {
 .artwork-image div > p,
 .artwork-result .provenance {
   display: none;
-}
-
-.artwork-image .image-advisory-overlay__message p {
-  display: block;
 }
 
 .artwork-result p.location {
@@ -989,227 +986,6 @@ $transitionOut: 0.3s 0;
   }
 }
 
-.image-advisory-frame {
-  position: relative;
-  display: inline-block;
-  max-width: 100%;
-  line-height: 0;
-
-  > a {
-    display: inline-block;
-    max-width: 100%;
-    line-height: 0;
-  }
-}
-
-.image-advisory-frame.is-blurred img {
-  filter: blur(9px);
-}
-
-.image-advisory-frame.is-blurred:not(.image-advisory-frame--compact) img {
-  filter: blur(28px);
-}
-
-.image-advisory-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(35, 35, 35, 0.72);
-  color: #fff;
-  text-align: center;
-}
-
-.image-advisory-frame:not(.image-advisory-frame--compact)
-  .image-advisory-overlay {
-  display: block;
-  overflow: hidden;
-}
-
-.image-advisory-overlay__content {
-  width: min(96%, 40em);
-  // Match page type: body is Mia Grotesk Light; headings are Bold.
-  font-family: $MiaGroteskLight;
-  font-size: 1.2em;
-  font-weight: 400;
-  line-height: 1.5em;
-  box-sizing: border-box;
-
-  .image-advisory-overlay__icon {
-    display: block;
-    font-size: 2.7rem;
-    line-height: 1;
-    font-weight: 400;
-    margin: 0 auto 16px;
-  }
-
-  strong {
-    display: block;
-    font-family: $MiaGroteskBold;
-    font-size: 1.3em;
-    font-weight: 400;
-    line-height: 1.25em;
-    margin-bottom: 10px;
-  }
-
-  p {
-    margin: 0;
-    width: 28rem;
-    max-width: 100%;
-    color: #ececec;
-    font-family: inherit;
-    font-size: 1em;
-    font-weight: inherit;
-    line-height: 1.45em;
-    text-wrap: balance;
-  }
-
-  .image-advisory-overlay__rule {
-    border: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    width: 100%;
-    margin: 0 0 0.85em;
-  }
-
-  button {
-    border: 1px solid #fff;
-    background: transparent;
-    color: #fff;
-    font-family: $MiaGroteskBold;
-    font-size: 1em;
-    line-height: 1.5em;
-    padding: 0.55em 1em;
-    cursor: pointer;
-  }
-
-  button.image-advisory-overlay__action {
-    display: block;
-    width: 100%;
-    border: 0;
-    background: transparent;
-    padding: 0.55em 0.4em;
-    font-size: max(16px, 1em);
-  }
-
-}
-
-.image-advisory-frame:not(.image-advisory-frame--compact)
-  .image-advisory-overlay__content {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-}
-
-.image-advisory-overlay__layout {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.image-advisory-overlay__message {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding: 2.5rem 1.35rem 3.5rem;
-  box-sizing: border-box;
-}
-
-.image-advisory-overlay__footer {
-  position: absolute;
-  left: 1.35rem;
-  right: 1.35rem;
-  bottom: 1.1rem;
-}
-
-.image-advisory-frame--compact {
-  .image-advisory-overlay__content {
-    width: auto;
-    font-size: 1em;
-  }
-
-  .image-advisory-overlay__icon {
-    margin: 0;
-    font-size: 1.75rem;
-  }
-}
-
-// Quilt photos are position:absolute, so the frame has to take the patch size.
-// Everywhere else the frame shrink-wraps the image and the overlay matches it.
-.quilt-wrap .image-advisory-frame--compact {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-// Phone widths: scale the advisory stack to the image so it stays on the photo.
-@media screen and (max-width: 600px) {
-  .image-advisory-frame:not(.image-advisory-frame--compact) {
-    .image-advisory-overlay {
-      overflow: hidden;
-      padding: 0.35rem 0.5rem;
-      box-sizing: border-box;
-    }
-
-    .image-advisory-overlay__message {
-      padding: 0.85rem 0.85rem 3.6rem;
-    }
-
-    .image-advisory-overlay__footer {
-      left: 0.85rem;
-      right: 0.85rem;
-      bottom: 0.7rem;
-    }
-
-    .image-advisory-overlay__icon {
-      font-size: 2.1rem;
-      margin-bottom: 12px;
-    }
-
-    strong {
-      margin-bottom: 8px;
-    }
-  }
-}
-
-.artwork .image-advisory-frame {
-  max-width: 95%;
-}
-
-.artwork .body-of-work-context,
-.focusedResult .body-of-work-context {
-  margin: 0.5em 0 0.75em;
-}
-
-.artwork .body-of-work-context__card,
-.focusedResult .body-of-work-context__card {
-  display: block;
-  background: rgb(35, 35, 35);
-  color: #fff;
-  max-width: 75%;
-  padding: 10px 14px 12px;
-  box-sizing: border-box;
-  text-align: left;
-}
-
-.artwork .body-of-work-context__body,
-.focusedResult .body-of-work-context__body {
-  width: 100%;
-  margin: 0;
-  color: inherit;
-  font-family: "MiaGrotesk-Regular", sans-serif;
-  font-weight: 400;
-  font-size: 0.7em;
-  line-height: 1.45em;
-  text-align: left;
-}
-
 #map {
   .leaflet-map-pane,
   .leaflet-control-container {
@@ -1265,29 +1041,6 @@ $transitionOut: 0.3s 0;
 .objects-focus div > p {
   margin-bottom: 1em;
   width: 75%;
-}
-
-.objects-focus .image-advisory-overlay__message p {
-  width: 28rem;
-  max-width: 100%;
-  margin: 0;
-}
-
-// Search preview: keep the advisory sentence on these two lines.
-.focusedResult .image-advisory-overlay {
-  container-type: inline-size;
-}
-
-.focusedResult .image-advisory-overlay__message p {
-  width: auto;
-  max-width: 100%;
-  text-wrap: wrap;
-  font-size: min(1em, calc((100cqi - 2.7rem) / 24.5));
-}
-
-.focusedResult .image-advisory-overlay__message p span {
-  display: block;
-  white-space: nowrap;
 }
 
 .objects-focus span {
