@@ -159,10 +159,6 @@ const ImageQuilt = React.createClass({
               this.props.isAdvisoryRevealed &&
               this.props.isAdvisoryRevealed(_art.id)
             }
-            onRevealAdvisory={
-              this.props.revealAdvisory &&
-              (() => this.props.revealAdvisory(_art.id))
-            }
           />
         );
       });
@@ -376,9 +372,8 @@ var QuiltPatch = React.createClass({
       width,
       customImageFn,
       hPadding,
-      advisoryRevealed,
-      onRevealAdvisory,
       onClick,
+      advisoryRevealed,
       ...other
     } = this.props;
     var id = art.id;
@@ -404,12 +399,7 @@ var QuiltPatch = React.createClass({
     false && console.info("QuiltPatch", { hPadding, imgStyle });
 
     var image = (
-      <ImageAdvisory
-        art={art}
-        compact={true}
-        revealed={advisoryRevealed}
-        onReveal={this.revealAndFocus}
-      >
+      <ImageAdvisory art={art} compact={true} revealed={!!advisoryRevealed}>
         <Image
           art={art}
           style={imgStyle}
@@ -465,13 +455,6 @@ var QuiltPatch = React.createClass({
     if (event.key !== "Enter" && event.key !== " ") return;
     event.preventDefault();
     this.props.onClick && this.props.onClick(event);
-  },
-
-  // View button: unblur (shared state) and open the search preview.
-  revealAndFocus() {
-    var { onRevealAdvisory, onClick } = this.props;
-    onRevealAdvisory && onRevealAdvisory();
-    onClick && onClick();
   },
 
   getDefaultProps() {

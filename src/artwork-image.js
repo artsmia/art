@@ -15,6 +15,8 @@ var ArtworkImage = React.createClass({
       style,
       containerStyle,
       ignoreStyle,
+      compact,
+      artworkLink,
       advisoryRevealed,
       onRevealAdvisory,
     } = this.props;
@@ -51,8 +53,10 @@ var ArtworkImage = React.createClass({
         <div className="artwork-image" style={containerStyle}>
           <ImageAdvisory
             art={art}
+            compact={compact}
+            artworkLink={artworkLink}
             revealed={advisoryRevealed}
-            onReveal={onRevealAdvisory}
+            onReveal={compact ? undefined : onRevealAdvisory}
           >
             {image}
           </ImageAdvisory>
