@@ -19,13 +19,6 @@ var ImageAdvisory = React.createClass({
     return this.state.localRevealed;
   },
 
-  swallowClick(event) {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  },
-
   reveal(event) {
     if (event) {
       event.preventDefault();
