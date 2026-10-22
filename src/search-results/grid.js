@@ -59,7 +59,6 @@ var SearchResultsGrid = React.createClass({
           isInspiredByMia={isInspiredByMia}
           disableHover={true}
           isAdvisoryRevealed={isAdvisoryRevealed}
-          revealAdvisory={revealAdvisory}
         />
       );
 
@@ -86,12 +85,11 @@ var SearchResultsGrid = React.createClass({
       </div>
     );
 
-    if (this.context.universal) {
+    if (smallViewport || this.context.universal) {
       focusedResult = null;
     }
 
     if (!focusedResult) leftColumnWidth = "100%";
-    else if (smallViewport) leftColumnWidth = "0%";
 
     var wrappedQuilt = !focusedResult ? (
       stuff
