@@ -45,7 +45,7 @@ var OneStrangeNight = React.createClass({
     var artworks = this.props.data.artworks || [];
 
     return (
-      <div>
+      <div className="one-strange-night-page">
         <div className="header-image"></div>
         <main className="one-strange-night">
           <OneStrangeNightHero />
@@ -180,9 +180,8 @@ var OneStrangeNightBook = React.createClass({
 
         <div className="one-strange-night-book-content">
           <h2>Get the One Strange Night at Mia</h2>
-
+          <p>The adventure doesn’t have to end at the museum. One Strange Night at Mia brings artworks from Mia’s collection to life through coloring, creativity, and a little imagination. Download the full coloring book for free, or order a printed copy on Amazon.</p>
           <div className="one-strange-night-book-actions">
-            <p>The adventure doesn’t have to end at the museum. One Strange Night at Mia brings artworks from Mia’s collection to life through coloring, creativity, and a little imagination. Download the full coloring book for free, or order a printed copy on Amazon.</p>
             <a
               href="https://images.artsmia.org/wp-content/uploads/2026/10/06132145/one_strange_night_at_mia_coloring_book.pdf"
               className="osn-book-button"
