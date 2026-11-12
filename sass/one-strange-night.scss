@@ -1,0 +1,301 @@
+div:has(.one-strange-night-page) > header {
+  z-index: 20 !important;
+}
+
+.one-strange-night {
+  margin-top: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Hero section
+
+.one-strange-night-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 4rem;
+
+  &-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+&-content {
+  h1 {
+    font-family: 'MiaGrotesk-Black', sans-serif;
+    font-size: 2.75rem;
+    font-weight: normal;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.25rem;
+  }
+
+  .osn-hero-intro {
+    font-family: 'MiaGrotesk-Light', sans-serif;
+    font-size: 25px;
+    line-height: 32px;
+    font-weight: 400;
+    margin-bottom: 1.25rem;
+    color: #555;
+  }
+
+  p {
+    font-family: 'MiaGrotesk-Light', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0 0 1rem;
+    color: #555;
+  }
+
+  .osn-hero-link {
+    display: inline-block;
+    color: #222;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    text-decoration: none;
+    border-bottom: 1px solid #222;
+    padding-bottom: 0.15rem;
+
+    &:hover {
+      color: #555;
+      border-bottom-color: #555;
+    }
+  }
+}
+}
+
+.osn-text-link {
+  display: inline-block;
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid #000;
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: "MiaGrotesk-Light", "Helvetica Neue", Helvetica, sans-serif;
+
+  &:focus-visible {
+    outline: 3px solid #d33;
+    outline-offset: 3px;
+  }
+}
+
+// Coloring book section
+
+.one-strange-night-book {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 3rem;
+  margin-bottom: 4rem;
+
+  &-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 250px;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-family: "MiaGrotesk-Black", "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+  p {
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    font-family: "MiaGrotesk-Light", "Helvetica Neue", Helvetica, sans-serif;
+  }
+  
+
+  &-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+.osn-book-button {
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+  background-color: #222;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 2px solid #222;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: #fff;
+    color: #222;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #d33;
+    outline-offset: 3px;
+  }
+}
+
+.osn-secondary-button {
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+  background: transparent;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 2px solid #222;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: #222;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #d33;
+    outline-offset: 3px;
+  }
+}
+
+// Artwork grid
+
+.one-strange-night-artworks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 2rem;
+  row-gap: 2.5rem;
+  align-items: start;
+}
+
+// Individual artwork cards
+
+.osn-artwork {
+  min-width: 0;
+}
+
+.osn-artwork-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.osn-artwork-title {
+  border-top: 2px solid #222;
+  border-bottom: 22px;
+  padding-top: 5px;
+  margin: 0 0 1rem;
+  font-family: "MiaGrotesk-Black", sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 23px;
+  letter-spacing: -0.5px;
+  color: #222;
+  min-height: 3.5rem;
+}
+
+.osn-artwork-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: #fff;
+  margin-bottom: 12px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.18s ease;
+  }
+}
+
+.osn-artwork-link:hover .osn-artwork-image img {
+  transform: scale(1.015);
+}
+
+.osn-artwork-link:hover .osn-artwork-title {
+  text-decoration: underline;
+}
+
+// Artwork captions
+
+.osn-artwork-caption {
+  margin-top: 0.75rem;
+  color: #555;
+
+  .one-strange-night-artwork-metadata {
+    font-family: 'MiaGrotesk-Light', sans-serif;
+    font-size: 15.2px;
+    font-weight: normal;
+    line-height: 1.4;
+    margin: 0;
+  }
+}
+
+// Responsive styles
+
+@media (max-width: 900px) {
+  .one-strange-night-artworks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .one-strange-night-hero,
+  .one-strange-night-book {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .one-strange-night-book {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .one-strange-night {
+    padding: 6rem 1rem 0;
+  }
+
+  .one-strange-night-artworks {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+  /* --- Header Image --- */
+  .header-image {
+    width: 100%;
+    height: 125px !important;
+    background-image: url("https://img.artsmia.org/web_objects_cache/127000/000/80/127081/mia_8008778_full.jpg");
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0 0 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #fff;
+  }
