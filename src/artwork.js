@@ -11,6 +11,8 @@ var ArtworkPreview = require("./artwork-preview");
 var ArtworkDetails = require("./artwork-details");
 var _Artwork = require("./_artwork");
 var Image = require("./image");
+var ImageAdvisory = require("./image-advisory");
+var advisoryRevealStore = require("./advisory-reveal-store");
 var imageCDN = require("./image-cdn");
 var SEARCH = require("./endpoints").search;
 var ArtworkRelatedContent = require("./artwork-related");
@@ -101,10 +103,18 @@ var Artwork = React.createClass({
     if (smallViewport && this.state.show3d) mapHeight = 67;
 
     var image = (
-      <Image
+      <ImageAdvisory
         art={art}
-        style={{ maxWidth: "95%", maxHeight: mapHeight - 5 + "vh" }}
-      />
+        revealed={
+          art.content_warnings ? this.state.imageAdvisoryDismissed : undefined
+        }
+        onReveal={this.dismissImageAdvisory}
+      >
+        <Image
+          art={art}
+          style={{ maxWidth: "95%", maxHeight: mapHeight - 5 + "vh" }}
+        />
+      </ImageAdvisory>
     );
 
     var showMoreIcon =
@@ -285,6 +295,11 @@ var Artwork = React.createClass({
     this.setState({ show3d: nextShow3d });
   },
 
+  dismissImageAdvisory() {
+    advisoryRevealStore.reveal(this.state.id);
+    this.setState({ imageAdvisoryDismissed: true });
+  },
+
   getInitialState() {
     var art = this.props.data.artwork;
     art.id =
@@ -320,6 +335,7 @@ var Artwork = React.createClass({
       show3d: navigatedFrom3dModelSearch,
       smallViewportShowInfoOrRelatedContent: window && window.enteredViaMore,
       showBiggie,
+      imageAdvisoryDismissed: advisoryRevealStore.isRevealed(art.id),
     };
   },
 

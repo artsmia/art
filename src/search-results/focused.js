@@ -36,6 +36,8 @@ var FocusedResult = React.createClass({
           showLink={true}
           onlyShowHighlightDetails={true}
           key={art.id}
+          advisoryRevealed={this.props.advisoryRevealed}
+          onRevealAdvisory={this.props.onRevealAdvisory}
         />
         <span
           className="closePreview"

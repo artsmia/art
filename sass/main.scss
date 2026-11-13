@@ -6,6 +6,7 @@
 @use "mia-font.scss";
 @use "alternative-titles.scss";
 @use "not-found-page.scss";
+@use "content-advisory.scss";
 @use "one-strange-night";
 @media print {
   @include meta.load-css("print.scss");
@@ -89,7 +90,8 @@ header {
   background: #222;
 }
 
-.quilt-wrap a:hover {
+.quilt-wrap a:hover,
+.quilt-wrap [role="button"]:hover {
   overflow: visible !important;
   // z-index: 100;
 
@@ -286,7 +288,7 @@ header {
   }
   .artwork-image img {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 200px;
   }
 }
 
