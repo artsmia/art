@@ -76,13 +76,11 @@ var ImageAdvisory = React.createClass({
                     />
                     <strong>Content advisory</strong>
                     <p>
-                      <span>
-                        This work contains graphic depictions of violence,
-                        serious{" "}
+                      This work contains graphic depictions of violence,{" "}
+                      <span className="image-advisory-overlay__phrase">
+                        serious injury
                       </span>
-                      <span>
-                        injury, severe emaciation, death, or human&nbsp;remains.
-                      </span>
+                      , severe emaciation, death, or human&nbsp;remains.
                     </p>
                   </div>
                   <div className="image-advisory-overlay__footer">
