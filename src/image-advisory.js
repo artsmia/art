@@ -78,7 +78,7 @@ var ImageAdvisory = React.createClass({
                     <p>
                       <span>
                         This work contains graphic depictions of violence,
-                        serious
+                        serious{" "}
                       </span>
                       <span>
                         injury, severe emaciation, death, or human&nbsp;remains.
