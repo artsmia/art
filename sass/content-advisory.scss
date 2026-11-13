@@ -85,6 +85,10 @@ $MiaGroteskBold: "MiaGrotesk-Bold", sans-serif;
     text-wrap: balance;
   }
 
+  .image-advisory-overlay__phrase {
+    white-space: nowrap;
+  }
+
   .image-advisory-overlay__rule {
     border: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.4);
@@ -234,19 +238,3 @@ $MiaGroteskBold: "MiaGrotesk-Bold", sans-serif;
   margin: 0;
 }
 
-// Search preview: keep the advisory sentence on these two lines.
-.focusedResult .image-advisory-overlay {
-  container-type: inline-size;
-}
-
-.focusedResult .image-advisory-overlay__message p {
-  width: auto;
-  max-width: 100%;
-  text-wrap: wrap;
-  font-size: min(1em, calc((100cqi - 2.7rem) / 24.5));
-}
-
-.focusedResult .image-advisory-overlay__message p span {
-  display: block;
-  white-space: nowrap;
-}
