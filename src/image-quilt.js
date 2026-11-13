@@ -8,6 +8,7 @@ var cookie = require("react-cookie");
 var linearPartition = require("linear-partitioning");
 var ArtworkImage = require("./artwork-image");
 var Image = require("./image");
+var ImageAdvisory = require("./image-advisory");
 
 const ImageQuilt = React.createClass({
   mixins: [PureRenderMixin],
@@ -154,6 +155,10 @@ const ImageQuilt = React.createClass({
             customImageFn={this.props.customImageFn}
             lazyLoad={this.props.lazyLoad}
             hPadding={hPadding}
+            advisoryRevealed={
+              this.props.isAdvisoryRevealed &&
+              this.props.isAdvisoryRevealed(_art.id)
+            }
           />
         );
       });
@@ -362,7 +367,15 @@ module.exports = ImageQuilt;
 
 var QuiltPatch = React.createClass({
   render() {
-    var { art, width, customImageFn, hPadding, ...other } = this.props;
+    var {
+      art,
+      width,
+      customImageFn,
+      hPadding,
+      onClick,
+      advisoryRevealed,
+      ...other
+    } = this.props;
     var id = art.id;
 
     var style = {
@@ -386,12 +399,14 @@ var QuiltPatch = React.createClass({
     false && console.info("QuiltPatch", { hPadding, imgStyle });
 
     var image = (
-      <Image
-        art={art}
-        style={imgStyle}
-        customImage={customImageFn}
-        {...other}
-      />
+      <ImageAdvisory art={art} compact={true} revealed={!!advisoryRevealed}>
+        <Image
+          art={art}
+          style={imgStyle}
+          customImage={customImageFn}
+          {...other}
+        />
+      </ImageAdvisory>
     );
 
     var textStyle = {
@@ -411,23 +426,35 @@ var QuiltPatch = React.createClass({
         </span>
       );
 
+    var wrapStyle = { ...style, position: "relative", cursor: "pointer" };
+
+    // SSR / no-JS: real link to the artwork page.
+    // Client: focus/preview via onClick only — no fake Link that can navigate.
+    if (this.context.universal) {
+      return (
+        <Link style={wrapStyle} to="artwork" params={{ id: art.id }}>
+          {patch}
+        </Link>
+      );
+    }
+
     return (
-      <Link
-        onClick={this.clickOrDontClick}
-        style={{ ...style, position: "relative" }}
-        to="artwork"
-        params={{ id: art.id }}
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={this.activateOnKey}
+        style={wrapStyle}
       >
         {patch}
-      </Link>
+      </div>
     );
   },
 
-  // halt the click event if javascript is loaded
-  // clicking triggers the right-hand preview, not the `<a>`
-  // TODO make this work with command click tho
-  clickOrDontClick(event) {
-    if (!this.context.universal) event.preventDefault();
+  activateOnKey(event) {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    this.props.onClick && this.props.onClick(event);
   },
 
   getDefaultProps() {

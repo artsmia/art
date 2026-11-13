@@ -59,6 +59,8 @@ var ArtworkPreview = React.createClass({
         style={style}
         link={showLink}
         ignoreImageStyle={true}
+        advisoryRevealed={this.props.advisoryRevealed}
+        onRevealAdvisory={this.props.onRevealAdvisory}
       >
         <div className="art-details preview-header">
           {art.deaccessioned == "true" && <DeaccessionedBanner art={art} />}
@@ -87,6 +89,22 @@ var ArtworkPreview = React.createClass({
           </h6>
           {this.props.children || (
             <div>
+              {art.body_of_work && (
+                <div
+                  className="body-of-work-context"
+                  role="note"
+                  aria-label="About this body of work"
+                >
+                  <div className="body-of-work-context__card">
+                    <p
+                      className="body-of-work-context__body"
+                      style={{ whiteSpace: "pre-line" }}
+                    >
+                      {art.body_of_work}
+                    </p>
+                  </div>
+                </div>
+              )}
               <div className="description" itemProp="description">
                 <Markdown>{highlight("text")}</Markdown>
               </div>
